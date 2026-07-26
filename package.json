@@ -1,0 +1,22 @@
+{
+  "name": "kobi-stop-smoking-bot",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "בוט טלגרם ללוויי גמילה מוויפ — מדבקות + מסטיק 2 מ\"ג + העבודה המנטלית",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "tail": "wrangler tail",
+    "kv:create": "wrangler kv namespace create BOT_KV",
+    "secret:token": "wrangler secret put BOT_TOKEN",
+    "secret:hook": "wrangler secret put WEBHOOK_SECRET",
+    "webhook:set": "node scripts/set-webhook.mjs set",
+    "webhook:info": "node scripts/set-webhook.mjs info",
+    "webhook:delete": "node scripts/set-webhook.mjs delete",
+    "check": "node --check src/index.js && node --check src/messages.js && node --check src/content.js && node --check src/plan.js && node --check src/store.js && node --check src/telegram.js"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

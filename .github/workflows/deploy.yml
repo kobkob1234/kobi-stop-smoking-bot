@@ -1,0 +1,62 @@
+name: Deploy bot
+
+# פריסה אוטומטית ל-Cloudflare בכל push ל-main.
+#
+# שלב הפריסה מדלג בשקט אם לא הוגדר CLOUDFLARE_API_TOKEN — כדי שלא תקבל
+# מייל כישלון על כל commit. בדיקת התקינות רצה תמיד.
+#
+# להפעלת הפריסה האוטומטית (חד-פעמי):
+#   1. dash.cloudflare.com/profile/api-tokens → Create Token
+#      → תבנית "Edit Cloudflare Workers"
+#   2. gh secret set CLOUDFLARE_API_TOKEN
+#      gh secret set CLOUDFLARE_ACCOUNT_ID --body b453be2fea5e4942adb70f2096bca49c
+#
+# בלי זה — פורסים מהמק עם `npm run deploy`, וזה לגמרי בסדר.
+# הטוקן של הבוט לא נמצא כאן ואף פעם לא צריך להיות.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: בדיקת תחביר
+        run: npm run check
+
+  deploy:
+    needs: check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: יש טוקן פריסה?
+        id: gate
+        env:
+          TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          if [ -n "$TOKEN" ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::מדלג על הפריסה — לא הוגדר CLOUDFLARE_API_TOKEN. הקוד נבדק ותקין; פרוס מהמק עם npm run deploy."
+          fi
+
+      - if: steps.gate.outputs.ready == 'true'
+        run: npm install
+      - if: steps.gate.outputs.ready == 'true'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

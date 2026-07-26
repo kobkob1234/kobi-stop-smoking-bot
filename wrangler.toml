@@ -1,0 +1,22 @@
+name = "kobi-stop-smoking-bot"
+main = "src/index.js"
+compatibility_date = "2025-09-01"
+
+# ה-cron רץ כל 10 דקות. הקוד עצמו מחליט לפי שעון ישראל
+# (Asia/Jerusalem, כולל שעון קיץ) מה מגיע לשלוח עכשיו — כך שאין
+# צורך לגעת בקרון פעמיים בשנה, וקרון שהתעכב עדיין שולח.
+[triggers]
+crons = ["*/10 * * * *"]
+
+# ⚠️ החלף את ה-id בזה שתקבל מ:
+#    npx wrangler kv namespace create BOT_KV
+[[kv_namespaces]]
+binding = "KV"
+id = "baaa0a70513e4afe9896e7a29263b11a"
+
+[observability]
+enabled = true
+
+# ל-AI_PROVIDER=workers-ai (אופציונלי, בלי מפתח ובלי חשבון נוסף)
+[ai]
+binding = "AI"

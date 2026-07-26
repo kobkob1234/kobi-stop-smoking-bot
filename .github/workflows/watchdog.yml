@@ -1,0 +1,44 @@
+name: Watchdog
+
+# שומר ראש על הבוט משתי בחינות:
+#  1. קרון-גיבוי — קורא ל-/cron של ה-Worker. אם הקרון של Cloudflare
+#     נכשל או התעכב, ההודעות המתוזמנות עדיין ייצאו.
+#  2. בדיקת בריאות — אם ה-Worker לא עונה, ה-job נכשל
+#     ו-GitHub שולח לך מייל אוטומטית. לכן אין צורך בטוקן הבוט כאן.
+#
+# Secrets נדרשים (Settings → Secrets and variables → Actions):
+#   WORKER_URL      https://kobi-stop-smoking-bot.xxx.workers.dev
+#   WEBHOOK_SECRET  אותו סוד שהוגדר ב-Worker
+
+on:
+  schedule:
+    - cron: '5,35 * * * *'      # כל חצי שעה
+  workflow_dispatch:
+
+concurrency:
+  group: watchdog
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: קרון-גיבוי
+        run: |
+          code=$(curl -s -o /tmp/cron.txt -w '%{http_code}' \
+            "${{ secrets.WORKER_URL }}/cron?key=${{ secrets.WEBHOOK_SECRET }}")
+          echo "HTTP $code"; cat /tmp/cron.txt
+          [ "$code" = "200" ] || { echo "::error::הקרון-גיבוי נכשל (HTTP $code)"; exit 1; }
+
+      - name: בדיקת בריאות
+        run: |
+          curl -fsS "${{ secrets.WORKER_URL }}/diag?key=${{ secrets.WEBHOOK_SECRET }}" -o /tmp/diag.json \
+            || { echo "::error::ה-Worker לא עונה"; exit 1; }
+          cat /tmp/diag.json
+          node -e '
+            const d = require("/tmp/diag.json");
+            if (!d.ok)     { console.error("::error::diag לא ok");            process.exit(1); }
+            if (!d.linked) { console.error("::warning::עוד לא נשלח /start לבוט"); }
+            console.log(`יום ${d.day}/70 · ${d.cleanDays} ימים נקיים · נשלח היום: ${d.sentToday.join(", ") || "כלום עדיין"}`);
+          '

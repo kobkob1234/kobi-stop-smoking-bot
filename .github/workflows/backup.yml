@@ -1,0 +1,30 @@
+name: Backup journal
+
+# גיבוי יומי של היומן (ימים, גלים, מסטיק, ניצחונות, יומן) כ-Artifact פרטי.
+# ⚠️ בכוונה *לא* נכנס ל-git: הריפו יכול להיות public, והיומן הוא אישי.
+# Artifacts נגישים רק לך, ונשמרים 90 יום.
+
+on:
+  schedule:
+    - cron: '0 1 * * *'         # 04:00 בישראל בקיץ
+  workflow_dispatch:
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: שליפת היומן
+        run: |
+          curl -fsS "${{ secrets.WORKER_URL }}/export?key=${{ secrets.WEBHOOK_SECRET }}&days=120" \
+            -o journal.json
+          node -e '
+            const j = require("./journal.json");
+            console.log(`גובו ${j.days.length} ימים · עד ${j.exportedAt}`);
+            if (!j.days.length) { console.error("::warning::הגיבוי ריק"); }
+          '
+      - uses: actions/upload-artifact@v4
+        with:
+          name: journal-${{ github.run_id }}
+          path: journal.json
+          retention-days: 90
