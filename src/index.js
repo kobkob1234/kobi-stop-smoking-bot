@@ -4,7 +4,7 @@
 //  scheduled() → cron כל 10 דקות; מחליט לפי שעון ישראל מה לשלוח
 // ==========================================================================
 
-import { send, edit, answer, inline, btn, esc, MAIN_KB, setCommands } from './telegram.js';
+import { send, edit, answer, inline, btn, esc, MAIN_KB, KB_REMOVE, setCommands } from './telegram.js';
 import * as P from './plan.js';
 import * as C from './content.js';
 import * as M from './messages.js';
@@ -40,6 +40,7 @@ const BOT_COMMANDS = [
   { command: 'coach',   description: '🏋️ אימון RAIN שבועי' },
   { command: 'partner', description: '👥 חיבור בת/בן הזוג' },
   { command: 'site',    description: '📍 מקומות ההדבקה ויישור הרוטציה' },
+  { command: 'keyboard', description: '⌨️ הסתרה/החזרה של מקלדת הכפתורים' },
   { command: 'review',  description: '🗓️ סקירה שבועית' },
   { command: 'phones',  description: '📞 טלפוני תמיכה' },
   { command: 'help',    description: '❓ עזרה' },
@@ -76,6 +77,7 @@ const ALIAS = {
   ask:      ['ask', 'שאל', 'שאלה'],
   ai:       ['ai'],
   site:     ['site', 'מקום', 'מקומות'],
+  keyboard: ['keyboard', 'מקלדת'],
 };
 
 const inPlanDay = pl => !pl.before && !pl.after;
@@ -174,7 +176,7 @@ export default {
         const pl = P.planFor(now.iso, meta.siteOffset);
         const day = await getDay(env, now.iso);
         const hit = KB.answer(q);
-        const cls = AI.enabled(env) ? await INT.classify(env, q, await stateLine(env, pl, iso0(now))) : null;
+        const cls = AI.enabled(env) ? await INT.classify(env, q, await buildState(env, pl, now.iso, now, meta)) : null;
         return Response.json({
           q,
           intent: cls ? cls.intent : null,
@@ -492,16 +494,69 @@ async function onMessage(msg, env) {
   return converse(text, chatId, env, meta, pl, iso, now);
 }
 
-/** תיאור מצב קצר שנשלח למודל כהקשר */
-async function stateLine(env, pl, iso) {
+/**
+ * המצב שנשלח למודל כהקשר.
+ *
+ * זה מה שמאפשר לו לענות על שאלות נתונים — "מתי היה המסטיק האחרון?",
+ * "כמה לקחתי אתמול?", "באיזו שעה הגלים באים?" — במקום להחזיר כרטיס
+ * סטטוס קבוע. בלי הנתונים האלה בהקשר, המודל פשוט לא יודע.
+ */
+const hm = e => `${String(e.h).padStart(2, '0')}:${String(e.m).padStart(2, '0')}`;
+
+function agoText(now, e) {
+  let mins = now.minutes - (e.h * 60 + e.m);
+  if (mins < 0) mins += 1440;
+  if (mins < 1) return 'ממש עכשיו';
+  if (mins === 1) return 'לפני דקה';
+  if (mins < 60) return `לפני ${mins} דקות`;
+  const h = Math.floor(mins / 60), m = mins % 60;
+  const hh = h === 1 ? 'שעה' : `${h} שעות`;
+  return m ? `לפני ${hh} ו-${m} דקות` : `לפני ${hh}`;
+}
+
+function evLine(now, evs, kind, label) {
+  const list = evs.filter(e => e.k === kind);
+  if (!list.length) return `${label}: 0`;
+  const times = list.map(hm).join(', ');
+  const last = list[list.length - 1];
+  return `${label}: ${list.length} — בשעות ${times}. האחרון ב-${hm(last)} (${agoText(now, last)})`;
+}
+
+async function buildState(env, pl, iso, now, meta) {
   const day = await getDay(env, iso);
-  return [
-    pl.before ? `לפני יום ההפסקה, עוד ${pl.daysToQuit} ימים`
-      : pl.after ? `סיים את 70 הימים, ${pl.cleanDays} ימים נקיים`
-      : `יום ${pl.n} מתוך 70, שבוע ${pl.week}, ${pl.clean} ימים נקיים, מדבקה ${pl.dose} מ"ג`,
-    `היום: מסטיק ${day.gum}, גלים ${day.waves}, נגלשו ${day.surfed}, מדבקה ${day.patch ? 'סומנה' : 'לא סומנה'}`,
-    day.mine ? `המוקש שרשם היום: ${day.mine}` : '',
-  ].filter(Boolean).join(' · ');
+  const L = [];
+
+  // --- התוכנית ---
+  if (inPlanDay(pl)) {
+    const nextStep = pl.dose === 21 ? 'ירידה ל-14 מ"ג ב-18.8'
+      : pl.dose === 14 ? 'ירידה ל-7 מ"ג ב-1.9' : 'סיום מדבקות ב-15.9';
+    L.push(`תוכנית: יום ${pl.n} מתוך 70 · שבוע ${pl.week} · ${pl.phase} ${pl.dose} מ"ג · מקום ההדבקה היום: ${pl.site} · ${nextStep} · ${pl.clean} ימים נקיים · נחסך ${pl.clean * meta.costPerDay}₪`);
+  } else if (pl.before) L.push(`לפני יום ההפסקה — עוד ${pl.daysToQuit} ימים (7.7.2026)`);
+  else L.push(`סיים את 70 הימים · ${pl.cleanDays} ימים נקיים`);
+
+  // --- היום, עם שעות ---
+  L.push(`היום ${P.fmtHe(iso)} (יום ${now.dowHe}), השעה כרגע ${now.hhmm}:`);
+  L.push('  ' + evLine(now, day.ev, 'g', 'מסטיק 2 מ"ג') + (day.gum && !day.ev.some(e => e.k === 'g') ? ` (סה"כ ${day.gum}, בלי שעות מתועדות)` : ''));
+  const patchEv = day.ev.filter(e => e.k === 'p').pop();
+  L.push(`  מדבקה: ${day.patch ? (patchEv ? `הודבקה ב-${hm(patchEv)}` : 'סומנה') : 'עוד לא סומנה היום'}`);
+  const waves = day.ev.filter(e => e.k === 'w');
+  L.push(`  גלים: ${day.waves}${waves.length ? ' — ' + waves.map(e => hm(e) + (e.tag ? ` (${ANL.TAGS[e.tag] || e.tag})` : '')).join(', ') : ''} · נגלשו עד הסוף: ${day.surfed}`);
+  if (day.slips) L.push(`  מעידות היום: ${day.slips}`);
+  L.push(`  יציאות עם טקס: ${day.outs}${day.mine ? ` · המוקש שרשם: ${day.mine}` : ''}`);
+  if (day.win) L.push(`  הניצחון שרשם: ${day.win}`);
+
+  // --- אתמול ---
+  const y = await getDay(env, P.addDaysISO(iso, -1));
+  L.push(`אתמול: מסטיק ${y.gum} · גלים ${y.waves} · נגלשו ${y.surfed} · מדבקה ${y.patch ? 'סומנה' : 'לא סומנה'}${y.slips ? ` · מעידות ${y.slips}` : ''}`);
+
+  // --- 7 ימים ---
+  const week = await ANL.collect(env, iso, 7);
+  const a = ANL.analyse(week);
+  L.push(`7 ימים אחרונים: ${a.gumPerDay} מסטיק ביום בממוצע · ${a.waves} גלים, ${a.surfed} נגלשו (${a.surfRate}%) · ${a.slips} מעידות · מדבקה סומנה ב-${a.patchDays}/7`);
+  if (a.topBucket) L.push(`  שעת השיא של הגלים: ${a.topBucket[0]}${a.topTag ? ` · ההקשר החוזר: ${a.topTag[0]}` : ''}`);
+
+  L.push('הערה: תיעוד שעות מדויק לכל אירוע קיים רק מ-26.7.2026 והלאה. לפני זה יש ספירות בלבד.');
+  return L.join('\n');
 }
 
 /**
@@ -520,7 +575,7 @@ async function converse(text, chatId, env, meta, pl, iso, now) {
   // ---- 1 · סיווג + ניסוח על ידי המודל ----
   if (AI.enabled(env) && text.trim().length >= 3) {
     if (AI.quotaLeft(meta, env) > 0) {
-      const res = await INT.classify(env, text, await stateLine(env, pl, iso));
+      const res = await INT.classify(env, text, await buildState(env, pl, iso, now, meta));
       if (res) {
         AI.noteUse(meta, iso);
         await putMeta(env, meta);
@@ -552,7 +607,7 @@ async function converse(text, chatId, env, meta, pl, iso, now) {
   // (המסלול המהיר בביטוי הרגולרי כבר רץ לפני זה, כך שדחף מפורש
   //  לא מגיע לכאן בכלל.)
   if (AI.enabled(env) && AI.quotaLeft(meta, env) > 0) {
-    const plain = await AI.ask(env, text, await stateLine(env, pl, iso));
+    const plain = await AI.ask(env, text, await buildState(env, pl, iso, now, meta));
     if (plain) {
       AI.noteUse(meta, iso);
       await putMeta(env, meta);
@@ -618,7 +673,7 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
   switch (cmd) {
     case 'start': {
       await R(M.welcome(pl, meta));
-      await send(env, chatId, 'המקלדת מוכנה 👇', { reply_markup: MAIN_KB });
+      await send(env, chatId, 'המקלדת מוכנה 👇\n<i>אפשר לקפל אותה עם החץ שליד שדה הכתיבה, או להסתיר לגמרי עם /מקלדת.</i>', { reply_markup: MAIN_KB });
       await setCommands(env, BOT_COMMANDS);
       return;
     }
@@ -640,8 +695,8 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
       return;
     }
     case 'out':   return R(M.outing(pl, iso, day, meta, now));
-    case 'gum':   return logGum(chatId, env, iso, meta);
-    case 'patch': return logPatch(chatId, env, iso, pl, meta);
+    case 'gum':   return logGum(chatId, env, iso, meta, now);
+    case 'patch': return logPatch(chatId, env, iso, pl, meta, now);
     case 'slip': {
       const evIdx = await recordWave(env, iso, now, 'x');
       const m = await getMeta(env);
@@ -772,6 +827,13 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
         p === 'off' ? '\nלהדלקה — ראה README, סעיף "שיחה חופשית".' : '',
       ].filter(Boolean).join('\n'));
     }
+    case 'keyboard': {
+      meta.kbHidden = !meta.kbHidden;
+      await putMeta(env, meta);
+      return meta.kbHidden
+        ? send(env, chatId, '⌨️ מקלדת הכפתורים הוסתרה. שדה הכתיבה הרגיל חזר, ואפשר פשוט לכתוב לי.\n\n/מקלדת להחזיר אותה.', { reply_markup: KB_REMOVE })
+        : send(env, chatId, '⌨️ המקלדת חזרה. אפשר לקפל אותה בכל רגע עם החץ שליד שדה הכתיבה.', { reply_markup: MAIN_KB });
+    }
     case 'quiet': {
       meta.quiet = true; await putMeta(env, meta);
       return send(env, chatId, '🔇 התזכורות המתוזמנות כבויות. הפקודות עדיין עובדות. /דבר להחזיר.');
@@ -784,20 +846,30 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
 }
 
 /** רושם אירוע גל/מעידה עם שעה — הבסיס למיפוי הדפוסים. מחזיר את האינדקס. */
-async function recordWave(env, iso, now, kind) {
+/**
+ * רושם אירוע עם חותמת שעה. זה מה שמאפשר לענות על "מתי היה המסטיק
+ * האחרון?" — בלי זה יש רק מונה, ואי-אפשר לגזור ממנו שעה.
+ * k: w=גל · x=מעידה · g=מסטיק · p=מדבקה · o=יציאה · v=גל שנגלש
+ */
+async function recordEvent(env, iso, now, kind, extra = {}) {
   let idx = -1;
   await updateDay(env, iso, d => {
-    if (kind === 'x') d.slips += 1; else d.waves += 1;
-    d.ev.push({ k: kind, h: now.hour, m: now.min, tag: null });
-    if (d.ev.length > 60) d.ev = d.ev.slice(-60);
+    d.ev.push({ k: kind, h: now.hour, m: now.min, ...extra });
+    if (d.ev.length > 120) d.ev = d.ev.slice(-120);
     idx = d.ev.length - 1;
   });
   return idx;
 }
 
+async function recordWave(env, iso, now, kind) {
+  await updateDay(env, iso, d => { if (kind === 'x') d.slips += 1; else d.waves += 1; });
+  return recordEvent(env, iso, now, kind, { tag: null });
+}
+
 // ---------- רישום מסטיק ----------
-async function logGum(chatId, env, iso, meta) {
+async function logGum(chatId, env, iso, meta, now) {
   const day = await updateDay(env, iso, d => { d.gum += 1; });
+  if (now) await recordEvent(env, iso, now, 'g');
   const m = await getMeta(env); m.totals.gum += 1; await putMeta(env, m);
 
   const lines = [`🍬 נרשם. מסטיק 2 מ״ג היום: <b>${day.gum}</b>`];
@@ -813,8 +885,9 @@ async function logGum(chatId, env, iso, meta) {
 }
 
 // ---------- רישום מדבקה ----------
-async function logPatch(chatId, env, iso, pl, meta) {
+async function logPatch(chatId, env, iso, pl, meta, now) {
   const day = await updateDay(env, iso, d => { d.patch = true; });
+  if (now) await recordEvent(env, iso, now, 'p');
   const m = await getMeta(env); m.totals.patch += 1; await putMeta(env, m);
 
   const lines = ['🩹 <b>מדבקה נרשמה ✓</b>'];
@@ -960,11 +1033,12 @@ async function onCallback(cb, env) {
   }
 
   // --- מונים ---
-  if (data === 'g') { await answer(env, cb.id, 'מסטיק נרשם 🍬'); return logGum(chatId, env, iso, meta); }
-  if (data === 'p') { await answer(env, cb.id, 'מדבקה נרשמה 🩹'); return logPatch(chatId, env, iso, pl, meta); }
+  if (data === 'g') { await answer(env, cb.id, 'מסטיק נרשם 🍬'); return logGum(chatId, env, iso, meta, now); }
+  if (data === 'p') { await answer(env, cb.id, 'מדבקה נרשמה 🩹'); return logPatch(chatId, env, iso, pl, meta, now); }
 
   if (data === 'sf') {
     const day = await updateDay(env, iso, d => { d.surfed += 1; });
+    await recordEvent(env, iso, now, 'v');
     const m2 = await getMeta(env); m2.totals.surfed += 1; m2.sos = null; await putMeta(env, m2);
     await answer(env, cb.id, 'גל נגלש 🌊');
     return send(env, chatId, [
@@ -1035,6 +1109,7 @@ async function onCallback(cb, env) {
   }
   if (data === 'out:done') {
     await updateDay(env, iso, d => { d.outs += 1; });
+    await recordEvent(env, iso, now, 'o');
     const m2 = await getMeta(env); m2.totals.outs += 1; await putMeta(env, m2);
     await answer(env, cb.id, 'יצאת מוכן ✓');
     return send(env, chatId, [

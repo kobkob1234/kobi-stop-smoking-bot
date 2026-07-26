@@ -56,6 +56,10 @@ export const setCommands = (env, commands) =>
 export const btn = (text, data) => ({ text, callback_data: data });
 export const inline = rows => ({ inline_keyboard: rows });
 
+// is_persistent הוסר בכוונה: הוא כופה על טלגרם להציג את המקלדת הזאת
+// כל הזמן במקום שדה הטקסט הרגיל, וזה מרגיש כאילו אי-אפשר לצאת מהבוט.
+// בלעדיו מופיע החץ הרגיל של טלגרם לקיפול המקלדת, ואפשר לחזור לכתיבה
+// חופשית או לצאת מהצ׳אט כרגיל. /מקלדת מסתיר או מחזיר אותה לגמרי.
 export const MAIN_KB = {
   keyboard: [
     [{ text: '🌊 יש לי גל' }, { text: '🚪 יוצא מהבית' }],
@@ -63,5 +67,7 @@ export const MAIN_KB = {
     [{ text: '🧰 כלים' }, { text: '📊 סטטוס' }],
   ],
   resize_keyboard: true,
-  is_persistent: true,
+  input_field_placeholder: 'כתוב לי מה קורה…',
 };
+
+export const KB_REMOVE = { remove_keyboard: true };
