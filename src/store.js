@@ -24,6 +24,7 @@ export const DEFAULT_META = {
   joinCode: null,          // {code, exp} — קוד חד-פעמי לחיבור השותף/ה
   training: null,          // {startISO, done:[1,2,...]} — אימון RAIN בן שבוע (נספח א׳)
   jarTotal: 0,             // מה שהועבר פיזית לצנצנת
+  siteOffset: 0,           // יישור רוטציית המדבקה למציאות (/מקום)
   lastEscalationISO: null, // כדי לא להציף את הודעת ההסלמה
   ai: null,                // {date, n} — מכסת AI יומית
 };

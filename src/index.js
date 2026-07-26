@@ -38,6 +38,7 @@ const BOT_COMMANDS = [
   { command: 'jar',     description: '🫙 הצנצנת — חוזה הפקדה' },
   { command: 'coach',   description: '🏋️ אימון RAIN שבועי' },
   { command: 'partner', description: '👥 חיבור בת/בן הזוג' },
+  { command: 'site',    description: '📍 מקומות ההדבקה ויישור הרוטציה' },
   { command: 'review',  description: '🗓️ סקירה שבועית' },
   { command: 'phones',  description: '📞 טלפוני תמיכה' },
   { command: 'help',    description: '❓ עזרה' },
@@ -73,7 +74,10 @@ const ALIAS = {
   exportd:  ['export', 'ייצוא', 'יצוא'],
   ask:      ['ask', 'שאל', 'שאלה'],
   ai:       ['ai'],
+  site:     ['site', 'מקום', 'מקומות'],
 };
+
+const inPlanDay = pl => !pl.before && !pl.after;
 
 function resolveCmd(word) {
   for (const [key, list] of Object.entries(ALIAS)) if (list.includes(word)) return key;
@@ -87,13 +91,34 @@ export default {
     if (url.pathname === '/health') return new Response('ok');
 
     // בדיקת שפיות + קרון-גיבוי מ-GitHub Actions (מוגן ב-WEBHOOK_SECRET)
-    if (url.pathname === '/diag' || url.pathname === '/cron' || url.pathname === '/export') {
+    if (['/diag', '/cron', '/export', '/send'].includes(url.pathname)) {
       if (!env.WEBHOOK_SECRET || url.searchParams.get('key') !== env.WEBHOOK_SECRET) {
         return new Response('forbidden', { status: 403 });
       }
       if (url.pathname === '/cron') {
         await tick(env);
         return new Response('ticked');
+      }
+      // שליחה כפויה של משבצת — מדלגת על ה-dedup ועל חלון החסד.
+      // לבדיקות, ולשליחה חוזרת של הבוקר/ערב אם משהו התפספס.
+      if (url.pathname === '/send') {
+        const meta = await getMeta(env);
+        if (!meta.chatId) return new Response('not linked', { status: 409 });
+        const slot = url.searchParams.get('slot') || 'morning';
+        if (!SLOTS.some(x => x.id === slot)) return new Response('unknown slot', { status: 400 });
+        const now = P.il();
+        const pl = P.planFor(now.iso, meta.siteOffset);
+        const day = await getDay(env, now.iso);
+        const msg = await buildSlot(slot, pl, now.iso, day, meta, now);
+        if (!msg) return new Response('nothing to send', { status: 204 });
+        const r = await send(env, meta.chatId, msg.text, { reply_markup: msg.kb });
+        // כברירת מחדל *לא* מסמנים כ"נשלח", כדי ששליחת בדיקה לא תבטל
+        // את ההודעה המתוזמנת האמיתית של אותו יום. ?mark=1 כדי לסמן בכל זאת.
+        if (url.searchParams.get('mark') === '1') {
+          meta.sent[`${now.iso}:${slot}`] = 1;
+          await putMeta(env, meta);
+        }
+        return Response.json({ sent: slot, ok: r.ok, marked: url.searchParams.get('mark') === '1' });
       }
       if (url.pathname === '/export') {
         const now = P.il();
@@ -106,7 +131,7 @@ export default {
       }
       const meta = await getMeta(env);
       const now = P.il();
-      const pl = P.planFor(now.iso);
+      const pl = P.planFor(now.iso, meta.siteOffset);
       const day = await getDay(env, now.iso);
       return Response.json({
         ok: true,
@@ -114,7 +139,7 @@ export default {
         linked: !!meta.chatId,
         partnerLinked: !!meta.partnerChatId,
         quiet: meta.quiet,
-        day: pl.n, dose: pl.dose ?? null, cleanDays: pl.clean ?? pl.cleanDays ?? null,
+        day: pl.n, dose: pl.dose ?? null, site: pl.site ?? null, cleanDays: pl.clean ?? pl.cleanDays ?? null,
         sentToday: Object.keys(meta.sent).filter(k => k.startsWith(now.iso)).map(k => k.split(':')[1]),
         today: { gum: day.gum, waves: day.waves, surfed: day.surfed, patch: day.patch },
         totals: meta.totals,
@@ -203,7 +228,7 @@ async function tick(env) {
 
       if (now.minutes - target > slot.grace) continue;   // מאוחר מדי — מדלגים בשקט
 
-      const pl = P.planFor(iso);
+      const pl = P.planFor(iso, meta.siteOffset);
       const day = await getDay(env, iso);
       const msg = await buildSlot(slot.id, pl, iso, day, meta, now);
       if (msg) await send(env, meta.chatId, msg.text, { reply_markup: msg.kb });
@@ -306,7 +331,7 @@ async function onMessage(msg, env) {
 
   const now = P.il();
   const iso = now.iso;
-  const pl = P.planFor(iso);
+  const pl = P.planFor(iso, meta.siteOffset);
 
   // ---- פקודה? ----
   if (text.startsWith('/')) {
@@ -574,6 +599,26 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
         ]),
       });
     }
+    case 'site': {
+      const lines = [
+        '📍 <b>מקומות ההדבקה</b>',
+        '─────────────',
+        'הרוטציה שלך, לפי הסדר — מחליפה צד וגובה בכל יום:',
+        '',
+        ...P.SITES.map((s, i) => `${i === (pl.siteIndex ?? -1) ? '👉' : `${i + 1} ·`} ${s}${i === (pl.siteIndex ?? -1) ? '  ← <b>היום</b>' : ''}`),
+        '',
+        'לוחצים 10 שניות, על עור נקי, יבש וחסר שיער. שוטפים ידיים.',
+        '',
+        '⚠️ עם 6 מקומות, אותו מקום חוזר <b>כל 6 ימים</b> — יום אחד פחות מכלל "לא אותו אזור תוך 7 ימים". אם מופיע גירוי, שווה להוסיף מקום שביעי (למשל זרוע עליונה) ואז המחזור נעשה 7.',
+        '',
+        '<b>לא שם היום איפה שאני אומר?</b> לחץ למטה ואיישר את הרוטציה למציאות — משם היא תמשיך נכון לבד.',
+      ];
+      const rows = [];
+      for (let i = 0; i < P.SITES.length; i += 2) {
+        rows.push(P.SITES.slice(i, i + 2).map((s, j) => btn(s, `site:${i + j}`)));
+      }
+      return send(env, chatId, lines.join('\n'), { reply_markup: inline(rows) });
+    }
     case 'card':  return send(env, chatId, C.WALLET_CARD, { reply_markup: inline([[btn('📌 הצמד את ההודעה הזאת למעלה', 'noop')]]) });
     case 'jar':   return R(M.jar(pl, meta));
     case 'coach': return R(M.training(meta, iso));
@@ -671,7 +716,7 @@ async function logPatch(chatId, env, iso, pl, meta) {
   const lines = ['🩹 <b>מדבקה נרשמה ✓</b>'];
   if (!pl.before && !pl.after) {
     lines.push(`היום: <b>${pl.dose} מ״ג</b> (${pl.product}) · 📍 ${pl.site}`);
-    const tm = P.planFor(P.addDaysISO(iso, 1));
+    const tm = P.planFor(P.addDaysISO(iso, 1), meta.siteOffset);
     if (!tm.after) lines.push(`מחר: ${tm.dose} מ״ג · 📍 ${tm.site}`);
   }
   lines.push('', '🍬 ותוך 30–60 דק׳ — מסטיק 2 מ״ג. המדבקה לוקחת 1–2 שעות לעלות בדם; זה הגשר.');
@@ -694,7 +739,7 @@ async function onCallback(cb, env) {
 
   const now = P.il();
   const iso = now.iso;
-  const pl = P.planFor(iso);
+  const pl = P.planFor(iso, meta.siteOffset);
 
   // --- כלים ---
   if (data.startsWith('T:')) {
@@ -711,6 +756,25 @@ async function onCallback(cb, env) {
   }
 
   if (data === 'noop') return answer(env, cb.id);
+
+  // --- יישור רוטציית המדבקה למקום שהוא באמת הדביק היום ---
+  if (data.startsWith('site:')) {
+    const want = parseInt(data.slice(5), 10);
+    if (!inPlanDay(pl) || isNaN(want)) return answer(env, cb.id);
+    const L = P.SITES.length;
+    meta.siteOffset = (((meta.siteOffset + want - pl.siteIndex) % L) + L) % L;
+    await putMeta(env, meta);
+    const fixed = P.planFor(iso, meta.siteOffset);
+    const tm = P.planFor(P.addDaysISO(iso, 1), meta.siteOffset);
+    await answer(env, cb.id, 'הרוטציה יושרה ✓');
+    return send(env, chatId, [
+      `📍 <b>עודכן.</b>`,
+      `היום: <b>${fixed.site}</b>`,
+      inPlanDay(tm) ? `מחר: <b>${tm.site}</b>` : '',
+      '',
+      '<i>מכאן הרוטציה תמשיך נכון לבד — לא צריך לגעת בזה שוב.</i>',
+    ].filter(Boolean).join('\n'));
+  }
   if (data === 'money') { await answer(env, cb.id); return runCommand('money', '', chatId, env, meta, pl, iso, now); }
   if (data === 'rep')   { await answer(env, cb.id); return runCommand('report', '', chatId, env, meta, pl, iso, now); }
 

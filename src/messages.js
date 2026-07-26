@@ -140,7 +140,7 @@ export function risk(pl, iso, day, meta) {
 // ==================== ערב ====================
 export function evening(pl, iso, day, meta, isSaturdayNight) {
   const ins = P.pick(C.INS_EVENING, iso);
-  const tomorrow = P.planFor(P.addDaysISO(iso, 1));
+  const tomorrow = P.planFor(P.addDaysISO(iso, 1), meta.siteOffset || 0);
   const parts = [];
 
   parts.push(`🌙 <b>ערב${inPlan(pl) ? ` — יום ${pl.n} מתוך ${P.TOTAL_DAYS}` : ''}</b>`);

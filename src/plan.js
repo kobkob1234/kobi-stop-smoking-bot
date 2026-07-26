@@ -12,14 +12,19 @@ export const TOTAL_DAYS = 70;
 const DOW_HE = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'];
 const DOW_EN = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-// רוטציית מקום הדבקה — לא אותו אזור תוך 7 ימים
-const SITES = [
-  'זרוע ימין (עליונה)',
-  'זרוע שמאל (עליונה)',
-  'חזה עליון – ימין',
-  'חזה עליון – שמאל',
-  'גב עליון – ימין',
+// רוטציית מקום הדבקה — ששת המקומות שקובי מדביק בהם בפועל.
+// הסדר לא שרירותי: הוא מחליף צד בכל יום ומחליף גובה, כך שכל שני
+// ימים עוקבים נמצאים רחוק אחד מהשני ולעור יש זמן להתאושש.
+// שים לב: עם 6 מקומות, אותו מקום חוזר כל 6 ימים — יום אחד פחות
+// מכלל ה"לא אותו אזור תוך 7 ימים". אם מופיע גירוי, שווה להוסיף
+// מקום שביעי (למשל זרוע עליונה) ואז המחזור נעשה 7 ימים.
+export const SITES = [
+  'כתף שמאל',
+  'גב תחתון – ימין',
   'גב עליון – שמאל',
+  'כתף ימין',
+  'גב תחתון – שמאל',
+  'גב עליון – ימין',
 ];
 
 const PHASES = [
@@ -104,7 +109,8 @@ export function fmtHe(iso) { const [y, m, d] = iso.split('-'); return `${+d}.${+
 export const dayNum = iso => diffDays(QUIT, iso) + 1;   // 1 = יום ההפסקה
 
 // ---------- התמונה של יום מסוים ----------
-export function planFor(iso) {
+// siteOffset מיישר את הרוטציה למקום שבו הוא באמת הדביק — /מקום בצ׳אט.
+export function planFor(iso, siteOffset = 0) {
   const n = dayNum(iso);
   if (n < 1) return { iso, n, before: true, daysToQuit: 1 - n };
   if (n > TOTAL_DAYS) return { iso, n, after: true, cleanDays: n - 1 };
@@ -113,6 +119,7 @@ export function planFor(iso) {
   let acc = 0, ph = PHASES[PHASES.length - 1];
   for (const p of PHASES) { if (i < acc + p.days) { ph = p; break; } acc += p.days; }
 
+  const L = SITES.length;
   return {
     iso, n, i,
     week: Math.floor(i / 7) + 1,
@@ -120,7 +127,8 @@ export function planFor(iso) {
     phase: ph.label,
     phaseKey: ph.key,
     product: ph.product,
-    site: SITES[(PRELOAD_DAYS + i) % SITES.length],
+    site: SITES[(((i + siteOffset) % L) + L) % L],
+    siteIndex: (((i + siteOffset) % L) + L) % L,
     clean: i,                                  // ימים נקיים שהושלמו
     focus: WEEK_FOCUS[Math.floor(i / 7)] || WEEK_FOCUS[WEEK_FOCUS.length - 1],
     tip: DAY_TIPS[i] || null,
