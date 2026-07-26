@@ -1,8 +1,16 @@
 name: Backup journal
 
-# גיבוי יומי של היומן (ימים, גלים, מסטיק, ניצחונות, יומן) כ-Artifact פרטי.
-# ⚠️ בכוונה *לא* נכנס ל-git: הריפו יכול להיות public, והיומן הוא אישי.
-# Artifacts נגישים רק לך, ונשמרים 90 יום.
+# גיבוי יומי של היומן (ימים, גלים, מסטיק, ניצחונות, יומן, chat id).
+#
+# ⚠️ הריפו הזה public, וב-repo ציבורי **כל אחד יכול להוריד Artifacts** —
+#    הם נגישים לכל מי שיש לו הרשאת קריאה, וב-public זה כולם.
+#    לכן הגיבוי מוצפן ב-AES-256 לפני ההעלאה, עם סיסמה שיושבת ב-Secrets.
+#    מה שנשמר ב-GitHub הוא בלוק בייטים חסר-משמעות בלי הסיסמה.
+#
+# פענוח (הסיסמה = אותו WEBHOOK_SECRET שנמצא ב-.webhook-secret על המק):
+#   unzip journal-*.zip
+#   openssl enc -d -aes-256-cbc -pbkdf2 -iter 600000 \
+#     -in journal.json.enc -out journal.json -pass pass:"$(cat .webhook-secret)"
 
 on:
   schedule:
@@ -14,17 +22,31 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: שליפת היומן
+      - name: שליפה והצפנה
+        env:
+          PASS: ${{ secrets.WEBHOOK_SECRET }}
+          URL: ${{ secrets.WORKER_URL }}
         run: |
-          curl -fsS "${{ secrets.WORKER_URL }}/export?key=${{ secrets.WEBHOOK_SECRET }}&days=120" \
-            -o journal.json
+          curl -fsS "${URL}/export?key=${PASS}&days=120" -o journal.json
+
           node -e '
             const j = require("./journal.json");
             console.log(`גובו ${j.days.length} ימים · עד ${j.exportedAt}`);
-            if (!j.days.length) { console.error("::warning::הגיבוי ריק"); }
+            if (!j.days.length) console.error("::warning::הגיבוי ריק");
           '
+
+          openssl enc -aes-256-cbc -pbkdf2 -iter 600000 -salt \
+            -in journal.json -out journal.json.enc -pass env:PASS
+          rm -f journal.json
+
+          # בדיקת שפיות: הקובץ המוצפן לא אמור להכיל טקסט קריא
+          if grep -aq '"days"' journal.json.enc; then
+            echo "::error::ההצפנה נכשלה — נמצא טקסט קריא בקובץ"; exit 1
+          fi
+          echo "✅ מוצפן ($(wc -c < journal.json.enc) בייטים)"
+
       - uses: actions/upload-artifact@v4
         with:
           name: journal-${{ github.run_id }}
-          path: journal.json
+          path: journal.json.enc
           retention-days: 90

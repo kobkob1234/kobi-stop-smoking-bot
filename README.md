@@ -8,6 +8,22 @@
 
 ---
 
+## המצב עכשיו — חי ורץ
+
+| | |
+|---|---|
+| **בוט** | [t.me/kobi_stop_smoking_bot](https://t.me/kobi_stop_smoking_bot) |
+| **Worker** | `https://kobi-stop-smoking-bot.kobiamit.workers.dev` |
+| **ריפו** | [kobkob1234/kobi-stop-smoking-bot](https://github.com/kobkob1234/kobi-stop-smoking-bot) (public, בלי סודות) |
+| **KV** | `baaa0a70513e4afe9896e7a29263b11a` |
+| **קרון** | `*/10 * * * *` רשום ופעיל |
+| **חשבון** | kobeamit1@gmail.com · Workers Free |
+| **עלות** | ₪0 |
+
+נפרס ב-26.7.2026. הכל רץ בענן — המק לא צריך להיות דלוק.
+
+---
+
 ## מה הבוט עושה
 
 ### אוטומטית, כל יום (שעון ישראל, כולל שעון קיץ)
@@ -178,11 +194,21 @@ gh repo create kobi-stop-smoking-bot --public --source=. --push
 |---|---|---|
 | `deploy.yml` | פריסה אוטומטית בכל push ל-main (עם בדיקת תקינות לפני) | `CLOUDFLARE_API_TOKEN` (הרשאת *Edit Cloudflare Workers*), `CLOUDFLARE_ACCOUNT_ID` |
 | `watchdog.yml` | **קרון-גיבוי** כל חצי שעה — אם הקרון של Cloudflare נכשל או התעכב, ההודעות עדיין יוצאות. וגם בדיקת בריאות: אם ה-Worker מושתק, ה-job נכשל ו-GitHub שולח לך מייל | `WORKER_URL`, `WEBHOOK_SECRET` |
-| `backup.yml` | גיבוי יומי של היומן כ-Artifact **פרטי** (90 יום) | `WORKER_URL`, `WEBHOOK_SECRET` |
+| `backup.yml` | גיבוי יומי של היומן, **מוצפן AES-256** לפני ההעלאה (90 יום) | `WORKER_URL`, `WEBHOOK_SECRET` |
 
-> הטוקן של הבוט **לא נדרש** באף workflow — בכוונה. ההתראה על תקלה מגיעה
-> ממערכת המיילים של GitHub, לא מהבוט, כדי שלא יהיה טוקן מיותר ב-GitHub.
-> והגיבוי הוא Artifact ולא commit — היומן אישי, והריפו public.
+> **הטוקן של הבוט לא נדרש באף workflow** — בכוונה. ההתראה על תקלה מגיעה
+> ממערכת המיילים של GitHub, לא מהבוט.
+>
+> **ולגבי הגיבוי:** ב-repo ציבורי, Artifacts נגישים לכל מי שיש לו הרשאת קריאה —
+> כלומר לכולם. לכן הגיבוי **מוצפן ב-AES-256** לפני ההעלאה, והסיסמה היא
+> `WEBHOOK_SECRET` (יושב ב-Secrets, לא בקוד). לפענוח:
+>
+> ```bash
+> openssl enc -d -aes-256-cbc -pbkdf2 -iter 600000 -in journal.json.enc -out journal.json -pass pass:"$(cat .webhook-secret)"
+> ```
+>
+> `deploy.yml` מדלג בשקט על הפריסה כשאין `CLOUDFLARE_API_TOKEN`, כדי שלא תקבל
+> מייל כישלון על כל commit. `CLOUDFLARE_ACCOUNT_ID` כבר מוגדר.
 
 > ⚠️ **אל תשים את הטוקן של הבוט בריפו.** אם הוא נחשף אי-פעם — `/revoke` ב-BotFather,
 > ואז `npx wrangler secret put BOT_TOKEN` עם הטוקן החדש + `npm run webhook:set` מחדש.
