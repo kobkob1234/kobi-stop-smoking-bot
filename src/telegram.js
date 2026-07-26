@@ -17,10 +17,29 @@ async function call(env, method, body) {
   return json;
 }
 
-export const send = (env, chat_id, text, extra = {}) =>
-  call(env, 'sendMessage', {
-    chat_id, text, parse_mode: 'HTML', link_preview_options: { is_disabled: true }, ...extra,
-  });
+/**
+ * שולח הודעה — ואם טלגרם דוחה את ה-HTML, שולח שוב כטקסט נקי.
+ *
+ * למה זה חשוב: חלק מהטקסטים נוצרים על ידי מודל, ותג לא מאוזן או תו
+ * חריג גורמים לטלגרם להחזיר 400 — כלומר המשתמש לא מקבל כלום. במצב
+ * דחף זה בדיוק הכשל שאסור. עדיף הודעה בלי עיצוב מאשר שתיקה.
+ */
+export async function send(env, chat_id, text, extra = {}) {
+  const base = { chat_id, link_preview_options: { is_disabled: true }, ...extra };
+  const r = await call(env, 'sendMessage', { ...base, text, parse_mode: 'HTML' });
+  if (r.ok) return r;
+
+  const desc = String(r.description || '');
+  if (/parse|entity|tag|html/i.test(desc)) {
+    const plain = String(text)
+      .replace(/<br\s*\/?>/gi, '\n')
+      .replace(/<[^>]*>/g, '')
+      .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+    console.log('נפילה לטקסט נקי אחרי שגיאת HTML:', desc.slice(0, 120));
+    return call(env, 'sendMessage', { ...base, text: plain });
+  }
+  return r;
+}
 
 export const edit = (env, chat_id, message_id, text, extra = {}) =>
   call(env, 'editMessageText', {

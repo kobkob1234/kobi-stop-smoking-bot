@@ -11,6 +11,7 @@ import * as M from './messages.js';
 import * as KB from './kb.js';
 import * as AI from './ai.js';
 import * as ANL from './analytics.js';
+import * as INT from './intent.js';
 import { getMeta, putMeta, getDay, updateDay, pruneSent } from './store.js';
 
 // ---------- משבצות הזמן היומיות (שעון ישראל) ----------
@@ -78,6 +79,7 @@ const ALIAS = {
 };
 
 const inPlanDay = pl => !pl.before && !pl.after;
+const iso0 = now => now.iso;
 
 // ==========================================================================
 //  זיהוי כוונה בטקסט חופשי
@@ -172,15 +174,13 @@ export default {
         const pl = P.planFor(now.iso, meta.siteOffset);
         const day = await getDay(env, now.iso);
         const hit = KB.answer(q);
-        const state = [
-          inPlanDay(pl) ? `יום ${pl.n} מתוך 70, שבוע ${pl.week}, ${pl.clean} ימים נקיים, מדבקה ${pl.dose} מ"ג` : '',
-          `היום: מסטיק ${day.gum}, גלים ${day.waves}, נגלשו ${day.surfed}, מדבקה ${day.patch ? 'סומנה' : 'לא סומנה'}`,
-        ].filter(Boolean).join(' · ');
-        const ai = AI.enabled(env) ? await AI.ask(env, q, state) : null;
+        const cls = AI.enabled(env) ? await INT.classify(env, q, await stateLine(env, pl, iso0(now))) : null;
         return Response.json({
           q,
-          kb: hit ? { topic: hit.t, score: +hit.score.toFixed(1), source: hit.id } : null,
-          ai,
+          intent: cls ? cls.intent : null,
+          urgency: cls ? cls.urgency : null,
+          reply: cls ? cls.reply : null,
+          kb: hit ? { topic: hit.t, score: +hit.score.toFixed(1) } : null,
           provider: AI.provider(env),
         });
       }
@@ -465,7 +465,10 @@ async function onMessage(msg, env) {
     return;
   }
 
-  // ---- טקסט חופשי: ניתוב לפי כוונה ----
+  // ---- טקסט חופשי ----
+  // המסלול המהיר: ביטויים חד-משמעיים בלבד, כדי שברגע דחף אמיתי
+  // התשובה תהיה מיידית ולא תמתין לרשת. כל השאר עובר להבנת המודל
+  // ב-converse(), ושם אין רשימת מילים שאפשר ליפול דרכה.
   const t = text.replace(/[״"'׳]/g, '');
   const R = c => runCommand(c, '', chatId, env, meta, pl, iso, now);
 
@@ -486,65 +489,91 @@ async function onMessage(msg, env) {
   if (RX.win.test(t))    return R('win');
 
   // ---- שיחה: קודם בסיס הידע מהמדריכים, אחר-כך AI (אם מופעל) ----
-  return converse(text, chatId, env, meta, pl, iso);
+  return converse(text, chatId, env, meta, pl, iso, now);
+}
+
+/** תיאור מצב קצר שנשלח למודל כהקשר */
+async function stateLine(env, pl, iso) {
+  const day = await getDay(env, iso);
+  return [
+    pl.before ? `לפני יום ההפסקה, עוד ${pl.daysToQuit} ימים`
+      : pl.after ? `סיים את 70 הימים, ${pl.cleanDays} ימים נקיים`
+      : `יום ${pl.n} מתוך 70, שבוע ${pl.week}, ${pl.clean} ימים נקיים, מדבקה ${pl.dose} מ"ג`,
+    `היום: מסטיק ${day.gum}, גלים ${day.waves}, נגלשו ${day.surfed}, מדבקה ${day.patch ? 'סומנה' : 'לא סומנה'}`,
+    day.mine ? `המוקש שרשם היום: ${day.mine}` : '',
+  ].filter(Boolean).join(' · ');
 }
 
 /**
- * שכבת ה"דיבור":
- *  1. בסיס הידע מהמדריכים (kb.js) — חינם, מדויק, עם מקור. זה הרוב.
- *  2. AI אופציונלי, מעוגן באותם קטעים + מצב היום — רק אם הוגדר ספק.
- *  3. אחרת — שומר ביומן ומציע כלים, כדי שכלום לא ייפול לרצפה.
+ * שכבת ה"דיבור" — כאן המודל גם מבין את הכוונה וגם עונה.
+ *
+ * הסדר:
+ *  1. המודל מסווג ומנסח בקריאה אחת. אם הכוונה היא פעולה (דחף, מעידה,
+ *     יציאה, רישום) — מריצים את הזרימה האמיתית ולא רק עונים בטקסט.
+ *  2. אין AI / נפל / נגמרה מכסה → בסיס הידע מהמדריכים.
+ *  3. גם זה לא → שומרים ביומן, שכלום לא ייפול לרצפה.
  */
-async function converse(text, chatId, env, meta, pl, iso) {
-  const hit = KB.answer(text);
+async function converse(text, chatId, env, meta, pl, iso, now) {
+  const R = c => runCommand(c, '', chatId, env, meta, pl, iso, now);
+  meta._today = iso;
 
-  // התאמה חזקה → תשובה מהמדריכים, בלי AI ובלי עלות
-  if (hit && hit.score >= 6) {
-    const m = M.answerBlock(hit.text, null);
-    return send(env, chatId, m.text, { reply_markup: m.kb });
-  }
-
-  // AI מופעל → תשובה מעוגנת.
-  // בעבר היה כאן תנאי אורך (>25 תווים) שחסם משפטים קצרים וחשובים —
-  // הוא הוסר. כל טקסט חופשי שאינו מילה בודדת מגיע ל-AI.
-  if (AI.enabled(env) && text.trim().length >= 4) {
-    meta._today = iso;
+  // ---- 1 · סיווג + ניסוח על ידי המודל ----
+  if (AI.enabled(env) && text.trim().length >= 3) {
     if (AI.quotaLeft(meta, env) > 0) {
-      const day = await getDay(env, iso);
-      const state = [
-        pl.before ? `לפני יום ההפסקה, עוד ${pl.daysToQuit} ימים`
-          : pl.after ? `סיים את 70 הימים, ${pl.cleanDays} ימים נקיים`
-          : `יום ${pl.n} מתוך 70, שבוע ${pl.week}, ${pl.clean} ימים נקיים, מדבקה ${pl.dose} מ"ג`,
-        `היום: מסטיק ${day.gum}, גלים ${day.waves}, נגלשו ${day.surfed}, מדבקה ${day.patch ? 'סומנה' : 'לא סומנה'}`,
-        day.mine ? `המוקש שרשם היום: ${day.mine}` : '',
-      ].filter(Boolean).join(' · ');
-
-      const out = await AI.ask(env, text, state);
-      if (out) {
+      const res = await INT.classify(env, text, await stateLine(env, pl, iso));
+      if (res) {
         AI.noteUse(meta, iso);
         await putMeta(env, meta);
-        const m = M.answerBlock(out, `${AI.provider(env)} · מעוגן במדריכים שלך`);
+
+        // כוונות שדורשות פעולה — הזרימה האמיתית, לא רק תשובה
+        if (res.intent === 'urge')  { if (res.reply) await send(env, chatId, res.reply); return R('wave'); }
+        if (res.intent === 'slip')  { if (res.reply) await send(env, chatId, res.reply); return R('slip'); }
+        if (res.intent === 'leaving_home') return R('out');
+        if (res.intent === 'log_gum')      return R('gum');
+        if (res.intent === 'log_patch')    return R('patch');
+        if (res.intent === 'status')       return R('status');
+        if (res.intent === 'log_win') {
+          const day = await updateDay(env, iso, d => { d.surfed += 1; d.win = d.win || text.slice(0, 300); });
+          const m2 = await getMeta(env); m2.totals.surfed += 1; m2.sos = null; await putMeta(env, m2);
+          return send(env, chatId, `${res.reply}\n\n🌊 <b>נרשם — גלים שנגלשו היום: ${day.surfed}</b> · סה״כ ${m2.totals.surfed}`);
+        }
+        if (res.intent === 'crisis') return send(env, chatId, INT.CRISIS_TEXT);
+
+        // שאלה / רגש / אחר — תשובה בלבד
+        const m = M.answerBlock(res.reply, null);
         return send(env, chatId, m.text, { reply_markup: m.kb });
       }
     } else {
-      await send(env, chatId, '🤖 נגמרה המכסה היומית של השיחה החופשית. בסיס הידע מהמדריכים עדיין עובד — נסה לנסח כשאלה קצרה, או /כלים.');
+      await send(env, chatId, '🤖 נגמרה המכסה היומית של השיחה החופשית. בסיס הידע מהמדריכים עדיין עובד — שאל בקצרה, או /כלים.');
     }
   }
 
-  // התאמה חלשה → עדיין שווה להציע
+  // ---- 1ב · הסיווג לא חזר תקין → תשובה חופשית בלי סיווג ----
+  // (המסלול המהיר בביטוי הרגולרי כבר רץ לפני זה, כך שדחף מפורש
+  //  לא מגיע לכאן בכלל.)
+  if (AI.enabled(env) && AI.quotaLeft(meta, env) > 0) {
+    const plain = await AI.ask(env, text, await stateLine(env, pl, iso));
+    if (plain) {
+      AI.noteUse(meta, iso);
+      await putMeta(env, meta);
+      const m = M.answerBlock(plain, null);
+      return send(env, chatId, m.text, { reply_markup: m.kb });
+    }
+  }
+
+  // ---- 2 · בסיס הידע ----
+  const hit = KB.answer(text);
   if (hit) {
     const m = M.answerBlock(hit.text, null);
     return send(env, chatId, m.text, { reply_markup: m.kb });
   }
 
-  // אין התאמה — שומרים ביומן, לא מאבדים כלום
+  // ---- 3 · לא מאבדים כלום ----
   await updateDay(env, iso, d => { d.journal = (d.journal ? d.journal + '\n' : '') + text.slice(0, 800); });
   await send(env, chatId, [
     '📓 שמרתי את זה ביומן של היום.',
     '',
-    isQuestion
-      ? 'על השאלה הזאת אין לי תשובה מהמדריכים שלך — ואני לא ממציא. נסה לנסח אחרת, או /כלים · /טלפונים.'
-      : 'אם התכוונת למשהו אחר — הכפתורים למטה, או /עזרה.',
+    'אם יש דחף עכשיו — הכפתור הראשון למטה, והוא תמיד שם.',
   ].join('\n'), {
     reply_markup: inline([
       [btn('🌊 יש לי גל', 'sos:1'), btn('🚪 יוצא מהבית', 'out:start')],
@@ -729,7 +758,7 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
     }
     case 'ask': {
       if (!arg) return send(env, chatId, '❓ שאל אותי משהו: <code>/שאל למה הגל לא עובר?</code>\n(או פשוט כתוב את השאלה בלי פקודה.)');
-      return converse(arg, chatId, env, meta, pl, iso);
+      return converse(arg, chatId, env, meta, pl, iso, now);
     }
     case 'ai': {
       const p = AI.provider(env);
