@@ -18,40 +18,59 @@
 import * as KB from './kb.js';
 
 export const provider = env => (env.AI_PROVIDER || 'off').toLowerCase();
+
+const hasCreds = (p, env) =>
+  p === 'workers-ai' ? !!env.AI :
+  p === 'gemini' ? !!env.GEMINI_KEY :
+  p === 'groq' ? !!env.GROQ_KEY : false;
+
 export const enabled = env => {
   const p = provider(env);
   if (p === 'off') return false;
-  if (p === 'workers-ai') return !!env.AI;
-  if (p === 'gemini') return !!env.GEMINI_KEY;
-  if (p === 'groq') return !!env.GROQ_KEY;
-  return false;
+  return p.split(',').map(s => s.trim()).some(x => hasCreds(x, env));
 };
 
 const SYSTEM = `אתה "הליווי" — עוזר אישי בעברית של אדם בתהליך גמילה מוויפ, ביום 20+ מתוך תוכנית 70 ימים של מדבקות ניקוטין + מסטיק 2 מ"ג + עבודה מנטלית.
 
 חוקים מוחלטים:
-1. ענה **רק** על בסיס "הקטעים מהמדריכים" ו"מצב היום" שמצורפים לך. אם התשובה לא נמצאת שם — אמור בפירוש "זה לא מכוסה במדריכים שלך" והצע /כלים או את קו *6800. אל תשלים מהידע הכללי שלך.
-2. **אסור** לתת מינונים, מרשמים, או ייעוץ רפואי. שאלת מינון/תרופה/תופעת לוואי → הפנה לרוקח או רופא, וצטט רק מה שכתוב במדריכים.
-3. אם המשתמש בדחף **עכשיו** — אל תנתח. תן פעולה מיידית: מסטיק, לצאת להליכה בכיוון ההפוך, RAIN, ואמור לו לשלוח /גל.
-4. עברית בלבד, גוף שני, ישיר. עד 120 מילים. בלי הקדמות ובלי "כמובן".
-5. בלי הטפות, בלי "אתה חייב", בלי התלהבות מוגזמת, בלי הבטחות. אם הוא מעד — בלי אשמה: מעידה אחת לא מוחקת כלום.
-6. מותר HTML פשוט של טלגרם בלבד: <b> <i> <code>. בלי markdown ובלי כוכביות.
-7. בסוף, אם השתמשת בקטע — הוסף שורה: — <המקור>`;
+1. בסס את התשובה על "הקטעים מהמדריכים" ועל "מצב היום" שמצורפים לך. אל תוסיף עצות מהידע הכללי שלך.
+2. **אל תמהר לומר שאין תשובה.** אם יש בקטעים משהו שנוגע לשאלה — גם אם לא בדיוק — השתמש בו. רק אם באמת אין שום נגיעה, אמור "זה לא מכוסה במדריכים שלך" והצע /כלים או *6800.
+3. **אסור** לתת מינונים, מרשמים, או ייעוץ רפואי. שאלת מינון/תרופה/תופעת לוואי → הפנה לרוקח או רופא. אל תמציא מספרים.
+4. **RAIN — רק אם זה רלוונטי לשאלה, ואז בניסוח המדויק הזה בלבד:** R = זהה והרפה · A = הרשה · I = חקור בגוף ("מה מרגיש בגוף שלי עכשיו? איפה בדיוק?") · N = ציין במילה אחת. אסור לכתוב "נטרל", "הערה", "רשום", או כל גרסה אחרת. **ואל תדביק את השורה הזאת בראש התשובה כברירת מחדל** — אם השאלה לא על דחף עכשיו, אל תזכיר RAIN בכלל. ולא גולשים כדי שהגל יעבור — גולשים בסקרנות.
+5. **אין להציע הסחת דעת.** הסחה בורחת מהגל; גלישה מפרקת אותו. גם לא "תחשוב על משהו אחר" או "תראה סרט".
+6. אם המשתמש בדחף **עכשיו** — אל תנתח. פעולה מיידית: מסטיק 2 מ"ג, הליכה בכיוון ההפוך, RAIN, ולשלוח /גל.
+7. עברית בלבד, גוף שני, ישיר. עד 120 מילים. בלי הקדמות, בלי "כמובן", בלי רשימות ממוספרות ארוכות.
+8. בלי הטפות, בלי "אתה חייב", בלי התלהבות מוגזמת, בלי הבטחות. אם הוא מעד — בלי אשמה: מעידה אחת לא מוחקת כלום ולא מגדירה אותו.
+9. מותר HTML פשוט של טלגרם בלבד: <b> <i> <code>. בלי markdown ובלי כוכביות.
+10. בשורה האחרונה כתוב את שם המקור האמיתי מהקטע שהשתמשת בו, בפורמט: — שם המקור. אם לא השתמשת בקטע, אל תוסיף שורה כזאת. אסור לכתוב "<המקור>" או סוגריים משולשים.`;
 
 const fewShot = (question, ctx, state) =>
   `מצב היום:\n${state}\n\nהקטעים מהמדריכים:\n${ctx || '(לא נמצאו קטעים רלוונטיים)'}\n\nהשאלה: ${question}`;
 
 // ---------- ספקים ----------
 async function runWorkersAI(env, user) {
-  const r = await env.AI.run('@cf/meta/llama-3.3-70b-instruct-fp8-fast', {
+  // ברירת המחדל נבחרה אחרי בדיקת עברית מול כל המודלים החינמיים של
+  // Workers AI. חלק מהמודלים מחזירים {response} וחלק מחזירים מבנה
+  // בסגנון OpenAI ({choices}) — צריך לתמוך בשניהם.
+  const model = env.WORKERS_AI_MODEL || '@cf/openai/gpt-oss-120b';
+  const r = await env.AI.run(model, {
     messages: [{ role: 'system', content: SYSTEM }, { role: 'user', content: user }],
-    max_tokens: 500, temperature: 0.4,
+    max_tokens: 1200, temperature: 0.4,
   });
-  return (r && (r.response || r.result?.response)) || null;
+  if (!r) return null;
+  const fromChoices = r.choices?.[0]?.message?.content;
+  return fromChoices || r.response || r.result?.response || null;
 }
 
 async function runGemini(env, user) {
-  const model = env.GEMINI_MODEL || 'gemini-2.5-flash-lite';
+  // gemini-flash-lite-latest נבחר אחרי מדידה: 0 טוקני "חשיבה", ~1 שנייה,
+  // והעברית הכי טובה מבין החינמיים.
+  //
+  // שתי מלכודות שנבדקו בשטח:
+  //  1. אל תשלח thinkingConfig — הכינויים ב-"-latest" דוחים אותו ב-400.
+  //  2. מודלי 2.5 עם חשיבה שורפים את תקציב הטוקנים על מחשבות והתשובה
+  //     נחתכת באמצע מילה. לכן maxOutputTokens נדיב, ומסננים חלקי thought.
+  const model = env.GEMINI_MODEL || 'gemini-flash-lite-latest';
   const res = await fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
     {
@@ -60,12 +79,18 @@ async function runGemini(env, user) {
       body: JSON.stringify({
         systemInstruction: { parts: [{ text: SYSTEM }] },
         contents: [{ role: 'user', parts: [{ text: user }] }],
-        generationConfig: { temperature: 0.4, maxOutputTokens: 700 },
+        generationConfig: { temperature: 0.4, maxOutputTokens: 2000 },
       }),
     });
   const j = await res.json().catch(() => null);
-  if (!res.ok) { console.log('GEMINI ERR', JSON.stringify(j)); return null; }
-  return j?.candidates?.[0]?.content?.parts?.map(p => p.text).join('') || null;
+  if (!res.ok) {
+    // 429 = נגמרה המכסה החינמית להיום. לא חיוב — רק עצירה.
+    console.log('GEMINI ERR', res.status, JSON.stringify(j).slice(0, 300));
+    return null;
+  }
+  const parts = j?.candidates?.[0]?.content?.parts || [];
+  const text = parts.filter(p => !p.thought).map(p => p.text || '').join('').trim();
+  return text || null;
 }
 
 async function runGroq(env, user) {
@@ -101,20 +126,38 @@ function sanitize(s) {
  * מחזיר null אם אין ספק, אם נגמרה המכסה היומית, או אם הקריאה נכשלה —
  * ואז המתקשר נופל בחזרה ל-KB.
  */
+const RUNNERS = { 'workers-ai': runWorkersAI, gemini: runGemini, groq: runGroq };
+
+/**
+ * שרשרת נפילה־לאחור: מנסה את הספק הראשי, ואם הוא נכשל או שנגמרה
+ * המכסה החינמית שלו — עובר לספק הבא, ובסוף מחזיר null והמתקשר נופל
+ * ל-kb.js. ככה השיחה לא נשברת אף פעם, ולא נגרם חיוב אף פעם:
+ * מכסה חינמית שנגמרה מחזירה 429, לא חשבון.
+ *
+ * AI_PROVIDER יכול להיות גם שרשרת: "gemini,workers-ai"
+ */
 export async function ask(env, question, stateText) {
   if (!enabled(env)) return null;
   const user = fewShot(question, KB.context(question, 3), stateText);
-  const p = provider(env);
-  try {
-    let out = null;
-    if (p === 'workers-ai') out = await runWorkersAI(env, user);
-    else if (p === 'gemini') out = await runGemini(env, user);
-    else if (p === 'groq') out = await runGroq(env, user);
-    return sanitize(out);
-  } catch (e) {
-    console.log('AI ERR', e && e.message);
-    return null;
+
+  const chain = provider(env).split(',').map(s => s.trim()).filter(p => {
+    if (!RUNNERS[p]) return false;
+    if (p === 'workers-ai') return !!env.AI;
+    if (p === 'gemini') return !!env.GEMINI_KEY;
+    if (p === 'groq') return !!env.GROQ_KEY;
+    return false;
+  });
+
+  for (const p of chain) {
+    try {
+      const out = sanitize(await RUNNERS[p](env, user));
+      if (out) return out;
+      console.log(`AI ${p} החזיר ריק — עובר לספק הבא`);
+    } catch (e) {
+      console.log(`AI ${p} ERR`, e && e.message);
+    }
   }
+  return null;
 }
 
 /** מכסה יומית רכה כדי לא לחרוג מהשכבה החינמית */

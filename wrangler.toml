@@ -20,3 +20,13 @@ enabled = true
 # ל-AI_PROVIDER=workers-ai (אופציונלי, בלי מפתח ובלי חשבון נוסף)
 [ai]
 binding = "AI"
+
+# שיחה חופשית. שרשרת: Gemini ואם נגמרה המכסה שלו → Workers AI → ואם גם
+# הוא נפל → בסיס הידע מהמדריכים. שלוש השכבות חינמיות, אף אחת לא מחייבת:
+# מכסה חינמית שנגמרה מחזירה 429, לא חשבון.
+# המודלים נבחרו אחרי מדידת עברית בפועל.
+[vars]
+AI_PROVIDER = "gemini,workers-ai"
+GEMINI_MODEL = "gemini-flash-lite-latest"
+WORKERS_AI_MODEL = "@cf/openai/gpt-oss-120b"
+AI_DAILY_CAP = "40"

@@ -91,7 +91,7 @@ export default {
     if (url.pathname === '/health') return new Response('ok');
 
     // בדיקת שפיות + קרון-גיבוי מ-GitHub Actions (מוגן ב-WEBHOOK_SECRET)
-    if (['/diag', '/cron', '/export', '/send'].includes(url.pathname)) {
+    if (['/diag', '/cron', '/export', '/send', '/ask'].includes(url.pathname)) {
       if (!env.WEBHOOK_SECRET || url.searchParams.get('key') !== env.WEBHOOK_SECRET) {
         return new Response('forbidden', { status: 403 });
       }
@@ -119,6 +119,27 @@ export default {
           await putMeta(env, meta);
         }
         return Response.json({ sent: slot, ok: r.ok, marked: url.searchParams.get('mark') === '1' });
+      }
+      // בדיקת שכבת השיחה בלי לשלוח כלום לטלגרם
+      if (url.pathname === '/ask') {
+        const q = url.searchParams.get('q') || '';
+        if (!q) return new Response('missing q', { status: 400 });
+        const meta = await getMeta(env);
+        const now = P.il();
+        const pl = P.planFor(now.iso, meta.siteOffset);
+        const day = await getDay(env, now.iso);
+        const hit = KB.answer(q);
+        const state = [
+          inPlanDay(pl) ? `יום ${pl.n} מתוך 70, שבוע ${pl.week}, ${pl.clean} ימים נקיים, מדבקה ${pl.dose} מ"ג` : '',
+          `היום: מסטיק ${day.gum}, גלים ${day.waves}, נגלשו ${day.surfed}, מדבקה ${day.patch ? 'סומנה' : 'לא סומנה'}`,
+        ].filter(Boolean).join(' · ');
+        const ai = AI.enabled(env) ? await AI.ask(env, q, state) : null;
+        return Response.json({
+          q,
+          kb: hit ? { topic: hit.t, score: +hit.score.toFixed(1), source: hit.id } : null,
+          ai,
+          provider: AI.provider(env),
+        });
       }
       if (url.pathname === '/export') {
         const now = P.il();
@@ -912,7 +933,7 @@ async function onCallback(cb, env) {
     return send(env, chatId, [
       '🌙 <b>ערב הושלם. הלולאה החדשה קיבלה עוד יום של אימון.</b>',
       '',
-      '🩹 המדבקה הוסרה? החדשה מוכנה למחר?',
+      '🩹 <b>לפני השינה</b> — להסיר את המדבקה, ולהכין את של מחר.',
       '😴 שינה היא תחמושת: מחר תקבל החלטות טובות רק כמו הלילה שלך.',
       '',
       'לילה טוב.',

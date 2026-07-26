@@ -145,7 +145,7 @@ export function evening(pl, iso, day, meta, isSaturdayNight) {
 
   parts.push(`🌙 <b>ערב${inPlan(pl) ? ` — יום ${pl.n} מתוך ${P.TOTAL_DAYS}` : ''}</b>`);
   parts.push(LINE);
-  parts.push(`<b>1 · המדבקה</b> — מסירים עכשיו, ומכינים את של מחר.`);
+  parts.push(`<b>1 · המדבקה</b> — <b>לפני השינה</b> מסירים אותה, ומכינים את של מחר.`);
   if (inPlan(tomorrow)) {
     parts.push(`   מחר: <b>${tomorrow.dose} מ״ג</b> · 📍 ${tomorrow.site}`);
     if (tomorrow.milestone) parts.push(`   ${tomorrow.milestone}`);
