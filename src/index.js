@@ -682,18 +682,7 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
     case 'morning': return R(M.morning(pl, day, meta));
     case 'evening': return R(M.evening(pl, iso, day, meta, now.dow === 6));
     case 'tools':   return R(M.toolsMenu());
-    case 'wave': {
-      const evIdx = await recordWave(env, iso, now, 'w');
-      meta.sos = { startedAt: Date.now(), followedUp: false, evIdx };
-      meta.totals.waves += 1;
-      await putMeta(env, meta);
-      const m = M.sos(1);
-      await send(env, chatId, m.text, { reply_markup: m.kb });
-      if (meta.scenes) await send(env, chatId, `🔮 <b>הסצנות שכתבת לעצמך:</b>\n\n${esc(meta.scenes)}`);
-      const tr = M.tagRow();
-      await send(env, chatId, tr.text, { reply_markup: tr.kb });
-      return;
-    }
+    case 'wave': return startWave(chatId, env, meta, iso, now);
     case 'out':   return R(M.outing(pl, iso, day, meta, now));
     case 'gum':   return logGum(chatId, env, iso, meta, now);
     case 'patch': return logPatch(chatId, env, iso, pl, meta, now);
@@ -861,6 +850,58 @@ async function recordEvent(env, iso, now, kind, extra = {}) {
   return idx;
 }
 
+/** שולח לשותף/ה. מחזיר true אם נמסר. */
+async function notifyPartner(env, meta, text) {
+  if (!meta.partnerChatId || meta.partnerMute) return false;
+  const r = await send(env, meta.partnerChatId, text);
+  if (!r.ok) console.log('דיווח לשותף/ה נכשל:', r.description);
+  return !!r.ok;
+}
+
+/**
+ * תחילת גל — נתיב אחד לכל המקומות (כפתור, פקודה, זיהוי כוונה).
+ *
+ * הדיווח לשותף/ה יוצא **כאן**, ברגע שהגל מתחיל — ולא בשלב 4 של
+ * הזרימה כמו בגרסה הראשונה. שם זה היה חסר תועלת: מי שיוצא להליכה
+ * אחרי הלחיצה הראשונה לא מגיע לשלב 4 בכלל, והשקט — שהוא מה
+ * שהסבבים חיו עליו — נשמר בדיוק כשהוא הכי מזיק.
+ *
+ * מגרה של 30 דקות: אפיזודה אחת עם כמה גלים רצופים לא מפציצה אותה.
+ */
+async function startWave(chatId, env, meta, iso, now) {
+  const evIdx = await recordWave(env, iso, now, 'w');
+  meta.totals.waves += 1;
+  meta.sos = { startedAt: Date.now(), followedUp: false, evIdx, reported: false };
+
+  const throttled = Date.now() - (meta.lastPartnerAlert || 0) < 30 * 60000;
+  console.log('WAVE partner=', meta.partnerChatId, 'mute=', meta.partnerMute,
+              'lastAlert=', meta.lastPartnerAlert, 'throttled=', throttled);
+  if (meta.partnerChatId && !meta.partnerMute) {
+    if (throttled) {
+      meta.sos.reported = true;                 // אותה אפיזודה — כבר דווחה
+    } else if (await notifyPartner(env, meta, [
+      `🌊 <b>${C.PARTNER_MSG}</b>`,
+      '',
+      '<i>זה דיווח, לא בקשת רשות — לא צריך לעשות כלום.</i>',
+      '<i>אם מדברים: "זה גל — אני איתך, הוא יעבור."</i>',
+      '<i>ולעולם לא להציע "אז קח שאכטה".</i>',
+    ].join('\n'))) {
+      meta.lastPartnerAlert = Date.now();
+      meta.sos.reported = true;
+      console.log('WAVE דיווח נשלח לשותפה ✓');
+    }
+  }
+  await putMeta(env, meta);
+  console.log('WAVE נשמר: reported=', meta.sos.reported, 'lastAlert=', meta.lastPartnerAlert);
+
+  const m = M.sos(1);
+  const note = meta.sos.reported ? '\n\n📨 <i>דווח לבת הזוג אוטומטית.</i>' : '';
+  await send(env, chatId, m.text + note, { reply_markup: m.kb });
+  if (meta.scenes) await send(env, chatId, `🔮 <b>הסצנות שכתבת לעצמך:</b>\n\n${esc(meta.scenes)}`);
+  const tr = M.tagRow();
+  await send(env, chatId, tr.text, { reply_markup: tr.kb });
+}
+
 async function recordWave(env, iso, now, kind) {
   await updateDay(env, iso, d => { if (kind === 'x') d.slips += 1; else d.waves += 1; });
   return recordEvent(env, iso, now, kind, { tag: null });
@@ -1018,6 +1059,13 @@ async function onCallback(cb, env) {
       const m = M.partnerInfo(meta, meta.joinCode.code);
       return edit(env, chatId, msgId, m.text, { reply_markup: m.kb });
     }
+    if (what === 'auto') {
+      meta.partnerMute = !meta.partnerMute;
+      await putMeta(env, meta);
+      await answer(env, cb.id, meta.partnerMute ? 'כובה' : 'הופעל');
+      const m = M.partnerInfo(meta, null);
+      return edit(env, chatId, msgId, m.text, { reply_markup: m.kb });
+    }
     if (what === 'off') {
       meta.partnerChatId = null; await putMeta(env, meta);
       await answer(env, cb.id, 'נותק');
@@ -1125,9 +1173,14 @@ async function onCallback(cb, env) {
 
     if (which === 'done') {
       const day = await updateDay(env, iso, d => { d.surfed += 1; });
+      await recordEvent(env, iso, now, 'v');
       const m2 = await getMeta(env);
+      const wasReported = !!(m2.sos && m2.sos.reported);
       m2.totals.surfed += 1; m2.sos = null; m2.awaiting = 'win';
       await putMeta(env, m2);
+      if (wasReported) {
+        await notifyPartner(env, m2, '✅ <b>הגל נשבר.</b>\n\nהוא גלש עליו עד הסוף ולא פעל. <i>השתוקק — ולא פעל. זה בדיוק המדד.</i>');
+      }
       await answer(env, cb.id, 'ניצחון נרשם 🏆');
       return send(env, chatId, [
         `🏆 <b>נרשם! גלים שנגלשו עד הסוף: ${m2.totals.surfed}</b> (היום: ${day.surfed})`,
@@ -1140,21 +1193,19 @@ async function onCallback(cb, env) {
 
     const step = parseInt(which, 10) || 1;
     if (step === 1) {
-      const evIdx = await recordWave(env, iso, now, 'w');
-      const m2 = await getMeta(env);
-      m2.totals.waves += 1; m2.sos = { startedAt: Date.now(), followedUp: false, evIdx };
-      await putMeta(env, m2);
       await answer(env, cb.id);
-      const m = M.sos(1);
-      await send(env, chatId, m.text, { reply_markup: m.kb });
-      const tr = M.tagRow();
-      return send(env, chatId, tr.text, { reply_markup: tr.kb });
+      return startWave(chatId, env, meta, iso, now);
     }
     await answer(env, cb.id);
     const m = M.sos(step);
     // שלב 4 — אם יש שותף/ה מחובר/ת, שולחים בלחיצה במקום להעתיק
     if (step === 4 && meta.partnerChatId) {
-      m.kb = inline([[btn('📨 שלח דיווח לבת/בן הזוג', 'pr:send')], [btn('נשלח / ממשיך ←', 'sos:5')]]);
+      if (meta.sos && meta.sos.reported) {
+        m.text = '📨 <b>כבר דווח.</b>\n\nההודעה יצאה לבת הזוג ברגע שהגל התחיל — הסודיות נשברה, וזה כל העניין.\n\n<i>הסבבים חיו על שקט. הודעה אחת מפרקת אותם.</i>';
+        m.kb = inline([[btn('📨 שלח שוב', 'pr:send')], [btn('ממשיך ←', 'sos:5')]]);
+      } else {
+        m.kb = inline([[btn('📨 שלח דיווח לבת/בן הזוג', 'pr:send')], [btn('נשלח / ממשיך ←', 'sos:5')]]);
+      }
     }
     return edit(env, chatId, msgId, m.text, { reply_markup: m.kb });
   }

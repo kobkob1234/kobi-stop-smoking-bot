@@ -26,6 +26,8 @@ export const DEFAULT_META = {
   jarTotal: 0,             // מה שהועבר פיזית לצנצנת
   siteOffset: 0,           // יישור רוטציית המדבקה למציאות (/מקום)
   kbHidden: false,         // האם מקלדת הכפתורים מוסתרת (/מקלדת)
+  partnerMute: false,      // השתקת הדיווח האוטומטי לשותף/ה
+  lastPartnerAlert: 0,     // מגרה של 30 דקות בין דיווחי גל
   lastEscalationISO: null, // כדי לא להציף את הודעת ההסלמה
   ai: null,                // {date, n} — מכסת AI יומית
 };
