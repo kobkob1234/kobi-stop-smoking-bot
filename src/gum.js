@@ -133,6 +133,8 @@ export function reminderText(time, plan, iso, day, index, total) {
   }
   L.push('');
   L.push('<b>לעוס-והנח:</b> ללעוס 2–3 פעמים ← להניח בין החניכיים ללחי ← לחזור. ~30 דקות.');
+  L.push('');
+  L.push('<i>אשר למטה — הנתונים מתעדכנים לפי מה שתלחץ.</i>');
 
   const t = taperInfo(plan, iso);
   if (t && t.dropsSoFar > 0) L.push(`\n📉 <i>בתצמצום: ${t.active} יחידות ביום (מתוך ${t.start} בהתחלה).</i>`);

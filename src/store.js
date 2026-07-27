@@ -37,6 +37,7 @@ export const DEFAULT_META = {
   lastEscalationISO: null, // כדי לא להציף את הודעת ההסלמה
   ai: null,                // {date, n} — מכסת AI יומית
   gumPlan: null,           // תוכנית תזכורות המסטיק (ראה gum.js)
+  snooze: {},              // "ISO:gum:HH:MM" -> דקה ביום שבה להזכיר שוב
 };
 
 export async function getMeta(env) {
@@ -94,4 +95,13 @@ export function pruneSent(meta, todayISO) {
     else if (Math.abs(Date.parse(iso) - Date.parse(todayISO)) <= 3 * 86400000) keep[k] = 1;
   }
   meta.sent = keep;
+
+  // דחיות של ימים שעברו לא רלוונטיות, ואחרת הן נשארות ב-KV לנצח.
+  if (meta.snooze) {
+    const s = {};
+    for (const [k, v] of Object.entries(meta.snooze)) {
+      if (k.startsWith(todayISO + ':')) s[k] = v;
+    }
+    meta.snooze = s;
+  }
 }
