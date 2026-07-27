@@ -117,7 +117,7 @@ export function escalationFlags(daysArr, meta) {
     flags.push(`הייתה מעידה ב-7 הימים האחרונים (${a.slips}).`);
   }
   if (a.wavesPerDay >= 4 && a.surfRate < 60 && a.waves >= 10) {
-    flags.push(`קראבינג פורץ ומתמשך: ${a.wavesPerDay} גלים ביום בממוצע, ורק ${a.surfRate}% נגלשו עד הסוף.`);
+    flags.push(`קראבינג פורץ ומתמשך: ${a.wavesPerDay} דחפים ביום בממוצע, ורק ${a.surfRate}% עברו עד הסוף.`);
   }
   const atCap = last7.filter(d => (d.gum || 0) >= (meta.gumSoftCap || 12)).length;
   if (atCap >= 3) {
@@ -135,18 +135,18 @@ export function reportText(a, ifThen, days) {
   const L = ['📈 <b>הדפוסים שלך</b>', `<i>${days} הימים האחרונים</i>`, '─────────────'];
 
   if (!a.waves && !a.gum) {
-    L.push('אין עדיין מספיק נתונים. כל פעם שתלחץ "יש לי גל" או "מסטיק" אני אוסף — ומכאן יוצא המיפוי.');
+    L.push('אין עדיין מספיק נתונים. כל פעם שתלחץ "יש לי דחף עכשיו" או "מסטיק" אני אוסף — ומכאן יוצא המיפוי.');
     return L.join('\n');
   }
 
-  L.push(`🌀 גלים: <b>${a.waves}</b> (${a.wavesPerDay} ביום) · 🌊 נגלשו: <b>${a.surfed}</b>`);
+  L.push(`🌀 דחפים: <b>${a.waves}</b> (${a.wavesPerDay} ביום) · 🌊 עברו: <b>${a.surfed}</b>`);
   L.push(`📊 <b>שיעור שחרור: ${a.surfRate}%</b> ${a.surfRate >= 80 ? '— חזק מאוד' : a.surfRate >= 50 ? '— בכיוון' : '— יש כאן מה לחזק'}`);
   L.push(`🍬 מסטיק: ${a.gumPerDay} ביום · 🩹 מדבקה סומנה ב-${a.patchDays}/${a.n} ימים · 🚪 יציאות עם טקס: ${a.outs}`);
   if (a.slips) L.push(`↩️ מעידות: ${a.slips} <i>(דאטה, לא ציון)</i>`);
 
   if (a.topBucket || a.topTag || a.topDow) {
     L.push('', '<b>המכנה המשותף:</b>');
-    if (a.topBucket) L.push(`🕐 שעת השיא: <b>${a.topBucket[0]}</b> — ${a.topBucket[1]} מתוך ${a.evCount} גלים (${pct(a.topBucket[1], a.evCount)}%)`);
+    if (a.topBucket) L.push(`🕐 שעת השיא: <b>${a.topBucket[0]}</b> — ${a.topBucket[1]} מתוך ${a.evCount} דחפים (${pct(a.topBucket[1], a.evCount)}%)`);
     if (a.topTag)    L.push(`🏷️ ההקשר החוזר: <b>${a.topTag[0]}</b> (${a.topTag[1]} פעמים)`);
     if (a.topDow)    L.push(`📅 היום הקשה: <b>יום ${a.topDow[0]}</b>`);
   }
@@ -155,7 +155,7 @@ export function reportText(a, ifThen, days) {
     L.push('', '✍️ <b>שורת האם-אז שנגזרת מזה:</b>', ifThen,
       '', '<i>זה בדיוק מה שהמדריך מבקש לעשות ביד — למצוא את המכנה המשותף של האירועים ולהפוך אותו לשורה ראשונה בטבלה. להילחם מוקדם, לא חזק.</i>');
   } else {
-    L.push('', '<i>עוד כמה גלים מתויגים ואוציא לך מזה שורת אם-אז אוטומטית.</i>');
+    L.push('', '<i>עוד כמה דחפים מתויגים ואוציא לך מזה שורת אם-אז אוטומטית.</i>');
   }
   return L.join('\n');
 }

@@ -26,7 +26,7 @@ const SLOTS = [
 ];
 
 const BOT_COMMANDS = [
-  { command: 'wave',    description: '🌊 יש לי גל / דחף עכשיו' },
+  { command: 'wave',    description: '🌊 יש לי דחף עכשיו' },
   { command: 'out',     description: '🚪 יוצא מהבית — טקס 20 השניות' },
   { command: 'gum',     description: '🍬 רישום מסטיק 2 מ״ג' },
   { command: 'patch',   description: '🩹 רישום מדבקה' },
@@ -112,7 +112,8 @@ const RX = {
     'בא לי', 'מתחשק', 'רוצה (?:לשאוף|לוויפ|לווייפ|וויפ|ויפ|סיגריה|עשן|שאכטה)',
     'חייב (?:וויפ|ויפ|סיגריה|שאכטה|לשאוף)', 'צריך (?:וויפ|ויפ|שאכטה)',
     // דחף בשמותיו
-    'יש לי גל', 'גל של קנייה', 'גל עכשיו', 'דחף', 'קראבינג', 'קרייבינג', 'השתוקקות',
+    'יש לי גל', 'יש לי דחף', 'גל של קנייה', 'גל עכשיו', 'דחף עכשיו',
+    'דחף', 'קראבינג', 'קרייבינג', 'השתוקקות',
     // מקום
     'בדרך לחנות', 'ליד החנות', 'מול החנות', 'בחנות', 'בקיוסק', 'בפיצוצי', 'לפיצוצי',
     // מצוקה שמובילה לשם
@@ -360,7 +361,7 @@ async function tick(env) {
         '<b>אבל התנאי הוא מצב, לא תאריך.</b> אלה הנתונים שלך:',
         `• מסטיק: <b>${rd.nowAvg}</b> ביום בשבוע האחרון (שבוע לפני כן: ${rd.prevAvg})`,
         `• מחוץ לתוכנית: <b>${rd.extra}</b> יחידות בשבוע`,
-        `• גלים: ${rd.waves} · נגלשו: ${rd.surfed}${rd.slips ? ` · מעידות: ${rd.slips}` : ''}`,
+        `• דחפים: ${rd.waves} · עברו: ${rd.surfed}${rd.slips ? ` · מעידות: ${rd.slips}` : ''}`,
         '',
         rd.ready
           ? '✅ <b>הנתונים נראים יציבים.</b> הצריכה לא עולה, השימוש לפי צורך נמוך, ואין מעידות. זה נראה כמו הזמן.'
@@ -419,7 +420,7 @@ async function sendWeeklyReport(env, meta, iso) {
   if (meta.partnerChatId) {
     await send(env, meta.partnerChatId, [
       `🗓️ <b>סיכום שבוע</b>`,
-      `🌊 גלים שנגלשו עד הסוף: <b>${a.surfed}</b> מתוך ${a.waves} (${a.surfRate}%)`,
+      `🌊 דחפים שעברו עד הסוף: <b>${a.surfed}</b> מתוך ${a.waves} (${a.surfRate}%)`,
       a.slips ? `↩️ מעידות: ${a.slips} — <i>דאטה, לא ציון. בלי חשבון נפש.</i>` : '✅ בלי מעידות השבוע.',
       '',
       `<i>מודדים שחרורים, לא רק ימים. וחגיגה שבועית קטנה היא חלק מהשיטה.</i>`,
@@ -506,7 +507,10 @@ async function onMessage(msg, env) {
 
   // ---- כפתורי המקלדת הקבועה ----
   const kbMap = {
-    '🌊 יש לי גל': 'wave', '🚪 יוצא מהבית': 'out', '🍬 מסטיק': 'gum',
+    // הטקסט הישן נשאר ממופה: מקלדת שכבר מוצגת במכשיר לא מתעדכנת
+    // לבד, ולחיצה עליה חייבת להמשיך לעבוד.
+    '🌊 יש לי דחף עכשיו': 'wave', '🌊 יש לי גל': 'wave',
+    '🚪 יוצא מהבית': 'out', '🍬 מסטיק': 'gum',
     '🩹 מדבקה': 'patch', '🧰 כלים': 'tools', '📊 סטטוס': 'status',
   };
   if (kbMap[text]) { meta.awaiting = null; await putMeta(env, meta); return runCommand(kbMap[text], '', chatId, env, meta, pl, iso, now); }
@@ -634,19 +638,19 @@ async function buildState(env, pl, iso, now, meta) {
   const patchEv = day.ev.filter(e => e.k === 'p').pop();
   L.push(`  מדבקה: ${day.patch ? (patchEv ? `הודבקה ב-${hm(patchEv)}` : 'סומנה') : 'עוד לא סומנה היום'}`);
   const waves = day.ev.filter(e => e.k === 'w');
-  L.push(`  גלים: ${day.waves}${waves.length ? ' — ' + waves.map(e => hm(e) + (e.tag ? ` (${ANL.TAGS[e.tag] || e.tag})` : '')).join(', ') : ''} · נגלשו עד הסוף: ${day.surfed}`);
+  L.push(`  דחפים: ${day.waves}${waves.length ? ' — ' + waves.map(e => hm(e) + (e.tag ? ` (${ANL.TAGS[e.tag] || e.tag})` : '')).join(', ') : ''} · עברו עד הסוף: ${day.surfed}`);
   if (day.slips) L.push(`  מעידות היום: ${day.slips}`);
   L.push(`  יציאות עם טקס: ${day.outs}${day.mine ? ` · המוקש שרשם: ${day.mine}` : ''}`);
   if (day.win) L.push(`  הניצחון שרשם: ${day.win}`);
 
   // --- אתמול ---
   const y = await getDay(env, P.addDaysISO(iso, -1));
-  L.push(`אתמול: מסטיק ${y.gum} · גלים ${y.waves} · נגלשו ${y.surfed} · מדבקה ${y.patch ? 'סומנה' : 'לא סומנה'}${y.slips ? ` · מעידות ${y.slips}` : ''}`);
+  L.push(`אתמול: מסטיק ${y.gum} · דחפים ${y.waves} · עברו ${y.surfed} · מדבקה ${y.patch ? 'סומנה' : 'לא סומנה'}${y.slips ? ` · מעידות ${y.slips}` : ''}`);
 
   // --- 7 ימים ---
   const week = await ANL.collect(env, iso, 7);
   const a = ANL.analyse(week);
-  L.push(`7 ימים אחרונים: ${a.gumPerDay} מסטיק ביום בממוצע · ${a.waves} גלים, ${a.surfed} נגלשו (${a.surfRate}%) · ${a.slips} מעידות · מדבקה סומנה ב-${a.patchDays}/7`);
+  L.push(`7 ימים אחרונים: ${a.gumPerDay} מסטיק ביום בממוצע · ${a.waves} דחפים, ${a.surfed} עברו (${a.surfRate}%) · ${a.slips} מעידות · מדבקה סומנה ב-${a.patchDays}/7`);
   if (a.topBucket) L.push(`  שעת השיא של הגלים: ${a.topBucket[0]}${a.topTag ? ` · ההקשר החוזר: ${a.topTag[0]}` : ''}`);
 
   L.push('הערה: תיעוד שעות מדויק לכל אירוע קיים רק מ-26.7.2026 והלאה. לפני זה יש ספירות בלבד.');
@@ -684,7 +688,7 @@ async function converse(text, chatId, env, meta, pl, iso, now) {
         if (res.intent === 'log_win') {
           const day = await updateDay(env, iso, d => { d.surfed += 1; d.win = d.win || text.slice(0, 300); });
           const m2 = await getMeta(env); m2.totals.surfed += 1; m2.sos = null; await putMeta(env, m2);
-          return send(env, chatId, `${res.reply}\n\n🌊 <b>נרשם — גלים שנגלשו היום: ${day.surfed}</b> · סה״כ ${m2.totals.surfed}`);
+          return send(env, chatId, `${res.reply}\n\n🌊 <b>נרשם — דחפים שעברו היום: ${day.surfed}</b> · סה״כ ${m2.totals.surfed}`);
         }
         if (res.intent === 'crisis') return send(env, chatId, INT.CRISIS_TEXT);
 
@@ -725,7 +729,7 @@ async function converse(text, chatId, env, meta, pl, iso, now) {
     'אם יש דחף עכשיו — הכפתור הראשון למטה, והוא תמיד שם.',
   ].join('\n'), {
     reply_markup: inline([
-      [btn('🌊 יש לי גל', 'sos:1'), btn('🚪 יוצא מהבית', 'out:start')],
+      [btn('🌊 יש לי דחף עכשיו', 'sos:1'), btn('🚪 יוצא מהבית', 'out:start')],
       [btn('🧰 כלים', 'T:menu'), btn('📊 סטטוס', 'st')],
     ]),
   });
@@ -886,7 +890,7 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
         if (!d.waves && !d.gum && !d.journal && !d.win && !d.patch) continue;
         const pd = P.planFor(d.iso);
         lines.push('', `## ${P.fmtHe(d.iso)}${pd.n >= 1 && pd.n <= 70 ? ` · יום ${pd.n}/70 · ${pd.dose} מ״ג` : ''}`);
-        lines.push(`מדבקה: ${d.patch ? 'כן' : 'לא'} · מסטיק: ${d.gum} · גלים: ${d.waves} · נגלשו: ${d.surfed}${d.slips ? ` · מעידות: ${d.slips}` : ''}`);
+        lines.push(`מדבקה: ${d.patch ? 'כן' : 'לא'} · מסטיק: ${d.gum} · דחפים: ${d.waves} · עברו: ${d.surfed}${d.slips ? ` · מעידות: ${d.slips}` : ''}`);
         if (d.mine) lines.push(`מוקש: ${d.mine}`);
         if (d.win) lines.push(`ניצחון: ${d.win}`);
         if (d.journal) lines.push(`יומן: ${d.journal}`);
@@ -969,7 +973,7 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
 /**
  * רושם אירוע עם חותמת שעה. זה מה שמאפשר לענות על "מתי היה המסטיק
  * האחרון?" — בלי זה יש רק מונה, ואי-אפשר לגזור ממנו שעה.
- * k: w=גל · x=מעידה · g=מסטיק · p=מדבקה · o=יציאה · v=גל שנגלש
+ * k: w=גל · x=מעידה · g=מסטיק · p=מדבקה · o=יציאה · v=דחף שעבר
  */
 async function recordEvent(env, iso, now, kind, extra = {}) {
   let idx = -1;
@@ -1300,9 +1304,9 @@ async function onCallback(cb, env) {
     const day = await updateDay(env, iso, d => { d.surfed += 1; });
     await recordEvent(env, iso, now, 'v');
     const m2 = await getMeta(env); m2.totals.surfed += 1; m2.sos = null; await putMeta(env, m2);
-    await answer(env, cb.id, 'גל נגלש 🌊');
+    await answer(env, cb.id, 'דחף שעבר 🌊');
     return send(env, chatId, [
-      `🌊 <b>נרשם. גלים שנגלשו עד הסוף היום: ${day.surfed}</b> · סה״כ: ${m2.totals.surfed}`,
+      `🌊 <b>נרשם. דחפים שעברו עד הסוף היום: ${day.surfed}</b> · סה״כ: ${m2.totals.surfed}`,
       '',
       '<b>עצור 5 שניות והרגש את השקט שאחרי.</b> זה התגמול שצורב את הלולאה החדשה.',
       '',
@@ -1376,7 +1380,7 @@ async function onCallback(cb, env) {
       `🚪 <b>יצאת מוכן.</b> נרשם — יציאות עם טקס: ${m2.totals.outs}`,
       '',
       'הכפתור למטה איתך כל הזמן. אם עולה גל — לחיצה אחת, ואני מוביל.',
-    ].join('\n'), { reply_markup: inline([[btn('🌊 יש גל / אני בדרך לחנות', 'sos:1')]]) });
+    ].join('\n'), { reply_markup: inline([[btn('🌊 יש דחף / אני בדרך לחנות', 'sos:1')]]) });
   }
 
   // --- SOS ---
@@ -1395,7 +1399,7 @@ async function onCallback(cb, env) {
       }
       await answer(env, cb.id, 'ניצחון נרשם 🏆');
       return send(env, chatId, [
-        `🏆 <b>נרשם! גלים שנגלשו עד הסוף: ${m2.totals.surfed}</b> (היום: ${day.surfed})`,
+        `🏆 <b>נרשם! דחפים שעברו עד הסוף: ${m2.totals.surfed}</b> (היום: ${day.surfed})`,
         '',
         'זה המדד האמיתי — לא ספירת ימים. <i>מדוד שחרורים.</i>',
         '',

@@ -27,7 +27,7 @@ export const INTENTS = [
   'leaving_home',  // יוצא מהבית
   'log_gum',       // לקח מסטיק
   'log_patch',     // הדביק מדבקה
-  'log_win',       // ניצחון / גל שנגלש
+  'log_win',       // ניצחון / דחף שעבר
   'status',        // רוצה לדעת איפה הוא עומד
   'question',      // שאלה על התהליך
   'feeling',       // משתף מצב/רגש בלי דחף מיידי

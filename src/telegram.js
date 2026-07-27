@@ -62,7 +62,7 @@ export const inline = rows => ({ inline_keyboard: rows });
 // חופשית או לצאת מהצ׳אט כרגיל. /מקלדת מסתיר או מחזיר אותה לגמרי.
 export const MAIN_KB = {
   keyboard: [
-    [{ text: '🌊 יש לי גל' }, { text: '🚪 יוצא מהבית' }],
+    [{ text: '🌊 יש לי דחף עכשיו' }, { text: '🚪 יוצא מהבית' }],
     [{ text: '🍬 מסטיק' }, { text: '🩹 מדבקה' }],
     [{ text: '🧰 כלים' }, { text: '📊 סטטוס' }],
   ],
