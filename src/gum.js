@@ -119,6 +119,45 @@ export function taperInfo(plan, iso) {
   };
 }
 
+/**
+ * דקות שעברו מאז המסטיק האחרון היום, או null אם לא היה.
+ * משמש כדי לא להזכיר יחידה מתוזמנת דקות אחרי שנלקחה יחידה נוספת.
+ */
+export function minutesSinceLastGum(day, nowMinutes) {
+  const gs = (day.ev || []).filter(e => e.k === 'g');
+  if (!gs.length) return null;
+  const last = gs[gs.length - 1];
+  const diff = nowMinutes - (last.h * 60 + last.m);
+  return diff < 0 ? null : diff;
+}
+
+/**
+ * האם המצב מצביע על מוכנות לתצמצום.
+ * התנאי בתוכנית הוא מצב ולא תאריך: "מתחילים לצמצם כשצריכת המסטיק
+ * יורדת מעצמה, וכשגלים עוברים בלי שנדרש כלום". לכן משווים שבוע
+ * לשבוע שלפניו, ומסתכלים גם על יחידות מחוץ לתוכנית — שימוש PRN גבוה
+ * הוא בדיוק הסימן שעוד לא הזמן.
+ */
+export function readiness(last7, prev7) {
+  const sum = (a, k) => a.reduce((t, d) => t + (d[k] || 0), 0);
+  const nowAvg = +(sum(last7, 'gum') / Math.max(1, last7.length)).toFixed(1);
+  const prevAvg = +(sum(prev7, 'gum') / Math.max(1, prev7.length)).toFixed(1);
+  const extra = sum(last7, 'gumExtra');
+  const waves = sum(last7, 'waves');
+  const surfed = sum(last7, 'surfed');
+  const slips = sum(last7, 'slips');
+  const reasons = [];
+  if (prevAvg > 0 && nowAvg > prevAvg) reasons.push(`הצריכה עלתה (${prevAvg} → ${nowAvg} ביום)`);
+  if (extra >= 7) reasons.push(`${extra} יחידות מחוץ לתוכנית בשבוע — שימוש לפי צורך עוד גבוה`);
+  if (slips > 0) reasons.push(`${slips} מעידות בשבוע האחרון`);
+  if (waves >= 14) reasons.push(`${waves} גלים בשבוע — עוד תכוף`);
+  return {
+    nowAvg, prevAvg, extra, waves, surfed, slips,
+    ready: reasons.length === 0,
+    reasons,
+  };
+}
+
 /** התזכורת שמגיעה בשעה מסוימת */
 export function reminderText(time, plan, iso, day, index, total) {
   const isMorning = index === 0;

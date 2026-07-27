@@ -323,6 +323,16 @@ async function tick(env) {
         if (snoozed !== undefined) { delete meta.snooze[key]; }
         dirty = true;
         if (now.minutes - target > 75) continue;      // איחור גדול — מדלגים בשקט
+
+        // אם נלקח מסטיק ב-45 הדקות האחרונות (למשל יחידה נוספת מחוץ
+        // לתוכנית), התזכורת הזאת מיותרת — והיא גם לא "הוחמצה". סופרים
+        // אותה כמכוסה, כדי שההיצמדות תשקף את המציאות ולא תיראה גרועה.
+        const since = G.minutesSinceLastGum(day, now.minutes);
+        if (since !== null && since <= 45) {
+          await updateDay(env, iso, d => { d.gumCovered = (d.gumCovered || 0) + 1; });
+          console.log('GUM דילג על', t, '— נלקח לפני', since, 'דק');
+          continue;
+        }
         console.log('GUM תזכורת נשלחה:', t);
         await send(env, meta.chatId, G.reminderText(t, plan, iso, day, i, active.length), {
           reply_markup: inline([
@@ -340,15 +350,23 @@ async function tick(env) {
     if (taperDue && now.minutes >= 9 * 60 && !meta.sent[`${iso}:taperask`]) {
       meta.sent[`${iso}:taperask`] = 1;
       dirty = true;
+      const d14 = await ANL.collect(env, iso, 14);
+      const rd = G.readiness(d14.slice(0, 7), d14.slice(7, 14));
       await send(env, meta.chatId, [
-        '📉 <b>היום 15.9 — היום שאחרי המדבקה האחרונה.</b>',
+        `📉 <b>תצמצום המסטיק — ${P.fmtHe(iso)}</b>`,
         '',
-        `לפי התוכנית זה המועד שבו מתחיל תצמצום המסטיק: יחידה אחת פחות כל ${plan.stepDays} ימים, מ-${G.sortTimes(plan.times).length} יחידות עד יחידת הבוקר בלבד.`,
+        `לפי התוכנית: יחידה אחת פחות כל ${plan.stepDays} ימים, מ-${G.sortTimes(plan.times).length} יחידות עד יחידת הבוקר בלבד.`,
         '',
-        '<b>אבל התנאי הוא מצב, לא תאריך:</b> מתחילים רק אם צריכת המסטיק יורדת מעצמה וגלים עוברים בלי שנדרש כלום. אם צריך להתאמץ — לא הזמן.',
+        '<b>אבל התנאי הוא מצב, לא תאריך.</b> אלה הנתונים שלך:',
+        `• מסטיק: <b>${rd.nowAvg}</b> ביום בשבוע האחרון (שבוע לפני כן: ${rd.prevAvg})`,
+        `• מחוץ לתוכנית: <b>${rd.extra}</b> יחידות בשבוע`,
+        `• גלים: ${rd.waves} · נגלשו: ${rd.surfed}${rd.slips ? ` · מעידות: ${rd.slips}` : ''}`,
+        '',
+        rd.ready
+          ? '✅ <b>הנתונים נראים יציבים.</b> הצריכה לא עולה, השימוש לפי צורך נמוך, ואין מעידות. זה נראה כמו הזמן.'
+          : '⏸️ <b>הנתונים מצביעים על להמתין:</b>\n' + rd.reasons.map(r => `   • ${r}`).join('\n'),
         '',
         '<i>אין פרס על מהירות. תצמצם שמחזיר גלים הוא תצמצם שנכשל.</i>',
-        '',
         '<i>עד שתאשר — נשארים על המספר המלא. אשאל שוב בעוד שלושה ימים.</i>',
       ].join('\n'), {
         reply_markup: inline([
@@ -913,6 +931,7 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
         `היום: <b>${day.gum}</b> סה״כ · ${day.gumSched || 0}/${active.length} מתוזמנים · ${day.gumExtra || 0} נוספים${day.gumMissed ? ` · ${day.gumMissed} הוחמצו` : ''}`,
         '',
         '<i>מסטיק נוסף מחוץ לתוכנית — תמיד מותר. הכפתור 🍬 במקלדת, /מסטיק, או "לקחתי מסטיק". הוא נספר בנפרד כדי שנראה מה מתוזמן ומה לפי צורך.</i>',
+        '<i>ואם לקחת יחידה נוספת — התזכורת שב-45 הדקות שאחריה מדולגת, ונספרת כמכוסה ולא כהוחמצה.</i>',
       ];
       if (t) {
         L.push('', t.pending

@@ -70,6 +70,7 @@ export const EMPTY_DAY = {
   gumMissed: 0, // תזכורות שאושרו כ"לא לקחתי"
   gumSched: 0,  // יחידות שנלקחו לפי התוכנית
   gumExtra: 0,  // יחידות נוספות, מחוץ לתוכנית (PRN)
+  gumCovered: 0,// תזכורות שדולגו כי נלקח מסטיק ב-45 הדק' שלפניהן
 };
 
 export async function getDay(env, iso) {
