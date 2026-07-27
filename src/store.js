@@ -6,6 +6,11 @@
 
 const META_KEY = 'meta';
 
+// סדר המקומות ב-plan.js השתנה ב-27.7.2026, וגם נוסף לו עוגן מפורש.
+// כל siteOffset שנשמר לפני כן יישר את הרוטציה מול המערך הישן, ולכן
+// הוא לא סתם לא-נחוץ אלא מזיק — הוא יזיז את העוגן החדש. מאפסים פעם אחת.
+const SITE_ROTATION_VER = 2;
+
 export const DEFAULT_META = {
   chatId: null,
   costPerDay: 25,          // ₪ ליום שהוויפ עלה — /כסף 30 משנה
@@ -24,22 +29,26 @@ export const DEFAULT_META = {
   joinCode: null,          // {code, exp} — קוד חד-פעמי לחיבור השותף/ה
   training: null,          // {startISO, done:[1,2,...]} — אימון RAIN בן שבוע (נספח א׳)
   jarTotal: 0,             // מה שהועבר פיזית לצנצנת
-  siteOffset: 0,           // יישור רוטציית המדבקה למציאות (/מקום)
+  siteOffset: 0,           // יישור רוטציית המדבקה למציאות (/מקום), מעל SITE_ANCHOR
+  siteVer: 0,              // גרסת מערך המקומות שה-siteOffset יושר מולה
   kbHidden: false,         // האם מקלדת הכפתורים מוסתרת (/מקלדת)
   partnerMute: false,      // השתקת הדיווח האוטומטי לשותף/ה
   lastPartnerAlert: 0,     // מגרה של 30 דקות בין דיווחי גל
   lastEscalationISO: null, // כדי לא להציף את הודעת ההסלמה
   ai: null,                // {date, n} — מכסת AI יומית
+  gumPlan: null,           // תוכנית תזכורות המסטיק (ראה gum.js)
 };
 
 export async function getMeta(env) {
   const raw = await env.KV.get(META_KEY);
   const m = raw ? JSON.parse(raw) : {};
-  return {
+  const out = {
     ...DEFAULT_META, ...m,
     totals: { ...DEFAULT_META.totals, ...(m.totals || {}) },
     sent: m.sent || {},
   };
+  if (out.siteVer !== SITE_ROTATION_VER) { out.siteOffset = 0; out.siteVer = SITE_ROTATION_VER; }
+  return out;
 }
 
 export async function putMeta(env, meta) {
@@ -56,7 +65,10 @@ export async function updateMeta(env, fn) {
 export const EMPTY_DAY = {
   patch: false, gum: 0, waves: 0, surfed: 0, slips: 0, outs: 0,
   win: '', journal: '', mine: '', mDone: false, eDone: false,
-  ev: [],   // אירועים למיפוי דפוסים: {k:'w'|'x', h, m, tag}
+  ev: [],       // אירועים למיפוי דפוסים: {k, h, m, tag}
+  gumMissed: 0, // תזכורות שאושרו כ"לא לקחתי"
+  gumSched: 0,  // יחידות שנלקחו לפי התוכנית
+  gumExtra: 0,  // יחידות נוספות, מחוץ לתוכנית (PRN)
 };
 
 export async function getDay(env, iso) {

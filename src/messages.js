@@ -155,7 +155,7 @@ export function evening(pl, iso, day, meta, isSaturdayNight) {
   parts.push('');
   parts.push(`<b>2 · ספירת היום</b> — מודדים שחרורים, לא רק ימים:`);
   parts.push(`   🌀 גלים שהיו: <b>${day.waves}</b> · 🌊 נגלשו עד הסוף: <b>${day.surfed}</b>`);
-  parts.push(`   🍬 מסטיק: <b>${day.gum}</b> · 🩹 מדבקה: ${day.patch ? '✓' : '—'}`);
+  parts.push(`   🍬 מסטיק: <b>${day.gum}</b> (${day.gumSched || 0} מתוזמנים · ${day.gumExtra || 0} נוספים${day.gumMissed ? ` · ${day.gumMissed} הוחמצו` : ''}) · 🩹 מדבקה: ${day.patch ? '✓' : '—'}`);
   parts.push('');
   parts.push(`<b>3 · יומן שלוש שורות</b>`);
   parts.push(`   הרגע הקשה של היום — ומה הייתה <b>התחנה הראשונה</b> שלו? · מה עבד? · מה מחר עושים אחרת?`);
@@ -206,7 +206,7 @@ export function status(pl, iso, day, meta) {
   parts.push(`🌊 גלים שנגלשו עד הסוף: <b>${t.surfed}</b>  <i>(היום: ${day.surfed})</i>`);
   parts.push(`🌀 גלים שהיו: <b>${t.waves}</b>  <i>(היום: ${day.waves})</i>`);
   parts.push(`🍬 מסטיק: היום <b>${day.gum}</b> · סה״כ ${t.gum}`);
-  parts.push(`🩹 מדבקה היום: ${day.patch ? '✓' : '— עדיין לא סומן'}`);
+  parts.push(`🩹 מדבקה היום: ${day.patch ? '✓' : '— עדיין לא סומנה'}`);
   parts.push(`🚪 יציאות עם טקס: <b>${t.outs}</b>`);
   parts.push(`🌅 בקרים: ${t.mDone} · 🌙 ערבים: ${t.eDone}`);
   if (t.slips > 0) {
@@ -293,6 +293,7 @@ export function sos(step) {
         ].join('\n'),
         kb: inline([
           [btn('▶️ ההנחיה הבאה', 'rw:0')],
+          [btn('🪑 אני לא יכול לזוז עכשיו', 'T:isom')],
           [btn('הגל נחלש — לשלב הבא ←', 'sos:3')],
         ]),
       };
@@ -369,11 +370,13 @@ export function toolsMenu() {
     ].join('\n'),
     kb: inline([
       [btn('🌊 RAIN', 'T:rain'), btn('⚡ שבירת דחף', 'T:urge')],
+      [btn('🪑 גל ואי-אפשר לזוז', 'T:isom')],
       [btn('✍️ אם-אז', 'T:ifthen'), btn('⛓️ שרשרת ההחלטות', 'T:chain')],
       [btn('🎬 הרצת הסרט', 'T:movie'), btn('🚌 דה-פוזיה', 'T:defus')],
       [btn('🪪 זהות', 'T:ident'), btn('🧭 מצפן', 'T:compass')],
       [btn('🔮 סצנות עתיד', 'T:scenes'), btn('🧠 5 שורות בחוץ', 'T:out5')],
       [btn('🍬 מסטיק 2 מ״ג', 'T:gum'), btn('🩹 מדבקה', 'T:patch')],
+      [btn('🍬 תוכנית תזכורות', 'gp:show'), btn('📉 תצמצום', 'T:taper')],
       [btn('⚠️ מעידה — 90 שניות', 'T:slip'), btn('📞 טלפונים', 'T:phones')],
       [btn('🪪 כרטיס ארנק', 'T:card'), btn('🫙 צנצנת', 'jar:ask')],
       [btn('📈 הדפוסים שלי', 'rep'), btn('🗓️ סקירה שבועית', 'T:weekly')],
@@ -395,9 +398,11 @@ export const TOOL_TEXTS = {
   patch: C.PATCH_GUIDE,
   phones: C.PHONES,
   urge: C.URGE_ORDER,
+  isom: C.ISOMETRIC,
   out5: C.OUT_5_LINES,
   weekly: C.WEEKLY,
   card: C.WALLET_CARD,
+  taper: C.TAPER,
 };
 
 // ==================== עזרה ====================
@@ -417,6 +422,7 @@ export function help() {
       '',
       `<b>פקודות:</b>`,
       `/גל — יש לי דחף עכשיו (זרימה מודרכת + RAIN)`,
+      `/איזומטרי — גל כשאי-אפשר לקום (פגישה, נהיגה, ליד אנשים)`,
       `/יוצא — טקס היציאה מהבית`,
       `/מסטיק — רישום מסטיק 2 מ״ג`,
       `/מדבקה — רישום מדבקה + מקום ההדבקה`,

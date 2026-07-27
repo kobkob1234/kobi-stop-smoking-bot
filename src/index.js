@@ -12,6 +12,7 @@ import * as KB from './kb.js';
 import * as AI from './ai.js';
 import * as ANL from './analytics.js';
 import * as INT from './intent.js';
+import * as G from './gum.js';
 import { getMeta, putMeta, getDay, updateDay, pruneSent } from './store.js';
 
 // ---------- משבצות הזמן היומיות (שעון ישראל) ----------
@@ -40,6 +41,8 @@ const BOT_COMMANDS = [
   { command: 'coach',   description: '🏋️ אימון RAIN שבועי' },
   { command: 'partner', description: '👥 חיבור בת/בן הזוג' },
   { command: 'site',    description: '📍 מקומות ההדבקה ויישור הרוטציה' },
+  { command: 'gumplan', description: '🍬 תוכנית תזכורות המסטיק' },
+  { command: 'taper',   description: '📉 תצמצום המסטיק' },
   { command: 'keyboard', description: '⌨️ הסתרה/החזרה של מקלדת הכפתורים' },
   { command: 'review',  description: '🗓️ סקירה שבועית' },
   { command: 'phones',  description: '📞 טלפוני תמיכה' },
@@ -78,6 +81,7 @@ const ALIAS = {
   ai:       ['ai'],
   site:     ['site', 'מקום', 'מקומות'],
   keyboard: ['keyboard', 'מקלדת'],
+  isometric:['isometric', 'איזומטרי', 'איזומטרית', 'בישיבה'],
 };
 
 const inPlanDay = pl => !pl.before && !pl.after;
@@ -282,7 +286,54 @@ async function tick(env) {
     }
   }
 
+  // --- תזכורות המסטיק, לפי התוכנית ובשעות שנקבעו ---
   if (!meta.quiet) {
+    const plan = { ...G.DEFAULT_PLAN, ...(meta.gumPlan || {}) };
+    if (plan.on) {
+      const active = G.activeTimes(plan, iso);
+      const day = await getDay(env, iso);
+      for (let i = 0; i < active.length; i++) {
+        const t = active[i];
+        const key = `${iso}:gum:${t}`;
+        if (meta.sent[key]) continue;
+        const [hh, mm] = t.split(':').map(Number);
+        const target = hh * 60 + mm;
+        if (now.minutes < target) continue;
+        meta.sent[key] = 1;
+        dirty = true;
+        if (now.minutes - target > 75) continue;      // איחור גדול — מדלגים בשקט
+        console.log('GUM תזכורת נשלחה:', t);
+        await send(env, meta.chatId, G.reminderText(t, plan, iso, day, i, active.length), {
+          reply_markup: inline([
+            [btn('✅ לקחתי', `gr:y:${t}`), btn('❌ לא לקחתי', `gr:n:${t}`)],
+            [btn('⏰ עוד 20 דק׳', `gr:s:${t}`)],
+          ]),
+        });
+      }
+    }
+
+    // --- 15.9: יום פתיחת התצמצום — שואלים לפני שמתחילים ---
+    if (plan.on && plan.taperStartISO && iso === plan.taperStartISO && !plan.confirmedTaper
+        && now.minutes >= 9 * 60 && !meta.sent[`${iso}:taperask`]) {
+      meta.sent[`${iso}:taperask`] = 1;
+      dirty = true;
+      await send(env, meta.chatId, [
+        '📉 <b>היום 15.9 — היום שאחרי המדבקה האחרונה.</b>',
+        '',
+        `לפי התוכנית זה המועד שבו מתחיל תצמצום המסטיק: יחידה אחת פחות כל ${plan.stepDays} ימים, מ-${G.sortTimes(plan.times).length} יחידות עד יחידת הבוקר בלבד.`,
+        '',
+        '<b>אבל התנאי הוא מצב, לא תאריך:</b> מתחילים רק אם צריכת המסטיק יורדת מעצמה וגלים עוברים בלי שנדרש כלום. אם צריך להתאמץ — לא הזמן.',
+        '',
+        '<i>אין פרס על מהירות. תצמצם שמחזיר גלים הוא תצמצם שנכשל.</i>',
+      ].join('\n'), {
+        reply_markup: inline([
+          [btn('✅ יציב — מתחילים לצמצם', 'tp:go')],
+          [btn('⏸️ עוד לא — דחה בשבוע', 'tp:wait')],
+          [btn('📉 קרא את תוכנית הצמצום', 'T:taper')],
+        ]),
+      });
+    }
+
     for (const slot of SLOTS) {
       const key = `${iso}:${slot.id}`;
       if (meta.sent[key]) continue;
@@ -528,15 +579,15 @@ async function buildState(env, pl, iso, now, meta) {
 
   // --- התוכנית ---
   if (inPlanDay(pl)) {
-    const nextStep = pl.dose === 21 ? 'ירידה ל-14 מ"ג ב-18.8'
-      : pl.dose === 14 ? 'ירידה ל-7 מ"ג ב-1.9' : 'סיום מדבקות ב-15.9';
-    L.push(`תוכנית: יום ${pl.n} מתוך 70 · שבוע ${pl.week} · ${pl.phase} ${pl.dose} מ"ג · מקום ההדבקה היום: ${pl.site} · ${nextStep} · ${pl.clean} ימים נקיים · נחסך ${pl.clean * meta.costPerDay}₪`);
+    const nextStep = pl.dose === 21 ? 'ירידה ל-14 מ״ג ב-18.8'
+      : pl.dose === 14 ? 'ירידה ל-7 מ״ג ב-1.9' : 'סיום מדבקות ב-15.9';
+    L.push(`תוכנית: יום ${pl.n} מתוך 70 · שבוע ${pl.week} · ${pl.phase} ${pl.dose} מ״ג · מקום ההדבקה היום: ${pl.site} · ${nextStep} · ${pl.clean} ימים נקיים · נחסך ${pl.clean * meta.costPerDay}₪`);
   } else if (pl.before) L.push(`לפני יום ההפסקה — עוד ${pl.daysToQuit} ימים (7.7.2026)`);
   else L.push(`סיים את 70 הימים · ${pl.cleanDays} ימים נקיים`);
 
   // --- היום, עם שעות ---
   L.push(`היום ${P.fmtHe(iso)} (יום ${now.dowHe}), השעה כרגע ${now.hhmm}:`);
-  L.push('  ' + evLine(now, day.ev, 'g', 'מסטיק 2 מ"ג') + (day.gum && !day.ev.some(e => e.k === 'g') ? ` (סה"כ ${day.gum}, בלי שעות מתועדות)` : ''));
+  L.push('  ' + evLine(now, day.ev, 'g', 'מסטיק 2 מ״ג') + (day.gum && !day.ev.some(e => e.k === 'g') ? ` (סה״כ ${day.gum}, בלי שעות מתועדות)` : ''));
   const patchEv = day.ev.filter(e => e.k === 'p').pop();
   L.push(`  מדבקה: ${day.patch ? (patchEv ? `הודבקה ב-${hm(patchEv)}` : 'סומנה') : 'עוד לא סומנה היום'}`);
   const waves = day.ev.filter(e => e.k === 'w');
@@ -682,6 +733,13 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
     case 'morning': return R(M.morning(pl, day, meta));
     case 'evening': return R(M.evening(pl, iso, day, meta, now.dow === 6));
     case 'tools':   return R(M.toolsMenu());
+    case 'isometric':
+      return send(env, chatId, C.ISOMETRIC, {
+        reply_markup: inline([
+          [btn('🍬 מסטיק ✓', 'g'), btn('🌊 עשיתי — הגל נחלש', 'sf')],
+          [btn('🧰 חזרה לכלים', 'T:menu')],
+        ]),
+      });
     case 'wave': return startWave(chatId, env, meta, iso, now);
     case 'out':   return R(M.outing(pl, iso, day, meta, now));
     case 'gum':   return logGum(chatId, env, iso, meta, now);
@@ -816,6 +874,33 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
         p === 'off' ? '\nלהדלקה — ראה README, סעיף "שיחה חופשית".' : '',
       ].filter(Boolean).join('\n'));
     }
+    case 'gumplan': {
+      const plan = { ...G.DEFAULT_PLAN, ...(meta.gumPlan || {}) };
+      const active = G.activeTimes(plan, iso);
+      const t = G.taperInfo(plan, iso);
+      const day = await getDay(env, iso);
+      const L = [
+        '🍬 <b>תוכנית המסטיק</b>',
+        '─────────────',
+        `מצב: <b>${plan.on ? 'פעיל ✅' : 'כבוי 🔇'}</b> · היום <b>${active.length}</b> יחידות`,
+        `שעות: ${active.join(' · ')}`,
+        '',
+        `היום: <b>${day.gum}</b> סה״כ · ${day.gumSched || 0}/${active.length} מתוזמנים · ${day.gumExtra || 0} נוספים${day.gumMissed ? ` · ${day.gumMissed} הוחמצו` : ''}`,
+        '',
+        '<i>מסטיק נוסף מחוץ לתוכנית — תמיד מותר. הכפתור 🍬 במקלדת, /מסטיק, או "לקחתי מסטיק". הוא נספר בנפרד כדי שנראה מה מתוזמן ומה לפי צורך.</i>',
+      ];
+      if (t) {
+        L.push('', t.dropsSoFar > 0
+          ? `📉 בתצמצום: ${t.active} מתוך ${t.start} · ${t.atFloor ? 'הגעת לרצפה (בוקר בלבד)' : `הבאה שנופלת: ${t.nextToGo} ב-${P.fmtHe(t.nextDropISO)}`}`
+          : `📉 התצמצום מתחיל ב-<b>${P.fmtHe(plan.taperStartISO)}</b> — יחידה אחת פחות כל ${t.step} ימים.`);
+      }
+      L.push('', `<i>${G.RECOMMENDED.why}</i>`);
+      const rows = Object.entries(G.PRESETS).map(([k, v]) => [btn((k === 'ten' ? '⭐ ' : '') + v.label, `gp:${k}`)]);
+      rows.push([btn(plan.on ? '🔇 כבה תזכורות' : '✅ הפעל תזכורות', 'gp:toggle')]);
+      rows.push([btn('📉 תוכנית הצמצום', 'T:taper')]);
+      return send(env, chatId, L.join('\n'), { reply_markup: inline(rows) });
+    }
+    case 'taper': return send(env, chatId, C.TAPER, { reply_markup: inline([[btn('🍬 תוכנית המסטיק', 'gp:show')]]) });
     case 'keyboard': {
       meta.kbHidden = !meta.kbHidden;
       await putMeta(env, meta);
@@ -909,11 +994,14 @@ async function recordWave(env, iso, now, kind) {
 
 // ---------- רישום מסטיק ----------
 async function logGum(chatId, env, iso, meta, now) {
-  const day = await updateDay(env, iso, d => { d.gum += 1; });
-  if (now) await recordEvent(env, iso, now, 'g');
+  const day = await updateDay(env, iso, d => { d.gum += 1; d.gumExtra = (d.gumExtra || 0) + 1; });
+  if (now) await recordEvent(env, iso, now, 'g', { extra: true });
   const m = await getMeta(env); m.totals.gum += 1; await putMeta(env, m);
 
-  const lines = [`🍬 נרשם. מסטיק 2 מ״ג היום: <b>${day.gum}</b>`];
+  const plan = { ...G.DEFAULT_PLAN, ...(meta.gumPlan || {}) };
+  const active = plan.on ? G.activeTimes(plan, iso) : [];
+  const lines = [`🍬 <b>נרשם — מסטיק נוסף, מחוץ לתוכנית.</b>`];
+  lines.push(`היום: <b>${day.gum}</b> סה״כ · ${day.gumSched || 0} מתוזמנים${active.length ? ` מתוך ${active.length}` : ''} · ${day.gumExtra || 0} נוספים`);
   if (day.gum % 4 === 1) {
     lines.push('', '<b>לעוס-והנח:</b> ללעוס עד עקצוץ ← להפסיק ← להניח בין החניכיים ללחי ← לחזור כשהעקצוץ נחלש. ~30 דקות.');
   }
@@ -974,6 +1062,76 @@ async function onCallback(cb, env) {
   }
 
   if (data === 'noop') return answer(env, cb.id);
+
+  // --- בחירת תוכנית המסטיק ---
+  if (data.startsWith('gp:')) {
+    const what = data.slice(3);
+    if (what === 'show') { await answer(env, cb.id); return runCommand('gumplan', '', chatId, env, meta, pl, iso, now); }
+    const plan = { ...G.DEFAULT_PLAN, ...(meta.gumPlan || {}) };
+    if (what === 'toggle') { plan.on = !plan.on; }
+    else if (G.PRESETS[what]) { plan.times = G.PRESETS[what].times; plan.on = true; }
+    meta.gumPlan = plan; await putMeta(env, meta);
+    await answer(env, cb.id, 'עודכן');
+    return runCommand('gumplan', '', chatId, env, meta, pl, iso, now);
+  }
+
+  // --- אישור תזכורת מסטיק ---
+  if (data.startsWith('gr:')) {
+    const [, what, time] = data.split(':');
+    const plan = { ...G.DEFAULT_PLAN, ...(meta.gumPlan || {}) };
+    const total = G.activeTimes(plan, iso).length;
+
+    if (what === 's') {                                  // דחייה ב-20 דקות
+      delete meta.sent[`${iso}:gum:${time}`];
+      const [hh, mm] = time.split(':').map(Number);
+      const nt = `${String(Math.floor((hh * 60 + mm + 20) / 60) % 24).padStart(2, '0')}:${String((hh * 60 + mm + 20) % 60).padStart(2, '0')}`;
+      meta.snoozed = { ...(meta.snoozed || {}), [`${iso}:${time}`]: nt };
+      await putMeta(env, meta);
+      await answer(env, cb.id, 'נדחה ב-20 דק׳');
+      return edit(env, chatId, msgId, `⏰ <i>נדחה. אזכיר שוב בסביבות ${nt}.</i>`, { reply_markup: inline([]) });
+    }
+
+    if (what === 'y') {
+      const day = await updateDay(env, iso, d => { d.gum += 1; d.gumSched = (d.gumSched || 0) + 1; });
+      await recordEvent(env, iso, now, 'g', { sched: time });
+      const m2 = await getMeta(env); m2.totals.gum += 1; await putMeta(env, m2);
+      await answer(env, cb.id, 'נרשם 🍬');
+      const extra = day.gum >= (m2.gumSoftCap || 15)
+        ? `\n\n⚠️ <b>${day.gum} יחידות היום.</b> בדוק את המקסימום שעל האריזה שלך ואל תחרוג ממנו.`
+        : '';
+      return edit(env, chatId, msgId,
+        `✅ <b>${time} — נלקח.</b> ${day.gum} מתוך ${total} להיום.${extra}`, { reply_markup: inline([]) });
+    }
+
+    // 'n' — לא לקח
+    const day = await updateDay(env, iso, d => { d.gumMissed = (d.gumMissed || 0) + 1; });
+    await answer(env, cb.id, 'נרשם');
+    return edit(env, chatId, msgId, [
+      `❌ <b>${time} — לא נלקח.</b> ${day.gum} מתוך ${total} להיום · הוחמצו: ${day.gumMissed}`,
+      '',
+      '<i>בלי אשמה — זה נתון, לא ציון. אבל שווה לדעת: היצמדות גבוהה יותר ב-6 השבועות הראשונים נמצאה קשורה לשיעורי הימנעות גבוהים יותר עד שנה. תת-שימוש הוא הכשל הנפוץ, לא המינון.</i>',
+    ].join('\n'), { reply_markup: inline([[btn('🍬 לקחתי עכשיו', `gr:y:${time}`)]]) });
+  }
+
+  // --- פתיחת התצמצום ---
+  if (data.startsWith('tp:')) {
+    const what = data.slice(3);
+    const plan = { ...G.DEFAULT_PLAN, ...(meta.gumPlan || {}) };
+    if (what === 'go') {
+      plan.confirmedTaper = true; plan.taperStartISO = iso;
+      meta.gumPlan = plan; await putMeta(env, meta);
+      await answer(env, cb.id, 'התצמצום התחיל');
+      const t = G.taperInfo(plan, iso);
+      return send(env, chatId, `📉 <b>התצמצום התחיל.</b>\n\n${t.start} יחידות עכשיו · יחידה אחת פחות כל ${t.step} ימים · הראשונה שנופלת: <b>${t.nextToGo}</b> ב-${P.fmtHe(t.nextDropISO)}.\n\nיחידת הבוקר נשארת אחרונה — היא מכסה את הלילה בלי מדבקה.\n\n<i>עולים גלים? /מסטיקים ואני מחזיר אחורה. אין פרס על מהירות.</i>`);
+    }
+    if (what === 'wait') {
+      plan.taperStartISO = P.addDaysISO(iso, 7); plan.confirmedTaper = false;
+      meta.gumPlan = plan; await putMeta(env, meta);
+      await answer(env, cb.id, 'נדחה בשבוע');
+      return send(env, chatId, `⏸️ <b>נדחה ל-${P.fmtHe(plan.taperStartISO)}.</b> התוכנית נשארת ${G.sortTimes(plan.times).length} יחידות ביום.\n\n<i>זו ההחלטה הנכונה אם המצב לא יציב. הניקוטין הוא הזנב, לא הכלב.</i>`);
+    }
+    return answer(env, cb.id);
+  }
 
   // --- יישור רוטציית המדבקה למקום שהוא באמת הדביק היום ---
   if (data.startsWith('site:')) {

@@ -12,20 +12,26 @@ export const TOTAL_DAYS = 70;
 const DOW_HE = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'];
 const DOW_EN = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-// רוטציית מקום הדבקה — ששת המקומות שקובי מדביק בהם בפועל.
-// הסדר לא שרירותי: הוא מחליף צד בכל יום ומחליף גובה, כך שכל שני
-// ימים עוקבים נמצאים רחוק אחד מהשני ולעור יש זמן להתאושש.
+// רוטציית מקום הדבקה — ששת המקומות שקובי מדביק בהם בפועל, בסדר שהוא
+// באמת עובד בו: זוג-זוג לפי גובה, שמאל ואז ימין, מלמעלה למטה.
+// שני ימים עוקבים תמיד בצדדים נגדיים, ואותו גובה חוזר רק כל 6 ימים.
 // שים לב: עם 6 מקומות, אותו מקום חוזר כל 6 ימים — יום אחד פחות
 // מכלל ה"לא אותו אזור תוך 7 ימים". אם מופיע גירוי, שווה להוסיף
 // מקום שביעי (למשל זרוע עליונה) ואז המחזור נעשה 7 ימים.
 export const SITES = [
   'כתף שמאל',
-  'גב תחתון – ימין',
-  'גב עליון – שמאל',
   'כתף ימין',
-  'גב תחתון – שמאל',
+  'גב עליון – שמאל',
   'גב עליון – ימין',
+  'גב תחתון – שמאל',
+  'גב תחתון – ימין',
 ];
+
+// עוגן הרוטציה — נקודה אחת שנמדדה מול המציאות ולא חושבה:
+// ב-27.7.2026 המדבקה הייתה על כתף ימין (אינדקס 1).
+// כל שאר הימים נגזרים מכאן, קדימה ואחורה. אם הרוטציה תיסחף שוב,
+// מתקנים כאן — או ב-/מקום, שמזיז את siteOffset מעל העוגן הזה.
+export const SITE_ANCHOR = { iso: '2026-07-27', index: 1 };
 
 const PHASES = [
   { key: 'full',  label: 'מינון מלא', dose: 21, product: 'Nicotinell TTS 30', days: 42 },
@@ -119,7 +125,11 @@ export function planFor(iso, siteOffset = 0) {
   let acc = 0, ph = PHASES[PHASES.length - 1];
   for (const p of PHASES) { if (i < acc + p.days) { ph = p; break; } acc += p.days; }
 
+  // מקום ההדבקה נמדד מהעוגן ולא ממספר היום בתוכנית, כדי שהוא יישאר
+  // נכון גם אם התוכנית תזוז. siteOffset הוא תיקון ידני מעל העוגן.
   const L = SITES.length;
+  const siteIndex = ((((SITE_ANCHOR.index + diffDays(SITE_ANCHOR.iso, iso) + siteOffset) % L) + L) % L);
+
   return {
     iso, n, i,
     week: Math.floor(i / 7) + 1,
@@ -127,8 +137,8 @@ export function planFor(iso, siteOffset = 0) {
     phase: ph.label,
     phaseKey: ph.key,
     product: ph.product,
-    site: SITES[(((i + siteOffset) % L) + L) % L],
-    siteIndex: (((i + siteOffset) % L) + L) % L,
+    site: SITES[siteIndex],
+    siteIndex,
     clean: i,                                  // ימים נקיים שהושלמו
     focus: WEEK_FOCUS[Math.floor(i / 7)] || WEEK_FOCUS[WEEK_FOCUS.length - 1],
     tip: DAY_TIPS[i] || null,
