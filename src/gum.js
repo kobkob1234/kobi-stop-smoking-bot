@@ -79,7 +79,10 @@ export const sortTimes = ts => [...new Set(ts)].sort((a, b) => toMin(a) - toMin(
 export function activeTimes(plan, iso) {
   const all = sortTimes(plan.times || []);
   if (!all.length) return [];
-  if (!plan.taperStartISO) return all;
+  // התצמצום לא מתחיל מעצמו בתאריך. הוא דורש אישור מפורש שהמצב יציב,
+  // כי התנאי בתוכנית הוא מצב ולא תאריך — "אם צריך להתאמץ כדי להפחית,
+  // עוד לא הזמן". בלי אישור נשארים על המספר המלא, וזו הכשל הבטוח.
+  if (!plan.taperStartISO || !plan.confirmedTaper) return all;
 
   const days = diffDays(plan.taperStartISO, iso);
   if (days < 0) return all;
@@ -94,6 +97,11 @@ export function activeTimes(plan, iso) {
 /** מתי תיפול היחידה הבאה, ולאיזה יעד — לתצוגה */
 export function taperInfo(plan, iso) {
   if (!plan.taperStartISO) return null;
+  if (!plan.confirmedTaper) {
+    return { pending: true, active: sortTimes(plan.times || []).length,
+             start: sortTimes(plan.times || []).length, step: Math.max(1, plan.stepDays || 4),
+             dropsSoFar: 0, atFloor: false, nextDropISO: null, nextToGo: null };
+  }
   const all = sortTimes(plan.times || []);
   const active = activeTimes(plan, iso);
   const step = Math.max(1, plan.stepDays || 4);

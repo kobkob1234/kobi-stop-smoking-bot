@@ -313,8 +313,10 @@ async function tick(env) {
     }
 
     // --- 15.9: יום פתיחת התצמצום — שואלים לפני שמתחילים ---
-    if (plan.on && plan.taperStartISO && iso === plan.taperStartISO && !plan.confirmedTaper
-        && now.minutes >= 9 * 60 && !meta.sent[`${iso}:taperask`]) {
+    const taperDue = plan.on && plan.taperStartISO && !plan.confirmedTaper
+      && P.diffDays(plan.taperStartISO, iso) >= 0
+      && P.diffDays(plan.taperStartISO, iso) % 3 === 0;   // חוזר על השאלה כל 3 ימים
+    if (taperDue && now.minutes >= 9 * 60 && !meta.sent[`${iso}:taperask`]) {
       meta.sent[`${iso}:taperask`] = 1;
       dirty = true;
       await send(env, meta.chatId, [
@@ -325,6 +327,8 @@ async function tick(env) {
         '<b>אבל התנאי הוא מצב, לא תאריך:</b> מתחילים רק אם צריכת המסטיק יורדת מעצמה וגלים עוברים בלי שנדרש כלום. אם צריך להתאמץ — לא הזמן.',
         '',
         '<i>אין פרס על מהירות. תצמצם שמחזיר גלים הוא תצמצם שנכשל.</i>',
+        '',
+        '<i>עד שתאשר — נשארים על המספר המלא. אשאל שוב בעוד שלושה ימים.</i>',
       ].join('\n'), {
         reply_markup: inline([
           [btn('✅ יציב — מתחילים לצמצם', 'tp:go')],
@@ -890,9 +894,11 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
         '<i>מסטיק נוסף מחוץ לתוכנית — תמיד מותר. הכפתור 🍬 במקלדת, /מסטיק, או "לקחתי מסטיק". הוא נספר בנפרד כדי שנראה מה מתוזמן ומה לפי צורך.</i>',
       ];
       if (t) {
-        L.push('', t.dropsSoFar > 0
-          ? `📉 בתצמצום: ${t.active} מתוך ${t.start} · ${t.atFloor ? 'הגעת לרצפה (בוקר בלבד)' : `הבאה שנופלת: ${t.nextToGo} ב-${P.fmtHe(t.nextDropISO)}`}`
-          : `📉 התצמצום מתחיל ב-<b>${P.fmtHe(plan.taperStartISO)}</b> — יחידה אחת פחות כל ${t.step} ימים.`);
+        L.push('', t.pending
+          ? `📉 תצמצום: <b>ממתין לאישור שלך</b> · מתוכנן מ-${P.fmtHe(plan.taperStartISO)}, יחידה אחת פחות כל ${t.step} ימים. עד שתאשר — נשארים על ${t.start}.`
+          : t.dropsSoFar > 0
+            ? `📉 בתצמצום: ${t.active} מתוך ${t.start} · ${t.atFloor ? 'הגעת לרצפה (בוקר בלבד)' : `הבאה שנופלת: ${t.nextToGo} ב-${P.fmtHe(t.nextDropISO)}`}`
+            : `📉 התצמצום אושר ומתחיל ב-<b>${P.fmtHe(plan.taperStartISO)}</b> — יחידה אחת פחות כל ${t.step} ימים.`);
       }
       L.push('', `<i>${G.RECOMMENDED.why}</i>`);
       const rows = Object.entries(G.PRESETS).map(([k, v]) => [btn((k === 'ten' ? '⭐ ' : '') + v.label, `gp:${k}`)]);
