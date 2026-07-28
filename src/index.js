@@ -18,7 +18,7 @@ import { getMeta, putMeta, getDay, updateDay, pruneSent } from './store.js';
 // מזהה בנייה. מתעדכן בכל פריסה ומוחזר ב-/diag, כדי שאפשר יהיה לדעת
 // בוודאות איזו גרסה חיה במקום לנחש אחרי sleep. ארבע פעמים היום בדיקה
 // רצה מול הגרסה הקודמת והסקתי מזה מסקנה שגויה.
-export const BUILD = '112850';
+export const BUILD = '113928';
 
 // ---------- משבצות הזמן היומיות (שעון ישראל) ----------
 const SLOTS = [
@@ -171,10 +171,14 @@ export default {
     if (url.pathname === '/health') return new Response('ok');
 
     // בדיקת שפיות + קרון-גיבוי מ-GitHub Actions (מוגן ב-WEBHOOK_SECRET)
-    if (['/diag', '/cron', '/export', '/send', '/ask'].includes(url.pathname)) {
-      if (!env.WEBHOOK_SECRET || url.searchParams.get('key') !== env.WEBHOOK_SECRET) {
-        return new Response('forbidden', { status: 403 });
-      }
+    if (['/diag', '/cron', '/export', '/send', '/ask', '/trigger'].includes(url.pathname)) {
+      // /trigger מקבל גם TRIGGER_KEY נפרד — הסוד הזה יושב בקיצור על
+      // הטלפון, ולא רצוי שיהיה אותו סוד שמגן על /export ועל הווביהוק.
+      const given = url.searchParams.get('key');
+      const okKey = (env.WEBHOOK_SECRET && given === env.WEBHOOK_SECRET)
+        || (url.pathname === '/trigger' && env.TRIGGER_KEY && given === env.TRIGGER_KEY);
+      if (!okKey) return new Response('forbidden', { status: 403 });
+
       if (url.pathname === '/cron') {
         await tick(env);
         return new Response('ticked');
@@ -219,6 +223,38 @@ export default {
           provider: AI.provider(env),
         });
       }
+      // ------------------------------------------------------------------
+      //  /trigger — הפעלה בקריאה אחת, בשביל כפתור פיזי.
+      //
+      //  ברגע דחף אמיתי, "לפתוח נעילה → למצוא טלגרם → לגלול → ללחוץ" הוא
+      //  יותר מדי. עם נקודת הקצה הזאת אפשר לחבר קיצור של מערכת ההפעלה:
+      //  הקשה כפולה על גב האייפון, כפתור הפעולה, תג NFC על הארנק, או
+      //  "היי סירי, יש לי דחף" — והזרימה מופעלת בלי לגעת באפליקציה.
+      //
+      //  level=1 דחף רגיל · level=2 תירוצים לצאת · level=3 בדרך לקנות
+      //  what=gum רישום מסטיק · what=patch רישום מדבקה
+      //
+      //  מקבל גם TRIGGER_KEY נפרד, כדי שהסוד שיושב בקיצור בטלפון לא
+      //  יהיה אותו סוד שמגן על כל שאר נקודות הקצה.
+      // ------------------------------------------------------------------
+      if (url.pathname === '/trigger') {
+        const meta = await getMeta(env);
+        if (!meta.chatId) return new Response('not linked', { status: 409 });
+        const now = P.il();
+        const iso = now.iso;
+        const pl = P.planFor(iso, meta.siteOffset);
+        const what = (url.searchParams.get('what') || '').toLowerCase();
+
+        if (what === 'gum')   { await logGum(meta.chatId, env, iso, meta, now);   return new Response('🍬 מסטיק נרשם'); }
+        if (what === 'patch') { await logPatch(meta.chatId, env, iso, pl, meta, now); return new Response('🩹 מדבקה נרשמה'); }
+
+        const level = parseInt(url.searchParams.get('level') || '1', 10);
+        if (level === 3) { await startEnRoute(meta.chatId, env, meta, iso, now); return new Response('🆘 בדרך לקנות — נשלח, ובת הזוג עודכנה'); }
+        if (level === 2) { await startPlanning(meta.chatId, env, meta, iso, now); return new Response('🧠 תירוצים לצאת — נשלח, ובת הזוג עודכנה'); }
+        await startWave(meta.chatId, env, meta, iso, now);
+        return new Response('🌊 דחף — הזרימה נשלחה לטלגרם');
+      }
+
       if (url.pathname === '/export') {
         const now = P.il();
         const days = await ANL.collect(env, now.iso, parseInt(url.searchParams.get('days') || '120', 10));
