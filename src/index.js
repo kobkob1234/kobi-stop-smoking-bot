@@ -18,7 +18,7 @@ import { getMeta, putMeta, getDay, updateDay, pruneSent } from './store.js';
 // מזהה בנייה. מתעדכן בכל פריסה ומוחזר ב-/diag, כדי שאפשר יהיה לדעת
 // בוודאות איזו גרסה חיה במקום לנחש אחרי sleep. ארבע פעמים היום בדיקה
 // רצה מול הגרסה הקודמת והסקתי מזה מסקנה שגויה.
-export const BUILD = '104933';
+export const BUILD = '112850';
 
 // ---------- משבצות הזמן היומיות (שעון ישראל) ----------
 const SLOTS = [
@@ -113,7 +113,17 @@ const RX = {
   // וסימון שגוי כמעידה גם מזין את גלאי ההסלמה בנתון כזב.
   slipNegated: /(?:לא|בלי ש|התגברתי|נמנעתי|הצלחתי לא|כמעט)\s*(?:קניתי|שאפתי|שאבתי|נפלתי|מעדתי|נכנעתי)/,
 
-  // דרגה 2: המחשבות מייצרות תירוצים לצאת. נבדק **לפני** urge.
+  // דרגה 3: כבר בדרך. נבדק **ראשון** — בלעדיו "אני בדרך לחנות" נתפס
+  // על ידי RX.urge ומנותב לדרגה 1, כלומר הניסוח הדחוף ביותר קיבל את
+  // התגובה הרפה ביותר ובלי דיווח לבת הזוג.
+  enroute: new RegExp([
+    'בדרך לחנות', 'בדרך לקנות', 'בדרך לפיצוצי', 'בדרך לקיוסק',
+    'הולך לקנות', 'יוצא לקנות', 'נוסע לקנות', 'הולך לחנות',
+    'עומד בחנות', 'נכנס לחנות', 'בקופה', 'היד על הארנק', 'הכסף ביד',
+    'עוד רגע קונה', 'כבר בחנות',
+  ].join('|')),
+
+  // דרגה 2: המחשבות מייצרות תירוצים לצאת. נבדק לפני urge.
   planning: new RegExp([
     'מחפש (?:תירוצ|סיב|דרך|דרכים)', 'מחפשות (?:תירוצ|סיב|דרך|דרכים)',
     'תירוצ', 'משכנע את עצמי', 'מצדיק', 'מתכנן',
@@ -597,8 +607,11 @@ async function onMessage(msg, env) {
   //     ייתפס כ"רוצה לקנות".
   if (RX.slip.test(t) && !RX.slipNegated.test(t)) return R('slip');
 
-  // 2 · דרגה 2 קודם: תירוצים לצאת הם התחנה הראשונה בשרשרת, וזו
-  //     הדרגה שמדווחת לשותפה. נבדקת לפני דחף רגיל.
+  // 2 · דרגה 3 ראשונה: הדחופה מכולן, ולכן היא זוכה על כל השאר.
+  if (RX.enroute.test(t) && !RX.negated.test(t)) return R('enroute');
+
+  // 3 · דרגה 2: תירוצים לצאת הם התחנה הראשונה בשרשרת, וזו הדרגה
+  //     שמדווחת לשותפה. נבדקת לפני דחף רגיל.
   if (RX.planning.test(t) && !RX.negated.test(t)) return R('planning');
 
   // 3 · דחף רגיל — הרגע שכל הבוט קיים בשבילו.
@@ -703,7 +716,12 @@ async function converse(text, chatId, env, meta, pl, iso, now) {
         AI.noteUse(meta, iso);
         await putMeta(env, meta);
 
-        // כוונות שדורשות פעולה — הזרימה האמיתית, לא רק תשובה
+        // כוונות שדורשות פעולה — הזרימה האמיתית, לא רק תשובה.
+        // שתי הדרגות החמורות חייבות להיות כאן: בלעדיהן טקסט חופשי
+        // שהמודל מסווג נכון היה מקבל תשובה בצ׳אט בלי להפעיל את הזרימה
+        // ובלי שהדיווח לבת הזוג יֵצא — כלומר בדיוק ההפוך מהכוונה.
+        if (res.intent === 'urge_enroute')  { if (res.reply) await send(env, chatId, res.reply); return R('enroute'); }
+        if (res.intent === 'urge_planning') { if (res.reply) await send(env, chatId, res.reply); return R('planning'); }
         if (res.intent === 'urge')  { if (res.reply) await send(env, chatId, res.reply); return R('wave'); }
         if (res.intent === 'slip')  { if (res.reply) await send(env, chatId, res.reply); return R('slip'); }
         if (res.intent === 'leaving_home') return R('out');
