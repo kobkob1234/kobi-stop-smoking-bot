@@ -32,7 +32,7 @@ export const DEFAULT_META = {
   jarTotal: 0,             // מה שהועבר פיזית לצנצנת
   siteOffset: 0,           // יישור רוטציית המדבקה למציאות (/מקום), מעל SITE_ANCHOR
   siteVer: 0,              // גרסת מערך המקומות שה-siteOffset יושר מולה
-  kbHidden: false,         // האם מקלדת הכפתורים מוסתרת (/מקלדת)
+  kbMode: 'fold',          // 'open' פתוחה תמיד · 'fold' מתקפלת · 'off' מוסתרת
   partnerMute: false,      // השתקת הדיווח האוטומטי לשותף/ה
   lastPartnerAlert: 0,     // מגרה של 30 דקות בין דיווחים מאותה דרגה
   lastPartnerAlertLevel: 0,// דרגת הדיווח האחרון — הסלמה ל-2 עוברת תמיד

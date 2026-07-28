@@ -4,7 +4,7 @@
 //  scheduled() → cron כל 10 דקות; מחליט לפי שעון ישראל מה לשלוח
 // ==========================================================================
 
-import { send, edit, answer, inline, btn, esc, MAIN_KB, KB_REMOVE, setCommands } from './telegram.js';
+import { send, edit, answer, inline, btn, esc, MAIN_KB, mainKb, KB_REMOVE, setCommands } from './telegram.js';
 import * as P from './plan.js';
 import * as C from './content.js';
 import * as M from './messages.js';
@@ -18,7 +18,7 @@ import { getMeta, putMeta, getDay, updateDay, pruneSent } from './store.js';
 // מזהה בנייה. מתעדכן בכל פריסה ומוחזר ב-/diag, כדי שאפשר יהיה לדעת
 // בוודאות איזו גרסה חיה במקום לנחש אחרי sleep. ארבע פעמים היום בדיקה
 // רצה מול הגרסה הקודמת והסקתי מזה מסקנה שגויה.
-export const BUILD = '113928';
+export const BUILD = '114925';
 
 // ---------- משבצות הזמן היומיות (שעון ישראל) ----------
 const SLOTS = [
@@ -50,7 +50,8 @@ const BOT_COMMANDS = [
   { command: 'site',    description: '📍 מקומות ההדבקה ויישור הרוטציה' },
   { command: 'gumplan', description: '🍬 תוכנית תזכורות המסטיק' },
   { command: 'taper',   description: '📉 תצמצום המסטיק' },
-  { command: 'keyboard', description: '⌨️ הסתרה/החזרה של מקלדת הכפתורים' },
+  { command: 'keyboard', description: '⌨️ מצב המקלדת: פתוחה / מתקפלת / מוסתרת' },
+  { command: 'button',   description: '📲 כפתור פיזי — הפעלה בלי לפתוח את האפליקציה' },
   { command: 'review',  description: '🗓️ סקירה שבועית' },
   { command: 'phones',  description: '📞 טלפוני תמיכה' },
   { command: 'help',    description: '❓ עזרה' },
@@ -90,6 +91,7 @@ const ALIAS = {
   planning: ['planning', 'תירוצים', 'שרשרת', 'מחשבות'],
   enroute:  ['enroute', 'בדרך', 'סוס'],
   keyboard: ['keyboard', 'מקלדת'],
+  button:   ['button', 'כפתור'],
   isometric:['isometric', 'איזומטרי', 'איזומטרית', 'בישיבה'],
 };
 
@@ -566,7 +568,7 @@ async function onMessage(msg, env) {
     const arg = text.slice(1 + raw[0].length).trim();
     const cmd = resolveCmd(word);
     if (cmd) { meta.awaiting = null; await putMeta(env, meta); return runCommand(cmd, arg, chatId, env, meta, pl, iso, now); }
-    await send(env, chatId, 'לא הכרתי את הפקודה. /עזרה לרשימה המלאה.', { reply_markup: MAIN_KB });
+    await send(env, chatId, 'לא הכרתי את הפקודה. /עזרה לרשימה המלאה.', { reply_markup: mainKb(meta.kbMode || 'fold') });
     return;
   }
 
@@ -850,7 +852,7 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
   switch (cmd) {
     case 'start': {
       await R(M.welcome(pl, meta));
-      await send(env, chatId, 'המקלדת מוכנה 👇\n<i>אפשר לקפל אותה עם החץ שליד שדה הכתיבה, או להסתיר לגמרי עם /מקלדת.</i>', { reply_markup: MAIN_KB });
+      await send(env, chatId, 'המקלדת מוכנה 👇\n<i>⊞ שליד שדה הכתיבה פותח אותה. /מקלדת כדי שתישאר פתוחה תמיד — לחיצה אחת ברגע דחף.</i>', { reply_markup: mainKb(meta.kbMode || 'fold') });
       await setCommands(env, BOT_COMMANDS);
       return;
     }
@@ -1033,12 +1035,28 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
     }
     case 'taper': return send(env, chatId, C.TAPER, { reply_markup: inline([[btn('🍬 תוכנית המסטיק', 'gp:show')]]) });
     case 'keyboard': {
-      meta.kbHidden = !meta.kbHidden;
+      const modes = ['fold', 'open', 'off'];
+      const names = {
+        open: '📌 <b>פתוחה תמיד</b> — לחיצה אחת ברגע דחף. אין שדה כתיבה גלוי; לכתוב חופשי אפשר דרך כפתור ⊞.',
+        fold: '⊞ <b>מתקפלת</b> — נפתחת בכפתור הריבועים שליד שדה הכתיבה. שתי לחיצות, אבל הכתיבה תמיד זמינה.',
+        off:  '🔇 <b>מוסתרת</b> — בלי מקלדת. הפקודות והטקסט החופשי עובדים כרגיל.',
+      };
+      const cur = modes.includes(meta.kbMode) ? meta.kbMode : 'fold';
+      const next = arg && modes.includes(arg) ? arg : modes[(modes.indexOf(cur) + 1) % modes.length];
+      meta.kbMode = next;
       await putMeta(env, meta);
-      return meta.kbHidden
-        ? send(env, chatId, '⌨️ מקלדת הכפתורים הוסתרה. שדה הכתיבה הרגיל חזר, ואפשר פשוט לכתוב לי.\n\n/מקלדת להחזיר אותה.', { reply_markup: KB_REMOVE })
-        : send(env, chatId, '⌨️ המקלדת חזרה. אפשר לקפל אותה בכל רגע עם החץ שליד שדה הכתיבה.', { reply_markup: MAIN_KB });
+      return send(env, chatId, [
+        `⌨️ <b>המקלדת: ${next === 'open' ? 'פתוחה תמיד' : next === 'fold' ? 'מתקפלת' : 'מוסתרת'}</b>`,
+        '─────────────',
+        names[next],
+        '',
+        '<i>/מקלדת שוב כדי להחליף מצב. ולחיצה אחת גם כשהטלפון נעול — /כפתור.</i>',
+      ].join('\n'), { reply_markup: mainKb(next) });
     }
+
+    case 'button': return send(env, chatId, C.PHYSICAL_BUTTON, {
+      reply_markup: inline([[btn('⌨️ מצב המקלדת', 'kb:cycle')]]),
+    });
     case 'quiet': {
       meta.quiet = true; await putMeta(env, meta);
       return send(env, chatId, '🔇 התזכורות המתוזמנות כבויות. הפקודות עדיין עובדות. /דבר להחזיר.');
@@ -1271,6 +1289,7 @@ async function onCallback(cb, env) {
   }
 
   if (data === 'noop') return answer(env, cb.id);
+  if (data === 'kb:cycle') { await answer(env, cb.id); return runCommand('keyboard', '', chatId, env, meta, pl, iso, now); }
   if (data === 'er:start') { await answer(env, cb.id); return startEnRoute(chatId, env, meta, iso, now); }
 
   // --- דרגה 2: תירוצים לצאת ---
