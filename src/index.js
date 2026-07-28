@@ -18,7 +18,7 @@ import { getMeta, putMeta, getDay, updateDay, pruneSent } from './store.js';
 // מזהה בנייה. מתעדכן בכל פריסה ומוחזר ב-/diag, כדי שאפשר יהיה לדעת
 // בוודאות איזו גרסה חיה במקום לנחש אחרי sleep. ארבע פעמים היום בדיקה
 // רצה מול הגרסה הקודמת והסקתי מזה מסקנה שגויה.
-export const BUILD = '114925';
+export const BUILD = '115951';
 
 // ---------- משבצות הזמן היומיות (שעון ישראל) ----------
 const SLOTS = [
@@ -241,6 +241,7 @@ export default {
       // ------------------------------------------------------------------
       if (url.pathname === '/trigger') {
         const meta = await getMeta(env);
+        if (url.searchParams.get('dry') === '1') meta.partnerMute = true;   // בדיקה בלי להטריד אותה
         if (!meta.chatId) return new Response('not linked', { status: 409 });
         const now = P.il();
         const iso = now.iso;
@@ -1111,11 +1112,24 @@ async function notifyPartner(env, meta, text) {
  * מגרה: דיווח מאותה דרגה או נמוכה ממנה לא חוזר תוך 30 דקות, אבל
  * **הסלמה לדרגה גבוהה יותר עוברת תמיד** — זה בדיוק מה שהיא צריכה לדעת.
  */
-async function alertPartner(env, meta, level) {
+async function alertPartner(env, meta, level, dry = false) {
   if (level < 2) return false;
+  // בדיקות שלי שלחו לה התראות דחופות אמיתיות. dry מאפשר לאמת את
+  // הזרימה בלי להפעיל אותה על אדם שלישי.
+  if (dry) { console.log('PARTNER דרגה', level, '— dry, לא נשלח'); return false; }
   if (!meta.partnerChatId || meta.partnerMute) return false;
-  const fresh = Date.now() - (meta.lastPartnerAlert || 0) < 30 * 60000;
-  if (fresh && (meta.lastPartnerAlertLevel || 0) >= level) return true;
+
+  // מגרה של 90 שניות, ולא של 30 דקות, ורק מול אותה דרגה בדיוק.
+  //
+  // הגרסה הקודמת חסמה 30 דקות וגם "כלפי מטה" (דיווח דרגה 3 חסם דרגה 2),
+  // וגרוע מזה — היא סימנה reported=true בלי לשלוח כלום, כך שגם הנתונים
+  // וגם ההודעה למשתמש אמרו שדווח כשלא. בפועל זה גרם ללחיצה על
+  // "אני בדרך לקנות" לא להגיע אליה בכלל.
+  //
+  // בדרגות האלה עדיף שתקבל פעמיים מאשר שלא תקבל. 90 שניות מגנים רק
+  // מפני לחיצה כפולה בטעות, ואין להאריך את זה.
+  const sameLevel = (meta.lastPartnerAlertLevel || 0) === level;
+  if (sameLevel && Date.now() - (meta.lastPartnerAlert || 0) < 90 * 1000) return true;
 
   const body = level >= 3
     ? [`🆘 <b>${C.PARTNER_MSG_ENROUTE}</b>`, '',
@@ -1127,10 +1141,11 @@ async function alertPartner(env, meta, level) {
        '<b>מה שעוזר: אם הוא יוצא — לצאת איתו.</b> זה המצב שהתוכנית מייעדת לך.',
        '<i>זה דיווח ולא בקשת רשות. ולעולם לא להציע "אז קח שאכטה".</i>'];
 
-  if (!(await notifyPartner(env, meta, body.join('\n')))) return false;
+  const ok = await notifyPartner(env, meta, body.join('\n'));
+  console.log('PARTNER דרגה', level, ok ? 'נשלח ✓' : 'נכשל ✗');
+  if (!ok) return false;
   meta.lastPartnerAlert = Date.now();
   meta.lastPartnerAlertLevel = level;
-  console.log('PARTNER דיווח נשלח, דרגה', level);
   return true;
 }
 
