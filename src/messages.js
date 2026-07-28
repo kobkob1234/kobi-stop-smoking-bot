@@ -278,6 +278,8 @@ export function sos(step) {
         kb: inline([
           [btn('🚶 פונה 180° ומתחיל ללכת ←', 'sos:2')],
           [btn('🍬 לקחתי מסטיק ✓', 'g')],
+          [btn('🧠 והמחשבות מחפשות דרך לקנות', 'pl:start')],
+          [btn('🆘 אני בדרך לקנות', 'er:start')],
         ]),
       };
     case 2:

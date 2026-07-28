@@ -15,6 +15,11 @@ import * as INT from './intent.js';
 import * as G from './gum.js';
 import { getMeta, putMeta, getDay, updateDay, pruneSent } from './store.js';
 
+// מזהה בנייה. מתעדכן בכל פריסה ומוחזר ב-/diag, כדי שאפשר יהיה לדעת
+// בוודאות איזו גרסה חיה במקום לנחש אחרי sleep. ארבע פעמים היום בדיקה
+// רצה מול הגרסה הקודמת והסקתי מזה מסקנה שגויה.
+export const BUILD = '104933';
+
 // ---------- משבצות הזמן היומיות (שעון ישראל) ----------
 const SLOTS = [
   { id: 'morning', h: 7,  m: 0,  grace: 240 },
@@ -27,6 +32,8 @@ const SLOTS = [
 
 const BOT_COMMANDS = [
   { command: 'wave',    description: '🌊 יש לי דחף עכשיו' },
+  { command: 'planning', description: '🧠 המחשבות מחפשות דרך לצאת ולקנות' },
+  { command: 'enroute',  description: '🆘 אני בדרך לקנות' },
   { command: 'out',     description: '🚪 יוצא מהבית — טקס 20 השניות' },
   { command: 'gum',     description: '🍬 רישום מסטיק 2 מ״ג' },
   { command: 'patch',   description: '🩹 רישום מדבקה' },
@@ -80,6 +87,8 @@ const ALIAS = {
   ask:      ['ask', 'שאל', 'שאלה'],
   ai:       ['ai'],
   site:     ['site', 'מקום', 'מקומות'],
+  planning: ['planning', 'תירוצים', 'שרשרת', 'מחשבות'],
+  enroute:  ['enroute', 'בדרך', 'סוס'],
   keyboard: ['keyboard', 'מקלדת'],
   isometric:['isometric', 'איזומטרי', 'איזומטרית', 'בישיבה'],
 };
@@ -103,6 +112,15 @@ const RX = {
   // ...אלא אם זה בשלילה. "התגברתי, לא קניתי" הוא ניצחון, לא מעידה —
   // וסימון שגוי כמעידה גם מזין את גלאי ההסלמה בנתון כזב.
   slipNegated: /(?:לא|בלי ש|התגברתי|נמנעתי|הצלחתי לא|כמעט)\s*(?:קניתי|שאפתי|שאבתי|נפלתי|מעדתי|נכנעתי)/,
+
+  // דרגה 2: המחשבות מייצרות תירוצים לצאת. נבדק **לפני** urge.
+  planning: new RegExp([
+    'מחפש (?:תירוצ|סיב|דרך|דרכים)', 'מחפשות (?:תירוצ|סיב|דרך|דרכים)',
+    'תירוצ', 'משכנע את עצמי', 'מצדיק', 'מתכנן',
+    'סתם אצא', 'סתם לצאת', 'סתם אסתובב', 'צריך לצאת לרגע', 'חייב אוויר',
+    'נגמר ה', 'אני צריך לקנות משהו', 'אקפוץ ל', 'רק אקנה',
+    'מחשבות מחפשות', 'הראש מחפש', 'תחנה ראשונה',
+  ].join('|')),
 
   // דחף או כוונת קנייה — הווה/עתיד
   urge: new RegExp([
@@ -215,6 +233,7 @@ export default {
         today: { gum: day.gum, waves: day.waves, surfed: day.surfed, patch: day.patch },
         totals: meta.totals,
         ai: AI.provider(env),
+        build: BUILD,
         kbTopics: KB.KB.length,
         gum: (() => {
           const gp = { ...G.DEFAULT_PLAN, ...(meta.gumPlan || {}) };
@@ -510,6 +529,8 @@ async function onMessage(msg, env) {
     // הטקסט הישן נשאר ממופה: מקלדת שכבר מוצגת במכשיר לא מתעדכנת
     // לבד, ולחיצה עליה חייבת להמשיך לעבוד.
     '🌊 יש לי דחף עכשיו': 'wave', '🌊 יש לי גל': 'wave',
+    '🧠 המחשבות מחפשות דרך לקנות': 'planning',
+    '🆘 אני בדרך לקנות': 'enroute',
     '🚪 יוצא מהבית': 'out', '🍬 מסטיק': 'gum',
     '🩹 מדבקה': 'patch', '🧰 כלים': 'tools', '📊 סטטוס': 'status',
   };
@@ -576,7 +597,11 @@ async function onMessage(msg, env) {
   //     ייתפס כ"רוצה לקנות".
   if (RX.slip.test(t) && !RX.slipNegated.test(t)) return R('slip');
 
-  // 2 · דחף / כוונת קנייה — הרגע שכל הבוט קיים בשבילו.
+  // 2 · דרגה 2 קודם: תירוצים לצאת הם התחנה הראשונה בשרשרת, וזו
+  //     הדרגה שמדווחת לשותפה. נבדקת לפני דחף רגיל.
+  if (RX.planning.test(t) && !RX.negated.test(t)) return R('planning');
+
+  // 3 · דחף רגיל — הרגע שכל הבוט קיים בשבילו.
   //     כאן מעדיפים בכוונה זיהוי-יתר: התראת שווא עולה לחיצה אחת,
   //     החמצה עולה מכשיר חדש.
   if (RX.urge.test(t) && !RX.negated.test(t)) return R('wave');
@@ -788,6 +813,8 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
         ]),
       });
     case 'wave': return startWave(chatId, env, meta, iso, now);
+    case 'planning': return startPlanning(chatId, env, meta, iso, now);
+    case 'enroute':  return startEnRoute(chatId, env, meta, iso, now);
     case 'out':   return R(M.outing(pl, iso, day, meta, now));
     case 'gum':   return logGum(chatId, env, iso, meta, now);
     case 'patch': return logPatch(chatId, env, iso, pl, meta, now);
@@ -1003,36 +1030,114 @@ async function notifyPartner(env, meta, text) {
  *
  * מגרה של 30 דקות: אפיזודה אחת עם כמה גלים רצופים לא מפציצה אותה.
  */
+/**
+ * מדווח לשותפה — **רק בדרגות החמורות** (2 ו-3).
+ *
+ * דחף רגיל לא מגיע אליה: הוא חלק מהיום, והיא לא צריכה להיות צד לכל
+ * אחד מהם. מה שכן מגיע: מחשבות שמייצרות תירוצים לצאת, ובדרך לקנות.
+ *
+ * מגרה: דיווח מאותה דרגה או נמוכה ממנה לא חוזר תוך 30 דקות, אבל
+ * **הסלמה לדרגה גבוהה יותר עוברת תמיד** — זה בדיוק מה שהיא צריכה לדעת.
+ */
+async function alertPartner(env, meta, level) {
+  if (level < 2) return false;
+  if (!meta.partnerChatId || meta.partnerMute) return false;
+  const fresh = Date.now() - (meta.lastPartnerAlert || 0) < 30 * 60000;
+  if (fresh && (meta.lastPartnerAlertLevel || 0) >= level) return true;
+
+  const body = level >= 3
+    ? [`🆘 <b>${C.PARTNER_MSG_ENROUTE}</b>`, '',
+       '<i>זו הדרגה הדחופה — הוא בדרך לקנות ולחץ על הכפתור במקום להמשיך.</i>',
+       '<b>אם אפשר: תתקשרי אליו עכשיו.</b> שיחה אחת מפרקת את הסודיות שהסבבים חיו עליה.',
+       '<i>ולעולם לא להציע "אז קח שאכטה".</i>']
+    : [`🧠 <b>${C.PARTNER_MSG_PLANNING}</b>`, '',
+       '<i>לא סתם דחף — מחשבות שמייצרות תירוצים לצאת. זו התחנה הראשונה בשרשרת.</i>',
+       '<b>מה שעוזר: אם הוא יוצא — לצאת איתו.</b> זה המצב שהתוכנית מייעדת לך.',
+       '<i>זה דיווח ולא בקשת רשות. ולעולם לא להציע "אז קח שאכטה".</i>'];
+
+  if (!(await notifyPartner(env, meta, body.join('\n')))) return false;
+  meta.lastPartnerAlert = Date.now();
+  meta.lastPartnerAlertLevel = level;
+  console.log('PARTNER דיווח נשלח, דרגה', level);
+  return true;
+}
+
+/**
+ * דרגה 1 — דחף רגיל. **בלי דיווח לשותפה, במכוון.**
+ */
 async function startWave(chatId, env, meta, iso, now) {
   const evIdx = await recordWave(env, iso, now, 'w');
   meta.totals.waves += 1;
-  meta.sos = { startedAt: Date.now(), followedUp: false, evIdx, reported: false };
-
-  const throttled = Date.now() - (meta.lastPartnerAlert || 0) < 30 * 60000;
-  console.log('WAVE partner=', meta.partnerChatId, 'mute=', meta.partnerMute,
-              'lastAlert=', meta.lastPartnerAlert, 'throttled=', throttled);
-  if (meta.partnerChatId && !meta.partnerMute) {
-    if (throttled) {
-      meta.sos.reported = true;                 // אותה אפיזודה — כבר דווחה
-    } else if (await notifyPartner(env, meta, [
-      `🌊 <b>${C.PARTNER_MSG}</b>`,
-      '',
-      '<i>זה דיווח, לא בקשת רשות — לא צריך לעשות כלום.</i>',
-      '<i>אם מדברים: "זה גל — אני איתך, הוא יעבור."</i>',
-      '<i>ולעולם לא להציע "אז קח שאכטה".</i>',
-    ].join('\n'))) {
-      meta.lastPartnerAlert = Date.now();
-      meta.sos.reported = true;
-      console.log('WAVE דיווח נשלח לשותפה ✓');
-    }
-  }
+  meta.sos = { startedAt: Date.now(), followedUp: false, evIdx, reported: false, level: 1 };
   await putMeta(env, meta);
-  console.log('WAVE נשמר: reported=', meta.sos.reported, 'lastAlert=', meta.lastPartnerAlert);
 
   const m = M.sos(1);
-  const note = meta.sos.reported ? '\n\n📨 <i>דווח לבת הזוג אוטומטית.</i>' : '';
-  await send(env, chatId, m.text + note, { reply_markup: m.kb });
+  await send(env, chatId, m.text, { reply_markup: m.kb });
   if (meta.scenes) await send(env, chatId, `🔮 <b>הסצנות שכתבת לעצמך:</b>\n\n${esc(meta.scenes)}`);
+  const tr = M.tagRow();
+  await send(env, chatId, tr.text, { reply_markup: tr.kb });
+}
+
+/**
+ * דרגה 2 — המחשבות מייצרות תירוצים לצאת ולקנות.
+ * זו התחנה הראשונה בשרשרת של מרלט, ו**כאן מדווחים לשותפה**: שורת
+ * האם-אז בתוכנית קובעת במפורש שבמצב הזה לוקחים שותף/ה או דוחים
+ * ב-15 דקות ומודדים אם הסיבה שורדת.
+ */
+async function startPlanning(chatId, env, meta, iso, now) {
+  const evIdx = await recordWave(env, iso, now, 'w');
+  meta.totals.waves += 1;
+  meta.totals.planning = (meta.totals.planning || 0) + 1;
+  meta.sos = { startedAt: Date.now(), followedUp: false, evIdx, reported: false, level: 2 };
+  await updateDay(env, iso, d => {
+    d.planning = (d.planning || 0) + 1;
+    if (d.ev[evIdx]) d.ev[evIdx].lvl = 2;
+  });
+  meta.sos.reported = await alertPartner(env, meta, 2);
+  await putMeta(env, meta);
+
+  const note = meta.sos.reported
+    ? '\n\n📨 <i>בת הזוג קיבלה דיווח.</i>'
+    : (meta.partnerChatId ? '' : '\n\n<i>אין שותפה מחוברת. /שותף כדי שהדיווח יֵצא לבד.</i>');
+
+  await send(env, chatId, C.URGE_PLANNING + note, {
+    reply_markup: inline([
+      [btn('⏳ דוחה ב-15 דקות ומודד', 'pl:delay')],
+      [btn('👥 יוצא רק עם בת הזוג', 'pl:together')],
+      [btn('🚶 פונה 180° ומתחיל ללכת', 'sos:2')],
+      [btn('🆘 אני כבר בדרך לקנות', 'er:start')],
+      [btn('🚌 דה-פוזיה', 'T:defus'), btn('⛓️ שרשרת ההחלטות', 'T:chain')],
+    ]),
+  });
+  const tr = M.tagRow();
+  await send(env, chatId, tr.text, { reply_markup: tr.kb });
+}
+
+/**
+ * דרגה 3 — בדרך לקנות. הדחופה מכולן, ולחיצה אחת מהמקלדת.
+ * דיווח לשותפה יוצא מיד ועובר את המגרה גם אם דרגה 2 דווחה לפני רגע.
+ */
+async function startEnRoute(chatId, env, meta, iso, now) {
+  const evIdx = await recordWave(env, iso, now, 'w');
+  meta.totals.waves += 1;
+  meta.totals.enroute = (meta.totals.enroute || 0) + 1;
+  meta.sos = { startedAt: Date.now(), followedUp: false, evIdx, reported: false, level: 3 };
+  await updateDay(env, iso, d => {
+    d.enroute = (d.enroute || 0) + 1;
+    if (d.ev[evIdx]) d.ev[evIdx].lvl = 3;
+  });
+  meta.sos.reported = await alertPartner(env, meta, 3);
+  await putMeta(env, meta);
+
+  await send(env, chatId, C.URGE_ENROUTE + (meta.sos.reported
+    ? '\n\n📨 <i>בת הזוג קיבלה דיווח דחוף. אם היא מתקשרת — תענה.</i>'
+    : (meta.partnerChatId ? '' : '\n\n<i>אין שותפה מחוברת. /שותף.</i>')), {
+    reply_markup: inline([
+      [btn('🚶 פונה 180° ומתחיל ללכת עכשיו', 'sos:2')],
+      [btn('🎬 הרץ את הסרט עד הפח', 'sos:3')],
+      [btn('🍬 לקחתי מסטיק ✓', 'g')],
+    ]),
+  });
   const tr = M.tagRow();
   await send(env, chatId, tr.text, { reply_markup: tr.kb });
 }
@@ -1112,6 +1217,60 @@ async function onCallback(cb, env) {
   }
 
   if (data === 'noop') return answer(env, cb.id);
+  if (data === 'er:start') { await answer(env, cb.id); return startEnRoute(chatId, env, meta, iso, now); }
+
+  // --- דרגה 2: תירוצים לצאת ---
+  if (data.startsWith('pl:')) {
+    const what = data.slice(3);
+    if (what === 'start') { await answer(env, cb.id); return startPlanning(chatId, env, meta, iso, now); }
+    if (what === 'delay') {
+      const until = `${String(Math.floor((now.minutes + 15) / 60) % 24).padStart(2, '0')}:${String((now.minutes + 15) % 60).padStart(2, '0')}`;
+      meta.snooze = { ...(meta.snooze || {}), [`${iso}:pl`]: now.minutes + 15 };
+      await putMeta(env, meta);
+      await answer(env, cb.id, 'נדחה ל-15 דק׳');
+      return send(env, chatId, [
+        `⏳ <b>נדחה עד ${until}.</b>`,
+        '',
+        'ועכשיו המדידה, וזו כל הפואנטה:',
+        '<b>אם הסיבה אמיתית — היא תהיה שם גם ב-' + until + '.</b>',
+        '<b>אם היא נעלמה — היא הייתה תירוץ.</b>',
+        '',
+        'בינתיים: מסטיק, ואם אפשר לזוז בבית — לזוז. לא יוצאים מהדלת עד השעה הזאת.',
+        '',
+        '<i>אזכיר לך לבדוק. וכל תחנה ראשונה שנעצרה נרשמת — זה בדיוק מה שהמדריך מבקש למדוד.</i>',
+      ].join('\n'), { reply_markup: inline([[btn('✅ הסיבה נעלמה — היה תירוץ', 'pl:gone'), btn('🚪 עוד קיימת', 'out:start')]]) });
+    }
+    if (what === 'together') {
+      await answer(env, cb.id, 'הדרך הנכונה');
+      if (meta.partnerChatId) await notifyPartner(env, meta, '👥 <b>הוא יוצא — וביקש לצאת יחד.</b>\n\n<i>זה בדיוק המצב שהתוכנית מייעדת לך. לא שוטר — ליווי.</i>');
+      return send(env, chatId, [
+        '👥 <b>זו התשובה שהתוכנית נותנת למצב הזה.</b>',
+        '',
+        'יציאה "סתם להסתובב" עם כיווץ בגוף היא <b>בעצמה תחנה ראשונה</b>. יציאה עם מישהו סוגרת אותה — לא בכוח רצון, אלא בכך שהמסלול מפסיק להיות פרטי.',
+        '',
+        'ולפני שיוצאים — /יוצא לטקס 20 השניות.',
+      ].join('\n'), { reply_markup: inline([[btn('🚪 טקס היציאה', 'out:start')]]) });
+    }
+    if (what === 'gone') {
+      const day = await updateDay(env, iso, d => { d.surfed += 1; d.chainStops = (d.chainStops || 0) + 1; });
+      await recordEvent(env, iso, now, 'v');
+      const m2 = await getMeta(env); m2.totals.surfed += 1; m2.totals.chainStops = (m2.totals.chainStops || 0) + 1; m2.sos = null; await putMeta(env, m2);
+      if (m2.partnerChatId && meta.sos && meta.sos.reported) {
+        await notifyPartner(env, m2, '✅ <b>עבר.</b> הוא דחה ב-15 דקות והסיבה נעלמה — כלומר היא הייתה תירוץ, והוא תפס אותה בתחנה הראשונה.');
+      }
+      await answer(env, cb.id, 'נרשם 🎯');
+      return send(env, chatId, [
+        '🎯 <b>זה הדבר החזק ביותר שאפשר לעשות, ועשית אותו.</b>',
+        '',
+        `תחנות ראשונות שנעצרו: <b>${m2.totals.chainStops}</b> · דחפים שעברו: ${m2.totals.surfed}`,
+        '',
+        'הסיבה נעלמה תוך רבע שעה — זו הוכחה אמפירית, במו ידיך, שהיא הייתה תירוץ ולא צורך. <b>עצור 5 שניות והרגש את זה</b>; זה התגמול שצורב את הלולאה החדשה.',
+        '',
+        '<i>מרלט: בתחנה הראשונה הדחף עוד קטן, ושם עוצרים כמעט בלי מאמץ. בקופה כמעט אף אחד לא עוצר. להילחם מוקדם, לא חזק.</i>',
+      ].join('\n'));
+    }
+    return answer(env, cb.id);
+  }
 
   // --- בחירת תוכנית המסטיק ---
   if (data.startsWith('gp:')) {

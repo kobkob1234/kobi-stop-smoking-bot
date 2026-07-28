@@ -22,7 +22,8 @@ export const DEFAULT_META = {
   sos: null,               // {startedAt, followedUp, evIdx}
   quiet: false,            // השתקת תזכורות מתוזמנות
   sent: {},                // "ISO:slot" -> 1
-  totals: { surfed: 0, waves: 0, slips: 0, outs: 0, mDone: 0, eDone: 0, gum: 0, patch: 0 },
+  totals: { surfed: 0, waves: 0, slips: 0, outs: 0, mDone: 0, eDone: 0, gum: 0, patch: 0,
+            planning: 0, chainStops: 0, enroute: 0 },
 
   // --- תוספות ---
   partnerChatId: null,     // צ׳אט של בת/בן הזוג לדיווח בלחיצה
@@ -33,7 +34,8 @@ export const DEFAULT_META = {
   siteVer: 0,              // גרסת מערך המקומות שה-siteOffset יושר מולה
   kbHidden: false,         // האם מקלדת הכפתורים מוסתרת (/מקלדת)
   partnerMute: false,      // השתקת הדיווח האוטומטי לשותף/ה
-  lastPartnerAlert: 0,     // מגרה של 30 דקות בין דיווחי גל
+  lastPartnerAlert: 0,     // מגרה של 30 דקות בין דיווחים מאותה דרגה
+  lastPartnerAlertLevel: 0,// דרגת הדיווח האחרון — הסלמה ל-2 עוברת תמיד
   lastEscalationISO: null, // כדי לא להציף את הודעת ההסלמה
   ai: null,                // {date, n} — מכסת AI יומית
   gumPlan: null,           // תוכנית תזכורות המסטיק (ראה gum.js)
@@ -71,6 +73,9 @@ export const EMPTY_DAY = {
   gumSched: 0,  // יחידות שנלקחו לפי התוכנית
   gumExtra: 0,  // יחידות נוספות, מחוץ לתוכנית (PRN)
   gumCovered: 0,// תזכורות שדולגו כי נלקח מסטיק ב-45 הדק' שלפניהן
+  planning: 0,  // פעמים שהמחשבות חיפשו דרך לצאת ולקנות (דרגה 2)
+  chainStops: 0,// תחנות ראשונות שנעצרו — הסיבה נעלמה אחרי דחייה
+  enroute: 0,   // פעמים שהיה בדרך לקנות ועצר (דרגה 3)
 };
 
 export async function getDay(env, iso) {
