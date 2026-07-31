@@ -14,7 +14,9 @@
     "webhook:set": "node scripts/set-webhook.mjs set",
     "webhook:info": "node scripts/set-webhook.mjs info",
     "webhook:delete": "node scripts/set-webhook.mjs delete",
-    "check": "node scripts/check-refs.mjs && node --check src/index.js && node --check src/messages.js && node --check src/content.js && node --check src/plan.js && node --check src/store.js && node --check src/telegram.js"
+    "check": "node scripts/check-refs.mjs && node --check src/index.js && node --check src/messages.js && node --check src/content.js && node --check src/plan.js && node --check src/store.js && node --check src/telegram.js",
+    "test": "npm run check --silent && node --test \"test/*.test.mjs\"",
+    "test:live": "node scripts/live-check.mjs"
   },
   "devDependencies": {
     "wrangler": "^4.0.0"

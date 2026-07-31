@@ -18,7 +18,7 @@ import { getMeta, putMeta, getDay, updateDay, pruneSent, recentHist, pushHist } 
 // מזהה בנייה. מתעדכן בכל פריסה ומוחזר ב-/diag, כדי שאפשר יהיה לדעת
 // בוודאות איזו גרסה חיה במקום לנחש אחרי sleep. ארבע פעמים היום בדיקה
 // רצה מול הגרסה הקודמת והסקתי מזה מסקנה שגויה.
-export const BUILD = '180012';
+export const BUILD = '183305';
 
 // ---------- משבצות הזמן היומיות (שעון ישראל) ----------
 const SLOTS = [
@@ -108,7 +108,7 @@ const iso0 = now => now.iso;
 //  ("אני רוצה ללכת לקנות וויפ" לא נתפס בגרסה הראשונה ונשמר ביומן.
 //   זה היה הכשל היחיד שאסור היה לקרות, ומכאן הרוחב.)
 // ==========================================================================
-const RX = {
+export const RX = {
   // עבר — כבר קרה
   slip: /קניתי|נפלתי|שאפתי|שאבתי|עשיתי שאכטה|מעדתי|לקחתי שאכטה|התפרקתי וקניתי|נכנעתי/,
   // ...אלא אם זה בשלילה. "התגברתי, לא קניתי" הוא ניצחון, לא מעידה —
@@ -690,31 +690,9 @@ async function onMessage(msg, env) {
   // המסלול המהיר: ביטויים חד-משמעיים בלבד, כדי שברגע דחף אמיתי
   // התשובה תהיה מיידית ולא תמתין לרשת. כל השאר עובר להבנת המודל
   // ב-converse(), ושם אין רשימת מילים שאפשר ליפול דרכה.
-  const t = text.replace(/[״"'׳]/g, '');
   const R = c => runCommand(c, '', chatId, env, meta, pl, iso, now);
-
-  // 1 · עבר — מעידה שקרתה. חייב להיקדם לזיהוי הדחף, אחרת "קניתי"
-  //     ייתפס כ"רוצה לקנות".
-  if (RX.slip.test(t) && !RX.slipNegated.test(t)) return R('slip');
-
-  // 2 · דרגה 3 ראשונה: הדחופה מכולן, ולכן היא זוכה על כל השאר.
-  if (RX.enroute.test(t) && !RX.negated.test(t)) return R('enroute');
-
-  // 3 · דרגה 2: תירוצים לצאת הם התחנה הראשונה בשרשרת, וזו הדרגה
-  //     שמדווחת לשותפה. נבדקת לפני דחף רגיל.
-  if (RX.planning.test(t) && !RX.negated.test(t)) return R('planning');
-
-  // 3 · דחף רגיל — הרגע שכל הבוט קיים בשבילו.
-  //     כאן מעדיפים בכוונה זיהוי-יתר: התראת שווא עולה לחיצה אחת,
-  //     החמצה עולה מכשיר חדש.
-  if (RX.urge.test(t) && !RX.negated.test(t)) return R('wave');
-
-  // 3 · שאר הכוונות
-  if (RX.out.test(t))    return R('out');
-  if (RX.gum.test(t))    return R('gum');
-  if (RX.patch.test(t))  return R('patch');
-  if (RX.status.test(t)) return R('status');
-  if (RX.win.test(t))    return R('win');
+  const fast = fastRoute(text);
+  if (fast) return R(fast);
 
   // ---- שיחה: קודם בסיס הידע מהמדריכים, אחר-כך AI (אם מופעל) ----
   return converse(text, chatId, env, meta, pl, iso, now);
@@ -902,6 +880,56 @@ async function onJoin(text, chatId, msg, env) {
     'אפשר לכתוב לי כאן והודעה תועבר אליו.',
   ].join('\n'));
   await send(env, meta.chatId, `👥 <b>${esc(name)} חובר/ה ✓</b>\nמעכשיו כפתור אחד שולח דיווח גל — בלי העתקה והדבקה.`);
+}
+
+// ==========================================================================
+//  הניתוב המהיר — פונקציה טהורה, ולכן ניתנת לבדיקה
+//
+//  הסדר כאן הוא הלוגיקה הכי קריטית בבוט, והוא כבר נשבר פעם אחת: בלי
+//  בדיקת enroute לפני urge, "אני בדרך לחנות" נתפס כדחף רגיל — כלומר
+//  הניסוח הדחוף ביותר קיבל את התגובה הרפה ביותר ובלי דיווח לבת הזוג.
+//  הסדר היה מוטבע ב-handleText ולא היה ניתן לבדיקה בלי KV ורשת.
+//
+//  מחזיר את שם הפקודה, או null אם אין התאמה חד-משמעית — ואז ההודעה
+//  עוברת להבנת המודל ב-converse(), שם אין רשימת מילים ליפול דרכה.
+// ==========================================================================
+// אותיות סופיות. הדפוסים נכתבו בצורה הלא-סופית ("תירוצ"), והמילה
+// נכתבת בסופית ("תירוץ") — ולכן "אני מחפש תירוץ לצאת", הניסוח הכי
+// מובהק לדרגה 2 שיש, לא זוהה בכלל. מקפלים את שני הצדדים במקום לצוד
+// כל מקרה בנפרד: הקיפול נוגע רק באותיות עבריות, ולכן תחביר הביטוי
+// הרגולרי אינו נפגע.
+const foldFinals = s => s
+  .replace(/\u05dd/g, '\u05de').replace(/\u05df/g, '\u05e0').replace(/\u05e5/g, '\u05e6')
+  .replace(/\u05e3/g, '\u05e4').replace(/\u05da/g, '\u05db');
+
+const RXF = Object.fromEntries(
+  Object.entries(RX).map(([k, re]) => [k, new RegExp(foldFinals(re.source))]),
+);
+
+export function fastRoute(text) {
+  const t = foldFinals(String(text).replace(/[\u05f4"'\u05f3]/g, ''));
+
+  // 1 · עבר — מעידה שקרתה. חייב להיקדם לזיהוי הדחף, אחרת "קניתי"
+  //     ייתפס כ"רוצה לקנות".
+  if (RXF.slip.test(t) && !RXF.slipNegated.test(t)) return 'slip';
+
+  // 2 · דרגה 3: הדחופה מכולן, ולכן היא זוכה על כל השאר.
+  if (RXF.enroute.test(t) && !RXF.negated.test(t)) return 'enroute';
+
+  // 3 · דרגה 2: תירוצים לצאת הם התחנה הראשונה בשרשרת, וזו הדרגה
+  //     שמדווחת לשותפה. נבדקת לפני דחף רגיל.
+  if (RXF.planning.test(t) && !RXF.negated.test(t)) return 'planning';
+
+  // 4 · דחף רגיל — הרגע שכל הבוט קיים בשבילו. כאן מעדיפים בכוונה
+  //     זיהוי-יתר: התראת שווא עולה לחיצה אחת, החמצה עולה מכשיר חדש.
+  if (RXF.urge.test(t) && !RXF.negated.test(t)) return 'wave';
+
+  if (RXF.out.test(t))    return 'out';
+  if (RXF.gum.test(t))    return 'gum';
+  if (RXF.patch.test(t))  return 'patch';
+  if (RXF.status.test(t)) return 'status';
+  if (RXF.win.test(t))    return 'win';
+  return null;
 }
 
 // ==========================================================================
