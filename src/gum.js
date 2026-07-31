@@ -132,30 +132,127 @@ export function minutesSinceLastGum(day, nowMinutes) {
   return diff < 0 ? null : diff;
 }
 
-/**
- * האם המצב מצביע על מוכנות לתצמצום.
- * התנאי בתוכנית הוא מצב ולא תאריך: "מתחילים לצמצם כשצריכת המסטיק
- * יורדת מעצמה, וכשגלים עוברים בלי שנדרש כלום". לכן משווים שבוע
- * לשבוע שלפניו. יחידות שנלקחו ביוזמתו **אינן** סימן שלילי: בתזמון
- * מסתגל זו התנהגות תקינה, וספירתן כרעה הייתה מענישה על יוזמה.
- */
-export function readiness(last7, prev7) {
+// ==========================================================================
+//  גלאי המוכנות לתצמצום
+//
+//  התנאי בתוכנית הוא מצב ולא תאריך: "מתחילים לצמצם כשצריכת המסטיק יורדת
+//  מעצמה, וכשגלים עוברים בלי שנדרש כלום". שני חלקים — ולכן שני סוגי
+//  פלט, ולא דגל בינארי אחד:
+//
+//  • חסמים — סיבות אמיתיות להמתין. אלה מכבים את ready.
+//  • סימנים חיוביים — מה שהופך את הרגע לטוב ולא רק ל"לא-רע". אלה
+//    קובעים confidence, ולא חוסמים. שקילת "לא יורד מעצמה" כחסם הייתה
+//    נועלת לנצח מישהו יציב לגמרי שפשוט לוקח 10 ביום — וזה בדיוק מה
+//    שהתצמצום נועד לפתור.
+//
+//  והחסם הראשון הוא כיסוי הנתונים. `collect` מחזיר יום חסר כיום מאופס,
+//  ולכן שבוע בלי תיעוד נראה כמו 0 מסטיקים, 0 גלים, 0 מעידות — כלומר
+//  מקבל ציון טוב יותר משבוע אמיתי מוצלח. זה הפוך מהמציאות: ניתוק מהבוט
+//  הוא מה שקורה כשקשה. בלי כיסוי אין קביעה, לא "מצוין".
+//
+//  יחידות שנלקחו ביוזמתו אינן סימן שלילי ואינן נשקלות: בתזמון מסתגל זו
+//  התנהגות תקינה, וספירתן כרעה הייתה מענישה על יוזמה.
+// ==========================================================================
+
+export const COVERAGE_MIN = 5;   // ימים מתועדים מתוך 7 — מתחת לזה אין קביעה
+export const NOISE = 0.5;        // יחידות ליום; הפרש קטן מזה הוא רעש, לא מגמה
+export const WAVES_HIGH = 14;    // 2 ביום בממוצע — עוד תכוף מדי
+
+/** יום נחשב מתועד אם יש בו סימן חיים כלשהו, לא רק מסטיק */
+export const isLogged = d =>
+  (d.gum || 0) > 0 || ((d.ev || []).length > 0) || !!d.mDone || !!d.eDone ||
+  !!d.patch || (d.waves || 0) > 0 || (d.slips || 0) > 0;
+
+export function readiness(last7, prev7, target = 10) {
   const sum = (a, k) => a.reduce((t, d) => t + (d[k] || 0), 0);
-  const nowAvg = +(sum(last7, 'gum') / Math.max(1, last7.length)).toFixed(1);
-  const prevAvg = +(sum(prev7, 'gum') / Math.max(1, prev7.length)).toFixed(1);
+  const avg = (a, k) => +(sum(a, k) / Math.max(1, a.length)).toFixed(1);
+
+  const coverage = last7.filter(isLogged).length;
+  const prevCoverage = prev7.filter(isLogged).length;
+
+  // ממוצע על ימים מתועדים בלבד — אחרת יום לא-מתועד "מדלל" את הצריכה
+  // כלפי מטה ונראה כמו שיפור.
+  const loggedNow = last7.filter(isLogged);
+  const loggedPrev = prev7.filter(isLogged);
+  const nowAvg = loggedNow.length ? avg(loggedNow, 'gum') : 0;
+  const prevAvg = loggedPrev.length ? avg(loggedPrev, 'gum') : 0;
+
   const extra = sum(last7, 'gumExtra');
   const waves = sum(last7, 'waves');
+  const prevWaves = sum(prev7, 'waves');
   const surfed = sum(last7, 'surfed');
   const slips = sum(last7, 'slips');
+  const passRate = waves > 0 ? Math.round((surfed / waves) * 100) : null;
+
+  // ---- חסמים ----
   const reasons = [];
-  if (prevAvg > 0 && nowAvg > prevAvg) reasons.push(`הצריכה עלתה (${prevAvg} → ${nowAvg} ביום)`);
-  if (slips > 0) reasons.push(`${slips} מעידות בשבוע האחרון`);
-  if (waves >= 14) reasons.push(`${waves} גלים בשבוע — עוד תכוף`);
+  if (coverage < COVERAGE_MIN)
+    reasons.push(`רק ${coverage} מתוך 7 ימים מתועדים — אין מספיק נתונים כדי לקבוע`);
+  if (slips > 0)
+    reasons.push(`${slips} מעידות בשבוע האחרון`);
+  // ספירת דחפים תלויה בחריצות הדיווח: מי שמדווח ביושר "צובר" יותר.
+  // לחסום על הספירה לבדה זה להעניש על דיווח — אותה תקלה כמו שתיקה
+  // שנקראת כהצלחה, רק הפוכה. לכן תדירות חוסמת רק כשגם האיכות ירודה.
+  const badQuality = passRate !== null && waves >= 4 && passRate < 60;
+  if (badQuality)
+    reasons.push(`מתוך ${waves} דחפים בשבוע, רק ${passRate}% עברו בלי שנדרש כלום`);
+  else if (waves >= WAVES_HIGH && (passRate === null || passRate < 80))
+    reasons.push(`${waves} דחפים בשבוע${passRate === null ? '' : ` ורק ${passRate}% עברו`} — עוד תכוף`);
+  if (prevAvg > 0 && nowAvg > prevAvg + NOISE)
+    reasons.push(`הצריכה עלתה (${prevAvg} → ${nowAvg} ביום)`);
+
+
+  // ---- סימנים חיוביים ----
+  // רק כשיש כיסוי. בלי זה "הצריכה ירדה מ-10 ל-0" הוא תיאור של שבוע
+  // שלא תועד, לא של שבוע מוצלח — וזו בדיוק הטענה שהגלאי הזה נבנה
+  // מחדש כדי לא להשמיע.
+  const enough = coverage >= COVERAGE_MIN;
+  const signals = [];
+  const declining = enough && prevAvg > 0 && nowAvg <= prevAvg - NOISE;
+  if (declining)        signals.push(`הצריכה יורדת מעצמה (${prevAvg} → ${nowAvg} ביום)`);
+  if (enough && nowAvg <= target - 1 && nowAvg > 0)
+    signals.push(`${nowAvg} ביום — כבר מתחת ליעד ${target}`);
+  if (enough && prevWaves > 0 && waves <= prevWaves - 2)
+    signals.push(`פחות דחפים משבוע שעבר (${prevWaves} → ${waves})`);
+  if (enough && passRate !== null && passRate >= 80 && waves >= 3)
+    signals.push(`${passRate}% מהדחפים עברו בלי שנדרש כלום`);
+  if (coverage === 7 && prevCoverage >= COVERAGE_MIN)
+    signals.push('שבועיים של תיעוד רציף');
+
+  const ready = reasons.length === 0;
   return {
-    nowAvg, prevAvg, extra, waves, surfed, slips,
-    ready: reasons.length === 0,
-    reasons,
+    nowAvg, prevAvg, extra, waves, prevWaves, surfed, slips, passRate,
+    coverage, prevCoverage, declining, target,
+    ready, reasons, signals,
+    confidence: !ready ? 'none' : signals.length >= 3 ? 'strong' : signals.length >= 1 ? 'ok' : 'weak',
   };
+}
+
+/**
+ * ניטור *במהלך* התצמצום — מה שלא היה קיים קודם.
+ * "אם צריך להתאמץ כדי להפחית, עוד לא הזמן" הוא תנאי מתמשך, אבל הוא
+ * נבדק פעם אחת בלבד לפני ההתחלה, ומאותו רגע הסולם ירד כל 4 ימים בלי
+ * קשר למה שקרה בפועל. כאן משווים את השבוע האחרון לקו-הבסיס שנשמר
+ * ברגע האישור, ומציעים צעד אחורה כשהמצב מחמיר.
+ */
+export function taperWatch(last7, baseline) {
+  if (!baseline) return null;
+  const sum = (a, k) => a.reduce((t, d) => t + (d[k] || 0), 0);
+  const coverage = last7.filter(isLogged).length;
+  if (coverage < COVERAGE_MIN) return null;   // בלי כיסוי לא מסיקים החמרה
+
+  const waves = sum(last7, 'waves');
+  const slips = sum(last7, 'slips');
+  const enroute = sum(last7, 'enroute');
+  const planning = sum(last7, 'planning');
+
+  const worse = [];
+  if (slips > 0)                      worse.push(`${slips} מעידות`);
+  if (enroute > 0)                    worse.push(`${enroute} פעמים בדרך לקנות`);
+  if (waves >= (baseline.waves || 0) + 5) worse.push(`הדחפים עלו (${baseline.waves} → ${waves} בשבוע)`);
+  if (planning >= 3)                  worse.push(`${planning} פעמים שהמחשבות חיפשו דרך לצאת`);
+
+  return worse.length ? { worse, waves, slips, enroute, planning, baseline } : null;
 }
 
 // ==========================================================================

@@ -18,7 +18,7 @@ import { getMeta, putMeta, getDay, updateDay, pruneSent } from './store.js';
 // מזהה בנייה. מתעדכן בכל פריסה ומוחזר ב-/diag, כדי שאפשר יהיה לדעת
 // בוודאות איזו גרסה חיה במקום לנחש אחרי sleep. ארבע פעמים היום בדיקה
 // רצה מול הגרסה הקודמת והסקתי מזה מסקנה שגויה.
-export const BUILD = '121905';
+export const BUILD = '161810';
 
 // ---------- משבצות הזמן היומיות (שעון ישראל) ----------
 const SLOTS = [
@@ -413,23 +413,28 @@ async function tick(env) {
       meta.sent[`${iso}:taperask`] = 1;
       dirty = true;
       const d14 = await ANL.collect(env, iso, 14);
-      const rd = G.readiness(d14.slice(0, 7), d14.slice(7, 14));
+      const rd = G.readiness(d14.slice(0, 7), d14.slice(7, 14), G.dailyTarget(plan, iso));
+      const verdict = !rd.ready
+        ? '⏸️ <b>הנתונים מצביעים על להמתין:</b>\n' + rd.reasons.map(r => `   • ${r}`).join('\n')
+        : rd.confidence === 'weak'
+          ? '🟡 <b>אין סיבה לחסום — אבל גם אין סימן חיובי אחד.</b>\nהצריכה לא עולה ואין מעידות, וזה הכל. זה "לא רע", לא "זה הזמן". אם אתה מהסס, זו הסיבה.'
+          : `✅ <b>הנתונים נראים יציבים${rd.confidence === 'strong' ? ', ובבירור' : ''}:</b>\n` + rd.signals.map(s => `   • ${s}`).join('\n');
       await send(env, meta.chatId, [
         `📉 <b>תצמצום המסטיק — ${P.fmtHe(iso)}</b>`,
         '',
         `לפי התוכנית: יחידה אחת פחות כל ${plan.stepDays} ימים, מ-${G.sortTimes(plan.times).length} יחידות עד יחידת הבוקר בלבד.`,
         '',
         '<b>אבל התנאי הוא מצב, לא תאריך.</b> אלה הנתונים שלך:',
-        `• מסטיק: <b>${rd.nowAvg}</b> ביום בשבוע האחרון (שבוע לפני כן: ${rd.prevAvg})`,
-        `• מחוץ לתוכנית: <b>${rd.extra}</b> יחידות בשבוע`,
-        `• דחפים: ${rd.waves} · עברו: ${rd.surfed}${rd.slips ? ` · מעידות: ${rd.slips}` : ''}`,
+        `• מסטיק: <b>${rd.nowAvg}</b> ביום (שבוע לפני כן: ${rd.prevAvg || '—'})`,
+        `• דחפים: ${rd.waves}${rd.passRate !== null ? ` · ${rd.passRate}% עברו בלי שנדרש כלום` : ''}${rd.slips ? ` · מעידות: ${rd.slips}` : ''}`,
+        `• תיעוד: ${rd.coverage}/7 ימים${rd.coverage < G.COVERAGE_MIN ? ' ⚠️' : ''}`,
         '',
-        rd.ready
-          ? '✅ <b>הנתונים נראים יציבים.</b> הצריכה לא עולה, השימוש לפי צורך נמוך, ואין מעידות. זה נראה כמו הזמן.'
-          : '⏸️ <b>הנתונים מצביעים על להמתין:</b>\n' + rd.reasons.map(r => `   • ${r}`).join('\n'),
+        verdict,
         '',
-        '<i>אין פרס על מהירות. תצמצם שמחזיר גלים הוא תצמצם שנכשל.</i>',
-        '<i>עד שתאשר — נשארים על המספר המלא. אשאל שוב בעוד שלושה ימים.</i>',
+        rd.coverage < G.COVERAGE_MIN
+          ? '<i>שים לב: ימים בלי תיעוד נראים לי כמו ימים בלי מסטיק ובלי דחפים. לכן כשהתיעוד חלקי אני לא קובע שהמצב טוב — אני אומר שאני לא יודע.</i>'
+          : '<i>אין פרס על מהירות. תצמצם שמחזיר דחפים הוא תצמצם שנכשל.</i>',
+        '<i>ההחלטה שלך בכל מקרה — הנתונים הם קלט, לא שער. עד שתאשר נשארים על המספר המלא, ואשאל שוב בעוד שלושה ימים.</i>',
       ].join('\n'), {
         reply_markup: inline([
           [btn('✅ יציב — מתחילים לצמצם', 'tp:go')],
@@ -437,6 +442,38 @@ async function tick(env) {
           [btn('📉 קרא את תוכנית הצמצום', 'T:taper')],
         ]),
       });
+    }
+
+    // --- ניטור *במהלך* התצמצום, כל 7 ימים ---
+    // בלי זה האישור ב-15.9 היה ההחלטה האחרונה בתהליך, והסולם היה יורד
+    // כל 4 ימים בלי שאיש בודק אם זה עובד.
+    if (plan.confirmedTaper && plan.baseline && now.minutes >= 9 * 60
+        && P.diffDays(plan.taperStartISO, iso) > 0
+        && P.diffDays(plan.taperStartISO, iso) % 7 === 0
+        && !meta.sent[`${iso}:taperwatch`]) {
+      const w7 = await ANL.collect(env, iso, 7);
+      const tw = G.taperWatch(w7, plan.baseline);
+      meta.sent[`${iso}:taperwatch`] = 1;
+      dirty = true;
+      if (tw) {
+        const n = G.activeTimes(plan, iso).length;
+        await send(env, meta.chatId, [
+          '⚠️ <b>בדיקת התצמצום — משהו החמיר.</b>',
+          '',
+          `אתה על <b>${n}</b> יחידות ביום. מאז שהתחלנו לצמצם:`,
+          ...tw.worse.map(x => `   • ${x}`),
+          '',
+          'התוכנית אומרת את זה במפורש: <b>אם צריך להתאמץ כדי להפחית, עוד לא הזמן.</b> אני לא מוריד עוד יחידה עד שתחליט.',
+          '',
+          '<i>צעד אחורה עכשיו זול. מעידה יקרה.</i>',
+        ].join('\n'), {
+          reply_markup: inline([
+            [btn('↩️ חזור צעד אחורה', 'tp:back')],
+            [btn('✅ ממשיכים — זה בשליטה', 'tp:keep')],
+            [btn('🍬 מצב המסטיק', 'gp:show')],
+          ]),
+        });
+      }
     }
 
     for (const slot of SLOTS) {
@@ -1027,6 +1064,9 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
       L.push('', `<i>${G.RECOMMENDED.why}</i>`);
       const rows = Object.entries(G.PRESETS).map(([k, v]) => [btn((k === 'ten' ? '⭐ ' : '') + v.label, `gp:${k}`)]);
       rows.push([btn(plan.on ? '🔇 כבה תזכורות' : '✅ הפעל תזכורות', 'gp:toggle')]);
+      // צעד אחורה חייב להיות בהישג יד *תוך כדי* התצמצום, לא רק כשהבוט
+      // מזהה החמרה — הוא מרגיש את זה לפני שהנתונים מראים את זה.
+      if (t && !t.pending && t.dropsSoFar > 0) rows.push([btn('↩️ חזור צעד אחורה', 'tp:back')]);
       rows.push([btn('📉 תוכנית הצמצום', 'T:taper')]);
       return send(env, chatId, L.join('\n'), { reply_markup: inline(rows) });
     }
@@ -1412,10 +1452,28 @@ async function onCallback(cb, env) {
     const plan = { ...G.DEFAULT_PLAN, ...(meta.gumPlan || {}) };
     if (what === 'go') {
       plan.confirmedTaper = true; plan.taperStartISO = iso;
+      // קו-הבסיס נשמר *ברגע האישור* כדי שיהיה מול מה להשוות בהמשך.
+      // בלי זה אין דרך לדעת אם התצמצום עצמו החזיר גלים.
+      const b7 = await ANL.collect(env, iso, 7);
+      const bsum = k => b7.reduce((t, d) => t + (d[k] || 0), 0);
+      plan.baseline = { iso, waves: bsum('waves'), surfed: bsum('surfed'), gum: bsum('gum') };
       meta.gumPlan = plan; await putMeta(env, meta);
       await answer(env, cb.id, 'התצמצום התחיל');
       const t = G.taperInfo(plan, iso);
-      return send(env, chatId, `📉 <b>התצמצום התחיל.</b>\n\n${t.start} יחידות עכשיו · יחידה אחת פחות כל ${t.step} ימים · הראשונה שנופלת: <b>${t.nextToGo}</b> ב-${P.fmtHe(t.nextDropISO)}.\n\nיחידת הבוקר נשארת אחרונה — היא מכסה את הלילה בלי מדבקה.\n\n<i>עולים גלים? /מסטיקים ואני מחזיר אחורה. אין פרס על מהירות.</i>`);
+      return send(env, chatId, `📉 <b>התצמצום התחיל.</b>\n\n${t.start} יחידות עכשיו · יחידה אחת פחות כל ${t.step} ימים · הראשונה שנופלת: <b>${t.nextToGo}</b> ב-${P.fmtHe(t.nextDropISO)}.\n\nיחידת הבוקר נשארת אחרונה — היא מכסה את הלילה בלי מדבקה.\n\n<b>ואני ממשיך לבדוק.</b> כל שבוע אשווה את הדחפים והמעידות לקו-הבסיס של עכשיו (${plan.baseline.waves} דחפים בשבוע), ואם המצב מחמיר אציע צעד אחורה — לא אחכה שתבקש.\n\n<i>אין פרס על מהירות.</i>`);
+    }
+    if (what === 'back') {
+      // דחיפת נקודת ההתחלה קדימה בצעד אחד מחזירה בדיוק דרגה אחת,
+      // וכל הירידות הבאות נדחות איתה.
+      plan.taperStartISO = P.addDaysISO(plan.taperStartISO, Math.max(1, plan.stepDays || 4));
+      meta.gumPlan = plan; await putMeta(env, meta);
+      await answer(env, cb.id, 'חזרנו צעד אחורה');
+      const n = G.activeTimes(plan, iso).length;
+      return send(env, chatId, `↩️ <b>צעד אחורה.</b> חזרת ל-<b>${n}</b> יחידות ביום, וכל הירידות הבאות נדחו ב-${plan.stepDays} ימים.\n\n<i>זו לא נסיגה. התוכנית אומרת במפורש: אם צריך להתאמץ כדי להפחית, עוד לא הזמן. הניקוטין הוא הזנב, לא הכלב — והכלב הוא מה שאתה שומר עליו עכשיו.</i>`);
+    }
+    if (what === 'keep') {
+      await answer(env, cb.id, 'ממשיכים');
+      return send(env, chatId, '👍 <b>ממשיכים.</b> אבדוק שוב בעוד שבוע.\n\n<i>ואם תשנה דעת באמצע — /מסטיקים, כפתור הצמצום, ואני מחזיר צעד. זה תמיד פתוח.</i>');
     }
     if (what === 'wait') {
       plan.taperStartISO = P.addDaysISO(iso, 7); plan.confirmedTaper = false;
