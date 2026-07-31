@@ -39,7 +39,10 @@ export const DEFAULT_META = {
   lastEscalationISO: null, // כדי לא להציף את הודעת ההסלמה
   ai: null,                // {date, n} — מכסת AI יומית
   gumPlan: null,           // תוכנית תזכורות המסטיק (ראה gum.js)
-  snooze: {},              // "ISO:gum:HH:MM" -> דקה ביום שבה להזכיר שוב
+  gumRemindISO: null,      // היום של תזכורת המסטיק האחרונה
+  gumRemindMin: null,      // ובאיזו דקה — לא יותר מפעם ב-45 דק׳
+  gumSnoozeISO: null,      // דחייה: היום
+  gumSnoozeMin: 0,         // ועד איזו דקה
 };
 
 export async function getMeta(env) {
@@ -71,7 +74,7 @@ export const EMPTY_DAY = {
   ev: [],       // אירועים למיפוי דפוסים: {k, h, m, tag}
   gumMissed: 0, // תזכורות שאושרו כ"לא לקחתי"
   gumSched: 0,  // יחידות שנלקחו לפי התוכנית
-  gumExtra: 0,  // יחידות נוספות, מחוץ לתוכנית (PRN)
+  gumExtra: 0,  // יחידות שנרשמו ביוזמתו ולא בתגובה לתזכורת
   gumCovered: 0,// תזכורות שדולגו כי נלקח מסטיק ב-45 הדק' שלפניהן
   planning: 0,  // פעמים שהמחשבות חיפשו דרך לצאת ולקנות (דרגה 2)
   chainStops: 0,// תחנות ראשונות שנעצרו — הסיבה נעלמה אחרי דחייה

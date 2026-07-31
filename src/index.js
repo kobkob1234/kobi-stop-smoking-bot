@@ -18,7 +18,7 @@ import { getMeta, putMeta, getDay, updateDay, pruneSent } from './store.js';
 // מזהה בנייה. מתעדכן בכל פריסה ומוחזר ב-/diag, כדי שאפשר יהיה לדעת
 // בוודאות איזו גרסה חיה במקום לנחש אחרי sleep. ארבע פעמים היום בדיקה
 // רצה מול הגרסה הקודמת והסקתי מזה מסקנה שגויה.
-export const BUILD = '115951';
+export const BUILD = '121905';
 
 // ---------- משבצות הזמן היומיות (שעון ישראל) ----------
 const SLOTS = [
@@ -287,11 +287,20 @@ export default {
         gum: (() => {
           const gp = { ...G.DEFAULT_PLAN, ...(meta.gumPlan || {}) };
           const t = G.taperInfo(gp, now.iso);
+          const w = G.windowOf(gp);
+          const lastRemind = meta.gumRemindISO === now.iso ? meta.gumRemindMin : null;
+          const r = G.dueNow(gp, now.iso, day, now.minutes, lastRemind);
           return {
             on: gp.on,
+            mode: 'adaptive',
             planned: G.sortTimes(gp.times).length,
-            activeToday: G.activeTimes(gp, now.iso).length,
-            times: G.activeTimes(gp, now.iso),
+            targetToday: G.dailyTarget(gp, now.iso),
+            window: `${G.hhmm(w.start)}-${G.hhmm(w.end)}`,
+            dueNow: r.due,
+            why: r.why,
+            expected: r.expected ?? null,
+            sinceLastGum: r.since,
+            lastRemindMin: lastRemind,
             taperStart: gp.taperStartISO,
             taperConfirmed: !!gp.confirmedTaper,
             taperPending: !!(t && t.pending),
@@ -372,45 +381,29 @@ async function tick(env) {
     }
   }
 
-  // --- תזכורות המסטיק, לפי התוכנית ובשעות שנקבעו ---
-  if (!meta.quiet) {
-    const plan = { ...G.DEFAULT_PLAN, ...(meta.gumPlan || {}) };
-    if (plan.on) {
-      const active = G.activeTimes(plan, iso);
-      const day = await getDay(env, iso);
-      for (let i = 0; i < active.length; i++) {
-        const t = active[i];
-        const key = `${iso}:gum:${t}`;
-        if (meta.sent[key]) continue;
-        const [hh, mm] = t.split(':').map(Number);
-        // דחייה: אם נדחה, היעד הוא הזמן החדש ולא השעה המקורית. בלי זה
-        // הכפתור אמר "20 דקות" והתזכורת חזרה בטיק הבא — כלומר עד 10.
-        const snoozed = (meta.snooze || {})[key];
-        const target = typeof snoozed === 'number' ? snoozed : hh * 60 + mm;
-        if (now.minutes < target) continue;
-        meta.sent[key] = 1;
-        if (snoozed !== undefined) { delete meta.snooze[key]; }
-        dirty = true;
-        if (now.minutes - target > 75) continue;      // איחור גדול — מדלגים בשקט
+  // --- תזכורת המסטיק: מסתגלת לקצב בפועל, לא לשעון קבוע ---
+  const plan = { ...G.DEFAULT_PLAN, ...(meta.gumPlan || {}) };
+  if (!meta.quiet && plan.on) {
+    const day = await getDay(env, iso);
+    const snoozedTo = meta.gumSnoozeISO === iso ? (meta.gumSnoozeMin || 0) : 0;
+    const lastRemind = meta.gumRemindISO === iso ? meta.gumRemindMin : null;
+    const r = G.dueNow(plan, iso, day, now.minutes, lastRemind);
 
-        // אם נלקח מסטיק ב-45 הדקות האחרונות (למשל יחידה נוספת מחוץ
-        // לתוכנית), התזכורת הזאת מיותרת — והיא גם לא "הוחמצה". סופרים
-        // אותה כמכוסה, כדי שההיצמדות תשקף את המציאות ולא תיראה גרועה.
-        const since = G.minutesSinceLastGum(day, now.minutes);
-        if (since !== null && since <= 45) {
-          await updateDay(env, iso, d => { d.gumCovered = (d.gumCovered || 0) + 1; });
-          console.log('GUM דילג על', t, '— נלקח לפני', since, 'דק');
-          continue;
-        }
-        console.log('GUM תזכורת נשלחה:', t);
-        await send(env, meta.chatId, G.reminderText(t, plan, iso, day, i, active.length), {
-          reply_markup: inline([
-            [btn('✅ לקחתי', `gr:y:${t}`), btn('⏭️ מדלג', `gr:n:${t}`)],
-            [btn('⏰ עוד 20 דק׳', `gr:s:${t}`)],
-          ]),
-        });
-      }
+    if (r.due && now.minutes >= snoozedTo) {
+      meta.gumRemindISO = iso;
+      meta.gumRemindMin = now.minutes;
+      dirty = true;
+      console.log('GUM תזכורת:', r.taken, '/', r.target, '·', r.why);
+      await send(env, meta.chatId, G.reminderText(now.hhmm, plan, iso, day, r.taken, r.target), {
+        reply_markup: inline([
+          [btn('✅ לקחתי', 'gr:y'), btn('⏭️ מדלג', 'gr:n')],
+          [btn('⏰ עוד 20 דק׳', 'gr:s')],
+        ]),
+      });
     }
+  }
+
+  if (!meta.quiet) {
 
     // --- 15.9: יום פתיחת התצמצום — שואלים לפני שמתחילים ---
     const taperDue = plan.on && plan.taperStartISO && !plan.confirmedTaper
@@ -1010,16 +1003,19 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
       const active = G.activeTimes(plan, iso);
       const t = G.taperInfo(plan, iso);
       const day = await getDay(env, iso);
+      const w = G.windowOf(plan);
+      const r = G.dueNow(plan, iso, day, now.minutes, meta.gumRemindISO === iso ? meta.gumRemindMin : null);
       const L = [
         '🍬 <b>תוכנית המסטיק</b>',
         '─────────────',
-        `מצב: <b>${plan.on ? 'פעיל ✅' : 'כבוי 🔇'}</b> · היום <b>${active.length}</b> יחידות`,
-        `שעות: ${active.join(' · ')}`,
+        `מצב: <b>${plan.on ? 'פעיל ✅' : 'כבוי 🔇'}</b> · יעד היום <b>${active.length}</b> יחידות`,
+        `חלון: ${G.hhmm(w.start)}–${G.hhmm(w.end)} · לפי הקצב שלך, לא לפי שעון קבוע`,
         '',
-        `היום: <b>${day.gum}</b> סה״כ · ${day.gumSched || 0}/${active.length} מתוזמנים · ${day.gumExtra || 0} נוספים${day.gumMissed ? ` · ${day.gumMissed} הוחמצו` : ''}`,
+        `היום: <b>${day.gum}</b> מתוך ${active.length}${r.since !== null ? ` · האחרונה לפני ${r.since} דק׳` : ' · עוד לא היתה'}`,
+        `עכשיו: <b>${r.due ? 'כדאי לקחת' : 'לא צריך'}</b> — ${r.why}`,
         '',
-        '<i>מסטיק נוסף מחוץ לתוכנית — תמיד מותר. הכפתור 🍬 במקלדת, /מסטיק, או "לקחתי מסטיק". הוא נספר בנפרד כדי שנראה מה מתוזמן ומה לפי צורך.</i>',
-        '<i>ואם לקחת יחידה נוספת — התזכורת שב-45 הדקות שאחריה מדולגת, ונספרת כמכוסה ולא כהוחמצה.</i>',
+        '<i>אין שעות קבועות. אני סופר כמה יחידות נשארו וכמה שעות נשארו בחלון, ומזכיר רק כשאתה מתחת לקצב — או אחרי 2.5 שעות בלי כלום. יחידה שלקחת ביוזמתך נספרת בדיוק כמו כל אחרת ומזיזה את התזכורת הבאה.</i>',
+        `<i>לא מזכיר בתוך ${G.MIN_GAP} דק׳ מהיחידה האחרונה, ולא יותר מפעם ב-${G.GAP_REMIND} דק׳ — ואם התעלמת מהתזכורת הקודמת, ${G.BACKOFF} דק׳.</i>`,
       ];
       if (t) {
         L.push('', t.pending
@@ -1242,8 +1238,9 @@ async function logGum(chatId, env, iso, meta, now) {
 
   const plan = { ...G.DEFAULT_PLAN, ...(meta.gumPlan || {}) };
   const active = plan.on ? G.activeTimes(plan, iso) : [];
-  const lines = [`🍬 <b>נרשם — מסטיק נוסף, מחוץ לתוכנית.</b>`];
-  lines.push(`היום: <b>${day.gum}</b> סה״כ · ${day.gumSched || 0} מתוזמנים${active.length ? ` מתוך ${active.length}` : ''} · ${day.gumExtra || 0} נוספים`);
+  const lines = [`🍬 <b>נרשם.</b>`];
+  lines.push(`היום: <b>${day.gum}</b> מתוך ${active.length || '—'} · <i>${day.gumSched || 0} אחרי תזכורת · ${day.gumExtra || 0} ביוזמתך</i>`);
+  lines.push(`<i>שניהם נספרים ליעד — והתזכורת הבאה נדחית בהתאם.</i>`);
   if (day.gum % 4 === 1) {
     lines.push('', '<b>לעוס-והנח:</b> ללעוס עד עקצוץ ← להפסיק ← להניח בין החניכיים ללחי ← לחזור כשהעקצוץ נחלש. ~30 דקות.');
   }
@@ -1374,48 +1371,39 @@ async function onCallback(cb, env) {
 
   // --- אישור תזכורת מסטיק ---
   if (data.startsWith('gr:')) {
-    // callback_data הוא gr:<what>:HH:MM — פיצול נאיבי על ':' חותך את
-    // השעה ל-"17" ומאבד את הדקות, ואז מפתחות ה-sent וה-snooze לא
-    // תואמים למה שהלולאה מחפשת. מחברים בחזרה את כל מה שאחרי המצב.
-    const _p = data.split(':');
-    const what = _p[1];
-    const time = _p.slice(2).join(':');
-    const plan = { ...G.DEFAULT_PLAN, ...(meta.gumPlan || {}) };
-    const total = G.activeTimes(plan, iso).length;
+    const what = data.slice(3);
+    const gplan = { ...G.DEFAULT_PLAN, ...(meta.gumPlan || {}) };
+    const target = G.dailyTarget(gplan, iso);
 
-    if (what === 's') {                                  // דחייה ב-20 דקות מ*עכשיו*
-      const key = `${iso}:gum:${time}`;
-      const nextMin = now.minutes + 20;
-      delete meta.sent[key];
-      meta.snooze = { ...(meta.snooze || {}), [key]: nextMin };
+    if (what === 's') {                       // דחייה ב-20 דקות מעכשיו
+      meta.gumSnoozeISO = iso;
+      meta.gumSnoozeMin = now.minutes + 20;
       await putMeta(env, meta);
-      const nt = `${String(Math.floor(nextMin / 60) % 24).padStart(2, '0')}:${String(nextMin % 60).padStart(2, '0')}`;
+      const nt = `${String(Math.floor(meta.gumSnoozeMin / 60) % 24).padStart(2, '0')}:${String(meta.gumSnoozeMin % 60).padStart(2, '0')}`;
       await answer(env, cb.id, 'נדחה ב-20 דק׳');
-      return edit(env, chatId, msgId, `⏰ <b>נדחה.</b> אזכיר שוב ב-${nt}.\n\n<i>הנתונים לא השתנו — היחידה עוד לא נספרה.</i>`, { reply_markup: inline([]) });
+      return edit(env, chatId, msgId, `⏰ <b>נדחה.</b> אזכיר שוב בסביבות ${nt}.\n\n<i>שום מונה לא זז — היחידה עוד לא נספרה.</i>`, { reply_markup: inline([]) });
     }
 
     if (what === 'y') {
       const day = await updateDay(env, iso, d => { d.gum += 1; d.gumSched = (d.gumSched || 0) + 1; });
-      await recordEvent(env, iso, now, 'g', { sched: time });
+      await recordEvent(env, iso, now, 'g', { sched: true });
       const m2 = await getMeta(env); m2.totals.gum += 1; await putMeta(env, m2);
-      await answer(env, cb.id, 'נרשם 🍬');
-      const extra = day.gum >= (m2.gumSoftCap || 15)
-        ? `\n\n⚠️ <b>${day.gum} יחידות היום.</b> בדוק את המקסימום שעל האריזה שלך ואל תחרוג ממנו.`
+      const cap = day.gum >= (m2.gumSoftCap || 15)
+        ? `\n\n⚠️ <b>${day.gum} יחידות היום.</b> בדוק את המקסימום שעל האריזה ואל תחרוג ממנו.`
         : '';
+      await answer(env, cb.id, 'נרשם 🍬');
       return edit(env, chatId, msgId,
-        `✅ <b>${time} — נלקח.</b>\nהנתונים עודכנו: <b>${day.gum}</b> נלקחו היום · ${day.gumSched || 0}/${total} מתוזמנים${day.gumExtra ? ` · ${day.gumExtra} נוספים` : ''}${extra}`,
-        { reply_markup: inline([]) });
+        `✅ <b>נרשם.</b> <b>${day.gum}</b> מתוך ${target} להיום.${cap}`, { reply_markup: inline([]) });
     }
 
     // 'n' — דילוג
     const day = await updateDay(env, iso, d => { d.gumMissed = (d.gumMissed || 0) + 1; });
     await answer(env, cb.id, 'דולג');
     return edit(env, chatId, msgId, [
-      `⏭️ <b>${time} — דולג.</b>`,
-      `הנתונים עודכנו: <b>${day.gum}</b> נלקחו היום · ${day.gumSched || 0}/${total} מתוזמנים · ${day.gumMissed} דולגו`,
+      `⏭️ <b>דולג.</b> ${day.gum} מתוך ${target} להיום · ${day.gumMissed} דולגו.`,
       '',
-      '<i>בלי אשמה — זה נתון, לא ציון, וגם דילוג הוא מידע שימושי. אבל שווה לדעת: תת-שימוש הוא הכשל הנפוץ ולא המינון, והיצמדות גבוהה יותר ב-6 השבועות הראשונים נמצאה קשורה לשיעורי הימנעות גבוהים יותר עד שנה.</i>',
-    ].join('\n'), { reply_markup: inline([[btn('🍬 בעצם לקחתי', `gr:y:${time}`)]]) });
+      '<i>בלי אשמה — זה נתון, לא ציון. אזכיר שוב כשהקצב יחייב.</i>',
+    ].join('\n'), { reply_markup: inline([[btn('🍬 בעצם לקחתי', 'gr:y')]]) });
   }
 
   // --- פתיחת התצמצום ---

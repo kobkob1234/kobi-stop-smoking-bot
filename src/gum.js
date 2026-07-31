@@ -70,6 +70,7 @@ export const DEFAULT_PLAN = {
 };
 
 const toMin = t => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
+export const hhmm = m => `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
 export const sortTimes = ts => [...new Set(ts)].sort((a, b) => toMin(a) - toMin(b));
 
 /**
@@ -135,8 +136,8 @@ export function minutesSinceLastGum(day, nowMinutes) {
  * האם המצב מצביע על מוכנות לתצמצום.
  * התנאי בתוכנית הוא מצב ולא תאריך: "מתחילים לצמצם כשצריכת המסטיק
  * יורדת מעצמה, וכשגלים עוברים בלי שנדרש כלום". לכן משווים שבוע
- * לשבוע שלפניו, ומסתכלים גם על יחידות מחוץ לתוכנית — שימוש PRN גבוה
- * הוא בדיוק הסימן שעוד לא הזמן.
+ * לשבוע שלפניו. יחידות שנלקחו ביוזמתו **אינן** סימן שלילי: בתזמון
+ * מסתגל זו התנהגות תקינה, וספירתן כרעה הייתה מענישה על יוזמה.
  */
 export function readiness(last7, prev7) {
   const sum = (a, k) => a.reduce((t, d) => t + (d[k] || 0), 0);
@@ -148,7 +149,6 @@ export function readiness(last7, prev7) {
   const slips = sum(last7, 'slips');
   const reasons = [];
   if (prevAvg > 0 && nowAvg > prevAvg) reasons.push(`הצריכה עלתה (${prevAvg} → ${nowAvg} ביום)`);
-  if (extra >= 7) reasons.push(`${extra} יחידות מחוץ לתוכנית בשבוע — שימוש לפי צורך עוד גבוה`);
   if (slips > 0) reasons.push(`${slips} מעידות בשבוע האחרון`);
   if (waves >= 14) reasons.push(`${waves} גלים בשבוע — עוד תכוף`);
   return {
@@ -158,11 +158,87 @@ export function readiness(last7, prev7) {
   };
 }
 
-/** התזכורת שמגיעה בשעה מסוימת */
+// ==========================================================================
+//  תזמון מסתגל — לפי הקצב בפועל, לא לפי שעון קשיח
+//
+//  הגרסה הראשונה הזכירה בעשר שעות קבועות. בפועל, ביום הראשון, כל
+//  התזכורות יצאו בזמן והיחידות נלקחו כשעה אחרי כל אחת — כלומר הקצב
+//  האמיתי לא היה הקצב שבלוח. שעון קשיח מייצר שני כשלים: תזכורת
+//  שמגיעה כשכבר לקחת, ושתיקה כשנשארת מאחור.
+//
+//  לכן היעד הוא **כמות ליום** ופריסה סבירה, לא רשימת שעות:
+//    • מזכירים רק אם אתה מתחת לקצב שנדרש כדי להגיע ליעד עד סוף החלון.
+//    • ולעולם לא לפני MIN_GAP דקות מהיחידה האחרונה — לא משנה מי יזם אותה.
+//  מכאן שיחידה שנלקחה מחוץ לתוכנית **דוחה את התזכורת הבאה מעצמה**,
+//  ואם נשארת מאחור התזכורות מתקרבות כדי להשלים.
+//
+//  ורשימת השעות עוד משמשת לשני דברים: עוגן חלון היום (הראשונה
+//  והאחרונה), והיעד היומי — שממנו התצמצום גורע יחידה כל כמה ימים.
+// ==========================================================================
+
+export const MIN_GAP = 60;     // לא מזכירים בתוך שעה מהיחידה האחרונה
+export const MAX_GAP = 150;    // ואחרי שעתיים וחצי בלי כלום — מזכירים בכל מקרה
+export const GAP_REMIND = 60;  // מרווח מינימלי בין תזכורות שנענו
+export const BACKOFF = 90;     // ואחרי תזכורת שלא נענתה — נסיגה ארוכה יותר
+
+/** היעד היומי: מספר היחידות הפעילות אחרי התצמצם */
+export const dailyTarget = (plan, iso) => activeTimes(plan, iso).length;
+
+/** חלון הערות: מהיחידה הראשונה בתוכנית ועד האחרונה */
+export function windowOf(plan) {
+  const all = sortTimes(plan.times || []);
+  if (!all.length) return { start: 7 * 60 + 30, end: 21 * 60 };
+  return { start: toMin(all[0]), end: toMin(all[all.length - 1]) };
+}
+
+/**
+ * האם מגיעה תזכורת עכשיו — ולמה.
+ * מחזיר גם את המספרים, כדי שההודעה תוכל להסביר את עצמה.
+ */
+export function dueNow(plan, iso, day, nowMinutes, lastRemindMin = null) {
+  const target = dailyTarget(plan, iso);
+  const taken = day.gum || 0;
+  const { start, end } = windowOf(plan);
+  const since = minutesSinceLastGum(day, nowMinutes);
+
+  const base = { target, taken, since, start, end };
+  if (!plan.on || target === 0)      return { ...base, due: false, why: 'off' };
+  if (taken >= target)               return { ...base, due: false, why: 'הושלם היעד' };
+  if (nowMinutes < start)            return { ...base, due: false, why: 'לפני תחילת החלון' };
+  if (nowMinutes > end + 45)         return { ...base, due: false, why: 'אחרי סוף החלון' };
+
+  // אף פעם לא בתוך MIN_GAP מהיחידה האחרונה — גם אם היא נלקחה מחוץ לתוכנית
+  if (since !== null && since < MIN_GAP) return { ...base, due: false, why: `נלקח לפני ${since} דק׳` };
+
+  // נסיגה — לפני כל ענף שמחזיר due, כולל "פער ארוך מדי". תזכורת שלא
+  // הובילה ליחידה לא חוזרת אחרי 45 דקות; אם מאז התזכורת האחרונה לא
+  // נלקח כלום ממתינים BACKOFF במקום GAP_REMIND. כשהבדיקה הזו ישבה
+  // *אחרי* ענף MAX_GAP, יום איטי עקף אותה וייצר 20 תזכורות — בדיוק מה
+  // שגורם לאנשים להשתיק בוט.
+  if (lastRemindMin !== null && lastRemindMin !== undefined) {
+    const gumSinceRemind = (day.ev || [])
+      .some(e => e.k === 'g' && (e.h * 60 + e.m) >= lastRemindMin);
+    const wait = gumSinceRemind ? GAP_REMIND : BACKOFF;
+    if (nowMinutes - lastRemindMin < wait) {
+      return { ...base, due: false, why: gumSinceRemind ? 'תזכורת לפני פחות משעה' : 'ממתין — התזכורת הקודמת לא נענתה' };
+    }
+  }
+
+  // עבר יותר מדי זמן בלי כלום — מזכירים בלי קשר לקצב
+  if (since !== null && since >= MAX_GAP) return { ...base, due: true, why: 'פער ארוך מדי' };
+  if (since === null && nowMinutes >= start + MIN_GAP) return { ...base, due: true, why: 'עוד לא היה מסטיק היום' };
+
+  // אחרת — רק אם אנחנו מתחת לקצב הדרוש
+  const span = Math.max(1, end - start);
+  const expected = Math.min(target, Math.floor(((nowMinutes - start) / span) * target) + 1);
+  return { ...base, expected, due: taken < expected, why: taken < expected ? `בקצב צריך ${expected}, יש ${taken}` : 'בקצב' };
+}
+
+/** התזכורת המסתגלת */
 export function reminderText(time, plan, iso, day, index, total) {
-  const isMorning = index === 0;
-  const L = [`🍬 <b>מסטיק 2 מ״ג · ${time}</b>`];
-  L.push(`<i>יחידה ${index + 1} מתוך ${total} להיום · נלקחו עד כה: ${day.gum}</i>`);
+  const isMorning = (day.gum || 0) === 0;
+  const L = [`🍬 <b>מסטיק 2 מ״ג</b>`];
+  L.push(`<i>יחידה ${index + 1} מתוך ${total} להיום${time ? ` · ${time}` : ''}</i>`);
   L.push('─────────────');
 
   if (isMorning) {
