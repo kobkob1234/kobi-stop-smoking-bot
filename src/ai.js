@@ -169,9 +169,13 @@ export async function ask(env, question, stateText, hist) {
 }
 
 /** מכסה יומית רכה כדי לא לחרוג מהשכבה החינמית */
-export function quotaLeft(meta, env) {
+// היום מגיע כפרמטר ולא דרך meta._today. השדה ההוא היה זמני-לכאורה אבל
+// נשמר ל-KV דרך putMeta, והנכונות הייתה תלויה בכך שכל קורא יזכור להציב
+// אותו קודם — אחרת ההשוואה נכשלת, used יוצא 0, והמכסה פשוט לא נאכפת.
+export function quotaLeft(meta, env, iso) {
   const cap = parseInt(env.AI_DAILY_CAP || '40', 10);
-  const used = meta.ai && meta.ai.date === meta._today ? meta.ai.n : 0;
+  const day = iso || meta._today;
+  const used = meta.ai && day && meta.ai.date === day ? meta.ai.n : 0;
   return Math.max(0, cap - used);
 }
 

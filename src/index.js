@@ -18,7 +18,7 @@ import { getMeta, putMeta, getDay, updateDay, pruneSent, recentHist, pushHist } 
 // מזהה בנייה. מתעדכן בכל פריסה ומוחזר ב-/diag, כדי שאפשר יהיה לדעת
 // בוודאות איזו גרסה חיה במקום לנחש אחרי sleep. ארבע פעמים היום בדיקה
 // רצה מול הגרסה הקודמת והסקתי מזה מסקנה שגויה.
-export const BUILD = '174515';
+export const BUILD = '180012';
 
 // ---------- משבצות הזמן היומיות (שעון ישראל) ----------
 const SLOTS = [
@@ -800,7 +800,7 @@ async function converse(text, chatId, env, meta, pl, iso, now) {
 
   // ---- 1 · סיווג + ניסוח על ידי המודל ----
   if (AI.enabled(env) && text.trim().length >= 3) {
-    if (AI.quotaLeft(meta, env) > 0) {
+    if (AI.quotaLeft(meta, env, iso) > 0) {
       const hist = recentHist(meta);
       const res = await INT.classify(env, text, await buildState(env, pl, iso, now, meta), hist);
       if (res) {
@@ -843,7 +843,7 @@ async function converse(text, chatId, env, meta, pl, iso, now) {
   // ---- 1ב · הסיווג לא חזר תקין → תשובה חופשית בלי סיווג ----
   // (המסלול המהיר בביטוי הרגולרי כבר רץ לפני זה, כך שדחף מפורש
   //  לא מגיע לכאן בכלל.)
-  if (AI.enabled(env) && AI.quotaLeft(meta, env) > 0) {
+  if (AI.enabled(env) && AI.quotaLeft(meta, env, iso) > 0) {
     const plain = await AI.ask(env, text, await buildState(env, pl, iso, now, meta), recentHist(meta));
     if (plain) {
       AI.noteUse(meta, iso);
@@ -1058,7 +1058,7 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
       return send(env, chatId, [
         `🤖 <b>שיחה חופשית</b>`,
         `ספק: <b>${p === 'off' ? 'כבוי' : p}</b>${AI.enabled(env) ? '' : ' <i>(לא מוגדר במלואו)</i>'}`,
-        AI.enabled(env) ? `נותרו היום: <b>${AI.quotaLeft(meta, env)}</b> תשובות` : '',
+        AI.enabled(env) ? `נותרו היום: <b>${AI.quotaLeft(meta, env, iso)}</b> תשובות` : '',
         '',
         `בסיס הידע מהמדריכים (${KB.KB.length} נושאים) עובד תמיד, גם בלי AI, וגם בלי עלות.`,
         p === 'off' ? '\nלהדלקה — ראה README, סעיף "שיחה חופשית".' : '',
