@@ -43,7 +43,26 @@ export const DEFAULT_META = {
   gumRemindMin: null,      // ובאיזו דקה — לא יותר מפעם ב-45 דק׳
   gumSnoozeISO: null,      // דחייה: היום
   gumSnoozeMin: 0,         // ועד איזו דקה
+  hist: [],                // זיכרון שיחה: [{r:'u'|'a', t, ts}] — ראה HIST_* למטה
 };
+
+// כל הודעה שמגיעה ל-AI כבר כותבת meta, ולכן ההיסטוריה לא עולה בכתיבה
+// נוספת ל-KV. מה שכן צריך תקרה: meta נקרא בכל בקשה.
+export const HIST_TURNS = 8;        // 4 חילופי דברים
+export const HIST_CHARS = 260;      // לכל תור
+export const HIST_TTL_MS = 2 * 3600 * 1000;  // שיחה מלפני שעתיים היא רעש
+
+/** התורות הרלוונטיים בלבד, ישן→חדש */
+export function recentHist(meta, nowMs = Date.now()) {
+  return (meta.hist || []).filter(h => nowMs - (h.ts || 0) <= HIST_TTL_MS);
+}
+
+export function pushHist(meta, role, text, nowMs = Date.now()) {
+  if (!text) return;
+  const h = recentHist(meta, nowMs);
+  h.push({ r: role, t: String(text).replace(/<[^>]*>/g, '').slice(0, HIST_CHARS), ts: nowMs });
+  meta.hist = h.slice(-HIST_TURNS);
+}
 
 export async function getMeta(env) {
   const raw = await env.KV.get(META_KEY);

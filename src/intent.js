@@ -20,6 +20,7 @@
 // ==========================================================================
 
 import * as KB from './kb.js';
+import { DOCTRINE, GROUNDING } from './core.js';
 
 export const INTENTS = [
   'urge',          // דחף רגיל — עכשיו
@@ -74,10 +75,12 @@ const SYSTEM = `אתה מסווג-כוונות וגם מנסח-תשובות בע
 <b>urgency:</b> now אם זה קורה ברגע זה · later אם זה צפוי · none אחרת.
 
 <b>reply — התשובה שתישלח למשתמש:</b>
-1. בסס אותה על "הקטעים מהמדריכים" ועל "מצב היום" שמצורפים. אל תוסיף עצות מהידע הכללי שלך. אם אין שם כלום שנוגע לעניין, אמור זאת בכנות.
+1. ${GROUNDING} אם באמת אין לך על מה לענות — אמור זאת בכנות, אבל זה נדיר: הדוקטרינה מכסה את רוב מה שיישאל.
+1ג. <b>יש לך את השיחה עד כה.</b> אם ההודעה היא המשך ("ולמה?", "כן", "אז מה", "לא הבנתי", "ומה עם...") — ענה בהקשר של מה שנאמר קודם, אל תתחיל מחדש ואל תבקש שיחזור על עצמו.
 1א. <b>לשאלת נתון — ענה במספר או בשעה מדויקים מ"מצב היום", ובקצרה.</b> דוגמה: "המסטיק האחרון היה ב-13:40, לפני 5 שעות ו-50 דקות. סה״כ 2 היום." <b>אל תמציא שעה שלא מופיעה שם.</b> אם לאירוע יש רק ספירה בלי שעה — אמור שיש ספירה ושהתיעוד המדויק התחיל ב-26.7.
 2. **אסור** לתת מינונים, מרשמים או ייעוץ רפואי — הפנה לרוקח או רופא. אל תמציא מספרים.
 3. **RAIN — רק אם רלוונטי, ואז בניסוח הזה בלבד:** R = זהה והרפה · A = הרשה · I = חקור בגוף ("מה מרגיש בגוף שלי עכשיו? איפה בדיוק?") · N = ציין במילה אחת. אסור "נטרל"/"הערה"/"רשום".
+3א. <b>ולא גולשים כדי שהגל יעבור — גולשים בסקרנות.</b> אסור לנסח את זה כ"תן לו לחלוף", "חכה שיעבור", "זה יעבור מהר" — זו מלחמה במסווה, וברואר מפורש בנקודה הזאת. הניסוח הוא "מעניין מה זה", "איפה זה יושב בגוף".
 4. **בתוך גל — אין להציע הסחת דעת.** הסחה בורחת מהגל; גלישה מפרקת אותו. (תכנון מראש של שעות ריקות — כן; ווסט ממליץ. ההבדל הוא הזמן.)
 4א. **אם הוא לא יכול לזוז** (בפגישה/בנהיגה/ליד אנשים) — אל תסתפק ב-RAIN. הפנה ל-/איזומטרי: מתיחת שרירים בישיבה, בלתי-נראית.
 4ג. אם intent הוא <b>urge_enroute</b> — <b>משפט אחד או שניים, פקודתי.</b> "עצור. פנה 180° והתחל ללכת עכשיו." בלי הסבר ובלי ניתוח; הבוט שולח מיד את הזרימה.
@@ -89,11 +92,18 @@ const SYSTEM = `אתה מסווג-כוונות וגם מנסח-תשובות בע
 8. HTML של טלגרם בלבד: <b> <i> <code>. בלי markdown, בלי כוכביות.
 9. אם השתמשת בקטע — שורה אחרונה: — שם המקור האמיתי. בלי סוגריים משולשים.`;
 
-const buildUser = (text, state) =>
-  `מצב היום:\n${state}\n\nהקטעים מהמדריכים:\n${KB.context(text, 3) || '(לא נמצאו קטעים רלוונטיים)'}\n\nההודעה מהמשתמש: ${text}`;
+const histBlock = hist =>
+  (hist && hist.length)
+    ? `\n\nהשיחה עד כה (ישן→חדש; התייחס אליה — "ולמה?", "כן", "אז מה עכשיו" מתייחסים אליה):\n`
+      + hist.map(h => `${h.r === 'u' ? 'הוא' : 'אתה'}: ${h.t}`).join('\n')
+    : '';
+
+const buildUser = (text, state, hist) =>
+  `${DOCTRINE}\n\nמצב היום:\n${state}\n\nהקטעים מהמדריכים (לשאלה הנוכחית):\n${KB.context(text, 3) || '(אין קטע ייעודי — ענה מהדוקטרינה וממצב היום)'}`
+  + `${histBlock(hist)}\n\nההודעה מהמשתמש: ${text}`;
 
 // ---------- Gemini עם פלט מובנה ----------
-async function viaGemini(env, text, state) {
+async function viaGemini(env, text, state, hist) {
   const model = env.GEMINI_MODEL || 'gemini-flash-lite-latest';
   const res = await fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
@@ -102,7 +112,7 @@ async function viaGemini(env, text, state) {
       headers: { 'content-type': 'application/json', 'x-goog-api-key': env.GEMINI_KEY },
       body: JSON.stringify({
         systemInstruction: { parts: [{ text: SYSTEM }] },
-        contents: [{ role: 'user', parts: [{ text: buildUser(text, state) }] }],
+        contents: [{ role: 'user', parts: [{ text: buildUser(text, state, hist) }] }],
         generationConfig: {
           temperature: 0.3,
           maxOutputTokens: 2000,
@@ -119,12 +129,12 @@ async function viaGemini(env, text, state) {
 }
 
 // ---------- Workers AI (בלי סכימה — מבקשים JSON ומפרשים בסבלנות) ----------
-async function viaWorkersAI(env, text, state) {
+async function viaWorkersAI(env, text, state, hist) {
   const model = env.WORKERS_AI_MODEL || '@cf/openai/gpt-oss-120b';
   const r = await env.AI.run(model, {
     messages: [
       { role: 'system', content: SYSTEM + '\n\nהחזר JSON בלבד, בלי טקסט לפניו ואחריו.' },
-      { role: 'user', content: buildUser(text, state) },
+      { role: 'user', content: buildUser(text, state, hist) },
     ],
     max_tokens: 1200, temperature: 0.3,
   });
@@ -164,6 +174,10 @@ function sanitize(s) {
     .trim()
     .slice(0, 3500);
 
+  // שורת המקור נדבקת לעיתים לסוף המשפט ("...לחלוף.— קאר, פרק 24").
+  // מפרידים אותה לשורה משלה.
+  t = t.replace(/([^\s\n])\s*—\s*(קאר|ווסט|ברואר|מרלט|התוכנית|המדריך|יוצא)/g, '$1\n— $2');
+
   // איזון תגיות: תג פתוח בלי סגירה גורם לטלגרם להחזיר 400
   for (const tag of ['b', 'i', 'code', 'u', 's']) {
     const open = (t.match(new RegExp(`<${tag}>`, 'g')) || []).length;
@@ -178,13 +192,13 @@ function sanitize(s) {
  * מסווג ומנסח בקריאה אחת. מחזיר {intent, urgency, reply} או null.
  * נופל לאחור בין ספקים, בדיוק כמו ai.js.
  */
-export async function classify(env, text, state) {
+export async function classify(env, text, state, hist) {
   const chain = (env.AI_PROVIDER || 'off').toLowerCase().split(',').map(s => s.trim());
   for (const p of chain) {
     try {
       let out = null;
-      if (p === 'gemini' && env.GEMINI_KEY) out = await viaGemini(env, text, state);
-      else if (p === 'workers-ai' && env.AI) out = await viaWorkersAI(env, text, state);
+      if (p === 'gemini' && env.GEMINI_KEY) out = await viaGemini(env, text, state, hist);
+      else if (p === 'workers-ai' && env.AI) out = await viaWorkersAI(env, text, state, hist);
       if (out) return out;
     } catch (e) {
       console.log(`INTENT ${p} ERR`, e && e.message);

@@ -13,12 +13,12 @@ import * as AI from './ai.js';
 import * as ANL from './analytics.js';
 import * as INT from './intent.js';
 import * as G from './gum.js';
-import { getMeta, putMeta, getDay, updateDay, pruneSent } from './store.js';
+import { getMeta, putMeta, getDay, updateDay, pruneSent, recentHist, pushHist } from './store.js';
 
 // מזהה בנייה. מתעדכן בכל פריסה ומוחזר ב-/diag, כדי שאפשר יהיה לדעת
 // בוודאות איזו גרסה חיה במקום לנחש אחרי sleep. ארבע פעמים היום בדיקה
 // רצה מול הגרסה הקודמת והסקתי מזה מסקנה שגויה.
-export const BUILD = '161810';
+export const BUILD = '171333';
 
 // ---------- משבצות הזמן היומיות (שעון ישראל) ----------
 const SLOTS = [
@@ -215,7 +215,10 @@ export default {
         const pl = P.planFor(now.iso, meta.siteOffset);
         const day = await getDay(env, now.iso);
         const hit = KB.answer(q);
-        const cls = AI.enabled(env) ? await INT.classify(env, q, await buildState(env, pl, now.iso, now, meta)) : null;
+        // h= זוג תורות מדומה לבדיקת המשכיות: h=שאלה||תשובה
+        const hRaw = url.searchParams.get('h');
+        const hist = hRaw ? hRaw.split('||').map((t, i) => ({ r: i % 2 ? 'a' : 'u', t, ts: Date.now() })) : recentHist(meta);
+        const cls = AI.enabled(env) ? await INT.classify(env, q, await buildState(env, pl, now.iso, now, meta), hist) : null;
         return Response.json({
           q,
           intent: cls ? cls.intent : null,
@@ -780,9 +783,15 @@ async function converse(text, chatId, env, meta, pl, iso, now) {
   // ---- 1 · סיווג + ניסוח על ידי המודל ----
   if (AI.enabled(env) && text.trim().length >= 3) {
     if (AI.quotaLeft(meta, env) > 0) {
-      const res = await INT.classify(env, text, await buildState(env, pl, iso, now, meta));
+      const hist = recentHist(meta);
+      const res = await INT.classify(env, text, await buildState(env, pl, iso, now, meta), hist);
       if (res) {
         AI.noteUse(meta, iso);
+        // ההודעה והתשובה נכנסות לזיכרון כאן, לפני כל הסתעפות — אחרת
+        // כוונות שמסתיימות ב-return R(...) היו נופלות מההיסטוריה,
+        // ובדיוק הן הרגעים שהמשך שיחה מתייחס אליהם ("זה עבר", "ולמה?").
+        pushHist(meta, 'u', text);
+        pushHist(meta, 'a', res.reply);
         await putMeta(env, meta);
 
         // כוונות שדורשות פעולה — הזרימה האמיתית, לא רק תשובה.
@@ -817,9 +826,11 @@ async function converse(text, chatId, env, meta, pl, iso, now) {
   // (המסלול המהיר בביטוי הרגולרי כבר רץ לפני זה, כך שדחף מפורש
   //  לא מגיע לכאן בכלל.)
   if (AI.enabled(env) && AI.quotaLeft(meta, env) > 0) {
-    const plain = await AI.ask(env, text, await buildState(env, pl, iso, now, meta));
+    const plain = await AI.ask(env, text, await buildState(env, pl, iso, now, meta), recentHist(meta));
     if (plain) {
       AI.noteUse(meta, iso);
+      pushHist(meta, 'u', text);
+      pushHist(meta, 'a', plain);
       await putMeta(env, meta);
       const m = M.answerBlock(plain, null);
       return send(env, chatId, m.text, { reply_markup: m.kb });
