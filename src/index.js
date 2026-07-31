@@ -18,7 +18,7 @@ import { getMeta, putMeta, getDay, updateDay, pruneSent, recentHist, pushHist } 
 // מזהה בנייה. מתעדכן בכל פריסה ומוחזר ב-/diag, כדי שאפשר יהיה לדעת
 // בוודאות איזו גרסה חיה במקום לנחש אחרי sleep. ארבע פעמים היום בדיקה
 // רצה מול הגרסה הקודמת והסקתי מזה מסקנה שגויה.
-export const BUILD = '171333';
+export const BUILD = '174515';
 
 // ---------- משבצות הזמן היומיות (שעון ישראל) ----------
 const SLOTS = [
@@ -503,7 +503,25 @@ async function tick(env) {
     }
   }
 
-  if (dirty) { pruneSent(meta, iso); await putMeta(env, meta); }
+  // כתיבה ממוזגת, ולא putMeta(meta) על האובייקט שנקרא בתחילת ה-tick.
+  //
+  // הקרון רץ במקביל להודעות: טלגרם מסדר עדכונים לפי צ׳אט, אבל הוא לא
+  // יודע דבר על הקרון. tick קורא meta, שולח הודעות (שניות), וכותב.
+  // אם בזמן הזה הגיעה הודעה ו-converse כתב meta, הכתיבה כאן הייתה
+  // מוחקת אותה — ובכיוון ההפוך, הודעה שנכתבה אחרי קריאת ה-tick הייתה
+  // מוחקת את meta.sent ומייצרת שליחה כפולה של הודעת הבוקר בקרון הבא.
+  // לכן קוראים מחדש ומחילים רק את השדות שהקרון באמת מחזיק.
+  if (dirty) {
+    const fresh = await getMeta(env);
+    fresh.sent = { ...fresh.sent, ...meta.sent };
+    for (const k of ['sos', 'gumRemindISO', 'gumRemindMin',
+                     'lastPartnerAlert', 'lastPartnerAlertLevel', 'lastEscalationISO']) {
+      fresh[k] = meta[k];
+    }
+    if (meta.gumPlan) fresh.gumPlan = meta.gumPlan;
+    pruneSent(fresh, iso);
+    await putMeta(env, fresh);
+  }
 }
 
 /** דוח הדפוסים השבועי — הופך את טבלת המיפוי מהמדריך לדבר אוטומטי */
