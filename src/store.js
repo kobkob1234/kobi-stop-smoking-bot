@@ -14,7 +14,11 @@ const SITE_ROTATION_VER = 2;
 export const DEFAULT_META = {
   chatId: null,
   costPerDay: 25,          // ₪ ליום שהוויפ עלה — /כסף 30 משנה
-  gumSoftCap: 12,          // תזכורת רכה בלבד; המקסימום האמיתי הוא מה שעל האריזה
+  // תזכורת רכה בלבד; המקסימום המסומן ל-2 מ״ג הוא 24–25 מנות ביום.
+  // חייב להיות **מעל** היעד: כשהיעד היה 10 והסף 12 זה עוד עבד, אבל עם
+  // יעד 12 סף של 12 היה מפיק אזהרת מינון-יתר בכל יום שבו הוא עומד ביעד,
+  // וגם דגל הסלמה שבועי — כלומר ציות מלא היה נקרא כמצוקה.
+  gumSoftCap: 18,
   partner: '',             // שם בת/בן הזוג לתזכורות
   scenes: '',              // שלוש סצנות העתיד (כלי 4)
   identity: 'אני לא מווייפ. ההחלטה סגורה — אין דיון היום.',
@@ -76,8 +80,17 @@ export async function getMeta(env) {
   return out;
 }
 
+// מפתחות שמתחילים ב-_ הם request-scoped ולעולם לא נשמרים.
+//
+// זה קיים בגלל באג אמיתי: `/trigger?dry=1` קבע `meta.partnerMute = true`
+// "כדי לבדוק בלי להטריד אותה", אבל startEnRoute/startWave/startPlanning
+// מסתיימים ב-putMeta — כך שהדגל נשמר ל-KV, ובדיקה אחת השביתה את ערוץ
+// ההתראה לשותפה **לצמיתות ובשקט**. הכלל הזה הופך את המחלקה הזאת של
+// באגים לבלתי-אפשרית: כל דגל זמני נכתב עם _ ונעלם מעצמו.
 export async function putMeta(env, meta) {
-  await env.KV.put(META_KEY, JSON.stringify(meta));
+  const clean = {};
+  for (const [k, v] of Object.entries(meta)) if (!k.startsWith('_')) clean[k] = v;
+  await env.KV.put(META_KEY, JSON.stringify(clean));
 }
 
 export async function updateMeta(env, fn) {
@@ -100,17 +113,45 @@ export const EMPTY_DAY = {
   enroute: 0,   // פעמים שהיה בדרך לקנות ועצר (דרגה 3)
 };
 
+/** מסיר מפתחות request-scoped לפני כתיבה — ראה putMeta */
+const strip = o => {
+  const out = {};
+  for (const [k, v] of Object.entries(o)) if (!k.startsWith('_')) out[k] = v;
+  return out;
+};
+
+/**
+ * יום מ-KV. `_exists` אומר אם הרשומה באמת קיימת.
+ *
+ * בלי הסימן הזה יום שלא תועד היה **בלתי-נבדל** מיום מאופס, ומכאן
+ * העיוות החמור ביותר במערכת: שבוע של שתיקה מוחלטת קיבל ציון טוב יותר
+ * משבוע אמיתי מוצלח — 0 דחפים, 0 מעידות, 0 מסטיקים — וגלאי ההסלמה
+ * ראה בו שבוע תקין. התנתקות מהבוט היא בדיוק מה שקורה כשקשה, ולכן זה
+ * היה עיוור בכיוון המסוכן.
+ *
+ * `_exists` מתחיל ב-_ ולכן strip() מוחק אותו בכתיבה — הוא לעולם לא
+ * זולג לרשומה עצמה.
+ */
 export async function getDay(env, iso) {
   const raw = await env.KV.get('d:' + iso);
-  const d = { ...EMPTY_DAY, ...(raw ? JSON.parse(raw) : {}) };
+  let parsed = {};
+  let ok = false;
+  if (raw) {
+    // בלי try/catch, רשומה פגומה אחת השביתה לצמיתות ובשקט כל
+    // אינטראקציה בתאריך הזה — getDay נקרא בכל מסלול.
+    try { parsed = JSON.parse(raw); ok = true; }
+    catch (e) { console.log('DAY PARSE ERR', iso, e && e.message); }
+  }
+  const d = { ...EMPTY_DAY, ...parsed };
   if (!Array.isArray(d.ev)) d.ev = [];
+  d._exists = ok;
   return d;
 }
 
 export async function updateDay(env, iso, fn) {
   const d = await getDay(env, iso);
   fn(d);
-  await env.KV.put('d:' + iso, JSON.stringify(d));
+  await env.KV.put('d:' + iso, JSON.stringify(strip(d)));
   return d;
 }
 

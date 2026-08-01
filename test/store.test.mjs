@@ -3,6 +3,65 @@
 // ==========================================================================
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { makeKV, makeEnv } from './helpers.mjs';
+import { getDay, updateDay, getMeta, putMeta } from '../src/store.js';
+
+// ==========================================================================
+//  שכבת ה-KV — לא הייתה נבדקת כלל, ושם ישבו הבאגים החמורים.
+// ==========================================================================
+
+test('יום שלא נכתב מסומן כלא-קיים; יום שנכתב מסומן כקיים', async () => {
+  const env = makeEnv();
+  const missing = await getDay(env, '2026-08-01');
+  assert.equal(missing._exists, false, 'זו ההבחנה שאבדה וגרמה לשבוע שקט להיראות מוצלח');
+  assert.equal(missing.gum, 0, 'הערכים עדיין מאופסים — רק המשמעות שונה');
+
+  await updateDay(env, '2026-08-01', d => { d.gum = 3; });
+  const present = await getDay(env, '2026-08-01');
+  assert.equal(present._exists, true);
+  assert.equal(present.gum, 3);
+});
+
+test('_exists לא נשמר לרשומה עצמה', async () => {
+  const env = makeEnv();
+  await updateDay(env, '2026-08-01', d => { d.gum = 1; });
+  const raw = JSON.parse(env.KV._store['d:2026-08-01']);
+  assert.ok(!('_exists' in raw), 'דגלי _ הם request-scoped ואסור שיזלגו ל-KV');
+});
+
+test('רשומה פגומה לא מפילה את היום ולא זורקת', async () => {
+  // בלי try/catch, רשומה פגומה אחת השביתה לצמיתות ובשקט כל
+  // אינטראקציה בתאריך הזה — getDay נקרא בכל מסלול.
+  const kv = makeKV({ 'd:2026-08-01': '{לא JSON' });
+  const d = await getDay(makeEnv(kv), '2026-08-01');
+  assert.equal(d.gum, 0);
+  assert.equal(d._exists, false, 'רשומה שלא ניתן לקרוא אינה כיסוי');
+});
+
+test('putMeta לא שומר מפתחות שמתחילים ב-_', async () => {
+  // `/trigger?dry=1` קבע partnerMute=true "רק לבדיקה", וזה נשמר ל-KV
+  // דרך putMeta שבסוף startEnRoute — כלומר בדיקה אחת השביתה את ערוץ
+  // ההתראה לשותפה לצמיתות ובשקט.
+  const env = makeEnv();
+  const m = await getMeta(env);
+  m.chatId = 42;
+  m._dryRun = true;
+  await putMeta(env, m);
+
+  assert.ok(!('_dryRun' in JSON.parse(env.KV._store.meta)), 'דגל הבדיקה נשמר');
+  const back = await getMeta(env);
+  assert.equal(back.chatId, 42, 'שאר השדות נשמרים כרגיל');
+  assert.equal(back.partnerMute, false, 'ערוץ השותפה נשאר פעיל');
+});
+
+test('updateDay קורא-משנה-כותב, ושתי קריאות מצטברות', async () => {
+  const env = makeEnv();
+  await updateDay(env, '2026-08-01', d => { d.gum += 1; });
+  await updateDay(env, '2026-08-01', d => { d.gum += 1; d.patch = true; });
+  const d = await getDay(env, '2026-08-01');
+  assert.equal(d.gum, 2);
+  assert.equal(d.patch, true);
+});
 import * as S from '../src/store.js';
 
 const fresh = () => ({ ...S.DEFAULT_META, hist: [], sent: {} });

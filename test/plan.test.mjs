@@ -1,5 +1,13 @@
 // ==========================================================================
-//  ציר 70 הימים — התוכנית שהוא באמת חי לפיה
+//  ציר התוכנית — מעוגן ל-25.7.2026, יום הגמילה האפקטיבי.
+//
+//  7.7–24.7 היה ניסיון על מדבקה בלבד ובו 7 קניות; ההימנעות הרצופה
+//  והמסטיק התחילו ב-25.7. לוח המדבקות עצמו לא זז — ולכן שלב המנה
+//  המלאה הוא 24 ימים ולא 42, והתוכנית 52 ימים ולא 70.
+//
+//  הבדיקות כאן נגזרות מ-P ולא מקבעות מספרים: הן נשברו פעם אחת בדיוק
+//  בגלל 70/69/42 קשיחים, וזה בזבוז — מה שבאמת צריך להיות מקובע הוא
+//  התאריכים שבהם המינון יורד, לא אורך המערך.
 // ==========================================================================
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -7,18 +15,26 @@ import * as P from '../src/plan.js';
 
 const days = Array.from({ length: P.TOTAL_DAYS }, (_, i) =>
   P.planFor(P.addDaysISO(P.QUIT, i), 0));
+const LAST = days.length - 1;
 
-test(`התוכנית היא ${P.TOTAL_DAYS} ימים`, () => {
-  assert.equal(days.length, 70);
+test(`התוכנית היא ${P.TOTAL_DAYS} ימים ומתחילה ב-${P.QUIT}`, () => {
+  assert.equal(days.length, P.TOTAL_DAYS);
   assert.equal(days[0].n, 1);
-  assert.equal(days[69].n, 70);
+  assert.equal(days[0].iso, '2026-07-25');
+  assert.equal(days[LAST].n, P.TOTAL_DAYS);
 });
 
-test('חלוקת המינונים: 42 × 21 מ״ג · 14 × 14 מ״ג · 14 × 7 מ״ג', () => {
+test('חלוקת המינונים: 24 × 21 מ״ג · 14 × 14 מ״ג · 14 × 7 מ״ג', () => {
   const count = d => days.filter(x => x.dose === d).length;
-  assert.equal(count(21), 42);
+  assert.equal(count(21), 24);
   assert.equal(count(14), 14);
   assert.equal(count(7), 14);
+  assert.equal(count(21) + count(14) + count(7), P.TOTAL_DAYS);
+});
+
+test('היום שבו יורדים ל-14 מ״ג הוא יום 25 — שלושה ימים אחרי סגירת החלון האקוטי', () => {
+  const first14 = days.find(d => d.dose === 14);
+  assert.equal(first14.n, 25, 'אם זה זז, ההערה במיקוד שבוע 4 ובאבן הדרך כבר לא נכונה');
 });
 
 test('המינון יורד מונוטונית ולעולם לא עולה', () => {
@@ -36,8 +52,10 @@ test('הירידות נופלות בדיוק ב-18.8 וב-1.9', () => {
   assert.equal(first7.iso, '2026-09-01');
 });
 
-test('היום האחרון הוא 14.9.2026', () => {
-  assert.equal(days[69].iso, '2026-09-14');
+test('היום האחרון הוא 14.9.2026 — לוח המדבקות המקורי לא זז', () => {
+  assert.equal(days[LAST].iso, '2026-09-14');
+  assert.equal(days[LAST].lastPatchISO, '2026-09-14');
+  assert.ok(P.planFor('2026-09-15').after, '15.9 כבר מחוץ לתוכנית');
 });
 
 test('כל 6 ימים רצופים מכסים את כל ששת המקומות — כלומר מקום חוזר רק אחרי 6 ימים', () => {

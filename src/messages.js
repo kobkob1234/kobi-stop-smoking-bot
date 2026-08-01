@@ -26,13 +26,13 @@ export function morning(pl, day, meta) {
 
   if (pl.before) {
     return {
-      text: `🌅 <b>בוקר טוב</b>\n\nיום ההפסקה: <b>7.7.2026</b> — עוד ${pl.daysToQuit} ימים.\nממשיכים מדבקה 21 מ״ג.\n\n${insight(ins)}`,
+      text: `🌅 <b>בוקר טוב</b>\n\nיום ההפסקה: <b>25.7.2026</b> — עוד ${pl.daysToQuit} ימים.\nממשיכים מדבקה 21 מ״ג.\n\n${insight(ins)}`,
       kb: inline([[btn('🩹 מדבקה הודבקה ✓', 'p')]]),
     };
   }
   if (pl.after) {
     return {
-      text: `🌅 <b>בוקר טוב</b>\n\n🏁 סיימת את 70 הימים. המדבקה האחרונה הייתה ב-14.9.2026.\n<b>${pl.cleanDays} ימים נקיים מוויפ.</b>\n\nשומרים על השגרה החדשה, על הכלים, ומסטיק בהישג יד לביטחון.\n\n${insight(ins)}`,
+      text: `🌅 <b>בוקר טוב</b>\n\n🏁 סיימת את שלב המדבקות. המדבקה האחרונה הייתה ב-14.9.2026.\n<b>${pl.cleanDays} ימים נקיים מוויפ.</b>\n\nשומרים על השגרה החדשה, על הכלים, ומסטיק בהישג יד לביטחון.\n\n${insight(ins)}`,
       kb: inline([[btn('📊 סטטוס', 'st'), btn('🧰 כלים', 'T:menu')]]),
     };
   }
@@ -187,7 +187,7 @@ export function status(pl, iso, day, meta) {
   const parts = [`📊 <b>איפה אנחנו עומדים</b>`, LINE];
 
   if (pl.before) {
-    parts.push(`יום ההפסקה: <b>7.7.2026</b> — עוד ${pl.daysToQuit} ימים.`);
+    parts.push(`יום ההפסקה: <b>25.7.2026</b> — עוד ${pl.daysToQuit} ימים.`);
   } else if (pl.after) {
     parts.push(`🏁 התוכנית הושלמה. <b>${pl.cleanDays} ימים נקיים.</b>`);
     parts.push(`💰 נחסך: <b>${pl.cleanDays * meta.costPerDay}₪</b>`);
@@ -198,7 +198,7 @@ export function status(pl, iso, day, meta) {
     parts.push(`🔥 <b>${pl.clean} ימים נקיים מוויפ</b>`);
     parts.push(`🩹 היום: <b>${pl.dose} מ״ג</b> (${pl.product}) · 📍 ${pl.site}`);
     parts.push(`📅 המדבקה האחרונה: <b>${P.fmtHe(pl.lastPatchISO)}</b> — עוד ${left} ימים`);
-    parts.push(`💰 נחסך מאז 7.7: <b>${pl.clean * meta.costPerDay}₪</b> <i>(${meta.costPerDay}₪/יום — /כסף לשינוי)</i>`);
+    parts.push(`💰 נחסך מאז 25.7: <b>${pl.clean * meta.costPerDay}₪</b> <i>(${meta.costPerDay}₪/יום — /כסף לשינוי)</i>`);
   }
 
   parts.push('');
@@ -456,7 +456,7 @@ export function help() {
 
 export function welcome(pl, meta) {
   const where = pl.before
-    ? `יום ההפסקה: 7.7.2026 — עוד ${pl.daysToQuit} ימים.`
+    ? `יום ההפסקה: 25.7.2026 — עוד ${pl.daysToQuit} ימים.`
     : pl.after
       ? `🏁 התוכנית הושלמה — ${pl.cleanDays} ימים נקיים.`
       : `אנחנו ביום <b>${pl.n} מתוך ${P.TOTAL_DAYS}</b> · שבוע ${pl.week} · מדבקה ${pl.dose} מ״ג · <b>${pl.clean} ימים נקיים</b>.`;

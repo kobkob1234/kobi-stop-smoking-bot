@@ -10,8 +10,24 @@ const ISO = '2026-08-15';
 const plan = { ...G.DEFAULT_PLAN };
 
 // ---------------------------------------------------------------- תזמון
-test('יעד היום הוא 10 יחידות לפני התצמצום', () => {
-  assert.equal(G.dailyTarget(plan, ISO), 10);
+test('יעד היום הוא 12 יחידות לפני התצמצום', () => {
+  assert.equal(G.dailyTarget(plan, ISO), 12);
+});
+
+test('ארבע מנות יושבות בחלון הסיכון 17:00–21:00', () => {
+  // הפריסה אינה אחידה במכוון: הגלים שלו מרוכזים שם, ולכן הצפיפות
+  // עוקבת אחרי הסיכון ולא אחרי השעון.
+  const inRisk = G.RECOMMENDED.times.filter(t => {
+    const [h, m] = t.split(':').map(Number);
+    return h * 60 + m >= 17 * 60 && h * 60 + m < 21 * 60;
+  });
+  assert.equal(inRisk.length, 4, inRisk.join(','));
+});
+
+test('היעד נמוך מהתקרה הרכה — אחרת ציות מלא נקרא כמינון יתר', () => {
+  // כשהיעד היה 10 והתקרה 12 זה עבד. עם יעד 12 ותקרה 12, כל יום שבו
+  // הוא עומד ביעד היה מפיק אזהרה וגם דגל הסלמה שבועי.
+  assert.ok(G.dailyTarget(plan, ISO) < 18, 'gumSoftCap הוא 18');
 });
 
 test('לא מזכיר בתוך MIN_GAP מהיחידה האחרונה', () => {
@@ -35,8 +51,32 @@ test('אחרי MAX_GAP בלי כלום — מזכיר בלי קשר לקצב', (
 });
 
 test('הושלם היעד — לא מזכיר יותר', () => {
-  const d = day({ gum: 10, ev: [gumAt(18, 0)] });
-  assert.equal(G.dueNow(plan, ISO, d, 20 * 60).due, false);
+  const d = day({ gum: 12, ev: [gumAt(18, 0)] });
+  assert.equal(G.dueNow(plan, ISO, d, 14 * 60).due, false);
+});
+
+test('הגעה ליעד לא משתיקה את חלון הסיכון אחרי פער ארוך', () => {
+  // קודם לכן `taken >= target` השתיק את הבוט לשארית היום — כולל דרך
+  // כל 17:00–21:00, שבשבילו נבנתה הפריסה. יום שהתחיל קשה וצרך את
+  // היעד עד 13:00 השאיר את הערב בלי כלום.
+  const d = day({ gum: 12, ev: [gumAt(13, 0)] });
+  assert.equal(G.dueNow(plan, ISO, d, 15 * 60).due, false, 'מחוץ לחלון — שקט');
+  assert.equal(G.dueNow(plan, ISO, d, 19 * 60).due, true, 'בתוך החלון, פער ארוך — מזכיר');
+});
+
+test('החריג בחלון הסיכון עוצר בתקרה הרכה', () => {
+  const d = day({ gum: 18, ev: [gumAt(13, 0)] });
+  assert.equal(G.dueNow(plan, ISO, d, 19 * 60, null, 18).due, false, 'בתקרה — לא דוחפים מעבר');
+});
+
+test('יום עם מסטיקים אבל בלי אירועים לא מייצר "עוד לא היה מסטיק היום"', () => {
+  // day.gum מתעדכן בשלושה מסלולים שלא כולם כותבים אירוע, ו-ev נחתך
+  // ל-120. בלי בדיקת taken, יום כזה ייצר ~9 תזכורות שכל אחת סותרת
+  // את המונה שמופיע באותה הודעה ממש.
+  const d = day({ gum: 8, ev: [] });
+  for (const t of [8 * 60, 12 * 60, 16 * 60, 20 * 60]) {
+    assert.notEqual(G.dueNow(plan, ISO, d, t).why, 'עוד לא היה מסטיק היום');
+  }
 });
 
 test('לפני תחילת החלון ואחריו — שקט', () => {
@@ -60,10 +100,10 @@ test('הנסיגה נבדקת לפני ענף "פער ארוך מדי" ולא א
 
 // ------------------------------------------------- סימולציות יום שלם
 const sims = [
-  ['הקצב שלו — כל 70 דק׳', 70, 10, 8],
+  ['הקצב שלו — כל 70 דק׳', 70, 10, 9],
   ['נשאר מאחור — כל 120 דק׳', 120, 6, 11],
   ['איטי מאוד — כל 180 דק׳', 180, 4, 11],
-  ['מקדים — כל 45 דק׳', 45, 10, 3],
+  ['מקדים — כל 45 דק׳', 45, 12, 4],
 ];
 for (const [label, gap, minTaken, maxReminders] of sims) {
   test(`יום שלם · ${label}: ≥${minTaken} יחידות, ולא יותר מ-${maxReminders} תזכורות`, () => {
@@ -79,28 +119,68 @@ test('מי שמתעלם לגמרי לא מקבל יותר מ-10 תזכורות �
 });
 
 // ---------------------------------------------------------------- תצמצום
+const TAPER = { ...plan, taperStartISO: '2026-09-15', confirmedTaper: true, stepDays: 4 };
+const dayAfter = n => new Date(Date.UTC(2026, 8, 15) + n * 86400000).toISOString().slice(0, 10);
+const isRisk = t => {
+  const [h, m] = t.split(':').map(Number);
+  return h * 60 + m >= 17 * 60 && h * 60 + m < 21 * 60;
+};
+
 test('התצמצום לא מתחיל בלי אישור מפורש, גם אחרי התאריך', () => {
-  const p = { ...plan, taperStartISO: '2026-09-15', confirmedTaper: false };
-  assert.equal(G.activeTimes(p, '2026-10-01').length, 10);
+  const p = { ...TAPER, confirmedTaper: false };
+  assert.equal(G.activeTimes(p, '2026-10-01').length, 12);
 });
 
-test('אחרי אישור — יחידה אחת פחות כל stepDays, ומונוטוני יורד', () => {
-  const p = { ...plan, taperStartISO: '2026-09-15', confirmedTaper: true, stepDays: 4 };
+test('אחרי אישור — יחידה אחת פחות כל stepDays, ומונוטוני יורד עד אפס', () => {
+  // הגרסה הקודמת של הבדיקה בנתה `iso` והתעלמה ממנו, ולכן 25 מתוך 41
+  // האיטרציות בדקו את אותו יום קבוע. כאן התאריכים אמיתיים.
   let prev = Infinity;
-  for (let d = 0; d <= 40; d++) {
-    const iso = `2026-09-${String(15 + d).padStart(2, '0')}`.replace(/-(\d\d)$/, (m, x) =>
-      +x > 30 ? `-${String(+x - 30).padStart(2, '0')}` : m);
-    const n = G.activeTimes(p, d <= 15 ? `2026-09-${String(15 + d).padStart(2, '0')}` : '2026-10-25').length;
-    assert.ok(n <= prev, `עלה מ-${prev} ל-${n}`);
+  for (let d = 0; d <= 60; d++) {
+    const n = G.activeTimes(TAPER, dayAfter(d)).length;
+    assert.ok(n <= prev, `יום ${d}: עלה מ-${prev} ל-${n}`);
     prev = n;
   }
-  assert.equal(prev, 1, 'הרצפה היא יחידה אחת');
+  assert.equal(prev, 0, 'הרצפה היא אפס — "תאריך סיום מוגדר, לא הרגל פתוח"');
+});
+
+test('חלון הסיכון שורד את ההורדות הראשונות — אמצע-היום יורד קודם', () => {
+  // זה הפגם המהותי שתוקן: הסדר הקודם (מהמאוחר לכיוון הבוקר) מחק את
+  // ארבע מנות הערב **ראשונות**, כלומר פירק את החלון המכוסה ביותר,
+  // בזמן שמנות אמצע-היום שרדו עד הסוף.
+  for (const d of [4, 8, 12, 16, 20, 24, 28]) {
+    const a = G.activeTimes(TAPER, dayAfter(d));
+    assert.equal(a.filter(isRisk).length, 4,
+      `יום ${d}: נשארו ${a.filter(isRisk).length} מנות ערב מתוך 4 — ${a.join(' ')}`);
+  }
+});
+
+test('קצוות חלון הסיכון נשמרים אחרונים, כדי שהחלון יישאר ממוסגר', () => {
+  const a = G.activeTimes(TAPER, dayAfter(36));   // ירדנו ל-3
+  assert.ok(a.includes('17:15') && a.includes('20:30'),
+    `הקצוות נפלו לפני האמצע — ${a.join(' ')}`);
 });
 
 test('יחידת הבוקר נופלת אחרונה — היא מכסה את הלילה בלי מדבקה', () => {
-  const p = { ...plan, taperStartISO: '2026-09-15', confirmedTaper: true, stepDays: 4 };
-  const last = G.activeTimes(p, '2026-11-01');
-  assert.deepEqual(last, ['07:30']);
+  const one = G.activeTimes(TAPER, dayAfter(44));
+  assert.deepEqual(one, ['07:30']);
+});
+
+test('הקפאה עוצרת את הצמצום בפועל, לא רק בהבטחה', () => {
+  // הבוט הודיע "אני לא מוריד עוד יחידה עד שתחליט" ו-activeTimes המשיכה
+  // להוריד מנה כל 4 ימים בלי להתייעץ בכלום.
+  const frozen = { ...TAPER, pausedISO: dayAfter(12) };
+  const at12 = G.activeTimes(frozen, dayAfter(12)).length;
+  assert.equal(G.activeTimes(frozen, dayAfter(24)).length, at12, 'המשיך לרדת בזמן הקפאה');
+  assert.equal(G.taperInfo(frozen, dayAfter(24)).nextDropISO, null);
+  assert.equal(G.taperInfo(frozen, dayAfter(24)).paused, true);
+});
+
+test('nextToGo מצביע על המנה שבאמת תיפול', () => {
+  // קודם לכן הוא החזיר את האחרונה ברשימה, כלומר הבטיח שתיפול מנת ערב
+  // בזמן שבפועל נפלה מנת צהריים.
+  const t = G.taperInfo(TAPER, dayAfter(1));
+  const after = G.activeTimes(TAPER, dayAfter(4));
+  assert.ok(!after.includes(t.nextToGo), `הובטח ${t.nextToGo} אבל הוא עוד כאן`);
 });
 
 // --------------------------------------------------------- גלאי המוכנות

@@ -8,14 +8,16 @@
 //     התזכורות מכסות את הרגעים הידועים מראש — בוקר, טריגרים, ערב.
 //
 //  2. בתצמצום — **הבוקר יורד אחרון**. הוא מכסה את הפער הגדול ביותר,
-//     הלילה בלי מדבקה. לכן סדר הנטישה מתחיל מהחלונות המאוחרים.
+//     הלילה בלי מדבקה. אבל סדר הנטישה מתחיל מ**אמצע-היום** ולא מהמאוחרים:
+//     ראה dropOrderOf למטה. המדריך אומר "המאוחרים לפני המוקדמים", ואצלו
+//     זה בדיוק הפוך — הגלים ב-17:00–21:00, ושם הכיסוי הכי צריך לשרוד.
 //
 //  ולמה אין כאן "יחידה כל שעה" קשיחה: Cochrane 2023 מדרג את ההשוואה
 //  בין לוח קבוע לבין לפי-צורך בוודאות נמוכה עד נמוכה מאוד. הכיסוי
 //  בהזדמנויות מבוסס; שעון קשיח הוא לא. לכן השעות נבחרות על ידו.
 // ==========================================================================
 
-import { addDaysISO, diffDays } from './plan.js';
+import { addDaysISO, diffDays, QUIT, TOTAL_DAYS } from './plan.js';
 
 // ==========================================================================
 //  התוכנית המומלצת — נבחרה, לא מוצעת
@@ -27,7 +29,7 @@ import { addDaysISO, diffDays } from './plan.js';
 //    לא בתוכו. זה גם למה מסטיק לא עוצר גל שכבר בשיא.
 //  • כמות: **2 מ"ג מספק כשליש** מרמת הניקוטין של עישון רגיל; 4 מ"ג מספק
 //    כשני-שלישים. מכיוון שהבחירה היא 2 מ"ג, הכמות היא מה שמפצה חלקית
-//    על המינון הנמוך — ולכן 10 יחידות ולא 5.
+//    על המינון הנמוך — ולכן 12 יחידות ולא 5.
 //  • Cochrane 2023: יתרון ל-4 מ"ג על 2 מ"ג בוודאות **גבוהה**. הבחירה
 //    ב-2 מ"ג היא שלו, מדעת; הכמות היא הפיצוי היחיד שנשאר.
 //  • ווסט (ch.10) קובע רצפה מפורשת: 10+ יחידות ביום, 6 שבועות לפחות.
@@ -37,19 +39,26 @@ import { addDaysISO, diffDays } from './plan.js';
 //    נמצאה קשורה לשיעורי הימנעות גבוהים יותר עד שנה**. מה שהעלה את
 //    ההיצמדות בניסויים היה ניטור ותזכורות — כלומר בדיוק זה.
 //
-//  ופריסת השעות אינה אחידה במקרה: רוב הגלים בנתונים שלו נופלים בין
-//  17:00 ל-21:00, וההקשר החוזר הוא "בחוץ". לכן שלוש יחידות יושבות
-//  לפני החלון ובתוכו (16:30 · 17:45 · 19:00) — כיסוי לפניו, לא אחריו.
-// ==========================================================================
+//  והחישוב שמאחורי 12 ולא 10:
+//  מנה 2 מ"ג מספקת ~0.9 מ"ג נספג בפועל, כלומר 12 מנות ≈ 10.8 מ"ג.
+//  יחד עם מדבקת 21 מ"ג הרג׳ים מגיע ל-~32 מ"ג ליום, מול צריכת סאלט של
+//  30–40+ מ"ג. ב-10 מנות זה היה בגבול התחתון ממש. המקסימום המסומן הוא
+//  24–25 מנות, אז 12 יושב בבירור בתוך הטווח הבטוח.
+//
+//  ופריסת השעות אינה אחידה במכוון: **ארבע** מנות יושבות ב-17:00–21:00,
+//  חלון הסיכון שלו, במרווחי שעה — צפוף יותר מאשר בשאר היום (75 דקות).
+//  הצפיפות עוקבת אחרי הסיכון, לא אחרי השעון.
 export const RECOMMENDED = {
-  key: 'ten',
-  label: '10 ביום · מומלץ',
-  times: ['07:30', '09:00', '10:30', '12:00', '13:30', '15:00', '16:30', '17:45', '19:00', '20:30'],
-  why: '10+ ביום (רצפת ווסט) · 2 מ"ג = ~⅓ מרמת עישון ליחידה, ולכן כמות מפצה · שיא ספיגה ~30 דק׳ ולכן לפני החלון · והיצמדות היא מה שנמצא קשור להימנעות',
+  key: 'twelve',
+  label: '12 ביום · מומלץ',
+  times: ['07:30', '08:45', '10:00', '11:15', '12:30', '13:45',
+          '15:00', '16:15', '17:15', '18:15', '19:15', '20:30'],
+  why: '12 ביום (מעל רצפת ווסט של 10+) · 2 מ"ג ≈ 0.9 מ"ג נספג, ולכן הכמות היא הפיצוי · שיא ספיגה ~30 דק׳ ולכן לפני החלון · 4 מנות בחלון 17:00–21:00',
 };
 
 export const PRESETS = {
-  ten:   { label: RECOMMENDED.label, times: RECOMMENDED.times },
+  twelve: { label: RECOMMENDED.label, times: RECOMMENDED.times },
+  ten:   { label: '10 ביום · רצפת ווסט', times: ['07:30', '09:00', '10:30', '12:00', '13:30', '15:00', '16:30', '17:45', '19:00', '20:30'] },
   six:   { label: '6 ביום · כל ~2 שעות ערות', times: ['07:30', '10:00', '12:30', '15:00', '17:30', '20:00'] },
   five:  { label: '5 ביום',                     times: ['07:30', '10:30', '13:30', '17:00', '20:00'] },
   four:  { label: '4 ביום',                     times: ['07:30', '11:30', '15:30', '19:30'] },
@@ -58,40 +67,99 @@ export const PRESETS = {
   one:   { label: '1 ביום · בוקר בלבד',          times: ['07:30'] },
 };
 
+// היום שאחרי המדבקה האחרונה. עד אז המסטיק הוא רשת הביטחון של ירידות
+// המדבקה, ולא מורידים שתי רשתות במקביל. נגזר מ-plan.js ולא מקודד קשיח,
+// כדי שלא יישבר בשינוי הבא בלוח.
+export const TAPER_START = addDaysISO(QUIT, TOTAL_DAYS);
+
+// רצפה זמנית: אם התנאי המצבי לא התקיים עד ~12 שבועות מהגמילה, מתחילים
+// בכל זאת ובקצב איטי. תנאי-מצב פתוח לגמרי מסתכן בכך שהצמצום לא יתחיל
+// לעולם, וזה כשל אמיתי בדיוק כמו לצמצם מוקדם מדי.
+export const TAPER_BACKSTOP = addDaysISO(QUIT, 84);
+
 export const DEFAULT_PLAN = {
   on: true,
   times: RECOMMENDED.times,
-  // התצמצום נקבע ל-15.9 — היום שאחרי המדבקה האחרונה. עד אז המסטיק הוא
-  // רשת הביטחון של ירידות המדבקה, ולא מורידים שתי רשתות במקביל.
-  // ב-15.9 הבוט שואל אם המצב יציב, ומאפשר לדחות.
-  taperStartISO: '2026-09-15',
+  taperStartISO: TAPER_START,
   stepDays: 4,           // יחידה אחת פחות כל 4 ימים
   confirmedTaper: false, // האם אישר שהוא מוכן להתחיל לצמצם
+  pausedISO: null,       // אם הצמצום הוקפא — התאריך שבו הוקפא
 };
 
 const toMin = t => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
 export const hhmm = m => `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
 export const sortTimes = ts => [...new Set(ts)].sort((a, b) => toMin(a) - toMin(b));
 
+// ==========================================================================
+//  סדר ההורדה — תוקן, וזה היה הפגם המהותי ביותר בצמצום.
+//
+//  הגרסה הקודמת הורידה מהמאוחר לכיוון הבוקר (`all.slice(1).reverse()`).
+//  זה נשמע סביר, ובמדריך זה אפילו כתוב כ"המאוחרים לפני המוקדמים" — אבל
+//  אצלו הגלים מרוכזים ב-17:00–21:00, ושם יושבות ארבע מנות **בכוונה**.
+//  כלומר ארבע ההורדות הראשונות מחקו בדיוק את החלון המכוסה ביותר, בעוד
+//  מנות אמצע-היום שרדו עד הסוף. "הכי מאוחר" ו"הכי קל" הם אותו דבר
+//  במדריך ושני דברים הפוכים אצלו.
+//
+//  הכלל החדש, בשתי שורות:
+//    • גוש היום (עד 17:00) יורד לפני גוש הערב.
+//    • בתוך כל גוש — מהמרכז החוצה, כדי שהכיסוי יישאר פרוס ולא יתכווץ
+//      לצד אחד. בפועל זה משאיר את קצוות הערב (17:15 ו-20:30) אחרונים,
+//      כך שהחלון עדיין ממוסגר גם כשנשארו בו שתי מנות.
+//    • 07:30 נופל **אחרון מכולם** — הוא מגשר על הלילה בלי מדבקה.
+// ==========================================================================
+const RISK_START = 17 * 60;
+const RISK_END = 21 * 60;
+
+/** סדר ההורדה: מספר נמוך = יורד מוקדם. הראשון בכל יום לעולם אחרון. */
+export function dropOrderOf(all) {
+  const mins = all.map(toMin);
+  const anchor = mins[0];
+  const band = m => (m >= RISK_START && m < RISK_END ? 1 : 0);
+  const inBand = b => mins.filter(m => m !== anchor && band(m) === b);
+  const centre = arr => (arr.length ? (Math.min(...arr) + Math.max(...arr)) / 2 : 0);
+  const c = [centre(inBand(0)), centre(inBand(1))];
+
+  return [...all].sort((x, y) => {
+    const mx = toMin(x), my = toMin(y);
+    if (mx === anchor) return 1;          // הבוקר תמיד אחרון
+    if (my === anchor) return -1;
+    const bx = band(mx), by = band(my);
+    if (bx !== by) return bx - by;        // גוש היום לפני גוש הערב
+    const dx = Math.abs(mx - c[bx]), dy = Math.abs(my - c[by]);
+    if (dx !== dy) return dx - dy;        // מהמרכז החוצה
+    // שוויון מרחק בקצוות — נופל המאוחר. מנה אחת שנשארת בחלון עדיף
+    // שתהיה בתחילתו: ספיגה של ~30 דקות מ-17:15 מכסה את כל הערב,
+    // ואילו 20:30 מכסה רק את הזנב שלו.
+    return my - mx;
+  });
+}
+
 /**
  * השעות הפעילות היום, אחרי החלת התצמצם.
- * סדר הנטישה: מהמאוחר לכיוון הבוקר — והבוקר לעולם לא נופל.
+ *
+ * הרצפה היא **אפס** ולא אחת: המדריך מבטיח "תאריך סיום מוגדר — לא הרגל
+ * פתוח", והקוד הקודם קיבע מנה אחת ביום לנצח וסתר אותו. מנת הבוקר עדיין
+ * האחרונה שנופלת, אבל היא כן נופלת בסוף.
  */
 export function activeTimes(plan, iso) {
   const all = sortTimes(plan.times || []);
   if (!all.length) return [];
   // התצמצום לא מתחיל מעצמו בתאריך. הוא דורש אישור מפורש שהמצב יציב,
   // כי התנאי בתוכנית הוא מצב ולא תאריך — "אם צריך להתאמץ כדי להפחית,
-  // עוד לא הזמן". בלי אישור נשארים על המספר המלא, וזו הכשל הבטוח.
+  // עוד לא הזמן". בלי אישור נשארים על המספר המלא, וזה הכשל הבטוח.
   if (!plan.taperStartISO || !plan.confirmedTaper) return all;
 
-  const days = diffDays(plan.taperStartISO, iso);
+  // הקפאה: כשגלאי הניטור מזהה החמרה, הצמצום **באמת** נעצר. קודם לכן
+  // הבוט הודיע "אני לא מוריד עוד יחידה עד שתחליט" וזה פשוט לא היה נכון —
+  // activeTimes הייתה פונקציה טהורה של ימים שחלפו ולא התייעצה בכלום.
+  const effective = plan.pausedISO && plan.pausedISO < iso ? plan.pausedISO : iso;
+
+  const days = diffDays(plan.taperStartISO, effective);
   if (days < 0) return all;
   const drop = Math.floor(days / Math.max(1, plan.stepDays || 4));
   if (drop <= 0) return all;
 
-  const dropOrder = all.slice(1).reverse();               // הבוקר לא ברשימה
-  const dropped = new Set(dropOrder.slice(0, Math.min(drop, all.length - 1)));
+  const dropped = new Set(dropOrderOf(all).slice(0, Math.min(drop, all.length)));
   return all.filter(t => !dropped.has(t));
 }
 
@@ -106,17 +174,26 @@ export function taperInfo(plan, iso) {
   const all = sortTimes(plan.times || []);
   const active = activeTimes(plan, iso);
   const step = Math.max(1, plan.stepDays || 4);
-  const days = Math.max(0, diffDays(plan.taperStartISO, iso));
+  const effective = plan.pausedISO && plan.pausedISO < iso ? plan.pausedISO : iso;
+  const days = Math.max(0, diffDays(plan.taperStartISO, effective));
   const dropsSoFar = Math.floor(days / step);
-  const atFloor = active.length <= 1;
+  const atFloor = active.length === 0;
+  const paused = !!plan.pausedISO;
+  // המנה הבאה שתיפול נגזרת מסדר ההורדה, לא מ"האחרונה ברשימה" — אחרת
+  // התצוגה הייתה מבטיחה שתיפול מנת ערב בזמן שבפועל נופלת מנת צהריים.
+  const nextToGo = atFloor || paused
+    ? null
+    : dropOrderOf(all).find(t => active.includes(t)) || null;
   return {
     active: active.length,
     start: all.length,
     step,
     dropsSoFar,
     atFloor,
-    nextDropISO: atFloor ? null : addDaysISO(plan.taperStartISO, (dropsSoFar + 1) * step),
-    nextToGo: atFloor ? null : active[active.length - 1],
+    paused,
+    pausedISO: plan.pausedISO || null,
+    nextDropISO: atFloor || paused ? null : addDaysISO(plan.taperStartISO, (dropsSoFar + 1) * step),
+    nextToGo,
   };
 }
 
@@ -163,7 +240,7 @@ export const isLogged = d =>
   (d.gum || 0) > 0 || ((d.ev || []).length > 0) || !!d.mDone || !!d.eDone ||
   !!d.patch || (d.waves || 0) > 0 || (d.slips || 0) > 0;
 
-export function readiness(last7, prev7, target = 10) {
+export function readiness(last7, prev7, target = 12) {
   const sum = (a, k) => a.reduce((t, d) => t + (d[k] || 0), 0);
   const avg = (a, k) => +(sum(a, k) / Math.max(1, a.length)).toFixed(1);
 
@@ -210,8 +287,13 @@ export function readiness(last7, prev7, target = 10) {
   const signals = [];
   const declining = enough && prevAvg > 0 && nowAvg <= prevAvg - NOISE;
   if (declining)        signals.push(`הצריכה יורדת מעצמה (${prevAvg} → ${nowAvg} ביום)`);
-  if (enough && nowAvg <= target - 1 && nowAvg > 0)
-    signals.push(`${nowAvg} ביום — כבר מתחת ליעד ${target}`);
+  // "כבר מתחת ליעד" **הוסר כסימן חיובי**, והוא היה הפוך.
+  // רצפת ווסט היא 10+ ליום, וכל מנוע התזכורות קיים כדי לדחוף את
+  // הצריכה *למעלה* אל היעד. לספור צריכה נמוכה כסימן מוכנות פירושו
+  // לקרוא תת-מינון — הכשל הנפוץ ביותר ב-NRT — כהצלחה. עם יעד 12 זה
+  // היה מסמן 11 ליום כ"מוכן לצמצם", וזה בדיוק הכיוון ההפוך.
+  // ירידה **ספונטנית** (declining) עדיין נספרת, וזה הסימן הנכון:
+  // הוא מודד מגמה, לא רמה.
   if (enough && prevWaves > 0 && waves <= prevWaves - 2)
     signals.push(`פחות דחפים משבוע שעבר (${prevWaves} → ${waves})`);
   if (enough && passRate !== null && passRate >= 80 && waves >= 3)
@@ -273,6 +355,7 @@ export function taperWatch(last7, baseline) {
 //  והאחרונה), והיעד היומי — שממנו התצמצום גורע יחידה כל כמה ימים.
 // ==========================================================================
 
+export const PACE_SLACK = 1;   // פיגור של מנה אחת הוא רעש, לא סטייה
 export const MIN_GAP = 60;     // לא מזכירים בתוך שעה מהיחידה האחרונה
 export const MAX_GAP = 150;    // ואחרי שעתיים וחצי בלי כלום — מזכירים בכל מקרה
 export const GAP_REMIND = 60;  // מרווח מינימלי בין תזכורות שנענו
@@ -292,17 +375,27 @@ export function windowOf(plan) {
  * האם מגיעה תזכורת עכשיו — ולמה.
  * מחזיר גם את המספרים, כדי שההודעה תוכל להסביר את עצמה.
  */
-export function dueNow(plan, iso, day, nowMinutes, lastRemindMin = null) {
+export function dueNow(plan, iso, day, nowMinutes, lastRemindMin = null, softCap = 18) {
   const target = dailyTarget(plan, iso);
   const taken = day.gum || 0;
   const { start, end } = windowOf(plan);
   const since = minutesSinceLastGum(day, nowMinutes);
+  const inRisk = nowMinutes >= RISK_START && nowMinutes < RISK_END;
 
   const base = { target, taken, since, start, end };
   if (!plan.on || target === 0)      return { ...base, due: false, why: 'off' };
-  if (taken >= target)               return { ...base, due: false, why: 'הושלם היעד' };
   if (nowMinutes < start)            return { ...base, due: false, why: 'לפני תחילת החלון' };
   if (nowMinutes > end + 45)         return { ...base, due: false, why: 'אחרי סוף החלון' };
+
+  // הגעה ליעד השתיקה את הבוט לשארית היום — כולל דרך כל חלון 17:00–21:00,
+  // שהוא בדיוק החלון שבשבילו נבנתה הפריסה. יום שהתחיל קשה וצרך את היעד
+  // עד 13:00 השאיר את הערב בלי כלום. עכשיו יש חריג צר: רק בחלון הסיכון,
+  // רק אחרי פער ארוך באמת, ורק כשעוד רחוק מהתקרה הרכה (המקסימום המסומן
+  // הוא 24–25, אז יש מרווח).
+  if (taken >= target) {
+    const topUp = inRisk && taken < softCap && since !== null && since >= MAX_GAP;
+    if (!topUp) return { ...base, due: false, why: 'הושלם היעד' };
+  }
 
   // אף פעם לא בתוך MIN_GAP מהיחידה האחרונה — גם אם היא נלקחה מחוץ לתוכנית
   if (since !== null && since < MIN_GAP) return { ...base, due: false, why: `נלקח לפני ${since} דק׳` };
@@ -323,17 +416,38 @@ export function dueNow(plan, iso, day, nowMinutes, lastRemindMin = null) {
 
   // עבר יותר מדי זמן בלי כלום — מזכירים בלי קשר לקצב
   if (since !== null && since >= MAX_GAP) return { ...base, due: true, why: 'פער ארוך מדי' };
-  if (since === null && nowMinutes >= start + MIN_GAP) return { ...base, due: true, why: 'עוד לא היה מסטיק היום' };
 
-  // אחרת — רק אם אנחנו מתחת לקצב הדרוש
+  // `since === null` אומר "אין אירוע מסטיק היום", אבל **לא** בהכרח
+  // "לא נלקח מסטיק": המונה `day.gum` מתעדכן בשלושה מסלולים שלא כולם
+  // כותבים אירוע, ו-`ev` נחתך ל-120 אירועים ביום. בלי בדיקת `taken`
+  // יום עם 8 מסטיקים ורשימת אירועים ריקה ייצר ~9 תזכורות שכל אחת מהן
+  // מכריזה "עוד לא היה מסטיק היום" — וסותרת את המונה שמופיע באותה
+  // הודעה ממש. עם הבדיקה, יום כזה נופל לענף הקצב ונשפט לפי המספר.
+  if (since === null && taken === 0 && nowMinutes >= start + MIN_GAP) {
+    return { ...base, due: true, why: 'עוד לא היה מסטיק היום' };
+  }
+
+  // אחרת — רק אם אנחנו **משמעותית** מתחת לקצב הדרוש.
+  //
+  // ה-slack אינו קוסמטי. חלון של 13 שעות חלקי 12 מנות דורש מנה כל ~65
+  // דקות; מי שלוקח כל 70 דקות נשאר בפיגור של מנה אחת כל היום, ובלי
+  // סובלנות היה מקבל תזכורת כמעט בכל בדיקה — 12 ביום. פיגור של מנה
+  // אחת הוא רעש, לא סטייה, וזה בדיוק מה שגורם לאנשים להשתיק בוט.
   const span = Math.max(1, end - start);
   const expected = Math.min(target, Math.floor(((nowMinutes - start) / span) * target) + 1);
-  return { ...base, expected, due: taken < expected, why: taken < expected ? `בקצב צריך ${expected}, יש ${taken}` : 'בקצב' };
+  const behind = taken < expected - PACE_SLACK;
+  return { ...base, expected, due: behind, why: behind ? `בקצב צריך ${expected}, יש ${taken}` : 'בקצב' };
 }
 
 /** התזכורת המסתגלת */
-export function reminderText(time, plan, iso, day, index, total) {
-  const isMorning = (day.gum || 0) === 0;
+export function reminderText(time, plan, iso, day, index, total, nowMinutes = null) {
+  // לפי **שעה**, לא לפי ספירה. קודם לכן `isMorning` היה `day.gum === 0`,
+  // כך שהמנה הראשונה ביום שנלקחה ב-19:00 קיבלה את הטקסט "המדבקה הוסרה
+  // בלילה ולוקח לה 1–2 שעות לעלות" — נכון קלינית בבוקר, שגוי בערב.
+  const mins = nowMinutes != null ? nowMinutes
+             : time ? toMin(time)
+             : null;
+  const isMorning = mins != null ? mins < 10 * 60 : (day.gum || 0) === 0;
   const L = [`🍬 <b>מסטיק 2 מ״ג</b>`];
   L.push(`<i>יחידה ${index + 1} מתוך ${total} להיום${time ? ` · ${time}` : ''}</i>`);
   L.push('─────────────');

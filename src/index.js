@@ -109,6 +109,28 @@ const iso0 = now => now.iso;
 //   זה היה הכשל היחיד שאסור היה לקרות, ומכאן הרוחב.)
 // ==========================================================================
 export const RX = {
+  // משבר — נבדק **ראשון**, לפני הכל.
+  //
+  // עד כה `crisis` זוהה רק על ידי המודל, ול-KB אין כרטיס משבר: נבדק,
+  // ו"אין לי טעם לחיות" / "אני רוצה למות" / "אני חושב לפגוע בעצמי"
+  // החזירו אפס תוצאות. כלומר כשהמכסה נגמרה או שכל הספקים למטה,
+  // הודעה כזאת קיבלה "📓 שמרתי את זה ביומן של היום" — והטקסט הנכון
+  // (ער"ן 1201) ישב לידה בלתי-נגיש. זה הנתיב היחיד בבוט שחייב לעבוד
+  // בלי רשת בכלל.
+  //
+  // אסימטריית העלויות כאן קיצונית יותר מאשר בדחף, ולכן גם הסף נמוך
+  // יותר: התראת שווא שולחת מספר טלפון של קו סיוע, החמצה היא החמצה.
+  crisis: new RegExp([
+    'אין (?:לי )?טעם (?:לחיות|לכלום|בכלום|בחיים|להמשיך|בשום דבר)',
+    'לא רוצה (?:לחיות|להתעורר|להמשיך לחיות|להיות פה|להיות כאן)',
+    'רוצה למות', 'מתחשק לי למות', 'מוטב שאמות', 'שאמות',
+    'לשים סוף', 'לשים קץ', 'לסיים את החיים', 'לגמור עם הכל',
+    'לפגוע בעצמי', 'להזיק לעצמי', 'לעשות לעצמי משהו',
+    'אובדני', 'אובדנות',
+    'אין לי (?:כוח|סיבה|טעם) לחיות',
+    'יסתדרו בלעדיי', 'יהיה להם יותר טוב בלעדיי', 'העולם בלעדיי',
+  ].join('|')),
+
   // עבר — כבר קרה
   slip: /קניתי|נפלתי|שאפתי|שאבתי|עשיתי שאכטה|מעדתי|לקחתי שאכטה|התפרקתי וקניתי|נכנעתי/,
   // ...אלא אם זה בשלילה. "התגברתי, לא קניתי" הוא ניצחון, לא מעידה —
@@ -244,7 +266,8 @@ export default {
       // ------------------------------------------------------------------
       if (url.pathname === '/trigger') {
         const meta = await getMeta(env);
-        if (url.searchParams.get('dry') === '1') meta.partnerMute = true;   // בדיקה בלי להטריד אותה
+        // _dryRun ולא partnerMute: putMeta מסנן מפתחות _ ולכן זה לא נשמר.
+        if (url.searchParams.get('dry') === '1') meta._dryRun = true;
         if (!meta.chatId) return new Response('not linked', { status: 409 });
         const now = P.il();
         const iso = now.iso;
@@ -459,6 +482,14 @@ async function tick(env) {
       meta.sent[`${iso}:taperwatch`] = 1;
       dirty = true;
       if (tw) {
+        // ההקפאה נעשית **בפועל** ולא רק בהבטחה. קודם לכן ההודעה אמרה
+        // "אני לא מוריד עוד יחידה עד שתחליט", ו-activeTimes המשיכה
+        // להוריד מנה כל 4 ימים בלי להתייעץ בכלום — כלומר הבוט הבטיח
+        // הבטחה שלא קיים, בדיוק במצב שבו הכי חשוב שיקיים.
+        if (!plan.pausedISO) {
+          plan.pausedISO = iso;
+          meta.gumPlan = plan;
+        }
         const n = G.activeTimes(plan, iso).length;
         await send(env, meta.chatId, [
           '⚠️ <b>בדיקת התצמצום — משהו החמיר.</b>',
@@ -466,7 +497,8 @@ async function tick(env) {
           `אתה על <b>${n}</b> יחידות ביום. מאז שהתחלנו לצמצם:`,
           ...tw.worse.map(x => `   • ${x}`),
           '',
-          'התוכנית אומרת את זה במפורש: <b>אם צריך להתאמץ כדי להפחית, עוד לא הזמן.</b> אני לא מוריד עוד יחידה עד שתחליט.',
+          'התוכנית אומרת את זה במפורש: <b>אם צריך להתאמץ כדי להפחית, עוד לא הזמן.</b>',
+          '⏸️ <b>הקפאתי את הצמצום עכשיו</b> — לא תיפול עוד מנה עד שתחליט.',
           '',
           '<i>צעד אחורה עכשיו זול. מעידה יקרה.</i>',
         ].join('\n'), {
@@ -537,13 +569,20 @@ async function sendWeeklyReport(env, meta, iso) {
     ]),
   });
   if (meta.partnerChatId) {
+    // "✅ בלי מעידות השבוע" נאמר קודם גם על שבוע שכמעט לא תועד — כלומר
+    // אישור אקטיבי לבת הזוג על ששה ימים שאין עליהם שום נתון. אם הכיסוי
+    // חלקי, אומרים את זה במפורש ולא מנחמים על סמך חוסר.
+    const thin = a.coverage < 5;
     await send(env, meta.partnerChatId, [
       `🗓️ <b>סיכום שבוע</b>`,
+      thin ? `📭 רק ${a.coverage} מתוך 7 ימים תועדו — הנתונים למטה חלקיים.` : null,
       `🌊 דחפים שעברו עד הסוף: <b>${a.surfed}</b> מתוך ${a.waves} (${a.surfRate}%)`,
-      a.slips ? `↩️ מעידות: ${a.slips} — <i>דאטה, לא ציון. בלי חשבון נפש.</i>` : '✅ בלי מעידות השבוע.',
+      a.slips  ? `↩️ מעידות: ${a.slips} — <i>דאטה, לא ציון. בלי חשבון נפש.</i>`
+      : thin   ? `<i>לא דווחו מעידות — אבל עם כיסוי חלקי זה לא אותו דבר כמו "לא היו".</i>`
+               : '✅ בלי מעידות השבוע.',
       '',
       `<i>מודדים שחרורים, לא רק ימים. וחגיגה שבועית קטנה היא חלק מהשיטה.</i>`,
-    ].join('\n'));
+    ].filter(Boolean).join('\n'));
   }
 }
 
@@ -551,10 +590,12 @@ async function sendWeeklyReport(env, meta, iso) {
 async function maybeEscalate(env, meta, iso) {
   if (meta.lastEscalationISO && P.diffDays(meta.lastEscalationISO, iso) < 7) return;
   const days = await ANL.collect(env, iso, 7);
-  const { flags, stats } = ANL.escalationFlags(days, meta);
-  if (flags.length < 2) return;                       // דורש שני סימנים, לא אחד
+  const { flags, stats, blind } = ANL.escalationFlags(days, meta);
+  // שני סימנים כדי לא להציף — אבל כיסוי חסר עומד בפני עצמו, כי הוא
+  // אומר שאין תמונה בכלל, וזה בדיוק המצב שקודם לכן היה בלתי-נראה.
+  if (!blind && flags.length < 2) return;
   meta.lastEscalationISO = iso;
-  await send(env, meta.chatId, ANL.escalationText(flags, stats), {
+  await send(env, meta.chatId, ANL.escalationText(flags, stats, blind), {
     reply_markup: inline([
       [btn('📞 טלפוני תמיכה', 'T:phones')],
       [btn('🍬 מדריך המסטיק', 'T:gum'), btn('🩹 שגרת המדבקה', 'T:patch')],
@@ -692,6 +733,9 @@ async function onMessage(msg, env) {
   // ב-converse(), ושם אין רשימת מילים שאפשר ליפול דרכה.
   const R = c => runCommand(c, '', chatId, env, meta, pl, iso, now);
   const fast = fastRoute(text);
+  // משבר נשלח כאן ישירות ולא דרך runCommand: זה טקסט סטטי בלי שינוי
+  // מצב, וזה הנתיב היחיד שחייב לעבוד גם כשהמכסה נגמרה וכל הספקים למטה.
+  if (fast === 'crisis') return send(env, chatId, INT.CRISIS_TEXT);
   if (fast) return R(fast);
 
   // ---- שיחה: קודם בסיס הידע מהמדריכים, אחר-כך AI (אם מופעל) ----
@@ -734,9 +778,9 @@ async function buildState(env, pl, iso, now, meta) {
   if (inPlanDay(pl)) {
     const nextStep = pl.dose === 21 ? 'ירידה ל-14 מ״ג ב-18.8'
       : pl.dose === 14 ? 'ירידה ל-7 מ״ג ב-1.9' : 'סיום מדבקות ב-15.9';
-    L.push(`תוכנית: יום ${pl.n} מתוך 70 · שבוע ${pl.week} · ${pl.phase} ${pl.dose} מ״ג · מקום ההדבקה היום: ${pl.site} · ${nextStep} · ${pl.clean} ימים נקיים · נחסך ${pl.clean * meta.costPerDay}₪`);
-  } else if (pl.before) L.push(`לפני יום ההפסקה — עוד ${pl.daysToQuit} ימים (7.7.2026)`);
-  else L.push(`סיים את 70 הימים · ${pl.cleanDays} ימים נקיים`);
+    L.push(`תוכנית: יום ${pl.n} מתוך ${P.TOTAL_DAYS} · שבוע ${pl.week} · ${pl.phase} ${pl.dose} מ״ג · מקום ההדבקה היום: ${pl.site} · ${nextStep} · ${pl.clean} ימים נקיים · נחסך ${pl.clean * meta.costPerDay}₪`);
+  } else if (pl.before) L.push(`לפני יום ההפסקה — עוד ${pl.daysToQuit} ימים (25.7.2026)`);
+  else L.push(`סיים את שלב המדבקות · ${pl.cleanDays} ימים נקיים`);
 
   // --- היום, עם שעות ---
   L.push(`היום ${P.fmtHe(iso)} (יום ${now.dowHe}), השעה כרגע ${now.hhmm}:`);
@@ -909,6 +953,10 @@ const RXF = Object.fromEntries(
 export function fastRoute(text) {
   const t = foldFinals(String(text).replace(/[\u05f4"'\u05f3]/g, ''));
 
+  // 0 · משבר — גובר על הכל, כולל על מעידה. מי שכותב "קניתי ואין לי
+  //     טעם לחיות" צריך את קו הסיוע, לא את נוהל המעידה.
+  if (RXF.crisis.test(t)) return 'crisis';
+
   // 1 · עבר — מעידה שקרתה. חייב להיקדם לזיהוי הדחף, אחרת "קניתי"
   //     ייתפס כ"רוצה לקנות".
   if (RXF.slip.test(t) && !RXF.slipNegated.test(t)) return 'slip';
@@ -985,7 +1033,7 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
       const n = parseFloat(String(arg).replace(/[^\d.]/g, ''));
       if (!isNaN(n) && n > 0) {
         meta.costPerDay = Math.round(n); await putMeta(env, meta);
-        return send(env, chatId, `💰 עודכן: <b>${meta.costPerDay}₪ ליום</b>.\nנחסך מאז 7.7: <b>${(pl.clean || 0) * meta.costPerDay}₪</b>.`);
+        return send(env, chatId, `💰 עודכן: <b>${meta.costPerDay}₪ ליום</b>.\nנחסך מאז 25.7: <b>${(pl.clean || 0) * meta.costPerDay}₪</b>.`);
       }
       meta.awaiting = 'money'; await putMeta(env, meta);
       return send(env, chatId, `💰 כמה הוויפ עלה לך <b>ליום</b> בשקלים? שלח מספר.\n(עכשיו מוגדר: ${meta.costPerDay}₪/יום · נחסך: ${(pl.clean || 0) * meta.costPerDay}₪)`);
@@ -1060,7 +1108,7 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
       for (const d of days.slice().reverse()) {
         if (!d.waves && !d.gum && !d.journal && !d.win && !d.patch) continue;
         const pd = P.planFor(d.iso);
-        lines.push('', `## ${P.fmtHe(d.iso)}${pd.n >= 1 && pd.n <= 70 ? ` · יום ${pd.n}/70 · ${pd.dose} מ״ג` : ''}`);
+        lines.push('', `## ${P.fmtHe(d.iso)}${pd.n >= 1 && pd.n <= P.TOTAL_DAYS ? ` · יום ${pd.n}/${P.TOTAL_DAYS} · ${pd.dose} מ״ג` : ''}`);
         lines.push(`מדבקה: ${d.patch ? 'כן' : 'לא'} · מסטיק: ${d.gum} · דחפים: ${d.waves} · עברו: ${d.surfed}${d.slips ? ` · מעידות: ${d.slips}` : ''}`);
         if (d.mine) lines.push(`מוקש: ${d.mine}`);
         if (d.win) lines.push(`ניצחון: ${d.win}`);
@@ -1180,7 +1228,7 @@ async function recordEvent(env, iso, now, kind, extra = {}) {
 
 /** שולח לשותף/ה. מחזיר true אם נמסר. */
 async function notifyPartner(env, meta, text) {
-  if (!meta.partnerChatId || meta.partnerMute) return false;
+  if (!meta.partnerChatId || meta.partnerMute || meta._dryRun) return false;
   const r = await send(env, meta.partnerChatId, text);
   if (!r.ok) console.log('דיווח לשותף/ה נכשל:', r.description);
   return !!r.ok;
@@ -1210,7 +1258,7 @@ async function alertPartner(env, meta, level, dry = false) {
   // בדיקות שלי שלחו לה התראות דחופות אמיתיות. dry מאפשר לאמת את
   // הזרימה בלי להפעיל אותה על אדם שלישי.
   if (dry) { console.log('PARTNER דרגה', level, '— dry, לא נשלח'); return false; }
-  if (!meta.partnerChatId || meta.partnerMute) return false;
+  if (!meta.partnerChatId || meta.partnerMute || meta._dryRun) return false;
 
   // מגרה של 90 שניות, ולא של 30 דקות, ורק מול אותה דרגה בדיוק.
   //
@@ -1485,7 +1533,7 @@ async function onCallback(cb, env) {
       const day = await updateDay(env, iso, d => { d.gum += 1; d.gumSched = (d.gumSched || 0) + 1; });
       await recordEvent(env, iso, now, 'g', { sched: true });
       const m2 = await getMeta(env); m2.totals.gum += 1; await putMeta(env, m2);
-      const cap = day.gum >= (m2.gumSoftCap || 15)
+      const cap = day.gum >= (m2.gumSoftCap || 18)
         ? `\n\n⚠️ <b>${day.gum} יחידות היום.</b> בדוק את המקסימום שעל האריזה ואל תחרוג ממנו.`
         : '';
       await answer(env, cb.id, 'נרשם 🍬');
@@ -1521,16 +1569,28 @@ async function onCallback(cb, env) {
     }
     if (what === 'back') {
       // דחיפת נקודת ההתחלה קדימה בצעד אחד מחזירה בדיוק דרגה אחת,
-      // וכל הירידות הבאות נדחות איתה.
+      // וכל הירידות הבאות נדחות איתה. משחררים גם את ההקפאה — הצעד
+      // אחורה הוא ההחלטה, ומכאן הלוח רץ שוב.
       plan.taperStartISO = P.addDaysISO(plan.taperStartISO, Math.max(1, plan.stepDays || 4));
+      plan.pausedISO = null;
       meta.gumPlan = plan; await putMeta(env, meta);
       await answer(env, cb.id, 'חזרנו צעד אחורה');
       const n = G.activeTimes(plan, iso).length;
       return send(env, chatId, `↩️ <b>צעד אחורה.</b> חזרת ל-<b>${n}</b> יחידות ביום, וכל הירידות הבאות נדחו ב-${plan.stepDays} ימים.\n\n<i>זו לא נסיגה. התוכנית אומרת במפורש: אם צריך להתאמץ כדי להפחית, עוד לא הזמן. הניקוטין הוא הזנב, לא הכלב — והכלב הוא מה שאתה שומר עליו עכשיו.</i>`);
     }
     if (what === 'keep') {
+      // שחרור ההקפאה: הלוח קפא ביום שבו הגלאי התריע, ולכן מזיזים את
+      // נקודת ההתחלה קדימה באותו מספר ימים — אחרת כל הימים שעברו
+      // בהקפאה היו "נפרעים" בבת אחת ומפילים כמה מנות ביום אחד.
+      let held = 0;
+      if (plan.pausedISO) {
+        held = Math.max(0, P.diffDays(plan.pausedISO, iso));
+        plan.taperStartISO = P.addDaysISO(plan.taperStartISO, held);
+        plan.pausedISO = null;
+        meta.gumPlan = plan; await putMeta(env, meta);
+      }
       await answer(env, cb.id, 'ממשיכים');
-      return send(env, chatId, '👍 <b>ממשיכים.</b> אבדוק שוב בעוד שבוע.\n\n<i>ואם תשנה דעת באמצע — /מסטיקים, כפתור הצמצום, ואני מחזיר צעד. זה תמיד פתוח.</i>');
+      return send(env, chatId, `👍 <b>ממשיכים.</b>${held ? ` הצמצום היה מוקפא ${held} ימים, והלוח נדחה באותה מידה כדי שלא ייפלו כמה מנות בבת אחת.` : ''} אבדוק שוב בעוד שבוע.\n\n<i>ואם תשנה דעת באמצע — /מסטיקים, כפתור הצמצום, ואני מחזיר צעד. זה תמיד פתוח.</i>`);
     }
     if (what === 'wait') {
       plan.taperStartISO = P.addDaysISO(iso, 7); plan.confirmedTaper = false;
