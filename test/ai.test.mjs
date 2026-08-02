@@ -179,3 +179,24 @@ test('הפרומפטים אוסרים תרופות מרשם במפורש', () =>
     assert.ok(/נשללו/.test(src), `${name}: לא נאמר שההחלטה התקבלה`);
   }
 });
+
+// ---------- A2 · חיתוך באורך מרבי ----------
+
+test('חיתוך ב-3500 לא משאיר תגית קטועה', () => {
+  // slice חתך באמצע "<b>" והשאיר "<b" או "<" תלויים. לולאת האיזון
+  // סופרת תגיות שלמות בלבד ולכן לא ראתה את זה, וטלגרם החזיר 400
+  // "can't parse entities" על ההודעה כולה.
+  for (let pad = 3490; pad <= 3505; pad++) {
+    const out = sanitizeModelText('א'.repeat(pad) + '<b>מודגש</b>');
+    assert.ok(!/<[^>]*$/.test(out), `pad ${pad}: ${JSON.stringify(out.slice(-10))}`);
+    const open = (out.match(/<b>/g) || []).length;
+    const close = (out.match(/<\/b>/g) || []).length;
+    assert.equal(open, close, `pad ${pad}: תגיות לא מאוזנות`);
+  }
+});
+
+test('תגיות מקוננות נסגרות בסדר הנכון', () => {
+  const t = sanitizeModelText('<b>חיצוני <i>פנימי</i> סוף');
+  assert.equal((t.match(/<b>/g) || []).length, (t.match(/<\/b>/g) || []).length);
+  assert.equal((t.match(/<i>/g) || []).length, (t.match(/<\/i>/g) || []).length);
+});
