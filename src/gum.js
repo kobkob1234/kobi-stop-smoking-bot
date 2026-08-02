@@ -312,8 +312,13 @@ export function readiness(last7, prev7, target = 12) {
   const badQuality = passRate !== null && waves >= 4 && surfed > 0 && passRate < 60;
   if (badQuality)
     reasons.push(`מתוך ${waves} דחפים בשבוע, רק ${passRate}% עברו בלי שנדרש כלום`);
-  else if (waves >= WAVES_HIGH && (passRate === null || passRate < 80))
-    reasons.push(`${waves} דחפים בשבוע${passRate === null ? '' : ` ורק ${passRate}% עברו`} — עוד תכוף`);
+  // גם כאן `surfed > 0`, ומאותה סיבה. ההערה שלמעלה קובעת במפורש
+  // שתדירות לבדה לא חוסמת — "לחסום על הספירה לבדה זה להעניש על
+  // דיווח" — ואז מתנה על passRate, שנשען על אותו כפתור שלא נלחץ.
+  // כלומר בלי אף סימון אחד, הבדיקה הזאת **כן** חסמה על הספירה לבדה,
+  // בדיוק מה שההערה אמרה לא לעשות.
+  else if (waves >= WAVES_HIGH && surfed > 0 && passRate < 80)
+    reasons.push(`${waves} דחפים בשבוע ורק ${passRate}% עברו — עוד תכוף`);
   if (prevAvg > 0 && nowAvg > prevAvg + NOISE)
     reasons.push(`הצריכה עלתה (${prevAvg} → ${nowAvg} ביום)`);
 
