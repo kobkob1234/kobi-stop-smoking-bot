@@ -37,14 +37,25 @@ const BUCKETS = [
 const bucketOf = h => (BUCKETS.find(b => h >= b.lo && h < b.hi) || BUCKETS[0]).name;
 const DOW_HE = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'];
 
-/** קורא את N הימים האחרונים מ-KV */
+/**
+ * קורא את N הימים האחרונים מ-KV.
+ *
+ * במנות ובמקביל, ולא אחד-אחרי-השני: הגיבוי היומי מבקש 120 ימים, וזה
+ * היה 120 קריאות סדרתיות בבקשה אחת — זמן קיר שגדל ליניארית, ומספר
+ * subrequests שעלול לחרוג מהמגבלה. המנות שומרות על מקביליות בלי
+ * לפתוח 120 קריאות בבת אחת.
+ */
+const CHUNK = 20;
+
 export async function collect(env, todayISO, days = 14) {
+  const isos = Array.from({ length: days }, (_, i) => P.addDaysISO(todayISO, -i));
   const out = [];
-  for (let i = 0; i < days; i++) {
-    const iso = P.addDaysISO(todayISO, -i);
-    const d = await getDay(env, iso);
-    const dow = new Date(Date.parse(iso + 'T12:00:00Z')).getUTCDay();
-    out.push({ iso, dow, ...d });
+  for (let i = 0; i < isos.length; i += CHUNK) {
+    const slice = isos.slice(i, i + CHUNK);
+    const got = await Promise.all(slice.map(iso => getDay(env, iso)));
+    slice.forEach((iso, k) => {
+      out.push({ iso, dow: new Date(Date.parse(iso + 'T12:00:00Z')).getUTCDay(), ...got[k] });
+    });
   }
   return out;
 }
@@ -73,6 +84,14 @@ export function analyse(daysArr) {
     }
   }
 
+  // משך הגלים — הטענה האמפירית המרכזית של ברואר, על הנתונים שלו עצמו.
+  const durs = [];
+  for (const d of daysArr) {
+    for (const e of d.ev || []) if (e.k === 'v' && typeof e.sec === 'number') durs.push(e.sec);
+  }
+  durs.sort((a, b) => a - b);
+  const medianWaveSec = durs.length ? durs[Math.floor(durs.length / 2)] : null;
+
   const n = daysArr.length;
   // ממוצעים על ימים מכוסים בלבד. חלוקה ב-n הגולמי גורמת לימים שלא
   // תועדו "לדלל" את הצריכה כלפי מטה — כלומר פחות דיווח נראה כמו
@@ -81,6 +100,7 @@ export function analyse(daysArr) {
   const denom = Math.max(1, coverage);
   return {
     n, coverage, waves, surfed, gum, slips, outs, patchDays, evCount,
+    medianWaveSec, waveSamples: durs.length,
     surfRate: pct(surfed, waves),
     wavesPerDay: +(waves / denom).toFixed(1),
     gumPerDay: +(gum / denom).toFixed(1),
@@ -169,6 +189,11 @@ export function reportText(a, ifThen, days) {
   L.push(`📊 <b>שיעור שחרור: ${a.surfRate}%</b> ${a.surfRate >= 80 ? '— חזק מאוד' : a.surfRate >= 50 ? '— בכיוון' : '— יש כאן מה לחזק'}`);
   L.push(`🍬 מסטיק: ${a.gumPerDay} ביום · 🩹 מדבקה סומנה ב-${a.patchDays}/${a.n} ימים · 🚪 יציאות עם טקס: ${a.outs}`);
   if (a.slips) L.push(`↩️ מעידות: ${a.slips} <i>(דאטה, לא ציון)</i>`);
+  // המספר הזה שווה יותר מכל עצה: זו ההוכחה שלו, על עצמו, שהגל דועך.
+  if (a.medianWaveSec != null && a.waveSamples >= 3) {
+    const m = Math.floor(a.medianWaveSec / 60), s = a.medianWaveSec % 60;
+    L.push(`⏱️ <b>אורך הגל החציוני שלך: ${m ? `${m} דק׳ ` : ''}${s} שנ׳</b> <i>(${a.waveSamples} גלים שנמדדו) — דקות, לא שעות. זה הנתון שלך, לא טענה מספר.</i>`);
+  }
 
   if (a.topBucket || a.topTag || a.topDow) {
     L.push('', '<b>המכנה המשותף:</b>');

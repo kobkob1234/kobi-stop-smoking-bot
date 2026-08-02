@@ -297,7 +297,32 @@ export default {
         const now = P.il();
         const days = await ANL.collect(env, now.iso, parseInt(url.searchParams.get('days') || '120', 10));
         const meta = await getMeta(env);
-        const out = { exportedAt: now.iso, meta: { ...meta, sent: undefined }, days: days.filter(d => d.waves || d.gum || d.journal || d.win || d.patch || d.slips) };
+        // הפילטר הישן פספס בדיוק את הימים שהכי חשוב לשמר: יום שבו הוא
+        // ענה "מדלג" לכל תזכורת (gumMissed בלבד) הוא יום של אי-היענות
+        // מלאה — הסיגנל הקליני החזק ביותר — והוא נשמט מהגיבוי. כך גם
+        // ימי outs/mine/planning/enroute בלבד. עכשיו הבדיקה היא על
+        // **כל** סימן חיים, באותה הגדרה שמשמשת את גלאי הכיסוי.
+        const hasData = d =>
+          d.waves || d.gum || d.journal || d.win || d.patch || d.slips ||
+          d.outs || d.mine || d.mDone || d.eDone || d.planning || d.enroute ||
+          d.chainStops || d.gumMissed || d.gumSched || d.gumExtra ||
+          (d.ev && d.ev.length);
+        // הסקירות השבועיות (`w:ISO`) נכתבו ואף אחד לא קרא אותן: לא
+        // /status, לא /דוח, לא /ייצוא ולא הגיבוי — collect עובר רק על
+        // מפתחות `d:`. עד 4000 תווים של רפלקציה שבועית היו ניתנים
+        // לשליפה רק ב-wrangler kv key get, ורק אם ידעת את התאריך.
+        const weeklies = {};
+        for (const d of days) {
+          if (d.dow !== 6) continue;                 // נכתבות במוצ״ש
+          const w = await env.KV.get(`w:${d.iso}`);
+          if (w) weeklies[d.iso] = w;
+        }
+        const out = {
+          exportedAt: now.iso,
+          meta: { ...meta, sent: undefined },
+          days: days.filter(hasData),
+          weeklies,
+        };
         return new Response(JSON.stringify(out, null, 1), {
           headers: { 'content-type': 'application/json; charset=utf-8' },
         });
@@ -390,6 +415,10 @@ async function tick(env) {
   const now = P.il();
   const iso = now.iso;
   let dirty = false;
+  // אילו שדות ה-tick באמת שינה. המיזוג בסוף החיל אותם ללא תנאי,
+  // גם כשהקרון לא נגע בהם — ולכן ערך ישן מתחילת ה-tick דרס
+  // שינוי שהמשתמש עשה תוך כדי. ראו את ההסבר במיזוג למטה.
+  const touched = new Set();
 
   // --- מעקב SOS: צ׳ק-אין ~10 דקות אחרי שהתחיל גל ---
   if (meta.sos && !meta.sos.followedUp) {
@@ -409,11 +438,37 @@ async function tick(env) {
         ]),
       });
       meta.sos.followedUp = true;
-      dirty = true;
+      dirty = true; touched.add('sos');
     } else if (mins > 40) {
       meta.sos = null;
-      dirty = true;
+      dirty = true; touched.add('sos');
     }
+  }
+
+  // --- דחיית 15 הדקות של דרגה 2 ---
+  //
+  // meta.snooze נכתב ב-pl:delay, נוקה ב-pruneSent, ו**אף אחד לא קרא אותו**.
+  // כלומר ההודעה הבטיחה "אזכיר לך לבדוק" ואז לא קרה כלום — בזמן שכל
+  // הפואנטה של הדחייה היא המדידה שאחריה: אם הסיבה נעלמה היא הייתה
+  // תירוץ. בלי התזכורת, ההתערבות המרכזית של דרגה 2 פשוט לא הושלמה.
+  const plKey = `${iso}:pl`;
+  if (meta.snooze && meta.snooze[plKey] && now.minutes >= meta.snooze[plKey]) {
+    const s = { ...meta.snooze };
+    delete s[plKey];
+    meta.snooze = s;
+    dirty = true; touched.add('snooze');
+    await send(env, meta.chatId, [
+      '⏳ <b>עברו 15 הדקות. עכשיו המדידה.</b>',
+      '',
+      'הסיבה שרצית לצאת בשבילה — <b>היא עדיין שם?</b>',
+      '',
+      'אם היא נעלמה, זו לא הקלה מקרית: זו הוכחה אמפירית, במו ידיך, שהיא הייתה תירוץ ולא צורך. ואם היא עדיין כאן — זה בסדר, ואז יוצאים עם מישהו ולא לבד.',
+    ].join('\n'), {
+      reply_markup: inline([
+        [btn('✅ נעלמה — היה תירוץ', 'pl:gone')],
+        [btn('🚪 עדיין קיימת', 'out:start'), btn('🌊 יש לי דחף', 'sos:1')],
+      ]),
+    });
   }
 
   // --- תזכורת המסטיק: מסתגלת לקצב בפועל, לא לשעון קבוע ---
@@ -427,7 +482,7 @@ async function tick(env) {
     if (r.due && now.minutes >= snoozedTo) {
       meta.gumRemindISO = iso;
       meta.gumRemindMin = now.minutes;
-      dirty = true;
+      dirty = true; touched.add('gumRemindISO'); touched.add('gumRemindMin');
       console.log('GUM תזכורת:', r.taken, '/', r.target, '·', r.why);
       await send(env, meta.chatId, G.reminderText(now.hhmm, plan, iso, day, r.taken, r.target), {
         reply_markup: inline([
@@ -498,6 +553,7 @@ async function tick(env) {
         if (!plan.pausedISO) {
           plan.pausedISO = iso;
           meta.gumPlan = plan;
+          touched.add('gumPlan');
         }
         const n = G.activeTimes(plan, iso).length;
         await send(env, meta.chatId, [
@@ -555,11 +611,20 @@ async function tick(env) {
   if (dirty) {
     const fresh = await getMeta(env);
     fresh.sent = { ...fresh.sent, ...meta.sent };
-    for (const k of ['sos', 'gumRemindISO', 'gumRemindMin',
-                     'lastPartnerAlert', 'lastPartnerAlertLevel', 'lastEscalationISO']) {
-      fresh[k] = meta[k];
+    // רק שדות שה-tick באמת שינה. הגרסה הקודמת החילה רשימה קבועה ללא
+    // תנאי, כולל `sos` ו-`gumPlan` שהקרון כמעט אף פעם לא נוגע בהם —
+    // ולכן ערך שנקרא בתחילת ה-tick נכתב בחזרה בסופו ודרס כל שינוי
+    // שהמשתמש עשה בשניות שביניהם:
+    //   • לחיצה על "יש לי דחף" באמצע tick → sos חוזר ל-null, כלומר
+    //     צ׳ק-אין 10 הדקות לא יוצא, evIdx אובד והתגית נדבקת לאירוע
+    //     הלא נכון, ו-reported אובד כך שגם עדכון "הגל נשבר" נעלם.
+    //   • אישור התצמצום (tp:go) באמצע tick → confirmedTaper ו-baseline
+    //     נמחקים, והבוט שואל שוב שלושה ימים אחר-כך.
+    for (const k of touched) fresh[k] = meta[k];
+    // אלה כן תמיד של הקרון: הוא היחיד שכותב אותם.
+    for (const k of ['lastPartnerAlert', 'lastPartnerAlertLevel', 'lastEscalationISO']) {
+      if (meta[k] !== undefined) fresh[k] = meta[k];
     }
-    if (meta.gumPlan) fresh.gumPlan = meta.gumPlan;
     pruneSent(fresh, iso);
     await putMeta(env, fresh);
   }
@@ -1126,7 +1191,11 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
       const days = await ANL.collect(env, iso, 30);
       const lines = [`# יומן גמילה — 30 ימים אחרונים (יוצא ${P.fmtHe(iso)})`];
       for (const d of days.slice().reverse()) {
-        if (!d.waves && !d.gum && !d.journal && !d.win && !d.patch) continue;
+        // d.slips **חסר** כאן — ולכן יום שבו נרשמה מעידה ב-/מעידה אבל
+        // לא נכתב יומן היה נשמט בשקט מהייצוא שהוא עצמו קורא.
+        if (!d.waves && !d.gum && !d.journal && !d.win && !d.patch
+            && !d.slips && !d.outs && !d.mine && !d.gumMissed
+            && !d.planning && !d.enroute) continue;
         const pd = P.planFor(d.iso);
         lines.push('', `## ${P.fmtHe(d.iso)}${pd.n >= 1 && pd.n <= P.TOTAL_DAYS ? ` · יום ${pd.n}/${P.TOTAL_DAYS} · ${pd.dose} מ״ג` : ''}`);
         lines.push(`מדבקה: ${d.patch ? 'כן' : 'לא'} · מסטיק: ${d.gum} · דחפים: ${d.waves} · עברו: ${d.surfed}${d.slips ? ` · מעידות: ${d.slips}` : ''}`);
@@ -1236,6 +1305,19 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
  * האחרון?" — בלי זה יש רק מונה, ואי-אפשר לגזור ממנו שעה.
  * k: w=גל · x=מעידה · g=מסטיק · p=מדבקה · o=יציאה · v=דחף שעבר
  */
+/**
+ * משך הגל בשניות, אם ידוע.
+ *
+ * `sos.startedAt` נמדד בכל פתיחת גל ונזרק בכל סגירה — הקוד פשוט קבע
+ * `sos = null`. זו הטענה האמפירית המרכזית של ברואר ("הגל דועך תוך
+ * דקות, לא שעות"), היא נמדדת כאן בחינם, ואי אפשר היה להראות לו אותה
+ * על הנתונים שלו עצמו.
+ */
+const waveSeconds = meta =>
+  meta && meta.sos && meta.sos.startedAt
+    ? Math.max(0, Math.round((Date.now() - meta.sos.startedAt) / 1000))
+    : null;
+
 async function recordEvent(env, iso, now, kind, extra = {}) {
   let idx = -1;
   await updateDay(env, iso, d => {
@@ -1502,8 +1584,9 @@ async function onCallback(cb, env) {
       ].join('\n'), { reply_markup: inline([[btn('🚪 טקס היציאה', 'out:start')]]) });
     }
     if (what === 'gone') {
+      const secPl = waveSeconds(meta);
       const day = await updateDay(env, iso, d => { d.surfed += 1; d.chainStops = (d.chainStops || 0) + 1; });
-      await recordEvent(env, iso, now, 'v');
+      await recordEvent(env, iso, now, 'v', secPl != null ? { sec: secPl } : {});
       const m2 = await getMeta(env); m2.totals.surfed += 1; m2.totals.chainStops = (m2.totals.chainStops || 0) + 1; m2.sos = null; await putMeta(env, m2);
       if (m2.partnerChatId && meta.sos && meta.sos.reported) {
         await notifyPartner(env, m2, '✅ <b>עבר.</b> הוא דחה ב-15 דקות והסיבה נעלמה — כלומר היא הייתה תירוץ, והוא תפס אותה בתחנה הראשונה.');
@@ -1731,8 +1814,9 @@ async function onCallback(cb, env) {
   if (data === 'p') { await answer(env, cb.id, 'מדבקה נרשמה 🩹'); return logPatch(chatId, env, iso, pl, meta, now); }
 
   if (data === 'sf') {
+    const sec = waveSeconds(meta);
     const day = await updateDay(env, iso, d => { d.surfed += 1; });
-    await recordEvent(env, iso, now, 'v');
+    await recordEvent(env, iso, now, 'v', sec != null ? { sec } : {});
     const m2 = await getMeta(env); m2.totals.surfed += 1; m2.sos = null; await putMeta(env, m2);
     await answer(env, cb.id, 'דחף שעבר 🌊');
     return send(env, chatId, [

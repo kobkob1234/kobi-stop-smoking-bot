@@ -152,3 +152,42 @@ test('reportText לא קורס על נתונים ריקים', () => {
   const a = ANL.analyse([day(), day()]);
   assert.ok(ANL.reportText(a, null, 2).includes('אין עדיין מספיק נתונים'));
 });
+
+// ---------- משך הגל ----------
+
+test('משך הגל נאסף מאירועי v ומחושב חציון', () => {
+  // sos.startedAt נמדד בכל פתיחת גל ונזרק בכל סגירה — הקוד פשוט קבע
+  // sos = null. זו הטענה האמפירית המרכזית של ברואר, והיא נמדדת בחינם.
+  const wave = sec => day({ waves: 1, surfed: 1, ev: [{ k: 'v', h: 19, m: 0, sec }] });
+  const a = ANL.analyse([wave(60), wave(300), wave(120)]);
+  assert.equal(a.waveSamples, 3);
+  assert.equal(a.medianWaveSec, 120);
+});
+
+test('בלי מדידות אין חציון ואין שורה בדוח', () => {
+  const a = ANL.analyse([day({ waves: 1, surfed: 1, gum: 5 })]);
+  assert.equal(a.medianWaveSec, null);
+  assert.ok(!ANL.reportText(a, null, 7).includes('אורך הגל'));
+});
+
+test('הדוח מציג את אורך הגל רק ממדגם של 3 ומעלה', () => {
+  const wave = sec => day({ waves: 1, surfed: 1, ev: [{ k: 'v', h: 19, m: 0, sec }] });
+  const few = ANL.analyse([wave(90), wave(110)]);
+  assert.ok(!ANL.reportText(few, null, 7).includes('אורך הגל'), 'מדגם 2 — עוד לא');
+  const enough = ANL.analyse([wave(90), wave(110), wave(130)]);
+  assert.ok(ANL.reportText(enough, null, 7).includes('אורך הגל'));
+});
+
+// ---------- collect ----------
+
+test('collect מחזיר את הימים בסדר יורד גם כשהוא קורא במנות', async () => {
+  // הקריאה עברה למקבילית במנות של 20; הסדר חייב להישמר, אחרת
+  // slice(0,7) ב-escalationFlags היה לוקח ימים אקראיים.
+  const kv = makeKV();
+  const got = await ANL.collect(makeEnv(kv), TODAY, 45);
+  assert.equal(got.length, 45);
+  assert.equal(got[0].iso, TODAY);
+  for (let i = 1; i < got.length; i++) {
+    assert.ok(got[i].iso < got[i - 1].iso, `סדר נשבר ב-${i}: ${got[i].iso}`);
+  }
+});
