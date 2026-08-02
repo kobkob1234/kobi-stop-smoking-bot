@@ -679,10 +679,12 @@ async function maybeEscalate(env, meta, iso) {
   let fired = false;
   if (meta.lastEscalationISO && P.diffDays(meta.lastEscalationISO, iso) < 7) return fired;
   const days = await ANL.collect(env, iso, 7);
-  const { flags, stats, blind } = ANL.escalationFlags(days, meta);
-  // שני סימנים כדי לא להציף — אבל כיסוי חסר עומד בפני עצמו, כי הוא
-  // אומר שאין תמונה בכלל, וזה בדיוק המצב שקודם לכן היה בלתי-נראה.
-  if (!blind && flags.length < 2) return fired;
+  const res = ANL.escalationFlags(days, meta);
+  const { flags, stats, blind } = res;
+  // הכלל עצמו יושב ב-analytics.js לצד הנתונים שהוא שופט. כשהוא ישב
+  // כאן, אף צד לא הכיל את התמונה המלאה — וזה מה שהסתיר את העובדה
+  // ששבוע שקט מייצר דגל אחד בלבד ולכן לעולם לא עובר את הסף.
+  if (!ANL.shouldEscalate(res)) return fired;
   meta.lastEscalationISO = iso;
   fired = true;
   await send(env, meta.chatId, ANL.escalationText(flags, stats, blind), {

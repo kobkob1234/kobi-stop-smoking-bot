@@ -181,6 +181,22 @@ export function escalationFlags(daysArr, meta) {
   return { flags, stats: a, blind };
 }
 
+/**
+ * שער ההסלמה — חי כאן ולא ב-index.js, וזה לא סידור.
+ *
+ * התנאי היה `!blind && flags.length < 2` בתוך maybeEscalate, כלומר
+ * **הנתונים היו כאן והכלל היה שם**. בדיוק בפער הזה נולד הבאג: הדגל
+ * היחיד שנדלק על שבוע שקט לא הספיק לסף של שניים, ואיש לא ראה את זה
+ * כי אף צד לא הכיל את התמונה המלאה. עכשיו שניהם באותו קובץ ובדיקים.
+ *
+ * שני דגלים כדי לא להציף — אבל כיסוי חסר עומד בפני עצמו, כי הוא לא
+ * "עוד סימפטום" אלא היעדר תמונה.
+ */
+export const ESCALATION_MIN_FLAGS = 2;
+
+export const shouldEscalate = ({ flags, blind }) =>
+  !!blind || flags.length >= ESCALATION_MIN_FLAGS;
+
 // ---------- דוח לתצוגה ----------
 export function reportText(a, ifThen, days) {
   const L = ['📈 <b>הדפוסים שלך</b>', `<i>${days} הימים האחרונים</i>`, '─────────────'];
