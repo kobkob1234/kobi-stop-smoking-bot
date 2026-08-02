@@ -262,3 +262,26 @@ test('יציאה לדרך לקנות מייצרת התראה גם בלי קפי�
 test('שבוע לא מתועד אינו מסיק החמרה — אין נתונים, אין מסקנה', () => {
   assert.equal(G.taperWatch(week(), baseline), null);
 });
+
+// ---------------------------------------------------------------- מיגרציה
+test('תוכנית שמורה בברירת המחדל הישנה משודרגת ל-12', () => {
+  // בלי זה השינוי המרכזי לא היה חל בכלל: המיזוג
+  // {...DEFAULT_PLAN, ...meta.gumPlan} לוקח את times השמור, ולכן
+  // משתמש קיים היה נשאר על 10 מנות אחרי הפריסה — היעד החדש קיים
+  // בקוד ולא בפועל.
+  const old = { on: true, times: G.LEGACY_TIMES_V1, stepDays: 4 };
+  const up = G.migratePlan(old);
+  assert.equal(up.times.length, 12);
+  assert.equal(up.ver, G.PLAN_VER);
+});
+
+test('שעות שהמשתמש שינה ידנית לא נדרסות', () => {
+  const custom = { on: true, times: ['08:00', '14:00', '20:00'], stepDays: 4 };
+  assert.deepEqual(G.migratePlan(custom).times, ['08:00', '14:00', '20:00']);
+});
+
+test('מיגרציה רצה פעם אחת בלבד', () => {
+  const once = G.migratePlan({ on: true, times: G.LEGACY_TIMES_V1 });
+  const twice = G.migratePlan(once);
+  assert.deepEqual(twice.times, once.times, 'ריצה שנייה שינתה משהו');
+});

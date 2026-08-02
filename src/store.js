@@ -4,6 +4,8 @@
 //  d:ISO : היומן של יום מסוים
 // ==========================================================================
 
+import { migratePlan } from './gum.js';
+
 const META_KEY = 'meta';
 
 // סדר המקומות ב-plan.js השתנה ב-27.7.2026, וגם נוסף לו עוגן מפורש.
@@ -77,6 +79,9 @@ export async function getMeta(env) {
     sent: m.sent || {},
   };
   if (out.siteVer !== SITE_ROTATION_VER) { out.siteOffset = 0; out.siteVer = SITE_ROTATION_VER; }
+  // שדרוג תוכנית המסטיק ל-12 מנות. בלי זה `times` השמור היה גובר על
+  // ברירת המחדל החדשה, והיעד החדש היה קיים בקוד ולא בפועל.
+  if (out.gumPlan) out.gumPlan = migratePlan(out.gumPlan);
   return out;
 }
 

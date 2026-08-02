@@ -77,7 +77,38 @@ export const TAPER_START = addDaysISO(QUIT, TOTAL_DAYS);
 // לעולם, וזה כשל אמיתי בדיוק כמו לצמצם מוקדם מדי.
 export const TAPER_BACKSTOP = addDaysISO(QUIT, 84);
 
+// לוח ברירת המחדל הקודם — 10 מנות. שמור כאן כדי שאפשר יהיה לזהות
+// משתמש שמעולם לא שינה אותו, ולשדרג אותו בלי לדרוס בחירה אישית.
+export const LEGACY_TIMES_V1 = [
+  '07:30', '09:00', '10:30', '12:00', '13:30', '15:00', '16:30', '17:45', '19:00', '20:30',
+];
+export const PLAN_VER = 2;
+
+/**
+ * שדרוג תוכנית שמורה.
+ *
+ * בלי זה השינוי המרכזי פשוט לא היה חל: `{...DEFAULT_PLAN, ...meta.gumPlan}`
+ * לוקח את `times` השמור, ולכן משתמש קיים היה נשאר על 10 מנות גם אחרי
+ * הפריסה — היעד החדש קיים בקוד ולא בפועל.
+ *
+ * מי ששינה את השעות ידנית לא נדרס: משדרגים רק אם המערך זהה בדיוק
+ * לברירת המחדל הישנה.
+ */
+export function migratePlan(plan) {
+  if (!plan || plan.ver >= PLAN_VER) return plan;
+  const cur = sortTimes(plan.times || []);
+  const wasDefault =
+    cur.length === LEGACY_TIMES_V1.length &&
+    cur.every((t, i) => t === LEGACY_TIMES_V1[i]);
+  return {
+    ...plan,
+    ver: PLAN_VER,
+    times: wasDefault ? RECOMMENDED.times : plan.times,
+  };
+}
+
 export const DEFAULT_PLAN = {
+  ver: PLAN_VER,
   on: true,
   times: RECOMMENDED.times,
   taperStartISO: TAPER_START,
