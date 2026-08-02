@@ -305,3 +305,12 @@ test('שיעור שחרור נמוך אמיתי כן חוסם', () => {
   assert.equal(r.ready, false);
   assert.ok(r.reasons.some(x => x.includes('עברו בלי שנדרש')));
 });
+
+test('תוכנית בלי times נופלת לברירת המחדל ולא מכבה תזכורות', () => {
+  // migratePlan קבע `times: plan.times` גם כשהוא undefined, מה שהוסיף
+  // מפתח מפורש בערך undefined — והוא גובר על DEFAULT_PLAN בפריסה.
+  // התוצאה הייתה dailyTarget=0, כלומר תזכורות המסטיק כבויות לגמרי.
+  const merged = { ...G.DEFAULT_PLAN, ...G.migratePlan({ on: true, stepDays: 4 }) };
+  assert.ok(Array.isArray(merged.times), 'times חייב להישאר מערך');
+  assert.equal(G.dailyTarget(merged, ISO), 12);
+});

@@ -516,7 +516,10 @@ async function tick(env) {
         '',
         '<b>אבל התנאי הוא מצב, לא תאריך.</b> אלה הנתונים שלך:',
         `• מסטיק: <b>${rd.nowAvg}</b> ביום (שבוע לפני כן: ${rd.prevAvg || '—'})`,
-        `• דחפים: ${rd.waves}${rd.passRate !== null ? ` · ${rd.passRate}% עברו בלי שנדרש כלום` : ''}${rd.slips ? ` · מעידות: ${rd.slips}` : ''}`,
+        // "0% עברו" נקרא ככישלון, אבל כשאף גל לא סומן זה אומר שלא מדדנו
+        // — לא שנכשלת. אצלו זה המצב בפועל (3 מתוך 47), ולכן ההבחנה חשובה.
+        `• דחפים: ${rd.waves}${rd.unmeasured ? ' · <i>אף אחד לא סומן כ"עבר", אז אין לי מדד איכות</i>'
+          : rd.passRate !== null ? ` · ${rd.passRate}% עברו בלי שנדרש כלום` : ''}${rd.slips ? ` · מעידות: ${rd.slips}` : ''}`,
         `• תיעוד: ${rd.coverage}/7 ימים${rd.coverage < G.COVERAGE_MIN ? ' ⚠️' : ''}`,
         '',
         verdict,
@@ -595,7 +598,7 @@ async function tick(env) {
       // אחרי הודעת הערב: דוח דפוסים במוצ״ש, ובדיקת נקודת ההסלמה
       if (slot.id === 'evening') {
         if (now.dow === 6) await sendWeeklyReport(env, meta, iso);
-        await maybeEscalate(env, meta, iso);
+        if (await maybeEscalate(env, meta, iso)) touched.add('lastEscalationISO');
       }
     }
   }
@@ -620,11 +623,11 @@ async function tick(env) {
     //     הלא נכון, ו-reported אובד כך שגם עדכון "הגל נשבר" נעלם.
     //   • אישור התצמצום (tp:go) באמצע tick → confirmedTaper ו-baseline
     //     נמחקים, והבוט שואל שוב שלושה ימים אחר-כך.
+    //   • lastPartnerAlert — נכתב ב-alertPartner, שרץ ממסלולי המשתמש
+    //     (startPlanning/startEnRoute) ולא מהקרון. כתיבה בחזרה של ערך
+    //     ישן הייתה מאפסת את מגרת 30 הדקות ומאפשרת דיווח כפול לשותפה.
+    //     לכן הוא **לא** ברשימה: הקרון לא נוגע בו, ולכן גם לא כותב אותו.
     for (const k of touched) fresh[k] = meta[k];
-    // אלה כן תמיד של הקרון: הוא היחיד שכותב אותם.
-    for (const k of ['lastPartnerAlert', 'lastPartnerAlertLevel', 'lastEscalationISO']) {
-      if (meta[k] !== undefined) fresh[k] = meta[k];
-    }
     pruneSent(fresh, iso);
     await putMeta(env, fresh);
   }
@@ -662,13 +665,15 @@ async function sendWeeklyReport(env, meta, iso) {
 
 /** נקודת ההחלטה להסלמה (סעיף יב׳) — לכל היותר פעם בשבוע */
 async function maybeEscalate(env, meta, iso) {
-  if (meta.lastEscalationISO && P.diffDays(meta.lastEscalationISO, iso) < 7) return;
+  let fired = false;
+  if (meta.lastEscalationISO && P.diffDays(meta.lastEscalationISO, iso) < 7) return fired;
   const days = await ANL.collect(env, iso, 7);
   const { flags, stats, blind } = ANL.escalationFlags(days, meta);
   // שני סימנים כדי לא להציף — אבל כיסוי חסר עומד בפני עצמו, כי הוא
   // אומר שאין תמונה בכלל, וזה בדיוק המצב שקודם לכן היה בלתי-נראה.
-  if (!blind && flags.length < 2) return;
+  if (!blind && flags.length < 2) return fired;
   meta.lastEscalationISO = iso;
+  fired = true;
   await send(env, meta.chatId, ANL.escalationText(flags, stats, blind), {
     reply_markup: inline([
       [btn('📞 טלפוני תמיכה', 'T:phones')],

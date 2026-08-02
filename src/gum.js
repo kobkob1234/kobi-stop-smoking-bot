@@ -100,11 +100,13 @@ export function migratePlan(plan) {
   const wasDefault =
     cur.length === LEGACY_TIMES_V1.length &&
     cur.every((t, i) => t === LEGACY_TIMES_V1[i]);
-  return {
-    ...plan,
-    ver: PLAN_VER,
-    times: wasDefault ? RECOMMENDED.times : plan.times,
-  };
+  const out = { ...plan, ver: PLAN_VER };
+  // רק אם באמת יש מה לשנות. השמה של `times: plan.times` כשהוא undefined
+  // מוסיפה מפתח מפורש בערך undefined, והוא **גובר** על DEFAULT_PLAN
+  // בפריסה — כלומר תוכנית בלי times הייתה מכבה את התזכורות לגמרי,
+  // במקום ליפול לברירת המחדל כפי שקרה קודם.
+  if (wasDefault) out.times = RECOMMENDED.times;
+  return out;
 }
 
 export const DEFAULT_PLAN = {
