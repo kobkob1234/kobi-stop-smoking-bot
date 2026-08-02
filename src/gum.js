@@ -491,22 +491,26 @@ export function dueNow(plan, iso, day, nowMinutes, lastRemindMin = null, softCap
   // אף פעם לא בתוך MIN_GAP מהיחידה האחרונה — גם אם היא נלקחה מחוץ לתוכנית
   if (since !== null && since < MIN_GAP) return { ...base, due: false, why: `נלקח לפני ${since} דק׳` };
 
-  // נסיגה — לפני כל ענף שמחזיר due, כולל "פער ארוך מדי". תזכורת שלא
-  // הובילה ליחידה לא חוזרת אחרי 45 דקות; אם מאז התזכורת האחרונה לא
-  // נלקח כלום ממתינים BACKOFF במקום GAP_REMIND. כשהבדיקה הזו ישבה
-  // *אחרי* ענף MAX_GAP, יום איטי עקף אותה וייצר 20 תזכורות — בדיוק מה
-  // שגורם לאנשים להשתיק בוט.
   // סנוז מפורש שעוד לא פג — שקט, בלי קשר לכל השאר.
   if (snoozedTo && nowMinutes < snoozedTo) {
     return { ...base, due: false, why: `נדחה עד ${hhmm(snoozedTo)}` };
   }
 
+  // נסיגה — לפני כל ענף שמחזיר due, כולל "פער ארוך מדי". אם מאז
+  // התזכורת האחרונה לא נלקח כלום ממתינים BACKOFF במקום GAP_REMIND.
+  // כשהבדיקה הזו ישבה *אחרי* ענף MAX_GAP, יום איטי עקף אותה וייצר 20
+  // תזכורות — בדיוק מה שגורם לאנשים להשתיק בוט.
   if (lastRemindMin !== null && lastRemindMin !== undefined) {
     const gumSinceRemind = (day.ev || [])
       .some(e => e.k === 'g' && (e.h * 60 + e.m) >= lastRemindMin);
     // סנוז שפג **מדלג** על הנסיגה. בלי זה הרצפה שנקבעה ב-index.js
     // נבלעת בתקרה שכאן, והבטחת ה-"אזכיר ב-10:51" הופכת ל-12:10.
     const snoozeExpired = snoozedTo && nowMinutes >= snoozedTo;
+    // הערה על GAP_REMIND: הענף הזה כמעט לעולם אינו נחתך בפועל.
+    // `gumSinceRemind` אמיתי פירושו שיש מסטיק בזמן g >= lastRemind,
+    // ולכן `since <= now - lastRemind` — כלומר MIN_GAP (60) תמיד חוסם
+    // קודם. הוא נשאר כרשת למקרה היחיד שבו since הוא null בזמן שיש
+    // אירוע (אירוע עם חותמת עתידית), ולא כדי לקבוע מרווח.
     const wait = gumSinceRemind ? GAP_REMIND : BACKOFF;
     if (!snoozeExpired && nowMinutes - lastRemindMin < wait) {
       return { ...base, due: false, why: gumSinceRemind ? 'תזכורת לפני פחות משעה' : 'ממתין — התזכורת הקודמת לא נענתה' };

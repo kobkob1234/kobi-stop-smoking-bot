@@ -75,7 +75,12 @@ export function analyse(daysArr) {
     slips += d.slips || 0;
     outs += d.outs || 0;
     if (d.patch) patchDays++;
-    if (d.waves) dows[DOW_HE[d.dow]] = (dows[DOW_HE[d.dow]] || 0) + d.waves;
+    // רק עם dow תקין. `collect` תמיד מוסיף אותו, אבל analyse מקבל גם
+    // מערכי ימים גולמיים — ואז DOW_HE[undefined] מייצר את המפתח
+    // "undefined", והדוח מציג למשתמש "היום הקשה: יום undefined".
+    if (d.waves && d.dow >= 0 && d.dow <= 6) {
+      dows[DOW_HE[d.dow]] = (dows[DOW_HE[d.dow]] || 0) + d.waves;
+    }
     for (const e of d.ev || []) {
       if (e.k !== 'w' && e.k !== 'x') continue;
       evCount++;
