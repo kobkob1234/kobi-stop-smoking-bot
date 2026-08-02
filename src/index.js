@@ -477,11 +477,18 @@ async function tick(env) {
     const day = await getDay(env, iso);
     const snoozedTo = meta.gumSnoozeISO === iso ? (meta.gumSnoozeMin || 0) : 0;
     const lastRemind = meta.gumRemindISO === iso ? meta.gumRemindMin : null;
-    const r = G.dueNow(plan, iso, day, now.minutes, lastRemind);
+    // הסנוז נמסר ל-dueNow ולא נאכף כאן בנפרד. כשהוא היה תנאי חיצוני
+    // בלבד הוא היה רצפה מול תקרת הנסיגה שבתוך dueNow, והמכפלה איחרה
+    // את התזכורת ב-79 דקות מעבר למה שהובטח.
+    const r = G.dueNow(plan, iso, day, now.minutes, lastRemind,
+                       meta.gumSoftCap, snoozedTo);
 
-    if (r.due && now.minutes >= snoozedTo) {
+    if (r.due) {
       meta.gumRemindISO = iso;
       meta.gumRemindMin = now.minutes;
+      // הסנוז כובד — מנקים, אחרת הוא היה מדלג על הנסיגה שוב ושוב
+      // לשארית היום ומייצר תזכורת בכל בדיקה.
+      if (snoozedTo) { meta.gumSnoozeMin = 0; touched.add('gumSnoozeMin'); }
       dirty = true; touched.add('gumRemindISO'); touched.add('gumRemindMin');
       console.log('GUM תזכורת:', r.taken, '/', r.target, '·', r.why);
       await send(env, meta.chatId, G.reminderText(now.hhmm, plan, iso, day, r.taken, r.target), {
@@ -560,12 +567,16 @@ async function tick(env) {
         }
         const n = G.activeTimes(plan, iso).length;
         await send(env, meta.chatId, [
-          '⚠️ <b>בדיקת התצמצום — משהו החמיר.</b>',
+          tw.lowCoverage
+            ? '⏸️ <b>בדיקת התצמצום — אין לי מספיק נתונים.</b>'
+            : '⚠️ <b>בדיקת התצמצום — משהו החמיר.</b>',
           '',
           `אתה על <b>${n}</b> יחידות ביום. מאז שהתחלנו לצמצם:`,
           ...tw.worse.map(x => `   • ${x}`),
           '',
-          'התוכנית אומרת את זה במפורש: <b>אם צריך להתאמץ כדי להפחית, עוד לא הזמן.</b>',
+          tw.lowCoverage
+            ? 'להוריד עוד מנה בלי לדעת מה קורה זה לצמצם בעיוורון, ולכן עצרתי. שני ימים של תיעוד ואני ממשיך.'
+            : 'התוכנית אומרת את זה במפורש: <b>אם צריך להתאמץ כדי להפחית, עוד לא הזמן.</b>',
           '⏸️ <b>הקפאתי את הצמצום עכשיו</b> — לא תיפול עוד מנה עד שתחליט.',
           '',
           '<i>צעד אחורה עכשיו זול. מעידה יקרה.</i>',
@@ -1629,12 +1640,15 @@ async function onCallback(cb, env) {
     const target = G.dailyTarget(gplan, iso);
 
     if (what === 's') {                       // דחייה ב-20 דקות מעכשיו
+      // מעגלים לרשת הקרון (כל 10 דקות) ומודיעים את השעה שבה באמת
+      // תצא התזכורת. קודם הובטח 10:51 בזמן שהבדיקה הבאה היא ב-11:00,
+      // כלומר ההבטחה לא הייתה ניתנת לקיום גם בלי הבאג.
       meta.gumSnoozeISO = iso;
-      meta.gumSnoozeMin = now.minutes + 20;
+      meta.gumSnoozeMin = Math.ceil((now.minutes + 20) / 10) * 10;
       await putMeta(env, meta);
-      const nt = `${String(Math.floor(meta.gumSnoozeMin / 60) % 24).padStart(2, '0')}:${String(meta.gumSnoozeMin % 60).padStart(2, '0')}`;
-      await answer(env, cb.id, 'נדחה ב-20 דק׳');
-      return edit(env, chatId, msgId, `⏰ <b>נדחה.</b> אזכיר שוב בסביבות ${nt}.\n\n<i>שום מונה לא זז — היחידה עוד לא נספרה.</i>`, { reply_markup: inline([]) });
+      const nt = G.hhmm(meta.gumSnoozeMin % 1440);
+      await answer(env, cb.id, 'נדחה');
+      return edit(env, chatId, msgId, `⏰ <b>נדחה.</b> אזכיר שוב ב-${nt}.\n\n<i>שום מונה לא זז — היחידה עוד לא נספרה.</i>`, { reply_markup: inline([]) });
     }
 
     if (what === 'y') {

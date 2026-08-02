@@ -237,8 +237,12 @@ export function taperInfo(plan, iso) {
 export function minutesSinceLastGum(day, nowMinutes) {
   const gs = (day.ev || []).filter(e => e.k === 'g');
   if (!gs.length) return null;
-  const last = gs[gs.length - 1];
-  const diff = nowMinutes - (last.h * 60 + last.m);
+  // לפי **הזמן המאוחר ביותר**, לא לפי האחרון במערך. `ev` אינו ממוין:
+  // /trigger יכול להיכתב אחרי webhook מדקה מוקדמת יותר, ואז האיבר
+  // האחרון הוא דווקא המוקדם. נמדד בפועל: פער של 360 דקות במקום 60,
+  // כלומר MAX_GAP נחצה והבוט הזכיר שעה מוקדם מדי.
+  const latest = Math.max(...gs.map(e => e.h * 60 + e.m));
+  const diff = nowMinutes - latest;
   return diff < 0 ? null : diff;
 }
 
@@ -372,8 +376,15 @@ export function readiness(last7, prev7, target = 12) {
 export function taperWatch(last7, baseline) {
   if (!baseline) return null;
   const sum = (a, k) => a.reduce((t, d) => t + (d[k] || 0), 0);
+  // כיסוי חסר **אינו** שקט. הגרסה הקודמת החזירה null, כלומר הניטור
+  // נעלם בדיוק בשבוע שבו קשה — וזה השבוע שבו מפסיקים לדווח — בזמן
+  // שהצמצום המשיך להוריד מנה כל 4 ימים. כשל שקט בכיוון המזיק.
   const coverage = last7.filter(isLogged).length;
-  if (coverage < COVERAGE_MIN) return null;   // בלי כיסוי לא מסיקים החמרה
+  if (coverage < COVERAGE_MIN) {
+    return { lowCoverage: true, coverage, worse: [
+      `רק ${coverage} מתוך 7 ימים תועדו, ואני באמצע הורדת מנות — אז אני לא יודע אם זה עובד.`,
+    ] };
+  }
 
   const waves = sum(last7, 'waves');
   const slips = sum(last7, 'slips');
@@ -416,18 +427,46 @@ export const BACKOFF = 90;     // ואחרי תזכורת שלא נענתה — 
 /** היעד היומי: מספר היחידות הפעילות אחרי התצמצם */
 export const dailyTarget = (plan, iso) => activeTimes(plan, iso).length;
 
-/** חלון הערות: מהיחידה הראשונה בתוכנית ועד האחרונה */
+/**
+ * חלון הערות: מהיחידה הראשונה בתוכנית ועד האחרונה.
+ *
+ * החריג היחיד הוא תוכנית של **משבצת אחת**. שם start===end, ולכן
+ * `nowMinutes > end + 45` נכון מ-08:15 והלאה — בחירת הפריסט "1 ביום"
+ * בתפריט השביתה את התזכורות לחלוטין, בשקט. מנה יחידה ליום אינה
+ * אמורה להיתפס כ"היום נגמר ב-07:30"; היא אמורה להיות ניתנת לתזכורת
+ * לאורך היום.
+ *
+ * תוכניות מרובות-משבצות **לא** מורחבות: אם המנה האחרונה ב-18:00, אין
+ * סיבה להזכיר ב-19:00 — היעד כבר מכוסה, וזה שקט מכוון ולא באג.
+ */
+export const DAY_END = 20 * 60 + 30;
+
 export function windowOf(plan) {
   const all = sortTimes(plan.times || []);
   if (!all.length) return { start: 7 * 60 + 30, end: 21 * 60 };
-  return { start: toMin(all[0]), end: toMin(all[all.length - 1]) };
+  const start = toMin(all[0]);
+  const end = all.length === 1 ? Math.max(start, DAY_END) : toMin(all[all.length - 1]);
+  return { start, end };
 }
 
 /**
  * האם מגיעה תזכורת עכשיו — ולמה.
  * מחזיר גם את המספרים, כדי שההודעה תוכל להסביר את עצמה.
  */
-export function dueNow(plan, iso, day, nowMinutes, lastRemindMin = null, softCap = 18) {
+/**
+ * @param snoozedTo דקה שאליה נדחתה התזכורת במפורש ("⏰ עוד 20 דק׳"), או 0.
+ *
+ * הפרמטר הזה הוא התיקון לבאג שדווח מהשטח. הסנוז נאכף עד עכשיו **רק**
+ * ב-index.js, כתנאי `now >= snoozedTo` — כלומר רצפה. אבל כאן, בצד השני
+ * של התפר, יושבת תקרה: לחיצה על סנוז אינה רושמת מסטיק, ולכן בבדיקה
+ * הבאה `gumSinceRemind` שקרי ו-`wait` הוא BACKOFF (90) ולא GAP_REMIND
+ * (60). שתי המגבלות נכונות בנפרד, ומכפלתן היא שהבוט הבטיח 10:51 והיה
+ * מזכיר ב-12:10 — 79 דקות באיחור.
+ *
+ * ההכרעה: סנוז מפורש **מחליף** את הנסיגה ולא מצטרף אליה. המשתמש אמר
+ * מתי הוא רוצה שיזכירו לו; זו הבעת כוונה, לא התעלמות.
+ */
+export function dueNow(plan, iso, day, nowMinutes, lastRemindMin = null, softCap = 18, snoozedTo = 0) {
   const target = dailyTarget(plan, iso);
   const taken = day.gum || 0;
   const { start, end } = windowOf(plan);
@@ -457,13 +496,22 @@ export function dueNow(plan, iso, day, nowMinutes, lastRemindMin = null, softCap
   // נלקח כלום ממתינים BACKOFF במקום GAP_REMIND. כשהבדיקה הזו ישבה
   // *אחרי* ענף MAX_GAP, יום איטי עקף אותה וייצר 20 תזכורות — בדיוק מה
   // שגורם לאנשים להשתיק בוט.
+  // סנוז מפורש שעוד לא פג — שקט, בלי קשר לכל השאר.
+  if (snoozedTo && nowMinutes < snoozedTo) {
+    return { ...base, due: false, why: `נדחה עד ${hhmm(snoozedTo)}` };
+  }
+
   if (lastRemindMin !== null && lastRemindMin !== undefined) {
     const gumSinceRemind = (day.ev || [])
       .some(e => e.k === 'g' && (e.h * 60 + e.m) >= lastRemindMin);
+    // סנוז שפג **מדלג** על הנסיגה. בלי זה הרצפה שנקבעה ב-index.js
+    // נבלעת בתקרה שכאן, והבטחת ה-"אזכיר ב-10:51" הופכת ל-12:10.
+    const snoozeExpired = snoozedTo && nowMinutes >= snoozedTo;
     const wait = gumSinceRemind ? GAP_REMIND : BACKOFF;
-    if (nowMinutes - lastRemindMin < wait) {
+    if (!snoozeExpired && nowMinutes - lastRemindMin < wait) {
       return { ...base, due: false, why: gumSinceRemind ? 'תזכורת לפני פחות משעה' : 'ממתין — התזכורת הקודמת לא נענתה' };
     }
+    if (snoozeExpired) return { ...base, due: true, why: 'הסנוז פג' };
   }
 
   // עבר יותר מדי זמן בלי כלום — מזכירים בלי קשר לקצב

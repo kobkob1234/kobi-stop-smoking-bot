@@ -259,8 +259,20 @@ test('יציאה לדרך לקנות מייצרת התראה גם בלי קפי�
   assert.ok(w && w.worse.join(' ').includes('בדרך לקנות'));
 });
 
-test('שבוע לא מתועד אינו מסיק החמרה — אין נתונים, אין מסקנה', () => {
-  assert.equal(G.taperWatch(week(), baseline), null);
+test('שבוע לא מתועד עוצר את הצמצום במקום לשתוק', () => {
+  // הגרסה הקודמת החזירה null — "אין נתונים, אין מסקנה". זה נשמע נכון
+  // אבל היה כשל שקט בכיוון המזיק: הניטור נעלם בדיוק בשבוע שבו קשה,
+  // שהוא השבוע שבו מפסיקים לדווח, **בזמן שהצמצום המשיך להוריד מנה
+  // כל 4 ימים**. חוסר ידיעה הוא סיבה לעצור, לא סיבה להמשיך.
+  const tw = G.taperWatch(week(), baseline);
+  assert.ok(tw, 'כיסוי חסר חייב להחזיר משהו, לא null');
+  assert.equal(tw.lowCoverage, true);
+  assert.ok(tw.worse.length >= 1, 'חייבת להיות סיבה להצגה');
+});
+
+test('שבוע מתועד ויציב עדיין לא מתריע', () => {
+  const stable = weekOf(() => ({ gum: 11, waves: 1, surfed: 1, patch: true, ev: [gumAt(9, 0)] }));
+  assert.equal(G.taperWatch(stable, baseline), null);
 });
 
 // ---------------------------------------------------------------- מיגרציה
@@ -313,4 +325,55 @@ test('תוכנית בלי times נופלת לברירת המחדל ולא מכב
   const merged = { ...G.DEFAULT_PLAN, ...G.migratePlan({ on: true, stepDays: 4 }) };
   assert.ok(Array.isArray(merged.times), 'times חייב להישאר מערך');
   assert.equal(G.dailyTarget(merged, ISO), 12);
+});
+
+// ==========================================================================
+//  שלב 0 — הבאגים שדווחו מהשטח
+// ==========================================================================
+
+test('סנוז מפורש מכובד בזמן, ולא נבלע בנסיגה', () => {
+  // הבאג שדווח: "אזכיר שוב בסביבות 10:51" ולא הגיעה תזכורת.
+  // index.js הציב רצפה (now >= snoozedTo) ו-gum.js החזיק תקרה
+  // (BACKOFF=90, כי סנוז לא רושם מסטיק). שני הצדדים תקינים לחוד,
+  // והמכפלה דחתה את התזכורת ל-12:10 — 79 דקות באיחור.
+  const remindAt = 10 * 60 + 31, snoozeTo = 10 * 60 + 51;
+  const d = day({ gum: 5, ev: [gumAt(9, 15)] });
+
+  assert.equal(G.dueNow(plan, ISO, d, 10 * 60 + 40, remindAt, 18, snoozeTo).due, false,
+    'לפני שהסנוז פג — שקט');
+  const after = G.dueNow(plan, ISO, d, 11 * 60, remindAt, 18, snoozeTo);
+  assert.equal(after.due, true, 'אחרי שהסנוז פג — תזכורת, למרות שהנסיגה עוד פעילה');
+  assert.equal(after.why, 'הסנוז פג');
+});
+
+test('בלי סנוז, הנסיגה עדיין חוסמת כרגיל', () => {
+  // הסנוז מדלג על הנסיגה — אבל רק כשהוא קיים. אסור שהתיקון יפתח
+  // את הנסיגה לכולם.
+  const d = day({ gum: 5, ev: [gumAt(9, 15)] });
+  const r = G.dueNow(plan, ISO, d, 11 * 60, 10 * 60 + 31, 18, 0);
+  assert.equal(r.due, false);
+  assert.match(r.why, /ממתין/);
+});
+
+test('פריסט "1 ביום" לא מכבה את התזכורות בשקט', () => {
+  // windowOf החזיר start===end, ולכן כל בדיקה אחרי 08:15 נפלה על
+  // "אחרי סוף החלון" — בחירת הפריסט בתפריט השביתה את המנגנון כולו.
+  const p = { ...G.DEFAULT_PLAN, times: G.PRESETS.one.times };
+  assert.ok(G.windowOf(p).end > G.windowOf(p).start, 'חלון מנוון');
+  assert.equal(G.dueNow(p, ISO, day({ gum: 0, ev: [] }), 19 * 60).due, true);
+});
+
+test('תוכנית מרובת-משבצות לא מורחבת מלאכותית', () => {
+  // "2 ביום" נגמר ב-18:00, ושקט ב-19:00 הוא מכוון: היעד מכוסה.
+  // הרחבה גורפת הייתה הופכת שקט תקין לנדנוד.
+  const p = { ...G.DEFAULT_PLAN, times: G.PRESETS.two.times };
+  assert.equal(G.windowOf(p).end, 18 * 60);
+  assert.equal(G.dueNow(p, ISO, day({ gum: 2, ev: [gumAt(18, 0)] }), 19 * 60).due, false);
+});
+
+test('minutesSinceLastGum לפי הזמן המאוחר ולא לפי סדר המערך', () => {
+  // ev אינו ממוין: /trigger יכול להיכתב אחרי webhook מדקה מוקדמת.
+  // נמדד בפועל: 360 דקות במקום 60, כלומר MAX_GAP נחצה שלא בצדק.
+  const d = day({ gum: 2, ev: [gumAt(14, 0), gumAt(9, 0)] });
+  assert.equal(G.minutesSinceLastGum(d, 15 * 60), 60);
 });
