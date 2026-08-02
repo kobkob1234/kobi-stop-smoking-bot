@@ -16,7 +16,7 @@
 // ==========================================================================
 
 import * as KB from './kb.js';
-import { DOCTRINE, GROUNDING } from './core.js';
+import { DOCTRINE, GROUNDING, withTimeout, timeoutSignal, sanitizeModelText } from './core.js';
 
 export const provider = env => (env.AI_PROVIDER || 'off').toLowerCase();
 
@@ -62,10 +62,10 @@ async function runWorkersAI(env, user) {
   // Workers AI. חלק מהמודלים מחזירים {response} וחלק מחזירים מבנה
   // בסגנון OpenAI ({choices}) — צריך לתמוך בשניהם.
   const model = env.WORKERS_AI_MODEL || '@cf/openai/gpt-oss-120b';
-  const r = await env.AI.run(model, {
+  const r = await withTimeout(env.AI.run(model, {
     messages: [{ role: 'system', content: SYSTEM }, { role: 'user', content: user }],
     max_tokens: 1200, temperature: 0.4,
-  });
+  }), undefined, 'workers-ai');
   if (!r) return null;
   const fromChoices = r.choices?.[0]?.message?.content;
   return fromChoices || r.response || r.result?.response || null;
@@ -90,6 +90,7 @@ async function runGemini(env, user) {
         contents: [{ role: 'user', parts: [{ text: user }] }],
         generationConfig: { temperature: 0.4, maxOutputTokens: 2000 },
       }),
+      signal: timeoutSignal(),
     });
   const j = await res.json().catch(() => null);
   if (!res.ok) {
@@ -109,26 +110,19 @@ async function runGroq(env, user) {
     body: JSON.stringify({
       model: env.GROQ_MODEL || 'llama-3.3-70b-versatile',
       messages: [{ role: 'system', content: SYSTEM }, { role: 'user', content: user }],
-      temperature: 0.4, max_tokens: 500,
+      // 500 היה חריג מול 1200/2000 אצל האחרים, ותשובה בת 120 מילים
+      // בעברית נחתכת שם באמצע משפט.
+      temperature: 0.4, max_tokens: 1200,
     }),
+    signal: timeoutSignal(),
   });
   const j = await res.json().catch(() => null);
   if (!res.ok) { console.log('GROQ ERR', JSON.stringify(j)); return null; }
   return j?.choices?.[0]?.message?.content || null;
 }
 
-/** ניקוי: מונע markdown ותגיות שטלגרם ידחה */
-function sanitize(s) {
-  if (!s) return null;
-  return s
-    .replace(/```[\s\S]*?```/g, '')
-    .replace(/^\s*#+\s*/gm, '')
-    .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')
-    .replace(/(?<!\w)\*(?!\s)(.+?)(?<!\s)\*(?!\w)/g, '<i>$1</i>')
-    .replace(/<(?!\/?(b|i|code|u|s)>)[^>]*>/g, '')
-    .trim()
-    .slice(0, 3500);
-}
+/** ניקוי משותף עם intent.js — ראה core.js */
+const sanitize = s => sanitizeModelText(s) || null;
 
 /**
  * שואל את המודל, מעוגן ב-KB ובמצב היום.
@@ -145,7 +139,7 @@ const RUNNERS = { 'workers-ai': runWorkersAI, gemini: runGemini, groq: runGroq }
  *
  * AI_PROVIDER יכול להיות גם שרשרת: "gemini,workers-ai"
  */
-export async function ask(env, question, stateText, hist) {
+export async function ask(env, question, stateText, hist, meter = null) {
   if (!enabled(env)) return null;
   const user = fewShot(question, KB.context(question, 3), stateText, hist);
 
@@ -158,6 +152,7 @@ export async function ask(env, question, stateText, hist) {
   });
 
   for (const p of chain) {
+    if (meter) meter.calls += 1;
     try {
       const out = sanitize(await RUNNERS[p](env, user));
       if (out) return out;
@@ -180,7 +175,19 @@ export function quotaLeft(meta, env, iso) {
   return Math.max(0, cap - used);
 }
 
-export function noteUse(meta, iso) {
+/**
+ * סופר **קריאות upstream**, לא תשובות.
+ *
+ * קודם לכן noteUse נקרא פעם אחת ורק בהצלחה, בזמן שהודעה אחת יכולה
+ * לייצר עד ארבע קריאות: classify מנסה gemini ואז workers-ai, ואם שתיהן
+ * החזירו null גם ask מנסה את שתיהן. כלומר המכסה הגבילה תשובות מוצלחות
+ * ולא צריכה — ודווקא היום שבו הכול נכשל, שבו הצריכה הגבוהה ביותר,
+ * נספר כאפס.
+ */
+export function noteUse(meta, iso, calls = 1) {
   if (!meta.ai || meta.ai.date !== iso) meta.ai = { date: iso, n: 0 };
-  meta.ai.n += 1;
+  meta.ai.n += Math.max(1, calls);
 }
+
+// מיוצא לבדיקות בלבד — כדי שאפשר יהיה לוודא שהאיסורים באמת בפרומפט
+export const SYSTEM_TEXT = SYSTEM;

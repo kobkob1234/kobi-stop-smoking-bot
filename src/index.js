@@ -240,7 +240,15 @@ export default {
         // h= זוג תורות מדומה לבדיקת המשכיות: h=שאלה||תשובה
         const hRaw = url.searchParams.get('h');
         const hist = hRaw ? hRaw.split('||').map((t, i) => ({ r: i % 2 ? 'a' : 'u', t, ts: Date.now() })) : recentHist(meta);
-        const cls = AI.enabled(env) ? await INT.classify(env, q, await buildState(env, pl, now.iso, now, meta), hist) : null;
+        // /ask עקף את המכסה לגמרי, ו-live-check שולח 17 קריאות בהרצה.
+        // כלומר הריצה שנועדה *לבדוק* את הבוט שרפה מכסה שלא נספרה, ואז
+        // שיחה אמיתית נתקלה ב-429 בלי שהמונה הראה משהו.
+        const meter = { calls: 0 };
+        const left = AI.quotaLeft(meta, env, now.iso);
+        const cls = AI.enabled(env) && left > 0
+          ? await INT.classify(env, q, await buildState(env, pl, now.iso, now, meta), hist, meter)
+          : null;
+        if (meter.calls) { AI.noteUse(meta, now.iso, meter.calls); await putMeta(env, meta); }
         return Response.json({
           q,
           intent: cls ? cls.intent : null,
@@ -248,6 +256,7 @@ export default {
           reply: cls ? cls.reply : null,
           kb: hit ? { topic: hit.t, score: +hit.score.toFixed(1) } : null,
           provider: AI.provider(env),
+          quota: { left: AI.quotaLeft(meta, env, now.iso), spent: meter.calls },
         });
       }
       // ------------------------------------------------------------------
@@ -824,9 +833,14 @@ async function converse(text, chatId, env, meta, pl, iso, now) {
   if (AI.enabled(env) && text.trim().length >= 3) {
     if (AI.quotaLeft(meta, env, iso) > 0) {
       const hist = recentHist(meta);
-      const res = await INT.classify(env, text, await buildState(env, pl, iso, now, meta), hist);
+      // meter סופר קריאות upstream בפועל. הודעה אחת יכולה לייצר עד
+      // ארבע (classify מנסה שני ספקים, ואז ask מנסה שוב שניים), וקודם
+      // לכן כולן נספרו כאחת — או כאפס כשהכול נכשל, שזה בדיוק היום
+      // שבו הצריכה הגבוהה ביותר.
+      const meter = { calls: 0 };
+      const res = await INT.classify(env, text, await buildState(env, pl, iso, now, meta), hist, meter);
       if (res) {
-        AI.noteUse(meta, iso);
+        AI.noteUse(meta, iso, meter.calls);
         // ההודעה והתשובה נכנסות לזיכרון כאן, לפני כל הסתעפות — אחרת
         // כוונות שמסתיימות ב-return R(...) היו נופלות מההיסטוריה,
         // ובדיוק הן הרגעים שהמשך שיחה מתייחס אליהם ("זה עבר", "ולמה?").
@@ -853,9 +867,14 @@ async function converse(text, chatId, env, meta, pl, iso, now) {
         }
         if (res.intent === 'crisis') return send(env, chatId, INT.CRISIS_TEXT);
 
-        // שאלה / רגש / אחר — תשובה בלבד
-        const m = M.answerBlock(res.reply, null);
-        return send(env, chatId, m.text, { reply_markup: m.kb });
+        // שאלה / רגש / אחר — תשובה בלבד.
+        // אם התשובה התרוקנה בניקוי, **לא** שולחים הודעה ריקה: טלגרם
+        // דוחה אותה ב-400 שלא נתפס בנפילה-לאחור לטקסט פשוט, והמשתמש
+        // היה מקבל שתיקה מוחלטת אחרי שהמכסה כבר חויבה. נופלים ל-KB.
+        if (res.reply && res.reply.trim()) {
+          const m = M.answerBlock(res.reply, null);
+          return send(env, chatId, m.text, { reply_markup: m.kb });
+        }
       }
     } else {
       await send(env, chatId, '🤖 נגמרה המכסה היומית של השיחה החופשית. בסיס הידע מהמדריכים עדיין עובד — שאל בקצרה, או /כלים.');
@@ -866,9 +885,10 @@ async function converse(text, chatId, env, meta, pl, iso, now) {
   // (המסלול המהיר בביטוי הרגולרי כבר רץ לפני זה, כך שדחף מפורש
   //  לא מגיע לכאן בכלל.)
   if (AI.enabled(env) && AI.quotaLeft(meta, env, iso) > 0) {
-    const plain = await AI.ask(env, text, await buildState(env, pl, iso, now, meta), recentHist(meta));
-    if (plain) {
-      AI.noteUse(meta, iso);
+    const meter2 = { calls: 0 };
+    const plain = await AI.ask(env, text, await buildState(env, pl, iso, now, meta), recentHist(meta), meter2);
+    if (plain && plain.trim()) {
+      AI.noteUse(meta, iso, meter2.calls);
       pushHist(meta, 'u', text);
       pushHist(meta, 'a', plain);
       await putMeta(env, meta);

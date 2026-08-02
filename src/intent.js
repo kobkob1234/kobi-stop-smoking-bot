@@ -20,7 +20,7 @@
 // ==========================================================================
 
 import * as KB from './kb.js';
-import { DOCTRINE, GROUNDING } from './core.js';
+import { DOCTRINE, GROUNDING, withTimeout, timeoutSignal, sanitizeModelText } from './core.js';
 
 export const INTENTS = [
   'urge',          // דחף רגיל — עכשיו
@@ -121,6 +121,7 @@ async function viaGemini(env, text, state, hist) {
           responseSchema: SCHEMA,
         },
       }),
+      signal: timeoutSignal(),
     });
   const j = await res.json().catch(() => null);
   if (!res.ok) { console.log('INTENT gemini', res.status, JSON.stringify(j).slice(0, 250)); return null; }
@@ -132,19 +133,44 @@ async function viaGemini(env, text, state, hist) {
 // ---------- Workers AI (בלי סכימה — מבקשים JSON ומפרשים בסבלנות) ----------
 async function viaWorkersAI(env, text, state, hist) {
   const model = env.WORKERS_AI_MODEL || '@cf/openai/gpt-oss-120b';
-  const r = await env.AI.run(model, {
+  const r = await withTimeout(env.AI.run(model, {
     messages: [
       { role: 'system', content: SYSTEM + '\n\nהחזר JSON בלבד, בלי טקסט לפניו ואחריו.' },
       { role: 'user', content: buildUser(text, state, hist) },
     ],
     max_tokens: 1200, temperature: 0.3,
-  });
+  }), undefined, 'intent workers-ai');
   const raw = r?.choices?.[0]?.message?.content || r?.response || '';
   return parse(raw);
 }
 
+// ---------- Groq ----------
+// היה חסר לגמרי, ו-classify פשוט התעלם מהספק. מכיוון ש-ai.js כן תומך
+// בו, `AI_PROVIDER=groq` נתן AI.enabled() אמיתי אבל classify שהחזיר
+// null תמיד — כלומר **אף זרימה לא הופעלה**: לא דחף, לא מעידה, ולא
+// משבר. כשל שקט לגמרי, שנפתח בשינוי הגדרה בלבד.
+async function viaGroq(env, text, state, hist) {
+  const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json', authorization: `Bearer ${env.GROQ_KEY}` },
+    body: JSON.stringify({
+      model: env.GROQ_MODEL || 'llama-3.3-70b-versatile',
+      messages: [
+        { role: 'system', content: SYSTEM + '\n\nהחזר JSON בלבד, בלי טקסט לפניו ואחריו.' },
+        { role: 'user', content: buildUser(text, state, hist) },
+      ],
+      temperature: 0.3, max_tokens: 1200,
+      response_format: { type: 'json_object' },
+    }),
+    signal: timeoutSignal(),
+  });
+  const j = await res.json().catch(() => null);
+  if (!res.ok) { console.log('INTENT groq', res.status, JSON.stringify(j).slice(0, 250)); return null; }
+  return parse(j?.choices?.[0]?.message?.content || '');
+}
+
 /** פירוח סבלני: גם אם המודל עטף את ה-JSON בטקסט או בגדרות קוד */
-function parse(raw) {
+export function parse(raw) {
   if (!raw) return null;
   let s = String(raw).trim().replace(/^```(?:json)?/i, '').replace(/```$/, '').trim();
   const a = s.indexOf('{'), b = s.lastIndexOf('}');
@@ -160,46 +186,26 @@ function parse(raw) {
   } catch { return null; }
 }
 
-function sanitize(s) {
-  let t = String(s)
-    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '')   // תווי בקרה
-    // המודל נוטה להחזיר &quot; / &#39; במקום גרשיים. בטלגרם אין צורך
-    // לברוח מהם, והם עלולים להופיע למשתמש כטקסט גולמי — מפענחים בחזרה.
-    .replace(/&quot;|&#0*34;/g, '"')
-    .replace(/&apos;|&#0*39;/g, "'")
-    .replace(/&nbsp;/g, ' ')
-    .replace(/```[\s\S]*?```/g, '')
-    .replace(/^\s*#+\s*/gm, '')
-    .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')
-    .replace(/<(?!\/?(?:b|i|code|u|s)>)[^>]*>/g, '')                // רק תגיות מותרות
-    .trim()
-    .slice(0, 3500);
-
-  // שורת המקור נדבקת לעיתים לסוף המשפט ("...לחלוף.— קאר, פרק 24").
-  // מפרידים אותה לשורה משלה.
-  t = t.replace(/([^\s\n])\s*—\s*(קאר|ווסט|ברואר|מרלט|התוכנית|המדריך|יוצא)/g, '$1\n— $2');
-
-  // איזון תגיות: תג פתוח בלי סגירה גורם לטלגרם להחזיר 400
-  for (const tag of ['b', 'i', 'code', 'u', 's']) {
-    const open = (t.match(new RegExp(`<${tag}>`, 'g')) || []).length;
-    const close = (t.match(new RegExp(`</${tag}>`, 'g')) || []).length;
-    if (open > close) t += `</${tag}>`.repeat(open - close);
-    else if (close > open) t = t.replace(new RegExp(`</${tag}>`), '');
-  }
-  return t;
-}
+// הניקוי עבר ל-core.js ומשותף עם ai.js. הגרסה שם הייתה חסרה את איזון
+// התגיות ואת פענוח הישויות, ולכן מסלול AI.ask איבד את כל העיצוב בכל
+// פעם שהמודל השאיר תג פתוח, ונשען על נפילה-לאחור לטקסט פשוט בטלגרם.
+const sanitize = sanitizeModelText;
 
 /**
  * מסווג ומנסח בקריאה אחת. מחזיר {intent, urgency, reply} או null.
  * נופל לאחור בין ספקים, בדיוק כמו ai.js.
  */
-export async function classify(env, text, state, hist) {
+export async function classify(env, text, state, hist, meter = null) {
   const chain = (env.AI_PROVIDER || 'off').toLowerCase().split(',').map(s => s.trim());
   for (const p of chain) {
+    const runner =
+      p === 'gemini' && env.GEMINI_KEY ? viaGemini :
+      p === 'workers-ai' && env.AI ? viaWorkersAI :
+      p === 'groq' && env.GROQ_KEY ? viaGroq : null;
+    if (!runner) continue;
+    if (meter) meter.calls += 1;
     try {
-      let out = null;
-      if (p === 'gemini' && env.GEMINI_KEY) out = await viaGemini(env, text, state, hist);
-      else if (p === 'workers-ai' && env.AI) out = await viaWorkersAI(env, text, state, hist);
+      const out = await runner(env, text, state, hist);
       if (out) return out;
     } catch (e) {
       console.log(`INTENT ${p} ERR`, e && e.message);
@@ -221,3 +227,6 @@ export const CRISIS_TEXT = [
   '',
   '<i>אני כאן להמשך התוכנית מתי שתרצה. אבל את השיחה הזאת עדיף לעשות עם בן אדם.</i>',
 ].join('\n');
+
+// מיוצא לבדיקות בלבד — כדי שאפשר יהיה לוודא שהאיסורים באמת בפרומפט
+export const SYSTEM_TEXT = SYSTEM;

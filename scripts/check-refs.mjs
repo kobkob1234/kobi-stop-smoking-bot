@@ -36,4 +36,53 @@ for (const f of readdirSync('src').filter(x => x.endsWith('.js'))) {
   }
 }
 console.log(bad === 0 ? '✅ כל הפונקציות שנקראות מוגדרות' : `\n${bad} בעיות`);
-process.exit(bad ? 1 : 0);
+
+// ==========================================================================
+//  ההפניות למקורות — מה שהשם של הקובץ הבטיח ולא סיפק.
+//
+//  עד כה "refs" היה רק הפניות לפונקציות JS. שדה `src` של כל כרטיס ב-kb.js
+//  נכתב ביד, מוזרק למודל כהקשר סמכותי, והמודל מתבקש להדהד אותו —
+//  ואף בדיקה לא ודאה שהוא מפנה למשהו אמיתי. הבדיקה היחידה שהייתה
+//  (test/kb.test.mjs) רק ודאה שהמחרוזת אינה ריקה.
+//
+//  זו לא אימות מול טקסט הספרים, אבל היא תופסת את מה שבאמת נשבר בפועל:
+//  ייחוס לשם מקור שאינו קיים במערכת, וכרטיס בלי ייחוס בכלל.
+// ==========================================================================
+const SOURCES = ['קאר', 'ווסט', 'ברואר', 'מרלט', 'גולביצר', 'ACT',
+                 'התוכנית', 'המדריך', 'יוצא', 'Cochrane'];
+
+const kb = readFileSync('src/kb.js', 'utf8');
+let refBad = 0, refSeen = 0;
+for (const m of kb.matchAll(/^\s*src:\s*'([^']+)'/gm)) {
+  refSeen++;
+  if (!SOURCES.some(s => m[1].includes(s))) {
+    console.error(`❌ kb.js — ייחוס לא מוכר: "${m[1]}"`);
+    refBad++;
+  }
+}
+// כל כרטיס חייב ייחוס: מספר ה-src חייב להתאים למספר ה-id
+const cards = (kb.match(/^\s*id:\s*'/gm) || []).length;
+if (refSeen !== cards) {
+  console.error(`❌ kb.js — ${cards} כרטיסים אבל ${refSeen} ייחוסים`);
+  refBad++;
+}
+console.log(refBad === 0
+  ? `✅ ${refSeen} ייחוסי מקור, כולם מוכרים`
+  : `\n${refBad} בעיות ייחוס`);
+
+// תרופות מרשם — נשללו מדעת, ואסור שיחזרו לטקסט שנשלח למשתמש או למודל
+const RX_DRUGS = /וארניקלין|בופרופיון|ציטיזין|Champix|צמפיקס/;
+let drugBad = 0;
+for (const f of readdirSync('src').filter(x => x.endsWith('.js'))) {
+  const src = readFileSync(`src/${f}`, 'utf8');
+  src.split('\n').forEach((line, i) => {
+    // שורת איסור בפרומפט היא בדיוק המקום שבו כן מותר להזכיר אותן
+    if (RX_DRUGS.test(line) && !/נשללו|אל תציע|אסור/.test(line)) {
+      console.error(`❌ src/${f}:${i + 1} — תרופת מרשם בטקסט: ${line.trim().slice(0, 70)}`);
+      drugBad++;
+    }
+  });
+}
+console.log(drugBad === 0 ? '✅ אין המלצות על תרופות מרשם' : `\n${drugBad} אזכורים`);
+
+process.exit(bad + refBad + drugBad ? 1 : 0);
