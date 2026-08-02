@@ -301,7 +301,15 @@ export function readiness(last7, prev7, target = 12) {
   // ספירת דחפים תלויה בחריצות הדיווח: מי שמדווח ביושר "צובר" יותר.
   // לחסום על הספירה לבדה זה להעניש על דיווח — אותה תקלה כמו שתיקה
   // שנקראת כהצלחה, רק הפוכה. לכן תדירות חוסמת רק כשגם האיכות ירודה.
-  const badQuality = passRate !== null && waves >= 4 && passRate < 60;
+  // `surfed > 0` הוא התנאי שהיה חסר, וזה לא ניואנס: בנתונים האמיתיים
+  // שיעור השחרור הוא ~6% — 3 מתוך 47 — כי כפתור "הגל עבר" כמעט לא
+  // נלחץ. זה **ארטיפקט דיווח ולא עובדה קלינית**: הוא מדווח על גלים
+  // ולא חוזר לסמן שעברו. בלי התנאי, הבדיקה הזאת הייתה חוסמת את
+  // הצמצום לנצח, אצל מישהו שאולי גולש מצוין ופשוט לא מתעד.
+  //
+  // ההערה שכמה שורות מעל מזהה בדיוק את הכשל הזה עבור קריטריון
+  // התדירות ומגנה עליו — ושכחה שלקריטריון האיכות יש אותה תלות.
+  const badQuality = passRate !== null && waves >= 4 && surfed > 0 && passRate < 60;
   if (badQuality)
     reasons.push(`מתוך ${waves} דחפים בשבוע, רק ${passRate}% עברו בלי שנדרש כלום`);
   else if (waves >= WAVES_HIGH && (passRate === null || passRate < 80))
@@ -332,12 +340,18 @@ export function readiness(last7, prev7, target = 12) {
   if (coverage === 7 && prevCoverage >= COVERAGE_MIN)
     signals.push('שבועיים של תיעוד רציף');
 
+  // גלים נרשמים אבל אף אחד לא מסומן כ"עבר" — אין מדד איכות בכלל.
+  // לא חוסם (זה ארטיפקט דיווח), אבל גם לא מאפשר להכריז "מצוין":
+  // בלי הנתון הזה אנחנו לא באמת יודעים אם הגלים עוברים.
+  const unmeasured = enough && waves >= 4 && surfed === 0;
+
   const ready = reasons.length === 0;
+  const rawConf = signals.length >= 3 ? 'strong' : signals.length >= 1 ? 'ok' : 'weak';
   return {
     nowAvg, prevAvg, extra, waves, prevWaves, surfed, slips, passRate,
-    coverage, prevCoverage, declining, target,
+    coverage, prevCoverage, declining, target, unmeasured,
     ready, reasons, signals,
-    confidence: !ready ? 'none' : signals.length >= 3 ? 'strong' : signals.length >= 1 ? 'ok' : 'weak',
+    confidence: !ready ? 'none' : unmeasured ? 'weak' : rawConf,
   };
 }
 

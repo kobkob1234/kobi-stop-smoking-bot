@@ -4,7 +4,10 @@
 //  d:ISO : היומן של יום מסוים
 // ==========================================================================
 
-import { migratePlan } from './gum.js';
+import { migratePlan, PLAN_VER } from './gum.js';
+
+// התקרה הרכה חייבת להישאר מעל היעד (12) במרווח סביר
+const MIN_SOFT_CAP = 18;
 
 const META_KEY = 'meta';
 
@@ -81,7 +84,14 @@ export async function getMeta(env) {
   if (out.siteVer !== SITE_ROTATION_VER) { out.siteOffset = 0; out.siteVer = SITE_ROTATION_VER; }
   // שדרוג תוכנית המסטיק ל-12 מנות. בלי זה `times` השמור היה גובר על
   // ברירת המחדל החדשה, והיעד החדש היה קיים בקוד ולא בפועל.
-  if (out.gumPlan) out.gumPlan = migratePlan(out.gumPlan);
+  if (out.gumPlan) {
+    const before = out.gumPlan.ver || 1;
+    out.gumPlan = migratePlan(out.gumPlan);
+    // התקרה הרכה נשמרה כשהיעד היה 10, ולכן 15 היה מרווח של חמש מנות.
+    // עם יעד 12 היא מרווח של שלוש, ו-atCap>=3 היה מדליק דגל הסלמה על
+    // שלושה ימים קשים. מעלים פעם אחת יחד עם הלוח, ורק אם נשארה מתחת.
+    if (before < PLAN_VER && out.gumSoftCap < MIN_SOFT_CAP) out.gumSoftCap = MIN_SOFT_CAP;
+  }
   return out;
 }
 

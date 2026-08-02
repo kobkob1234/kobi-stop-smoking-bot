@@ -285,3 +285,23 @@ test('מיגרציה רצה פעם אחת בלבד', () => {
   const twice = G.migratePlan(once);
   assert.deepEqual(twice.times, once.times, 'ריצה שנייה שינתה משהו');
 });
+
+test('שיעור שחרור 0% אינו חוסם — זה ארטיפקט דיווח, לא כשל', () => {
+  // בנתונים האמיתיים: 3 מתוך 47 גלים סומנו כ"עברו" (6%), כי הכפתור
+  // כמעט לא נלחץ. בלי התנאי surfed>0 הצמצום היה חסום לנצח אצל מישהו
+  // שאולי גולש מצוין ופשוט לא מתעד.
+  const wk = Array.from({ length: 7 }, () =>
+    day({ gum: 11, waves: 2, surfed: 0, patch: true, ev: [gumAt(9, 0)] }));
+  const r = G.readiness(wk, wk, 12);
+  assert.equal(r.ready, true, r.reasons.join(' | '));
+  assert.equal(r.unmeasured, true);
+  assert.equal(r.confidence, 'weak', 'בלי מדד איכות אסור להכריז "מצוין"');
+});
+
+test('שיעור שחרור נמוך אמיתי כן חוסם', () => {
+  const wk = Array.from({ length: 7 }, () =>
+    day({ gum: 11, waves: 5, surfed: 1, patch: true, ev: [gumAt(9, 0)] }));
+  const r = G.readiness(wk, wk, 12);
+  assert.equal(r.ready, false);
+  assert.ok(r.reasons.some(x => x.includes('עברו בלי שנדרש')));
+});
