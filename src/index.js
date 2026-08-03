@@ -14,6 +14,7 @@ import * as ANL from './analytics.js';
 import * as INT from './intent.js';
 import * as G from './gum.js';
 import { getMeta, putMeta, getDay, updateDay, pruneSent, recentHist, pushHist } from './store.js';
+import { SLOTS, slotAction, mergeTickMeta, taperAskDue, taperWatchDue } from './tick-logic.js';
 
 // מזהה בנייה. מתעדכן בכל פריסה ומוחזר ב-/diag, כדי שאפשר יהיה לדעת
 // בוודאות איזו גרסה חיה במקום לנחש אחרי sleep. ארבע פעמים היום בדיקה
@@ -21,14 +22,6 @@ import { getMeta, putMeta, getDay, updateDay, pruneSent, recentHist, pushHist } 
 export const BUILD = '183305';
 
 // ---------- משבצות הזמן היומיות (שעון ישראל) ----------
-const SLOTS = [
-  { id: 'morning', h: 7,  m: 0,  grace: 240 },
-  { id: 'micro1',  h: 10, m: 0,  grace: 90  },
-  { id: 'noon',    h: 12, m: 30, grace: 120 },
-  { id: 'micro2',  h: 15, m: 0,  grace: 90  },
-  { id: 'risk',    h: 17, m: 30, grace: 150 },
-  { id: 'evening', h: 21, m: 30, grace: 210 },
-];
 
 const BOT_COMMANDS = [
   { command: 'wave',    description: '🌊 יש לי דחף עכשיו' },
@@ -503,10 +496,8 @@ async function tick(env) {
   if (!meta.quiet) {
 
     // --- 15.9: יום פתיחת התצמצום — שואלים לפני שמתחילים ---
-    const taperDue = plan.on && plan.taperStartISO && !plan.confirmedTaper
-      && P.diffDays(plan.taperStartISO, iso) >= 0
-      && P.diffDays(plan.taperStartISO, iso) % 3 === 0;   // חוזר על השאלה כל 3 ימים
-    if (taperDue && now.minutes >= 9 * 60 && !meta.sent[`${iso}:taperask`]) {
+    if (taperAskDue(plan, P.diffDays(plan.taperStartISO, iso), now.minutes,
+                    !!meta.sent[`${iso}:taperask`])) {
       meta.sent[`${iso}:taperask`] = 1;
       dirty = true;
       const d14 = await ANL.collect(env, iso, 14);
@@ -547,10 +538,8 @@ async function tick(env) {
     // --- ניטור *במהלך* התצמצום, כל 7 ימים ---
     // בלי זה האישור ב-15.9 היה ההחלטה האחרונה בתהליך, והסולם היה יורד
     // כל 4 ימים בלי שאיש בודק אם זה עובד.
-    if (plan.confirmedTaper && plan.baseline && now.minutes >= 9 * 60
-        && P.diffDays(plan.taperStartISO, iso) > 0
-        && P.diffDays(plan.taperStartISO, iso) % 7 === 0
-        && !meta.sent[`${iso}:taperwatch`]) {
+    if (taperWatchDue(plan, P.diffDays(plan.taperStartISO, iso), now.minutes,
+                      !!meta.sent[`${iso}:taperwatch`])) {
       const w7 = await ANL.collect(env, iso, 7);
       const tw = G.taperWatch(w7, plan.baseline);
       meta.sent[`${iso}:taperwatch`] = 1;
@@ -591,15 +580,14 @@ async function tick(env) {
     }
 
     for (const slot of SLOTS) {
-      const key = `${iso}:${slot.id}`;
-      if (meta.sent[key]) continue;
-      const target = slot.h * 60 + slot.m;
-      if (now.minutes < target) continue;
+      const act = slotAction(slot, now.minutes, meta.sent, iso);
+      if (act === 'done' || act === 'early') continue;
 
-      meta.sent[key] = 1;
+      // 'late' מסמן שנשלח בלי לשלוח: וורקר שהיה למטה שעתיים לא אמור
+      // לירות את כל הודעות היום בבת אחת, וגם לא לדלג עליהן לנצח.
+      meta.sent[`${iso}:${slot.id}`] = 1;
       dirty = true;
-
-      if (now.minutes - target > slot.grace) continue;   // מאוחר מדי — מדלגים בשקט
+      if (act === 'late') continue;
 
       const pl = P.planFor(iso, meta.siteOffset);
       const day = await getDay(env, iso);
@@ -623,8 +611,7 @@ async function tick(env) {
   // מוחקת את meta.sent ומייצרת שליחה כפולה של הודעת הבוקר בקרון הבא.
   // לכן קוראים מחדש ומחילים רק את השדות שהקרון באמת מחזיק.
   if (dirty) {
-    const fresh = await getMeta(env);
-    fresh.sent = { ...fresh.sent, ...meta.sent };
+    const fresh0 = await getMeta(env);
     // רק שדות שה-tick באמת שינה. הגרסה הקודמת החילה רשימה קבועה ללא
     // תנאי, כולל `sos` ו-`gumPlan` שהקרון כמעט אף פעם לא נוגע בהם —
     // ולכן ערך שנקרא בתחילת ה-tick נכתב בחזרה בסופו ודרס כל שינוי
@@ -638,7 +625,7 @@ async function tick(env) {
     //     (startPlanning/startEnRoute) ולא מהקרון. כתיבה בחזרה של ערך
     //     ישן הייתה מאפסת את מגרת 30 הדקות ומאפשרת דיווח כפול לשותפה.
     //     לכן הוא **לא** ברשימה: הקרון לא נוגע בו, ולכן גם לא כותב אותו.
-    for (const k of touched) fresh[k] = meta[k];
+    const fresh = mergeTickMeta(fresh0, meta, touched);
     pruneSent(fresh, iso);
     await putMeta(env, fresh);
   }
