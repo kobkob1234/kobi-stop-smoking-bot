@@ -116,6 +116,31 @@ export function analyse(daysArr) {
   };
 }
 
+/**
+ * מחשב את הסכומים מחדש מרשומות הימים.
+ *
+ * `meta.totals` הוא מונה מצטבר שמוגדל בכל אירוע, במקביל לרשומות
+ * היומיות — כלומר **שני מקורות אמת לאותו נתון**. הם נפרדו בפועל:
+ * 62 מסטיקים במונה מול 73 ברשומות, ו-3 ימי מדבקה מול 4. כל כתיבה
+ * שנכשלה באמצע, כל מיזוג שנדרס וכל בדיקה שנוקתה מזיזה אותם זה מזה,
+ * והמונה אינו ניתן לשחזור.
+ *
+ * הרשומות היומיות הן האמת — יש להן חותמות זמן ואפשר לבדוק אותן.
+ * המונה הופך כאן למטמון שנבנה מחדש, ולא למקור.
+ */
+export async function reconcileTotals(env, todayISO, days = 120) {
+  const arr = await collect(env, todayISO, days);
+  const sum = k => arr.reduce((t, d) => t + (d[k] || 0), 0);
+  return {
+    surfed: sum('surfed'), waves: sum('waves'), slips: sum('slips'),
+    outs: sum('outs'), gum: sum('gum'), planning: sum('planning'),
+    chainStops: sum('chainStops'), enroute: sum('enroute'),
+    patch: arr.filter(d => d.patch).length,
+    mDone: arr.filter(d => d.mDone).length,
+    eDone: arr.filter(d => d.eDone).length,
+  };
+}
+
 /** מציע שורת אם-אז מהמכנה המשותף שנמצא */
 export function suggestIfThen(a) {
   if (!a.topBucket && !a.topTag) return null;

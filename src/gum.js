@@ -203,6 +203,44 @@ export function slotStats(daysArr, times) {
 }
 
 /**
+ * הקצב בפועל, מהנתונים — לא מהלוח.
+ *
+ * זו המדידה שחושפת עד כמה המודל המתוכנן והמציאות התרחקו. על הנתונים
+ * הנקיים: **8 מנות ליום מול יעד 12**, מרווח חציוני 91 דקות, מנה
+ * ראשונה ב-09:00 ואחרונה ב-21:34 — בזמן שהחלון בבוט הוא 07:30–20:30,
+ * כך ש-20% מהמנות נופלות מחוצה לו ולא נספרות בקצב.
+ *
+ * ומעל הכול: ~90% מהמנות נלקחות ביוזמה ולא בתגובה לתזכורת. כלומר
+ * הורדת משבצת תזכורת אינה מורידה צריכה — היא מורידה את המספר שהבוט
+ * מצפה לו. זו הסיבה שהמדידה הזאת קודמת לכל החלטה על צמצום.
+ */
+export function measureRhythm(daysArr) {
+  const gaps = [], perDay = [], firsts = [], lasts = [];
+  let outside = 0, total = 0;
+  for (const d of daysArr) {
+    const g = (d.ev || []).filter(e => e.k === 'g')
+      .map(e => e.h * 60 + e.m).sort((a, b) => a - b);
+    total += g.length;
+    outside += g.filter(m => m < 7 * 60 + 30 || m > DAY_END).length;
+    if (g.length < 2) continue;
+    perDay.push(g.length);
+    firsts.push(g[0]);
+    lasts.push(g[g.length - 1]);
+    for (let i = 1; i < g.length; i++) gaps.push(g[i] - g[i - 1]);
+  }
+  const med = a => (a.length ? [...a].sort((x, y) => x - y)[Math.floor(a.length / 2)] : null);
+  return {
+    days: perDay.length,
+    perDay: med(perDay),
+    gap: med(gaps),
+    first: med(firsts),
+    last: med(lasts),
+    outsideWindow: total ? +(outside / total).toFixed(2) : 0,
+    total,
+  };
+}
+
+/**
  * שיהוי תזכורת→מנה, בדקות. חציון.
  * נמדד מאירוע 'r' (תזכורת נשלחה) עד אירוע ה-'g' הבא באותו יום.
  */

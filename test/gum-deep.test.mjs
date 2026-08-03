@@ -289,3 +289,25 @@ test('remindLatency מודד מתזכורת עד המנה הבאה', () => {
   assert.equal(l.n, 3);
   assert.equal(l.median, 25);
 });
+
+test('measureRhythm מודד את הקצב בפועל ולא את המתוכנן', () => {
+  // הפער בין השניים הוא הממצא: 8 מנות מול יעד 12, וחלון שונה.
+  const mk = (times) => ({ ev: times.map(([h, m]) => gumAt(h, m)) });
+  const days = [
+    mk([[9, 0], [10, 30], [12, 0], [13, 30], [15, 0], [16, 30], [18, 0], [21, 30]]),
+    mk([[9, 20], [11, 0], [12, 40], [14, 20], [16, 0], [17, 40], [19, 20], [21, 0]]),
+    mk([[9, 10], [10, 50], [12, 30], [14, 10], [15, 50], [17, 30], [19, 10], [22, 0]]),
+  ];
+  const r = G.measureRhythm(days);
+  assert.equal(r.days, 3);
+  assert.equal(r.perDay, 8, 'ספירה יומית שגויה');
+  assert.ok(r.gap >= 85 && r.gap <= 105, `מרווח חציוני ${r.gap}`);
+  assert.ok(r.first >= 9 * 60 && r.first <= 9 * 60 + 30, 'מנה ראשונה');
+  assert.ok(r.outsideWindow > 0, 'מנות אחרי 20:30 לא נספרו כמחוץ לחלון');
+});
+
+test('measureRhythm לא קורס על ימים ריקים או בודדים', () => {
+  assert.equal(G.measureRhythm([]).perDay, null);
+  assert.equal(G.measureRhythm([{ ev: [] }]).days, 0);
+  assert.equal(G.measureRhythm([{ ev: [gumAt(9, 0)] }]).days, 0, 'מנה אחת אינה מרווח');
+});

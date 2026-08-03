@@ -600,7 +600,13 @@ async function tick(env) {
 
       // אחרי הודעת הערב: דוח דפוסים במוצ״ש, ובדיקת נקודת ההסלמה
       if (slot.id === 'evening') {
-        if (now.dow === 6) await sendWeeklyReport(env, meta, iso);
+        if (now.dow === 6) {
+          // מיישבים את המונה מול הרשומות פעם בשבוע. הוא נסחף בפועל
+          // (62 מול 73 מסטיקים), והרשומות הן האמת.
+          meta.totals = await ANL.reconcileTotals(env, iso);
+          touched.add('totals');
+          await sendWeeklyReport(env, meta, iso);
+        }
         if (await maybeEscalate(env, meta, iso)) touched.add('lastEscalationISO');
       }
     }
@@ -1277,6 +1283,15 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
         if (top.length) L.push(`   הכי עקביות: ${top.map(([k, s]) => `<b>${k}</b> ${(s.adherence * 100) | 0}%`).join(' · ')}`);
         if (weak.length) L.push(`   הכי חלשות: ${weak.map(([k, s]) => `${k} ${(s.adherence * 100) | 0}%`).join(' · ')}`);
         if (lat.n >= 3) L.push(`   ⏱️ מתזכורת עד מנה: חציון <b>${lat.median} דק׳</b> (${lat.n} מדידות)`);
+        // הקצב בפועל מול המתוכנן. כשהפער גדול, הלוח מודד את עצמו
+        // ולא אותך — ואז גם הצמצום שנשען עליו מודד את עצמו.
+        const rh = G.measureRhythm(d14);
+        if (rh.days >= 3) {
+          L.push(`   🕐 הקצב שלך: <b>${rh.perDay}</b> מנות ביום · מרווח חציוני <b>${rh.gap} דק׳</b> · ${G.hhmm(rh.first)}–${G.hhmm(rh.last)}`);
+          if (rh.outsideWindow >= 0.1) {
+            L.push(`   ⚠️ <b>${Math.round(rh.outsideWindow * 100)}% מהמנות מחוץ לחלון ${G.hhmm(w.start)}–${G.hhmm(w.end)}</b> — הן לא נספרות בקצב.`);
+          }
+        }
         L.push(usage.usable
           ? '   <i>מספיק נתונים — הצמצום יוריד קודם את המשבצות שפחות בשימוש.</i>'
           : `   <i>עוד ${G.MIN_USAGE_DAYS - usage.covered} ימים מתועדים ואוכל לבנות את סדר הצמצום על השימוש שלך ולא על כלל כללי.</i>`);
