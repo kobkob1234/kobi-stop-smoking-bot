@@ -311,3 +311,73 @@ test('measureRhythm לא קורס על ימים ריקים או בודדים', (
   assert.equal(G.measureRhythm([{ ev: [] }]).days, 0);
   assert.equal(G.measureRhythm([{ ev: [gumAt(9, 0)] }]).days, 0, 'מנה אחת אינה מרווח');
 });
+
+// ==========================================================================
+//  מצב-מרווח — הצמצום שמתאים להתנהגות בפועל
+// ==========================================================================
+
+const IV = {
+  ...G.DEFAULT_PLAN, confirmedTaper: true, taperStartISO: '2026-09-15', stepDays: 4,
+  mode: 'interval', baseGap: 91, gapStepPct: 10, winStart: 540, winEnd: 1294,
+};
+const ivDay = n => new Date(Date.UTC(2026, 8, 15) + n * 86400000).toISOString().slice(0, 10);
+
+test('המרווח היעד מתארך באחוז קבוע', () => {
+  assert.equal(G.targetGap(IV, ivDay(0)), 91);
+  assert.equal(G.targetGap(IV, ivDay(4)), 100);
+  assert.equal(G.targetGap(IV, ivDay(8)), 110);
+});
+
+test('עוצמת הצעד אחידה לכל האורך — זו כל הנקודה ב-ד׳', () => {
+  // בצעד קבוע של -1 מנה, 12→11 הוא 8% ו-3→2 הוא 33%: הצעדים הקשים
+  // ביותר היו הגדולים ביותר. באחוז, כל צעד הוא אותו שיעור.
+  for (const n of [0, 12, 24, 36]) {
+    const a = G.targetGap(IV, ivDay(n));
+    const b = G.targetGap(IV, ivDay(n + 4));
+    assert.ok(Math.abs((b / a) - 1.1) < 0.02, `צעד ב-${n}: ${a}→${b}`);
+  }
+});
+
+test('היעד היומי נגזר מהמרווח ויורד מונוטונית עד 1', () => {
+  let prev = Infinity;
+  for (let n = 0; n <= 80; n += 4) {
+    const t = G.dailyTarget(IV, ivDay(n));
+    assert.ok(t <= prev, `יום ${n}: עלה מ-${prev} ל-${t}`);
+    prev = t;
+  }
+  assert.equal(prev, 1, 'מנת הבוקר נשארת כרצפה');
+});
+
+test('התזכורת עוקבת אחרי המרווח היעד, לא אחרי MAX_GAP', () => {
+  // הבאג שנתפס בבנייה: MAX_GAP=150 קבוע ירה ב-150 דקות בזמן שהיעד
+  // כבר היה 236 — הצמצום התקדם על הנייר והתזכורות נשארו בקצב ההתחלתי.
+  // שני מנגנונים נכונים לחוד שמבטלים זה את זה.
+  for (const n of [0, 28, 40, 52]) {
+    const iso = ivDay(n);
+    const gap = G.targetGap(IV, iso);
+    const d = day({ gum: 1, ev: [gumAt(10, 0)] });
+    let fired = null;
+    for (let t = 630; t <= 1300; t += 5) {
+      if (G.dueNow(IV, iso, d, t).due) { fired = t - 600; break; }
+    }
+    assert.ok(fired !== null && Math.abs(fired - gap) <= 10,
+      `יום ${n}: יעד ${gap} אבל הזכיר אחרי ${fired}`);
+  }
+});
+
+test('לפני אישור הצמצום — מצב המשבצות לא משתנה', () => {
+  // מצב-מרווח נדלק רק באישור, כדי שלא ישנה כלום בשלב המדבקה.
+  const pre = { ...G.DEFAULT_PLAN };
+  assert.equal(G.targetGap(pre, ISO), null);
+  assert.equal(G.dailyTarget(pre, ISO), 12);
+});
+
+test('הקפאה מקפיאה גם את המרווח', () => {
+  const frozen = { ...IV, pausedISO: ivDay(12) };
+  assert.equal(G.targetGap(frozen, ivDay(12)), G.targetGap(frozen, ivDay(40)));
+});
+
+test('windowLen מהמדידה, ובנפילה לאחור מהשעות', () => {
+  assert.equal(G.windowLen(IV), 1294 - 540);
+  assert.equal(G.windowLen({ ...G.DEFAULT_PLAN }), 20 * 60 + 30 - (7 * 60 + 30));
+});

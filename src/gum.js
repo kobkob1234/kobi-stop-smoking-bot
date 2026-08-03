@@ -566,8 +566,64 @@ export const MAX_GAP = 150;    // ואחרי שעתיים וחצי בלי כלו
 export const GAP_REMIND = 60;  // מרווח מינימלי בין תזכורות שנענו
 export const BACKOFF = 90;     // ואחרי תזכורת שלא נענתה — נסיגה ארוכה יותר
 
-/** היעד היומי: מספר היחידות הפעילות אחרי התצמצם */
-export const dailyTarget = (plan, iso) => activeTimes(plan, iso).length;
+// ==========================================================================
+//  מצב-מרווח — הצמצום שמתאים להתנהגות בפועל
+//
+//  למה זה קיים: 90% מהמנות נלקחות ביוזמה ולא בתגובה לתזכורת. לכן
+//  הורדת משבצת תזכורת **אינה מורידה צריכה** — היא מורידה את המספר
+//  שהבוט מצפה לו. הצמצום המשבצתי היה מעביר את היעד מ-12 ל-11 ל-10
+//  בזמן שהצריכה בפועל היא 8, כלומר לא נוגע בהתנהגות בכלל.
+//
+//  במצב-מרווח היעד הוא **כמה זמן בין מנות**, וזה בדיוק הממד שבו הוא
+//  כן מתנהג: מרווח חציוני נמדד של 91 דקות. הצמצום מאריך אותו.
+//
+//  והצעדים באחוזים ולא ב-1 קבוע: ברירת המחדל הישנה הורידה מנה שלמה
+//  בכל צעד, כך ש-12→11 היה 8% ו-3→2 היה 33% — הצעדים הקשים ביותר היו
+//  הגדולים ביותר. אחוז קבוע שומר על עוצמת צעד אחידה לכל האורך.
+//  (הסייג: מבחינת ניקוטין הצעד קבוע ממילא — 0.9 מ"ג. הטיעון פסיכולוגי.)
+// ==========================================================================
+
+export const GAP_STEP_PCT = 10;     // הארכת המרווח בכל צעד
+export const GAP_CEILING = 12 * 60; // מעבר לזה — מנת הבוקר בלבד
+
+/** מספר הצעדים שהושלמו, משותף לשני המצבים */
+function dropsSoFar(plan, iso) {
+  if (!plan.taperStartISO || !plan.confirmedTaper) return 0;
+  const eff = plan.pausedISO && plan.pausedISO < iso ? plan.pausedISO : iso;
+  const days = diffDays(plan.taperStartISO, eff);
+  if (days < 0) return 0;
+  return Math.max(0, Math.floor(days / Math.max(1, plan.stepDays || 4)));
+}
+
+/** המרווח היעד בדקות, או null אם התוכנית אינה במצב-מרווח */
+export function targetGap(plan, iso) {
+  if (plan.mode !== 'interval' || !plan.baseGap) return null;
+  const pct = plan.gapStepPct || GAP_STEP_PCT;
+  const gap = plan.baseGap * Math.pow(1 + pct / 100, dropsSoFar(plan, iso));
+  return Math.round(gap);
+}
+
+/** אורך חלון הערות בדקות — נמדד אם יש, אחרת מהשעות */
+export function windowLen(plan) {
+  if (plan.winStart != null && plan.winEnd != null) return plan.winEnd - plan.winStart;
+  const w = windowOf(plan);
+  return w.end - w.start;
+}
+
+/**
+ * היעד היומי.
+ *
+ * במצב משבצות — מספר המשבצות הפעילות.
+ * במצב-מרווח — כמה מנות נכנסות בחלון במרווח היעד. מעל תקרת המרווח
+ * נשארת מנת הבוקר בלבד, והיא גם האחרונה שנופלת: היא מגשרת על הלילה
+ * בלי מדבקה, וזה נכון בשני המצבים.
+ */
+export function dailyTarget(plan, iso) {
+  const gap = targetGap(plan, iso);
+  if (gap == null) return activeTimes(plan, iso).length;
+  if (gap >= GAP_CEILING) return plan.morningFloor === false ? 0 : 1;
+  return Math.max(1, Math.round(windowLen(plan) / gap));
+}
 
 /**
  * חלון הערות: מהיחידה הראשונה בתוכנית ועד האחרונה.
@@ -660,8 +716,16 @@ export function dueNow(plan, iso, day, nowMinutes, lastRemindMin = null, softCap
     if (snoozeExpired) return { ...base, due: true, why: 'הסנוז פג' };
   }
 
-  // עבר יותר מדי זמן בלי כלום — מזכירים בלי קשר לקצב
-  if (since !== null && since >= MAX_GAP) return { ...base, due: true, why: 'פער ארוך מדי' };
+  // עבר יותר מדי זמן בלי כלום — מזכירים בלי קשר לקצב.
+  //
+  // במצב-מרווח הסף הזה **הוא** המרווח היעד, ולא 150 קבוע: אחרת
+  // MAX_GAP היה יורה ב-150 דקות בזמן שהיעד כבר 236, כלומר הצמצום
+  // היה מתקדם על הנייר והתזכורות היו נשארות בקצב ההתחלתי. שני
+  // מנגנונים נכונים לחוד שמבטלים זה את זה — בדיוק כמו הסנוז והנסיגה.
+  const maxGap = targetGap(plan, iso) ?? MAX_GAP;
+  if (since !== null && since >= maxGap) {
+    return { ...base, due: true, why: maxGap === MAX_GAP ? 'פער ארוך מדי' : `עברו ${since} דק׳, המרווח היעד ${maxGap}` };
+  }
 
   // `since === null` אומר "אין אירוע מסטיק היום", אבל **לא** בהכרח
   // "לא נלקח מסטיק": המונה `day.gum` מתעדכן בשלושה מסלולים שלא כולם
@@ -671,6 +735,14 @@ export function dueNow(plan, iso, day, nowMinutes, lastRemindMin = null, softCap
   // הודעה ממש. עם הבדיקה, יום כזה נופל לענף הקצב ונשפט לפי המספר.
   if (since === null && taken === 0 && nowMinutes >= start + MIN_GAP) {
     return { ...base, due: true, why: 'עוד לא היה מסטיק היום' };
+  }
+
+  // מצב-מרווח: הקצב **הוא** המרווח, ואין "כמה הספקתי עד עכשיו".
+  // המקרה של since >= gap כבר טופל למעלה יחד עם MAX_GAP, ולכן כאן
+  // נשאר רק השקט.
+  const gap = targetGap(plan, iso);
+  if (gap != null) {
+    return { ...base, gap, due: false, why: `במרווח (${since}/${gap} דק׳)` };
   }
 
   // אחרת — רק אם אנחנו **משמעותית** מתחת לקצב הדרוש.

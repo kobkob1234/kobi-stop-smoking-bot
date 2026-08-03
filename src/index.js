@@ -1297,6 +1297,12 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
           : `   <i>עוד ${G.MIN_USAGE_DAYS - usage.covered} ימים מתועדים ואוכל לבנות את סדר הצמצום על השימוש שלך ולא על כלל כללי.</i>`);
       }
       if (plan.dropBasis) L.push(`   <i>סדר הצמצום נקבע לפי: ${plan.dropBasis}</i>`);
+      const tg = G.targetGap(plan, iso);
+      if (tg != null) {
+        L.push('', `⏳ <b>מצב-מרווח</b> · המרווח היעד היום: <b>${tg} דק׳</b> (התחלנו מ-${plan.baseGap})`,
+          `   כל ${plan.stepDays} ימים המרווח מתארך ב-${plan.gapStepPct}% — כלומר ~${plan.gapStepPct}% פחות מנות, בעוצמת צעד אחידה לכל האורך.`,
+          plan.rhythmBasis ? `   <i>הבסיס נמדד ממך: ${plan.rhythmBasis}</i>` : '');
+      }
 
       L.push('', `<i>${G.RECOMMENDED.why}</i>`);
       const rows = Object.entries(G.PRESETS).map(([k, v]) => [btn((k === 'ten' ? '⭐ ' : '') + v.label, `gp:${k}`)]);
@@ -1720,6 +1726,18 @@ async function onCallback(cb, env) {
       const usage = G.slotStats(b14, plan.times);
       plan.dropOrder = G.dropOrderOf(G.sortTimes(plan.times), usage);
       plan.dropBasis = usage.usable ? `שימוש בפועל · ${usage.covered} ימים` : 'סדר קליני (מדגם קטן מדי)';
+
+      // מעבר למצב-מרווח, על בסיס הקצב הנמדד. אם אין מספיק מדידות
+      // נשארים במצב המשבצות — עדיף לוח שמרני מבסיס שנשען על יומיים.
+      const rh = G.measureRhythm(b14);
+      if (rh.days >= 5 && rh.gap) {
+        plan.mode = 'interval';
+        plan.baseGap = rh.gap;
+        plan.gapStepPct = G.GAP_STEP_PCT;
+        plan.winStart = rh.first;
+        plan.winEnd = rh.last;
+        plan.rhythmBasis = `${rh.perDay} מנות ביום · מרווח ${rh.gap} דק׳ · ${rh.days} ימים`;
+      }
       meta.gumPlan = plan; await putMeta(env, meta);
       await answer(env, cb.id, 'התצמצום התחיל');
       const t = G.taperInfo(plan, iso);
