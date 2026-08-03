@@ -48,16 +48,36 @@ import { addDaysISO, diffDays, QUIT, TOTAL_DAYS } from './plan.js';
 //  ופריסת השעות אינה אחידה במכוון: **ארבע** מנות יושבות ב-17:00–21:00,
 //  חלון הסיכון שלו, במרווחי שעה — צפוף יותר מאשר בשאר היום (75 דקות).
 //  הצפיפות עוקבת אחרי הסיכון, לא אחרי השעון.
+// ==========================================================================
+//  היעד ירד מ-12 ל-9, ואחרי מדידה ולא אחרי ניחוש.
+//
+//  12 חושב תיאורטית: אם הצריכה הקודמת הייתה 30–40 מ"ג, צריך רג'ים
+//  של ~30, ומדבקה 21 + 12 מנות מגיעה לשם. אבל **הנתונים סותרים את
+//  החשבון**: הצריכה בפועל היא 8.1 מנות ליום, כלומר 21 + 7.3 = 28 מ"ג
+//  — ובעשרה ימים לא היה ולו גל משמעותי אחד.
+//
+//  היעדר קראבינג הוא הראיה החזקה ביותר שההחלפה מספקת. החשבון היה
+//  תיאורטי, התוצאה אמפירית, וכשהם מתנגשים התוצאה מנצחת.
+//
+//  9 ולא 8: מעט מעל הצריכה בפועל כדי לא לעודד ירידה, ומתחת ל-12 כדי
+//  להפסיק לנדנד למי שכבר מכוסה. רצפת ווסט (10+) נשארת היעד לשאוף
+//  אליו, לא מספר לנדנד עליו.
+//
+//  והשעות נגזרות מהמדידה שלו — 09:00–21:30, מרווח חציוני 91 דקות —
+//  ולא מלוח תיאורטי שהתחיל ב-07:30 והסתיים ב-20:30 בזמן ש-20%
+//  מהמנות נפלו מחוצה לו. הצפיפות עולה לקראת הערב, כי שם הצריכה
+//  בפועל הגבוהה ביותר (20:30 הייתה המשבצת הכבדה ביותר בנתונים).
+// ==========================================================================
 export const RECOMMENDED = {
-  key: 'twelve',
-  label: '12 ביום · מומלץ',
-  times: ['07:30', '08:45', '10:00', '11:15', '12:30', '13:45',
-          '15:00', '16:15', '17:15', '18:15', '19:15', '20:30'],
-  why: '12 ביום (מעל רצפת ווסט של 10+) · 2 מ"ג ≈ 0.9 מ"ג נספג, ולכן הכמות היא הפיצוי · שיא ספיגה ~30 דק׳ ולכן לפני החלון · 4 מנות בחלון 17:00–21:00',
+  key: 'nine',
+  label: '9 ביום · לפי הקצב שלך',
+  times: ['09:00', '10:45', '12:30', '14:15', '16:00', '17:30', '19:00', '20:15', '21:30'],
+  why: '9 ביום — מעט מעל הצריכה הנמדדת (8.1) · השעות מהקצב שלך: 09:00–21:30, מרווח ~90 דק׳ · צפיפות גבוהה יותר בערב, שם הצריכה בפועל',
 };
 
 export const PRESETS = {
-  twelve: { label: RECOMMENDED.label, times: RECOMMENDED.times },
+  nine:   { label: RECOMMENDED.label, times: RECOMMENDED.times },
+  twelve: { label: '12 ביום · הלוח התיאורטי', times: ['07:30', '08:45', '10:00', '11:15', '12:30', '13:45', '15:00', '16:15', '17:15', '18:15', '19:15', '20:30'] },
   ten:   { label: '10 ביום · רצפת ווסט', times: ['07:30', '09:00', '10:30', '12:00', '13:30', '15:00', '16:30', '17:45', '19:00', '20:30'] },
   six:   { label: '6 ביום · כל ~2 שעות ערות', times: ['07:30', '10:00', '12:30', '15:00', '17:30', '20:00'] },
   five:  { label: '5 ביום',                     times: ['07:30', '10:30', '13:30', '17:00', '20:00'] },
@@ -93,7 +113,11 @@ export const backstopPassed = (plan, iso) =>
 export const LEGACY_TIMES_V1 = [
   '07:30', '09:00', '10:30', '12:00', '13:30', '15:00', '16:30', '17:45', '19:00', '20:30',
 ];
-export const PLAN_VER = 2;
+export const LEGACY_TIMES_V2 = [
+  '07:30', '08:45', '10:00', '11:15', '12:30', '13:45',
+  '15:00', '16:15', '17:15', '18:15', '19:15', '20:30',
+];
+export const PLAN_VER = 3;
 
 /**
  * שדרוג תוכנית שמורה.
@@ -108,9 +132,8 @@ export const PLAN_VER = 2;
 export function migratePlan(plan) {
   if (!plan || plan.ver >= PLAN_VER) return plan;
   const cur = sortTimes(plan.times || []);
-  const wasDefault =
-    cur.length === LEGACY_TIMES_V1.length &&
-    cur.every((t, i) => t === LEGACY_TIMES_V1[i]);
+  const eq = ref => cur.length === ref.length && cur.every((t, i) => t === ref[i]);
+  const wasDefault = eq(LEGACY_TIMES_V1) || eq(LEGACY_TIMES_V2);
   const out = { ...plan, ver: PLAN_VER };
   // רק אם באמת יש מה לשנות. השמה של `times: plan.times` כשהוא undefined
   // מוסיפה מפתח מפורש בערך undefined, והוא **גובר** על DEFAULT_PLAN
@@ -282,7 +305,11 @@ export function dropOrderOf(all, usage = null) {
   if (usage && usage.slots) usage = usage.usable ? usage.slots : null;
   const mins = all.map(toMin);
   const anchor = mins[0];
-  const band = m => (m >= RISK_START && m < RISK_END ? 1 : 0);
+  // גבול הערב נמתח עד המנה האחרונה בפועל ולא נעצר ב-21:00 קשיח.
+  // אחרת מנה ב-21:30 — שהיא הכבדה ביותר בנתונים — מסווגת כ"אמצע יום"
+  // ויורדת מוקדם, בדיוק ההפך מהכוונה. הקבוע נכתב כשהלוח נגמר ב-20:30.
+  const riskEnd = Math.max(RISK_END, mins[mins.length - 1] + 1);
+  const band = m => (m >= RISK_START && m < riskEnd ? 1 : 0);
   const inBand = b => mins.filter(m => m !== anchor && band(m) === b);
   const centre = arr => (arr.length ? (Math.min(...arr) + Math.max(...arr)) / 2 : 0);
   const c = [centre(inBand(0)), centre(inBand(1))];
@@ -550,6 +577,16 @@ export function taperWatch(last7, baseline) {
   if (waves >= (baseline.waves || 0) + 5) worse.push(`הדחפים עלו (${baseline.waves} → ${waves} בשבוע)`);
   if (planning >= 3)                  worse.push(`${planning} פעמים שהמחשבות חיפשו דרך לצאת`);
 
+  // צריכת המסטיק — הסיגנל הישיר ביותר, והיחיד שקיים כשאין גלים
+  // מתועדים. אם צריך **יותר** מסטיק אחרי הורדה, ההורדה הייתה מהירה
+  // מדי; זו בדיוק ההגדרה של "תצמצם שמחזיר גלים". הקו-בסיס שמר את
+  // הנתון הזה מלכתחילה ומעולם לא השווה אותו.
+  const gum = sum(last7, 'gum');
+  const baseGum = baseline.gum || 0;
+  if (baseGum > 0 && gum >= baseGum * 1.25) {
+    worse.push(`צריכת המסטיק עלתה (${Math.round(baseGum / 7 * 10) / 10} → ${Math.round(gum / 7 * 10) / 10} ליום)`);
+  }
+
   return worse.length ? { worse, waves, slips, enroute, planning, baseline } : null;
 }
 
@@ -596,6 +633,11 @@ export const BACKOFF = 90;     // ואחרי תזכורת שלא נענתה — 
 
 export const GAP_STEP_PCT = 10;     // הארכת המרווח בכל צעד
 export const GAP_CEILING = 12 * 60; // מעבר לזה — מנת הבוקר בלבד
+// וכמה צעדים נשארים על מנת הבוקר לפני האפס. בלי זה מצב-מרווח היה
+// נתקע על 1 לנצח והמרווח היה מתנפח למספרים חסרי משמעות (מעל מיליון
+// דקות) — כלומר "מנה אחת ביום לנצח" שתוקן במצב המשבצות, חוזר מהדלת
+// האחורית. המדריך מבטיח "תאריך סיום מוגדר, לא הרגל פתוח".
+export const FINAL_STEPS = 3;
 
 /** מספר הצעדים שהושלמו, משותף לשני המצבים */
 function dropsSoFar(plan, iso) {
@@ -632,8 +674,14 @@ export function windowLen(plan) {
 export function dailyTarget(plan, iso) {
   const gap = targetGap(plan, iso);
   if (gap == null) return activeTimes(plan, iso).length;
-  // מנת הבוקר היא הרצפה: היא מגשרת על הלילה בלי מדבקה.
-  if (gap >= GAP_CEILING) return 1;
+  if (gap >= GAP_CEILING) {
+    // מנת הבוקר מחזיקה עוד כמה צעדים — היא מגשרת על הלילה בלי
+    // מדבקה — ואז נגמר. סוף אמיתי, לא רצפה נצחית.
+    const pct = plan.gapStepPct || GAP_STEP_PCT;
+    const atCeiling = Math.ceil(
+      Math.log(GAP_CEILING / plan.baseGap) / Math.log(1 + pct / 100));
+    return dropsSoFar(plan, iso) >= atCeiling + FINAL_STEPS ? 0 : 1;
+  }
   return Math.max(1, Math.round(windowLen(plan) / gap));
 }
 

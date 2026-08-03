@@ -57,7 +57,7 @@ test('S2 · getMeta מריץ את מיגרציית התוכנית', async () => 
   const kv = makeKV({ meta: JSON.stringify({ gumPlan: { times: G.LEGACY_TIMES_V1 } }) });
   const m = await S.getMeta(makeEnv(kv));
   assert.equal(m.gumPlan.ver, G.PLAN_VER, 'המיגרציה לא רצה בקריאה');
-  assert.equal(m.gumPlan.times.length, 12);
+  assert.equal(m.gumPlan.times.length, G.RECOMMENDED.times.length);
 });
 
 test('S2 · אין מעגל ייבוא — שני הכיוונים נטענים', async () => {

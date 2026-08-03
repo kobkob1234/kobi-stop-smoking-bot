@@ -86,11 +86,11 @@ test('siteVer ישן מאפס את ה-offset פעם אחת', async () => {
 
 // ---------- migratePlan ----------
 
-test('מיגרציה: ברירת מחדל ישנה → 12, מותאם אישית נשמר, חסר נופל לברירת מחדל', () => {
-  assert.equal(G.migratePlan({ times: G.LEGACY_TIMES_V1 }).times.length, 12);
+test('מיגרציה: ברירת מחדל ישנה → הלוח הנוכחי, מותאם אישית נשמר, חסר נופל לברירת מחדל', () => {
+  assert.equal(G.migratePlan({ times: G.LEGACY_TIMES_V1 }).times.length, G.RECOMMENDED.times.length);
   assert.deepEqual(G.migratePlan({ times: ['08:00', '20:00'] }).times, ['08:00', '20:00']);
   const merged = { ...G.DEFAULT_PLAN, ...G.migratePlan({ on: true }) };
-  assert.equal(merged.times.length, 12, 'תוכנית בלי times מכבה תזכורות');
+  assert.equal(merged.times.length, G.RECOMMENDED.times.length, 'תוכנית בלי times מכבה תזכורות');
 });
 
 test('מיגרציה אידמפוטנטית ולא מאבדת שדות', () => {
@@ -177,6 +177,6 @@ test('round-trip על ה-meta האמיתי לא מאבד שדות', { skip: !bac
 test('המיגרציות חלות על הנתונים האמיתיים', { skip: !backup && 'אין גיבוי' }, async () => {
   const live = JSON.parse(readFileSync(backupDir + backup, 'utf8'));
   const m = await S.getMeta({ KV: { get: async () => JSON.stringify(live), put: async () => {} } });
-  assert.equal(G.dailyTarget({ ...G.DEFAULT_PLAN, ...m.gumPlan }, '2026-08-02'), 12);
+  assert.equal(G.dailyTarget({ ...G.DEFAULT_PLAN, ...m.gumPlan }, '2026-08-02'), G.RECOMMENDED.times.length);
   assert.equal(m.gumSoftCap, 18);
 });

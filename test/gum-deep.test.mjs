@@ -40,18 +40,18 @@ test('ענף 3 · אחרי סוף החלון, עם 45 דק׳ חסד', () => {
 });
 
 test('ענף 4 · הושלם היעד מחוץ לחלון הסיכון', () => {
-  const d = day({ gum: 12, ev: [gumAt(11, 0)] });
+  const d = day({ gum: G.dailyTarget(P, ISO), ev: [gumAt(11, 0)] });
   assert.equal(G.dueNow(P, ISO, d, at(14)).why, 'הושלם היעד');
 });
 
 test('ענף 4ב · חריג הגעה-ליעד דורש את שלושת התנאים יחד', () => {
   // בחלון + פער ארוך + מתחת לתקרה. חסר אחד — שקט.
-  const long = day({ gum: 12, ev: [gumAt(13, 0)] });     // פער 6 שעות ב-19:00
+  const long = day({ gum: G.dailyTarget(P, ISO), ev: [gumAt(13, 0)] });     // פער 6 שעות ב-19:00
   assert.equal(G.dueNow(P, ISO, long, at(19), null, 18).due, true, 'שלושתם מתקיימים');
   assert.equal(G.dueNow(P, ISO, long, at(15), null, 18).due, false, 'מחוץ לחלון');
-  const short = day({ gum: 12, ev: [gumAt(18, 30)] });   // פער 30 דק׳
+  const short = day({ gum: G.dailyTarget(P, ISO), ev: [gumAt(18, 30)] });   // פער 30 דק׳
   assert.equal(G.dueNow(P, ISO, short, at(19), null, 18).due, false, 'פער קצר');
-  assert.equal(G.dueNow(P, ISO, long, at(19), null, 12).due, false, 'בתקרה');
+  assert.equal(G.dueNow(P, ISO, long, at(19), null, G.dailyTarget(P, ISO)).due, false, 'בתקרה');
 });
 
 test('ענף 5 · MIN_GAP מהמנה האחרונה, לא משנה מי יזם אותה', () => {
@@ -59,7 +59,9 @@ test('ענף 5 · MIN_GAP מהמנה האחרונה, לא משנה מי יזם �
   const r = G.dueNow(P, ISO, d, at(11, 59));
   assert.equal(r.due, false);
   assert.match(r.why, /נלקח לפני 59/);
-  assert.equal(G.dueNow(P, ISO, d, at(12, 1)).due, true, 'דקה אחרי MIN_GAP — כן');
+  // אחרי MIN_GAP החסימה משתחררת. אם התזכורת תצא בפועל תלוי בקצב,
+  // וזה ענף אחר — כאן נבדק רק שהחסם הזה כבר לא זה שמדבר.
+  assert.ok(!/נלקח לפני/.test(G.dueNow(P, ISO, d, at(12, 1)).why), 'MIN_GAP עדיין חוסם');
 });
 
 test('ענף 6 · סנוז פעיל משתיק, בלי קשר לכל השאר', () => {
@@ -77,7 +79,7 @@ test('ענף 7א · תזכורת שנענתה — MIN_GAP הוא שחוסם, ל�
   const d = day({ gum: 3, ev: [gumAt(11, 5)] });
   const last = at(11);
   assert.match(G.dueNow(P, ISO, d, at(11, 45), last).why, /נלקח לפני/);
-  assert.equal(G.dueNow(P, ISO, d, at(12, 10), last).due, true, 'אחרי MIN_GAP — משוחרר');
+  assert.ok(!/נלקח לפני|ממתין/.test(G.dueNow(P, ISO, d, at(12, 10), last).why), 'עדיין חסום');
 });
 
 test('ענף 7ב · נסיגה אחרי תזכורת שלא נענתה — BACKOFF', () => {
@@ -96,23 +98,26 @@ test('ענף 8 · סנוז שפג גובר על הנסיגה', () => {
 });
 
 test('ענף 9 · MAX_GAP מזכיר בלי קשר לקצב', () => {
-  const d = day({ gum: 9, ev: [gumAt(10, 0)] });
+  const d = day({ gum: 2, ev: [gumAt(10, 0)] });
   const r = G.dueNow(P, ISO, d, at(12, 40));
   assert.equal(r.due, true);
   assert.equal(r.why, 'פער ארוך מדי');
 });
 
 test('ענף 10 · "עוד לא היה מסטיק היום" רק כשבאמת לא היה', () => {
-  assert.equal(G.dueNow(P, ISO, day({ gum: 0, ev: [] }), at(9)).why, 'עוד לא היה מסטיק היום');
+  const w0 = G.windowOf(P).start + G.MIN_GAP + 5;
+  assert.equal(G.dueNow(P, ISO, day({ gum: 0, ev: [] }), w0).why, 'עוד לא היה מסטיק היום');
   // עם מונה גדול מאפס — נופל לענף הקצב ולא מכריז הכרזה סותרת
-  assert.notEqual(G.dueNow(P, ISO, day({ gum: 6, ev: [] }), at(9)).why, 'עוד לא היה מסטיק היום');
+  assert.notEqual(G.dueNow(P, ISO, day({ gum: 6, ev: [] }), w0).why, 'עוד לא היה מסטיק היום');
 });
 
 test('ענף 11 · קצב, עם סובלנות של מנה אחת', () => {
   // בחצי החלון היעד הוא ~6. פיגור של 1 הוא רעש; של 3 הוא סטייה.
-  const mid = at(14);
-  const near = day({ gum: 6, ev: [gumAt(12, 30)] });
-  const far = day({ gum: 3, ev: [gumAt(12, 30)] });
+  const wv = G.windowOf(P);
+  const mid = Math.round((wv.start + wv.end) / 2);
+  const half = Math.round(G.dailyTarget(P, ISO) / 2);
+  const near = day({ gum: half, ev: [gumAt(Math.floor((mid - 90) / 60), 0)] });
+  const far = day({ gum: 0, ev: [gumAt(Math.floor((mid - 90) / 60), 0)] });
   assert.equal(G.dueNow(P, ISO, near, mid).due, false, 'בקצב — שקט');
   assert.equal(G.dueNow(P, ISO, far, mid).due, true, 'מאחור — מזכיר');
 });
@@ -129,9 +134,9 @@ test('סדר הענפים: הנסיגה נבדקת לפני MAX_GAP', () => {
 
 const sims = [
   // קצב, מינ׳ מנות, מקס׳ תזכורות, מינ׳ תזכורות
-  ['מקדים · 45 דק׳', 45, 12, 4, 0],
-  ['הקצב שלו · 70 דק׳', 70, 10, 9, 0],
-  ['מאחור · 120 דק׳', 120, 6, 11, 2],
+  ['מקדים · 45 דק׳', 45, 9, 4, 0],
+  ['הקצב שלו · 70 דק׳', 70, 8, 4, 0],
+  ['מאחור · 120 דק׳', 120, 6, 9, 2],
   ['איטי · 180 דק׳', 180, 4, 11, 3],
 ];
 for (const [label, gap, minTaken, maxRem, minRem] of sims) {
@@ -177,7 +182,7 @@ test('dropOrderOf מכיל את כל השעות בדיוק פעם אחת', () =>
   const order = G.dropOrderOf(G.RECOMMENDED.times);
   assert.equal(order.length, G.RECOMMENDED.times.length);
   assert.equal(new Set(order).size, order.length, 'כפילות בסדר ההורדה');
-  assert.equal(order[order.length - 1], '07:30', 'הבוקר לא אחרון');
+  assert.equal(order[order.length - 1], G.sortTimes(G.RECOMMENDED.times)[0], 'הבוקר לא אחרון');
 });
 
 test('הקפאה עתידית לא משפיעה על היום', () => {
@@ -369,7 +374,7 @@ test('לפני אישור הצמצום — מצב המשבצות לא משתנה
   // מצב-מרווח נדלק רק באישור, כדי שלא ישנה כלום בשלב המדבקה.
   const pre = { ...G.DEFAULT_PLAN };
   assert.equal(G.targetGap(pre, ISO), null);
-  assert.equal(G.dailyTarget(pre, ISO), 12);
+  assert.equal(G.dailyTarget(pre, ISO), G.RECOMMENDED.times.length);
 });
 
 test('הקפאה מקפיאה גם את המרווח', () => {
@@ -379,7 +384,8 @@ test('הקפאה מקפיאה גם את המרווח', () => {
 
 test('windowLen מהמדידה, ובנפילה לאחור מהשעות', () => {
   assert.equal(G.windowLen(IV), 1294 - 540);
-  assert.equal(G.windowLen({ ...G.DEFAULT_PLAN }), 20 * 60 + 30 - (7 * 60 + 30));
+  const wd = G.windowOf({ ...G.DEFAULT_PLAN });
+  assert.equal(G.windowLen({ ...G.DEFAULT_PLAN }), wd.end - wd.start);
 });
 
 test('החלון הנמדד גובר על הלוח', () => {
@@ -390,12 +396,12 @@ test('החלון הנמדד גובר על הלוח', () => {
   const d = day({ gum: 5, ev: [gumAt(18, 0)] });
   assert.notEqual(G.dueNow(measured, ISO, d, 21 * 60).why, 'אחרי סוף החלון');
   // ובלי מדידה — נופלים ללוח כרגיל
-  assert.equal(G.windowOf({ ...G.DEFAULT_PLAN }).end, 20 * 60 + 30);
+  assert.equal(G.windowOf({ ...G.DEFAULT_PLAN }).end, 21 * 60 + 30);
 });
 
 test('חלון לא תקין לא נלקח', () => {
   const bad = { ...G.DEFAULT_PLAN, winStart: 1200, winEnd: 600 };
-  assert.equal(G.windowOf(bad).end, 20 * 60 + 30, 'חלון הפוך התקבל');
+  assert.equal(G.windowOf(bad).end, 21 * 60 + 30, 'חלון הפוך התקבל');
 });
 
 test('הרצפה הזמנית מזוהה — 12 שבועות מהגמילה', () => {
@@ -412,4 +418,37 @@ test('הרצפה הזמנית מזוהה — 12 שבועות מהגמילה', ()
 test('הרצפה הזמנית היא 12 שבועות בדיוק מהגמילה', () => {
   assert.equal(G.TAPER_BACKSTOP, '2026-10-17');
   assert.ok(G.TAPER_BACKSTOP > G.TAPER_START, 'הרצפה לפני תחילת הצמצום');
+});
+
+test('גבול הערב נמתח עד המנה האחרונה בפועל', () => {
+  // RISK_END נכתב כ-21:00 כשהלוח נגמר ב-20:30. עם לוח שנגמר ב-21:30,
+  // המנה האחרונה — הכבדה ביותר בנתונים — סווגה כ"אמצע יום" וירדה
+  // מוקדם, בדיוק ההפך מהכוונה.
+  const T = { ...G.DEFAULT_PLAN, taperStartISO: '2026-09-15', confirmedTaper: true, stepDays: 4 };
+  const d = n => new Date(Date.UTC(2026, 8, 15) + n * 86400000).toISOString().slice(0, 10);
+  const last = G.sortTimes(G.RECOMMENDED.times).at(-1);
+  for (const n of [8, 16, 24]) {
+    assert.ok(G.activeTimes(T, d(n)).includes(last), `יום ${n}: ${last} נפל מוקדם`);
+  }
+});
+
+test('מצב-מרווח מגיע לאפס ולא נתקע על מנה אחת לנצח', () => {
+  // אותו פגם שתוקן במצב המשבצות חזר מהדלת האחורית: dailyTarget החזיר
+  // 1 לנצח והמרווח התנפח למעל מיליון דקות.
+  const p = { ...G.DEFAULT_PLAN, confirmedTaper: true, taperStartISO: '2026-09-15',
+              stepDays: 4, mode: 'interval', baseGap: 91, gapStepPct: 10,
+              winStart: 540, winEnd: 1294 };
+  const d = n => new Date(Date.UTC(2026, 8, 15) + n * 86400000).toISOString().slice(0, 10);
+  assert.equal(G.dailyTarget(p, d(88)), 1, 'עוד על מנת הבוקר');
+  assert.equal(G.dailyTarget(p, d(100)), 0, 'לא הגיע לסוף');
+  assert.equal(G.dailyTarget(p, d(200)), 0, 'לא נשאר באפס');
+});
+
+test('הניטור מתריע על זינוק במסטיק — הסיגנל היחיד כשאין גלים', () => {
+  const base = { waves: 0, surfed: 0, gum: 56 };   // 8 ליום
+  const mk = g => Array.from({ length: 7 }, () =>
+    day({ gum: g, patch: true, ev: [gumAt(9, 0)] }));
+  assert.ok(G.taperWatch(mk(14), base), 'זינוק ל-14 לא זוהה');
+  assert.equal(G.taperWatch(mk(8), base), null, 'צריכה יציבה הפעילה התראה');
+  assert.equal(G.taperWatch(mk(6), base), null, 'ירידה הפעילה התראה');
 });

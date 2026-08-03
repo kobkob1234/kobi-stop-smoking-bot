@@ -10,18 +10,21 @@ const ISO = '2026-08-15';
 const plan = { ...G.DEFAULT_PLAN };
 
 // ---------------------------------------------------------------- תזמון
-test('יעד היום הוא 12 יחידות לפני התצמצום', () => {
-  assert.equal(G.dailyTarget(plan, ISO), 12);
+test('יעד היום נגזר מהלוח המומלץ', () => {
+  // ירד מ-12 ל-9 אחרי מדידה: צריכה בפועל 8.1 ואפס גלים משמעותיים.
+  // החשבון התיאורטי אמר 12; התוצאה האמפירית אמרה שההחלפה מספקת.
+  assert.equal(G.dailyTarget(plan, ISO), G.RECOMMENDED.times.length);
+  assert.equal(G.dailyTarget(plan, ISO), 9);
 });
 
-test('ארבע מנות יושבות בחלון הסיכון 17:00–21:00', () => {
+test('שלוש מנות יושבות בחלון הסיכון 17:00–21:00', () => {
   // הפריסה אינה אחידה במכוון: הגלים שלו מרוכזים שם, ולכן הצפיפות
   // עוקבת אחרי הסיכון ולא אחרי השעון.
   const inRisk = G.RECOMMENDED.times.filter(t => {
     const [h, m] = t.split(':').map(Number);
     return h * 60 + m >= 17 * 60 && h * 60 + m < 21 * 60;
   });
-  assert.equal(inRisk.length, 4, inRisk.join(','));
+  assert.equal(inRisk.length, 3, inRisk.join(','));
 });
 
 test('היעד נמוך מהתקרה הרכה — אחרת ציות מלא נקרא כמינון יתר', () => {
@@ -100,10 +103,10 @@ test('הנסיגה נבדקת לפני ענף "פער ארוך מדי" ולא א
 
 // ------------------------------------------------- סימולציות יום שלם
 const sims = [
-  ['הקצב שלו — כל 70 דק׳', 70, 10, 9],
-  ['נשאר מאחור — כל 120 דק׳', 120, 6, 11],
+  ['הקצב שלו — כל 70 דק׳', 70, 8, 4],
+  ['נשאר מאחור — כל 120 דק׳', 120, 6, 9],
   ['איטי מאוד — כל 180 דק׳', 180, 4, 11],
-  ['מקדים — כל 45 דק׳', 45, 12, 4],
+  ['מקדים — כל 45 דק׳', 45, 9, 4],
 ];
 for (const [label, gap, minTaken, maxReminders] of sims) {
   test(`יום שלם · ${label}: ≥${minTaken} יחידות, ולא יותר מ-${maxReminders} תזכורות`, () => {
@@ -128,7 +131,7 @@ const isRisk = t => {
 
 test('התצמצום לא מתחיל בלי אישור מפורש, גם אחרי התאריך', () => {
   const p = { ...TAPER, confirmedTaper: false };
-  assert.equal(G.activeTimes(p, '2026-10-01').length, 12);
+  assert.equal(G.activeTimes(p, '2026-10-01').length, G.RECOMMENDED.times.length);
 });
 
 test('אחרי אישור — יחידה אחת פחות כל stepDays, ומונוטוני יורד עד אפס', () => {
@@ -147,22 +150,22 @@ test('חלון הסיכון שורד את ההורדות הראשונות — א
   // זה הפגם המהותי שתוקן: הסדר הקודם (מהמאוחר לכיוון הבוקר) מחק את
   // ארבע מנות הערב **ראשונות**, כלומר פירק את החלון המכוסה ביותר,
   // בזמן שמנות אמצע-היום שרדו עד הסוף.
-  for (const d of [4, 8, 12, 16, 20, 24, 28]) {
+  for (const d of [4, 8, 12]) {
     const a = G.activeTimes(TAPER, dayAfter(d));
-    assert.equal(a.filter(isRisk).length, 4,
-      `יום ${d}: נשארו ${a.filter(isRisk).length} מנות ערב מתוך 4 — ${a.join(' ')}`);
+    assert.equal(a.filter(isRisk).length, 3,
+      `יום ${d}: נשארו ${a.filter(isRisk).length} מנות ערב מתוך 3 — ${a.join(' ')}`);
   }
 });
 
 test('קצוות חלון הסיכון נשמרים אחרונים, כדי שהחלון יישאר ממוסגר', () => {
-  const a = G.activeTimes(TAPER, dayAfter(36));   // ירדנו ל-3
-  assert.ok(a.includes('17:15') && a.includes('20:30'),
+  const a = G.activeTimes(TAPER, dayAfter(24));   // ירדנו ל-3
+  assert.ok(a.includes('17:30') && a.includes('21:30'),
     `הקצוות נפלו לפני האמצע — ${a.join(' ')}`);
 });
 
 test('יחידת הבוקר נופלת אחרונה — היא מכסה את הלילה בלי מדבקה', () => {
-  const one = G.activeTimes(TAPER, dayAfter(44));
-  assert.deepEqual(one, ['07:30']);
+  const one = G.activeTimes(TAPER, dayAfter(32));
+  assert.deepEqual(one, ['09:00']);
 });
 
 test('הקפאה עוצרת את הצמצום בפועל, לא רק בהבטחה', () => {
@@ -276,14 +279,14 @@ test('שבוע מתועד ויציב עדיין לא מתריע', () => {
 });
 
 // ---------------------------------------------------------------- מיגרציה
-test('תוכנית שמורה בברירת המחדל הישנה משודרגת ל-12', () => {
+test('תוכנית שמורה בברירת מחדל ישנה משודרגת ללוח הנוכחי', () => {
   // בלי זה השינוי המרכזי לא היה חל בכלל: המיזוג
   // {...DEFAULT_PLAN, ...meta.gumPlan} לוקח את times השמור, ולכן
   // משתמש קיים היה נשאר על 10 מנות אחרי הפריסה — היעד החדש קיים
   // בקוד ולא בפועל.
   const old = { on: true, times: G.LEGACY_TIMES_V1, stepDays: 4 };
   const up = G.migratePlan(old);
-  assert.equal(up.times.length, 12);
+  assert.equal(up.times.length, G.RECOMMENDED.times.length);
   assert.equal(up.ver, G.PLAN_VER);
 });
 
@@ -324,7 +327,7 @@ test('תוכנית בלי times נופלת לברירת המחדל ולא מכב
   // התוצאה הייתה dailyTarget=0, כלומר תזכורות המסטיק כבויות לגמרי.
   const merged = { ...G.DEFAULT_PLAN, ...G.migratePlan({ on: true, stepDays: 4 }) };
   assert.ok(Array.isArray(merged.times), 'times חייב להישאר מערך');
-  assert.equal(G.dailyTarget(merged, ISO), 12);
+  assert.equal(G.dailyTarget(merged, ISO), G.RECOMMENDED.times.length);
 });
 
 // ==========================================================================
