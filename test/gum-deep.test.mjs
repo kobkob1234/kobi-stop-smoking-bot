@@ -211,3 +211,81 @@ test('taperInfo ברצפה לא מבטיח נפילה הבאה', () => {
   assert.equal(t.nextDropISO, null);
   assert.equal(t.nextToGo, null);
 });
+
+// ==========================================================================
+//  צמצום מונחה-נתונים
+// ==========================================================================
+
+test('nearestSlot מייחס מנה למשבצת הקרובה', () => {
+  const times = ['07:30', '10:00', '20:30'];
+  assert.equal(G.nearestSlot(at(9, 20), times), '10:00');
+  assert.equal(G.nearestSlot(at(7, 45), times), '07:30');
+  assert.equal(G.nearestSlot(at(21, 34), times), '20:30', 'מנה אחרי החלון נזקפת לאחרונה');
+  assert.equal(G.nearestSlot(at(1, 0), times), '07:30', 'מנה לילית נזקפת לקרובה');
+  assert.equal(G.nearestSlot(at(9), []), null);
+});
+
+test('slotStats מודד היענות לכל משבצת', () => {
+  const times = ['07:30', '12:00', '20:30'];
+  const days = Array.from({ length: 4 }, (_, i) => ({
+    iso: `d${i}`, gum: 2, ev: [gumAt(12, 5), gumAt(20, 40)],
+  }));
+  const st = G.slotStats(days, times);
+  assert.equal(st.covered, 4);
+  assert.equal(st.slots['12:00'].adherence, 1);
+  assert.equal(st.slots['20:30'].adherence, 1);
+  assert.equal(st.slots['07:30'].adherence, 0, 'משבצת שלא נלקחה נספרה');
+});
+
+test('מדגם קטן לא משנה את סדר ההורדה', () => {
+  // 4 ימים: כל יום שווה 25%, ומנה אחת שהוחמצה הופכת משבצת מ"מלאה"
+  // ל"חלשה". זה רעש, ולא דפוס.
+  const few = Array.from({ length: 4 }, (_, i) => ({ iso: `d${i}`, gum: 1, ev: [gumAt(20, 30)] }));
+  const st = G.slotStats(few, G.RECOMMENDED.times);
+  assert.equal(st.usable, false);
+  assert.deepEqual(G.dropOrderOf(G.RECOMMENDED.times, st), G.dropOrderOf(G.RECOMMENDED.times));
+});
+
+test('מדגם מספיק מוריד קודם את המשבצות שפחות בשימוש', () => {
+  const times = ['07:30', '10:00', '12:00', '14:00'];
+  // 10:00 ו-14:00 בשימוש מלא; 12:00 כמעט אף פעם.
+  const days = Array.from({ length: 12 }, (_, i) => ({
+    iso: `d${i}`, gum: 2, ev: [gumAt(10, 0), gumAt(14, 0)],
+  }));
+  const st = G.slotStats(days, times);
+  assert.equal(st.usable, true);
+  const order = G.dropOrderOf(times, st);
+  assert.equal(order[order.length - 1], '07:30', 'הבוקר חייב להישאר אחרון');
+  assert.ok(order.indexOf('12:00') < order.indexOf('10:00'),
+    `המשבצת הלא-בשימוש לא יורדת קודם: ${order.join(' ')}`);
+});
+
+test('הכלל הקליני שורד: הבוקר אחרון גם כשאינו בשימוש', () => {
+  const times = ['07:30', '10:00', '20:30'];
+  const days = Array.from({ length: 12 }, (_, i) => ({
+    iso: `d${i}`, gum: 2, ev: [gumAt(10, 0), gumAt(20, 30)],   // 07:30 אף פעם
+  }));
+  const order = G.dropOrderOf(times, G.slotStats(days, times));
+  assert.equal(order[order.length - 1], '07:30',
+    'הבוקר מגשר על הלילה בלי מדבקה — נתונים לא מבטלים את זה');
+});
+
+test('סדר שנשמר בתוכנית גובר על חישוב מחדש', () => {
+  // ההחלטה מתקבלת פעם אחת באישור ולא משתנה תחת רגליו באמצע הצמצום.
+  const p = { ...G.DEFAULT_PLAN, confirmedTaper: true, taperStartISO: '2026-09-15',
+              stepDays: 4, dropOrder: ['20:30', '07:30', ...G.RECOMMENDED.times.filter(t => !['20:30', '07:30'].includes(t))] };
+  const after = G.activeTimes(p, '2026-09-19');
+  assert.ok(!after.includes('20:30'), 'הסדר השמור לא כובד');
+});
+
+test('remindLatency מודד מתזכורת עד המנה הבאה', () => {
+  const days = [
+    { ev: [{ k: 'r', h: 10, m: 0 }, { k: 'g', h: 10, m: 25 }] },
+    { ev: [{ k: 'r', h: 14, m: 0 }, { k: 'g', h: 14, m: 45 }] },
+    { ev: [{ k: 'r', h: 16, m: 0 }, { k: 'g', h: 16, m: 5 }] },
+    { ev: [{ k: 'r', h: 18, m: 0 }] },                       // בלי מנה — לא נספר
+  ];
+  const l = G.remindLatency(days);
+  assert.equal(l.n, 3);
+  assert.equal(l.median, 25);
+});

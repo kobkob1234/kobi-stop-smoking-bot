@@ -484,6 +484,10 @@ async function tick(env) {
       if (snoozedTo) { meta.gumSnoozeMin = 0; touched.add('gumSnoozeMin'); }
       dirty = true; touched.add('gumRemindISO'); touched.add('gumRemindMin');
       console.log('GUM תזכורת:', r.taken, '/', r.target, '·', r.why);
+      // רושמים שהתזכורת יצאה, כדי שאפשר יהיה למדוד שיהוי תזכורת→מנה.
+      // בלי האירוע הזה אין דרך לדעת אם התזכורות בכלל מניעות משהו —
+      // ובנתונים בפועל 90% מהמנות נלקחות ביוזמה ולא בתגובה.
+      await recordEvent(env, iso, now, 'r');
       await send(env, meta.chatId, G.reminderText(now.hhmm, plan, iso, day, r.taken, r.target), {
         reply_markup: inline([
           [btn('✅ לקחתי', 'gr:y'), btn('⏭️ מדלג', 'gr:n')],
@@ -1260,6 +1264,25 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
             ? `📉 בתצמצום: ${t.active} מתוך ${t.start} · ${t.atFloor ? 'הגעת לרצפה (בוקר בלבד)' : `הבאה שנופלת: ${t.nextToGo} ב-${P.fmtHe(t.nextDropISO)}`}`
             : `📉 התצמצום אושר ומתחיל ב-<b>${P.fmtHe(plan.taperStartISO)}</b> — יחידה אחת פחות כל ${t.step} ימים.`);
       }
+      // ---- מה הנתונים מראים ----
+      // בלי התצוגה הזאת הניתוח קיים ולא נראה, וגם אי אפשר לחלוק עליו.
+      const d14 = await ANL.collect(env, iso, 14);
+      const usage = G.slotStats(d14, plan.times);
+      const lat = G.remindLatency(d14);
+      if (usage.covered) {
+        const rank = Object.entries(usage.slots).sort((a, b) => b[1].adherence - a[1].adherence);
+        const top = rank.slice(0, 3).filter(([, s]) => s.taken);
+        const weak = rank.slice(-3).reverse().filter(([, s]) => s.adherence < 0.5);
+        L.push('', `📊 <b>מה שאני רואה ב-${usage.covered} הימים המתועדים</b>`);
+        if (top.length) L.push(`   הכי עקביות: ${top.map(([k, s]) => `<b>${k}</b> ${(s.adherence * 100) | 0}%`).join(' · ')}`);
+        if (weak.length) L.push(`   הכי חלשות: ${weak.map(([k, s]) => `${k} ${(s.adherence * 100) | 0}%`).join(' · ')}`);
+        if (lat.n >= 3) L.push(`   ⏱️ מתזכורת עד מנה: חציון <b>${lat.median} דק׳</b> (${lat.n} מדידות)`);
+        L.push(usage.usable
+          ? '   <i>מספיק נתונים — הצמצום יוריד קודם את המשבצות שפחות בשימוש.</i>'
+          : `   <i>עוד ${G.MIN_USAGE_DAYS - usage.covered} ימים מתועדים ואוכל לבנות את סדר הצמצום על השימוש שלך ולא על כלל כללי.</i>`);
+      }
+      if (plan.dropBasis) L.push(`   <i>סדר הצמצום נקבע לפי: ${plan.dropBasis}</i>`);
+
       L.push('', `<i>${G.RECOMMENDED.why}</i>`);
       const rows = Object.entries(G.PRESETS).map(([k, v]) => [btn((k === 'ten' ? '⭐ ' : '') + v.label, `gp:${k}`)]);
       rows.push([btn(plan.on ? '🔇 כבה תזכורות' : '✅ הפעל תזכורות', 'gp:toggle')]);
@@ -1673,6 +1696,15 @@ async function onCallback(cb, env) {
       const b7 = await ANL.collect(env, iso, 7);
       const bsum = k => b7.reduce((t, d) => t + (d[k] || 0), 0);
       plan.baseline = { iso, waves: bsum('waves'), surfed: bsum('surfed'), gum: bsum('gum') };
+
+      // סדר ההורדה נקבע כאן, מ-14 יום של שימוש בפועל, ונשמר.
+      // משבצת שעקבית לא נלקחת אינה עושה עבודה — היא יורדת ראשונה,
+      // ולא זו שהלוח הצביע עליה. מתחת ל-MIN_USAGE_DAYS ההבדלים הם
+      // רעש דגימה, ואז נופלים לסדר הקליני.
+      const b14 = await ANL.collect(env, iso, 14);
+      const usage = G.slotStats(b14, plan.times);
+      plan.dropOrder = G.dropOrderOf(G.sortTimes(plan.times), usage);
+      plan.dropBasis = usage.usable ? `שימוש בפועל · ${usage.covered} ימים` : 'סדר קליני (מדגם קטן מדי)';
       meta.gumPlan = plan; await putMeta(env, meta);
       await answer(env, cb.id, 'התצמצום התחיל');
       const t = G.taperInfo(plan, iso);

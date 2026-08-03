@@ -143,8 +143,94 @@ export const sortTimes = ts => [...new Set(ts)].sort((a, b) => toMin(a) - toMin(
 const RISK_START = 17 * 60;
 const RISK_END = 21 * 60;
 
-/** סדר ההורדה: מספר נמוך = יורד מוקדם. הראשון בכל יום לעולם אחרון. */
-export function dropOrderOf(all) {
+// ==========================================================================
+//  ייחוס מנה למשבצת, וסטטיסטיקת שימוש
+//
+//  **נגזר ולא נשמר**, וזו החלטה: שדה חדש היה מתחיל לצבור נתונים רק
+//  מהיום, כלומר שבועיים של המתנה לפני שאפשר להסיק משהו. הגזירה עובדת
+//  על כל ההיסטוריה שכבר ב-KV — ויש שם חודש של חותמות זמן.
+//
+//  ולמה זה נחוץ: סדר ההורדה היה קליני בלבד (אמצע-יום קודם, בוקר
+//  אחרון). זה נכון כברירת מחדל, אבל הבוט יודע אילו משבצות באמת
+//  בשימוש. משבצת שעקבית לא נלקחת אינה עושה עבודה — והיא זו שצריכה
+//  ליפול ראשונה, לא זו שהלוח הצביע עליה.
+// ==========================================================================
+
+/** המשבצת הקרובה ביותר לשעה נתונה (בדקות), או null אם אין שעות */
+export function nearestSlot(minute, times) {
+  const all = sortTimes(times || []);
+  if (!all.length) return null;
+  let best = all[0], bestD = Infinity;
+  for (const t of all) {
+    const d = Math.abs(toMin(t) - minute);
+    if (d < bestD) { bestD = d; best = t; }
+  }
+  return best;
+}
+
+/**
+ * שימוש בפועל לכל משבצת, על פני מספר ימים.
+ *
+ * `taken` — כמה מנות נזקפו למשבצת · `days` — בכמה ימים שונים ·
+ * `adherence` — החלק מהימים המכוסים שבהם המשבצת קיבלה מנה.
+ */
+// מתחת לזה, ההבדלים בין המשבצות הם רעש דגימה ולא דפוס. ב-4 ימים כל
+// יום שווה 25%, כלומר מנה אחת שהוחמצה הופכת משבצת מ"מלאה" ל"חלשה".
+export const MIN_USAGE_DAYS = 10;
+
+export function slotStats(daysArr, times) {
+  const all = sortTimes(times || []);
+  const stat = Object.fromEntries(all.map(t => [t, { taken: 0, days: new Set() }]));
+  let covered = 0;
+  for (const d of daysArr) {
+    const gs = (d.ev || []).filter(e => e.k === 'g');
+    if (!isLogged(d)) continue;
+    covered++;
+    for (const e of gs) {
+      const s = nearestSlot(e.h * 60 + e.m, all);
+      if (s && stat[s]) { stat[s].taken++; stat[s].days.add(d.iso || covered); }
+    }
+  }
+  const out = {};
+  for (const t of all) {
+    out[t] = {
+      taken: stat[t].taken,
+      days: stat[t].days.size,
+      adherence: covered ? +(stat[t].days.size / covered).toFixed(2) : 0,
+    };
+  }
+  return { slots: out, covered, usable: covered >= MIN_USAGE_DAYS };
+}
+
+/**
+ * שיהוי תזכורת→מנה, בדקות. חציון.
+ * נמדד מאירוע 'r' (תזכורת נשלחה) עד אירוע ה-'g' הבא באותו יום.
+ */
+export function remindLatency(daysArr) {
+  const lags = [];
+  for (const d of daysArr) {
+    const ev = [...(d.ev || [])].sort((a, b) => (a.h * 60 + a.m) - (b.h * 60 + b.m));
+    for (let i = 0; i < ev.length; i++) {
+      if (ev[i].k !== 'r') continue;
+      const g = ev.slice(i + 1).find(e => e.k === 'g');
+      if (g) lags.push((g.h * 60 + g.m) - (ev[i].h * 60 + ev[i].m));
+    }
+  }
+  lags.sort((a, b) => a - b);
+  return { n: lags.length, median: lags.length ? lags[Math.floor(lags.length / 2)] : null };
+}
+
+/**
+ * סדר ההורדה: מספר נמוך = יורד מוקדם. הראשון בכל יום לעולם אחרון.
+ *
+ * @param usage אופציונלי — פלט slotStats().slots. כשהוא נמסר, בתוך
+ *   כל גוש יורדות **המשבצות הפחות בשימוש קודם**, במקום לפי מרחק
+ *   מהמרכז בלבד. המבנה הקליני נשמר: גוש היום לפני גוש הערב, והבוקר
+ *   אחרון תמיד — הנתונים בוחרים בתוך הכלל, לא במקומו.
+ */
+export function dropOrderOf(all, usage = null) {
+  // usage שהגיע כאובייקט מלא של slotStats — מכבדים את שער המדגם שלו.
+  if (usage && usage.slots) usage = usage.usable ? usage.slots : null;
   const mins = all.map(toMin);
   const anchor = mins[0];
   const band = m => (m >= RISK_START && m < RISK_END ? 1 : 0);
@@ -158,6 +244,17 @@ export function dropOrderOf(all) {
     if (my === anchor) return -1;
     const bx = band(mx), by = band(my);
     if (bx !== by) return bx - by;        // גוש היום לפני גוש הערב
+
+    // בתוך הגוש: מה שפחות בשימוש יורד קודם. משבצת שעקבית לא נלקחת
+    // אינה עושה עבודה, ואין סיבה להעדיף עליה משבצת שכן.
+    if (usage) {
+      const ax = usage[x] ? usage[x].adherence : 0;
+      const ay = usage[y] ? usage[y].adherence : 0;
+      // סף של 0.15 כדי שרעש דגימה לא יהפוך את הסדר. פחות מזה — נופלים
+      // לכלל הקליני.
+      if (Math.abs(ax - ay) >= 0.15) return ax - ay;
+    }
+
     const dx = Math.abs(mx - c[bx]), dy = Math.abs(my - c[by]);
     if (dx !== dy) return dx - dy;        // מהמרכז החוצה
     // שוויון מרחק בקצוות — נופל המאוחר. מנה אחת שנשארת בחלון עדיף
@@ -192,7 +289,13 @@ export function activeTimes(plan, iso) {
   const drop = Math.floor(days / Math.max(1, plan.stepDays || 4));
   if (drop <= 0) return all;
 
-  const dropped = new Set(dropOrderOf(all).slice(0, Math.min(drop, all.length)));
+  // סדר ההורדה נקבע **פעם אחת** באישור ונשמר בתוכנית. כך ההחלטה
+  // גלויה, ניתנת להצגה למשתמש, ולא משתנה תחת רגליו כשנתונים חדשים
+  // נכנסים באמצע הצמצום.
+  const order = Array.isArray(plan.dropOrder) && plan.dropOrder.length
+    ? plan.dropOrder.filter(x => all.includes(x))
+    : dropOrderOf(all);
+  const dropped = new Set(order.slice(0, Math.min(drop, all.length)));
   return all.filter(t => !dropped.has(t));
 }
 
@@ -214,9 +317,10 @@ export function taperInfo(plan, iso) {
   const paused = !!plan.pausedISO;
   // המנה הבאה שתיפול נגזרת מסדר ההורדה, לא מ"האחרונה ברשימה" — אחרת
   // התצוגה הייתה מבטיחה שתיפול מנת ערב בזמן שבפועל נופלת מנת צהריים.
-  const nextToGo = atFloor || paused
-    ? null
-    : dropOrderOf(all).find(t => active.includes(t)) || null;
+  const order = Array.isArray(plan.dropOrder) && plan.dropOrder.length
+    ? plan.dropOrder.filter(x => all.includes(x))
+    : dropOrderOf(all);
+  const nextToGo = atFloor || paused ? null : order.find(t => active.includes(t)) || null;
   return {
     active: active.length,
     start: all.length,
