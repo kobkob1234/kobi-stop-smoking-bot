@@ -128,6 +128,10 @@ test('I5 · "הבטחה = מימוש" — כל הבטחה בטקסט יש לה �
     { re: /אבדוק שוב בעוד שבוע/,    impl: /taperWatchDue/, what: 'ניטור הצמצום' },
     { re: /אשאל שוב בעוד שלושה ימים/, impl: /taperAskDue/, what: 'שאלת הצמצום' },
     { re: /אזכיר שוב כשהקצב יחייב/,  impl: /PACE_SLACK|MAX_GAP/, what: 'תזכורת לפי קצב' },
+    // נתפס במוטציה: backstopPassed היה מוגדר ונבדק, אבל ניתוק
+    // הקריאה אליו לא הפיל אף בדיקה — הפרדיקט נבדק והחיבור לא.
+    { re: /ברצפה הזמנית/,          impl: /G\.backstopPassed\(/, what: 'רצפת הצמצום הזמנית' },
+    { re: /מרווח היעד/,            impl: /targetGap\(/,        what: 'מצב-מרווח' },
   ];
   for (const { re, impl, what } of PROMISES) {
     assert.ok(re.test(ALL), `ההבטחה "${what}" נעלמה מהטקסט — עדכן את הרשימה`);

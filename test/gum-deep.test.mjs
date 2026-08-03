@@ -381,3 +381,35 @@ test('windowLen מהמדידה, ובנפילה לאחור מהשעות', () => {
   assert.equal(G.windowLen(IV), 1294 - 540);
   assert.equal(G.windowLen({ ...G.DEFAULT_PLAN }), 20 * 60 + 30 - (7 * 60 + 30));
 });
+
+test('החלון הנמדד גובר על הלוח', () => {
+  // הלוח אמר 07:30–20:30 והמדידה 09:00–21:34, ולכן 20% מהמנות נפלו
+  // "אחרי סוף החלון" והבוט שתק דווקא בשעות שבהן הוא כן לוקח.
+  const measured = { ...G.DEFAULT_PLAN, winStart: 540, winEnd: 1294 };
+  assert.deepEqual(G.windowOf(measured), { start: 540, end: 1294 });
+  const d = day({ gum: 5, ev: [gumAt(18, 0)] });
+  assert.notEqual(G.dueNow(measured, ISO, d, 21 * 60).why, 'אחרי סוף החלון');
+  // ובלי מדידה — נופלים ללוח כרגיל
+  assert.equal(G.windowOf({ ...G.DEFAULT_PLAN }).end, 20 * 60 + 30);
+});
+
+test('חלון לא תקין לא נלקח', () => {
+  const bad = { ...G.DEFAULT_PLAN, winStart: 1200, winEnd: 600 };
+  assert.equal(G.windowOf(bad).end, 20 * 60 + 30, 'חלון הפוך התקבל');
+});
+
+test('הרצפה הזמנית מזוהה — 12 שבועות מהגמילה', () => {
+  // הקבוע היה מוגדר ואף אחד לא קרא אותו: "אם לא התחלת עד 17.10,
+  // התחל בכל זאת" היה הבטחה בתוכנית בלי מימוש בקוד.
+  const pending = { ...G.DEFAULT_PLAN, confirmedTaper: false };
+  assert.equal(G.backstopPassed(pending, '2026-10-16'), false);
+  assert.equal(G.backstopPassed(pending, G.TAPER_BACKSTOP), true);
+  assert.equal(G.backstopPassed(pending, '2026-11-01'), true);
+  // אחרי אישור — לא רלוונטי
+  assert.equal(G.backstopPassed({ ...pending, confirmedTaper: true }, '2026-11-01'), false);
+});
+
+test('הרצפה הזמנית היא 12 שבועות בדיוק מהגמילה', () => {
+  assert.equal(G.TAPER_BACKSTOP, '2026-10-17');
+  assert.ok(G.TAPER_BACKSTOP > G.TAPER_START, 'הרצפה לפני תחילת הצמצום');
+});

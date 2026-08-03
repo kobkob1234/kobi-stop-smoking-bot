@@ -500,6 +500,44 @@ async function tick(env) {
   if (!meta.quiet) {
 
     // --- 15.9: יום פתיחת התצמצום — שואלים לפני שמתחילים ---
+    // הרצפה הזמנית: אם לא אושר עד 12 שבועות מהגמילה, מתחילים בכל זאת
+    // ובקצב איטי יותר. תנאי-מצב פתוח לגמרי אומר שהצמצום עלול לא
+    // להתחיל לעולם — וזה כשל אמיתי בדיוק כמו לצמצם מוקדם מדי.
+    if (G.backstopPassed(plan, iso) && !meta.sent[`${iso}:backstop`]) {
+      meta.sent[`${iso}:backstop`] = 1;
+      dirty = true;
+      plan.confirmedTaper = true;
+      plan.taperStartISO = iso;
+      plan.stepDays = 6;                       // איטי מהרגיל, כי לא נבחר
+      const b14 = await ANL.collect(env, iso, 14);
+      const rhB = G.measureRhythm(b14);
+      if (rhB.days >= 5 && rhB.gap) {
+        plan.mode = 'interval'; plan.baseGap = rhB.gap; plan.gapStepPct = G.GAP_STEP_PCT;
+        plan.winStart = rhB.first; plan.winEnd = rhB.last;
+        plan.rhythmBasis = `${rhB.perDay} מנות ביום · מרווח ${rhB.gap} דק׳ · ${rhB.days} ימים`;
+      }
+      const bsum = k => b14.slice(0, 7).reduce((s, d) => s + (d[k] || 0), 0);
+      plan.baseline = { iso, waves: bsum('waves'), surfed: bsum('surfed'), gum: bsum('gum') };
+      meta.gumPlan = plan; touched.add('gumPlan');
+      await send(env, meta.chatId, [
+        '📉 <b>מתחילים לצמצם — ברצפה הזמנית.</b>',
+        '',
+        `עברו 12 שבועות מהגמילה, והתנאי המצבי לא התקיים. התוכנית שלך אומרת במפורש: אם לא התחלת עד ${P.fmtHe(G.TAPER_BACKSTOP)} — להתחיל בכל זאת, לאט.`,
+        '',
+        plan.mode === 'interval'
+          ? `מתחילים מהקצב שלך בפועל: <b>מרווח ${plan.baseGap} דק׳</b>, ומאריכים ב-${plan.gapStepPct}% כל ${plan.stepDays} ימים.`
+          : `יחידה אחת פחות כל ${plan.stepDays} ימים.`,
+        `<i>איטי יותר מהרגיל, כי זה לא תזמון שבחרת.</i>`,
+        '',
+        '<b>וזה הפיך לגמרי</b> — צעד אחורה או עצירה, בלחיצה.',
+      ].join('\n'), {
+        reply_markup: inline([
+          [btn('⏸️ עצור — עוד לא', 'tp:wait')],
+          [btn('↩️ צעד אחורה', 'tp:back'), btn('🍬 מצב המסטיק', 'gp:show')],
+        ]),
+      });
+    }
+
     if (taperAskDue(plan, P.diffDays(plan.taperStartISO, iso), now.minutes,
                     !!meta.sent[`${iso}:taperask`])) {
       meta.sent[`${iso}:taperask`] = 1;
@@ -605,6 +643,15 @@ async function tick(env) {
           // (62 מול 73 מסטיקים), והרשומות הן האמת.
           meta.totals = await ANL.reconcileTotals(env, iso);
           touched.add('totals');
+          // רענון החלון מהמדידה. הלוח אמר 07:30–20:30 והמציאות
+          // 09:00–21:34, ולכן 20% מהמנות נפלו מחוץ לחלון והבוט שתק
+          // דווקא בשעות שבהן הוא כן לוקח.
+          const rh14 = G.measureRhythm(await ANL.collect(env, iso, 14));
+          if (rh14.days >= 5) {
+            const gp = { ...G.DEFAULT_PLAN, ...(meta.gumPlan || {}) };
+            gp.winStart = rh14.first; gp.winEnd = rh14.last;
+            meta.gumPlan = gp; touched.add('gumPlan');
+          }
           await sendWeeklyReport(env, meta, iso);
         }
         if (await maybeEscalate(env, meta, iso)) touched.add('lastEscalationISO');

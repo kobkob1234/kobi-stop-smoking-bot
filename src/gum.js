@@ -77,6 +77,17 @@ export const TAPER_START = addDaysISO(QUIT, TOTAL_DAYS);
 // לעולם, וזה כשל אמיתי בדיוק כמו לצמצם מוקדם מדי.
 export const TAPER_BACKSTOP = addDaysISO(QUIT, 84);
 
+/**
+ * האם עבר מועד הרצפה הזמנית בלי שהצמצום התחיל.
+ *
+ * הקבוע היה מוגדר ו**אף אחד לא קרא אותו** — כלומר "אם לא התחלת עד
+ * 17.10, התחל בכל זאת" היה הבטחה בתוכנית בלי מימוש בקוד, בדיוק
+ * המחלקה שרדפנו אחריה כל הזמן. בלעדיו תנאי-מצב פתוח לגמרי אומר
+ * שהצמצום עלול לא להתחיל לעולם, והיעד נשאר 12 לנצח מול צריכה של 8.
+ */
+export const backstopPassed = (plan, iso) =>
+  !plan.confirmedTaper && iso >= TAPER_BACKSTOP;
+
 // לוח ברירת המחדל הקודם — 10 מנות. שמור כאן כדי שאפשר יהיה לזהות
 // משתמש שמעולם לא שינה אותו, ולשדרג אותו בלי לדרוס בחירה אישית.
 export const LEGACY_TIMES_V1 = [
@@ -621,7 +632,8 @@ export function windowLen(plan) {
 export function dailyTarget(plan, iso) {
   const gap = targetGap(plan, iso);
   if (gap == null) return activeTimes(plan, iso).length;
-  if (gap >= GAP_CEILING) return plan.morningFloor === false ? 0 : 1;
+  // מנת הבוקר היא הרצפה: היא מגשרת על הלילה בלי מדבקה.
+  if (gap >= GAP_CEILING) return 1;
   return Math.max(1, Math.round(windowLen(plan) / gap));
 }
 
@@ -640,6 +652,13 @@ export function dailyTarget(plan, iso) {
 export const DAY_END = 20 * 60 + 30;
 
 export function windowOf(plan) {
+  // חלון נמדד גובר על הלוח. הלוח אומר 07:30–20:30 בזמן שהמדידה אומרת
+  // 09:00–21:34, ולכן 20% מהמנות נפלו "אחרי סוף החלון" ולא נספרו —
+  // והבוט שתק בדיוק בשעות שבהן הוא כן לוקח. האורך כמעט זהה (754 מול
+  // 780 דקות); מה שהיה שגוי הוא המיקום, לא הגודל.
+  if (plan.winStart != null && plan.winEnd != null && plan.winEnd > plan.winStart) {
+    return { start: plan.winStart, end: plan.winEnd };
+  }
   const all = sortTimes(plan.times || []);
   if (!all.length) return { start: 7 * 60 + 30, end: 21 * 60 };
   const start = toMin(all[0]);
