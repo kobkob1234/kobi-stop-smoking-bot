@@ -130,7 +130,8 @@ export const PLAN_VER = 3;
  * לברירת המחדל הישנה.
  */
 export function migratePlan(plan) {
-  if (!plan || plan.ver >= PLAN_VER) return plan;
+  if (!plan) return plan;
+  if (plan.ver >= PLAN_VER) return repairPlan(plan);
   const cur = sortTimes(plan.times || []);
   const eq = ref => cur.length === ref.length && cur.every((t, i) => t === ref[i]);
   const wasDefault = eq(LEGACY_TIMES_V1) || eq(LEGACY_TIMES_V2);
@@ -140,6 +141,56 @@ export function migratePlan(plan) {
   // בפריסה — כלומר תוכנית בלי times הייתה מכבה את התזכורות לגמרי,
   // במקום ליפול לברירת המחדל כפי שקרה קודם.
   if (wasDefault) out.times = RECOMMENDED.times;
+  return repairPlan(out);
+}
+
+// ==========================================================================
+//  צורת התוכנית — צירופים לא-חוקיים, ולמה הם מסוכנים דווקא כאן
+//
+//  gumPlan נושא את **שני** המצבים בשק אחד של שדות אופציונליים. הבדיקה
+//  היחידה שמפרידה ביניהם היא `plan.mode !== 'interval' || !plan.baseGap`
+//  בתוך targetGap — ולכן `mode:'interval'` בלי `baseGap` **נופל בשקט
+//  למצב המשבצות**. אין שגיאה, אין לוג, והצמצום פשוט רץ לפי לוח אחר
+//  מזה שנבחר. זה בדיוק מנגנון הכשל שהתוכנית הזאת נפתחה בו.
+//
+//  ולמה לתקן ולא לזרוק: הבוט חי, וקריסה בתוך ה-tick משמעה שכל
+//  התזכורות נעצרות. שקט מוחלט גרוע יותר מלוח שמרני. לכן התיקון
+//  מנרמל, מסמן את הסיבה, ומשאיר את הבעיה גלויה בטקסט.
+// ==========================================================================
+
+/** מה לא תקין בצורת התוכנית. טהור, ומחזיר תיאורים קריאים. */
+export function planProblems(plan) {
+  const p = [];
+  if (!plan) return ['אין תוכנית'];
+  if (plan.mode !== undefined && plan.mode !== 'interval' && plan.mode !== 'slot') {
+    p.push(`mode לא מוכר: ${JSON.stringify(plan.mode)}`);
+  }
+  if (plan.mode === 'interval' && !(plan.baseGap > 0)) {
+    p.push('mode=interval בלי baseGap — ייפול בשקט למשבצות');
+  }
+  if (plan.mode === 'interval' && !(plan.winEnd > plan.winStart)) {
+    p.push('mode=interval בלי חלון נמדד תקין');
+  }
+  if (plan.stepDays !== undefined && !(plan.stepDays >= 1)) {
+    p.push(`stepDays לא חוקי: ${plan.stepDays}`);
+  }
+  if (plan.confirmedTaper && !plan.taperStartISO) {
+    p.push('הצמצום אושר בלי תאריך התחלה');
+  }
+  return p;
+}
+
+/** מנרמל תוכנית פגומה למצב המשבצות השמרני, ומשאיר עקבות. */
+export function repairPlan(plan) {
+  const problems = planProblems(plan);
+  if (!problems.length) return plan;
+  console.log('gumPlan פגום, מתקן:', problems.join(' | '));
+  const out = { ...plan, planRepaired: problems };
+  if (problems.some(x => x.startsWith('mode'))) {
+    out.mode = 'slot';
+    out.rhythmBasis = `נפל למשבצות: ${problems.filter(x => x.startsWith('mode')).join(', ')}`;
+  }
+  if (out.stepDays !== undefined && !(out.stepDays >= 1)) out.stepDays = 4;
   return out;
 }
 

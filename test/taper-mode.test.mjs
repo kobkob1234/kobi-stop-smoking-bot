@@ -335,3 +335,67 @@ test('ג3 · חריגת חלון-הסיכון נעצרת ב-21:00, גם שהחל
   assert.equal(at(21 * 60 + 5).due, false, 'החריגה נמשכה מעבר ל-21:00');
   assert.equal(at(21 * 60 + 25).due, false, 'הוצעה מנה נוספת סמוך לשינה');
 });
+
+// ==========================================================================
+//  ג2 · צורת התוכנית — הצירוף שנופל בשקט
+// ==========================================================================
+
+test('ג2 · תוכנית תקינה אינה מדווחת על בעיות ואינה משתנה', () => {
+  assert.deepEqual(G.planProblems(G.DEFAULT_PLAN), []);
+  assert.equal(G.repairPlan(G.DEFAULT_PLAN), G.DEFAULT_PLAN, 'תוכנית תקינה שוכפלה');
+  assert.deepEqual(G.planProblems(ivPlan()), []);
+});
+
+test('ג2 · mode=interval בלי baseGap מזוהה ולא נופל בשקט', () => {
+  // זה הצירוף המסוכן: targetGap מחזיר null, dailyTarget עובר למשבצות,
+  // ואין שום סימן לכך בשום מקום.
+  const bad = { ...G.DEFAULT_PLAN, mode: 'interval', winStart: 540, winEnd: 1294 };
+  const probs = G.planProblems(bad);
+  assert.ok(probs.some(p => p.includes('baseGap')), probs.join(' | '));
+
+  const fixed = G.repairPlan(bad);
+  assert.equal(fixed.mode, 'slot', 'לא נורמל למשבצות');
+  assert.ok(fixed.planRepaired.length, 'התיקון לא השאיר עקבות');
+  assert.match(fixed.rhythmBasis, /נפל למשבצות/, 'הסיבה אינה גלויה בטקסט');
+});
+
+test('ג2 · כל צירוף פגום מזוהה', () => {
+  const cases = [
+    ['mode לא מוכר',        { mode: 'weird' }],
+    ['interval בלי חלון',   { mode: 'interval', baseGap: 91 }],
+    ['stepDays אפס',        { stepDays: 0 }],
+    ['אישור בלי תאריך',     { confirmedTaper: true, taperStartISO: null }],
+  ];
+  for (const [name, over] of cases) {
+    const probs = G.planProblems({ ...G.DEFAULT_PLAN, ...over });
+    assert.ok(probs.length > 0, `${name}: לא זוהה`);
+  }
+});
+
+test('ג2 · התיקון מחזיר תוכנית שעוברת את הבדיקה, ושומר על ההתנהגות', () => {
+  const bad = { ...G.DEFAULT_PLAN, mode: 'interval', stepDays: 0, confirmedTaper: true,
+                taperStartISO: ISO };
+  const fixed = G.repairPlan(bad);
+  assert.equal(fixed.stepDays, 4);
+  // אחרי התיקון התוכנית עדיין מייצרת יעד שפוי ומגיעה לאפס
+  assert.ok(G.dailyTarget(fixed, ISO) > 0);
+  let prev = Infinity;
+  for (let d = 0; d <= 200; d++) {
+    const t = G.dailyTarget(fixed, P.addDaysISO(ISO, d));
+    assert.ok(t <= prev, 'התיקון שבר את המונוטוניות');
+    prev = t;
+  }
+  assert.equal(prev, 0, 'תוכנית מתוקנת אינה מגיעה לאפס');
+});
+
+test('ג2 · migratePlan מריץ את התיקון, ולא רק בשדרוג גרסה', () => {
+  // תוכנית שכבר בגרסה הנוכחית חוזרת דרך migratePlan בכל קריאת getMeta.
+  // אם התיקון היה רק בענף השדרוג, מצב פגום היה שורד לנצח.
+  const cur = { ...G.DEFAULT_PLAN, ver: G.PLAN_VER, mode: 'interval' };
+  assert.equal(G.migratePlan(cur).mode, 'slot', 'תוכנית בגרסה נוכחית לא תוקנה');
+
+  const old = { ver: 1, times: G.LEGACY_TIMES_V1, mode: 'interval' };
+  const out = G.migratePlan(old);
+  assert.equal(out.ver, G.PLAN_VER);
+  assert.equal(out.mode, 'slot');
+});
