@@ -509,9 +509,9 @@ async function tick(env) {
       dirty = true;
       plan.confirmedTaper = true;
       plan.taperStartISO = iso;
-      plan.stepDays = 6;                       // איטי מהרגיל, כי לא נבחר
       const b14 = await ANL.collect(env, iso, 14);
-      G.chooseTaperMode(plan, b14);
+      // slow: הצמצום הזה לא נבחר אלא הופעל אוטומטית, ולכן רץ איטי יותר.
+      G.chooseTaperMode(plan, b14, { slow: true });
       const bsum = k => b14.slice(0, 7).reduce((s, d) => s + (d[k] || 0), 0);
       plan.baseline = { iso, waves: bsum('waves'), surfed: bsum('surfed'), gum: bsum('gum') };
       meta.gumPlan = plan; touched.add('gumPlan');

@@ -194,12 +194,19 @@ export function repairPlan(plan) {
   return out;
 }
 
+// צעדים לפי מצב. המרווח זקוק ליותר צעדים כדי לרוקן חלון שלם, ולכן
+// הוא צועד תכופות יותר; המשבצות מורידות מנה שלמה בכל צעד ולכן איטיות
+// יותר. בלי ההפרדה הזאת מצב-המשבצות — שהוא **הנפילה השמרנית**, לשימוש
+// דווקא כשאין מספיק נתונים — היה מסיים ב-3.10, מוקדם מהמצב המדוד.
+// הנפילה הזהירה לא אמורה להיות המהירה.
+export const STEP_DAYS = { interval: 2, slot: 4 };
+
 export const DEFAULT_PLAN = {
   ver: PLAN_VER,
   on: true,
   times: RECOMMENDED.times,
   taperStartISO: TAPER_START,
-  stepDays: 4,           // יחידה אחת פחות כל 4 ימים
+  stepDays: STEP_DAYS.slot,   // נדרס על ידי chooseTaperMode לפי המצב שנבחר
   confirmedTaper: false, // האם אישר שהוא מוכן להתחיל לצמצם
   pausedISO: null,       // אם הצמצום הוקפא — התאריך שבו הוקפא
 };
@@ -343,18 +350,24 @@ export const RHYTHM_MIN_DAYS = 5;
  *
  * @returns {{mode:'interval'|'slot', reason:string}} ומשנה את plan במקום
  */
-export function chooseTaperMode(plan, days14) {
+export function chooseTaperMode(plan, days14, { slow = false } = {}) {
   const rh = measureRhythm(days14 || []);
+  // הקצב נקבע כאן ולא באתר הקריאה. `slow` הוא נתיב הרצפה הזמנית:
+  // צמצום שלא נבחר אלא הופעל אוטומטית רץ איטי יותר, וקודם הוא קידד
+  // את זה כ-stepDays=6 קשיח — מספר שנשבר ברגע שהקצב הבסיסי השתנה.
+  const step = m => Math.round(STEP_DAYS[m] * (slow ? 1.5 : 1));
   if (rh.days >= RHYTHM_MIN_DAYS && rh.gap) {
     plan.mode = 'interval';
     plan.baseGap = rh.gap;
     plan.gapStepPct = GAP_STEP_PCT;
+    plan.stepDays = step('interval');
     plan.winStart = rh.first;
     plan.winEnd = rh.last;
     plan.rhythmBasis = `${rh.perDay} מנות ביום · מרווח ${rh.gap} דק׳ · ${rh.days} ימים`;
     return { mode: 'interval', reason: plan.rhythmBasis };
   }
   plan.mode = 'slot';
+  plan.stepDays = step('slot');
   plan.rhythmBasis = `רק ${rh.days} ימים מדודים — פחות מ-${RHYTHM_MIN_DAYS}`;
   return { mode: 'slot', reason: plan.rhythmBasis };
 }
@@ -749,7 +762,25 @@ export const BACKOFF = 90;     // ואחרי תזכורת שלא נענתה — 
 //  (הסייג: מבחינת ניקוטין הצעד קבוע ממילא — 0.9 מ"ג. הטיעון פסיכולוגי.)
 // ==========================================================================
 
-export const GAP_STEP_PCT = 10;     // הארכת המרווח בכל צעד
+// ==========================================================================
+//  הקצב כויל לתאריך סיום, ולא נבחר בשרירות.
+//
+//  10% כל 4 ימים היה קצב סביר בלי יעד — והוא הגיע לאפס רק ב-24.12,
+//  כלומר כ-5 חודשים מהגמילה. זה לא היה מכוון: אף אחד לא חישב את
+//  התאריך, כי אף בדיקה לא הריצה את המסלול עד הסוף.
+//
+//  היעד עכשיו: **לסיים ברגע שזה נכון, ולא לגרור.** 20% כל יומיים
+//  מגיע לאפס ב-15.10 — 11.7 שבועות מהגמילה, כלומר בדיוק בקצה קורס
+//  ה-NRT הסטנדרטי (8–12 שבועות), ובאותו שבוע שהתוכנית כבר מציינת
+//  (17.10, הרצפה הזמנית).
+//
+//  ומה שלא זז: הצמצום עדיין מתחיל **רק אחרי המדבקה האחרונה**. המסטיק
+//  הוא רשת הביטחון של כל מדרגת מדבקה (21→14 ב-18.8, 14→7 ב-1.9),
+//  ולסיים אותו לפני 14.9 פירושו להסיר שתי רשתות במקביל. הסיום מוקדם
+//  יותר הושג בקצב, לא בהקדמת ההתחלה.
+// ==========================================================================
+export const GAP_STEP_PCT = 20;     // הארכת המרווח בכל צעד
+
 export const GAP_CEILING = 12 * 60; // מעבר לזה — מנת הבוקר בלבד
 // וכמה צעדים נשארים על מנת הבוקר לפני האפס. בלי זה מצב-מרווח היה
 // נתקע על 1 לנצח והמרווח היה מתנפח למספרים חסרי משמעות (מעל מיליון

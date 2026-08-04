@@ -448,3 +448,89 @@ test('ג1.4 · המספר שהכפתור מדווח הוא היעד האמיתי
   assert.notEqual(G.dailyTarget(after, iso), G.activeTimes(after, iso).length,
     'שני המספרים זהים כאן — הבדיקה לא תופסת את הבאג');
 });
+
+// ==========================================================================
+//  ב2 · תאריך הסיום בפועל — הלוק שהיה חסר
+//
+//  כל בדיקות הצמצום מקבעות gapStepPct ו-stepDays ב-fixture משלהן, ולכן
+//  אף אחת מהן לא בדקה את **ברירת המחדל**. כך יצא שהקצב 10%/4d הגיע
+//  לאפס רק ב-24.12 — כ-5 חודשים מהגמילה — בלי שאיש חישב את התאריך.
+//
+//  הבדיקות כאן רצות על הקבועים האמיתיים ועל נתוני ה-KV האמיתיים, כי
+//  זה המסלול שירוץ בפועל ב-15.9.
+// ==========================================================================
+
+const realDays = (() => {
+  const dir = join(HERE, '..', '..', 'backups', 'days-20260803');
+  if (!existsSync(dir)) return null;
+  return readdirSync(dir).filter(f => f.endsWith('.json')).sort().reverse()
+    .map(f => JSON.parse(readFileSync(join(dir, f), 'utf8')));
+})();
+
+/** מריץ את הצמצום עד האפס ומחזיר את התאריך והמסלול */
+function taperRun(days, opts) {
+  const plan = { ...G.DEFAULT_PLAN, on: true, confirmedTaper: true,
+                 taperStartISO: G.TAPER_START };
+  G.chooseTaperMode(plan, days, opts);
+  const traj = []; let prev = null;
+  for (let d = 0; d < 400; d++) {
+    const iso = P.addDaysISO(G.TAPER_START, d);
+    const t = G.dailyTarget(plan, iso);
+    if (t !== prev) { traj.push(t); prev = t; }
+    if (t === 0) return { plan, traj, zero: iso, days: d };
+  }
+  return { plan, traj, zero: null, days: null };
+}
+
+test('ב2 · הצמצום שנבחר מסתיים באוקטובר, לא בדצמבר', () => {
+  assert.ok(realDays, 'גיבוי הימים חסר');
+  const r = taperRun(realDays.slice(0, 14), {});
+  assert.equal(r.plan.mode, 'interval');
+  assert.ok(r.zero >= '2026-10-01' && r.zero <= '2026-10-31',
+    `הסיום ב-${r.zero} — מחוץ לחלון שנקבע`);
+  // 8–12 שבועות הוא קורס ה-NRT הסטנדרטי; חורגים מעט ולא בהרבה
+  const weeks = P.diffDays(P.QUIT, r.zero) / 7;
+  assert.ok(weeks >= 10 && weeks <= 13, `${weeks.toFixed(1)} שבועות מהגמילה`);
+});
+
+test('ב2 · הצמצום עדיין מתחיל רק אחרי המדבקה האחרונה', () => {
+  // הקיצור הושג בקצב, לא בהקדמת ההתחלה. המסטיק הוא רשת הביטחון של
+  // כל מדרגת מדבקה, ולסיים אותו לפני 14.9 זה להסיר שתי רשתות יחד.
+  assert.ok(G.TAPER_START > P.planFor(P.QUIT).lastPatchISO);
+  const r = taperRun(realDays.slice(0, 14), {});
+  assert.ok(r.zero > P.planFor(P.QUIT).lastPatchISO,
+    'הצמצום נגמר לפני שהמדבקות נגמרו');
+});
+
+test('ב2 · הנפילה השמרנית אינה מהירה מהמצב המדוד', () => {
+  // מצב-המשבצות משמש כשאין מספיק נתונים. אם הוא היה מסיים מוקדם יותר,
+  // חוסר-הידע היה מזרז את הצמצום — בדיוק ההפך מהכוונה.
+  const measured = taperRun(realDays.slice(0, 14), {});
+  const blind = taperRun([], {});
+  assert.equal(blind.plan.mode, 'slot');
+  assert.ok(blind.zero >= measured.zero,
+    `הנפילה העיוורת (${blind.zero}) מסיימת לפני המדודה (${measured.zero})`);
+});
+
+test('ב2 · הרצפה הזמנית איטית מהצמצום שנבחר', () => {
+  // צמצום שהופעל אוטומטית ולא נבחר — רץ לאט יותר.
+  const chosen = taperRun(realDays.slice(0, 14), {});
+  const auto = taperRun(realDays.slice(0, 14), { slow: true });
+  assert.ok(auto.plan.stepDays > chosen.plan.stepDays);
+  assert.ok(auto.zero > chosen.zero, 'הרצפה הזמנית אינה איטית יותר');
+});
+
+test('ב2 · כל מסלול מגיע לאפס, ובלי קפיצות', () => {
+  for (const [name, days, opts] of [
+    ['נבחר', realDays.slice(0, 14), {}],
+    ['רצפה זמנית', realDays.slice(0, 14), { slow: true }],
+    ['משבצות', [], {}],
+  ]) {
+    const r = taperRun(days, opts);
+    assert.ok(r.zero, `${name}: לא מגיע לאפס`);
+    for (let i = 1; i < r.traj.length; i++) {
+      assert.equal(r.traj[i - 1] - r.traj[i], 1,
+        `${name}: קפיצה של ${r.traj[i - 1] - r.traj[i]} מנות בבת אחת`);
+    }
+  }
+});
