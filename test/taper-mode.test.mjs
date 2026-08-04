@@ -163,6 +163,96 @@ for (const [name, plan] of [
   });
 }
 
+// ==========================================================================
+//  ב2 · סך הניקוטין — הבדיקה היחידה שמסתכלת על מה שנכנס לגוף
+//
+//  לכל אחד משני המקורות יש לוח משלו, והם יורדים בזמנים שונים: המדבקה
+//  21→14 ביום 25 ו-14→7 ביום 39, בזמן שהמסטיק עוד לא התחיל לרדת בכלל.
+//  אף בדיקה לא הצליבה אותם, ולכן שינוי סביר בצד אחד יכול היה לייצר
+//  **עלייה** בסך הכול בלי שאיש ישים לב.
+// ==========================================================================
+
+test('ב2 · סך הניקוטין היומי לעולם אינו עולה — מדבקה ומסטיק יחד', () => {
+  const plan = ivPlan({ taperStartISO: G.TAPER_START });
+  const total = iso => {
+    const pl = P.planFor(iso);
+    const patch = pl && pl.n <= P.TOTAL_DAYS ? pl.dose : 0;
+    return patch + G.dailyTarget(plan, iso) * 2;   // מסטיק 2 מ"ג
+  };
+
+  let prev = Infinity, drops = 0;
+  for (let d = 0; d < 200; d++) {
+    const iso = P.addDaysISO(P.QUIT, d);
+    const cur = total(iso);
+    assert.ok(cur <= prev, `${iso} (יום ${d + 1}): סך הניקוטין עלה ${prev}→${cur} מ"ג`);
+    if (cur < prev) drops++;
+    prev = cur;
+  }
+  assert.ok(drops >= 4, `רק ${drops} ירידות — הלוח כמעט שטוח`);
+  assert.equal(prev, 0, 'לא הגיע לאפס ניקוטין');
+});
+
+test('ב2 · אין קפיצה גדולה מדי בשום יום בודד', () => {
+  // מדרגה חדה מדי היא הסיכון הקליני האמיתי. הגדולה ביותר המתוכננת
+  // היא הורדת המדבקה 21→14, כלומר 7 מ"ג.
+  const plan = ivPlan({ taperStartISO: G.TAPER_START });
+  const total = iso => {
+    const pl = P.planFor(iso);
+    return (pl && pl.n <= P.TOTAL_DAYS ? pl.dose : 0) + G.dailyTarget(plan, iso) * 2;
+  };
+  for (let d = 1; d < 200; d++) {
+    const a = total(P.addDaysISO(P.QUIT, d - 1));
+    const b = total(P.addDaysISO(P.QUIT, d));
+    assert.ok(a - b <= 9, `יום ${d + 1}: ירידה של ${a - b} מ"ג ביום אחד`);
+  }
+});
+
+// ==========================================================================
+//  ב2 · מעבר שעון החורף — 25.10.2026, בתוך הצמצום
+// ==========================================================================
+
+test('ב2 · dropsSoFar אינו מדלג ואינו סופר יום פעמיים בשעון החורף', () => {
+  // dropsSoFar נשען על diffDays שעובד ב-UTC, והמעבר נופל בתוך הצמצום.
+  const plan = ivPlan({ taperStartISO: '2026-10-01', stepDays: 4 });
+  const seen = [];
+  for (let d = 0; d <= 40; d++) {
+    const iso = P.addDaysISO('2026-10-01', d);
+    seen.push(G.taperInfo(plan, iso).dropsSoFar);
+  }
+  // מונוטוני, עולה ב-1 בכל פעם, ובדיוק כל 4 ימים
+  for (let i = 1; i < seen.length; i++) {
+    assert.ok(seen[i] >= seen[i - 1], `נסיגה ביום ${i}`);
+    assert.ok(seen[i] - seen[i - 1] <= 1, `קפיצה כפולה ביום ${i}: ${seen[i - 1]}→${seen[i]}`);
+  }
+  assert.equal(seen[40], 10, `אחרי 40 ימים בצעדי 4 — צפוי 10, התקבל ${seen[40]}`);
+});
+
+test('ב2 · הצעד נופל ביום המדויק — לא מוקדם ולא מאוחר', () => {
+  // בדיקת המונוטוניות לבדה אינה תופסת החלפת floor ב-round: הקצב נשאר
+  // צעד לכל 4 ימים, אבל **הפאזה** זזה והצעד יורה יומיים מוקדם. על פני
+  // צמצום שלם זה מקדים את כל הלוח.
+  const step = 4;
+  const plan = ivPlan({ taperStartISO: G.TAPER_START, stepDays: step });
+  for (let d = 0; d < step; d++) {
+    assert.equal(G.taperInfo(plan, P.addDaysISO(G.TAPER_START, d)).dropsSoFar, 0,
+      `יום ${d} מהתחלת הצמצום כבר ספר צעד`);
+  }
+  assert.equal(G.taperInfo(plan, P.addDaysISO(G.TAPER_START, step)).dropsSoFar, 1,
+    `הצעד הראשון לא נפל ביום ${step}`);
+  assert.equal(G.taperInfo(plan, P.addDaysISO(G.TAPER_START, 2 * step - 1)).dropsSoFar, 1);
+  assert.equal(G.taperInfo(plan, P.addDaysISO(G.TAPER_START, 2 * step)).dropsSoFar, 2);
+});
+
+test('ב2 · היעד יציב סביב 25.10 עצמו', () => {
+  const plan = ivPlan({ taperStartISO: '2026-10-01' });
+  for (const iso of ['2026-10-24', '2026-10-25', '2026-10-26']) {
+    assert.equal(typeof G.dailyTarget(plan, iso), 'number');
+    assert.ok(G.dailyTarget(plan, iso) >= 0, `יעד שלילי ב-${iso}`);
+  }
+  // היום שאחרי המעבר אינו קופץ מעלה
+  assert.ok(G.dailyTarget(plan, '2026-10-26') <= G.dailyTarget(plan, '2026-10-24'));
+});
+
 test('ב2 · המרווח לא מתנפח למספרים חסרי משמעות', () => {
   // הכשל שכבר תוקן פעם: היעד נתקע על 1 והמרווח גדל מעבר למיליון דקות.
   const plan = ivPlan();

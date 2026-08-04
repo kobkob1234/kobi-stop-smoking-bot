@@ -420,9 +420,11 @@ export function taperInfo(plan, iso) {
   }
   const all = sortTimes(plan.times || []);
   const step = Math.max(1, plan.stepDays || 4);
-  const effective = plan.pausedISO && plan.pausedISO < iso ? plan.pausedISO : iso;
-  const days = Math.max(0, diffDays(plan.taperStartISO, effective));
-  const dropsSoFar = Math.floor(days / step);
+  // ספירת הצעדים מגיעה מהפונקציה המשותפת, ואינה מחושבת כאן מחדש.
+  // כשהיו כאן שני מימושים — אחד שמניע את היעד ואחד שמניע את התצוגה —
+  // הם יכלו להיפרד בשקט, ואז המסך היה מראה התקדמות אחת בזמן שהמינון
+  // עוקב אחרי אחרת. (נתפס בבדיקת מוטציה: floor→round שינה רק אחד מהם.)
+  const drops = dropsSoFar(plan, iso);
   const paused = !!plan.pausedISO;
 
   // ------------------------------------------------------------------
@@ -442,13 +444,13 @@ export function taperInfo(plan, iso) {
     const cur = dailyTarget(plan, iso);
     return {
       mode, active: cur, start: dailyTarget(plan, plan.taperStartISO),
-      step, dropsSoFar, atFloor: cur === 0, paused,
+      step, dropsSoFar: drops, atFloor: cur === 0, paused,
       pausedISO: plan.pausedISO || null,
       gap: targetGap(plan, iso),
-      nextGap: targetGap(plan, addDaysISO(plan.taperStartISO, (dropsSoFar + 1) * step)),
+      nextGap: targetGap(plan, addDaysISO(plan.taperStartISO, (drops + 1) * step)),
       gapStepPct: plan.gapStepPct || GAP_STEP_PCT,
       nextDropISO: cur === 0 || paused
-        ? null : addDaysISO(plan.taperStartISO, (dropsSoFar + 1) * step),
+        ? null : addDaysISO(plan.taperStartISO, (drops + 1) * step),
       nextToGo: null,          // אין משבצת שנופלת — המרווח מתארך
     };
   }
@@ -466,11 +468,11 @@ export function taperInfo(plan, iso) {
     active: active.length,
     start: all.length,
     step,
-    dropsSoFar,
+    dropsSoFar: drops,
     atFloor,
     paused,
     pausedISO: plan.pausedISO || null,
-    nextDropISO: atFloor || paused ? null : addDaysISO(plan.taperStartISO, (dropsSoFar + 1) * step),
+    nextDropISO: atFloor || paused ? null : addDaysISO(plan.taperStartISO, (drops + 1) * step),
     nextToGo,
   };
 }
