@@ -399,3 +399,52 @@ test('ג2 · migratePlan מריץ את התיקון, ולא רק בשדרוג ג
   assert.equal(out.ver, G.PLAN_VER);
   assert.equal(out.mode, 'slot');
 });
+
+// ==========================================================================
+//  ג1.4 · פקדי הצמצום — "הבטחה = מימוש" על הכפתורים הקליניים
+//
+//  "עצור" ו"צעד אחורה" הם היחידים שהמשתמש לוחץ כשמשהו משתבש, ולכן
+//  היחידים שחייבים לעבוד בדיוק. "הקפאה שלא הקפיאה" כבר הייתה באג כאן.
+// ==========================================================================
+
+for (const [name, plan] of [
+  ['מרווח', ivPlan({ taperStartISO: '2026-09-15' })],
+  ['משבצות', { ...G.DEFAULT_PLAN, on: true, confirmedTaper: true,
+               taperStartISO: '2026-09-15', stepDays: 4 }],
+]) {
+  test(`ג1.4 · "עצור" באמת מקפיא — ${name}`, () => {
+    const at = '2026-10-01';
+    const paused = { ...plan, pausedISO: at };
+    const frozen = G.dailyTarget(paused, at);
+    for (const d of [1, 4, 8, 16, 32]) {
+      const iso = P.addDaysISO(at, d);
+      assert.equal(G.dailyTarget(paused, iso), frozen,
+        `${iso}: היעד זז למרות ההקפאה`);
+    }
+    // ובלי הקפאה הוא כן יורד — אחרת הבדיקה חסרת משמעות
+    assert.ok(G.dailyTarget(plan, P.addDaysISO(at, 16)) < frozen,
+      'הלוח לא יורד בכלל, ולכן ההקפאה אינה מוכיחה דבר');
+  });
+
+  test(`ג1.4 · "צעד אחורה" מחזיר בדיוק דרגה אחת — ${name}`, () => {
+    const iso = '2026-10-05';
+    const before = G.dailyTarget(plan, iso);
+    // בדיוק מה שהמטפל עושה: דוחף את נקודת ההתחלה בצעד אחד ומשחרר הקפאה
+    const after = { ...plan, pausedISO: null,
+      taperStartISO: P.addDaysISO(plan.taperStartISO, plan.stepDays) };
+    const t = G.dailyTarget(after, iso);
+    assert.ok(t > before, `${name}: הצעד אחורה לא הקל (${before}→${t})`);
+    assert.equal(G.taperInfo(after, iso).dropsSoFar,
+      G.taperInfo(plan, iso).dropsSoFar - 1, 'לא בדיוק דרגה אחת');
+  });
+}
+
+test('ג1.4 · המספר שהכפתור מדווח הוא היעד האמיתי', () => {
+  // הבאג: ההודעה אמרה activeTimes().length, שבמצב-מרווח הוא מספר אחר.
+  const plan = ivPlan({ taperStartISO: '2026-09-15' });
+  const iso = '2026-10-05';
+  const after = { ...plan, pausedISO: null,
+    taperStartISO: P.addDaysISO(plan.taperStartISO, plan.stepDays) };
+  assert.notEqual(G.dailyTarget(after, iso), G.activeTimes(after, iso).length,
+    'שני המספרים זהים כאן — הבדיקה לא תופסת את הבאג');
+});
