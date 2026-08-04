@@ -510,12 +510,7 @@ async function tick(env) {
       plan.taperStartISO = iso;
       plan.stepDays = 6;                       // איטי מהרגיל, כי לא נבחר
       const b14 = await ANL.collect(env, iso, 14);
-      const rhB = G.measureRhythm(b14);
-      if (rhB.days >= 5 && rhB.gap) {
-        plan.mode = 'interval'; plan.baseGap = rhB.gap; plan.gapStepPct = G.GAP_STEP_PCT;
-        plan.winStart = rhB.first; plan.winEnd = rhB.last;
-        plan.rhythmBasis = `${rhB.perDay} מנות ביום · מרווח ${rhB.gap} דק׳ · ${rhB.days} ימים`;
-      }
+      G.chooseTaperMode(plan, b14);
       const bsum = k => b14.slice(0, 7).reduce((s, d) => s + (d[k] || 0), 0);
       plan.baseline = { iso, waves: bsum('waves'), surfed: bsum('surfed'), gum: bsum('gum') };
       meta.gumPlan = plan; touched.add('gumPlan');
@@ -1293,7 +1288,6 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
     }
     case 'gumplan': {
       const plan = { ...G.DEFAULT_PLAN, ...(meta.gumPlan || {}) };
-      const active = G.activeTimes(plan, iso);
       const t = G.taperInfo(plan, iso);
       const day = await getDay(env, iso);
       const w = G.windowOf(plan);
@@ -1301,21 +1295,35 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
       const L = [
         '🍬 <b>תוכנית המסטיק</b>',
         '─────────────',
-        `מצב: <b>${plan.on ? 'פעיל ✅' : 'כבוי 🔇'}</b> · יעד היום <b>${active.length}</b> יחידות`,
+        // r.target הוא היעד האמיתי בשני המצבים. active.length הוא מספר
+        // המשבצות, ובמצב-מרווח הוא פשוט מספר אחר — 9 בזמן שהיעד 8.
+        `מצב: <b>${plan.on ? 'פעיל ✅' : 'כבוי 🔇'}</b> · יעד היום <b>${r.target}</b> יחידות`,
         `חלון: ${G.hhmm(w.start)}–${G.hhmm(w.end)} · לפי הקצב שלך, לא לפי שעון קבוע`,
         '',
-        `היום: <b>${day.gum}</b> מתוך ${active.length}${r.since !== null ? ` · האחרונה לפני ${r.since} דק׳` : ' · עוד לא היתה'}`,
+        `היום: <b>${day.gum}</b> מתוך ${r.target}${r.since !== null ? ` · האחרונה לפני ${r.since} דק׳` : ' · עוד לא היתה'}`,
         `עכשיו: <b>${r.due ? 'כדאי לקחת' : 'לא צריך'}</b> — ${r.why}`,
         '',
         '<i>אין שעות קבועות. אני סופר כמה יחידות נשארו וכמה שעות נשארו בחלון, ומזכיר רק כשאתה מתחת לקצב — או אחרי 2.5 שעות בלי כלום. יחידה שלקחת ביוזמתך נספרת בדיוק כמו כל אחרת ומזיזה את התזכורת הבאה.</i>',
         `<i>לא מזכיר בתוך ${G.MIN_GAP} דק׳ מהיחידה האחרונה, ולא יותר מפעם ב-${G.GAP_REMIND} דק׳ — ואם התעלמת מהתזכורת הקודמת, ${G.BACKOFF} דק׳.</i>`,
       ];
       if (t) {
+        // הניסוח חייב לעקוב אחרי המנגנון. במצב-מרווח אין "משבצת שנופלת",
+        // ו-nextToGo הוא null — הגרסה הקודמת הייתה מדפיסה כאן ממש
+        // "הבאה שנופלת: null".
+        const iv = t.mode === 'interval';
+        const how = iv
+          ? `המרווח מתארך ב-${t.gapStepPct}% כל ${t.step} ימים`
+          : `יחידה אחת פחות כל ${t.step} ימים`;
+        const next = t.atFloor
+          ? (iv ? 'הגעת לסוף — אפס מנות' : 'הגעת לרצפה (בוקר בלבד)')
+          : iv
+            ? `הבא: ${t.nextGap} דק׳ ב-${P.fmtHe(t.nextDropISO)}`
+            : `הבאה שנופלת: ${t.nextToGo} ב-${P.fmtHe(t.nextDropISO)}`;
         L.push('', t.pending
-          ? `📉 תצמצום: <b>ממתין לאישור שלך</b> · מתוכנן מ-${P.fmtHe(plan.taperStartISO)}, יחידה אחת פחות כל ${t.step} ימים. עד שתאשר — נשארים על ${t.start}.`
+          ? `📉 תצמצום: <b>ממתין לאישור שלך</b> · מתוכנן מ-${P.fmtHe(plan.taperStartISO)}, ${how}. עד שתאשר — נשארים על ${t.start}.`
           : t.dropsSoFar > 0
-            ? `📉 בתצמצום: ${t.active} מתוך ${t.start} · ${t.atFloor ? 'הגעת לרצפה (בוקר בלבד)' : `הבאה שנופלת: ${t.nextToGo} ב-${P.fmtHe(t.nextDropISO)}`}`
-            : `📉 התצמצום אושר ומתחיל ב-<b>${P.fmtHe(plan.taperStartISO)}</b> — יחידה אחת פחות כל ${t.step} ימים.`);
+            ? `📉 בתצמצום: <b>${t.active}</b> מתוך ${t.start}${iv ? ` · מרווח ${t.gap} דק׳` : ''} · ${next}`
+            : `📉 התצמצום אושר ומתחיל ב-<b>${P.fmtHe(plan.taperStartISO)}</b> — ${how}.`);
       }
       // ---- מה הנתונים מראים ----
       // בלי התצוגה הזאת הניתוח קיים ולא נראה, וגם אי אפשר לחלוק עליו.
@@ -1776,19 +1784,17 @@ async function onCallback(cb, env) {
 
       // מעבר למצב-מרווח, על בסיס הקצב הנמדד. אם אין מספיק מדידות
       // נשארים במצב המשבצות — עדיף לוח שמרני מבסיס שנשען על יומיים.
-      const rh = G.measureRhythm(b14);
-      if (rh.days >= 5 && rh.gap) {
-        plan.mode = 'interval';
-        plan.baseGap = rh.gap;
-        plan.gapStepPct = G.GAP_STEP_PCT;
-        plan.winStart = rh.first;
-        plan.winEnd = rh.last;
-        plan.rhythmBasis = `${rh.perDay} מנות ביום · מרווח ${rh.gap} דק׳ · ${rh.days} ימים`;
-      }
+      G.chooseTaperMode(plan, b14);
       meta.gumPlan = plan; await putMeta(env, meta);
       await answer(env, cb.id, 'התצמצום התחיל');
       const t = G.taperInfo(plan, iso);
-      return send(env, chatId, `📉 <b>התצמצום התחיל.</b>\n\n${t.start} יחידות עכשיו · יחידה אחת פחות כל ${t.step} ימים · הראשונה שנופלת: <b>${t.nextToGo}</b> ב-${P.fmtHe(t.nextDropISO)}.\n\nיחידת הבוקר נשארת אחרונה — היא מכסה את הלילה בלי מדבקה.\n\n<b>ואני ממשיך לבדוק.</b> כל שבוע אשווה את הדחפים והמעידות לקו-הבסיס של עכשיו (${plan.baseline.waves} דחפים בשבוע), ואם המצב מחמיר אציע צעד אחורה — לא אחכה שתבקש.\n\n<i>אין פרס על מהירות.</i>`);
+      // הטקסט חייב לתאר את המנגנון שירוץ בפועל. הגרסה הקודמת הייתה
+      // משבצתית תמיד, ולכן במצב-מרווח היא הבטיחה "יחידה אחת פחות כל
+      // 4 ימים · הראשונה שנופלת 14:15" — שלוש טענות שגויות.
+      const how = t.mode === 'interval'
+        ? `<b>${t.active} מנות ביום</b> עכשיו · המרווח מתארך מ-<b>${t.gap} דק׳</b> ב-${t.gapStepPct}% כל ${t.step} ימים (הבא: ${t.nextGap} דק׳ ב-${P.fmtHe(t.nextDropISO)}).\n\n<i>מבוסס על ${plan.rhythmBasis}.</i>\n\nהמרווח הוא הממד שבו אתה באמת מתנהג — 90% מהמנות ביוזמתך ולא מתזכורת, ולכן הורדת תזכורת לא מורידה צריכה, והארכת מרווח כן.`
+        : `<b>${t.start} יחידות</b> עכשיו · יחידה אחת פחות כל ${t.step} ימים · הראשונה שנופלת: <b>${t.nextToGo}</b> ב-${P.fmtHe(t.nextDropISO)}.\n\n<i>${plan.rhythmBasis} — ולכן לוח משבצות ולא מרווח.</i>\n\nיחידת הבוקר נשארת אחרונה — היא מכסה את הלילה בלי מדבקה.`;
+      return send(env, chatId, `📉 <b>התצמצום התחיל.</b>\n\n${how}\n\n<b>ואני ממשיך לבדוק.</b> כל שבוע אשווה את הדחפים והמעידות לקו-הבסיס של עכשיו (${plan.baseline.waves} דחפים בשבוע), ואם המצב מחמיר אציע צעד אחורה — לא אחכה שתבקש.\n\n<i>אין פרס על מהירות.</i>`);
     }
     if (what === 'back') {
       // דחיפת נקודת ההתחלה קדימה בצעד אחד מחזירה בדיוק דרגה אחת,

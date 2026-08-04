@@ -172,6 +172,51 @@ test('I7 · כל כרטיס KB נשלף, וכל ייחוס מוכר', () => {
   }
 });
 
+// ==========================================================================
+//  I9 · החלטת מצב הצמצום — נקודה אחת, ושני הנתיבים עוברים בה
+// ==========================================================================
+
+test('I9 · שני נתיבי הצמצום קוראים ל-chooseTaperMode ואינם משכפלים אותה', () => {
+  // ההחלטה ישבה מועתקת בשני מקומות ב-index.js. עותקים יכולים להיפרד
+  // בשקט, ואף אחד מהם לא היה ניתן לבדיקה. אם מישהו יחזיר את ההשמה
+  // הישירה — כאן זה ייעצר.
+  const idx = SRC['index.js'];
+  const calls = [...idx.matchAll(/chooseTaperMode\(/g)].length;
+  assert.equal(calls, 2, `נמצאו ${calls} קריאות — צפויות שתיים (אישור + רצפה זמנית)`);
+
+  // הבדיקה האמיתית: ההחלטה עצמה — ההשמה ל-mode — שייכת ל-gum.js בלבד.
+  // קריאה ל-measureRhythm לתצוגה היא לגיטימית ואינה החלטה, ולכן אינה
+  // נאסרת כאן; מה שנאסר הוא לקבוע את המצב מחוץ לנקודה האחת.
+  const assigns = [...idx.matchAll(/\bplan\.mode\s*=[^=]/g)].length;
+  assert.equal(assigns, 0, 'index.js מציב plan.mode ישירות — ההחלטה שוב משוכפלת');
+});
+
+test('I9 · הודעת תחילת הצמצום מתארת את המנגנון שירוץ בפועל', () => {
+  // "הבטחה = מימוש" בגרסתו החמורה ביותר: ההודעה הזאת נשלחת פעם אחת,
+  // ביום שבו הצמצום מתחיל. הגרסה הקודמת הבטיחה "יחידה אחת פחות כל 4
+  // ימים · הראשונה שנופלת 14:15" גם כשהמנגנון היה מרווח.
+  const idx = SRC['index.js'];
+  const i = idx.indexOf('התצמצום התחיל');
+  assert.ok(i > 0, 'הודעת תחילת הצמצום נעלמה');
+  const around = idx.slice(i, i + 1800);
+  assert.match(around, /t\.mode === 'interval'/, 'ההודעה אינה מסתעפת לפי המצב');
+  assert.match(around, /t\.gap/, 'ענף המרווח אינו מציג את המרווח');
+  assert.match(around, /nextToGo/, 'ענף המשבצות איבד את המשבצת שנופלת');
+});
+
+test('I9 · אף צרכן של taperInfo אינו מניח משבצות', () => {
+  // nextToGo הוא null במצב-מרווח. כל שימוש בו חייב להיות מוגן.
+  const t = G.taperInfo({
+    ...G.DEFAULT_PLAN, on: true, confirmedTaper: true,
+    taperStartISO: G.TAPER_START, stepDays: 4,
+    mode: 'interval', baseGap: 91, gapStepPct: 10, winStart: 540, winEnd: 1294,
+  }, G.TAPER_START);
+  assert.equal(t.nextToGo, null);
+  assert.equal(typeof t.active, 'number');
+  assert.ok(t.active > 0, 'היעד ביום הראשון של הצמצום הוא אפס');
+  assert.ok(t.gap > 0, 'המרווח לא דווח, ולכן אין מה להציג במקום המשבצת');
+});
+
 test('I8 · ציר התוכנית עקבי מקצה לקצה', () => {
   const first = P.planFor(P.QUIT);
   const last = P.planFor(P.addDaysISO(P.QUIT, P.TOTAL_DAYS - 1));

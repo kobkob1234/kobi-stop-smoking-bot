@@ -274,6 +274,40 @@ export function measureRhythm(daysArr) {
   };
 }
 
+/** מינימום ימים מדודים כדי לבסס עליהם מצב-מרווח */
+export const RHYTHM_MIN_DAYS = 5;
+
+/**
+ * בחירת מצב הצמצום מתוך הקצב הנמדד — **ההחלטה היחידה בתהליך שנורית פעם
+ * אחת ואינה חוזרת.** היא קובעת אם הצמצום יהיה לפי מרווח (מה שנבחר) או
+ * לפי משבצות (הנפילה השמרנית).
+ *
+ * הייתה מועתקת בשני מקומות ב-index.js — נתיב האישור ונתיב הרצפה הזמנית —
+ * ולכן לא הייתה ניתנת לבדיקה משום צד, ושני העותקים יכלו להיפרד בשקט.
+ * כאן היא טהורה, ולכן נבדקת.
+ *
+ * מתחת ל-RHYTHM_MIN_DAYS נשארים במצב המשבצות: עדיף לוח שמרני מבסיס
+ * שנשען על יומיים. הנפילה הזאת שקטה במכוון, אבל **חייבת להיות גלויה
+ * בטקסט** — ראה `taperInfo().mode`.
+ *
+ * @returns {{mode:'interval'|'slot', reason:string}} ומשנה את plan במקום
+ */
+export function chooseTaperMode(plan, days14) {
+  const rh = measureRhythm(days14 || []);
+  if (rh.days >= RHYTHM_MIN_DAYS && rh.gap) {
+    plan.mode = 'interval';
+    plan.baseGap = rh.gap;
+    plan.gapStepPct = GAP_STEP_PCT;
+    plan.winStart = rh.first;
+    plan.winEnd = rh.last;
+    plan.rhythmBasis = `${rh.perDay} מנות ביום · מרווח ${rh.gap} דק׳ · ${rh.days} ימים`;
+    return { mode: 'interval', reason: plan.rhythmBasis };
+  }
+  plan.mode = 'slot';
+  plan.rhythmBasis = `רק ${rh.days} ימים מדודים — פחות מ-${RHYTHM_MIN_DAYS}`;
+  return { mode: 'slot', reason: plan.rhythmBasis };
+}
+
 /**
  * שיהוי תזכורת→מנה, בדקות. חציון.
  * נמדד מאירוע 'r' (תזכורת נשלחה) עד אירוע ה-'g' הבא באותו יום.
@@ -379,18 +413,48 @@ export function activeTimes(plan, iso) {
 export function taperInfo(plan, iso) {
   if (!plan.taperStartISO) return null;
   if (!plan.confirmedTaper) {
-    return { pending: true, active: sortTimes(plan.times || []).length,
+    return { pending: true, mode: plan.mode === 'interval' ? 'interval' : 'slot',
+             active: sortTimes(plan.times || []).length,
              start: sortTimes(plan.times || []).length, step: Math.max(1, plan.stepDays || 4),
              dropsSoFar: 0, atFloor: false, nextDropISO: null, nextToGo: null };
   }
   const all = sortTimes(plan.times || []);
-  const active = activeTimes(plan, iso);
   const step = Math.max(1, plan.stepDays || 4);
   const effective = plan.pausedISO && plan.pausedISO < iso ? plan.pausedISO : iso;
   const days = Math.max(0, diffDays(plan.taperStartISO, effective));
   const dropsSoFar = Math.floor(days / step);
-  const atFloor = active.length === 0;
   const paused = !!plan.pausedISO;
+
+  // ------------------------------------------------------------------
+  //  מצב-מרווח — הסתעפות שלא הייתה כאן, וזה היה באג אמיתי.
+  //
+  //  taperInfo היה משבצתי בלבד, וכל ארבעת הצרכנים שלו הציגו מספרי
+  //  משבצות. ההודעה שנשלחת ברגע תחילת התצמצום (index.js) אמרה
+  //  "9 יחידות עכשיו · יחידה אחת פחות כל 4 ימים · הראשונה שנופלת 14:15"
+  //  בזמן שבמצב-מרווח היעד ביום הראשון הוא 8, הוא **לא** יורד כל 4
+  //  ימים, ושום משבצת אינה נופלת. שלוש טענות שגויות ביום החשוב ביותר.
+  //
+  //  במצב-מרווח היעד אינו מספר המשבצות אלא כמה מנות נכנסות בחלון
+  //  במרווח היעד — ולכן הוא נגזר מ-dailyTarget, ו-nextToGo חסר משמעות.
+  // ------------------------------------------------------------------
+  const mode = plan.mode === 'interval' ? 'interval' : 'slot';
+  if (mode === 'interval') {
+    const cur = dailyTarget(plan, iso);
+    return {
+      mode, active: cur, start: dailyTarget(plan, plan.taperStartISO),
+      step, dropsSoFar, atFloor: cur === 0, paused,
+      pausedISO: plan.pausedISO || null,
+      gap: targetGap(plan, iso),
+      nextGap: targetGap(plan, addDaysISO(plan.taperStartISO, (dropsSoFar + 1) * step)),
+      gapStepPct: plan.gapStepPct || GAP_STEP_PCT,
+      nextDropISO: cur === 0 || paused
+        ? null : addDaysISO(plan.taperStartISO, (dropsSoFar + 1) * step),
+      nextToGo: null,          // אין משבצת שנופלת — המרווח מתארך
+    };
+  }
+
+  const active = activeTimes(plan, iso);
+  const atFloor = active.length === 0;
   // המנה הבאה שתיפול נגזרת מסדר ההורדה, לא מ"האחרונה ברשימה" — אחרת
   // התצוגה הייתה מבטיחה שתיפול מנת ערב בזמן שבפועל נופלת מנת צהריים.
   const order = Array.isArray(plan.dropOrder) && plan.dropOrder.length
@@ -398,6 +462,7 @@ export function taperInfo(plan, iso) {
     : dropOrderOf(all);
   const nextToGo = atFloor || paused ? null : order.find(t => active.includes(t)) || null;
   return {
+    mode,
     active: active.length,
     start: all.length,
     step,
