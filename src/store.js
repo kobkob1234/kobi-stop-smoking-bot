@@ -170,6 +170,25 @@ export async function updateDay(env, iso, fn) {
   return d;
 }
 
+// ==========================================================================
+//  הסקירה השבועית — `w:ISO`
+//
+//  הקריאה והכתיבה ישבו ב-index.js מול env.KV ישירות, כלומר שכבת
+//  הנתונים לא ידעה שהמפתח הזה קיים. זה לא סיכון לשלמות (זו מחרוזת
+//  חופשית ולא רשומה מובנית, ולכן strip לא רלוונטי) אבל זה כן אומר
+//  ששני מקומות בקוד צריכים לזכור את אותה תבנית מפתח בעל-פה.
+//
+//  התקרה: KV מוגבל, והרפלקציה נכתבת ביד — 4000 תווים הם התקרה
+//  שנקבעה בכתיבה, וחיתוך חייב לקרות פעם אחת ובמקום אחד.
+// ==========================================================================
+export const WEEKLY_MAX = 4000;
+export const weeklyKey = iso => `w:${iso}`;
+
+export const getWeekly = (env, iso) => env.KV.get(weeklyKey(iso));
+
+export const putWeekly = (env, iso, text) =>
+  env.KV.put(weeklyKey(iso), String(text).slice(0, WEEKLY_MAX));
+
 // ניקוי מפתחות "נשלח" ישנים כדי שה-meta לא יגדל לנצח
 export function pruneSent(meta, todayISO) {
   const keep = {};

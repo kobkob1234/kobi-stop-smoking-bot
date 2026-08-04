@@ -263,3 +263,75 @@ test('ב2 · המרווח לא מתנפח למספרים חסרי משמעות',
       `מרווח ${G.targetGap(plan, iso)} ביום ${d}`);
   }
 });
+
+// ==========================================================================
+//  ג3 · מרווח התזכורות למשתמש שמגיב מהר
+//
+//  הענף `gumSinceRemind ? GAP_REMIND : BACKOFF` נראה מת: שלוש מוטציות
+//  נפרדות (GAP_REMIND=5, =90, ומחיקת הענף כליל) עברו את כל 390 הטסטים.
+//  אבל מדידה ישירה הראתה שהוא **כן** קובע — למי שלוקח מנה תוך ~15 דקות
+//  מהתזכורת הוא נותן 80 דקות בין תזכורות במקום 90.
+//
+//  כלומר לא הקוד היה מת אלא הכיסוי. זה בדיוק המקרה שבו מחיקת "קוד מת"
+//  הייתה משנה התנהגות בשקט.
+// ==========================================================================
+
+/** מריץ יום שלם ומחזיר את המרווחים בין תזכורות */
+function reminderGaps(delayAfterRemind) {
+  const iso = '2026-08-03';
+  const plan = { ...G.DEFAULT_PLAN, on: true };
+  let taken = 0, lastR = null, ev = [], prev = null;
+  const gaps = [];
+  for (let m = 0; m < 24 * 60; m += 5) {
+    const r = G.dueNow(plan, iso, { gum: taken, ev }, m, lastR, 18, 0);
+    if (!r || !r.due) continue;
+    if (prev !== null) gaps.push(m - prev);
+    prev = m; lastR = m;
+    const t = m + delayAfterRemind;
+    ev = [...ev, { k: 'g', h: Math.floor(t / 60), m: t % 60 }];
+    taken++;
+  }
+  return gaps;
+}
+
+test('ג3 · מי שלוקח מהר מקבל 80 דק׳ בין תזכורות, לא 90', () => {
+  for (const delay of [5, 15]) {
+    const gaps = reminderGaps(delay);
+    assert.ok(gaps.length > 0, `אין תזכורות כלל בעיכוב ${delay}`);
+    assert.equal(Math.min(...gaps), 80,
+      `עיכוב ${delay} דק׳: המרווח המינימלי ${Math.min(...gaps)} — הענף של GAP_REMIND הפסיק לקבוע`);
+  }
+});
+
+test('ג3 · מי שלוקח לאט נשלט על ידי MIN_GAP מהמנה', () => {
+  // כאן MIN_GAP (60 מהמנה) הוא שחוסם, והמרווח גדל עם העיכוב.
+  assert.equal(Math.min(...reminderGaps(45)), 105);
+  assert.equal(Math.min(...reminderGaps(60)), 120);
+});
+
+test('ג3 · שום מרווח בין תזכורות אינו קטן מ-80 דק׳', () => {
+  // ההבטחה למשתמש. אם היא נשברת, הטקסט ב-/מסטיקים וב-README שקרי.
+  for (const delay of [0, 5, 15, 30, 45, 60]) {
+    const gaps = reminderGaps(delay);
+    if (!gaps.length) continue;
+    assert.ok(Math.min(...gaps) >= 80,
+      `עיכוב ${delay}: מרווח ${Math.min(...gaps)} דק׳ — מתחת להבטחה`);
+  }
+});
+
+test('ג3 · חריגת חלון-הסיכון נעצרת ב-21:00, גם שהחלון נמשך עד 21:30', () => {
+  // שני גבולות שונים לחלון הסיכון, בכוונה: dropOrderOf מותח עד המנה
+  // האחרונה כדי לסווג משבצות נכון, ו-dueNow נשאר על 21:00 כי מתן מנה
+  // **מעבר ליעד** סמוך לשינה אינו רצוי. הבדיקה מקבעת את ההבדל.
+  const iso = '2026-08-03';
+  const plan = { ...G.DEFAULT_PLAN, on: true };
+  const target = G.dailyTarget(plan, iso);
+  // יעד הושלם, והמנה האחרונה לפני הרבה זמן — התנאי לחריגה
+  const day = { gum: target, ev: [{ k: 'g', h: 14, m: 0 }] };
+
+  const at = m => G.dueNow(plan, iso, day, m, null, 18, 0);
+  assert.equal(at(19 * 60).due, true, 'בתוך חלון הסיכון החריגה לא פעלה');
+  assert.equal(at(20 * 60 + 55).due, true, 'רגע לפני 21:00 החריגה לא פעלה');
+  assert.equal(at(21 * 60 + 5).due, false, 'החריגה נמשכה מעבר ל-21:00');
+  assert.equal(at(21 * 60 + 25).due, false, 'הוצעה מנה נוספת סמוך לשינה');
+});

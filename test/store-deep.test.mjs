@@ -180,3 +180,27 @@ test('המיגרציות חלות על הנתונים האמיתיים', { skip:
   assert.equal(G.dailyTarget({ ...G.DEFAULT_PLAN, ...m.gumPlan }, '2026-08-02'), G.RECOMMENDED.times.length);
   assert.equal(m.gumSoftCap, 18);
 });
+
+// ==========================================================================
+//  ב5 · הסקירה השבועית — המפתח שהיה מחוץ לשכבת הנתונים
+// ==========================================================================
+
+test('ב5 · סקירה שבועית: כתיבה, קריאה, וחיתוך במקום אחד', async () => {
+  const kv = makeKV(); const env = makeEnv(kv);
+  assert.equal(await S.getWeekly(env, '2026-08-01'), null, 'מפתח שלא נכתב אינו null');
+
+  await S.putWeekly(env, '2026-08-01', 'רפלקציה');
+  assert.equal(await S.getWeekly(env, '2026-08-01'), 'רפלקציה');
+  assert.equal(kv._store['w:2026-08-01'], 'רפלקציה', 'תבנית המפתח השתנתה');
+
+  // החיתוך חייב לקרות פעם אחת ובמקום אחד, ולא בכל קורא בנפרד
+  await S.putWeekly(env, '2026-08-08', 'א'.repeat(S.WEEKLY_MAX + 500));
+  assert.equal((await S.getWeekly(env, '2026-08-08')).length, S.WEEKLY_MAX);
+});
+
+test('ב5 · סקירה אינה מתערבבת עם רשומות היום', async () => {
+  const kv = makeKV(); const env = makeEnv(kv);
+  await S.putWeekly(env, '2026-08-01', 'טקסט');
+  const d = await S.getDay(env, '2026-08-01');
+  assert.equal(d._exists, false, 'סקירה שבועית נספרה כרשומת יום');
+});

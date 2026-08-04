@@ -803,6 +803,15 @@ export function dueNow(plan, iso, day, nowMinutes, lastRemindMin = null, softCap
   const taken = day.gum || 0;
   const { start, end } = windowOf(plan);
   const since = minutesSinceLastGum(day, nowMinutes);
+  // כאן RISK_END נשאר 21:00 קבוע — **בכוונה**, ובניגוד ל-dropOrderOf
+  // שמותח את הגבול עד המנה האחרונה בפועל (21:30). שתי הגדרות, שתי
+  // מטרות:
+  //   • dropOrderOf שואל "לאיזה גוש שייכת המשבצת", ולכן חייב לכסות
+  //     כל משבצת קיימת — אחרת 21:30 מסווגת כאמצע-יום ויורדת מוקדם.
+  //   • כאן השאלה היא "האם להציע מנה **מעבר ליעד**", וזו חריגה
+  //     קלינית הקשורה לחלון הסיכון עצמו. ב-21:15, כשהיעד כבר הושלם,
+  //     תוספת ניקוטין סמוך לשינה אינה מה שרוצים.
+  // הבדל מכוון, לא שכחה. נעול ב-"החריגה נעצרת ב-21:00".
   const inRisk = nowMinutes >= RISK_START && nowMinutes < RISK_END;
 
   const base = { target, taken, since, start, end };
@@ -838,11 +847,16 @@ export function dueNow(plan, iso, day, nowMinutes, lastRemindMin = null, softCap
     // סנוז שפג **מדלג** על הנסיגה. בלי זה הרצפה שנקבעה ב-index.js
     // נבלעת בתקרה שכאן, והבטחת ה-"אזכיר ב-10:51" הופכת ל-12:10.
     const snoozeExpired = snoozedTo && nowMinutes >= snoozedTo;
-    // הערה על GAP_REMIND: הענף הזה כמעט לעולם אינו נחתך בפועל.
-    // `gumSinceRemind` אמיתי פירושו שיש מסטיק בזמן g >= lastRemind,
-    // ולכן `since <= now - lastRemind` — כלומר MIN_GAP (60) תמיד חוסם
-    // קודם. הוא נשאר כרשת למקרה היחיד שבו since הוא null בזמן שיש
-    // אירוע (אירוע עם חותמת עתידית), ולא כדי לקבוע מרווח.
+    // GAP_REMIND **כן** קובע מרווח, בניגוד למה שכתוב כאן קודם.
+    //
+    // הטענה הקודמת הייתה ש-MIN_GAP (60 מהמנה) תמיד חוסם קודם ולכן
+    // הענף מת. זה נכון רק כשהמנה נלקחת מאוחר. מי שלוקח מהר — בתוך
+    // ~15 דקות מהתזכורת — משחרר את MIN_GAP מוקדם, ואז דווקא הענף
+    // הזה הוא שקובע: **80 דקות בין תזכורות במקום 90.** נמדד, לא
+    // משוער, ונעול בבדיקה ("מרווח התזכורות למשתמש שמגיב מהר").
+    //
+    // וזה גם מסביר למה הטקסט למשתמש נאמר ב-80 ולא ב-60: 60 הוא
+    // הקלט לחישוב, לא התוצאה. אין להבטיח קבוע שאינו הרצפה בפועל.
     const wait = gumSinceRemind ? GAP_REMIND : BACKOFF;
     if (!snoozeExpired && nowMinutes - lastRemindMin < wait) {
       return { ...base, due: false, why: gumSinceRemind ? 'תזכורת לפני פחות משעה' : 'ממתין — התזכורת הקודמת לא נענתה' };

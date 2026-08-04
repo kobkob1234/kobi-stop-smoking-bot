@@ -13,7 +13,7 @@ import * as AI from './ai.js';
 import * as ANL from './analytics.js';
 import * as INT from './intent.js';
 import * as G from './gum.js';
-import { getMeta, putMeta, getDay, updateDay, pruneSent, recentHist, pushHist } from './store.js';
+import { getMeta, putMeta, getDay, updateDay, pruneSent, recentHist, pushHist, getWeekly, putWeekly } from './store.js';
 import { SLOTS, slotAction, mergeTickMeta, taperAskDue, taperWatchDue } from './tick-logic.js';
 import { notifyPartner, alertPartner } from './partner.js';
 
@@ -308,7 +308,7 @@ export default {
         const weeklies = {};
         for (const d of days) {
           if (d.dow !== 6) continue;                 // נכתבות במוצ״ש
-          const w = await env.KV.get(`w:${d.iso}`);
+          const w = await getWeekly(env, d.iso);
           if (w) weeklies[d.iso] = w;
         }
         const out = {
@@ -832,7 +832,7 @@ async function onMessage(msg, env) {
       return;
     }
     if (field === 'weekly') {
-      await env.KV.put(`w:${iso}`, text.slice(0, 4000));
+      await putWeekly(env, iso, text);
       await send(env, chatId, '🗓️ הסקירה השבועית נשמרה. <i>מודדים שחרורים, לא רק ימים.</i>');
       return;
     }
@@ -1305,7 +1305,7 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
         `עכשיו: <b>${r.due ? 'כדאי לקחת' : 'לא צריך'}</b> — ${r.why}`,
         '',
         '<i>אין שעות קבועות. אני סופר כמה יחידות נשארו וכמה שעות נשארו בחלון, ומזכיר רק כשאתה מתחת לקצב — או אחרי 2.5 שעות בלי כלום. יחידה שלקחת ביוזמתך נספרת בדיוק כמו כל אחרת ומזיזה את התזכורת הבאה.</i>',
-        `<i>לא מזכיר בתוך ${G.MIN_GAP} דק׳ מהיחידה האחרונה, ולא יותר מפעם ב-${G.GAP_REMIND} דק׳ — ואם התעלמת מהתזכורת הקודמת, ${G.BACKOFF} דק׳.</i>`,
+        `<i>לא מזכיר בתוך ${G.MIN_GAP} דק׳ מהיחידה האחרונה. בפועל המרווח בין תזכורות הוא לפחות ~80 דק׳ — ואם התעלמת מהקודמת, ${G.BACKOFF} דק׳.</i>`,
       ];
       if (t) {
         // הניסוח חייב לעקוב אחרי המנגנון. במצב-מרווח אין "משבצת שנופלת",
