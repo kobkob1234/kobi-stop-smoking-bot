@@ -592,7 +592,7 @@ async function tick(env) {
           meta.gumPlan = plan;
           touched.add('gumPlan');
         }
-        const n = G.activeTimes(plan, iso).length;
+        const n = G.dailyTarget(plan, iso);   // היעד האמיתי, לא מספר המשבצות
         await send(env, meta.chatId, [
           tw.lowCoverage
             ? '⏸️ <b>בדיקת התצמצום — אין לי מספיק נתונים.</b>'
@@ -1536,9 +1536,9 @@ async function logGum(chatId, env, iso, meta, now) {
   const m = await getMeta(env); m.totals.gum += 1; await putMeta(env, m);
 
   const plan = { ...G.DEFAULT_PLAN, ...(meta.gumPlan || {}) };
-  const active = plan.on ? G.activeTimes(plan, iso) : [];
+  const target = plan.on ? G.dailyTarget(plan, iso) : 0;
   const lines = [`🍬 <b>נרשם.</b>`];
-  lines.push(`היום: <b>${day.gum}</b> מתוך ${active.length || '—'} · <i>${day.gumSched || 0} אחרי תזכורת · ${day.gumExtra || 0} ביוזמתך</i>`);
+  lines.push(`היום: <b>${day.gum}</b> מתוך ${target || '—'} · <i>${day.gumSched || 0} אחרי תזכורת · ${day.gumExtra || 0} ביוזמתך</i>`);
   lines.push(`<i>שניהם נספרים ליעד — והתזכורת הבאה נדחית בהתאם.</i>`);
   if (day.gum % 4 === 1) {
     lines.push('', '<b>לעוס-והנח:</b> ללעוס עד עקצוץ ← להפסיק ← להניח בין החניכיים ללחי ← לחזור כשהעקצוץ נחלש. ~30 דקות.');
@@ -1752,7 +1752,7 @@ async function onCallback(cb, env) {
       plan.pausedISO = null;
       meta.gumPlan = plan; await putMeta(env, meta);
       await answer(env, cb.id, 'חזרנו צעד אחורה');
-      const n = G.activeTimes(plan, iso).length;
+      const n = G.dailyTarget(plan, iso);
       return send(env, chatId, `↩️ <b>צעד אחורה.</b> חזרת ל-<b>${n}</b> יחידות ביום, וכל הירידות הבאות נדחו ב-${plan.stepDays} ימים.\n\n<i>זו לא נסיגה. התוכנית אומרת במפורש: אם צריך להתאמץ כדי להפחית, עוד לא הזמן. הניקוטין הוא הזנב, לא הכלב — והכלב הוא מה שאתה שומר עליו עכשיו.</i>`);
     }
     if (what === 'keep') {

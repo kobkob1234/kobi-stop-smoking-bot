@@ -173,6 +173,28 @@ test('I7 · כל כרטיס KB נשלף, וכל ייחוס מוכר', () => {
   }
 });
 
+test('I11 · שום טקסט למשתמש אינו סופר משבצות', () => {
+  // activeTimes מחזיר את מספר **המשבצות**. במצב-מרווח זה פשוט מספר
+  // אחר מהיעד, ולכן כל הודעה שמציגה אותו כ"כמה מנות היום" משקרת.
+  // זה נמצא בשלושה מקומות בבת אחת — ניטור הצמצום, כפתור "צעד אחורה",
+  // ורישום המסטיק, שהיא ההודעה הנפוצה ביותר בבוט.
+  // היעד האמיתי בשני המצבים הוא dailyTarget, והוא המקור היחיד המותר.
+  assert.ok(!/activeTimes\(/.test(SRC['index.js']),
+    'index.js סופר משבצות במקום להשתמש ב-dailyTarget');
+});
+
+test('I11 · dailyTarget ו-activeTimes נפרדים דווקא במצב-מרווח', () => {
+  // אם השניים היו זהים תמיד, האינווריאנטה שלמעלה הייתה חסרת משמעות.
+  const iv = {
+    ...G.DEFAULT_PLAN, on: true, confirmedTaper: true,
+    taperStartISO: G.TAPER_START, stepDays: 4,
+    mode: 'interval', baseGap: 91, gapStepPct: 10, winStart: 540, winEnd: 1294,
+  };
+  const iso = P.addDaysISO(G.TAPER_START, 20);
+  assert.notEqual(G.dailyTarget(iv, iso), G.activeTimes(iv, iso).length,
+    'שני המספרים זהים — הבדיקה שלמעלה כבר לא בודקת כלום');
+});
+
 test('I10 · רק store.js ניגש ל-KV', () => {
   // הסקירה השבועית נכתבה ונקראה ישירות מ-index.js, כלומר שכבת הנתונים
   // לא ידעה שהמפתח קיים ושני מקומות החזיקו את אותה תבנית בעל-פה.
