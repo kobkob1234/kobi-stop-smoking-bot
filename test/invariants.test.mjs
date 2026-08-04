@@ -14,6 +14,7 @@ import * as P from '../src/plan.js';
 import * as G from '../src/gum.js';
 import * as KB from '../src/kb.js';
 import { sanitizeModelText } from '../src/core.js';
+import { mergeTickMeta } from '../src/tick-logic.js';
 import { day, gumAt } from './helpers.mjs';
 
 const read = f => readFileSync(new URL(`../src/${f}`, import.meta.url), 'utf8');
@@ -170,6 +171,82 @@ test('I7 · כל כרטיס KB נשלף, וכל ייחוס מוכר', () => {
   for (const c of KB.KB) {
     assert.ok(c.k.some(k => KB.search(k, 5).some(h => h.id === c.id)), `${c.id} לא נשלף`);
   }
+});
+
+// ==========================================================================
+//  S7 · tick ↔ callbacks — המרוץ
+//
+//  ה-tick קורא meta, עובד ~250 שורות (כולל קריאות רשת), ואז כותב.
+//  בזמן הזה המשתמש יכול ללחוץ כפתור ולכתוב meta משלו. הפתרון בקוד:
+//  לקרוא meta טרי לפני הכתיבה, ולהחיל עליו רק את השדות שה-tick באמת
+//  נגע בהם — הסט `touched`.
+//
+//  הבאג האפשרי כאן אינו בפונקציית המיזוג (היא טהורה ומכוסה) אלא
+//  ב**חוסר**: שדה שה-tick מציב ושוכחים להוסיף ל-touched פשוט נעלם
+//  בכתיבה. זה שקט לחלוטין — אין שגיאה, רק ערך שחוזר לאחור.
+//  לכן הבדיקה כאן היא על השלמות, ונגזרת מהקוד עצמו ולא מרשימה ידנית.
+// ==========================================================================
+
+const TICK_BODY = (() => {
+  const s = SRC['index.js'];
+  const i = s.indexOf('async function tick(env)');
+  const j = s.indexOf('\nasync function sendWeeklyReport');
+  assert.ok(i > 0 && j > i, 'לא נמצא גוף ה-tick');
+  return s.slice(i, j);
+})();
+
+test('S7 · כל שדה שה-tick מציב נמצא ב-touched', () => {
+  const assigned = new Set(
+    [...TICK_BODY.matchAll(/\bmeta\.([A-Za-z_]\w*)\s*(?:=[^=]|\+\+|--)/g)].map(m => m[1]));
+  const touched = new Set(
+    [...TICK_BODY.matchAll(/touched\.add\('([^']+)'\)/g)].map(m => m[1]));
+
+  const missing = [...assigned].filter(k => !touched.has(k));
+  assert.deepEqual(missing, [],
+    `שדות שה-tick מציב ואינם ב-touched — הם ייעלמו בכתיבה: ${missing.join(', ')}`);
+});
+
+test('S7 · גם שדות שעוזרים מציבים על meta נמצאים ב-touched', () => {
+  // maybeEscalate מקבל את meta ומציב עליו lastEscalationISO. שדה כזה
+  // אינו נראה בגוף ה-tick, ולכן בדיקה שמסתכלת רק שם הייתה מפספסת אותו.
+  const idx = SRC['index.js'];
+  const touched = new Set(
+    [...TICK_BODY.matchAll(/touched\.add\('([^']+)'\)/g)].map(m => m[1]));
+
+  for (const [, fn] of TICK_BODY.matchAll(/\b(\w+)\(env, meta[,)]/g).map(m => [0, m[1]])) {
+    const k = idx.indexOf(`function ${fn}(`);
+    if (k < 0) continue;                       // מיובא — נבדק במקומו
+    const body = idx.slice(k, idx.indexOf('\n}\n', k));
+    for (const m of body.matchAll(/\bmeta\.([A-Za-z_]\w*)\s*=[^=]/g)) {
+      assert.ok(touched.has(m[1]),
+        `${fn} מציב meta.${m[1]} וה-tick אינו מסמן אותו ב-touched`);
+    }
+  }
+});
+
+test('S7 · ה-tick קורא meta טרי לפני הכתיבה, ולא כותב את מה שקרא', () => {
+  const put = TICK_BODY.lastIndexOf('putMeta(');
+  const fresh = TICK_BODY.lastIndexOf('getMeta(', put);
+  assert.ok(fresh > 0 && fresh < put, 'אין קריאה חוזרת של meta לפני הכתיבה');
+  assert.ok(TICK_BODY.slice(fresh, put).includes('mergeTickMeta'),
+    'הכתיבה אינה עוברת דרך המיזוג — שינוי מקבילי יידרס');
+  assert.ok(!/putMeta\(env,\s*meta\s*\)/.test(TICK_BODY),
+    'ה-tick כותב את האובייקט שקרא בהתחלה — כל לחיצה במקביל נמחקת');
+});
+
+test('S7 · לחיצה במקביל שורדת, והשדה שה-tick נגע בו מנצח', () => {
+  // המרוץ עצמו, מקצה לקצה על פונקציית המיזוג.
+  const atStart = { sent: {}, gumRemindMin: 100, sos: null, partnerChatId: 5 };
+  const tickMeta = { ...atStart, gumRemindMin: 620, sent: { 'x:gum': 1 } };
+
+  // בזמן שה-tick עבד, המשתמש לחץ — וזה מה שיש עכשיו ב-KV
+  const fresh = { ...atStart, sos: { level: 3 }, lastPartnerAlert: 1234, sent: { 'x:sos': 1 } };
+
+  const out = mergeTickMeta(fresh, tickMeta, new Set(['gumRemindMin']));
+  assert.deepEqual(out.sos, { level: 3 }, 'הלחיצה נדרסה');
+  assert.equal(out.lastPartnerAlert, 1234, 'חותמת ההתראה נדרסה — מגרה נפתחת מחדש');
+  assert.equal(out.gumRemindMin, 620, 'השדה שה-tick נגע בו לא נשמר');
+  assert.deepEqual(out.sent, { 'x:sos': 1, 'x:gum': 1 }, 'sent אינו איחוד');
 });
 
 // ==========================================================================
