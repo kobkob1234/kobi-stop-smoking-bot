@@ -191,3 +191,66 @@ export function noteUse(meta, iso, calls = 1) {
 
 // מיוצא לבדיקות בלבד — כדי שאפשר יהיה לוודא שהאיסורים באמת בפרומפט
 export const SYSTEM_TEXT = SYSTEM;
+
+// ==========================================================================
+//  קריאה לפי תפקיד — למנוע ה-CBT
+//
+//  `ask()` למעלה משרת נתיב אחר: שאלה אחת, SYSTEM קבוע, עיגון ב-KB.
+//  המנוע צריך משהו אחר — **תפקיד** (triage/extract/fetch/respond/critique),
+//  system משלו, ורמת חשיבה שונה לכל אחד.
+//
+//  שתי מלכודות תצורה שכבר תועדו למעלה, ושתיהן חלות כאן:
+//    • כינויי "-latest" דוחים thinkingConfig ב-400
+//    • טוקני חשיבה נאכלים מ-maxOutputTokens והתשובה נחתכת באמצע מילה
+//
+//  לכן החשיבה נשלחת **רק** כשהמודל מקובע, ותקציב הפלט נדיב.
+// ==========================================================================
+
+/** מודל מקובע לתפקידים שדורשים חשיבה. ריק ⇒ רצים על הזול בלי חשיבה. */
+export const cbtModel = env => env.CBT_MODEL || '';
+
+/** תרגום `think` של התפקיד לתצורת ג׳מיני */
+const THINK = { none: 0, low: 1024, high: 8192 };
+
+/**
+ * מחזיר `call(role, prompt, system)` — בדיוק החתימה ש-`runTurn` מצפה לה.
+ *
+ * מחזיר null בכישלון, והמנוע יודע להתמודד: תור בלי `respond` מסתיים
+ * ב-`mode: 'failed'` ולא בחצי תשובה.
+ */
+export function cbtCall(env, roles, meter = null) {
+  return async (role, prompt, system) => {
+    if (!env.GEMINI_KEY) return null;
+    const cfg = roles[role] || { think: 'none', reserve: 800, temp: 0.3 };
+    const pinned = cbtModel(env);
+    const model = pinned || env.GEMINI_MODEL || 'gemini-flash-lite-latest';
+    const body = {
+      contents: [{ role: 'user', parts: [{ text: prompt }] }],
+      generationConfig: {
+        temperature: cfg.temp ?? 0.3,
+        maxOutputTokens: (cfg.reserve || 800) + (pinned ? THINK[cfg.think] || 0 : 0),
+      },
+    };
+    if (system) body.systemInstruction = { parts: [{ text: system }] };
+    // רק על מודל מקובע — ראה המלכודת למעלה.
+    if (pinned && THINK[cfg.think]) {
+      body.generationConfig.thinkingConfig = { thinkingBudget: THINK[cfg.think] };
+    }
+    if (meter) meter.calls = (meter.calls || 0) + 1;
+    try {
+      const res = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
+        { method: 'POST',
+          headers: { 'content-type': 'application/json', 'x-goog-api-key': env.GEMINI_KEY },
+          body: JSON.stringify(body), signal: timeoutSignal() });
+      const j = await res.json().catch(() => null);
+      if (!res.ok) { console.log('CBT AI', role, res.status, JSON.stringify(j).slice(0, 200)); return null; }
+      const parts = j?.candidates?.[0]?.content?.parts || [];
+      const out = parts.filter(p => !p.thought).map(p => p.text || '').join('').trim();
+      return out || null;
+    } catch (e) {
+      console.log('CBT AI', role, String(e).slice(0, 120));
+      return null;
+    }
+  };
+}

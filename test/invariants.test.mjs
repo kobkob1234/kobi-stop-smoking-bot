@@ -244,11 +244,25 @@ test('I10 · רק store.js ניגש ל-KV', () => {
 //  לכן הבדיקה כאן היא על השלמות, ונגזרת מהקוד עצמו ולא מרשימה ידנית.
 // ==========================================================================
 
+/**
+ * גוף ה-tick — **עד הסוגר התואם**, לא עד הפונקציה הבאה בשם.
+ *
+ * הגבול הקודם היה `indexOf('\\nasync function sendWeeklyReport')`, כלומר
+ * הוא נשען על מי שבמקרה מוגדר אחרי. הוספת פונקציית עזר במקום הזה
+ * גררה לתוך "גוף ה-tick" קוד שאינו שייך לו, והבדיקות S7 נכשלו על
+ * מטפל הודעות שכותב meta לגיטימית. גבול שתלוי בשכן אינו גבול.
+ */
 const TICK_BODY = (() => {
   const s = SRC['index.js'];
   const i = s.indexOf('async function tick(env)');
-  const j = s.indexOf('\nasync function sendWeeklyReport');
-  assert.ok(i > 0 && j > i, 'לא נמצא גוף ה-tick');
+  assert.ok(i > 0, 'לא נמצא גוף ה-tick');
+  let depth = 0, j = s.indexOf('{', i);
+  assert.ok(j > i, 'לא נמצא גוף');
+  for (let k = j; k < s.length; k++) {
+    if (s[k] === '{') depth++;
+    else if (s[k] === '}' && --depth === 0) { j = k + 1; break; }
+  }
+  assert.ok(j > i + 100, 'איזון הסוגריים נכשל');
   return s.slice(i, j);
 })();
 

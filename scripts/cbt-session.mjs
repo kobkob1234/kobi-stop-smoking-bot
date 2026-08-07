@@ -9,18 +9,17 @@
  * הסקריפט אינו מנהל שיחה. הוא **מגיש לסוכן את מה שצריך ורושם את מה
  * שחזר**, תור אחר תור. כך הפרוטוקול נאכף בקוד ולא בזיכרון של הסוכן.
  *
- * ═══ בעלוּת על נתונים — ההחלטה שמונעת סתירה ═══
+ * ═══ בעלים אחד: KV ═══
  *
- * שני מקורות, ולכל שדה **בעלים אחד בלבד**:
+ * התכנון הראשון חילק בעלוּת — הבוט על הימים, הקובץ על מצב ה-CBT —
+ * מתוך הנחה שהסשנים רצים רק כאן. משהתווסף `/טיפול` יש שני מקומות
+ * שמריצים סשן, וחלוקה כזו הופכת לשני מצבים מקבילים שמתפצלים.
  *
- *   הבוט (KV)  בעלים של: ימים — מסטיק, מדבקה, מצב רוח, גלים.
- *              הוא היחיד שאוסף אותם, בזמן אמת.
- *   הקובץ      בעלים של: מצב ה-CBT — סשנים, טריגרים, דפוסים, ש"ב.
+ * לכן `meta.cbt` ב-KV הוא **המקור היחיד**. הסקריפט מושך אותו לפני
+ * שהוא נוגע, ודוחף אחרי כל שינוי. הקובץ המקומי הוא מטמון עבודה
+ * ותו לא — `pull` דורס אותו בלי היסוס.
  *
- * אף צד לא כותב לשדות של השני. נתוני הבוט מגיעים לכאן כ**תצלום**
- * (`sync`), ומסומנים בתאריך כדי שיהיה ברור כמה הם טריים.
- *
- * זה מה שמאפשר להריץ סשן גם כאן וגם בבוט בלי שהמצב יתפצל.
+ * `active` מונע התנגשות: הבוט מסרב לקבל דחיפה שתדרוס סשן שפתוח בו.
  */
 
 import { readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
@@ -100,7 +99,9 @@ async function pushMirror(s) {
     const r = await fetch(`${WORKER}/cbt-state?key=${readFileSync(kf, 'utf8').trim()}`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ sessionsDone: s.cbt.sessionsDone, startISO: s.cbt.startISO }),
+      // **המצב המלא.** דחיפה חלקית הייתה מוחקת טריגרים, דפוסים ושיעורי
+      // בית — כלומר בדיוק את הרצף שכל המודול קיים בשבילו.
+      body: JSON.stringify({ ...s.cbt, force: true }),
       signal: AbortSignal.timeout(20000),
     });
     return { pushed: r.ok, status: r.status, sessionsDone: s.cbt.sessionsDone };
@@ -113,10 +114,24 @@ async function pushMirror(s) {
 //  פקודות
 // ==========================================================================
 
+/** מושך את מצב ה-CBT מ-KV. **המקור** — לא עותק. */
+async function pullCbt() {
+  const kf = join(REPO, '.webhook-secret');
+  if (!existsSync(kf)) return null;
+  try {
+    const r = await fetch(`${WORKER}/cbt-state?key=${readFileSync(kf, 'utf8').trim()}`,
+                          { signal: AbortSignal.timeout(20000) });
+    if (!r.ok) return null;
+    return (await r.json()).cbt || null;
+  } catch { return null; }
+}
+
 const CMDS = {
   /** מה המצב, ומה אמור לרוץ */
-  status() {
+  async status() {
     const s = load(); const iso = today();
+    const remote = await pullCbt();
+    if (remote) { s.cbt = S.migrateCbt(remote); save(s); }
     const due = P.dueSession(iso, s.cbt.sessionsDone, s.cbt.startISO || iso);
     out({
       today: iso,
@@ -133,14 +148,18 @@ const CMDS = {
   },
 
   /** פתיחת הסשן שאמור לרוץ */
-  start() {
+  async start() {
     const s = load(); const iso = today();
+    // מושכים לפני שנוגעים — אחרת סשן שנפתח בבוט לא ייראה כאן.
+    const remote = await pullCbt();
+    if (remote) s.cbt = S.migrateCbt(remote);
     if (s.cbt.active) return out({ error: 'סשן כבר פתוח', active: s.cbt.active.id });
     const due = P.dueSession(iso, s.cbt.sessionsDone, s.cbt.startISO || iso);
     if (!due) return out({ error: 'אין סשן שאמור לרוץ היום' });
     s.cbt = S.startSession(s.cbt, due.id, iso);
     s.turns = [];
     save(s);
+    await pushMirror(s);
     out({
       started: due.id, title: due.title, stpRef: due.stpRef,
       checklist: due.checklist.map(c => ({ bct: c.bct, label: c.label, required: c.required })),
@@ -186,14 +205,18 @@ const CMDS = {
   },
 
   /** רישום תשובה: record <bct> "<answer>" ["<captured>"] */
-  record(bct, answer, captured) {
+  async record(bct, answer, captured) {
     const s = load();
     if (!s.cbt.active) return out({ error: 'אין סשן פתוח' });
     if (!bct || !P.requiredBcts().includes(bct)) return out({ error: `bct לא מוכר: ${bct}` });
     s.cbt = S.recordBct(s.cbt, bct, captured || answer || null);
     s.turns.push({ tool: bct, answer: answer || '', captured: captured || null });
     save(s);
-    out({ recorded: bct, captured: captured || null, remaining: s.cbt.active.remaining.length });
+    // דחיפה בכל תור ולא רק בסוף: סשן שנקטע באמצע משאיר את מה שנאמר
+    // ב-KV, ולא רק בקובץ מקומי שאיש לא יסתכל בו.
+    const m = await pushMirror(s);
+    out({ recorded: bct, captured: captured || null,
+          remaining: s.cbt.active.remaining.length, pushed: m.pushed });
   },
 
   /** סגירה — מחזיר גם את הפרומפט לפורמולציה */

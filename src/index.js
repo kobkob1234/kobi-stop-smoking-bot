@@ -11,6 +11,10 @@ import * as M from './messages.js';
 import * as KB from './kb.js';
 import * as AI from './ai.js';
 import * as CBTP from './cbt/protocol.js';
+import * as CBTS from './cbt/state.js';
+import * as CBTT from './cbt/tools.js';
+import * as CBTE from './cbt/engine.js';
+import { retrieverFor } from './cbt/retrieve.js';
 import * as ANL from './analytics.js';
 import * as INT from './intent.js';
 import * as G from './gum.js';
@@ -47,6 +51,7 @@ const BOT_COMMANDS = [
   { command: 'taper',   description: '📉 תצמצום המסטיק' },
   { command: 'keyboard', description: '⌨️ מצב המקלדת: פתוחה / מתקפלת / מוסתרת' },
   { command: 'button',   description: '📲 כפתור פיזי — הפעלה בלי לפתוח את האפליקציה' },
+  { command: 'therapy', description: '🪑 סשן CBT — לפי פרוטוקול NCSCT' },
   { command: 'review',  description: '🗓️ סקירה שבועית' },
   { command: 'phones',  description: '📞 טלפוני תמיכה' },
   { command: 'help',    description: '❓ עזרה' },
@@ -80,6 +85,8 @@ const ALIAS = {
   partner:  ['partner', 'שותף', 'שותפה'],
   join:     ['join'],
   exportd:  ['export', 'ייצוא', 'יצוא'],
+  therapy:  ['therapy', 'טיפול', 'סשן', 'פגישה'],
+  endsess:  ['endsession', 'סיום', 'עצור'],
   ask:      ['ask', 'שאל', 'שאלה'],
   ai:       ['ai'],
   site:     ['site', 'מקום', 'מקומות'],
@@ -289,28 +296,34 @@ export default {
       }
 
       if (url.pathname === '/cbt-state') {
-        // ═══ מראה בלבד ═══
+        // ═══ בעלים אחד: KV ═══
         //
-        // הסשנים רצים בסוכן, ושם גם הבעלוּת על `sessionsDone`. הבוט
-        // צריך לדעת מה כבר רץ רק כדי **להפסיק להזכיר** עליו — ולכן
-        // הוא משקף ולא מחליט. שני מקורות שמחליטים על אותו שדה
-        // מתפצלים; מקור אחד שמחליט ואחד שמשקף לא.
+        // התכנון הראשון החזיק כאן **מראה** של מצב ה-CBT, מתוך הנחה
+        // שהסשנים רצים רק בסוכן. משהתווסף `/טיפול` יש שני מקומות
+        // שמריצים סשן — ומראה עם שני כותבים היא בדיוק ההגדרה של
+        // מצב שמתפצל.
         //
-        // GET מחזיר את המראה, POST מעדכן אותה.
+        // לכן `meta.cbt` ב-KV הוא המקור היחיד, והסוכן קורא וכותב
+        // דרכו. `active` מונע התנגשות: אי אפשר לפתוח סשן במקום אחד
+        // בזמן שרץ אחד בשני.
         const meta = await getMeta(env);
+        const cur = CBTS.migrateCbt(meta.cbt);
         if (req.method === 'POST') {
           const b = await req.json().catch(() => null);
           if (!b || !Array.isArray(b.sessionsDone)) {
             return new Response('bad body', { status: 400 });
           }
-          meta.cbtSeen = {
-            sessionsDone: b.sessionsDone.slice(0, 60).map(String),
-            startISO: b.startISO || null,
-            at: P.il().iso,
-          };
+          // סשן פתוח בבוט אינו נדרס משליחה חיצונית — מי שבאמצע
+          // שיחה הוא שהתחיל אותה.
+          if (cur.active && !b.active && !b.force) {
+            return Response.json({ ok: false, why: 'סשן פתוח בבוט',
+                                   active: cur.active.id }, { status: 409 });
+          }
+          meta.cbt = CBTS.migrateCbt(b);
           await putMeta(env, meta);
+          return Response.json({ ok: true, cbt: meta.cbt });
         }
-        return Response.json({ ok: true, cbtSeen: meta.cbtSeen });
+        return Response.json({ ok: true, cbt: cur });
       }
 
       if (url.pathname === '/export') {
@@ -468,10 +481,10 @@ async function tick(env) {
   //  רצים בסוכן, והבוט — היחיד שמדבר איתו ביוזמתו — לא ידע עליהם דבר.
   //  התערבות שתלויה בכך שייזכר לבד אינה התערבות.
   //
-  //  **המראה, לא המצב.** `meta.cbtSeen` נכתב רק דרך `/cbt-state`,
-  //  והבעלוּת על מה כבר רץ נשארת אצל הקובץ. אם המראה חסרה — מזכירים.
-  //  זו ברירת המחדל הנכונה: תזכורת מיותרת עולה הודעה אחת, תזכורת
-  //  שנחסמה בטעות עולה סשן שלם.
+  //  **בעלים אחד.** `meta.cbt` ב-KV הוא המצב, ושני המקומות שמריצים
+  //  סשן — הבוט והסוכן דרך `/cbt-state` — קוראים וכותבים אותו. אם
+  //  המצב חסר, מזכירים: תזכורת מיותרת עולה הודעה אחת, תזכורת שנחסמה
+  //  בטעות עולה סשן שלם.
   {
     const due = cbtRemindDue(now.minutes, meta, iso, CBTP.dueSession);
     if (due) {
@@ -786,6 +799,82 @@ async function tick(env) {
   }
 }
 
+// ==========================================================================
+//  סשן CBT בבוט
+//
+//  ה-I/O בלבד. כל ההחלטות — איזה כלי, מתי נגמר, מה הציון — יושבות
+//  ב-`cbt/session.js` ונבדקות שם בלי טלגרם ובלי KV.
+// ==========================================================================
+
+/** ה-state המספרי שהכלים והמודל מקבלים */
+async function cbtState(env, meta, cbt, pl, iso) {
+  const days = await ANL.collect(env, iso, 14);
+  const gp = { ...G.DEFAULT_PLAN, ...(meta.gumPlan || {}) };
+  return CBTS.toolState(cbt, days, { ...pl, gumTarget: G.dailyTarget(gp, iso),
+                                     confirmedTaper: !!gp.confirmedTaper }, iso);
+}
+
+/** התורות של הסשן הנוכחי — נגזרים מ-`captured`, כי הם מה ששרד */
+const cbtTurns = cbt => Object.entries(cbt.active?.captured || {})
+  .map(([tool, answer]) => ({ tool, answer }));
+
+/**
+ * תור אחד: מריץ, רושם, ושואל את הבא.
+ *
+ * **המצב נשמר גם כשהמודל נכשל.** תור שלא נרשם משאיר את הכלי
+ * ב-remaining לנצח — כישלון רשת שהופך לסשן שאי אפשר לסיים.
+ */
+async function runTherapyTurn(env, chatId, meta, text, pl, iso) {
+  const cbt0 = CBTS.migrateCbt(meta.cbt);
+  if (!cbt0.active) return void await send(env, chatId, 'אין סשן פתוח. /טיפול כדי להתחיל.');
+
+  const st = await cbtState(env, meta, cbt0, pl, iso);
+  const tool = CBTSESS.nextStep(cbt0, st);
+  if (!tool) return void await finishTherapy(env, chatId, meta, cbt0, st);
+
+  const turns = cbtTurns(cbt0);
+  const r = await CBTSESS.runStep(cbt0, tool, st, text, {
+    call: AI.cbtCall(env, CBTE.ROLES),
+    retrieve: retrieverFor(env, { bct: tool.id }),
+    turns,
+  });
+
+  const next = CBTSESS.nextStep(r.cbt, st);
+  const done = !next || CBTSESS.exhausted(cbtTurns(r.cbt));
+  meta.cbt = r.cbt;
+  meta.awaiting = done ? null : 'cbt';
+  await putMeta(env, meta);
+
+  const bits = [];
+  // תשובה שנכשלה אינה מוסתרת: סשן שממשיך כאילו כלום לא קרה מייצר
+  // רצף שבור שהמשתמש לא יכול להסביר לעצמו.
+  if (r.reply) bits.push(esc(r.reply));
+  else bits.push('<i>(לא הצלחתי לנסח תגובה — ממשיכים)</i>');
+  if (next) {
+    const a = next.run(st);
+    bits.push('', `<b>${esc(next.name)}</b>`, esc(a.text));
+    if (a.ask) bits.push('', `<b>${esc(a.ask)}</b>`);
+  }
+  await send(env, chatId, bits.join('\n'));
+  if (done) await finishTherapy(env, chatId, meta, r.cbt, st);
+}
+
+/** סגירה — ציון נאמנות ודפוס */
+async function finishTherapy(env, chatId, meta, cbt, st) {
+  const r = await CBTSESS.closeSession(cbt, st, {
+    call: AI.cbtCall(env, CBTE.ROLES), turns: cbtTurns(cbt),
+  });
+  if (r.error) return void await send(env, chatId, 'אין סשן פתוח.');
+  meta.cbt = r.cbt; meta.awaiting = null;
+  await putMeta(env, meta);
+  await send(env, chatId, [
+    '🪑 <b>הסשן נסגר.</b>',
+    `נאמנות לפרוטוקול: <b>${Math.round(r.fidelity.score * 100)}%</b>` +
+      (r.fidelity.missed.length ? ` · דולג: ${esc(r.fidelity.missed.join(', '))}` : ''),
+    ...(r.formulation ? ['', `<i>${esc(r.formulation)}</i>`] : []),
+  ].join('\n'));
+}
+
 /** דוח הדפוסים השבועי — הופך את טבלת המיפוי מהמדריך לדבר אוטומטי */
 async function sendWeeklyReport(env, meta, iso) {
   const days = await ANL.collect(env, iso, 7);
@@ -916,6 +1005,12 @@ async function onMessage(msg, env) {
     const field = meta.awaiting;
     meta.awaiting = null;
     await putMeta(env, meta);
+
+    // ---- תור בסשן CBT ----
+    if (field === 'cbt') {
+      await runTherapyTurn(env, chatId, meta, text, pl, iso);
+      return;
+    }
 
     if (field === 'money') {
       const n = parseFloat(text.replace(/[^\d.]/g, ''));
@@ -1347,6 +1442,49 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
       return R(M.partnerInfo(meta, meta.joinCode && meta.joinCode.code));
     }
     case 'join': return send(env, chatId, 'שימוש: <code>/join CODE</code> — הקוד מתקבל אצל קובי בפקודה /שותף.');
+    // ═══ סשן CBT ═══
+    //
+    // הפרוטוקול היה בנוי, בדוק ומחובר לספרייה — וניתן להרצה רק
+    // מהסוכן. כאן הוא נפתח מהטלפון, על אותם protocol/tools/engine.
+    case 'therapy': {
+      const cbt = CBTS.migrateCbt(meta.cbt);
+      if (cbt.active) {
+        const st = await cbtState(env, meta, cbt, pl, iso);
+        const tool = CBTSESS.nextStep(cbt, st);
+        if (!tool) return void await finishTherapy(env, chatId, meta, cbt, st);
+        meta.awaiting = 'cbt'; await putMeta(env, meta);
+        const a = tool.run(st);
+        return void await send(env, chatId,
+          `🪑 <b>${esc(tool.name)}</b>\n\n${esc(a.text)}${a.ask ? `\n\n<b>${esc(a.ask)}</b>` : ''}`);
+      }
+      const open = CBTSESS.openSession(cbt, iso);
+      if (open.error === 'none-due') {
+        return void await send(env, chatId,
+          `🪑 אין סשן שאמור לרוץ היום.${open.nextISO ? `\nהבא: <b>${P.fmtHe(open.nextISO)}</b>.` : ''}`);
+      }
+      meta.cbt = open.cbt; meta.awaiting = 'cbt'; await putMeta(env, meta);
+      const st = await cbtState(env, meta, open.cbt, pl, iso);
+      const tool = CBTSESS.nextStep(open.cbt, st);
+      const a = tool.run(st);
+      return void await send(env, chatId, [
+        `🪑 <b>${esc(open.session.title)}</b>`,
+        `${open.session.checklist.length} שלבים · כ-${open.session.minMinutes} דקות`,
+        ...(open.opening.length ? ['', `<i>${esc(open.opening.join(' · '))}</i>`] : []),
+        '', `<b>${esc(tool.name)}</b>`, esc(a.text),
+        ...(a.ask ? ['', `<b>${esc(a.ask)}</b>`] : []),
+        '', '<i>/סיום כדי לעצור באמצע.</i>',
+      ].join('\n'));
+    }
+
+    // עצירה באמצע. **סוגר ורושם** ולא נוטש: סשן שנשאר פתוח חוסם את
+    // כל הבאים אחריו, וציון נאמנות חלקי הוא מידע — נטישה שקטה לא.
+    case 'endsess': {
+      const cbt = CBTS.migrateCbt(meta.cbt);
+      if (!cbt.active) return void await send(env, chatId, 'אין סשן פתוח.');
+      const st = await cbtState(env, meta, cbt, pl, iso);
+      return void await finishTherapy(env, chatId, meta, cbt, st);
+    }
+
     case 'exportd': {
       const days = await ANL.collect(env, iso, 30);
       const lines = [`# יומן גמילה — 30 ימים אחרונים (יוצא ${P.fmtHe(iso)})`];

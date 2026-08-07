@@ -149,9 +149,9 @@ export const CBT_REMIND_MIN = 20 * 60 + 30;
 /**
  * האם להזכיר עכשיו על סשן.
  *
- * `seen` הוא **מראה** של מצב ה-CBT (`meta.cbtSeen`), לא המצב. הבעלוּת
- * על `sessionsDone` שייכת לקובץ שבו הסשנים רצים; הבוט רק צריך לדעת מה
- * כבר רץ כדי להפסיק להזכיר.
+ * קורא את `meta.cbt` — **המצב עצמו**, לא מראה שלו. התכנון הראשון החזיק
+ * כאן עותק נפרד מתוך הנחה שהסשנים רצים רק בסוכן; משהתווסף `/טיפול`
+ * יש שני מקומות שמריצים סשן, ועותק עם שני כותבים מתפצל בהגדרה.
  *
  * **מראה חסרה = מזכירים.** זו ברירת המחדל הנכונה: תזכורת מיותרת עולה
  * הודעה אחת, תזכורת שנחסמה בטעות עולה סשן שלם. הכיוון ההפוך — לשתוק
@@ -161,8 +161,10 @@ export function cbtRemindDue(minutes, meta, iso, dueSession) {
   if (meta.quiet) return null;
   if (minutes < CBT_REMIND_MIN) return null;
   if (meta.sent && meta.sent[`${iso}:cbt`]) return null;
-  const seen = meta.cbtSeen || {};
-  const due = dueSession(iso, seen.sessionsDone || [], seen.startISO || iso);
+  const cbt = meta.cbt || {};
+  // סשן שכבר פתוח אינו "אמור לרוץ" — הוא רץ. תזכורת עליו היא רעש.
+  if (cbt.active) return null;
+  const due = dueSession(iso, cbt.sessionsDone || [], cbt.startISO || iso);
   if (!due) return null;
 
   // ═══ נסיגה ═══
