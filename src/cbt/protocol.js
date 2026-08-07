@@ -149,15 +149,17 @@ export function dueSession(iso, done = [], startISO = null) {
     if (done.includes(s.id)) continue;
     if (iso >= s.dueISO) return { ...byId(s.id), dueISO: s.dueISO };
   }
-  // אחרי הסשנים הקבועים — תחזוקה כל 7 ימים
+  // אחרי הסשנים הקבועים — תחזוקה כל 7 ימים.
+  //
+  // **המרווח הראשון נספר מ-wk4, לא ממנו.** העוגן הוא יום ה-wk4 עצמו,
+  // ולכן חישוב שמתיר `weeks >= lastMaint` הפך את maint:0 לזמין באותו
+  // היום שבו wk4 זמין — שני סשנים באותו תאריך, והשני יוצא יום אחרי
+  // הראשון במקום שבוע. תחזוקה שרצה יום אחרי סשן המעקב אינה תחזוקה.
   const maint = byId('maint');
   const lastMaint = done.filter(d => d.startsWith('maint')).length;
   const anchor = addDaysISO(QUIT, 28);
-  if (iso < anchor) return null;
-  const weeks = Math.floor(diffDays(anchor, iso) / maint.everyDays);
-  return weeks >= lastMaint
-    ? { ...maint, id: `maint:${lastMaint}`, dueISO: addDaysISO(anchor, lastMaint * maint.everyDays) }
-    : null;
+  const dueISO = addDaysISO(anchor, (lastMaint + 1) * maint.everyDays);
+  return iso >= dueISO ? { ...maint, id: `maint:${lastMaint}`, dueISO } : null;
 }
 
 export const byId = id => SESSIONS.find(s => s.id === (id || '').split(':')[0]) || null;

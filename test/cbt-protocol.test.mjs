@@ -150,3 +150,39 @@ test('אין תאריך קשיח בפרוטוקול — הכול נגזר מ-pla
     .filter(([, l]) => /['"]\d{4}-\d{2}-\d{2}['"]/.test(l) && !l.trim().startsWith('//'));
   assert.deepEqual(lits.map(([i]) => i), [], `תאריך קשיח בשורות: ${lits.map(([i, l]) => i + ': ' + l.trim().slice(0, 50))}`);
 });
+
+
+// ==========================================================================
+//  תחזוקה לא מתחילה ביום של wk4
+// ==========================================================================
+
+test('אין שני סשנים על אותו תאריך', () => {
+  // העוגן של התחזוקה הוא יום ה-wk4, ולכן `weeks >= lastMaint` הפך את
+  // maint:0 לזמין באותו יום. בפועל זה אומר תחזוקה **יום אחרי** סשן
+  // המעקב במקום שבוע — כלומר לא תחזוקה.
+  const seen = new Map();
+  const done = [];
+  let iso = '2026-08-07';
+  for (let d = 0; d <= 120; d++) {
+    iso = new Date(Date.parse('2026-08-07') + d * 864e5).toISOString().slice(0, 10);
+    const s = C.dueSession(iso, done, '2026-08-07');
+    if (!s) continue;
+    assert.ok(!seen.has(s.dueISO),
+      `${s.id} ו-${seen.get(s.dueISO)} חולקים את ${s.dueISO}`);
+    seen.set(s.dueISO, s.id);
+    done.push(s.id);
+  }
+  assert.ok(done.length >= 8, `רק ${done.length} סשנים — הלוח נשבר`);
+});
+
+test('התחזוקה הראשונה שבוע אחרי wk4', () => {
+  const done = ['intake', 'wk3', 'wk4'];
+  const wk4Due = C.scheduleFor('2026-08-07').find(s => s.id === 'wk4').dueISO;
+  assert.equal(C.dueSession(wk4Due, done, '2026-08-07'), null,
+    'תחזוקה זמינה כבר ביום ה-wk4');
+  const dayAfter = new Date(Date.parse(wk4Due) + 864e5).toISOString().slice(0, 10);
+  assert.equal(C.dueSession(dayAfter, done, '2026-08-07'), null,
+    'תחזוקה זמינה יום אחרי wk4');
+  const weekAfter = new Date(Date.parse(wk4Due) + 7 * 864e5).toISOString().slice(0, 10);
+  assert.equal(C.dueSession(weekAfter, done, '2026-08-07').id, 'maint:0');
+});
