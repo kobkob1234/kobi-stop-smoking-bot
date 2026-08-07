@@ -126,3 +126,73 @@ test('ה-state שנשלח הוא מספרים, לא טקסט חופשי', () => 
       `${k} הוא ${typeof v} — טקסט חופשי ב-state נשלח החוצה`);
   }
 });
+
+// ==========================================================================
+//  התיקון שנבע מהרצת הסשן בפועל
+//
+//  הגרסה הראשונה טענה ש"AI מעשיר את הניסוח". הרצה של סשן שלם הראתה
+//  שמונה שאלות כתובות מראש בלי תגובה לאף תשובה — כלומר טופס, לא CBT.
+//  התגובתיות היא הטיפול, ולכן היא חייבת להיות מסומנת ומדווחת.
+// ==========================================================================
+
+test('לכל כלי יש mode מוכר', () => {
+  for (const t of T.TOOLS) {
+    assert.ok(['fixed', 'scale', 'responsive'].includes(t.mode), `${t.id}: mode=${t.mode}`);
+  }
+});
+
+test('כלים הצהרתיים מסומנים fixed — AI לא ישפר אותם', () => {
+  // לכלל "אף לא שאיפה אחת" אין למה להגיב. הוא הצהרה, לא שאלה.
+  // WITHDRAWAL הוסר מהרשימה: ההסבר שלו קבוע, אבל הוא שואל "מה מהם
+  // עדיין נוכח אצלך" — ולשאלה פתוחה צריך מי שיגיב.
+  for (const id of [P.BCT.NAP, P.BCT.OBJECTIVE]) {
+    assert.equal(T.byId(id).mode, 'fixed', `${id} סומן כדורש AI`);
+  }
+});
+
+test('רוב הכלים דורשים תגובתיות — וזה הממצא, לא תקלה', () => {
+  const resp = T.TOOLS.filter(t => t.mode === 'responsive');
+  assert.ok(resp.length > T.TOOLS.length / 2,
+    'רוב הכלים סומנו כדטרמיניסטיים — סימן שהסיווג מקל על עצמו');
+});
+
+test('בלי AI הסשן מדווח כבדיקה מובנית ולא כסשן', () => {
+  const s = P.byId('wk3');
+  const rem = s.checklist.map(c => c.bct);
+  const withAi = T.sessionMode(rem, true);
+  const without = T.sessionMode(rem, false);
+  assert.equal(withAi.mode, 'session');
+  assert.equal(without.mode, 'checkin', 'הבוט מציג טופס כאילו היה סשן');
+  assert.ok(without.degraded.length > 0);
+  assert.match(without.note, /בלי המשך/);
+});
+
+test('סשן שכולו כלים הצהרתיים אינו מדווח כירידת דרגה', () => {
+  const r = T.sessionMode([P.BCT.NAP, P.BCT.OBJECTIVE], false);
+  assert.equal(r.mode, 'session');
+  assert.deepEqual(r.degraded, []);
+});
+
+test('כל כלי ששואל שאלה פתוחה חייב להיות responsive', () => {
+  // זה הכלל המבני, ולא רשימה ידנית: שאלה פתוחה שאין מי שיגיב לה היא
+  // מציין-מקום. אם כלי מבקש טקסט חופשי והוא מסומן fixed, הסשן יציג
+  // אותו כמלא בזמן שהוא בעצם ריק.
+  const REAL2 = { ...T.EMPTY_STATE, dayNum: 14, cleanDays: 14, gum7: 52, gumTarget: 9,
+                  patchDays7: 7, triggers: ['ערב'] };
+  for (const t of T.TOOLS) {
+    const out = t.run(REAL2);
+    const open = out.ask && ['free', 'if-then', 'homework'].includes(out.expects);
+    if (open) {
+      assert.equal(t.mode, 'responsive',
+        `${t.id} שואל שאלה פתוחה (${out.expects}) אבל מסומן ${t.mode}`);
+    }
+  }
+});
+
+test('כלי fixed אינו שואל שאלה פתוחה', () => {
+  const REAL2 = { ...T.EMPTY_STATE, dayNum: 14, cleanDays: 14, gum7: 52, gumTarget: 9, patchDays7: 7 };
+  for (const t of T.TOOLS.filter(x => x.mode === 'fixed')) {
+    const out = t.run(REAL2);
+    assert.notEqual(out.expects, 'free', `${t.id} מסומן fixed ומבקש טקסט חופשי`);
+  }
+});
