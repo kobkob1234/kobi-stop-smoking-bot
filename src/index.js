@@ -13,8 +13,8 @@ import * as AI from './ai.js';
 import * as ANL from './analytics.js';
 import * as INT from './intent.js';
 import * as G from './gum.js';
-import { getMeta, putMeta, getDay, updateDay, pruneSent, recentHist, pushHist, getWeekly, putWeekly, PATCH_BACKFILL_VER, backfillPatches } from './store.js';
-import { SLOTS, slotAction, mergeTickMeta, taperAskDue, taperWatchDue, moodAskDue } from './tick-logic.js';
+import { getMeta, putMeta, getDay, updateDay, pruneSent, recentHist, pushHist, getWeekly, putWeekly, PATCH_BACKFILL_VER, backfillPatches, recordMood, moodReadings, MOOD_MAX_PER_DAY } from './store.js';
+import { SLOTS, slotAction, mergeTickMeta, taperAskDue, taperWatchDue, moodCheckDue, moodAnchorAt } from './tick-logic.js';
 import { notifyPartner, alertPartner } from './partner.js';
 
 // מזהה בנייה. מתעדכן בכל פריסה ומוחזר ב-/diag, כדי שאפשר יהיה לדעת
@@ -415,17 +415,23 @@ async function tick(env) {
   // שינוי שהמשתמש עשה תוך כדי. ראו את ההסבר במיזוג למטה.
   const touched = new Set();
 
-  // --- תזכורת יחידה למצב הרוח -----------------------------------------
+  // --- מצב רוח: עד שלוש בדיקות ביום ------------------------------------
   {
     const dayNow = await getDay(env, iso);
-    const key = `${iso}:moodask`;
-    if (moodAskDue(dayNow, now.minutes, meta.sent[key])) {
+    const anchor = moodAnchorAt(now.minutes);
+    const n = moodReadings(dayNow).length;
+    const key = anchor ? `${iso}:mood:${anchor.id}` : null;
+    if (anchor && moodCheckDue(now.minutes, n, meta.sent[key], MOOD_MAX_PER_DAY)) {
       meta.sent[key] = 1; dirty = true;
+      const nth = ['הבוקר', 'אחר הצהריים', 'הערב'][['am', 'pm', 'eve'].indexOf(anchor.id)];
+      // משפט העידוד מתחלף לפי מונה רץ, ולכן לא חוזר בין הבדיקות.
+      const [enc, encSrc] = C.encouragement(P.diffDays(P.QUIT, iso) * 3 + n);
       await send(env, meta.chatId, [
-        '🌤️ <b>לפני שהיום נסגר — איך הוא היה?</b>',
+        `🌤️ <b>איך ${nth}?</b>`,
+        '1 = רע מאוד · 5 = טוב מאוד',
         '',
-        '<i>שאלה אחת, ולא אשאל שוב היום.</i>',
-        'גם יום שלא בא לך לדרג אותו הוא נתון — ודווקא הוא זה שהכי שווה לתפוס.',
+        `<i>${enc}</i>`,
+        `— ${encSrc}`,
       ].join('\n'), { reply_markup: inline([[1, 2, 3, 4, 5].map(v => btn(String(v), `mo:${v}`))]) });
     }
   }
@@ -1980,20 +1986,33 @@ async function onCallback(cb, env) {
   //  ועייפות-גמילה מנבאת הישנות מעל ומעבר לעוצמת הדחפים.
   if (data.startsWith('mo:')) {
     const v = Math.max(1, Math.min(5, parseInt(data.slice(3), 10) || 0));
-    await updateDay(env, iso, d => { d.mood = v; });
+    const dayBefore = await getDay(env, iso);
+    const nth = moodReadings(dayBefore).length;          // כמה כבר נרשמו היום
+    await recordMood(env, iso, now.hour, now.minutes % 60, v);
     await answer(env, cb.id, `נרשם ${v}/5`);
     const d14 = await ANL.collect(env, iso, 14);
     const med = ANL.subjMedian(d14, 'mood');
     const n14 = ANL.subjCount(d14, 'mood');
     const fb = C.MOOD_FEEDBACK[v];
-    const [q, src] = C.moodQuote(v, pl.n || 0);
+    // מונה רץ: יום × 3 + מספר הבדיקה. שתי תשובות עוקבות — גם באותה
+    // דרגה, גם באותו ערב — לעולם לא מקבלות את אותו ציטוט.
+    const [q, src] = C.moodQuote(v, (pl.n || 0) * 3 + nth);
     const L = [`🌤️ <b>מצב רוח: ${v}/5</b>`, '', `<b>${fb.head}</b>`, fb.body];
     // מגמה, ורק כשיש מספיק מדידות כדי שלא תהיה רעש
     if (med !== null && n14 >= 3) {
       const arrow = v > med ? 'מעל' : v < med ? 'מתחת ל' : 'בדיוק ב';
       L.push('', `📊 היום ${arrow}חציון של ${n14} הימים שנמדדו (${med}).`);
     }
+    // מגמה בתוך היום עצמה — זו התנועה שמנבאת, לא הממוצע
+    const today = moodReadings(await getDay(env, iso)).map(e => e.v);
+    if (today.length >= 2) {
+      const prev = today[today.length - 2];
+      const dir = v > prev ? '↗️ עלה' : v < prev ? '↘️ ירד' : '➡️ יציב';
+      L.push('', `${dir} מאז המדידה הקודמת היום (${today.join(' → ')}).`);
+    }
     L.push('', `<i>"${q}"</i>`, `— ${src}`);
+    const [enc, encSrc] = C.encouragement((pl.n || 0) * 3 + nth);
+    L.push('', `<i>${enc}</i>`, `<i>— ${encSrc}</i>`);
     // ביום נמוך הכפתורים חשובים יותר מהטקסט: אפקט שלילי הוא המנבא
     // החזק ביותר למעידה, וזה הרגע להציע פעולה ולא רק ניסוח.
     const kb = v <= 2

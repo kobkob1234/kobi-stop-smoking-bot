@@ -118,10 +118,30 @@ test('כל ציטוט מיוחס לספר מוכר', () => {
   }
 });
 
-test('הציטוט מתחלף בין ימים ולא חוזר על עצמו', () => {
-  const a = C.moodQuote(1, 0), b = C.moodQuote(1, 1);
-  assert.notDeepEqual(a, b, 'אותו ציטוט בכל יום');
-  assert.deepEqual(C.moodQuote(1, 0), C.moodQuote(1, 2), 'הרוטציה אינה מחזורית');
+test('ציטוטים עוקבים תמיד שונים — גם באותה דרגה ובאותו יום', () => {
+  // עם 3 בדיקות ביום, אינדקס לפי מספר היום בלבד היה מחזיר את אותו
+  // ציטוט שלוש פעמים באותו ערב. המונה רץ, ולכן אין חזרה ברצף.
+  for (const level of [1, 2, 3, 4, 5]) {
+    const n = C.MOOD_FEEDBACK[level].quotes.length;
+    assert.ok(n >= 5, `רמה ${level}: רק ${n} ציטוטים — מעט מדי לרוטציה`);
+    for (let s = 0; s < 12; s++) {
+      assert.notDeepEqual(C.moodQuote(level, s), C.moodQuote(level, s + 1),
+        `רמה ${level}: ציטוט חוזר ברצף באינדקס ${s}`);
+    }
+    // חזרה מותרת — אבל רק אחרי מחזור מלא
+    assert.deepEqual(C.moodQuote(level, 0), C.moodQuote(level, n));
+  }
+});
+
+test('משפטי העידוד מגובים במקור, ולא חוזרים ברצף', () => {
+  assert.ok(C.ENCOURAGEMENT.length >= 5);
+  for (const [txt, src] of C.ENCOURAGEMENT) {
+    assert.ok(txt.length > 30, `משפט קצר מדי: ${txt}`);
+    assert.ok(/מרלט|גולביצר|בנדורה|ווסט/.test(src), `בלי מקור מחקרי: ${src}`);
+  }
+  for (let i = 0; i < 10; i++) {
+    assert.notDeepEqual(C.encouragement(i), C.encouragement(i + 1), `עידוד חוזר ברצף ב-${i}`);
+  }
 });
 
 test('לכל רמת עייפות יש משוב, והגבוהות אומרות להאט', () => {
@@ -151,4 +171,54 @@ test('אחרי חצות עדיין בתוך החלון', () => {
 
 test('מי שכבר ענה אינו מקבל תזכורת', () => {
   assert.equal(moodAskDue(day({ mood: 3 }), MOOD_ASK_MIN, undefined), false);
+});
+
+// ---------- שלוש בדיקות ביום ----------
+import { moodAnchorAt, moodCheckDue, MOOD_ANCHORS } from '../src/tick-logic.js';
+import * as S from '../src/store.js';
+import { makeKV, makeEnv } from './helpers.mjs';
+
+const hm = (h, m = 0) => h * 60 + m;
+
+test('שלושה עוגנים, ולא חופפים', () => {
+  assert.equal(MOOD_ANCHORS.length, 3);
+  for (let i = 1; i < MOOD_ANCHORS.length; i++) {
+    assert.ok(MOOD_ANCHORS[i].from > MOOD_ANCHORS[i - 1].to, `עוגן ${i} חופף לקודם`);
+  }
+});
+
+test('העוגן הנכון לכל שעה, וחצות שייך לערב', () => {
+  assert.equal(moodAnchorAt(hm(11)).id, 'am');
+  assert.equal(moodAnchorAt(hm(17)).id, 'pm');
+  assert.equal(moodAnchorAt(hm(22)).id, 'eve');
+  assert.equal(moodAnchorAt(hm(0, 15)).id, 'eve', '00:15 אינו שייך לערב');
+  assert.equal(moodAnchorAt(hm(8)), null, 'שאלה מוקדם מדי בבוקר');
+  assert.equal(moodAnchorAt(hm(14)), null);
+});
+
+test('לא יותר משלוש ביום, ואחת לכל עוגן', () => {
+  assert.equal(moodCheckDue(hm(11), 0, undefined), true);
+  assert.equal(moodCheckDue(hm(11), 0, 1), false, 'נשאל פעמיים באותו עוגן');
+  assert.equal(moodCheckDue(hm(11), 3, undefined), false, 'עבר את התקרה היומית');
+  assert.equal(moodCheckDue(hm(14), 0, undefined), false, 'נשאל מחוץ לעוגן');
+});
+
+test('דירוגים מרובים נשמרים, ו-mood הוא החציון', async () => {
+  const env = makeEnv(makeKV());
+  await S.recordMood(env, '2026-08-07', 11, 0, 2);
+  await S.recordMood(env, '2026-08-07', 17, 0, 4);
+  await S.recordMood(env, '2026-08-07', 22, 0, 5);
+  const d = await S.getDay(env, '2026-08-07');
+  assert.equal(S.moodReadings(d).length, 3);
+  assert.deepEqual(S.moodReadings(d).map(e => e.v), [2, 4, 5]);
+  assert.equal(d.mood, 4, 'mood אינו החציון — ניתוחים קיימים יישברו');
+});
+
+test('דירוגי מצב רוח אינם מתערבבים באירועי המסטיק', async () => {
+  const env = makeEnv(makeKV());
+  await S.updateDay(env, '2026-08-07', d => { d.ev = [{ k: 'g', h: 9, m: 0 }]; });
+  await S.recordMood(env, '2026-08-07', 11, 0, 3);
+  const d = await S.getDay(env, '2026-08-07');
+  assert.equal(G.measureRhythm([d]).total, 1, 'דירוג נספר כמנת מסטיק');
+  assert.equal(S.moodReadings(d).length, 1);
 });

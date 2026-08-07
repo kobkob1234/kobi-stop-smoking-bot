@@ -105,3 +105,35 @@ export function moodAskDue(day, nowMinutes, sentToday) {
   const m = nowMinutes < 4 * 60 ? nowMinutes + 24 * 60 : nowMinutes;
   return m >= MOOD_ASK_MIN && m <= MOOD_ASK_MAX;
 }
+
+// ==========================================================================
+//  שלוש בדיקות מצב רוח ביום
+//
+//  מדידה אחת בערב היא שחזור של יום שלם, וצבועה לפי איך שהוא הסתיים.
+//  שלוש נקודות פרוסות תופסות את **התנועה**, וזו התנועה שמנבאת.
+//
+//  לכל עוגן חלון משלו, ובכל חלון נשאלת שאלה אחת בלבד — ההגבלה חשובה
+//  לא פחות מהתדירות עצמה: בוט שמציף נמצא בדרך להשתקה, ומדד שגורם
+//  להשתקה גרוע ממדד חסר.
+// ==========================================================================
+export const MOOD_ANCHORS = [
+  { id: 'am',  from: 10 * 60,          to: 13 * 60 },          // 10:00–13:00
+  { id: 'pm',  from: 16 * 60,          to: 18 * 60 + 30 },     // 16:00–18:30
+  { id: 'eve', from: 21 * 60 + 30,     to: 24 * 60 + 30 },     // 21:30–00:30
+];
+
+/** איזה עוגן פעיל עכשיו, או null */
+export function moodAnchorAt(nowMinutes) {
+  const m = nowMinutes < 4 * 60 ? nowMinutes + 24 * 60 : nowMinutes;
+  return MOOD_ANCHORS.find(a => m >= a.from && m <= a.to) || null;
+}
+
+/**
+ * האם לשאול עכשיו.
+ * @param readings מספר הדירוגים שכבר נרשמו היום
+ */
+export function moodCheckDue(nowMinutes, readings, sentThisAnchor, maxPerDay = 3) {
+  if (readings >= maxPerDay) return false;
+  if (sentThisAnchor) return false;
+  return !!moodAnchorAt(nowMinutes);
+}

@@ -254,3 +254,26 @@ export function pruneSent(meta, todayISO) {
     meta.snooze = s;
   }
 }
+
+// ==========================================================================
+//  דירוגי מצב רוח — כמה ביום, לא אחד
+//
+//  מדידה יחידה בערב היא זיכרון משוחזר של יום שלם, והיא נוטה להיצבע
+//  לפי איך שהיום הסתיים. 2–3 מדידות פרוסות תופסות את התנועה עצמה —
+//  וזו התנועה שמנבאת, לא הממוצע.
+//
+//  כל דירוג נשמר כאירוע ב-ev (אותו מנגנון של המסטיק), ו-`mood` מחזיק
+//  את **החציון** של היום כדי שכל הניתוחים הקיימים ימשיכו לעבוד בלי
+//  לדעת שהמבנה השתנה.
+// ==========================================================================
+export const MOOD_MAX_PER_DAY = 3;
+
+export const moodReadings = day => (day.ev || []).filter(e => e.k === 'mo');
+
+export async function recordMood(env, iso, hour, minute, value) {
+  return updateDay(env, iso, d => {
+    d.ev = [...(d.ev || []), { k: 'mo', h: hour, m: minute, v: value }];
+    const vals = moodReadings(d).map(e => e.v).sort((a, b) => a - b);
+    d.mood = vals[Math.floor(vals.length / 2)];   // חציון היום
+  });
+}

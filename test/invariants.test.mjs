@@ -201,10 +201,13 @@ test('I12 · שאלת מצב הרוח אינה תלויה בלחיצה על "ע�
   const idx = SRC['index.js'];
   assert.match(idx, /slot\.id === 'evening' && !day\.mood/,
     'השאלה אינה נתלית על הודעת הערב שהקרון שולח');
-  assert.match(idx, /moodAskDue\(/, 'אין תזכורת חוזרת כלל');
-  // ושתי נקודות הכניסה מציעות את אותם חמישה ערכים
+  // והקרון שואל מיוזמתו בעוגנים, בלי תלות בשום לחיצה
+  assert.match(idx, /moodCheckDue\(/, 'אין בדיקות יזומות בכלל');
+  assert.match(idx, /moodAnchorAt\(/, 'אין עוגני זמן לבדיקות');
   const rows = [...idx.matchAll(/\[1, 2, 3, 4, 5\]\.map\(v => btn\(String\(v\), `mo:\$\{v\}`\)\)/g)];
   assert.ok(rows.length >= 3, `נמצאו ${rows.length} מקומות שמציעים דירוג — צפויים 3`);
+  // ותקרה יומית, כדי שהתדירות לא תהפוך להצפה
+  assert.match(idx, /MOOD_MAX_PER_DAY/, 'אין תקרה יומית לבדיקות');
 });
 
 test('I12 · לכל ערך שהכפתורים שולחים יש מטפל וטווח חוקי', () => {
