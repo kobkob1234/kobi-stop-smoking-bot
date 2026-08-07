@@ -1,0 +1,16 @@
+{
+  "cbt": {
+    "ver": 1,
+    "startISO": null,
+    "sessionsDone": [],
+    "triggers": [],
+    "pastAttempts": [],
+    "dependence": null,
+    "confidence": [],
+    "homework": null,
+    "formulations": [],
+    "notes": [],
+    "active": null
+  },
+  "turns": []
+}

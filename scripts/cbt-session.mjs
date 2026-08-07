@@ -32,13 +32,26 @@ import * as E from '../src/cbt/engine.js';
 import * as S from '../src/cbt/state.js';
 import { planFor, il } from '../src/plan.js';
 
-const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
-// המצב שבבעלות הקובץ — נשמר בגיט, כי היסטוריה של דפוסים ושיעורי בית
-// היא בדיוק מה שכדאי שתהיה ניתנת לשחזור.
-const STATE = join(ROOT, 'cbt', 'session-state.json');
+const HERE = dirname(fileURLToPath(import.meta.url));
+const ROOT = join(HERE, '..', '..');
+const REPO = join(HERE, '..');
+
+// ═══ למה המצב יושב **בתוך הריפו** ולא ליד חומרי ה-RAG ═══
+//
+// שתי סיבות, ושתיהן התגלו רק אחרי שהוא כבר ישב שם:
+//
+//   1. `cbt/` אינו ריפו. רק `telegram-bot/` הוא. קובץ שם אינו מנוהל
+//      גרסאות, לא נדחף, ולא ניתן לשחזור — כלומר בדיוק ההפך ממה
+//      שרציתי מהיסטוריית דפוסים ושיעורי בית.
+//   2. `extraction/build_cbt.py` עושה `shutil.rmtree(cbt/)` לפני שהוא
+//      בונה מחדש. ה-CLAUDE.md מנחה במפורש להריץ אותו אחרי הוספת ספר.
+//      כלומר תחזוקה שגרתית הייתה **מוחקת בשקט את כל היסטוריית הטיפול**.
+//
+// כאן הוא מנוהל גרסאות, נדחף עם הבוט, ומחוץ לנתיב המחיקה.
+const STATE = join(REPO, 'cbt-state', 'session-state.json');
 // תצלום נתוני הבוט — **נגזר, לא בבעלות**, ולכן מחוץ לגיט. בלי ההפרדה
 // כל sync היה מייצר diff של 17KB על נתונים שהבוט כבר מחזיק.
-const SNAP = join(ROOT, 'cbt', '.bot-snapshot.json');
+const SNAP = join(REPO, 'cbt-state', '.bot-snapshot.json');
 
 const load = () => {
   const own = existsSync(STATE)

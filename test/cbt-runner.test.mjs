@@ -17,7 +17,8 @@ import { dirname, join } from 'node:path';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const RUN = join(HERE, '..', 'scripts', 'cbt-session.mjs');
-const CBT = join(HERE, '..', '..', 'cbt');
+const REPO = join(HERE, '..');
+const CBT = join(REPO, 'cbt-state');
 const cli = (...a) => JSON.parse(execFileSync('node', [RUN, ...a], { encoding: 'utf8' }));
 
 test('הסקריפט קיים ורץ', () => {
@@ -55,6 +56,42 @@ test('סטטוס מסמן נתונים ישנים', () => {
   const s = cli('status');
   assert.equal(typeof s.stale, 'boolean');
   assert.match(s.dataAge, /ימים|לא סונכרן/);
+});
+
+test('המצב יושב בתוך הריפו — לא בנתיב שנמחק בבנייה מחדש', () => {
+  // שני באגים אמיתיים שהתגלו יחד:
+  //   • `cbt/` אינו ריפו כלל — רק `telegram-bot/` הוא. קובץ שם לא
+  //     מנוהל גרסאות ולא ניתן לשחזור.
+  //   • `extraction/build_cbt.py` עושה rmtree על `cbt/`, וה-CLAUDE.md
+  //     מנחה להריץ אותו אחרי הוספת ספר — תחזוקה שגרתית שהייתה מוחקת
+  //     בשקט את כל היסטוריית הטיפול.
+  const src = readFileSync(RUN, 'utf8');
+  const paths = [...src.matchAll(/const (STATE|SNAP) = ([^;]+);/g)].map(m => m[2]);
+  assert.equal(paths.length, 2, 'לא נמצאו שני נתיבי מצב');
+  for (const p of paths) {
+    assert.ok(/REPO/.test(p), `נתיב מחוץ לריפו: ${p}`);
+    assert.ok(!/'cbt'/.test(p), `נתיב בתוך תיקיית ה-RAG שנמחקת: ${p}`);
+  }
+  // והבנאי עדיין באמת מוחק — כלומר הבדיקה שומרת על משהו חי
+  const builder = join(REPO, '..', 'extraction', 'build_cbt.py');
+  if (existsSync(builder)) {
+    assert.match(readFileSync(builder, 'utf8'), /rmtree/,
+      'הבנאי כבר לא מוחק — עדכן את הנימוק בבדיקה הזו');
+  }
+});
+
+test('קובץ המצב במעקב גיט, התצלום לא', () => {
+  const tracked = (f) => {
+    try {
+      execFileSync('git', ['ls-files', '--error-unmatch', f],
+        { cwd: REPO, stdio: 'pipe' });
+      return true;
+    } catch { return false; }
+  };
+  assert.ok(tracked('cbt-state/session-state.json'),
+    'קובץ המצב אינו במעקב — אין רצף בין סשנים ואין שחזור');
+  assert.ok(!tracked('cbt-state/.bot-snapshot.json'), 'התצלום הנגזר נכנס לגיט');
+  assert.match(readFileSync(join(REPO, '.gitignore'), 'utf8'), /cbt-state\/\.bot-snapshot\.json/);
 });
 
 test('אי אפשר לרשום בלי סשן פתוח', () => {
