@@ -84,6 +84,31 @@ function botState(s, iso) {
 
 const out = (o) => console.log(JSON.stringify(o, null, 2));
 
+/**
+ * דחיפת המראה לבוט — כדי שיפסיק להזכיר על סשן שכבר רץ.
+ *
+ * **הכיוון חד-סטרי בכוונה.** הקובץ בעלים של `sessionsDone`; הבוט משקף.
+ * שני צדדים שמחליטים על אותו שדה מתפצלים, וכאן הפיצול היה מתבטא
+ * בתזכורת שחוזרת על סשן שנסגר — או גרוע יותר, בשתיקה על סשן שלא רץ.
+ *
+ * מחזיר ולא מדפיס, כדי שהקורא יחליט על הפלט.
+ */
+async function pushMirror(s) {
+  const kf = join(REPO, '.webhook-secret');
+  if (!existsSync(kf)) return { pushed: false, why: 'אין .webhook-secret' };
+  try {
+    const r = await fetch(`${WORKER}/cbt-state?key=${readFileSync(kf, 'utf8').trim()}`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ sessionsDone: s.cbt.sessionsDone, startISO: s.cbt.startISO }),
+      signal: AbortSignal.timeout(20000),
+    });
+    return { pushed: r.ok, status: r.status, sessionsDone: s.cbt.sessionsDone };
+  } catch (e) {
+    return { pushed: false, why: String(e.message || e) };
+  }
+}
+
 // ==========================================================================
 //  פקודות
 // ==========================================================================
@@ -190,8 +215,18 @@ const CMDS = {
     });
   },
 
+  /**
+   * דחיפת המראה לבוט — כדי שיפסיק להזכיר על סשן שכבר רץ.
+   *
+   * **הכיוון חד-סטרי בכוונה.** הקובץ בעלים של `sessionsDone`; הבוט
+   * משקף. שני צדדים שמחליטים על אותו שדה מתפצלים, וכאן הפיצול היה
+   * מתבטא בתזכורת שחוזרת על סשן שנסגר — או גרוע יותר, בשתיקה על סשן
+   * שלא רץ.
+   */
+  async push() { out(await pushMirror(load())); },
+
   /** סגירה סופית עם הדפוס */
-  finish(formulation) {
+  async finish(formulation) {
     const s = load(); const iso = today();
     if (!s.cbt.active) return out({ error: 'אין סשן פתוח' });
     const id = s.cbt.active.id;
@@ -201,7 +236,13 @@ const CMDS = {
     s.cbt = S.completeSession(s.cbt, iso);
     s.turns = [];
     save(s);
-    out({ closed: id, note: s.cbt.notes[s.cbt.notes.length - 1], formulation: S.latestFormulation(s.cbt) });
+    // הדחיפה מיד אחרי הסגירה — אחרת התזכורת של הערב הבא חוזרת על סשן
+    // שכבר רץ, וזה בדיוק סוג הרעש שגורם להתעלם מהתזכורות.
+    //
+    // **פלט אחד.** גרסה קודמת קראה ל-`push` שהדפיס בעצמו, ואז הפקודה
+    // הוציאה שני אובייקטי JSON — כל קורא שמפרסר את הפלט נשבר.
+    out({ closed: id, note: s.cbt.notes[s.cbt.notes.length - 1],
+          formulation: S.latestFormulation(s.cbt), mirror: await pushMirror(s) });
   },
 
   /**

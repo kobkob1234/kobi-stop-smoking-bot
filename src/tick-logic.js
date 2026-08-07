@@ -137,3 +137,49 @@ export function moodCheckDue(nowMinutes, readings, sentThisAnchor, maxPerDay = 3
   if (sentThisAnchor) return false;
   return !!moodAnchorAt(nowMinutes);
 }
+
+
+// ==========================================================================
+//  תזכורת לסשן CBT
+// ==========================================================================
+
+/** 20:30 — אחרי בדיקת הערב, לפני שהוא נרדם. רבע שעה עוד אפשרי. */
+export const CBT_REMIND_MIN = 20 * 60 + 30;
+
+/**
+ * האם להזכיר עכשיו על סשן.
+ *
+ * `seen` הוא **מראה** של מצב ה-CBT (`meta.cbtSeen`), לא המצב. הבעלוּת
+ * על `sessionsDone` שייכת לקובץ שבו הסשנים רצים; הבוט רק צריך לדעת מה
+ * כבר רץ כדי להפסיק להזכיר.
+ *
+ * **מראה חסרה = מזכירים.** זו ברירת המחדל הנכונה: תזכורת מיותרת עולה
+ * הודעה אחת, תזכורת שנחסמה בטעות עולה סשן שלם. הכיוון ההפוך — לשתוק
+ * כשלא יודעים — הופך כל תקלת סנכרון להיעלמות שקטה של הטיפול.
+ */
+export function cbtRemindDue(minutes, meta, iso, dueSession) {
+  if (meta.quiet) return null;
+  if (minutes < CBT_REMIND_MIN) return null;
+  if (meta.sent && meta.sent[`${iso}:cbt`]) return null;
+  const seen = meta.cbtSeen || {};
+  const due = dueSession(iso, seen.sessionsDone || [], seen.startISO || iso);
+  if (!due) return null;
+
+  // ═══ נסיגה ═══
+  //
+  // סשן שלא רץ נשאר "אמור לרוץ" לנצח, ולכן התזכורת הייתה יוצאת כל
+  // ערב בלי סוף. תזכורת יומית שמתעלמים ממנה גרועה מאין תזכורת: היא
+  // מאמנת להתעלם גם מהבאות, כולל אלה שכן חשובות.
+  //
+  // שלושה ימים ראשונים כל יום — שם עוד סביר שזה עניין של תזמון.
+  // אחר כך פעם בשבוע, כי בשלב הזה זו כבר החלטה, ותזכורת שבועית
+  // מכבדת אותה ועדיין משאירה דלת פתוחה.
+  const late = daysBetween(due.dueISO, iso);
+  if (late <= 2) return due;
+  return late % 7 === 0 ? due : null;
+}
+
+/** ימים בין שני ISO — מקומי, כדי ש-tick-logic לא ייקשר ל-plan */
+function daysBetween(a, b) {
+  return Math.round((Date.parse(b) - Date.parse(a)) / 864e5);
+}

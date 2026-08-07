@@ -10,11 +10,12 @@ import * as C from './content.js';
 import * as M from './messages.js';
 import * as KB from './kb.js';
 import * as AI from './ai.js';
+import * as CBTP from './cbt/protocol.js';
 import * as ANL from './analytics.js';
 import * as INT from './intent.js';
 import * as G from './gum.js';
 import { getMeta, putMeta, getDay, updateDay, pruneSent, recentHist, pushHist, getWeekly, putWeekly, PATCH_BACKFILL_VER, backfillPatches, recordMood, moodReadings, MOOD_MAX_PER_DAY } from './store.js';
-import { SLOTS, slotAction, mergeTickMeta, taperAskDue, taperWatchDue, moodCheckDue, moodAnchorAt } from './tick-logic.js';
+import { SLOTS, slotAction, mergeTickMeta, taperAskDue, taperWatchDue, moodCheckDue, moodAnchorAt, cbtRemindDue } from './tick-logic.js';
 import { notifyPartner, alertPartner } from './partner.js';
 
 // מזהה בנייה. מתעדכן בכל פריסה ומוחזר ב-/diag, כדי שאפשר יהיה לדעת
@@ -189,7 +190,7 @@ export default {
     if (url.pathname === '/health') return new Response('ok');
 
     // בדיקת שפיות + קרון-גיבוי מ-GitHub Actions (מוגן ב-WEBHOOK_SECRET)
-    if (['/diag', '/cron', '/export', '/send', '/ask', '/trigger'].includes(url.pathname)) {
+    if (['/diag', '/cron', '/export', '/send', '/ask', '/trigger', '/cbt-state'].includes(url.pathname)) {
       // /trigger מקבל גם TRIGGER_KEY נפרד — הסוד הזה יושב בקיצור על
       // הטלפון, ולא רצוי שיהיה אותו סוד שמגן על /export ועל הווביהוק.
       const given = url.searchParams.get('key');
@@ -285,6 +286,31 @@ export default {
         if (level === 2) { await startPlanning(meta.chatId, env, meta, iso, now); return new Response('🧠 תירוצים לצאת — נשלח, ובת הזוג עודכנה'); }
         await startWave(meta.chatId, env, meta, iso, now);
         return new Response('🌊 דחף — הזרימה נשלחה לטלגרם');
+      }
+
+      if (url.pathname === '/cbt-state') {
+        // ═══ מראה בלבד ═══
+        //
+        // הסשנים רצים בסוכן, ושם גם הבעלוּת על `sessionsDone`. הבוט
+        // צריך לדעת מה כבר רץ רק כדי **להפסיק להזכיר** עליו — ולכן
+        // הוא משקף ולא מחליט. שני מקורות שמחליטים על אותו שדה
+        // מתפצלים; מקור אחד שמחליט ואחד שמשקף לא.
+        //
+        // GET מחזיר את המראה, POST מעדכן אותה.
+        const meta = await getMeta(env);
+        if (req.method === 'POST') {
+          const b = await req.json().catch(() => null);
+          if (!b || !Array.isArray(b.sessionsDone)) {
+            return new Response('bad body', { status: 400 });
+          }
+          meta.cbtSeen = {
+            sessionsDone: b.sessionsDone.slice(0, 60).map(String),
+            startISO: b.startISO || null,
+            at: P.il().iso,
+          };
+          await putMeta(env, meta);
+        }
+        return Response.json({ ok: true, cbtSeen: meta.cbtSeen });
       }
 
       if (url.pathname === '/export') {
@@ -433,6 +459,33 @@ async function tick(env) {
         `<i>${enc}</i>`,
         `— ${encSrc}`,
       ].join('\n'), { reply_markup: inline([[1, 2, 3, 4, 5].map(v => btn(String(v), `mo:${v}`))]) });
+    }
+  }
+
+  // --- תזכורת לסשן CBT -------------------------------------------------
+  //
+  //  הפרוטוקול נבנה, נבדק, ואיש לא היה יודע מתי להריץ אותו: הסשנים
+  //  רצים בסוכן, והבוט — היחיד שמדבר איתו ביוזמתו — לא ידע עליהם דבר.
+  //  התערבות שתלויה בכך שייזכר לבד אינה התערבות.
+  //
+  //  **המראה, לא המצב.** `meta.cbtSeen` נכתב רק דרך `/cbt-state`,
+  //  והבעלוּת על מה כבר רץ נשארת אצל הקובץ. אם המראה חסרה — מזכירים.
+  //  זו ברירת המחדל הנכונה: תזכורת מיותרת עולה הודעה אחת, תזכורת
+  //  שנחסמה בטעות עולה סשן שלם.
+  {
+    const due = cbtRemindDue(now.minutes, meta, iso, CBTP.dueSession);
+    if (due) {
+      meta.sent[`${iso}:cbt`] = 1; dirty = true;
+      const late = P.diffDays(due.dueISO, iso);
+      await send(env, meta.chatId, [
+        `🪑 <b>${esc(due.title)}</b>`,
+        late > 0 ? `היה אמור לרוץ לפני ${late} ימים.` : 'מוכן להיום.',
+        '',
+        `כ-${due.minMinutes || 15} דקות · ${due.checklist.length} שלבים`,
+        '',
+        '<i>פותחים את Claude Code או Antigravity בתיקיית הפרויקט,</i>',
+        '<i>ואומרים: "בוא נעשה סשן".</i>',
+      ].join('\n'));
     }
   }
 

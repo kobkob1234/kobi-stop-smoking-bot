@@ -172,6 +172,26 @@ test('הכלי נבחר לפי מצב — לא לפי סדר הרשימה', () =
   assert.ok(n.remaining >= 0);
 });
 
+test('כל פקודה מוציאה בדיוק אובייקט JSON אחד', () => {
+  // `finish` קראה ל-`push` שהדפיס בעצמו, ואז הפקודה פלטה שני
+  // אובייקטים — וכל קורא שמפרסר את הפלט נשבר. הבדיקה **סופרת קוראים
+  // ל-out** בכל פקודה במקום לבדוק פקודות לפי שם, אחרת הפקודה הבאה
+  // שתעשה את אותו הדבר תעבור.
+  const src = readFileSync(RUN, 'utf8')
+    .replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+  const body = src.slice(src.indexOf('const CMDS = {'), src.indexOf('const [cmd,'));
+  // כל פקודה: מ-`  name(` או `  async name(` עד הפקודה הבאה
+  const cmds = body.split(/\n  (?:async )?\w+\(/).slice(1);
+  assert.ok(cmds.length >= 6, `נמצאו ${cmds.length} פקודות — הפיצול נשבר`);
+  for (const c of cmds) {
+    const outs = (c.match(/\bout\(/g) || []).length;
+    const early = (c.match(/return out\(/g) || []).length;
+    // מספר `return out(` + לכל היותר `out(` סופי אחד שאינו return
+    assert.ok(outs - early <= 1,
+      `פקודה עם ${outs - early} פלטים שאינם return — פלט כפול:\n${c.slice(0, 120)}`);
+  }
+});
+
 // ניקוי: מחזירים את המצב לנקי כדי שהרצה של הטסטים לא תשאיר סשן פתוח
 test('ניקוי', () => {
   const s = cli('status');
