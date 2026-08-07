@@ -11,7 +11,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { readFileSync, existsSync, rmSync } from 'node:fs';
+import { readFileSync, existsSync, rmSync, realpathSync } from 'node:fs';
+import { relative, isAbsolute } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
@@ -107,6 +108,33 @@ test('קובץ המצב במעקב גיט, התצלום לא', () => {
     'קובץ המצב אינו במעקב — אין רצף בין סשנים ואין שחזור');
   assert.ok(!tracked('cbt-state/.bot-snapshot.json'), 'התצלום הנגזר נכנס לגיט');
   assert.match(readFileSync(join(REPO, '.gitignore'), 'utf8'), /cbt-state\/\.bot-snapshot\.json/);
+});
+
+test('כל מה שהסשן צריך כדי לשרוד יושב בתוך הריפו', () => {
+  // שלוש פעמים כבר נכתב קובץ נושא-מצב מחוץ לריפו היחיד בפרויקט
+  // (מצב הסשן, התצלום, ה-SKILL) — ובכל פעם הוא נראה שמור ולא היה.
+  // הבדיקה **גוזרת את הרשימה מהקוד** במקום לתחזק אותה ביד, אחרת היא
+  // תפגר אחרי הקובץ הרביעי בדיוק כמו קודמותיה.
+  const src = readFileSync(RUN, 'utf8');
+  const needed = [
+    RUN,                                                 // הסקריפט
+    join(HERE, '..', '..', '.claude', 'skills', 'cbt-session', 'SKILL.md'),
+    fileURLToPath(import.meta.url),                       // הבדיקה הזו
+    // כל נתיב מצב שהסקריפט מכריז עליו — למעט מה שמוצהר כנגזר
+    ...[...src.matchAll(/const STATE = join\(([^;]+)\);/g)]
+        .map(() => join(REPO, 'cbt-state', 'session-state.json')),
+  ];
+  const untracked = needed.filter(f => {
+    if (!existsSync(f)) return true;
+    const real = realpathSync(f);                         // הסימלינק חייב לנחות בריפו
+    const rel = relative(realpathSync(REPO), real);
+    if (rel.startsWith('..') || isAbsolute(rel)) return true;
+    try {
+      execFileSync('git', ['ls-files', '--error-unmatch', rel], { cwd: REPO, stdio: 'pipe' });
+      return false;
+    } catch { return true; }
+  });
+  assert.deepEqual(untracked, [], `לא מנוהל גרסאות — לא ישרוד: ${untracked}`);
 });
 
 test('אי אפשר לרשום בלי סשן פתוח', () => {
