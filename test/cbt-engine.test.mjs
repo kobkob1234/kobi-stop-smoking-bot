@@ -19,7 +19,13 @@ const state = { ...T.EMPTY_STATE, dayNum: 22, cleanDays: 22, gum7: 52, gumTarget
 /** מודל מזויף שמתעד מה נשאל */
 const fake = (answers = {}) => {
   const seen = [];
-  const call = async (role, prompt) => { seen.push({ role, prompt }); return answers[role] ?? `[${role}]`; };
+  // ברירת המחדל ל-triage היא 'answer': הסיווג נוטה ל-distress בכל
+  // קלט לא מוכר, ולכן פיקסצ׳ר שמחזיר 'x' היה עוצר כל תור.
+  const call = async (role, prompt) => {
+    seen.push({ role, prompt });
+    if (answers[role] !== undefined) return answers[role];
+    return role === 'triage' ? 'answer' : `[${role}]`;
+  };
   return { call, seen };
 };
 
@@ -81,7 +87,7 @@ test('כלי fixed אינו קורא למודל בכלל', async () => {
 // ---------- התור התגובתי ----------
 
 test('תור תגובתי עובר triage → fetch → respond → critique', async () => {
-  const { call, seen } = fake({ triage: 'תשובה', critique: 'OK' });
+  const { call, seen } = fake({ triage: 'answer', critique: 'OK' });
   const r = await E.runTurn({
     tool: T.byId(P.BCT.COPING), state, userText: 'פשוט לא בא לי',
     call, retrieve: async () => [{ text: 'רקע' }],
@@ -95,7 +101,7 @@ test('תור תגובתי עובר triage → fetch → respond → critique', a
 
 test('מה שהמשתמש אמר מגיע לשלב התשובה במילים שלו', async () => {
   // הכשל שההרצה חשפה: התשובה נכתבה מראש בלי קשר למה שנאמר.
-  const { call, seen } = fake({ triage: 'תשובה', critique: 'OK' });
+  const { call, seen } = fake({ triage: 'answer', critique: 'OK' });
   await E.runTurn({ tool: T.byId(P.BCT.COPING), state, userText: 'פשוט לא בא לי', call });
   const respond = seen.find(s => s.role === 'respond');
   assert.match(respond.prompt, /פשוט לא בא לי/);
@@ -103,7 +109,7 @@ test('מה שהמשתמש אמר מגיע לשלב התשובה במילים ש�
 });
 
 test('ביקורת שמחזירה תיקון מחליפה את התשובה', async () => {
-  const { call } = fake({ triage: 'תשובה', respond: 'תשובה גנרית', critique: 'גרסה מתוקנת' });
+  const { call } = fake({ triage: 'answer', respond: 'תשובה גנרית', critique: 'גרסה מתוקנת' });
   const r = await E.runTurn({ tool: T.byId(P.BCT.COPING), state, userText: 'משהו', call });
   assert.equal(r.text, 'גרסה מתוקנת');
   assert.equal(r.revised, true);
@@ -111,14 +117,14 @@ test('ביקורת שמחזירה תיקון מחליפה את התשובה', as
 
 test('חשיפה מדאיגה עוצרת את הפרוטוקול', async () => {
   // הצ׳קליסט אינו חשוב יותר מזה.
-  const { call, seen } = fake({ triage: 'חשיפה' });
+  const { call, seen } = fake({ triage: 'distress' });
   const r = await E.runTurn({ tool: T.byId(P.BCT.COPING), state, userText: '...', call });
   assert.equal(r.halt, true);
   assert.equal(seen.length, 1, 'המשיך לשאול אחרי חשיפה');
 });
 
 test('כישלון המודל אינו מחזיר טקסט חלקי', async () => {
-  const call = async (role) => (role === 'respond' ? null : 'x');
+  const call = async (role) => (role === 'respond' ? null : role === 'triage' ? 'answer' : 'x');
   const r = await E.runTurn({ tool: T.byId(P.BCT.COPING), state, userText: 'x', call });
   assert.equal(r.text, null);
   assert.equal(r.mode, 'failed');
@@ -148,7 +154,7 @@ const RICH = {
 };
 const grab = async (over = {}) => {
   const seen = [];
-  const call = async (role, prompt, sys) => { seen.push({ role, prompt, sys }); return role === 'critique' ? 'OK' : 'x'; };
+  const call = async (role, prompt, sys) => { seen.push({ role, prompt, sys }); return role === 'critique' ? 'OK' : role === 'triage' ? 'answer' : 'x'; };
   await E.runTurn({ tool: T.byId(P.BCT.MEDS), state: RICH, userText: 'לא בא לי בערב', call, ...over });
   return seen.find(s => s.role === 'respond');
 };
@@ -215,7 +221,7 @@ test('חילוץ מובנה — לא נשמר המשפט השלם', async () => 
   // "אני חושב שזה בעיקר בערב מול הטלוויזיה כשאני עייף" נשמר כטריגר
   // והזין את הפרומפט של הסשן הבא. רעש שמצטבר משבוע לשבוע.
   const call = async (role) => (role === 'extract' ? 'ערב מול הטלוויזיה'
-    : role === 'critique' ? 'OK' : 'x');
+    : role === 'critique' ? 'OK' : role === 'triage' ? 'answer' : 'x');
   const r = await E.runTurn({
     tool: T.byId(P.BCT.TRIGGERS), state: RICH, call,
     userText: 'אני חושב שזה בעיקר בערב מול הטלוויזיה כשאני עייף אחרי העבודה',
@@ -224,14 +230,14 @@ test('חילוץ מובנה — לא נשמר המשפט השלם', async () => 
 });
 
 test('NONE מהחילוץ אינו נשמר', async () => {
-  const call = async (role) => (role === 'extract' ? 'NONE' : role === 'critique' ? 'OK' : 'x');
+  const call = async (role) => (role === 'extract' ? 'NONE' : role === 'critique' ? 'OK' : role === 'triage' ? 'answer' : 'x');
   const r = await E.runTurn({ tool: T.byId(P.BCT.TRIGGERS), state: RICH, call, userText: 'לא יודע' });
   assert.equal(r.captured, null);
 });
 
 test('כלי הצהרתי אינו מפעיל חילוץ', async () => {
   const seen = [];
-  const call = async (role) => { seen.push(role); return 'x'; };
+  const call = async (role) => { seen.push(role); return role === 'triage' ? 'answer' : 'x'; };
   await E.runTurn({ tool: T.byId(P.BCT.NAP), state: RICH, call, userText: 'ok' });
   assert.ok(!seen.includes('extract'));
 });
@@ -239,7 +245,7 @@ test('כלי הצהרתי אינו מפעיל חילוץ', async () => {
 test('הביקורת רואה את הנתונים ואת השאלה', async () => {
   // בלעדיהם היא לא יכולה לשפוט את הכלל "חבר בין מה שאמר לנתונים".
   const seen = [];
-  const call = async (role, prompt) => { seen.push({ role, prompt }); return role === 'critique' ? 'OK' : 'x'; };
+  const call = async (role, prompt) => { seen.push({ role, prompt }); return role === 'critique' ? 'OK' : role === 'triage' ? 'answer' : 'x'; };
   await E.runTurn({ tool: T.byId(P.BCT.MEDS), state: RICH, call, userText: 'לא בא לי' });
   const c = seen.find(s => s.role === 'critique');
   assert.match(c.prompt, /7\.4/, 'הביקורת בלי נתונים');
@@ -250,7 +256,7 @@ test('תיקון מהביקורת מאומת ולא נלקח בעיוורון', 
   const seen = [];
   const call = async (role) => {
     if (role === 'critique') { seen.push(1); return seen.length === 1 ? 'גרסה מתוקנת' : 'OK'; }
-    return 'x';
+    return role === 'triage' ? 'answer' : 'x';
   };
   const r = await E.runTurn({ tool: T.byId(P.BCT.MEDS), state: RICH, call, userText: 'x' });
   assert.equal(seen.length, 2, 'התיקון נשלח בלי אימות');
@@ -258,7 +264,7 @@ test('תיקון מהביקורת מאומת ולא נלקח בעיוורון', 
 });
 
 test('תיקון שנכשל שוב מסומן כלא-מאומת', async () => {
-  const call = async (role) => (role === 'critique' ? 'עוד גרסה' : 'x');
+  const call = async (role) => (role === 'critique' ? 'עוד גרסה' : role === 'triage' ? 'answer' : 'x');
   const r = await E.runTurn({ tool: T.byId(P.BCT.MEDS), state: RICH, call, userText: 'x' });
   assert.equal(r.verified, false, 'גרסה לא מאומתת מוצגת כמאומתת');
 });
@@ -283,7 +289,7 @@ test('כלי תגובתי שאינו שואל שאלה פתוחה אינו מח�
   const onTarget = { ...RICH, gum7: 63, gumTarget: 9 };
   assert.equal(T.byId(P.BCT.MEDS).run(onTarget).expects, 'ack', 'הנחת הבדיקה נשברה');
   const seen = [];
-  const call = async (role) => { seen.push(role); return role === 'critique' ? 'OK' : 'x'; };
+  const call = async (role) => { seen.push(role); return role === 'critique' ? 'OK' : role === 'triage' ? 'answer' : 'x'; };
   const r = await E.runTurn({ tool: T.byId(P.BCT.MEDS), state: onTarget, call, userText: 'אוקיי' });
   assert.ok(!seen.includes('extract'), 'חילוץ רץ על אישור');
   assert.equal(r.captured, null);
@@ -366,4 +372,68 @@ test('סשן ריק אינו מייצר פורמולציה', async () => {
 test('לפורמולציה החשיבה הגבוהה ביותר — לטנציה לא רלוונטית שם', () => {
   assert.equal(E.ROLES.formulate.think, 'high');
   assert.ok(E.ROLES.formulate.reserve > E.ROLES.critique.reserve);
+});
+
+// ==========================================================================
+//  תיקונים שנבעו מביקורת חיצונית — אחרי אימות כל טענה מול הקוד
+// ==========================================================================
+
+test('טריאז׳ מובנה ונוטה לצד הבטוח', () => {
+  // regex על טקסט חופשי החמיץ "he is in distress" ו"הוא בשבר".
+  // ל-triage שמופקד על בטיחות אסור false negative.
+  assert.equal(E.classifyTriage('answer'), 'answer');
+  assert.equal(E.classifyTriage('he is in distress'), 'distress');
+  assert.equal(E.classifyTriage('pushback'), 'pushback');
+  for (const bad of ['', null, undefined, 'משהו לא מוכר', '???']) {
+    assert.equal(E.classifyTriage(bad), 'distress', `${JSON.stringify(bad)} לא נטה לבטוח`);
+  }
+});
+
+test('הטריאז׳ מבקש קטגוריה מפורשת, לא טקסט חופשי', async () => {
+  const { call, seen } = fake();
+  await E.runTurn({ tool: T.byId(P.BCT.MEDS), state: RICH, userText: 'x', call });
+  const tr = seen.find(s => s.role === 'triage');
+  assert.match(tr.prompt, /answer/);
+  assert.match(tr.prompt, /distress/);
+  assert.match(tr.prompt, /pushback/, 'התנגדות אינה קטגוריה — היא הנפוצה בגמילה');
+});
+
+test('הסיווג מוחזר לקורא', async () => {
+  const { call } = fake({ triage: 'pushback', critique: 'OK' });
+  const r = await E.runTurn({ tool: T.byId(P.BCT.MEDS), state: RICH, userText: 'x', call });
+  assert.equal(r.kind, 'pushback');
+});
+
+test('הדפוס שזוהה מגיע ל-respond ול-critique', async () => {
+  // הפורמולציה נבנתה ומעולם לא נשלחה — תרגיל שאיש לא קרא את תוצאתו.
+  const { call, seen } = fake({ critique: 'OK' });
+  await E.runTurn({
+    tool: T.byId(P.BCT.MEDS), state: RICH, userText: 'x', call,
+    formulation: 'הערב הוא הנקודה שבה הכול נשבר',
+  });
+  assert.match(seen.find(s => s.role === 'respond').prompt, /הערב הוא הנקודה/);
+  assert.match(seen.find(s => s.role === 'critique').prompt, /הערב הוא הנקודה/);
+});
+
+test('הביקורת בודקת אישוש עיוותים', () => {
+  // הכשל המסוכן של מטפל-מכונה: נשמע אמפתי ומחזק את ההנחה שצריך לברר.
+  assert.ok(E.CRITIQUE_RULES.some(r => /מאשרת|עיוות/.test(r)));
+  assert.ok(E.CRITIQUE_RULES.some(r => /דפוס/.test(r)));
+});
+
+test('השרשרת המחולצת שורדת את חיתוך ההיסטוריה', async () => {
+  // תור 7 חייב לראות מה נאמר בתור 1. הערכים כבר מחולצים, 6 מילים כל אחד.
+  const turns = Array.from({ length: 8 }, (_, i) =>
+    ({ tool: `כלי${i}`, answer: `תשובה ארוכה ${i}`, captured: `ערך${i}` }));
+  const { call, seen } = fake({ critique: 'OK' });
+  await E.runTurn({ tool: T.byId(P.BCT.MEDS), state: RICH, userText: 'x', call, turns });
+  const p = seen.find(s => s.role === 'respond').prompt;
+  assert.match(p, /ערך0/, 'הערך מתור 1 אבד');
+  assert.match(p, /ערך7/);
+  assert.ok(!p.includes('תשובה ארוכה 0'), 'הציטוט הגולמי מתור 1 עדיין נשלח');
+});
+
+test('capturedChain ריק כשאין מה לשרשר', () => {
+  assert.equal(E.capturedChain([]), '');
+  assert.equal(E.capturedChain([{ tool: 'x', answer: 'y' }]), '');
 });

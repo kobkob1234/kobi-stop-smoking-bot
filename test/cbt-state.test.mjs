@@ -164,3 +164,32 @@ test('round-trip מלא דרך KV', async () => {
   assert.equal(back.cbt.confidence[0].v, 6);
   assert.equal(back.cbt.notes.length, 1);
 });
+
+// ---------- פורמולציה כהיסטוריה ----------
+
+test('הדפוס נשמר כהיסטוריה ולא כשדה יחיד', () => {
+  // שדה יחיד מוחק את הקודם בכל עדכון, ואז אי אפשר לראות איך הדפוס נע.
+  let c = S.migrateCbt(null);
+  c = S.recordFormulation(c, 'הערב הוא הנקודה', '2026-08-07');
+  c = S.recordFormulation(c, 'לא הערב — העייפות', '2026-08-15');
+  assert.equal(c.formulations.length, 2);
+  assert.equal(S.latestFormulation(c), 'לא הערב — העייפות');
+  assert.equal(c.formulations[0].text, 'הערב הוא הנקודה', 'הדפוס הקודם נמחק');
+});
+
+test('דפוס ריק אינו נשמר', () => {
+  const c = S.recordFormulation(S.migrateCbt(null), null, '2026-08-07');
+  assert.deepEqual(c.formulations, []);
+});
+
+test('הדפוס עולה בפתיחת הסשן', () => {
+  let c = S.recordFormulation(S.migrateCbt(null), 'הערב הוא הנקודה', '2026-08-07');
+  const f = S.openingContext(c, '2026-08-15').find(b => b.kind === 'formulation');
+  assert.ok(f, 'הדפוס נשמר ולא מוזכר — שוב תרגיל שאיש לא קורא');
+  assert.match(f.text, /הערב/);
+});
+
+test('formulations שרד מיגרציה ממצב ישן', () => {
+  const c = S.migrateCbt({ formulation: 'ישן', formulations: null });
+  assert.deepEqual(c.formulations, []);
+});

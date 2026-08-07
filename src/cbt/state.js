@@ -30,7 +30,9 @@ export const EMPTY_CBT = {
   dependence: null,        // זמן עד השאיפה הראשונה, כשעוד ויפ
   confidence: [],          // [{iso, v}] — היסטוריה, כי המגמה היא הסיגנל
   homework: null,          // {text, assignedISO, dueISO, done}
-  formulation: null,       // הדפוס שזוהה — נבנה על פני סשנים
+  // **היסטוריה ולא שדה יחיד.** שדה יחיד מוחק את הדפוס הקודם בכל
+  // עדכון, ואז אי אפשר לראות איך הוא נע — וזו בדיוק התנועה שמעניינת.
+  formulations: [],        // [{iso, text}] — הדפוס לאורך זמן
   notes: [],               // [{id, iso, bcts, score, missed}]
   active: null,            // סשן שרץ עכשיו
 };
@@ -40,7 +42,7 @@ export function migrateCbt(cbt) {
   if (!cbt) return { ...EMPTY_CBT };
   const out = { ...EMPTY_CBT, ...cbt, ver: CBT_VER };
   // שדות מערך שהגיעו כ-null מ-KV ישן היו מפילים כל .length בהמשך
-  for (const k of ['sessionsDone', 'triggers', 'pastAttempts', 'confidence', 'notes']) {
+  for (const k of ['sessionsDone', 'triggers', 'pastAttempts', 'confidence', 'notes', 'formulations']) {
     if (!Array.isArray(out[k])) out[k] = [];
   }
   return out;
@@ -209,9 +211,27 @@ export function openingContext(cbt, iso) {
     const c = cbt.confidence;
     bits.push({ kind: 'confidence', from: c[c.length - 2].v, to: c[c.length - 1].v });
   }
+  const f = latestFormulation(cbt);
+  if (f) bits.push({ kind: 'formulation', text: f });
   if (last && last.missed.length) bits.push({ kind: 'missed', items: last.missed });
   return bits;
 }
+
+/**
+ * שמירת דפוס חדש.
+ *
+ * הפורמולציה נבנתה ב-engine ו**מעולם לא נשמרה** — `formulate()` נקראה
+ * רק מטסטים, ו-`cbt.formulation` הוצהר ולא נכתב. תרגיל שאיש לא קרא את
+ * תוצאתו. זו הפונקציה שסוגרת את זה.
+ */
+export function recordFormulation(cbt, text, iso) {
+  if (!text) return cbt;
+  return { ...cbt, formulations: [...cbt.formulations, { iso, text }].slice(-8) };
+}
+
+/** הדפוס האחרון, או null */
+export const latestFormulation = cbt =>
+  cbt.formulations.length ? cbt.formulations[cbt.formulations.length - 1].text : null;
 
 /** האם הפרוטוקול בכלל התחיל */
 export const started = cbt => !!cbt.startISO;

@@ -167,8 +167,8 @@ export function stateDigest(s) {
 /** מה שכבר נאמר בסשן הזה — בלעדיו תור 3 לא יודע שתור 1 קרה */
 export function historyDigest(turns = []) {
   if (!turns.length) return null;
-  return turns.slice(-4)
-    .map(t => `· ${t.tool}: הוא ענה "${String(t.answer).slice(0, 120)}"`)
+  return turns.slice(-6)
+    .map(t => `· ${t.tool}: הוא ענה "${String(t.answer).slice(0, 180)}"`)
     .join('\n');
 }
 
@@ -195,7 +195,18 @@ export const CRITIQUE_RULES = [
   'האם התשובה מצטטת או נוגעת במשהו ספציפי שהמשתמש אמר? אם לא — גנרית.',
   'האם היא מורה במקום לשאול?',
   'האם היא ארוכה מדי — יותר משלושה משפטים ושאלה?',
+  // אישוש עיוות הוא הכשל המסוכן ביותר של מטפל-מכונה: הוא נשמע אמפתי
+  // ומחזק בדיוק את ההנחה שצריך היה לברר.
+  'האם היא **מאשרת** הנחה מעוותת של המשתמש במקום לחקור אותה? ' +
+    '("נכון, קשה בלי משהו ביד" מאשר; "מה קורה ביד באותן דקות?" חוקר.)',
+  'כשיש דפוס מזוהה — האם התשובה מתחברת אליו או מתעלמת ממנו?',
 ];
+
+/** הערכים שחולצו בסשן — שורדים את חיתוך ההיסטוריה */
+export function capturedChain(turns = []) {
+  const vals = turns.map(t => t.captured).filter(Boolean);
+  return vals.length ? `נאמר עד כה בסשן: ${vals.join(' · ')}` : '';
+}
 
 // ==========================================================================
 //  התזמור
@@ -208,7 +219,7 @@ export const CRITIQUE_RULES = [
  * שונה מקופסה שחורה — וזו בדיוק הבעיה שהפרוטוקול נועד לפתור.
  */
 export async function runTurn({ tool, state, userText, call, retrieve = null,
-                                turns = [], opening = [] }) {
+                                turns = [], opening = [], formulation = null }) {
   const trace = [];
   const step = async (role, prompt) => {
     const out = await call(role, prompt, role === 'respond' ? THERAPIST_SYSTEM : undefined);
@@ -221,11 +232,24 @@ export async function runTurn({ tool, state, userText, call, retrieve = null,
     return { text: tool.run(state).text, trace, mode: tool.mode };
   }
 
-  const triage = await step('triage',
-    `המשתמש ענה: "${userText}"\nהאם זו תשובה לשאלה, התחמקות, או חשיפה שדורשת עצירה? מילה אחת.`);
+  // **פלט מובנה ולא התאמת מחרוזת.** הגרסה הראשונה בדקה
+  // `/חשיפה|מצוקה|סכנה/` על טקסט חופשי — כלומר "he is in crisis"
+  // באנגלית, או "הוא בשבר", היו חומקים. ל-triage שמופקד על בטיחות
+  // אסור להיות עם false negative, ולכן הקטגוריה נדרשת מפורשות
+  // ו**כל דבר שאינו קטגוריה מוכרת נחשב חשיפה** — נטייה לצד הבטוח.
+  const triage = await step('triage', [
+    `המשתמש ענה: "${userText}"`,
+    '',
+    'סווג לקטגוריה אחת בלבד, והחזר את המילה באנגלית ותו לא:',
+    '· answer    — ענה לשאלה',
+    '· evasion   — התחמק, שינה נושא, או ענה בכלליות',
+    '· pushback  — חולק, מתנגד, או מבטל את הרלוונטיות',
+    '· distress  — מצוקה, ייאוש, או סכנה',
+  ].join('\n'));
 
+  const kind = classifyTriage(triage);
   // חשיפה מדאיגה עוצרת את הפרוטוקול. הצ׳קליסט אינו חשוב מזה.
-  if (/חשיפה|מצוקה|סכנה/.test(triage || '')) {
+  if (kind === 'distress') {
     return { text: null, halt: true, reason: triage, trace, mode: 'halt' };
   }
 
@@ -257,6 +281,12 @@ export async function runTurn({ tool, state, userText, call, retrieve = null,
     `הוא ענה: "${userText}"`,
     '',
     `הנתונים שלו: ${stateDigest(state)}`,
+    // הדפוס שזוהה עד עכשיו. היה נבנה ולא נשלח — כלומר הפורמולציה
+    // הייתה תרגיל שאיש לא קרא את תוצאתו.
+    formulation ? `הדפוס שזוהה עד עכשיו: "${formulation}"` : '',
+    // הערכים שכבר חולצו בסשן הזה. זולים (6 מילים כל אחד) ושורדים את
+    // חיתוך ההיסטוריה — כך תור 7 עדיין רואה מה נאמר בתור 1.
+    capturedChain(turns),
     opening.length ? `מהסשן הקודם: ${opening.map(describeOpening).filter(Boolean).join(' · ')}` : '',
     hist ? `קודם בסשן הזה:\n${hist}` : '',
     sources.length
@@ -277,6 +307,7 @@ export async function runTurn({ tool, state, userText, call, retrieve = null,
     `שאלת אותו: "${asked.ask || asked.text}"`,
     `הוא ענה: "${userText}"`,
     `הנתונים שלו: ${stateDigest(state)}`,
+    formulation ? `הדפוס שזוהה: "${formulation}"` : '',
     '', `התשובה שנכתבה: "${candidate}"`, '',
     ...CRITIQUE_RULES.map(r => `· ${r}`),
     '', 'אם היא עוברת — החזר OK בלבד. אחרת — החזר גרסה מתוקנת בלבד.',
@@ -284,8 +315,8 @@ export async function runTurn({ tool, state, userText, call, retrieve = null,
 
   const pass = v => v && /^OK\b/i.test(v.trim());
   const first = await step('critique', critiquePrompt(draft));
-  if (pass(first)) return { text: draft, revised: false, captured, sources, trace, mode: 'responsive' };
-  if (!first) return { text: draft, revised: false, captured, sources, trace, mode: 'responsive' };
+  if (pass(first)) return { text: draft, revised: false, captured, kind, sources, trace, mode: 'responsive' };
+  if (!first) return { text: draft, revised: false, captured, kind, sources, trace, mode: 'responsive' };
 
   // **התיקון מאומת ולא נלקח בעיוורון.** ביקורת שמייצרת גרסה גרועה
   // יותר הייתה נשלחת כמו שהיא, כי איש לא בדק אותה.
@@ -294,8 +325,22 @@ export async function runTurn({ tool, state, userText, call, retrieve = null,
     text: first,
     revised: true,
     verified: pass(second),
-    captured, sources, trace, mode: 'responsive',
+    captured, kind, sources, trace, mode: 'responsive',
   };
+}
+
+/**
+ * סיווג בטוח-בברירת-מחדל.
+ *
+ * מוכר → הקטגוריה. **לא מוכר, ריק, או כשל מודל → distress**, כי
+ * הכיוון היקר הוא לפספס מצוקה, לא לעצור סשן מיותר.
+ */
+export function classifyTriage(raw) {
+  const s = String(raw || '').toLowerCase();
+  for (const k of ['distress', 'evasion', 'pushback', 'answer']) {
+    if (s.includes(k)) return k;
+  }
+  return 'distress';
 }
 
 /** openingContext → משפט קצר. בלי זה הרצף משלב 4 נבנה ולא בשימוש. */
