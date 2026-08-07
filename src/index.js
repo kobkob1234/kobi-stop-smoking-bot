@@ -532,8 +532,7 @@ async function tick(env) {
       const b14 = await ANL.collect(env, iso, 14);
       // slow: הצמצום הזה לא נבחר אלא הופעל אוטומטית, ולכן רץ איטי יותר.
       G.chooseTaperMode(plan, b14, { slow: true });
-      const bsum = k => b14.slice(0, 7).reduce((s, d) => s + (d[k] || 0), 0);
-      plan.baseline = { iso, waves: bsum('waves'), surfed: bsum('surfed'), gum: bsum('gum') };
+      plan.baseline = ANL.buildBaseline(b14, iso);
       meta.gumPlan = plan; touched.add('gumPlan');
       await send(env, meta.chatId, [
         '📉 <b>מתחילים לצמצם — ברצפה הזמנית.</b>',
@@ -1737,9 +1736,7 @@ async function onCallback(cb, env) {
       plan.confirmedTaper = true; plan.taperStartISO = iso;
       // קו-הבסיס נשמר *ברגע האישור* כדי שיהיה מול מה להשוות בהמשך.
       // בלי זה אין דרך לדעת אם התצמצום עצמו החזיר גלים.
-      const b7 = await ANL.collect(env, iso, 7);
-      const bsum = k => b7.reduce((t, d) => t + (d[k] || 0), 0);
-      plan.baseline = { iso, waves: bsum('waves'), surfed: bsum('surfed'), gum: bsum('gum') };
+      plan.baseline = ANL.buildBaseline(await ANL.collect(env, iso, 14), iso);
 
       // סדר ההורדה נקבע כאן, מ-14 יום של שימוש בפועל, ונשמר.
       // משבצת שעקבית לא נלקחת אינה עושה עבודה — היא יורדת ראשונה,
@@ -1952,6 +1949,32 @@ async function onCallback(cb, env) {
     await answer(env, cb.id, 'בוקר הושלם ✓');
     return send(env, chatId, '🌅 <b>בוקר הושלם.</b> צא לדרך — הכלים איתך.\n\n<i>עשרים שניות שקונות את היום.</i>');
   }
+  // --- מצב רוח (יומי) ועייפות גמילה (שבועי) --------------------------
+  //
+  //  שני המדדים שהמערכת לא אספה, והם היחידים שהספרות מצביעה עליהם
+  //  כמנבאים: אפקט שלילי ניבא מעידה ראשונה יותר מכל משתנה מצבי אחר,
+  //  ועייפות-גמילה מנבאת הישנות מעל ומעבר לעוצמת הדחפים.
+  if (data.startsWith('mo:')) {
+    const v = Math.max(1, Math.min(5, parseInt(data.slice(3), 10) || 0));
+    await updateDay(env, iso, d => { d.mood = v; });
+    await answer(env, cb.id, `נרשם ${v}/5`);
+    const d14 = await ANL.collect(env, iso, 14);
+    const med = ANL.subjMedian(d14, 'mood');
+    const line = v <= 2
+      ? 'יום נמוך הוא מידע, לא כישלון. <i>אפקט שלילי הוא המנבא החזק ביותר למעידה — ולכן זה בדיוק היום לקחת מנה לפני שצריך, ולא אחרי.</i>'
+      : '<i>מה שנמדד לאורך זמן הוא מה שאפשר להשוות מולו אחר כך.</i>';
+    return send(env, chatId, `🌤️ <b>מצב רוח: ${v}/5</b>${med ? ` · חציון ${ANL.subjCount(d14, 'mood')} הימים שנמדדו: ${med}` : ''}\n\n${line}`);
+  }
+  if (data.startsWith('cf:')) {
+    const v = Math.max(1, Math.min(5, parseInt(data.slice(3), 10) || 0));
+    await updateDay(env, iso, d => { d.fatigue = v; });
+    await answer(env, cb.id, `נרשם ${v}/5`);
+    const line = v >= 4
+      ? '<b>זה סימן להאט, לא להתאמץ יותר.</b>\n\n<i>עייפות-גמילה אינה חוסר כוח רצון — היא העלות שנצברת ממאמץ ממושך. במחקרים היא מנבאת הישנות טוב יותר מעוצמת הדחפים. אם הצמצום כבר התחיל, זו סיבה לצעד אחורה.</i>'
+      : '<i>נמדד. היא נוטה לעלות ב-6 השבועות הראשונים ואז להתייצב — לכן שווה לעקוב, ולא להיבהל מעלייה.</i>';
+    return send(env, chatId, `🔋 <b>עייפות מלנסות: ${v}/5</b>\n\n${line}`);
+  }
+
   if (data === 'ed') {
     const day = await getDay(env, iso);
     if (!day.eDone) {
@@ -1959,14 +1982,26 @@ async function onCallback(cb, env) {
       const m2 = await getMeta(env); m2.totals.eDone += 1; await putMeta(env, m2);
     }
     await answer(env, cb.id, 'ערב הושלם ✓');
+    // השאלות נתלות כאן ולא בהודעה נפרדת: הערב הוא הרגע היחיד ביום שבו
+    // יש מבט לאחור על היום כולו, וזה בדיוק מה שהמדד מודד. הודעה נוספת
+    // הייתה עוד התראה — וכל התראה מיותרת מקרבת להשתקת הבוט.
+    const askMood = !day.mood;
+    // עייפות-גמילה נעה בקצב של שבועות, לא ימים. שאלה יומית עליה הייתה
+    // רעש ונטל; שבועית היא גם הקצב שבו היא נמדדת בספרות.
+    const askFat = !day.fatigue && P.diffDays(P.QUIT, iso) % 7 === 0;
+    const rows = [];
+    if (askMood) rows.push([1, 2, 3, 4, 5].map(v => btn(String(v), `mo:${v}`)));
+    if (askFat)  rows.push([1, 2, 3, 4, 5].map(v => btn(String(v), `cf:${v}`)));
     return send(env, chatId, [
       '🌙 <b>ערב הושלם. הלולאה החדשה קיבלה עוד יום של אימון.</b>',
       '',
       '🩹 <b>לפני השינה</b> — להסיר את המדבקה, ולהכין את של מחר.',
       '😴 שינה היא תחמושת: מחר תקבל החלטות טובות רק כמו הלילה שלך.',
+      ...(askMood ? ['', '🌤️ <b>איך היה היום?</b>  1 = רע מאוד · 5 = טוב מאוד'] : []),
+      ...(askFat  ? ['', '🔋 <b>ועד כמה אתה עייף מלנסות?</b>  1 = בכלל לא · 5 = מאוד'] : []),
       '',
       'לילה טוב.',
-    ].join('\n'));
+    ].join('\n'), rows.length ? { reply_markup: inline(rows) } : undefined);
   }
 
   if (data === 'st') { await answer(env, cb.id); const day = await getDay(env, iso); const m = M.status(pl, iso, day, meta); return send(env, chatId, m.text, { reply_markup: m.kb }); }

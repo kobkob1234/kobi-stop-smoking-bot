@@ -64,6 +64,51 @@ const topOf = obj => Object.entries(obj).sort((a, b) => b[1] - a[1])[0] || null;
 const pct = (a, b) => (b ? Math.round((a / b) * 100) : 0);
 
 /** מנתח ומחזיר אובייקט מסקנות */
+/**
+ * חציון של מדד סובייקטיבי (mood / fatigue) על הימים שבהם הוא נמדד.
+ *
+ * 0 פירושו "לא נמדד" ולא "אפס". ממוצע נאיבי שכולל אותם היה מושך את
+ * הציון כלפי מטה בכל יום שלא ענית בו — כלומר שתיקה הייתה נראית כמו
+ * מצב רוח רע, וזו בדיוק הסוג של הטעות שכבר תיקנו ב-_exists.
+ */
+export function subjMedian(daysArr, key) {
+  const v = daysArr.map(d => d[key] || 0).filter(x => x > 0).sort((a, b) => a - b);
+  if (!v.length) return null;
+  return v[Math.floor(v.length / 2)];
+}
+
+/** כמה ימים בכלל נמדד המדד */
+export const subjCount = (daysArr, key) => daysArr.filter(d => (d[key] || 0) > 0).length;
+
+/**
+ * קו-הבסיס שמולו נמדד הצמצום.
+ *
+ *  הגרסה הראשונה סכמה גלים/מעידות/מסטיק על **7 ימים** ברגע האישור.
+ *  אצל מי שהשבוע הזה עבר בלי גלים — כלומר בדיוק מי שהצמצום מתאים לו —
+ *  הקו-בסיס יוצא אפסים, ואז `taperWatch` משווה מול רצפה: שום החמרה
+ *  אינה יכולה להיראות כהחמרה יחסית. הצלחה מוקדמת ייצרה עיוורון.
+ *
+ *  שני תיקונים: חלון של 14 יום במקום 7 (יותר הזדמנויות לתפוס אות),
+ *  ושני מדדים סובייקטיביים שקיימים **גם כשאין גלים** — מצב רוח
+ *  ועייפות-גמילה. הם מספקים בסיס להשוואה בדיוק בתרחיש שבו הספירות
+ *  ההתנהגותיות ריקות.
+ */
+export function buildBaseline(days14, iso) {
+  const half = days14.slice(0, 7);
+  const sum = k => half.reduce((t, d) => t + (d[k] || 0), 0);
+  return {
+    iso,
+    waves: sum('waves'),
+    surfed: sum('surfed'),
+    gum: sum('gum'),
+    // חציון על 14 יום — עמיד יותר ליום חריג בודד מסכום שבועי
+    mood: subjMedian(days14, 'mood'),
+    fatigue: subjMedian(days14, 'fatigue'),
+    moodDays: subjCount(days14, 'mood'),
+    days: days14.filter(d => d._exists).length,
+  };
+}
+
 export function analyse(daysArr) {
   const buckets = {}, tags = {}, dows = {};
   let waves = 0, surfed = 0, gum = 0, slips = 0, outs = 0, patchDays = 0, evCount = 0;
@@ -103,7 +148,11 @@ export function analyse(daysArr) {
   // פחות דחפים ופחות מסטיק, וזה בדיוק הפוך מהמציאות.
   const coverage = daysArr.filter(covered).length;
   const denom = Math.max(1, coverage);
+  const mood = subjMedian(daysArr, 'mood');
+  const fatigue = subjMedian(daysArr, 'fatigue');
+
   return {
+    mood, fatigue, moodDays: subjCount(daysArr, 'mood'),
     n, coverage, waves, surfed, gum, slips, outs, patchDays, evCount,
     medianWaveSec, waveSamples: durs.length,
     surfRate: pct(surfed, waves),

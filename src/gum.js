@@ -586,7 +586,9 @@ export const WAVES_HIGH = 14;    // 2 ביום בממוצע — עוד תכוף 
 /** יום נחשב מתועד אם יש בו סימן חיים כלשהו, לא רק מסטיק */
 export const isLogged = d =>
   (d.gum || 0) > 0 || ((d.ev || []).length > 0) || !!d.mDone || !!d.eDone ||
-  !!d.patch || (d.waves || 0) > 0 || (d.slips || 0) > 0;
+  !!d.patch || (d.waves || 0) > 0 || (d.slips || 0) > 0 ||
+  // דירוג מצב רוח לבדו הוא סימן חיים: הוא דורש שהמשתמש נכח וענה.
+  (d.mood || 0) > 0 || (d.fatigue || 0) > 0;
 
 export function readiness(last7, prev7, target = 12) {
   const sum = (a, k) => a.reduce((t, d) => t + (d[k] || 0), 0);
@@ -712,6 +714,25 @@ export function taperWatch(last7, baseline) {
   // מתועדים. אם צריך **יותר** מסטיק אחרי הורדה, ההורדה הייתה מהירה
   // מדי; זו בדיוק ההגדרה של "תצמצם שמחזיר גלים". הקו-בסיס שמר את
   // הנתון הזה מלכתחילה ומעולם לא השווה אותו.
+  // המדדים הסובייקטיביים — קיימים **גם כשאין גלים**, וזה כל הטעם.
+  // אצל מי שעבר שבוע בלי גל אחד, כל הספירות ההתנהגותיות אפס, ולכן
+  // ההשוואה היחידה שיכולה לתפוס החמרה היא זו.
+  const med = (a, k) => {
+    const v = a.map(d => d[k] || 0).filter(x => x > 0).sort((x, y) => x - y);
+    return v.length ? v[Math.floor(v.length / 2)] : null;
+  };
+  const mood = med(last7, 'mood');
+  if (mood !== null && baseline.mood != null && mood <= baseline.mood - 1) {
+    worse.push(`מצב הרוח ירד (${baseline.mood} → ${mood})`);
+  }
+  const fat = med(last7, 'fatigue');
+  if (fat !== null && baseline.fatigue != null && fat >= baseline.fatigue + 1) {
+    worse.push(`העייפות מלנסות עלתה (${baseline.fatigue} → ${fat})`);
+  }
+  // ורמה מוחלטת גבוהה מספיקה לבדה — היא מנבאת הישנות מעל ומעבר
+  // לעוצמת הדחפים, ולכן אין להתנות אותה בקו-בסיס שאולי לא נמדד.
+  if (fat !== null && fat >= 4) worse.push(`עייפות גמילה גבוהה (${fat}/5)`);
+
   const gum = sum(last7, 'gum');
   const baseGum = baseline.gum || 0;
   if (baseGum > 0 && gum >= baseGum * 1.25) {
