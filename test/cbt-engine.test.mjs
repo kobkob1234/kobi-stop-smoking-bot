@@ -86,7 +86,9 @@ test('תור תגובתי עובר triage → fetch → respond → critique', a
     tool: T.byId(P.BCT.COPING), state, userText: 'פשוט לא בא לי',
     call, retrieve: async () => [{ text: 'רקע' }],
   });
-  assert.deepEqual(seen.map(s => s.role), ['triage', 'fetch', 'respond', 'critique']);
+  // extract נוסף אחרי triage: בלעדיו נשמר המשפט השלם כטריגר.
+  assert.deepEqual(seen.map(s => s.role),
+    ['triage', 'extract', 'fetch', 'respond', 'critique']);
   assert.equal(r.mode, 'responsive');
   assert.equal(r.revised, false, 'OK נחשב בטעות לתיקון');
 });
@@ -203,4 +205,86 @@ test('היסטוריה ארוכה נחתכת', async () => {
   const r = await grab({ turns: many });
   assert.ok(!r.prompt.includes('כלי0'), 'כל ההיסטוריה נשלחת — הפרומפט יתפוצץ');
   assert.match(r.prompt, /כלי9/);
+});
+
+// ==========================================================================
+//  שלושה ליקויים שנמצאו בקריאה חוזרת של המימוש
+// ==========================================================================
+
+test('חילוץ מובנה — לא נשמר המשפט השלם', async () => {
+  // "אני חושב שזה בעיקר בערב מול הטלוויזיה כשאני עייף" נשמר כטריגר
+  // והזין את הפרומפט של הסשן הבא. רעש שמצטבר משבוע לשבוע.
+  const call = async (role) => (role === 'extract' ? 'ערב מול הטלוויזיה'
+    : role === 'critique' ? 'OK' : 'x');
+  const r = await E.runTurn({
+    tool: T.byId(P.BCT.TRIGGERS), state: RICH, call,
+    userText: 'אני חושב שזה בעיקר בערב מול הטלוויזיה כשאני עייף אחרי העבודה',
+  });
+  assert.equal(r.captured, 'ערב מול הטלוויזיה');
+});
+
+test('NONE מהחילוץ אינו נשמר', async () => {
+  const call = async (role) => (role === 'extract' ? 'NONE' : role === 'critique' ? 'OK' : 'x');
+  const r = await E.runTurn({ tool: T.byId(P.BCT.TRIGGERS), state: RICH, call, userText: 'לא יודע' });
+  assert.equal(r.captured, null);
+});
+
+test('כלי הצהרתי אינו מפעיל חילוץ', async () => {
+  const seen = [];
+  const call = async (role) => { seen.push(role); return 'x'; };
+  await E.runTurn({ tool: T.byId(P.BCT.NAP), state: RICH, call, userText: 'ok' });
+  assert.ok(!seen.includes('extract'));
+});
+
+test('הביקורת רואה את הנתונים ואת השאלה', async () => {
+  // בלעדיהם היא לא יכולה לשפוט את הכלל "חבר בין מה שאמר לנתונים".
+  const seen = [];
+  const call = async (role, prompt) => { seen.push({ role, prompt }); return role === 'critique' ? 'OK' : 'x'; };
+  await E.runTurn({ tool: T.byId(P.BCT.MEDS), state: RICH, call, userText: 'לא בא לי' });
+  const c = seen.find(s => s.role === 'critique');
+  assert.match(c.prompt, /7\.4/, 'הביקורת בלי נתונים');
+  assert.match(c.prompt, /מה מפריע/, 'הביקורת בלי השאלה שנשאלה');
+});
+
+test('תיקון מהביקורת מאומת ולא נלקח בעיוורון', async () => {
+  const seen = [];
+  const call = async (role) => {
+    if (role === 'critique') { seen.push(1); return seen.length === 1 ? 'גרסה מתוקנת' : 'OK'; }
+    return 'x';
+  };
+  const r = await E.runTurn({ tool: T.byId(P.BCT.MEDS), state: RICH, call, userText: 'x' });
+  assert.equal(seen.length, 2, 'התיקון נשלח בלי אימות');
+  assert.equal(r.verified, true);
+});
+
+test('תיקון שנכשל שוב מסומן כלא-מאומת', async () => {
+  const call = async (role) => (role === 'critique' ? 'עוד גרסה' : 'x');
+  const r = await E.runTurn({ tool: T.byId(P.BCT.MEDS), state: RICH, call, userText: 'x' });
+  assert.equal(r.verified, false, 'גרסה לא מאומתת מוצגת כמאומתת');
+});
+
+test('בחירת מקטעים מקבלת חשיבה — היא משימת הסקה', () => {
+  assert.notEqual(E.ROLES.fetch.think, 'none',
+    'בחירה מתוך 140 מקטעים בלי חשיבה');
+});
+
+test('התיעוד אינו טוען ל-ReAct', () => {
+  // אין כאן לולאה ואין התבוננות בתוצאה — קריאה לזה ReAct היא הגזמה.
+  const src = readFileSync(new URL('../src/cbt/engine.js', import.meta.url), 'utf8');
+  const claim = /\*\*כאן ReAct כן\s*מתאים\*\*/.test(src);
+  assert.equal(claim, false, 'התיעוד עדיין טוען ל-ReAct בלי לולאה');
+  assert.match(src, /לא ReAct/, 'ההבחנה לא מתועדת');
+});
+
+test('כלי תגובתי שאינו שואל שאלה פתוחה אינו מחלץ', async () => {
+  // בדיקת NRT כשהמסטיק בקצב מחזירה expects:'ack'. היא responsive
+  // (ולכן לא נעצרת מוקדם), אבל אין שם ערך לשמור — וחילוץ מ"אישור"
+  // היה מייצר טריגר מתוך "אוקיי".
+  const onTarget = { ...RICH, gum7: 63, gumTarget: 9 };
+  assert.equal(T.byId(P.BCT.MEDS).run(onTarget).expects, 'ack', 'הנחת הבדיקה נשברה');
+  const seen = [];
+  const call = async (role) => { seen.push(role); return role === 'critique' ? 'OK' : 'x'; };
+  const r = await E.runTurn({ tool: T.byId(P.BCT.MEDS), state: onTarget, call, userText: 'אוקיי' });
+  assert.ok(!seen.includes('extract'), 'חילוץ רץ על אישור');
+  assert.equal(r.captured, null);
 });

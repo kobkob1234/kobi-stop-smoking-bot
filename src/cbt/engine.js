@@ -12,9 +12,19 @@
 //
 //    triage   — מה בעצם נאמר? תשובה, התחמקות, או חשיפה שדורשת עצירה.
 //               זול ומהיר. לא צריך חשיבה.
-//    fetch    — אילו מקטעים מהספרייה צריך כדי לענות. **כאן ReAct כן
-//               מתאים**: המודל מבקש מה שהוא צריך במקום לקבל פרקים
-//               קבועים מראש.
+//    fetch    — אילו מקטעים מהספרייה צריך כדי לענות. המודל מבקש מה
+//               שהוא צריך במקום לקבל פרקים קבועים מראש.
+//
+//               **וזה לא ReAct, למרות שכך קראתי לזה קודם.** ReAct הוא
+//               לולאה: הסק → פעל → **התבונן בתוצאה** → הסק שוב. כאן יש
+//               מתכנן-שאילתה חד-פעמי בלי לולאה ובלי התבוננות — המודל
+//               מבקש נושאים, מקבל מקטעים, וזהו.
+//
+//               ההחלטה להשאיר את זה כך היא שיקול ולא הזנחה: הספרייה
+//               היא 140 מקטעים עם מטא-דאטה, ובחירה מתוכה נכונה כמעט
+//               תמיד בניסיון הראשון. לולאה הייתה מוסיפה לטנציה וקריאות
+//               כדי לתקן מקרה נדיר. אם מדידה תראה שהבחירה מחטיאה —
+//               שם הצעד הבא, ולא לפני.
 //    respond  — התשובה עצמה, תחת אילוצי גילוי מודרך. חשיבה מלאה.
 //    critique — "האם זה מגיב למה שהוא אמר, או גנרי?" תופס בדיוק את
 //               הכשל שההרצה חשפה. זול, ומחזיר תיקון או אישור.
@@ -37,7 +47,13 @@
  */
 export const ROLES = {
   triage:   { think: 'none',   reserve: 400,  temp: 0.1 },
-  fetch:    { think: 'none',   reserve: 300,  temp: 0.0 },
+  // בחירת מקטעים מתוך 140 **היא** משימת הסקה. הגרסה הראשונה נתנה לה
+  // אפס חשיבה, בסתירה לעיצוב של עצמה.
+  fetch:    { think: 'low',    reserve: 300,  temp: 0.0 },
+  // חילוץ ערך נקי מתוך תשובה חופשית. בלעדיו נשמר המשפט השלם: "אני
+  // חושב שזה בעיקר בערב מול הטלוויזיה כשאני עייף" הפך ל**טריגר**,
+  // והזין את הפרומפט של הסשן הבא כרעש שמצטבר משבוע לשבוע.
+  extract:  { think: 'none',   reserve: 120,  temp: 0.0 },
   respond:  { think: 'high',   reserve: 3000, temp: 0.6 },
   critique: { think: 'low',    reserve: 600,  temp: 0.2 },
 };
@@ -171,6 +187,16 @@ export async function runTurn({ tool, state, userText, call, retrieve = null,
     return { text: null, halt: true, reason: triage, trace, mode: 'halt' };
   }
 
+  // חילוץ הערך שיישמר. רץ רק כשיש מה לשמור — כלי הצהרתי לא מגיע לכאן.
+  let captured = null;
+  if (['free', 'if-then', 'homework', 'scale-0-10'].includes(tool.run(state).expects)) {
+    const raw = await step('extract',
+      `שאלה: "${tool.run(state).ask}"\nתשובה: "${userText}"\n\n` +
+      'החזר את הערך המהותי בלבד, עד 6 מילים, בלי מילות מילוי ובלי "אני חושב ש". ' +
+      'אם אין ערך ברור — החזר NONE.');
+    captured = raw && !/^NONE\b/i.test(raw.trim()) ? raw.trim().slice(0, 80) : null;
+  }
+
   let sources = [];
   if (retrieve) {
     const want = await step('fetch',
@@ -199,16 +225,34 @@ export async function runTurn({ tool, state, userText, call, retrieve = null,
     'כללים:', ...RESPOND_RULES.map(r => `· ${r}`),
   ].filter(Boolean).join('\n'));
 
-  if (!draft) return { text: null, trace, mode: 'failed' };
+  if (!draft) return { text: null, captured, trace, mode: 'failed' };
 
-  const verdict = await step('critique', [
-    `תשובה: "${draft}"`, `המשתמש אמר: "${userText}"`, '',
+  // הביקורת חייבת לראות את **אותו הקשר** כמו הכותב. הגרסה הראשונה
+  // ראתה רק את הטיוטה ואת דברי המשתמש, ולכן לא יכלה לשפוט את הכלל
+  // "חבר בין מה שאמר לנתונים" — הנתונים לא היו מולה.
+  const critiquePrompt = (candidate) => [
+    `שאלת אותו: "${asked.ask || asked.text}"`,
+    `הוא ענה: "${userText}"`,
+    `הנתונים שלו: ${stateDigest(state)}`,
+    '', `התשובה שנכתבה: "${candidate}"`, '',
     ...CRITIQUE_RULES.map(r => `· ${r}`),
-    '', 'אם היא עוברת — החזר OK. אחרת — החזר גרסה מתוקנת בלבד.',
-  ].join('\n'));
+    '', 'אם היא עוברת — החזר OK בלבד. אחרת — החזר גרסה מתוקנת בלבד.',
+  ].join('\n');
 
-  const final = verdict && !/^OK\b/i.test(verdict.trim()) ? verdict : draft;
-  return { text: final, revised: final !== draft, sources, trace, mode: 'responsive' };
+  const pass = v => v && /^OK\b/i.test(v.trim());
+  const first = await step('critique', critiquePrompt(draft));
+  if (pass(first)) return { text: draft, revised: false, captured, sources, trace, mode: 'responsive' };
+  if (!first) return { text: draft, revised: false, captured, sources, trace, mode: 'responsive' };
+
+  // **התיקון מאומת ולא נלקח בעיוורון.** ביקורת שמייצרת גרסה גרועה
+  // יותר הייתה נשלחת כמו שהיא, כי איש לא בדק אותה.
+  const second = await step('critique', critiquePrompt(first));
+  return {
+    text: first,
+    revised: true,
+    verified: pass(second),
+    captured, sources, trace, mode: 'responsive',
+  };
 }
 
 /** openingContext → משפט קצר. בלי זה הרצף משלב 4 נבנה ולא בשימוש. */
