@@ -10,7 +10,7 @@
 //  ייצר יותר התראות שווא מתועלת. במקום זה — בדיקת נוכחות פשוטה של
 //  הגדרה כלשהי לאותו שם. תופס בדיוק את המקרה שכאב, בלי רעש.
 // ==========================================================================
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
 
 // מטרה: הפונקציות המקומיות של הפרויקט, לפי מוסכמות השמות שבו
 const INTERESTING = /^(start|on|run|record|log|build|notify|alert|maybe|send|tick|guard|converse|prune)[A-Z]\w*$/;
@@ -87,4 +87,69 @@ for (const f of readdirSync('src').filter(x => x.endsWith('.js'))) {
 }
 console.log(drugBad === 0 ? '✅ אין המלצות על תרופות מרשם' : `\n${drugBad} אזכורים`);
 
-process.exit(bad + refBad + drugBad ? 1 : 0);
+// ==========================================================================
+//  ציטוטים מילוליים — האם הם באמת בספר, ובפרק שאליו הם מיוחסים?
+//
+//  הבדיקה שמעל מאשרת רק ש**שם המקור מוכר**. היא לא בודקת שהמשפט קיים,
+//  ולכן ציטוט שהומצא ויוחס ל"ווסט, פרק 10" עבר אותה בשלום — וזה קרה.
+//
+//  כאן נבדק רק מה שמסומן 'q' (מילולי). ערך 'p' הוא פרפרזה או ייחוס
+//  רעיוני, מוצג בלי מרכאות, ואינו טוען שהמשפט נאמר כלשונו.
+//
+//  שתי מלכודות שנתפסו בדרך: מספור הקבצים אינו מספור הפרקים (אצל ברואר
+//  קובץ 04 הוא פרק 1), וגרשים מסולסלים ומיקוף הכשילו התאמת מחרוזת —
+//  ולכן ההשוואה על טקסט מנורמל, והמפה נבנית מהכותרות ולא משמות הקבצים.
+// ==========================================================================
+const BOOKS_DIR = '../books';
+const HEB = { 'ברואר': 'judson-brewer', 'קאר': 'allen-carr', 'ווסט': 'robert-west' };
+
+let quoteBad = 0, quoteOk = 0;
+if (existsSync(BOOKS_DIR)) {
+  // מפת פרקים אמיתית, מתוך הכותרת של כל קובץ
+  const chapters = {};
+  for (const dir of readdirSync(BOOKS_DIR, { withFileTypes: true })
+                     .filter(d => d.isDirectory()).map(d => d.name)) {
+    for (const f of readdirSync(`${BOOKS_DIR}/${dir}`).filter(x => x.endsWith('.md'))) {
+      const body = readFileSync(`${BOOKS_DIR}/${dir}/${f}`, 'utf8');
+      const m = body.slice(0, 300).match(/\*\*Chapter:\*\*\s*Chapter (\d+)/);
+      if (m) chapters[`${dir}|${m[1]}`] = body;
+    }
+  }
+  const norm = s => s.replace(/[\u2018\u2019']/g, '').replace(/[^\p{L}\p{N} ]/gu, ' ')
+                     .replace(/\s+/g, ' ').trim().toLowerCase();
+
+  // העוגן יושב **בתוך הערך** ולא בקובץ נפרד, כדי שלא יוכל להיפרד ממנו:
+  //   ['טקסט עברי', 'ווסט, פרק 14', 'q', 'english anchor']
+  // כך הוספת ציטוט מילולי בלי עוגן נתפסת מיד, ומחיקת ציטוט לא משאירה
+  // עוגן יתום. (הגרסה הראשונה השתמשה בקובץ JSON נפרד, והוא כבר נפרד —
+  // 14 עוגנים מול 13 ציטוטים.)
+  const { MOOD_FEEDBACK } = await import('../src/content.js');
+  const entries = [];
+  for (const lvl of Object.keys(MOOD_FEEDBACK)) {
+    for (const [text, src, kind, anchor] of MOOD_FEEDBACK[lvl].quotes) {
+      if (kind !== 'q') continue;
+      const m = src.match(/^(\S+), פרק (\d+)/);
+      if (!m) { console.error(`❌ ציטוט מילולי בלי פרק: ${src}`); quoteBad++; continue; }
+      if (!anchor) { console.error(`❌ ציטוט מילולי בלי עוגן: ${text.slice(0, 40)}`); quoteBad++; continue; }
+      entries.push([text.slice(0, 34), { book: m[1], ch: m[2], anchor }]);
+    }
+  }
+  for (const [key, { book, ch, anchor }] of entries) {
+    const dirKey = Object.keys(chapters).find(k => k.startsWith(HEB[book]) && k.endsWith(`|${ch}`));
+    if (!dirKey) {
+      console.error(`❌ ציטוט "${key}" מיוחס ל${book} פרק ${ch} — פרק שלא קיים`);
+      quoteBad++; continue;
+    }
+    if (!norm(chapters[dirKey]).includes(norm(anchor))) {
+      console.error(`❌ ציטוט "${key}" לא נמצא ב${book} פרק ${ch}`);
+      quoteBad++;
+    } else quoteOk++;
+  }
+  console.log(quoteBad === 0
+    ? `✅ ${quoteOk} ציטוטים מילוליים אומתו מול טקסט הספר`
+    : `\n${quoteBad} ציטוטים לא אומתו`);
+} else {
+  console.log('⏭️  ספריית הספרים לא נמצאה — דילוג על אימות ציטוטים');
+}
+
+process.exit(bad + refBad + drugBad + quoteBad ? 1 : 0);
