@@ -1,0 +1,153 @@
+// ==========================================================================
+//  engine.js — מה קורה בתוך תור אחד של סשן
+//
+//  **הבחירה איזה כלי להפעיל נשארת דטרמיניסטית.** לא ReAct, ובכוונה:
+//  מודל שבוחר לבד יבחר את מה שנוח, ידלג על מה שלא נשאל, ומדד הנאמנות
+//  יהפוך לחסר משמעות. `nextTool()` מחליט; המנוע כאן רק **מבצע**.
+//
+//  מה שכן דורש עומק הוא מה שקורה **אחרי שהמשתמש עונה** — וזה בדיוק מה
+//  שחסר היום: שמונה שאלות כתובות מראש בלי תגובה לאף תשובה.
+//
+//  ארבעה תפקידים, כל אחד קריאה נפרדת עם תקציב חשיבה משלו:
+//
+//    triage   — מה בעצם נאמר? תשובה, התחמקות, או חשיפה שדורשת עצירה.
+//               זול ומהיר. לא צריך חשיבה.
+//    fetch    — אילו מקטעים מהספרייה צריך כדי לענות. **כאן ReAct כן
+//               מתאים**: המודל מבקש מה שהוא צריך במקום לקבל פרקים
+//               קבועים מראש.
+//    respond  — התשובה עצמה, תחת אילוצי גילוי מודרך. חשיבה מלאה.
+//    critique — "האם זה מגיב למה שהוא אמר, או גנרי?" תופס בדיוק את
+//               הכשל שההרצה חשפה. זול, ומחזיר תיקון או אישור.
+//
+//  שני התפקידים האחרונים הם ההבדל בין טופס לבין סשן, ולכן הם היחידים
+//  שחייבים מודל חזק. triage ו-fetch יכולים לרוץ על השכבה הזולה.
+// ==========================================================================
+
+/**
+ * דירוג מודל לפי תפקיד.
+ *
+ * `flash-lite` נבחר בזמנו למהירות ו-0 טוקני חשיבה — נכון לניתוב, שגוי
+ * לסשן. התיעוד מציין שהוא נעצר "בקצה של חשיבה רב-שלבית", וזה תיאור
+ * מדויק של מה ש-respond עושה.
+ *
+ * שתי מלכודות מתועדות בקוד הקיים, ושתיהן תצורה ולא יכולת:
+ *   • thinkingConfig נדחה ב-400 על כינויי "-latest" — צריך גרסה מקובעת
+ *   • טוקני חשיבה נאכלים מ-maxOutputTokens והתשובה נחתכת באמצע מילה
+ * לכן `reserve` — תקציב פלט שמניח שהחשיבה תיקח משלה.
+ */
+export const ROLES = {
+  triage:   { think: 'none',   reserve: 400,  temp: 0.1 },
+  fetch:    { think: 'none',   reserve: 300,  temp: 0.0 },
+  respond:  { think: 'high',   reserve: 3000, temp: 0.6 },
+  critique: { think: 'low',    reserve: 600,  temp: 0.2 },
+};
+
+/**
+ * בונה את גוף הבקשה לפי תפקיד.
+ *
+ * מופרד מ-ai.js בכוונה: הקריאה שם משרתת שיחה חופשית ומכווננת למהירות,
+ * וכאן הצורך הפוך. ערבוב השניים היה מכריח פשרה שפוגעת בשניהם.
+ */
+export function buildRequest(role, { system, user, model, gen = {} }) {
+  const r = ROLES[role];
+  if (!r) throw new Error(`תפקיד לא מוכר: ${role}`);
+  const body = {
+    systemInstruction: { parts: [{ text: system }] },
+    contents: [{ role: 'user', parts: [{ text: user }] }],
+    generationConfig: { temperature: r.temp, maxOutputTokens: r.reserve, ...gen },
+  };
+  // גמיני 3 משתמש ב-thinkingLevel; 2.5 ב-thinkingBudget. **שליחת שניהם
+  // מחזירה שגיאה**, ולכן נבחר לפי המודל ולא נשלח "ליתר ביטחון".
+  if (r.think !== 'none' && model && !model.includes('-latest')) {
+    if (/gemini-3/.test(model)) body.generationConfig.thinkingLevel = r.think;
+    else body.generationConfig.thinkingConfig = { thinkingBudget: r.think === 'high' ? 4096 : 1024 };
+  }
+  return body;
+}
+
+// ==========================================================================
+//  אילוצי הניסוח — מה שהופך תשובה לגילוי מודרך
+// ==========================================================================
+
+/**
+ *  ההרצה הראשונה של סשן חשפה שלושה כשלים, וכל אילוץ כאן מכוון לאחד:
+ *    • "נסח אם-אז" היא הוראה → לשאול, לא להורות
+ *    • שום דבר לא חיבר בין הנתונים → לחבר לדפוס
+ *    • השאלה הבאה נכתבה מראש → להגיב למילים שנאמרו
+ */
+export const RESPOND_RULES = [
+  'הגב למה שהוא **אמר עכשיו**, במילים שלו. אם לא התייחסת לתשובה שלו — נכשלת.',
+  'שאל, אל תורה. "מה קרה רגע לפני?" עדיף על "נסח אם-אז".',
+  'אם יש דפוס בין מה שאמר לנתונים — הצבע עליו כשאלה, לא כמסקנה.',
+  'משפט אחד עד שלושה, ואז שאלה אחת. לא רשימה.',
+  'בלי עצות שלא ביקש, ובלי לסכם לו את מה שהרגיש.',
+];
+
+/** ליבת ביקורת עצמית — הבדיקה שתופסת תשובה גנרית */
+export const CRITIQUE_RULES = [
+  'האם התשובה מצטטת או נוגעת במשהו ספציפי שהמשתמש אמר? אם לא — גנרית.',
+  'האם היא מורה במקום לשאול?',
+  'האם היא ארוכה מדי — יותר משלושה משפטים ושאלה?',
+];
+
+// ==========================================================================
+//  התזמור
+// ==========================================================================
+
+/**
+ * תור אחד. `call(role, prompt)` מוזרק — כך המנוע נבדק בלי רשת ובלי מפתח.
+ *
+ * מחזיר גם `trace` עם כל הצעדים, כי סשן שאי אפשר לבדוק מה קרה בו אינו
+ * שונה מקופסה שחורה — וזו בדיוק הבעיה שהפרוטוקול נועד לפתור.
+ */
+export async function runTurn({ tool, state, userText, call, retrieve = null }) {
+  const trace = [];
+  const step = async (role, prompt) => {
+    const out = await call(role, prompt);
+    trace.push({ role, ok: !!out, chars: (out || '').length });
+    return out;
+  };
+
+  // כלי הצהרתי — אין למה להגיב, ואין טעם לשרוף קריאה
+  if (tool.mode === 'fixed' || tool.mode === 'scale') {
+    return { text: tool.run(state).text, trace, mode: tool.mode };
+  }
+
+  const triage = await step('triage',
+    `המשתמש ענה: "${userText}"\nהאם זו תשובה לשאלה, התחמקות, או חשיפה שדורשת עצירה? מילה אחת.`);
+
+  // חשיפה מדאיגה עוצרת את הפרוטוקול. הצ׳קליסט אינו חשוב מזה.
+  if (/חשיפה|מצוקה|סכנה/.test(triage || '')) {
+    return { text: null, halt: true, reason: triage, trace, mode: 'halt' };
+  }
+
+  let sources = [];
+  if (retrieve) {
+    const want = await step('fetch',
+      `הכלי: ${tool.name}. המשתמש אמר: "${userText}"\nאילו נושאים מהספרייה יעזרו? שניים לכל היותר.`);
+    sources = await retrieve(want || tool.name);
+  }
+
+  const draft = await step('respond', [
+    `כלי: ${tool.name} · ${tool.evidence}`,
+    `המשתמש אמר: "${userText}"`,
+    sources.length ? `רקע מהמקורות:\n${sources.map(s => s.text).join('\n---\n')}` : '',
+    '',
+    'כללים:', ...RESPOND_RULES.map(r => `· ${r}`),
+  ].filter(Boolean).join('\n'));
+
+  if (!draft) return { text: null, trace, mode: 'failed' };
+
+  const verdict = await step('critique', [
+    `תשובה: "${draft}"`, `המשתמש אמר: "${userText}"`, '',
+    ...CRITIQUE_RULES.map(r => `· ${r}`),
+    '', 'אם היא עוברת — החזר OK. אחרת — החזר גרסה מתוקנת בלבד.',
+  ].join('\n'));
+
+  const final = verdict && !/^OK\b/i.test(verdict.trim()) ? verdict : draft;
+  return { text: final, revised: final !== draft, sources, trace, mode: 'responsive' };
+}
+
+/** כמה קריאות תור אחד עולה — לתקצוב מול המכסה */
+export const turnCost = (toolMode, withRetrieval = true) =>
+  toolMode === 'fixed' || toolMode === 'scale' ? 0 : (withRetrieval ? 4 : 3);
