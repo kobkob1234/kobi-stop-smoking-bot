@@ -288,3 +288,82 @@ test('כלי תגובתי שאינו שואל שאלה פתוחה אינו מח�
   assert.ok(!seen.includes('extract'), 'חילוץ רץ על אישור');
   assert.equal(r.captured, null);
 });
+
+// ==========================================================================
+//  קהל, דוגמאות, ופורמולציה
+//
+//  שלושת אלה הם מה שנשאר אחרי שסיננתי רשימת ארכיטקטורות: CoT כבר קיים
+//  דרך thinkingLevel, Reflection כבר קיים כ-critique, ו-Supervisor יש לו
+//  מקבילה דטרמיניסטית זולה יותר. מה שבאמת חסר היה לא-זוהר.
+// ==========================================================================
+
+test('העמדה יודעת מי יושב מולה', () => {
+  // עמדה בלי קהל מייצרת ניסוח שמתאים לכל אחד ולכן לא לאף אחד.
+  // /וויפ/ לבדו עובר דרך שורת הכותרת. הבדיקה חייבת לתפוס את **ההבחנה**.
+  assert.match(E.THERAPIST_SYSTEM, /לא מסיגריות/, 'לא מבחין בין ויפ לסיגריות');
+  assert.match(E.THERAPIST_SYSTEM, /שאכטה/, 'לא אוסר על שפה של מעשנים');
+  assert.match(E.THERAPIST_SYSTEM, /2 מ"ג/, 'לא יודע על החלטות סגורות');
+  assert.match(E.THERAPIST_SYSTEM, /אנליטי|מעורפל/, 'לא יודע איך הוא מגיב');
+});
+
+test('העמדה מגנה על ההחלטות הסגורות', () => {
+  assert.match(E.THERAPIST_SYSTEM, /אל תציע לשנות מינון/);
+  assert.match(E.THERAPIST_SYSTEM, /תרופות מרשם/);
+});
+
+test('לכל דוגמה יש רע, טוב, וסיבה', () => {
+  assert.ok(E.EXEMPLARS.length >= 2);
+  for (const e of E.EXEMPLARS) {
+    assert.ok(e.said && e.bad && e.good && e.badWhy, JSON.stringify(e).slice(0, 60));
+    assert.notEqual(e.bad, e.good);
+    assert.ok(e.badWhy.length > 15, 'הסיבה לא מוסברת — הדוגמה לא מלמדת');
+  }
+});
+
+test('הדוגמאות מגיעות לפרומפט', async () => {
+  const r = await grab();
+  assert.match(r.prompt, /דוגמאות:/);
+  assert.match(r.prompt, /❌/);
+  assert.match(r.prompt, /✅/);
+});
+
+// ---------- פורמולציה ----------
+
+test('פורמולציה מקבלת את הסשן כולו ואת הנתונים', async () => {
+  let got = null;
+  await E.formulate({
+    state: RICH, turns: [{ tool: 'NRT', answer: 'לא בא לי בערב' }],
+    priorFormulation: null, call: async (role, p) => { got = p; return 'דפוס'; },
+  });
+  assert.match(got, /7\.4/, 'הפורמולציה בלי נתונים');
+  assert.match(got, /לא בא לי בערב/, 'הפורמולציה בלי מה שנאמר');
+  assert.match(got, /דפוס אחד/, 'מבקשת סיכום ולא דפוס');
+});
+
+test('פורמולציה קודמת מועברת — הדפוס נבנה על פני סשנים', async () => {
+  let got = null;
+  await E.formulate({
+    state: RICH, turns: [{ tool: 'x', answer: 'y' }],
+    priorFormulation: 'הערב הוא הנקודה', call: async (r, p) => { got = p; return 'ד'; },
+  });
+  assert.match(got, /הערב הוא הנקודה/);
+});
+
+test('NONE אינו נשמר כדפוס — עדיף כלום מדפוס מומצא', async () => {
+  const r = await E.formulate({
+    state: RICH, turns: [{ tool: 'x', answer: 'y' }], call: async () => 'NONE',
+  });
+  assert.equal(r, null);
+});
+
+test('סשן ריק אינו מייצר פורמולציה', async () => {
+  let called = false;
+  const r = await E.formulate({ state: RICH, turns: [], call: async () => { called = true; return 'ד'; } });
+  assert.equal(r, null);
+  assert.equal(called, false, 'נשרפה קריאה על סשן ריק');
+});
+
+test('לפורמולציה החשיבה הגבוהה ביותר — לטנציה לא רלוונטית שם', () => {
+  assert.equal(E.ROLES.formulate.think, 'high');
+  assert.ok(E.ROLES.formulate.reserve > E.ROLES.critique.reserve);
+});
