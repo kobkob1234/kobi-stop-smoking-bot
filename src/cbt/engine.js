@@ -65,6 +65,55 @@ export function buildRequest(role, { system, user, model, gen = {} }) {
   return body;
 }
 
+
+// ==========================================================================
+//  הפרומפט — כאן נקבעת האיכות, לא בצינור
+//
+//  הגרסה הראשונה שלחה 416 תווים שלא כללו את השאלה שנשאלה, את הנתונים,
+//  ולא עמדה טיפולית. סימולציה הראתה את התוצאה: המודל קיבל תשובה בלי
+//  לדעת על מה, וכלל שאמר "חבר בין מה שאמר לנתונים" בזמן שהנתונים לא
+//  היו בפרומפט — כלומר הוראה שאי-אפשר לבצע.
+// ==========================================================================
+
+/** העמדה. נשלח כ-systemInstruction ולא כטקסט משתמש. */
+export const THERAPIST_SYSTEM = [
+  'אתה מלווה גמילה מוויפ בגישת CBT, בעברית, בגוף שני.',
+  '',
+  'עמדה:',
+  '· גילוי מודרך. אתה שואל כדי שהוא יגיע — לא מסביר לו מה הוא מרגיש.',
+  '· אתה מגיב למה שנאמר עכשיו, במילים שלו.',
+  '· אתה מחבר בין מה שאמר לבין הנתונים כשיש קשר — כשאלה, לא כמסקנה.',
+  '· קצר. עד שלושה משפטים ואז שאלה אחת.',
+  '',
+  'אסור:',
+  '· לפתוח ברשימה או בכותרת.',
+  '· לתת עצה שלא ביקש.',
+  '· לומר לו מה הוא מרגיש או "אני מבין אותך".',
+  '· להמליץ על תרופות מרשם.',
+].join('\n');
+
+/** תמצית מספרית — מה שהמודל צריך כדי לראות דפוס */
+export function stateDigest(s) {
+  const L = [`יום ${s.dayNum} · ${s.cleanDays} ימים נקיים`];
+  if (s.gumTarget) L.push(`מסטיק ${(s.gum7 / 7).toFixed(1)}/יום מול יעד ${s.gumTarget}`);
+  if (s.patchDays7 != null) L.push(`מדבקה ${s.patchDays7}/7 ימים`);
+  if (s.mood != null) L.push(`מצב רוח חציוני ${s.mood}/5`);
+  if (s.fatigue != null) L.push(`עייפות מלנסות ${s.fatigue}/5`);
+  if (s.waves7) L.push(`${s.waves7} דחפים בשבוע`);
+  if (s.slips7) L.push(`${s.slips7} מעידות`);
+  if (s.triggers.length) L.push(`טריגרים ידועים: ${s.triggers.join(' · ')}`);
+  if (s.confidence != null) L.push(`ביטחון ${s.confidence}/10`);
+  return L.join(' · ');
+}
+
+/** מה שכבר נאמר בסשן הזה — בלעדיו תור 3 לא יודע שתור 1 קרה */
+export function historyDigest(turns = []) {
+  if (!turns.length) return null;
+  return turns.slice(-4)
+    .map(t => `· ${t.tool}: הוא ענה "${String(t.answer).slice(0, 120)}"`)
+    .join('\n');
+}
+
 // ==========================================================================
 //  אילוצי הניסוח — מה שהופך תשובה לגילוי מודרך
 // ==========================================================================
@@ -100,10 +149,11 @@ export const CRITIQUE_RULES = [
  * מחזיר גם `trace` עם כל הצעדים, כי סשן שאי אפשר לבדוק מה קרה בו אינו
  * שונה מקופסה שחורה — וזו בדיוק הבעיה שהפרוטוקול נועד לפתור.
  */
-export async function runTurn({ tool, state, userText, call, retrieve = null }) {
+export async function runTurn({ tool, state, userText, call, retrieve = null,
+                                turns = [], opening = [] }) {
   const trace = [];
   const step = async (role, prompt) => {
-    const out = await call(role, prompt);
+    const out = await call(role, prompt, role === 'respond' ? THERAPIST_SYSTEM : undefined);
     trace.push({ role, ok: !!out, chars: (out || '').length });
     return out;
   };
@@ -128,10 +178,23 @@ export async function runTurn({ tool, state, userText, call, retrieve = null }) 
     sources = await retrieve(want || tool.name);
   }
 
+  // **השאלה שנשאלה** חייבת להיות בפרומפט. בלעדיה המודל רואה תשובה
+  // ולא יודע על מה — "לא בא לי" יכול להיות על הטעם, על השעה, או על
+  // הכול. הגרסה הראשונה השמיטה את זה, וזה היה הליקוי החמור ביותר.
+  const asked = tool.run(state);
+  const hist = historyDigest(turns);
   const draft = await step('respond', [
-    `כלי: ${tool.name} · ${tool.evidence}`,
-    `המשתמש אמר: "${userText}"`,
-    sources.length ? `רקע מהמקורות:\n${sources.map(s => s.text).join('\n---\n')}` : '',
+    `כלי נוכחי: ${tool.name} · ${tool.evidence}`,
+    `שאלת אותו: "${asked.ask || asked.text}"`,
+    `הוא ענה: "${userText}"`,
+    '',
+    `הנתונים שלו: ${stateDigest(state)}`,
+    opening.length ? `מהסשן הקודם: ${opening.map(describeOpening).filter(Boolean).join(' · ')}` : '',
+    hist ? `קודם בסשן הזה:\n${hist}` : '',
+    sources.length
+      ? `רקע מקצועי (לביסוס הניסוח שלך — אל תצטט ממנו יותר ממשפט):\n${
+          sources.map(s => `[${s.src || 'מקור'}] ${s.text}`).join('\n---\n')}`
+      : '',
     '',
     'כללים:', ...RESPOND_RULES.map(r => `· ${r}`),
   ].filter(Boolean).join('\n'));
@@ -146,6 +209,16 @@ export async function runTurn({ tool, state, userText, call, retrieve = null }) 
 
   const final = verdict && !/^OK\b/i.test(verdict.trim()) ? verdict : draft;
   return { text: final, revised: final !== draft, sources, trace, mode: 'responsive' };
+}
+
+/** openingContext → משפט קצר. בלי זה הרצף משלב 4 נבנה ולא בשימוש. */
+export function describeOpening(b) {
+  switch (b.kind) {
+    case 'homework':   return `שיעורי בית פתוחים מלפני ${b.daysAgo} ימים: "${b.text}"`;
+    case 'confidence': return `הביטחון ${b.from > b.to ? 'ירד' : 'עלה'} ${b.from}→${b.to}`;
+    case 'last':       return `הסשן הקודם היה לפני ${b.daysAgo} ימים`;
+    default:           return null;
+  }
 }
 
 /** כמה קריאות תור אחד עולה — לתקצוב מול המכסה */

@@ -131,3 +131,76 @@ test('עלות תור נשארת בתוך המכסה', async () => {
   assert.ok(cost < 40, `סשן עולה ${cost} קריאות`);
   assert.ok(cost > 10, 'העלות נמוכה מדי — סימן שהתגובתיות לא באמת רצה');
 });
+
+// ==========================================================================
+//  איכות הפרומפט — מה שנקבע בסימולציה
+//
+//  הגרסה הראשונה שלחה 416 תווים בלי השאלה שנשאלה, בלי הנתונים ובלי
+//  עמדה. הכלל "חבר בין מה שאמר לנתונים" היה בלתי-אפשרי לביצוע, כי
+//  הנתונים לא היו בפרומפט. הבדיקות כאן מונעות חזרה לשם.
+// ==========================================================================
+
+const RICH = {
+  ...T.EMPTY_STATE, dayNum: 22, cleanDays: 22, gum7: 52, gumTarget: 9,
+  patchDays7: 7, mood: 3, waves7: 1, triggers: ['ערב מול הטלוויזיה'], confidence: 5,
+};
+const grab = async (over = {}) => {
+  const seen = [];
+  const call = async (role, prompt, sys) => { seen.push({ role, prompt, sys }); return role === 'critique' ? 'OK' : 'x'; };
+  await E.runTurn({ tool: T.byId(P.BCT.MEDS), state: RICH, userText: 'לא בא לי בערב', call, ...over });
+  return seen.find(s => s.role === 'respond');
+};
+
+test('הפרומפט כולל את השאלה שנשאלה — הליקוי החמור ביותר', async () => {
+  // בלעדיה המודל רואה תשובה ולא יודע על מה. "לא בא לי" יכול להיות
+  // על הטעם, על השעה, או על הכול.
+  const r = await grab();
+  assert.match(r.prompt, /שאלת אותו/);
+  assert.match(r.prompt, /מה מפריע/, 'השאלה עצמה אינה בפרומפט');
+});
+
+test('הנתונים בפרומפט — אחרת הכלל על דפוסים בלתי-אפשרי', async () => {
+  const r = await grab();
+  assert.match(r.prompt, /7\.4/, 'קצב המסטיק חסר');
+  assert.match(r.prompt, /יעד 9/);
+  assert.match(r.prompt, /ערב מול הטלוויזיה/, 'הטריגר הידוע חסר — אין ממה לבנות דפוס');
+  assert.match(r.prompt, /ביטחון 5/);
+});
+
+test('העמדה נשלחת כ-system ולא כטקסט משתמש', async () => {
+  const r = await grab();
+  assert.ok(r.sys, 'אין system prompt');
+  assert.match(r.sys, /גילוי מודרך/);
+  assert.match(r.sys, /אל תציע|אסור|להמליץ על תרופות מרשם/);
+});
+
+test('רק respond מקבל את העמדה — triage לא צריך אותה', async () => {
+  const seen = [];
+  const call = async (role, prompt, sys) => { seen.push({ role, sys }); return role === 'critique' ? 'OK' : 'x'; };
+  await E.runTurn({ tool: T.byId(P.BCT.MEDS), state: RICH, userText: 'x', call });
+  assert.ok(!seen.find(s => s.role === 'triage').sys, 'triage מקבל system מיותר');
+});
+
+test('היסטוריית הסשן עוברת — תור 3 יודע שתור 1 קרה', async () => {
+  const r = await grab({ turns: [{ tool: 'בדיקת התקדמות', answer: 'קצת לחוץ בעבודה' }] });
+  assert.match(r.prompt, /קצת לחוץ בעבודה/);
+});
+
+test('הרצף מהסשן הקודם מגיע לפרומפט', async () => {
+  // openingContext נבנה בשלב 4 ולא היה בשימוש בכלל.
+  const r = await grab({ opening: [{ kind: 'confidence', from: 8, to: 5 }] });
+  assert.match(r.prompt, /8→5/, 'הרצף נבנה ולא מחובר');
+});
+
+test('מקורות מגיעים עם ייחוס ועם הגבלת ציטוט', async () => {
+  const r = await grab({ retrieve: async () => [{ src: 'ווסט, פרק 10', text: 'רקע' }] });
+  assert.match(r.prompt, /ווסט, פרק 10/, 'המקור בלי ייחוס — אי אפשר לצטט');
+  assert.match(r.prompt, /אל תצטט ממנו יותר ממשפט/, 'אין הגבלה על העתקה מהספר');
+});
+
+test('היסטוריה ארוכה נחתכת', async () => {
+  const many = Array.from({ length: 10 }, (_, i) => ({ tool: `כלי${i}`, answer: `ת${i}` }));
+  const r = await grab({ turns: many });
+  assert.ok(!r.prompt.includes('כלי0'), 'כל ההיסטוריה נשלחת — הפרומפט יתפוצץ');
+  assert.match(r.prompt, /כלי9/);
+});
