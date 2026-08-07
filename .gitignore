@@ -9,3 +9,4 @@ node_modules/
 .webhook-secret
 .trigger-key
 cbt-state/.bot-snapshot.json
+../cbt/.kv-bulk.json
