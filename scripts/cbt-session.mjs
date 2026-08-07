@@ -52,6 +52,9 @@ const STATE = join(REPO, 'cbt-state', 'session-state.json');
 // תצלום נתוני הבוט — **נגזר, לא בבעלות**, ולכן מחוץ לגיט. בלי ההפרדה
 // כל sync היה מייצר diff של 17KB על נתונים שהבוט כבר מחזיק.
 const SNAP = join(REPO, 'cbt-state', '.bot-snapshot.json');
+// ניתן לדריסה כדי שהבדיקות יוכלו לכפות את מסלול הנפילה. בלי זה הענף
+// הזה לא רץ אף פעם כשיש רשת, והמוטציה שמשתיקה את ההודעה עוברת.
+const WORKER = process.env.CBT_WORKER || 'https://kobi-stop-smoking-bot.kobiamit.workers.dev';
 
 const load = () => {
   const own = existsSync(STATE)
@@ -207,12 +210,29 @@ const CMDS = {
    * מקבל קובץ ייצוא של הבוט, או נופל לגיבוי המקומי. **כותב רק לשדה
    * `days`** — לעולם לא לשדות ה-CBT, כדי ששני המקורות לא יתנגשו.
    */
-  sync(file) {
+  async sync(file) {
     const s = load();
-    let days = [];
+    let days = [], src = null, at = null;
     if (file && existsSync(file)) {
       const j = JSON.parse(readFileSync(file, 'utf8'));
-      days = j.days || j;
+      days = j.days || j; at = j.exportedAt || null; src = file;
+    } else if (!file && (at = await (async () => {
+      // **חי קודם.** הסוד יושב מקומית ב-.webhook-secret, כלומר הנתונים
+      // הטריים היו בהישג יד כל הזמן והסקריפט בכל זאת הגיש גיבוי בן
+      // ארבעה ימים. `exportedAt` מגיע מהבוט עצמו — הוא הסמכות על
+      // התאריך, לא שם קובץ ולא שעון מקומי.
+      const kf = join(REPO, '.webhook-secret');
+      if (!existsSync(kf)) return null;
+      try {
+        const r = await fetch(`${WORKER}/export?days=14&key=${readFileSync(kf, 'utf8').trim()}`,
+                              { signal: AbortSignal.timeout(25000) });
+        if (!r.ok) return null;
+        const j = await r.json();
+        days = j.days || []; src = 'הבוט (חי)';
+        return j.exportedAt || null;
+      } catch { return null; }
+    })())) {
+      // נשלף חי — days ו-src כבר הוצבו
     } else {
       const dir = join(ROOT, 'backups', 'days-20260803');
       if (!existsSync(dir)) return out({ error: 'אין קובץ ייצוא ואין גיבוי מקומי' });
@@ -223,11 +243,12 @@ const CMDS = {
       const files = readdirSync(dir).filter(f => f.endsWith('.json')).sort().reverse();
       days = files.map(f => ({ iso: f.replace('.json', ''),
                                ...JSON.parse(readFileSync(join(dir, f), 'utf8')) }));
+      at = days[0]?.iso || null; src = 'backups/ (הבוט לא נענה)';
     }
     s.days = days.slice(0, 14);
-    s.syncedISO = days[0]?.iso || null;
+    s.syncedISO = at || days[0]?.iso || null;
     save(s);
-    out({ synced: s.days.length, syncedISO: s.syncedISO, source: file || 'backups/' });
+    out({ synced: s.days.length, syncedISO: s.syncedISO, source: src });
   },
 };
 
@@ -236,4 +257,4 @@ if (!CMDS[cmd]) {
   console.log(`שימוש: cbt-session.mjs <${Object.keys(CMDS).join('|')}>`);
   process.exit(1);
 }
-CMDS[cmd](...args);
+await CMDS[cmd](...args);

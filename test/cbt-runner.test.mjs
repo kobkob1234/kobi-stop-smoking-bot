@@ -20,6 +20,8 @@ const RUN = join(HERE, '..', 'scripts', 'cbt-session.mjs');
 const REPO = join(HERE, '..');
 const CBT = join(REPO, 'cbt-state');
 const cli = (...a) => JSON.parse(execFileSync('node', [RUN, ...a], { encoding: 'utf8' }));
+const cliEnv = (env, ...a) => JSON.parse(execFileSync('node', [RUN, ...a],
+  { encoding: 'utf8', env: { ...process.env, ...env } }));
 
 test('הסקריפט קיים ורץ', () => {
   assert.ok(existsSync(RUN));
@@ -42,6 +44,19 @@ test('sync כותב רק לתצלום ולא נוגע במצב ה-CBT', () => {
   cli('sync');
   assert.equal(readFileSync(join(CBT, 'session-state.json'), 'utf8'), before,
     'sync שינה מצב שאינו בבעלותו');
+});
+
+test('sync מעדיף נתונים חיים, ולא משתיק נפילה לגיבוי', () => {
+  // הסוד יושב מקומית כל הזמן — הגרסה הראשונה בכל זאת הגישה גיבוי בן
+  // ארבעה ימים בשקט. אם הבוט לא נענה זה בסדר, אבל **המקור חייב לומר
+  // זאת**, כי כלי האימות מציג את המספרים כעובדה מדודה.
+  const live = cli('sync');
+  assert.match(live.source, /חי/, `לא נשלף חי: ${live.source}`);
+
+  // כופים נפילה — אחרת הענף לא רץ כשיש רשת, והבדיקה שומרת על כלום.
+  const fell = cliEnv({ CBT_WORKER: 'http://127.0.0.1:1' }, 'sync');
+  assert.match(fell.source, /לא נענה/, `נפילה לגיבוי הוסתרה: ${fell.source}`);
+  cli('sync');                                     // מחזירים נתונים טריים
 });
 
 test('גיל הנתונים מדווח אמיתי ולא נופל להיום', () => {
