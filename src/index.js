@@ -14,7 +14,7 @@ import * as ANL from './analytics.js';
 import * as INT from './intent.js';
 import * as G from './gum.js';
 import { getMeta, putMeta, getDay, updateDay, pruneSent, recentHist, pushHist, getWeekly, putWeekly, PATCH_BACKFILL_VER, backfillPatches } from './store.js';
-import { SLOTS, slotAction, mergeTickMeta, taperAskDue, taperWatchDue } from './tick-logic.js';
+import { SLOTS, slotAction, mergeTickMeta, taperAskDue, taperWatchDue, moodAskDue } from './tick-logic.js';
 import { notifyPartner, alertPartner } from './partner.js';
 
 // מזהה בנייה. מתעדכן בכל פריסה ומוחזר ב-/diag, כדי שאפשר יהיה לדעת
@@ -415,6 +415,21 @@ async function tick(env) {
   // שינוי שהמשתמש עשה תוך כדי. ראו את ההסבר במיזוג למטה.
   const touched = new Set();
 
+  // --- תזכורת יחידה למצב הרוח -----------------------------------------
+  {
+    const dayNow = await getDay(env, iso);
+    const key = `${iso}:moodask`;
+    if (moodAskDue(dayNow, now.minutes, meta.sent[key])) {
+      meta.sent[key] = 1; dirty = true;
+      await send(env, meta.chatId, [
+        '🌤️ <b>לפני שהיום נסגר — איך הוא היה?</b>',
+        '',
+        '<i>שאלה אחת, ולא אשאל שוב היום.</i>',
+        'גם יום שלא בא לך לדרג אותו הוא נתון — ודווקא הוא זה שהכי שווה לתפוס.',
+      ].join('\n'), { reply_markup: inline([[1, 2, 3, 4, 5].map(v => btn(String(v), `mo:${v}`))]) });
+    }
+  }
+
   // --- מילוי אחורה חד-פעמי של המדבקות ---------------------------------
   //
   //  הוא לבש מדבקה בכל יום מאז הגמילה ופשוט לא סימן. הנתון הזה אינו
@@ -649,6 +664,15 @@ async function tick(env) {
       const pl = P.planFor(iso, meta.siteOffset);
       const day = await getDay(env, iso);
       const msg = await buildSlot(slot.id, pl, iso, day, meta, now);
+      // שאלת מצב הרוח נתלית על הודעת הערב עצמה, ולא רק על כפתור
+      // "ערב הושלם". קודם היא הופיעה רק אחרי לחיצה — כלומר בערב שבו
+      // לא נכנסת לטקס, המדד לא נאסף כלל. וזה בדיוק הערב שבו הוא הכי
+      // שווה: יום שבו לא בא לך לפתוח את הבוט הוא נתון בפני עצמו.
+      if (msg && slot.id === 'evening' && !day.mood) {
+        msg.kb = msg.kb || inline([]);
+        msg.kb.inline_keyboard.unshift([1, 2, 3, 4, 5].map(v => btn(String(v), `mo:${v}`)));
+        msg.text += '\n\n🌤️ <b>איך היה היום?</b>  1 = רע מאוד · 5 = טוב מאוד';
+      }
       if (msg) await send(env, meta.chatId, msg.text, { reply_markup: msg.kb });
 
       // אחרי הודעת הערב: דוח דפוסים במוצ״ש, ובדיקת נקודת ההסלמה
@@ -1960,19 +1984,32 @@ async function onCallback(cb, env) {
     await answer(env, cb.id, `נרשם ${v}/5`);
     const d14 = await ANL.collect(env, iso, 14);
     const med = ANL.subjMedian(d14, 'mood');
-    const line = v <= 2
-      ? 'יום נמוך הוא מידע, לא כישלון. <i>אפקט שלילי הוא המנבא החזק ביותר למעידה — ולכן זה בדיוק היום לקחת מנה לפני שצריך, ולא אחרי.</i>'
-      : '<i>מה שנמדד לאורך זמן הוא מה שאפשר להשוות מולו אחר כך.</i>';
-    return send(env, chatId, `🌤️ <b>מצב רוח: ${v}/5</b>${med ? ` · חציון ${ANL.subjCount(d14, 'mood')} הימים שנמדדו: ${med}` : ''}\n\n${line}`);
+    const n14 = ANL.subjCount(d14, 'mood');
+    const fb = C.MOOD_FEEDBACK[v];
+    const [q, src] = C.moodQuote(v, pl.n || 0);
+    const L = [`🌤️ <b>מצב רוח: ${v}/5</b>`, '', `<b>${fb.head}</b>`, fb.body];
+    // מגמה, ורק כשיש מספיק מדידות כדי שלא תהיה רעש
+    if (med !== null && n14 >= 3) {
+      const arrow = v > med ? 'מעל' : v < med ? 'מתחת ל' : 'בדיוק ב';
+      L.push('', `📊 היום ${arrow}חציון של ${n14} הימים שנמדדו (${med}).`);
+    }
+    L.push('', `<i>"${q}"</i>`, `— ${src}`);
+    // ביום נמוך הכפתורים חשובים יותר מהטקסט: אפקט שלילי הוא המנבא
+    // החזק ביותר למעידה, וזה הרגע להציע פעולה ולא רק ניסוח.
+    const kb = v <= 2
+      ? inline([[btn('🍬 מסטיק עכשיו', 'g'), btn('🌊 יש לי דחף', 'wv')], [btn('🚶 יוצא להליכה', 'out:start')]])
+      : undefined;
+    return send(env, chatId, L.join('\n'), kb ? { reply_markup: kb } : undefined);
   }
   if (data.startsWith('cf:')) {
     const v = Math.max(1, Math.min(5, parseInt(data.slice(3), 10) || 0));
     await updateDay(env, iso, d => { d.fatigue = v; });
     await answer(env, cb.id, `נרשם ${v}/5`);
-    const line = v >= 4
-      ? '<b>זה סימן להאט, לא להתאמץ יותר.</b>\n\n<i>עייפות-גמילה אינה חוסר כוח רצון — היא העלות שנצברת ממאמץ ממושך. במחקרים היא מנבאת הישנות טוב יותר מעוצמת הדחפים. אם הצמצום כבר התחיל, זו סיבה לצעד אחורה.</i>'
-      : '<i>נמדד. היא נוטה לעלות ב-6 השבועות הראשונים ואז להתייצב — לכן שווה לעקוב, ולא להיבהל מעלייה.</i>';
-    return send(env, chatId, `🔋 <b>עייפות מלנסות: ${v}/5</b>\n\n${line}`);
+    const kb2 = v >= 4
+      ? inline([[btn('↩️ צעד אחורה בצמצום', 'tp:back'), btn('⏸️ עצור צמצום', 'tp:wait')]])
+      : undefined;
+    return send(env, chatId, `🔋 <b>עייפות מלנסות: ${v}/5</b>\n\n${C.FATIGUE_FEEDBACK[v]}`,
+      kb2 ? { reply_markup: kb2 } : undefined);
   }
 
   if (data === 'ed') {

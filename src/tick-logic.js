@@ -83,3 +83,25 @@ export function taperWatchDue(plan, daysSinceStart, nowMinutes, sentToday) {
     && daysSinceStart > 0 && daysSinceStart % 7 === 0
     && nowMinutes >= 9 * 60 && !sentToday;
 }
+
+// ==========================================================================
+//  תזכורת יחידה לשאלת מצב הרוח
+//
+//  הודעת הערב יוצאת ב-21:30 ונושאת את השאלה. אם לא ענית — עד עכשיו
+//  זה היה סופי, והיום פשוט לא נאסף. אבל **יום שלא בא לך לענות בו הוא
+//  בדיוק היום שהמדד נועד לתפוס**: אפקט שלילי הוא המנבא היחיד שניבא
+//  מעידה ראשונה.
+//
+//  ולכן תזכורת אחת, ורק אחת. כל התראה מיותרת מקרבת להשתקת הבוט, ומדד
+//  שגורם להשתקה גרוע ממדד חסר. החלון נסגר ב-00:30 כי דירוג רטרוספקטיבי
+//  של יום שכבר הסתיים הוא נתון גרוע.
+// ==========================================================================
+export const MOOD_ASK_MIN = 22 * 60 + 45;   // 22:45
+export const MOOD_ASK_MAX = 24 * 60 + 30;   // 00:30 למחרת
+
+export function moodAskDue(day, nowMinutes, sentToday) {
+  if (sentToday) return false;
+  if (day.mood) return false;
+  const m = nowMinutes < 4 * 60 ? nowMinutes + 24 * 60 : nowMinutes;
+  return m >= MOOD_ASK_MIN && m <= MOOD_ASK_MAX;
+}

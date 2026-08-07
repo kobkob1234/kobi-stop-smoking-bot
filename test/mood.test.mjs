@@ -90,3 +90,65 @@ test('שבוע בלי מדידות סובייקטיביות אינו מייצר 
   // מצב רוח היה מתריע על ירידה — כלומר שתיקה הייתה מייצרת אזעקה.
   assert.equal(G.taperWatch(week({}), base), null);
 });
+
+// ==========================================================================
+//  המשוב, והשאלה שחייבת להישאל גם בלי לחיצה
+// ==========================================================================
+import * as C from '../src/content.js';
+import { moodAskDue, MOOD_ASK_MIN, MOOD_ASK_MAX } from '../src/tick-logic.js';
+
+test('לכל רמה יש משוב משלה — לא שתי קבוצות', () => {
+  const heads = new Set();
+  for (const v of [1, 2, 3, 4, 5]) {
+    const f = C.MOOD_FEEDBACK[v];
+    assert.ok(f && f.head && f.body, `רמה ${v} חסרה`);
+    assert.ok(f.quotes.length >= 1, `רמה ${v} בלי ציטוט`);
+    heads.add(f.head);
+  }
+  assert.equal(heads.size, 5, 'שתי רמות חולקות אותו משוב');
+});
+
+test('כל ציטוט מיוחס לספר מוכר', () => {
+  const OK = ['קאר', 'ווסט', 'ברואר'];
+  for (const v of [1, 2, 3, 4, 5]) {
+    for (const [q, src] of C.MOOD_FEEDBACK[v].quotes) {
+      assert.ok(q.length > 20, `ציטוט קצר מדי ברמה ${v}`);
+      assert.ok(OK.some(s => src.includes(s)), `ייחוס לא מוכר: ${src}`);
+    }
+  }
+});
+
+test('הציטוט מתחלף בין ימים ולא חוזר על עצמו', () => {
+  const a = C.moodQuote(1, 0), b = C.moodQuote(1, 1);
+  assert.notDeepEqual(a, b, 'אותו ציטוט בכל יום');
+  assert.deepEqual(C.moodQuote(1, 0), C.moodQuote(1, 2), 'הרוטציה אינה מחזורית');
+});
+
+test('לכל רמת עייפות יש משוב, והגבוהות אומרות להאט', () => {
+  for (const v of [1, 2, 3, 4, 5]) assert.ok(C.FATIGUE_FEEDBACK[v]);
+  for (const v of [4, 5]) {
+    assert.match(C.FATIGUE_FEEDBACK[v], /להאט|עוצרים|אחורה/, `רמה ${v} לא ממליצה להאט`);
+  }
+});
+
+// ---------- התזכורת היחידה ----------
+
+const d0 = day({ mood: 0 });
+
+test('התזכורת יוצאת בחלון, פעם אחת בלבד', () => {
+  assert.equal(moodAskDue(d0, MOOD_ASK_MIN, undefined), true);
+  assert.equal(moodAskDue(d0, MOOD_ASK_MIN, 1), false, 'נשלחה פעמיים');
+});
+
+test('לא לפני החלון, ולא אחרי שנסגר', () => {
+  assert.equal(moodAskDue(d0, MOOD_ASK_MIN - 30, undefined), false, 'הקדימה את הודעת הערב');
+  assert.equal(moodAskDue(d0, 2 * 60, undefined), false, 'דירוג רטרוספקטיבי ב-02:00');
+});
+
+test('אחרי חצות עדיין בתוך החלון', () => {
+  assert.equal(moodAskDue(d0, 15, undefined), true, '00:15 נפל מחוץ לחלון');
+});
+
+test('מי שכבר ענה אינו מקבל תזכורת', () => {
+  assert.equal(moodAskDue(day({ mood: 3 }), MOOD_ASK_MIN, undefined), false);
+});
