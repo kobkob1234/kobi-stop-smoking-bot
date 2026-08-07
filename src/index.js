@@ -13,7 +13,7 @@ import * as AI from './ai.js';
 import * as ANL from './analytics.js';
 import * as INT from './intent.js';
 import * as G from './gum.js';
-import { getMeta, putMeta, getDay, updateDay, pruneSent, recentHist, pushHist, getWeekly, putWeekly } from './store.js';
+import { getMeta, putMeta, getDay, updateDay, pruneSent, recentHist, pushHist, getWeekly, putWeekly, PATCH_BACKFILL_VER, backfillPatches } from './store.js';
 import { SLOTS, slotAction, mergeTickMeta, taperAskDue, taperWatchDue } from './tick-logic.js';
 import { notifyPartner, alertPartner } from './partner.js';
 
@@ -409,10 +409,30 @@ async function tick(env) {
   const now = P.il();
   const iso = now.iso;
   let dirty = false;
+
   // אילו שדות ה-tick באמת שינה. המיזוג בסוף החיל אותם ללא תנאי,
   // גם כשהקרון לא נגע בהם — ולכן ערך ישן מתחילת ה-tick דרס
   // שינוי שהמשתמש עשה תוך כדי. ראו את ההסבר במיזוג למטה.
   const touched = new Set();
+
+  // --- מילוי אחורה חד-פעמי של המדבקות ---------------------------------
+  //
+  //  הוא לבש מדבקה בכל יום מאז הגמילה ופשוט לא סימן. הנתון הזה אינו
+  //  קוסמטי: `patch:false` מייצר דגל הסלמה, ומעוות כל ניתוח היצמדות.
+  //
+  //  זה נעשה כאן ולא מה-CLI מפני ש-`wrangler kv` לא הגיב כלל. מוגן
+  //  גרסה בדיוק כמו SITE_ROTATION_VER, ולכן רץ פעם אחת ולא חוזר.
+  //
+  //  **נוגע רק בימים שכבר יש להם רשומה.** יום בלי רשומה בכלל נשאר
+  //  חסר במכוון: `isLogged` היה הופך אותו ל"מכוסה", ודגל ה-blind —
+  //  שכל תפקידו לזהות שהדיווח נפסק — היה מושתק על ידי מילוי אחורה.
+  //  תיקון נתונים לא אמור לכבות גלאי.
+  if (meta.patchBackfillVer !== PATCH_BACKFILL_VER) {
+    const r = await backfillPatches(env, P.QUIT, iso, P.addDaysISO);
+    meta.patchBackfillVer = PATCH_BACKFILL_VER;
+    dirty = true; touched.add('patchBackfillVer');
+    console.log(`מדבקות: מולאו ${r.filled} · כבר סומנו ${r.already} · ${r.missing} ימים בלי רשומה`);
+  }
 
   // --- מעקב SOS: צ׳ק-אין ~10 דקות אחרי שהתחיל גל ---
   if (meta.sos && !meta.sos.followedUp) {

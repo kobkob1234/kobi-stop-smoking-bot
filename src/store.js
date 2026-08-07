@@ -16,8 +16,13 @@ const META_KEY = 'meta';
 // הוא לא סתם לא-נחוץ אלא מזיק — הוא יזיז את העוגן החדש. מאפסים פעם אחת.
 const SITE_ROTATION_VER = 2;
 
+// גרסת המילוי-אחורה של המדבקות. עולה ב-1 בלבד כשצריך למלא שוב;
+// ה-tick משווה מולה ומדלג אם כבר רץ. ראה את הבלוק ב-index.js.
+export const PATCH_BACKFILL_VER = 1;
+
 export const DEFAULT_META = {
   chatId: null,
+  patchBackfillVer: 0,
   costPerDay: 25,          // ₪ ליום שהוויפ עלה — /כסף 30 משנה
   // תזכורת רכה בלבד; המקסימום המסומן ל-2 מ״ג הוא 24–25 מנות ביום.
   // חייב להיות **מעל** היעד: כשהיעד היה 10 והסף 12 זה עוד עבד, אבל עם
@@ -168,6 +173,34 @@ export async function updateDay(env, iso, fn) {
   fn(d);
   await env.KV.put('d:' + iso, JSON.stringify(strip(d)));
   return d;
+}
+
+// ==========================================================================
+//  מילוי אחורה של המדבקות — מיגרציה חד-פעמית
+//
+//  הוא לבש מדבקה בכל יום מאז הגמילה ופשוט לא סימן. הנתון אינו קוסמטי:
+//  `patch:false` מייצר דגל הסלמה ומעוות כל ניתוח היצמדות.
+//
+//  **נוגע רק בימים שכבר יש להם רשומה.** יום בלי רשומה בכלל נשאר חסר
+//  במכוון: `isLogged` היה הופך אותו ל"מכוסה", ודגל ה-blind — שכל תפקידו
+//  לזהות שהדיווח נפסק — היה מושתק על ידי מילוי אחורה. תיקון נתונים לא
+//  אמור לכבות גלאי.
+//
+//  זה כאן ולא ב-tick כדי שיהיה ניתן לבדיקה: הוא כותב לנתוני בריאות
+//  אמיתיים, ולכן חייב בדיקה ולא רק הרצה.
+// ==========================================================================
+export async function backfillPatches(env, fromISO, todayISO, addDays) {
+  let filled = 0, missing = 0, already = 0;
+  for (let n = 0; ; n++) {
+    const iso = addDays(fromISO, n);
+    if (iso > todayISO) break;
+    const rec = await getDay(env, iso);
+    if (!rec._exists) { missing++; continue; }
+    if (rec.patch) { already++; continue; }
+    await updateDay(env, iso, d => { d.patch = true; });
+    filled++;
+  }
+  return { filled, missing, already };
 }
 
 // ==========================================================================

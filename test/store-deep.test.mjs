@@ -9,6 +9,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import * as S from '../src/store.js';
+import * as P from '../src/plan.js';
 import * as G from '../src/gum.js';
 import { makeKV, makeEnv } from './helpers.mjs';
 
@@ -203,4 +204,59 @@ test('ב5 · סקירה אינה מתערבבת עם רשומות היום', asy
   await S.putWeekly(env, '2026-08-01', 'טקסט');
   const d = await S.getDay(env, '2026-08-01');
   assert.equal(d._exists, false, 'סקירה שבועית נספרה כרשומת יום');
+});
+
+// ==========================================================================
+//  מילוי אחורה של המדבקות — מיגרציה שכותבת לנתוני בריאות אמיתיים
+// ==========================================================================
+
+test('מילוי אחורה מסמן מדבקה רק בימים שיש להם רשומה', async () => {
+  const kv = makeKV(); const env = makeEnv(kv);
+  await S.updateDay(env, '2026-07-25', d => { d.gum = 8; });
+  await S.updateDay(env, '2026-07-26', d => { d.gum = 9; d.patch = true; });
+  // 27.7 בכוונה ללא רשומה
+  await S.updateDay(env, '2026-07-28', d => { d.gum = 7; });
+
+  const r = await S.backfillPatches(env, '2026-07-25', '2026-07-28', P.addDaysISO);
+  assert.deepEqual(r, { filled: 2, missing: 1, already: 1 });
+
+  assert.equal((await S.getDay(env, '2026-07-25')).patch, true);
+  assert.equal((await S.getDay(env, '2026-07-28')).patch, true);
+  assert.equal((await S.getDay(env, '2026-07-27'))._exists, false,
+    'נוצרה רשומה ליום שלא דווח — זה משתיק את דגל ה-blind');
+});
+
+test('מילוי אחורה אינו נוגע בשום שדה אחר', async () => {
+  const kv = makeKV(); const env = makeEnv(kv);
+  await S.updateDay(env, '2026-07-25', d => {
+    d.gum = 8; d.waves = 2; d.surfed = 1; d.journal = 'טקסט';
+    d.ev = [{ k: 'g', h: 9, m: 0 }];
+  });
+  const before = await S.getDay(env, '2026-07-25');
+  await S.backfillPatches(env, '2026-07-25', '2026-07-25', P.addDaysISO);
+  const after = await S.getDay(env, '2026-07-25');
+
+  assert.equal(after.patch, true);
+  for (const k of ['gum', 'waves', 'surfed', 'journal']) {
+    assert.deepEqual(after[k], before[k], `השדה ${k} השתנה`);
+  }
+  assert.deepEqual(after.ev, before.ev, 'האירועים השתנו');
+});
+
+test('מילוי אחורה אידמפוטנטי — הרצה שנייה לא משנה כלום', async () => {
+  const kv = makeKV(); const env = makeEnv(kv);
+  await S.updateDay(env, '2026-07-25', d => { d.gum = 8; });
+  await S.backfillPatches(env, '2026-07-25', '2026-07-26', P.addDaysISO);
+  const w1 = kv.stats.writes;
+  const r2 = await S.backfillPatches(env, '2026-07-25', '2026-07-26', P.addDaysISO);
+  assert.equal(r2.filled, 0);
+  assert.equal(kv.stats.writes, w1, 'הרצה שנייה כתבה ל-KV');
+});
+
+test('מילוי אחורה עוצר בהיום ולא רץ לעתיד', async () => {
+  const kv = makeKV(); const env = makeEnv(kv);
+  await S.updateDay(env, '2026-08-20', d => { d.gum = 5; });   // עתידי
+  const r = await S.backfillPatches(env, '2026-07-25', '2026-07-27', P.addDaysISO);
+  assert.equal(r.filled + r.already, 0);
+  assert.equal((await S.getDay(env, '2026-08-20')).patch, false, 'נגע ביום עתידי');
 });
