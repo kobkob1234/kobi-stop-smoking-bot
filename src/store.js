@@ -5,6 +5,7 @@
 // ==========================================================================
 
 import { migratePlan, PLAN_VER } from './gum.js';
+import { migrateCbt } from './cbt/state.js';
 
 // התקרה הרכה חייבת להישאר מעל היעד (12) במרווח סביר
 const MIN_SOFT_CAP = 18;
@@ -58,6 +59,7 @@ export const DEFAULT_META = {
   gumSnoozeISO: null,      // דחייה: היום
   gumSnoozeMin: 0,         // ועד איזו דקה
   hist: [],                // זיכרון שיחה: [{r:'u'|'a', t, ts}] — ראה HIST_* למטה
+  cbt: null,               // מודול ה-CBT: פרוטוקול, רצף וסשנים (ראה cbt/state.js)
 };
 
 // כל הודעה שמגיעה ל-AI כבר כותבת meta, ולכן ההיסטוריה לא עולה בכתיבה
@@ -87,6 +89,9 @@ export async function getMeta(env) {
     sent: m.sent || {},
   };
   if (out.siteVer !== SITE_ROTATION_VER) { out.siteOffset = 0; out.siteVer = SITE_ROTATION_VER; }
+  // רץ בכל קריאה ולא רק בשדרוג גרסה — אותו לקח מ-repairPlan: מצב פגום
+  // שנשמר בגרסה הנוכחית היה שורד לנצח.
+  out.cbt = migrateCbt(out.cbt);
   // שדרוג תוכנית המסטיק ל-12 מנות. בלי זה `times` השמור היה גובר על
   // ברירת המחדל החדשה, והיעד החדש היה קיים בקוד ולא בפועל.
   if (out.gumPlan) {
