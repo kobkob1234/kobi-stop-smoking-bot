@@ -20,9 +20,18 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const RUN = join(HERE, '..', 'scripts', 'cbt-session.mjs');
 const REPO = join(HERE, '..');
 const CBT = join(REPO, 'cbt-state');
-const cli = (...a) => JSON.parse(execFileSync('node', [RUN, ...a], { encoding: 'utf8' }));
-const cliEnv = (env, ...a) => JSON.parse(execFileSync('node', [RUN, ...a],
-  { encoding: 'utf8', env: { ...process.env, ...env } }));
+// **הרמטי בכוונה.** מאז ש-`status`/`start` מושכים את המצב מ-KV, בדיקה
+// שרצה מול הבוט החי תלויה במה שבמקרה שמור שם — וסשן שנשאר פתוח
+// מהרצה קודמת היה מפיל אותה. מכוונים לפורט מת כדי שהמשיכה תיכשל
+// ותיפול למצב המקומי.
+const OFFLINE = { CBT_WORKER: 'http://127.0.0.1:1' };
+const cli = (...a) => JSON.parse(execFileSync('node', [RUN, ...a],
+  { encoding: 'utf8', env: { ...process.env, ...OFFLINE } }));
+const cliEnv = (env, ...a) => {
+  const e = { ...process.env, ...OFFLINE, ...env };
+  for (const k of Object.keys(e)) if (e[k] === undefined) delete e[k];
+  return JSON.parse(execFileSync('node', [RUN, ...a], { encoding: 'utf8', env: e }));
+};
 
 test('הסקריפט קיים ורץ', () => {
   assert.ok(existsSync(RUN));
@@ -51,7 +60,8 @@ test('sync מעדיף נתונים חיים, ולא משתיק נפילה לגי
   // הסוד יושב מקומית כל הזמן — הגרסה הראשונה בכל זאת הגישה גיבוי בן
   // ארבעה ימים בשקט. אם הבוט לא נענה זה בסדר, אבל **המקור חייב לומר
   // זאת**, כי כלי האימות מציג את המספרים כעובדה מדודה.
-  const live = cli('sync');
+  // הבדיקה הזו **כן** צריכה את הבוט החי — היא בודקת בדיוק את זה.
+  const live = cliEnv({ CBT_WORKER: undefined }, 'sync');
   assert.match(live.source, /חי/, `לא נשלף חי: ${live.source}`);
 
   // כופים נפילה — אחרת הענף לא רץ כשיש רשת, והבדיקה שומרת על כלום.

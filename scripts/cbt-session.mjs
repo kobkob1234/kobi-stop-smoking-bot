@@ -117,6 +117,7 @@ async function pushMirror(s) {
 /** מושך את מצב ה-CBT מ-KV. **המקור** — לא עותק. */
 async function pullCbt() {
   const kf = join(REPO, '.webhook-secret');
+  if (process.env.CBT_OFFLINE) return null;
   if (!existsSync(kf)) return null;
   try {
     const r = await fetch(`${WORKER}/cbt-state?key=${readFileSync(kf, 'utf8').trim()}`,

@@ -172,3 +172,91 @@ test('לכל תפקיד במנוע יש תצורה', () => {
   assert.equal(ROLES.respond.think, 'high', 'הניסוח רץ בלי חשיבה');
   assert.equal(ROLES.triage.think, 'none', 'הניתוב שורף חשיבה');
 });
+
+
+// ---------- עצירת בטיחות ----------
+
+test('halt אינו נרשם ככלי שבוצע', async () => {
+  // רישום הכלי בעצירת בטיחות היה מסמן אותו כבוצע ומדלג עליו כשחוזרים.
+  const o = SESS.openSession(fresh(), ISO);
+  const tool = SESS.nextStep(o.cbt, ST);
+  const before = o.cbt.active.remaining.length;
+  const r = await SESS.runStep(o.cbt, tool, ST, 'אין טעם בכלום', {
+    call: fake({ triage: 'distress' }),
+  });
+  assert.equal(r.mode, 'halt', 'לא זוהתה מצוקה');
+  assert.equal(r.cbt.active.remaining.length, before, 'הכלי סומן כבוצע');
+});
+
+test('הבוט מציג טלפוני עזרה על halt ולא "ממשיכים"', () => {
+  // ה-halt הגיע כ-reply ריק, ולכן הוצג כ"לא הצלחתי לנסח תגובה".
+  // כלומר זיהוי מצוקה אמיתי נבלע והסשן המשיך לצ׳קליסט.
+  // **בלי הערות.** הבדיקה הראשונה כאן נכשלה על ההערה שאני עצמי כתבתי
+  // בתוך הבלוק, שציטטה את הודעת הכישלון — כלומר היא בדקה תיעוד ולא קוד.
+  const src = readFileSync(join(SRC, 'index.js'), 'utf8')
+    .replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+  const i = src.indexOf("r.mode === 'halt'");
+  assert.ok(i > 0, 'הבוט אינו מטפל ב-halt בכלל');
+  const block = src.slice(i, i + 700);
+  assert.match(block, /PHONES/, 'עצירת בטיחות בלי טלפוני עזרה');
+  assert.match(block, /awaiting = null/, 'הסשן ממשיך אחרי עצירת בטיחות');
+  // והבליעה עצמה אסורה: הטיפול ב-halt חייב להיות **לפני** הודעת הכישלון
+  assert.ok(i < src.indexOf('לא הצלחתי לנסח תגובה'),
+    'ה-halt נבלע בהודעת הכישלון הכללית');
+});
+
+test('תוכן רגיל של סשן אינו מסווג כמצוקה', () => {
+  // "היה לי דחף חזק אתמול בלילה" סווג distress, כלומר הכלי שכל תפקידו
+  // לדבר על דחפים עצר ברגע שנאמר "דחף".
+  const src = readFileSync(join(SRC, 'cbt', 'engine.js'), 'utf8');
+  const i = src.indexOf("· distress");
+  assert.ok(i > 0);
+  const block = src.slice(i, i + 900);
+  for (const w of ['דחף', 'מעידה', 'שבוע קשה']) {
+    assert.ok(block.includes(w), `הפרומפט אינו מוציא "${w}" מהגדרת המצוקה`);
+  }
+  assert.match(block, /answer/, 'לא נאמר לאן לסווג אותם');
+});
+
+// ---------- מגבלת קצב ----------
+
+test('429 מנוסה שוב, שגיאה אחרת לא', async () => {
+  // תור עולה 5 קריאות, והמדרג החינמי מוגבל בבקשות לדקה. בלי ניסיון
+  // חוזר, 429 שורף פריט בצ׳קליסט: הכלי נרשם כבוצע, המשתמש מקבל
+  // "לא הצלחתי לנסח תגובה", והסשן מתקדם בלי שקרה בו כלום.
+  const { cbtCall, RETRY_MS } = await import('../src/ai.js');
+  assert.ok(RETRY_MS >= 1000, 'ההמתנה קצרה מכדי שחלון הדקה יתגלגל');
+
+  const calls = [];
+  const orig = globalThis.fetch;
+  const reply = (status, text) => {
+    globalThis.fetch = async () => {
+      calls.push(status);
+      return { ok: status === 200, status,
+               json: async () => (status === 200
+                 ? { candidates: [{ content: { parts: [{ text }] } }] }
+                 : { error: { code: status } }) };
+    };
+  };
+  try {
+    reply(429);
+    const env = { GEMINI_KEY: 'k' };
+    const t0 = Date.now();
+    await cbtCall(env, ROLES)('respond', 'x');
+    assert.equal(calls.length, 2, `429 נוסה ${calls.length} פעמים`);
+    assert.ok(Date.now() - t0 >= RETRY_MS - 200, 'לא הייתה המתנה בין הניסיונות');
+
+    calls.length = 0;
+    reply(400);
+    await cbtCall(env, ROLES)('respond', 'x');
+    assert.equal(calls.length, 1, '400 נוסה שוב — הוא יחזור זהה');
+  } finally { globalThis.fetch = orig; }
+});
+
+test('הביקורת תופסת חיבור מספרים שאינו קשור', async () => {
+  // "היה לי דחף" + "אתה מקפיד על המדבקה" הם שני דברים נכונים בלי קשר.
+  const { CRITIQUE_RULES } = await import('../src/cbt/engine.js');
+  const joined = CRITIQUE_RULES.join(' ');
+  assert.match(joined, /מספרים/, 'הביקורת אינה בודקת חיבור נתונים גנרי');
+  assert.match(joined, /קשר ממשי/, 'לא נדרש קשר ממשי');
+});

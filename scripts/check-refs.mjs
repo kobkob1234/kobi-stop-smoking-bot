@@ -35,7 +35,42 @@ for (const f of readdirSync('src').filter(x => x.endsWith('.js'))) {
     }
   }
 }
-console.log(bad === 0 ? '✅ כל הפונקציות שנקראות מוגדרות' : `\n${bad} בעיות`);
+// ---------------------------------------------------------------------------
+//  מרחבי-שם — הבאג שהבדיקה למעלה לא יכלה לתפוס
+//
+//  `CBTSESS.runStep(...)` נכתב בלי `import * as CBTSESS`. `node --check`
+//  עבר, המודול נטען, כל 613 הבדיקות עברו — ו-`/טיפול` היה קורס
+//  בפרודקשן ברגע הלחיצה, כי מזהה חופשי ב-JS נפתר רק בזמן ריצה.
+//
+//  הבדיקה למעלה מסתכלת על פונקציות מקומיות בשמות lowercase; קריאה דרך
+//  מרחב-שם היא צורה אחרת לגמרי ולכן לא נבדקה כלל.
+// ---------------------------------------------------------------------------
+for (const f of readdirSync('src').filter(x => x.endsWith('.js'))) {
+  const src = readFileSync(`src/${f}`, 'utf8');
+  // מסירים הערות, אחרת שם שמוזכר בתיעוד נספר כקריאה
+  const code = src.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+  const heads = new Set(
+    [...code.matchAll(/(?<![.\w$])([A-Z][A-Za-z0-9_]*)\s*\.\s*\w+\s*\(/g)].map(m => m[1]));
+  const imports = (code.match(/^import[\s\S]*?from\s+'[^']+';$/gm) || []).join('\n');
+  for (const ns of heads) {
+    const ok =
+      new RegExp(`import\\s*\\*\\s*as\\s+${ns}\\b`).test(imports) ||
+      new RegExp(`\\b${ns}\\b`).test(imports.replace(/from\s+'[^']+'/g, '')) ||
+      new RegExp(`(?:const|let|var|class|function)\\s+${ns}\\b`).test(code) ||
+      // גלובלים מובנים
+      ['Math', 'JSON', 'Object', 'Array', 'String', 'Number', 'Date', 'Promise',
+       'Boolean', 'Error', 'Set', 'Map', 'RegExp', 'AbortSignal', 'Response',
+       'Request', 'URL', 'URLSearchParams', 'TextEncoder', 'TextDecoder',
+       'Intl', 'Symbol', 'BigInt', 'WeakMap', 'WeakSet', 'Proxy', 'Reflect'].includes(ns);
+    if (!ok) {
+      const line = code.slice(0, code.indexOf(ns + '.')).split('\n').length;
+      console.error(`❌ src/${f}:~${line} — ${ns}.*() בשימוש אבל לא מיובא ולא מוגדר`);
+      bad++;
+    }
+  }
+}
+
+console.log(bad === 0 ? '✅ כל הפונקציות והמרחבים שנקראים מוגדרים' : `\n${bad} בעיות`);
 
 // ==========================================================================
 //  ההפניות למקורות — מה שהשם של הקובץ הבטיח ולא סיפק.

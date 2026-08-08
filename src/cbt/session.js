@@ -61,7 +61,9 @@ export async function runStep(cbt, tool, state, userText, { call, retrieve = nul
     opening: S.openingContext(cbt, state.iso),
     formulation: S.latestFormulation(cbt),
   });
-  const next = S.recordBct(cbt, tool.id, r.captured || null);
+  // עצירת בטיחות אינה תשובה: רישום הכלי כאן היה מסמן אותו כבוצע
+  // ומדלג עליו כשחוזרים לסשן.
+  const next = r.mode === 'halt' ? cbt : S.recordBct(cbt, tool.id, r.captured || null);
   return { cbt: next, reply: r.text, mode: r.mode, captured: r.captured || null,
            sources: r.sources || [], trace: r.trace || [] };
 }

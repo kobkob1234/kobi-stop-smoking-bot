@@ -27,6 +27,22 @@ import { LIBRARY } from './library.js';
 export const WORD_BUDGET = 6000;
 export const MAX_SECTIONS = 3;
 
+/**
+ * רצפה יחסית לציון.
+ *
+ * הרצה חיה החזירה, מתחת למקטע רלוונטי, דף עבודה על OCD ודיאלוג
+ * שכותרתו זבל — שניהם על סמך תג ה-BCT לבדו, בציון 10 מול 16 של
+ * הראשון. מקטע חלש בהרבה מהמוביל אינו מבסס אלא מרעיש, והרעש הזה
+ * נכנס לאותו פרומפט שאמור לייצר שאלה ממוקדת.
+ *
+ * יחסי ולא מוחלט: כשאין התאמה חזקה בכלל, עדיין מוחזר מה שיש.
+ *
+ * הגבול יושב בין "רק התג" לבין "התג ועוד משהו": תג לבדו הוא 10, ותג
+ * עם הסיגנל החלש ביותר שנוסף עליו הוא 11.5. מול מוביל של 16 זה
+ * 0.63 מול 0.72 — ולכן 0.7.
+ */
+export const SCORE_FLOOR = 0.7;
+
 /** ניקוד: BCT כבד · ספר ייעודי כבד · חפיפת מונחים בינונית · סוג קל */
 export const W = { bct: 10, smoking: 6, term: 2, kind: 1.5, title: 4 };
 
@@ -83,9 +99,11 @@ export function pickSections(want, { bct = null, kindWanted = null,
   scored.sort((a, b) => b.sc - a.sc || a.e.words - b.e.words);
 
   const out = [];
+  const floor = scored.length ? scored[0].sc * SCORE_FLOOR : 0;
   let spent = 0;
   for (const { e, sc } of scored) {
     if (out.length >= max) break;
+    if (sc < floor) break;                     // מדורג — הראשון שנופל סוגר
     // מקטע שחורג לבדו עדיין נבחר — הוא ייחתך בקריאה. לדלג עליו היה
     // אומר שהמקטע החזק ביותר בקורפוס אף פעם לא נבחר רק בגלל אורכו.
     if (spent && spent + e.words > budget) continue;

@@ -236,21 +236,42 @@ export function cbtCall(env, roles, meter = null) {
     if (pinned && THINK[cfg.think]) {
       body.generationConfig.thinkingConfig = { thinkingBudget: THINK[cfg.think] };
     }
-    if (meter) meter.calls = (meter.calls || 0) + 1;
-    try {
-      const res = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
-        { method: 'POST',
-          headers: { 'content-type': 'application/json', 'x-goog-api-key': env.GEMINI_KEY },
-          body: JSON.stringify(body), signal: timeoutSignal() });
-      const j = await res.json().catch(() => null);
-      if (!res.ok) { console.log('CBT AI', role, res.status, JSON.stringify(j).slice(0, 200)); return null; }
-      const parts = j?.candidates?.[0]?.content?.parts || [];
-      const out = parts.filter(p => !p.thought).map(p => p.text || '').join('').trim();
-      return out || null;
-    } catch (e) {
-      console.log('CBT AI', role, String(e).slice(0, 120));
-      return null;
+    // ═══ ניסיון חוזר על מגבלת קצב ═══
+    //
+    // תור אחד עולה 5 קריאות. המדרג החינמי מוגבל בבקשות לדקה, ושתי
+    // תשובות מהירות ברצף חוצות אותו — נמדד בשטח: triage עבר,
+    // ושלושת הצעדים שאחריו חזרו ריקים תוך שנייה וחצי.
+    //
+    // בלי הניסיון החוזר, 429 היה **שורף פריט בצ׳קליסט**: הכלי נרשם
+    // כבוצע, המשתמש קיבל "לא הצלחתי לנסח תגובה", והסשן התקדם בלי
+    // שקרה בו כלום. שגיאה חולפת אינה אמורה להיראות כמו שלב שהושלם.
+    for (let attempt = 0; attempt < 2; attempt++) {
+      if (meter) meter.calls = (meter.calls || 0) + 1;
+      try {
+        const res = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
+          { method: 'POST',
+            headers: { 'content-type': 'application/json', 'x-goog-api-key': env.GEMINI_KEY },
+            body: JSON.stringify(body), signal: timeoutSignal() });
+        const j = await res.json().catch(() => null);
+        if (res.ok) {
+          const parts = j?.candidates?.[0]?.content?.parts || [];
+          const out = parts.filter(p => !p.thought).map(p => p.text || '').join('').trim();
+          if (out) return out;
+          return null;                          // תשובה ריקה אינה שגיאה חולפת
+        }
+        console.log('CBT AI', role, res.status, JSON.stringify(j).slice(0, 160));
+        // רק מגבלת קצב שווה ניסיון נוסף. 400/403 יחזרו זהים.
+        if (res.status !== 429 || attempt) return null;
+        await new Promise(r => setTimeout(r, RETRY_MS));
+      } catch (e) {
+        console.log('CBT AI', role, String(e).slice(0, 120));
+        return null;
+      }
     }
+    return null;
   };
 }
+
+/** המתנה לפני ניסיון חוזר — מספיקה לחלון הדקה להתגלגל */
+export const RETRY_MS = 4000;

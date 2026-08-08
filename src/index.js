@@ -14,6 +14,7 @@ import * as CBTP from './cbt/protocol.js';
 import * as CBTS from './cbt/state.js';
 import * as CBTT from './cbt/tools.js';
 import * as CBTE from './cbt/engine.js';
+import * as CBTSESS from './cbt/session.js';
 import { retrieverFor } from './cbt/retrieve.js';
 import * as ANL from './analytics.js';
 import * as INT from './intent.js';
@@ -197,7 +198,7 @@ export default {
     if (url.pathname === '/health') return new Response('ok');
 
     // בדיקת שפיות + קרון-גיבוי מ-GitHub Actions (מוגן ב-WEBHOOK_SECRET)
-    if (['/diag', '/cron', '/export', '/send', '/ask', '/trigger', '/cbt-state'].includes(url.pathname)) {
+    if (['/diag', '/cron', '/export', '/send', '/ask', '/trigger', '/cbt-state', '/cbt-probe'].includes(url.pathname)) {
       // /trigger מקבל גם TRIGGER_KEY נפרד — הסוד הזה יושב בקיצור על
       // הטלפון, ולא רצוי שיהיה אותו סוד שמגן על /export ועל הווביהוק.
       const given = url.searchParams.get('key');
@@ -293,6 +294,40 @@ export default {
         if (level === 2) { await startPlanning(meta.chatId, env, meta, iso, now); return new Response('🧠 תירוצים לצאת — נשלח, ובת הזוג עודכנה'); }
         await startWave(meta.chatId, env, meta, iso, now);
         return new Response('🌊 דחף — הזרימה נשלחה לטלגרם');
+      }
+
+      if (url.pathname === '/cbt-probe') {
+        // ═══ תור אחד, בלי לגעת במצב ═══
+        //
+        // הדרך היחידה לדעת אם התשובות באמת טיפוליות ולא גנריות היא
+        // להריץ תור אמיתי ולקרוא אותו. `GEMINI_KEY` הוא סוד ולכן זה
+        // אינו ניתן להרצה מקומית, ובלי הנתיב הזה "איכות התשובות"
+        // נשארת הערכה במקום מדידה.
+        //
+        // **לא כותב כלום.** אין putMeta, אין שינוי סשן.
+        const tid = url.searchParams.get('tool') || 'identify-triggers';
+        const said = url.searchParams.get('said') || 'בעיקר כשאני לחוץ בעבודה';
+        const tool = CBTT.byId(tid);
+        if (!tool) return Response.json({ error: 'כלי לא מוכר', tool: tid }, { status: 400 });
+        const meta = await getMeta(env);
+        const now = P.il();
+        const pl = P.planFor(now.iso, meta.siteOffset);
+        const st = await cbtState(env, meta, CBTS.migrateCbt(meta.cbt), pl, now.iso);
+        const meter = { calls: 0 };
+        const t0 = Date.now();
+        const r = await CBTSESS.runStep(CBTS.migrateCbt(meta.cbt), tool, st, said, {
+          call: AI.cbtCall(env, CBTE.ROLES, meter),
+          retrieve: retrieverFor(env, { bct: tool.id }),
+          turns: [],
+        });
+        return Response.json({
+          tool: tool.id, name: tool.name, mode: r.mode,
+          asked: tool.run(st).ask || tool.run(st).text,
+          said, reply: r.reply, captured: r.captured,
+          sources: (r.sources || []).map(x => ({ id: x.id, src: x.src, words: x.text.split(/\s+/).length })),
+          trace: r.trace, calls: meter.calls, ms: Date.now() - t0,
+          state: CBTE.stateDigest(st),
+        });
       }
 
       if (url.pathname === '/cbt-state') {
@@ -844,6 +879,24 @@ async function runTherapyTurn(env, chatId, meta, text, pl, iso) {
   meta.cbt = r.cbt;
   meta.awaiting = done ? null : 'cbt';
   await putMeta(env, meta);
+
+  // ═══ עצירת בטיחות ═══
+  //
+  // `halt` הגיע כ-reply ריק, ולכן הוצג כ"לא הצלחתי לנסח תגובה —
+  // ממשיכים". כלומר זיהוי מצוקה אמיתי היה **נבלע** והסשן היה ממשיך
+  // לצ׳קליסט. הצ׳קליסט אינו חשוב מזה.
+  if (r.mode === 'halt') {
+    meta.awaiting = null; await putMeta(env, meta);
+    return void await send(env, chatId, [
+      'עצרתי את הסשן.',
+      '',
+      'מה שאמרת נשמע גדול מהפרוטוקול הזה, ואני בוט ולא תחליף לאדם.',
+      '',
+      ...C.PHONES.split('\n').filter(Boolean),
+      '',
+      '<i>/טיפול כשתרצה לחזור.</i>',
+    ].join('\n'));
+  }
 
   const bits = [];
   // תשובה שנכשלה אינה מוסתרת: סשן שממשיך כאילו כלום לא קרה מייצר

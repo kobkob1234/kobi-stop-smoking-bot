@@ -384,9 +384,23 @@ test('טריאז׳ מובנה ונוטה לצד הבטוח', () => {
   assert.equal(E.classifyTriage('answer'), 'answer');
   assert.equal(E.classifyTriage('he is in distress'), 'distress');
   assert.equal(E.classifyTriage('pushback'), 'pushback');
-  for (const bad of ['', null, undefined, 'משהו לא מוכר', '???']) {
+  // תשובה שהתקבלה ואינה קטגוריה מוכרת — נוטים לבטוח
+  for (const bad of ['משהו לא מוכר', '???', 'maybe ok']) {
     assert.equal(E.classifyTriage(bad), 'distress', `${JSON.stringify(bad)} לא נטה לבטוח`);
   }
+  // **היעדר תשובה אינו סיגנל קליני.** null אומר שהרשת נפלה או שהמכסה
+  // נגמרה, ולהציג טלפוני חירום למי שהחיבור שלו נותק זה שגוי ומפחיד —
+  // וגם היה תוקע את הסשן, כי halt אינו רושם את הכלי כבוצע.
+  for (const none of ['', '   ', null, undefined]) {
+    assert.equal(E.classifyTriage(none), null,
+      `${JSON.stringify(none)} — כשל תשתית סווג כמצוקה`);
+  }
+});
+
+test('כשל מודל אינו מפעיל עצירת בטיחות', async () => {
+  const r = await E.runTurn({ tool: T.byId(P.BCT.CRAVINGS), state: RICH,
+                              userText: 'משהו', call: async () => null });
+  assert.notEqual(r.mode, 'halt', 'רשת שנפלה הוצגה כמצוקה');
 });
 
 test('הטריאז׳ מבקש קטגוריה מפורשת, לא טקסט חופשי', async () => {

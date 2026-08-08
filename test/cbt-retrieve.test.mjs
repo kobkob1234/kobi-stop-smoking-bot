@@ -15,7 +15,7 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { pickSections, queryTerms, clip, retrieverFor, FETCH_ASK,
-         WORD_BUDGET, MAX_SECTIONS, SMOKING_BOOKS, W } from '../src/cbt/retrieve.js';
+         WORD_BUDGET, MAX_SECTIONS, SMOKING_BOOKS, W, SCORE_FLOOR } from '../src/cbt/retrieve.js';
 import { LIBRARY } from '../src/cbt/library.js';
 import { TOOLS } from '../src/cbt/tools.js';
 import { TOOL_EXEMPLARS, exemplarText, runTurn } from '../src/cbt/engine.js';
@@ -92,6 +92,39 @@ test('חפיפת מונחים טובה עדיין מנצחת תג לבדו', () 
   assert.ok(r.length);
   assert.ok(!SMOKING_BOOKS.has(r[0].book),
     `${r[0].id} — ההטיה לספרי גמילה הפכה למוחלטת`);
+});
+
+test('מקטע שכל הסיגנל שלו הוא התג נופל מול התאמה חזקה', () => {
+  // הרצה חיה החזירה, מתחת למקטע רלוונטי, דף עבודה על OCD ודיאלוג
+  // שכותרתו זבל — שניהם רק בזכות התג. רעש כזה נכנס לאותו פרומפט
+  // שאמור לייצר שאלה ממוקדת.
+  const lib = [
+    { id: 'strong', book: 'ncsct-stp', title: 'X', src: 's', kind: 'theory',
+      words: 500, bcts: ['identify-triggers'], terms: ['trigger'] },
+    { id: 'tag-only', book: 'manning-worksheets', title: 'Y', src: 's', kind: 'theory',
+      words: 300, bcts: ['identify-triggers'], terms: [] },
+  ];
+  const r = pickSections('trigger', { bct: 'identify-triggers', library: lib });
+  assert.deepEqual(r.map(x => x.id), ['strong'], 'הרעש נכנס');
+});
+
+test('כשכל ההתאמות חלשות — עדיין מוחזר מה שיש', () => {
+  // הרצפה יחסית ולא מוחלטת: אחרת שאלה על נושא שהקורפוס מכסה חלש
+  // הייתה מקבלת אפס מקורות במקום את הטוב שיש.
+  const lib = [
+    { id: 'a', book: 'beck-basics', title: 'X', src: 's', kind: 'theory',
+      words: 300, bcts: ['coping-plan'], terms: [] },
+    { id: 'b', book: 'beck-basics', title: 'Y', src: 's', kind: 'theory',
+      words: 300, bcts: ['coping-plan'], terms: [] },
+  ];
+  assert.equal(pickSections('x', { bct: 'coping-plan', library: lib }).length, 2);
+});
+
+test('הרצפה בין "רק התג" לבין "התג ועוד משהו"', () => {
+  assert.ok(W.bct / (W.bct + W.smoking) < SCORE_FLOOR, 'תג לבדו עובר את הרצפה');
+  const weakest = Math.min(W.term, W.kind, W.title, W.smoking);
+  assert.ok((W.bct + weakest) / (W.bct + W.smoking) >= SCORE_FLOOR,
+    'התג עם סיגנל נוסף נחסם — הרצפה גבוהה מדי');
 });
 
 test('שאילתה בלי שום התאמה מחזירה ריק, לא זבל', () => {
