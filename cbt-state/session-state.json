@@ -13,5 +13,6 @@
     "active": null
   },
   "turns": [],
-  "_corrupt": null
+  "_corrupt": null,
+  "_offline": false
 }
