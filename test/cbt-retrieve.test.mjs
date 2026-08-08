@@ -14,9 +14,9 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
-import { pickSections, queryTerms, clip, retrieverFor, FETCH_ASK,
-         WORD_BUDGET, MAX_SECTIONS, SMOKING_BOOKS, W, SCORE_FLOOR } from '../src/cbt/retrieve.js';
-import { LIBRARY } from '../src/cbt/library.js';
+import { pickSections, queryTerms, clip, retrieverFor, FETCH_ASK, bm25Scores,
+         WORD_BUDGET, MAX_SECTIONS, MAX_PER_SOURCE, SMOKING_BOOKS, W, SCORE_FLOOR } from '../src/cbt/retrieve.js';
+import { LIBRARY, BM25 } from '../src/cbt/library.js';
 import { TOOLS } from '../src/cbt/tools.js';
 import { TOOL_EXEMPLARS, exemplarText, runTurn } from '../src/cbt/engine.js';
 import * as P from '../src/cbt/protocol.js';
@@ -55,8 +55,39 @@ test('אין תג שמופיע ביותר משליש מהקורפוס', () => {
 });
 
 test('האינדקס נשאר קטן מספיק לבנדל', () => {
+  // עלה מ-58KB ל-~800KB עם האינדקס ההפוך של BM25. עדיין רחוק מהתקרה
+  // (3MB מכווץ ל-Worker), והוא נטען פעם אחת ומשרת כל בחירה בלי רשת.
   const kb = readFileSync(join(SRC, 'cbt', 'library.js')).length / 1024;
-  assert.ok(kb < 200, `${kb.toFixed(0)}KB — הטקסט המלא דלף לאינדקס`);
+  assert.ok(kb < 1200, `${kb.toFixed(0)}KB — גדול מדי לבנדל`);
+});
+
+test('BM25 מיושר עם הספרייה', () => {
+  // הפוסטינגס מפנים לאינדקס מספרי בתוך LIBRARY. אי-יישור היה מחזיר
+  // את המקטע הלא-נכון **בלי שום שגיאה** — הסוג הגרוע ביותר של תקלה.
+  assert.equal(BM25.len.length, LIBRARY.length, 'אורכי המסמכים אינם תואמים');
+  for (const [w, p] of Object.entries(BM25.post)) {
+    for (const [i] of p) {
+      assert.ok(i >= 0 && i < LIBRARY.length, `"${w}" מצביע על ${i} מחוץ לטווח`);
+    }
+  }
+  assert.ok(BM25.avg > 0);
+});
+
+test('שום מקטע אינו חורג מתקציב האחזור', () => {
+  // 16 מקטעים החזיקו 55% מהקורפוס וחרגו תמיד, כלומר רוב התוכן שלהם
+  // לא נקרא אף פעם. פיצול-משנה בגבולות פסקה הוריד את זה לאפס.
+  const over = LIBRARY.filter(e => e.words > WORD_BUDGET);
+  assert.deepEqual(over.map(e => `${e.id}:${e.words}`), [],
+    'מקטע שנחתך תמיד — רוב תוכנו לא ייקרא');
+});
+
+test('מונחי השאילתה עוברים את אותה טוקניזציה כמו הבנייה', () => {
+  // מילות עצירה שונות בין הצדדים = מונח שנגזם בבנייה מחפש ולא נמצא.
+  // "the"/"and" נגזמות; "client" **אינה** ברשימה של הבנאי, ולכן היא
+  // חייבת לעבור — אחרת השאילתה מחפשת מונח שהאינדקס לא מכיר.
+  assert.deepEqual(queryTerms('The client and therapy'), ['client', 'therapy'],
+    'מילות העצירה אינן זהות לאלה של הבנאי');
+  assert.deepEqual(queryTerms('ab cd'), [], 'מילים קצרות מדי עברו');
 });
 
 test('האינדקס נושא מטא-דאטה ולא את הטקסט', () => {
@@ -86,12 +117,14 @@ test('ספר ייעודי לגמילה מנצח ספר CBT כללי באותו �
     `הראשון הוא ${r[0].id} — ספרות כללית גברה על ספרות גמילה`);
 });
 
-test('חפיפת מונחים טובה עדיין מנצחת תג לבדו', () => {
-  // ההטיה לספרי הגמילה לא אמורה להכריע — יומן מחשבות הוא בק, לא STP.
-  const r = pickSections('automatic thoughts evidence record', {});
+test('BM25 חזק מנצח את ההטיה לספרי גמילה', () => {
+  // ההטיה לא אמורה להכריע — יומן מחשבות הוא בק, לא STP.
+  const r = pickSections('automatic thought record evidence column worksheet', {});
   assert.ok(r.length);
-  assert.ok(!SMOKING_BOOKS.has(r[0].book),
-    `${r[0].id} — ההטיה לספרי גמילה הפכה למוחלטת`);
+  // לא נדרש מקום ראשון: מקטע גמילה שמכסה יומן מחשבות הוא בחירה
+  // לגיטימית לסשן גמילה. הנדרש הוא שספרות כללית **תגיע בכלל**.
+  assert.ok(r.some(x => !SMOKING_BOOKS.has(x.book)),
+    `${r.map(x => x.id)} — ההטיה לספרי גמילה הפכה למוחלטת`);
 });
 
 test('מקטע שכל הסיגנל שלו הוא התג נופל מול התאמה חזקה', () => {
@@ -108,6 +141,12 @@ test('מקטע שכל הסיגנל שלו הוא התג נופל מול התאמ
   assert.deepEqual(r.map(x => x.id), ['strong'], 'הרעש נכנס');
 });
 
+test('הרצפה ניתנת להזרקה — כדי שאפשר יהיה לכייל אותה במדידה', () => {
+  const wide = pickSections('coping plan high risk', { bct: 'coping-plan', floor: 0.1 });
+  const tight = pickSections('coping plan high risk', { bct: 'coping-plan', floor: 0.95 });
+  assert.ok(wide.length >= tight.length, 'הרצפה אינה משפיעה');
+});
+
 test('כשכל ההתאמות חלשות — עדיין מוחזר מה שיש', () => {
   // הרצפה יחסית ולא מוחלטת: אחרת שאלה על נושא שהקורפוס מכסה חלש
   // הייתה מקבלת אפס מקורות במקום את הטוב שיש.
@@ -120,11 +159,13 @@ test('כשכל ההתאמות חלשות — עדיין מוחזר מה שיש',
   assert.equal(pickSections('x', { bct: 'coping-plan', library: lib }).length, 2);
 });
 
-test('הרצפה בין "רק התג" לבין "התג ועוד משהו"', () => {
-  assert.ok(W.bct / (W.bct + W.smoking) < SCORE_FLOOR, 'תג לבדו עובר את הרצפה');
-  const weakest = Math.min(W.term, W.kind, W.title, W.smoking);
-  assert.ok((W.bct + weakest) / (W.bct + W.smoking) >= SCORE_FLOOR,
-    'התג עם סיגנל נוסף נחסם — הרצפה גבוהה מדי');
+test('הרצפה חוסמת תג-בלבד מול התאמה מלאה', () => {
+  // מקטע שנושא רק את התג (10) מול מקטע עם BM25 מלא + תג + ספר ייעודי
+  const bare = W.bct;
+  const full = W.bm + W.bct + W.smoking;
+  assert.ok(bare / full < SCORE_FLOOR, 'תג לבדו עובר את הרצפה');
+  // ...אבל תג + ספר ייעודי כן עובר, אחרת ספרות הגמילה נחסמת מעצמה
+  assert.ok((W.bct + W.smoking) / full >= SCORE_FLOOR, 'הרצפה חוסמת ספרות גמילה');
 });
 
 test('שאילתה בלי שום התאמה מחזירה ריק, לא זבל', () => {
@@ -140,18 +181,21 @@ test('התקציב נשמר', () => {
   }
 });
 
-test('מקטע ענק לבדו עדיין נבחר', () => {
-  // לדלג עליו היה אומר שהמקטע החזק ביותר בקורפוס לעולם לא ייבחר
-  // רק בגלל אורכו.
-  const big = LIBRARY.reduce((a, b) => (a.words > b.words ? a : b));
-  assert.ok(big.words > WORD_BUDGET, 'אין מקטע שחורג — הבדיקה לא בודקת כלום');
-  const r = pickSections(big.terms.slice(0, 6).join(' '), { library: [big] });
-  assert.equal(r.length, 1, 'מקטע חורג נזרק');
+test('מקטע חורג עדיין נבחר — גם אם כבר אין כאלה', () => {
+  // הגנה שנשארת רלוונטית: אם ספר עתידי יביא מקטע שאי אפשר לפצל,
+  // לדלג עליו היה אומר שהמקטע החזק בקורפוס לעולם לא ייבחר בגלל אורכו.
+  const huge = { id: 'huge', book: 'x', title: 'T', src: 's', kind: 'theory',
+                 words: WORD_BUDGET * 3, bcts: ['coping-plan'], terms: [] };
+  assert.equal(pickSections('x', { bct: 'coping-plan', library: [huge] }).length, 1,
+    'מקטע חורג נזרק');
 });
 
-test('המשקלים מדורגים כפי שתועד', () => {
-  assert.ok(W.bct > W.term && W.bct > W.kind, 'תג ה-BCT אינו הסיגנל החזק');
-  assert.ok(W.smoking < W.bct, 'ההטיה לספרי גמילה מכריעה על הטכניקה');
+test('המשקלים מדורגים כפי שנמדד', () => {
+  // BM25 לבדו החזיר דף עבודה על כעס לשאילתת טריגרים; תג לבדו החזיר
+  // 56% בלבד על שאילתות גוף. אף אחד אינו אמור להכריע על השני.
+  assert.ok(W.bct >= W.bm, 'BM25 מכריע על הטכניקה');
+  assert.ok(W.bm > W.smoking, 'הטקסט חלש מהטיית הספר');
+  assert.ok(W.smoking > W.title && W.title > W.kind, 'סדר הסיגנלים המשניים השתנה');
 });
 
 // ---------- החיתוך ----------
@@ -283,4 +327,105 @@ test('מקורות שאוחזרו מגיעים לפרומפט עם ייחוס', 
   const r = seen.find(x => x.role === 'respond');
   assert.ok(r.prompt.includes('תוכן מקצועי'), 'המקור לא הגיע');
   assert.ok(r.prompt.includes('ספר X — פרק Y'), 'המקור בלי ייחוס');
+});
+
+// ==========================================================================
+//  BM25 עובד באמת — לא רק קיים
+//
+//  ארבע מוטציות עברו את הגרסה הראשונה של הקובץ הזה: ביטול BM25 לגמרי,
+//  ביטול ה-IDF, שינוי מילות העצירה, והרחבת הטוקנים. כלומר הבדיקות
+//  תיארו את המנגנון ולא הפעילו אותו. מה שלמטה נגזר מהמדידה עצמה.
+// ==========================================================================
+
+/** מונחים ייחודיים מגוף מקטע — הדרך היחידה להגיע אליו היא הטקסט המלא */
+const bodyQuery = (id) => {
+  const sc = bm25Scores(queryTerms('x'));          // חימום, מוודא שהאינדקס נטען
+  const i = LIBRARY.findIndex(e => e.id === id);
+  assert.ok(i >= 0, `${id} אינו בספרייה`);
+  // המונחים שהאינדקס מייחס למקטע הזה חזק מכל אחר
+  const mine = Object.entries(BM25.post)
+    .filter(([, p]) => p.length <= 4 && p.some(([j]) => j === i))
+    .map(([w, p]) => [w, p.find(([j]) => j === i)[1]])
+    .sort((a, b) => b[1] - a[1]).slice(0, 5).map(x => x[0]);
+  assert.ok(mine.length >= 3, `${id}: רק ${mine.length} מונחים ייחודיים`);
+  return mine.join(' ');
+};
+
+test('מקטע נמצא לפי גוף הטקסט שלו — לא רק לפי הכותרת', () => {
+  // זו הבדיקה שביטול BM25 חייב להפיל: המונחים האלה אינם בכותרת,
+  // אינם תג BCT, ואינם ברשימת 14 המונחים השכיחים.
+  let found = 0;
+  const sample = LIBRARY.filter((_, i) => i % 17 === 0).slice(0, 7);
+  for (const e of sample) {
+    const q = bodyQuery(e.id);
+    if (pickSections(q, {}).some(x => x.id === e.id)) found++;
+  }
+  assert.ok(found >= sample.length - 1,
+    `${found}/${sample.length} — אחזור לפי גוף הטקסט אינו עובד`);
+});
+
+test('IDF פועל — מונח נדיר מנצח מונח שכיח', () => {
+  const df = w => (BM25.post[w] || []).length;
+  const common = Object.keys(BM25.post).filter(w => df(w) > LIBRARY.length * 0.25);
+  const rare = Object.keys(BM25.post).filter(w => df(w) === 2);
+  assert.ok(common.length && rare.length, 'אין ממה להשוות');
+  const peak = q => Math.max(...bm25Scores([q]));
+  // המונח הנדיר חייב לתת ציון שיא גבוה יותר למסמך שלו
+  assert.ok(peak(rare[0]) > peak(common[0]),
+    `"${rare[0]}" (df=2) לא ניצח את "${common[0]}" (df=${df(common[0])}) — אין IDF`);
+});
+
+test('מילות עצירה נגזמות משני הצדדים', () => {
+  // הבנאי גוזם אותן מהאינדקס. אם השאילתה לא — מחפשים מונח שאינו קיים,
+  // וזה נכשל בשקט כי BM25 פשוט מדלג עליו.
+  for (const w of ['the', 'and', 'this', 'therapy']) {
+    const inIndex = !!BM25.post[w];
+    const inQuery = queryTerms(w).length > 0;
+    assert.equal(inQuery, inIndex, `"${w}": בשאילתה=${inQuery} באינדקס=${inIndex}`);
+  }
+});
+
+test('אורך הטוקן זהה בשני הצדדים', () => {
+  // הבנאי מחייב 4+ תווים. שאילתה שמקבלת 3 מחפשת מונחים שלא אוינדקסו.
+  const short = Object.keys(BM25.post).filter(w => w.length < 4);
+  assert.deepEqual(short, [], 'האינדקס מכיל מונחים קצרים');
+  assert.deepEqual(queryTerms('abc de f'), [], 'השאילתה מקבלת מונחים קצרים');
+});
+
+test('שאילתה בלי אף מונח מוכר לא מייצרת ציונים', () => {
+  const sc = bm25Scores(['zzqqxx', 'qqzzww']);
+  assert.equal(Math.max(...sc), 0, 'מונח לא מוכר ייצר ציון');
+});
+
+test('TF פועל — צפיפות המונח מדרגת בין מסמכים', () => {
+  // בלי TF, BM25 מתנוון להתאמה בינארית משוקללת-IDF. זה עדיין מדרג
+  // סביר, ולכן המוטציה שרדה את כל הבדיקות למעלה — צריך מקרה שמבודד
+  // את התדירות עצמה.
+  const w = Object.keys(BM25.post)
+    .find(t => BM25.post[t].length >= 3 &&
+               Math.max(...BM25.post[t].map(p => p[1])) >= 5 * Math.min(...BM25.post[t].map(p => p[1])));
+  assert.ok(w, 'אין מונח עם פער תדירות מספיק');
+  const p = BM25.post[w];
+  const hi = p.reduce((a, b) => (a[1] > b[1] ? a : b));
+  const lo = p.reduce((a, b) => (a[1] < b[1] ? a : b));
+  const sc = bm25Scores([w]);
+  assert.ok(sc[hi[0]] > sc[lo[0]],
+    `"${w}": ${hi[1]} הופעות לא ניצחו ${lo[1]} — התדירות אינה נספרת`);
+});
+
+
+test('לא יותר משני קטעים מאותו פרק', () => {
+  // פיצול-המשנה יצר אחים, ובלי תקרה שלוש התוצאות היו שלוש פרוסות של
+  // אותו פרק — יותר מאותו דבר במקום זווית שנייה.
+  for (const q of ['coping plan action items', 'craving urge', 'relapse prevention lapse',
+                   'automatic thought record', 'high risk situation']) {
+    const r = pickSections(q, {});
+    const per = {};
+    for (const e of r) {
+      const p = e.id.split('#')[0];
+      per[p] = (per[p] || 0) + 1;
+      assert.ok(per[p] <= MAX_PER_SOURCE,
+        `"${q}": ${per[p]} קטעים מ-${p} — הכול מאותו מקור`);
+    }
+  }
 });

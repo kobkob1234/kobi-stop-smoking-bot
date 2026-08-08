@@ -6,34 +6,81 @@
 //  רצה בלי אף קריאת רשת.
 export const LIBRARY = [
  {
-  "id": "beck-basics/00-introduction-to-cognitive-behavior-therapy",
+  "id": "beck-basics/00-introduction-to-cognitive-behavior-therapy#0",
   "book": "beck-basics",
-  "title": "Introduction To Cognitive Behavior Therapy",
+  "title": "Introduction To Cognitive Behavior Therapy (1/3)",
   "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
-  "kind": "exercise",
-  "words": 5520,
+  "kind": "theory",
+  "words": 1886,
   "terms": [
    "therapy",
-   "cognitive",
    "behavior",
-   "beck",
+   "cognitive",
    "treatment",
-   "thoughts",
-   "client",
-   "yourself",
+   "beck",
+   "beliefs",
+   "many",
+   "others",
    "techniques",
+   "sessions",
    "session",
+   "used",
+   "maria",
+   "specific"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "beck-basics/00-introduction-to-cognitive-behavior-therapy#1",
+  "book": "beck-basics",
+  "title": "Introduction To Cognitive Behavior Therapy (2/3)",
+  "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
+  "kind": "theory",
+  "words": 1870,
+  "terms": [
+   "beck",
+   "cognitive",
+   "therapy",
+   "judith",
    "first",
-   "therapist",
-   "skills",
-   "many"
+   "yourself",
+   "thoughts",
+   "behavior",
+   "study",
+   "depression",
+   "depressed",
+   "began",
+   "treatment",
+   "ct-r"
   ],
   "bcts": [
-   "coping-plan",
-   "relapse-prevention",
-   "prompt-commitment",
-   "check-nrt"
+   "coping-plan"
   ]
+ },
+ {
+  "id": "beck-basics/00-introduction-to-cognitive-behavior-therapy#2",
+  "book": "beck-basics",
+  "title": "Introduction To Cognitive Behavior Therapy (3/3)",
+  "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
+  "kind": "exercise",
+  "words": 1764,
+  "terms": [
+   "client",
+   "cognitive",
+   "thoughts",
+   "behavior",
+   "skills",
+   "therapy",
+   "practice",
+   "learn",
+   "techniques",
+   "treatment",
+   "therapist",
+   "yourself",
+   "like",
+   "effective"
+  ],
+  "bcts": []
  },
  {
   "id": "beck-basics/01-overview-of-treatment",
@@ -90,32 +137,111 @@ export const LIBRARY = [
   "bcts": []
  },
  {
-  "id": "beck-basics/03-helpless-core-beliefs",
+  "id": "beck-basics/03-helpless-core-beliefs#0",
   "book": "beck-basics",
-  "title": "Helpless Core Beliefs",
+  "title": "Helpless Core Beliefs (1/4)",
   "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
-  "kind": "exercise",
-  "words": 7384,
+  "kind": "theory",
+  "words": 2016,
   "terms": [
    "beliefs",
    "core",
    "belief",
-   "automatic",
-   "behavior",
-   "cognitive",
-   "thoughts",
-   "thought",
-   "data",
-   "conceptualization",
-   "situation",
-   "help",
    "negative",
-   "client"
+   "data",
+   "thoughts",
+   "reader",
+   "positive",
+   "cognitive",
+   "schema",
+   "intermediate",
+   "automatic",
+   "information",
+   "example"
   ],
   "bcts": [
-   "identify-triggers",
+   "identify-triggers"
+  ]
+ },
+ {
+  "id": "beck-basics/03-helpless-core-beliefs#1",
+  "book": "beck-basics",
+  "title": "Helpless Core Beliefs (2/4)",
+  "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
+  "kind": "theory",
+  "words": 2103,
+  "terms": [
+   "became",
+   "himself",
+   "beliefs",
+   "belief",
+   "work",
+   "depression",
+   "incompetent",
+   "negative",
+   "thoughts",
+   "core",
+   "home",
+   "perceived",
+   "doing",
+   "wife"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "beck-basics/03-helpless-core-beliefs#2",
+  "book": "beck-basics",
+  "title": "Helpless Core Beliefs (3/4)",
+  "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
+  "kind": "exercise",
+  "words": 2199,
+  "terms": [
+   "automatic",
+   "thought",
+   "behavior",
+   "cognitive",
+   "beliefs",
+   "situation",
+   "core",
+   "adaptive",
+   "current",
+   "client",
+   "emotions",
+   "thoughts",
+   "important",
+   "meaning"
+  ],
+  "bcts": [
    "coping-plan",
-   "prompt-commitment"
+   "prompt-commitment",
+   "identify-triggers"
+  ]
+ },
+ {
+  "id": "beck-basics/03-helpless-core-beliefs#3",
+  "book": "beck-basics",
+  "title": "Helpless Core Beliefs (4/4)",
+  "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
+  "kind": "theory",
+  "words": 1066,
+  "terms": [
+   "conceptualization",
+   "client",
+   "i'll",
+   "data",
+   "beliefs",
+   "rules",
+   "often",
+   "strategies",
+   "present",
+   "attitudes",
+   "assumptions",
+   "core",
+   "cognitive",
+   "coping"
+  ],
+  "bcts": [
+   "coping-plan"
   ]
  },
  {
@@ -303,31 +429,112 @@ export const LIBRARY = [
   ]
  },
  {
-  "id": "beck-basics/11-mood-check",
+  "id": "beck-basics/11-mood-check#0",
   "book": "beck-basics",
-  "title": "Mood Check",
+  "title": "Mood Check (1/4)",
+  "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
+  "kind": "theory",
+  "words": 2181,
+  "terms": [
+   "judith",
+   "session",
+   "week",
+   "therapy",
+   "mood",
+   "important",
+   "agenda",
+   "like",
+   "plan",
+   "time",
+   "beck",
+   "you've",
+   "action",
+   "check"
+  ],
+  "bcts": [
+   "check-nrt",
+   "coping-plan"
+  ]
+ },
+ {
+  "id": "beck-basics/11-mood-check#1",
+  "book": "beck-basics",
+  "title": "Mood Check (2/4)",
+  "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
+  "kind": "theory",
+  "words": 1990,
+  "terms": [
+   "judith",
+   "depressed",
+   "therapy",
+   "depression",
+   "like",
+   "next",
+   "think",
+   "just",
+   "thinking",
+   "doing",
+   "really",
+   "okay",
+   "thoughts",
+   "makes"
+  ],
+  "bcts": [
+   "coping-plan"
+  ]
+ },
+ {
+  "id": "beck-basics/11-mood-check#2",
+  "book": "beck-basics",
+  "title": "Mood Check (3/4)",
   "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
   "kind": "exercise",
-  "words": 8701,
+  "words": 2159,
   "terms": [
    "judith",
    "good",
    "think",
-   "session",
-   "therapy",
+   "thoughts",
+   "feel",
+   "important",
+   "thought",
    "like",
    "want",
-   "depressed",
-   "week",
-   "goals",
-   "thought",
-   "thoughts",
-   "important",
-   "just"
+   "automatic",
+   "just",
+   "true",
+   "aspirations",
+   "really"
   ],
   "bcts": [
-   "coping-plan",
-   "check-nrt"
+   "coping-plan"
+  ]
+ },
+ {
+  "id": "beck-basics/11-mood-check#3",
+  "book": "beck-basics",
+  "title": "Mood Check (4/4)",
+  "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
+  "kind": "exercise",
+  "words": 2371,
+  "terms": [
+   "goals",
+   "judith",
+   "session",
+   "think",
+   "want",
+   "good",
+   "goal",
+   "therapy",
+   "setting",
+   "like",
+   "know",
+   "week",
+   "doing",
+   "thoughts"
+  ],
+  "bcts": [
+   "coping-plan"
   ]
  },
  {
@@ -409,8 +616,8 @@ export const LIBRARY = [
    "doing"
   ],
   "bcts": [
-   "change-routine",
-   "coping-plan"
+   "coping-plan",
+   "change-routine"
   ]
  },
  {
@@ -441,27 +648,108 @@ export const LIBRARY = [
   ]
  },
  {
-  "id": "beck-basics/16-types-of-action-plan-items",
+  "id": "beck-basics/16-types-of-action-plan-items#0",
   "book": "beck-basics",
-  "title": "Types Of Action Plan Items",
+  "title": "Types Of Action Plan Items (1/4)",
   "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
   "kind": "exercise",
-  "words": 7708,
+  "words": 2168,
+  "terms": [
+   "action",
+   "plans",
+   "plan",
+   "session",
+   "therapy",
+   "you'll",
+   "thoughts",
+   "client",
+   "important",
+   "suggest",
+   "help",
+   "think",
+   "themselves",
+   "doing"
+  ],
+  "bcts": [
+   "coping-plan"
+  ]
+ },
+ {
+  "id": "beck-basics/16-types-of-action-plan-items#1",
+  "book": "beck-basics",
+  "title": "Types Of Action Plan Items (2/4)",
+  "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
+  "kind": "theory",
+  "words": 2136,
+  "terms": [
+   "action",
+   "maria",
+   "plan",
+   "judith",
+   "plans",
+   "just",
+   "sure",
+   "help",
+   "know",
+   "next",
+   "okay",
+   "think",
+   "doing",
+   "call"
+  ],
+  "bcts": [
+   "coping-plan"
+  ]
+ },
+ {
+  "id": "beck-basics/16-types-of-action-plan-items#2",
+  "book": "beck-basics",
+  "title": "Types Of Action Plan Items (3/4)",
+  "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
+  "kind": "exercise",
+  "words": 2147,
   "terms": [
    "action",
    "plan",
    "plans",
-   "maria",
    "judith",
    "doing",
-   "session",
-   "therapy",
-   "help",
-   "think",
-   "client",
+   "maria",
+   "week",
    "time",
+   "client",
+   "therapy",
+   "good",
+   "problem",
+   "session",
+   "make"
+  ],
+  "bcts": [
+   "coping-plan"
+  ]
+ },
+ {
+  "id": "beck-basics/16-types-of-action-plan-items#3",
+  "book": "beck-basics",
+  "title": "Types Of Action Plan Items (4/4)",
+  "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
+  "kind": "exercise",
+  "words": 1257,
+  "terms": [
+   "action",
+   "plan",
+   "plans",
+   "problem",
+   "doing",
+   "yourself",
+   "maria",
    "thoughts",
-   "week"
+   "judith",
+   "minutes",
+   "getting",
+   "problems",
+   "myself",
+   "going"
   ],
   "bcts": [
    "coping-plan"
@@ -597,27 +885,27 @@ export const LIBRARY = [
   ]
  },
  {
-  "id": "beck-basics/22-structuring-sessions",
+  "id": "beck-basics/22-structuring-sessions#0",
   "book": "beck-basics",
-  "title": "Structuring Sessions",
+  "title": "Structuring Sessions (1/3)",
   "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
   "kind": "exercise",
-  "words": 5846,
+  "words": 2163,
   "terms": [
-   "judith",
    "session",
-   "week",
-   "agenda",
-   "action",
-   "plan",
-   "therapy",
-   "think",
-   "important",
-   "you'll",
-   "sessions",
    "mood",
-   "good",
-   "client"
+   "agenda",
+   "therapy",
+   "sessions",
+   "plan",
+   "week",
+   "behavior",
+   "action",
+   "judith",
+   "better",
+   "check",
+   "notes",
+   "feeling"
   ],
   "bcts": [
    "coping-plan",
@@ -626,27 +914,135 @@ export const LIBRARY = [
   ]
  },
  {
-  "id": "beck-basics/23-problems-in",
+  "id": "beck-basics/22-structuring-sessions#1",
   "book": "beck-basics",
-  "title": "Problems In",
+  "title": "Structuring Sessions (2/3)",
   "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
-  "kind": "exercise",
-  "words": 5874,
+  "kind": "theory",
+  "words": 2004,
+  "terms": [
+   "judith",
+   "week",
+   "agenda",
+   "good",
+   "session",
+   "okay",
+   "positive",
+   "you'll",
+   "yeah",
+   "action",
+   "time",
+   "important",
+   "plan",
+   "goal"
+  ],
+  "bcts": [
+   "coping-plan"
+  ]
+ },
+ {
+  "id": "beck-basics/22-structuring-sessions#2",
+  "book": "beck-basics",
+  "title": "Structuring Sessions (3/3)",
+  "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
+  "kind": "theory",
+  "words": 1679,
+  "terms": [
+   "judith",
+   "thought",
+   "think",
+   "action",
+   "session",
+   "mail",
+   "summarize",
+   "plan",
+   "important",
+   "summary",
+   "make",
+   "automatic",
+   "true",
+   "pile"
+  ],
+  "bcts": [
+   "coping-plan"
+  ]
+ },
+ {
+  "id": "beck-basics/23-problems-in#0",
+  "book": "beck-basics",
+  "title": "Problems In (1/3)",
+  "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
+  "kind": "dialogue",
+  "words": 2191,
+  "terms": [
+   "client",
+   "session",
+   "structure",
+   "problems",
+   "sessions",
+   "maria",
+   "therapy",
+   "forms",
+   "structuring",
+   "problem",
+   "therapist",
+   "judith",
+   "time",
+   "know"
+  ],
+  "bcts": [
+   "coping-plan"
+  ]
+ },
+ {
+  "id": "beck-basics/23-problems-in#1",
+  "book": "beck-basics",
+  "title": "Problems In (2/3)",
+  "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
+  "kind": "dialogue",
+  "words": 2133,
+  "terms": [
+   "maria",
+   "agenda",
+   "week",
+   "judith",
+   "like",
+   "just",
+   "mood",
+   "better",
+   "help",
+   "work",
+   "want",
+   "know",
+   "session",
+   "think"
+  ],
+  "bcts": [
+   "coping-plan"
+  ]
+ },
+ {
+  "id": "beck-basics/23-problems-in#2",
+  "book": "beck-basics",
+  "title": "Problems In (3/3)",
+  "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
+  "kind": "theory",
+  "words": 1550,
   "terms": [
    "session",
-   "maria",
+   "problem",
    "client",
    "agenda",
-   "problem",
-   "judith",
-   "problems",
-   "week",
-   "sessions",
-   "therapy",
    "time",
-   "structure",
-   "help",
-   "just"
+   "problems",
+   "next",
+   "think",
+   "therapy",
+   "issue",
+   "thoughts",
+   "judith",
+   "goal",
+   "help"
   ],
   "bcts": [
    "coping-plan"
@@ -855,31 +1251,79 @@ export const LIBRARY = [
   "bcts": []
  },
  {
-  "id": "beck-basics/32-clinical-tips",
+  "id": "beck-basics/32-clinical-tips#0",
   "book": "beck-basics",
-  "title": "Clinical     Tips",
+  "title": "Clinical     Tips (1/3)",
   "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
-  "kind": "exercise",
-  "words": 4997,
+  "kind": "dialogue",
+  "words": 2194,
+  "terms": [
+   "thought",
+   "automatic",
+   "judith",
+   "want",
+   "margaret",
+   "questions",
+   "client",
+   "evidence",
+   "thoughts",
+   "situation",
+   "doesn",
+   "think",
+   "hear",
+   "much"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "beck-basics/32-clinical-tips#1",
+  "book": "beck-basics",
+  "title": "Clinical     Tips (2/3)",
+  "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
+  "kind": "theory",
+  "words": 2132,
   "terms": [
    "automatic",
-   "thought",
+   "thoughts",
+   "example",
+   "thinking",
+   "judith",
+   "angry",
+   "help",
+   "think",
+   "able",
+   "make",
+   "questions",
+   "called",
+   "know",
+   "thought"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "beck-basics/32-clinical-tips#2",
+  "book": "beck-basics",
+  "title": "Clinical     Tips (3/3)",
+  "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
+  "kind": "exercise",
+  "words": 671,
+  "terms": [
    "judith",
    "thoughts",
+   "automatic",
+   "thought",
    "want",
-   "questions",
+   "action",
+   "else",
    "think",
-   "help",
-   "client",
-   "situation",
-   "thinking",
-   "example",
-   "evidence",
-   "good"
+   "part",
+   "time",
+   "just",
+   "need",
+   "acceptance",
+   "valued"
   ],
-  "bcts": [
-   "coping-plan"
-  ]
+  "bcts": []
  },
  {
   "id": "beck-basics/33-responding-10-automatic-thoughts",
@@ -1140,31 +1584,81 @@ export const LIBRARY = [
   ]
  },
  {
-  "id": "beck-basics/43-modifying-maladaptive-beliefs",
+  "id": "beck-basics/43-modifying-maladaptive-beliefs#0",
   "book": "beck-basics",
-  "title": "Modifying Maladaptive Beliefs",
+  "title": "Modifying Maladaptive Beliefs (1/3)",
   "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
   "kind": "exercise",
-  "words": 4630,
+  "words": 2176,
   "terms": [
-   "judith",
-   "beliefs",
    "help",
+   "beliefs",
+   "judith",
    "belief",
-   "incompetent",
-   "because",
-   "well",
    "therapy",
-   "intellectual",
-   "failure",
-   "think",
    "change",
+   "chart",
+   "cognitive",
+   "techniques",
+   "incompetent",
+   "asking",
+   "competence",
    "people",
-   "techniques"
+   "think"
   ],
   "bcts": [
    "coping-plan"
   ]
+ },
+ {
+  "id": "beck-basics/43-modifying-maladaptive-beliefs#1",
+  "book": "beck-basics",
+  "title": "Modifying Maladaptive Beliefs (2/3)",
+  "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
+  "kind": "theory",
+  "words": 2063,
+  "terms": [
+   "judith",
+   "failure",
+   "incompetent",
+   "well",
+   "because",
+   "belief",
+   "depressed",
+   "intellectual",
+   "help",
+   "successful",
+   "guess",
+   "like",
+   "true",
+   "part"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "beck-basics/43-modifying-maladaptive-beliefs#2",
+  "book": "beck-basics",
+  "title": "Modifying Maladaptive Beliefs (3/3)",
+  "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
+  "kind": "exercise",
+  "words": 391,
+  "terms": [
+   "beliefs",
+   "core",
+   "belief",
+   "time",
+   "asked",
+   "memories",
+   "meaning",
+   "negative",
+   "maria",
+   "restructuring",
+   "modify",
+   "techniques",
+   "adaptive",
+   "modifying"
+  ],
+  "bcts": []
  },
  {
   "id": "beck-basics/44-additional-techniques",
@@ -1192,32 +1686,81 @@ export const LIBRARY = [
   "bcts": []
  },
  {
-  "id": "beck-basics/45-skills-training",
+  "id": "beck-basics/45-skills-training#0",
   "book": "beck-basics",
-  "title": "Skills Training",
+  "title": "Skills Training (1/3)",
   "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
   "kind": "exercise",
-  "words": 4467,
+  "words": 2098,
+  "terms": [
+   "problem",
+   "step",
+   "help",
+   "judith",
+   "you'll",
+   "disadvantages",
+   "advantages",
+   "volunteering",
+   "make",
+   "good",
+   "want",
+   "think",
+   "problems",
+   "okay"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "beck-basics/45-skills-training#1",
+  "book": "beck-basics",
+  "title": "Skills Training (2/3)",
+  "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
+  "kind": "dialogue",
+  "words": 2027,
+  "terms": [
+   "judith",
+   "exposure",
+   "much",
+   "activity",
+   "anxiety",
+   "avoidance",
+   "exposures",
+   "want",
+   "time",
+   "feared",
+   "situation",
+   "behavior",
+   "work",
+   "safety"
+  ],
+  "bcts": [
+   "identify-triggers"
+  ]
+ },
+ {
+  "id": "beck-basics/45-skills-training#2",
+  "book": "beck-basics",
+  "title": "Skills Training (3/3)",
+  "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
+  "kind": "theory",
+  "words": 342,
   "terms": [
    "judith",
    "maria",
-   "problem",
-   "want",
-   "step",
-   "much",
-   "like",
-   "think",
-   "help",
-   "you'll",
-   "make",
-   "good",
-   "exposure",
-   "skills"
+   "yourself",
+   "compare",
+   "people",
+   "legitimate",
+   "reason",
+   "depressed",
+   "before",
+   "doing",
+   "example",
+   "push",
+   "tired",
+   "depression"
   ],
-  "bcts": [
-   "identify-triggers",
-   "coping-plan"
-  ]
+  "bcts": []
  },
  {
   "id": "beck-basics/46-clinical-tips",
@@ -1270,31 +1813,56 @@ export const LIBRARY = [
   "bcts": []
  },
  {
-  "id": "beck-basics/48-inducing-positive-images",
+  "id": "beck-basics/48-inducing-positive-images#0",
   "book": "beck-basics",
-  "title": "Inducing Positive Images",
+  "title": "Inducing Positive Images (1/2)",
   "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
   "kind": "exercise",
-  "words": 3601,
+  "words": 2196,
   "terms": [
    "judith",
    "images",
    "image",
    "imagine",
-   "okay",
-   "techniques",
-   "really",
-   "help",
+   "doing",
    "yourself",
    "like",
-   "doing",
-   "feeling",
-   "imagery",
-   "positive"
+   "positive",
+   "hard",
+   "yeah",
+   "you're",
+   "okay",
+   "think",
+   "first"
   ],
   "bcts": [
    "coping-plan"
   ]
+ },
+ {
+  "id": "beck-basics/48-inducing-positive-images#1",
+  "book": "beck-basics",
+  "title": "Inducing Positive Images (2/2)",
+  "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
+  "kind": "exercise",
+  "words": 1405,
+  "terms": [
+   "judith",
+   "image",
+   "imagine",
+   "maria",
+   "techniques",
+   "okay",
+   "feeling",
+   "really",
+   "help",
+   "images",
+   "better",
+   "imagery",
+   "time",
+   "future"
+  ],
+  "bcts": []
  },
  {
   "id": "beck-basics/49-termination-and",
@@ -1510,35 +2078,170 @@ export const LIBRARY = [
   "bcts": []
  },
  {
-  "id": "beck-basics/57-appendix-d",
+  "id": "beck-basics/57-appendix-d#0",
   "book": "beck-basics",
-  "title": "Appendix D",
+  "title": "Appendix D (1/6)",
+  "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
+  "kind": "theory",
+  "words": 1932,
+  "terms": [
+   "self",
+   "judith",
+   "younger",
+   "really",
+   "belief",
+   "like",
+   "much",
+   "older",
+   "meaning",
+   "early",
+   "experience",
+   "play",
+   "said",
+   "just"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "beck-basics/57-appendix-d#1",
+  "book": "beck-basics",
+  "title": "Appendix D (2/6)",
   "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
   "kind": "exercise",
-  "words": 11034,
+  "words": 1808,
   "terms": [
    "therapy",
    "cognitive",
-   "beliefs",
-   "thoughts",
-   "session",
    "beck",
-   "automatic",
    "york",
-   "identifying",
-   "treatment",
-   "problems",
+   "psychotherapy",
+   "disorders",
+   "anxiety",
+   "behavioral",
    "clinical",
-   "conceptualization",
-   "dysfunctional"
+   "psychology",
+   "behavior",
+   "research",
+   "depression",
+   "review"
+  ],
+  "bcts": [
+   "check-nrt"
+  ]
+ },
+ {
+  "id": "beck-basics/57-appendix-d#2",
+  "book": "beck-basics",
+  "title": "Appendix D (3/6)",
+  "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
+  "kind": "exercise",
+  "words": 2084,
+  "terms": [
+   "therapy",
+   "cognitive",
+   "york",
+   "psychotherapy",
+   "treatment",
+   "clinical",
+   "behavioral",
+   "review",
+   "research",
+   "depression",
+   "psychology",
+   "case",
+   "behavior",
+   "personality"
+  ],
+  "bcts": [
+   "summary-and-homework",
+   "check-nrt"
+  ]
+ },
+ {
+  "id": "beck-basics/57-appendix-d#3",
+  "book": "beck-basics",
+  "title": "Appendix D (4/6)",
+  "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
+  "kind": "exercise",
+  "words": 1978,
+  "terms": [
+   "session",
+   "beliefs",
+   "identifying",
+   "cognitive",
+   "thoughts",
+   "problems",
+   "therapy",
+   "action",
+   "sessions",
+   "plan",
+   "setting",
+   "agenda",
+   "automatic",
+   "difficulties"
   ],
   "bcts": [
    "coping-plan",
    "change-routine",
-   "check-nrt",
+   "check-nrt"
+  ]
+ },
+ {
+  "id": "beck-basics/57-appendix-d#4",
+  "book": "beck-basics",
+  "title": "Appendix D (5/6)",
+  "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
+  "kind": "exercise",
+  "words": 1908,
+  "terms": [
+   "beliefs",
+   "cognitive",
+   "identifying",
+   "thoughts",
+   "problems",
+   "automatic",
+   "dysfunctional",
+   "session",
+   "negative",
+   "conceptualization",
+   "importance",
+   "therapy",
+   "core",
+   "using"
+  ],
+  "bcts": [
+   "coping-plan",
+   "change-routine",
+   "check-nrt"
+  ]
+ },
+ {
+  "id": "beck-basics/57-appendix-d#5",
+  "book": "beck-basics",
+  "title": "Appendix D (6/6)",
+  "src": "Cognitive Behavior Therapy: Basics and Beyond — Judith S. Beck",
+  "kind": "exercise",
+  "words": 1324,
+  "terms": [
+   "automatic",
+   "thoughts",
+   "therapy",
+   "cognitive",
+   "using",
+   "beliefs",
+   "problems",
+   "questions",
+   "treatment",
+   "conceptualization",
+   "session",
+   "therapeutic",
+   "clinical",
+   "dysfunctional"
+  ],
+  "bcts": [
    "relapse-prevention",
-   "summary-and-homework",
-   "identify-triggers"
+   "identify-triggers",
+   "coping-plan"
   ]
  },
  {
@@ -1567,100 +2270,414 @@ export const LIBRARY = [
   "bcts": []
  },
  {
-  "id": "green-lynn-smoking/00-2-why-hypnosis-rationale-and-supporting-evidence",
+  "id": "green-lynn-smoking/00-2-why-hypnosis-rationale-and-supporting-evidence#0",
   "book": "green-lynn-smoking",
-  "title": "2. Why Hypnosis? Rationale and Supporting Evidence",
+  "title": "2. Why Hypnosis? Rationale and Supporting Evidence (1/3)",
   "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
-  "kind": "exercise",
-  "words": 5496,
+  "kind": "theory",
+  "words": 2047,
   "terms": [
    "hypnosis",
    "smoking",
    "treatment",
-   "cessation",
-   "success",
    "studies",
-   "rates",
-   "participants",
-   "reported",
-   "behavioral",
-   "counseling",
-   "self",
+   "cessation",
    "lynn",
-   "abstinence"
+   "green",
+   "evidence",
+   "kirsch",
+   "meta",
+   "suggestions",
+   "approach",
+   "participants",
+   "self"
+  ],
+  "bcts": [
+   "check-nrt"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/00-2-why-hypnosis-rationale-and-supporting-evidence#1",
+  "book": "green-lynn-smoking",
+  "title": "2. Why Hypnosis? Rationale and Supporting Evidence (2/3)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "exercise",
+  "words": 2198,
+  "terms": [
+   "smoking",
+   "success",
+   "cessation",
+   "hypnosis",
+   "rates",
+   "studies",
+   "treatment",
+   "counseling",
+   "nicotine",
+   "reported",
+   "rate",
+   "interventions",
+   "across",
+   "trials"
   ],
   "bcts": [
    "check-nrt",
-   "discuss-cravings",
    "discuss-withdrawal",
    "smoking-contacts",
-   "relapse-prevention",
+   "discuss-cravings",
    "assess-dependence"
   ]
  },
  {
-  "id": "green-lynn-smoking/01-3-before-you-start-tips-for-facilitators",
+  "id": "green-lynn-smoking/00-2-why-hypnosis-rationale-and-supporting-evidence#2",
   "book": "green-lynn-smoking",
-  "title": "3. Before You Start: Tips for Facilitators",
+  "title": "2. Why Hypnosis? Rationale and Supporting Evidence (3/3)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "exercise",
+  "words": 1251,
+  "terms": [
+   "hypnosis",
+   "participants",
+   "smoking",
+   "treatment",
+   "behavioral",
+   "group",
+   "program",
+   "self",
+   "based",
+   "abstinence",
+   "reported",
+   "rates",
+   "carmody",
+   "report"
+  ],
+  "bcts": [
+   "relapse-prevention",
+   "check-nrt",
+   "change-routine",
+   "prompt-commitment",
+   "discuss-cravings"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/01-3-before-you-start-tips-for-facilitators#0",
+  "book": "green-lynn-smoking",
+  "title": "3. Before You Start: Tips for Facilitators (1/3)",
   "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
   "kind": "theory",
-  "words": 6520,
+  "words": 2117,
   "terms": [
    "smoking",
-   "participants",
    "smoke",
-   "stop",
    "change",
    "program",
-   "facilitators",
-   "motivation",
+   "participants",
+   "treatment",
+   "strategies",
+   "stop",
+   "miller",
+   "questions",
    "goal",
-   "urge",
-   "reduction",
    "cessation",
    "self",
-   "life"
+   "free"
   ],
   "bcts": [
    "discuss-cravings",
    "assess-readiness",
-   "smoking-contacts",
    "identify-triggers",
-   "not-a-puff",
-   "prompt-commitment"
-  ]
- },
- {
-  "id": "green-lynn-smoking/02-4-beginning-the-program-the-first-treatment-session",
-  "book": "green-lynn-smoking",
-  "title": "4. Beginning the Program: The First Treatment Session",
-  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
-  "kind": "exercise",
-  "words": 15352,
-  "terms": [
-   "smoking",
-   "program",
-   "participants",
-   "stop",
-   "hypnosis",
-   "smoke",
-   "first",
-   "people",
-   "goal",
-   "time",
-   "session",
-   "winning",
-   "edge",
-   "urge"
-  ],
-  "bcts": [
-   "discuss-cravings",
-   "check-nrt",
-   "identify-triggers",
-   "relapse-prevention",
    "prompt-commitment",
    "smoking-contacts"
   ]
+ },
+ {
+  "id": "green-lynn-smoking/01-3-before-you-start-tips-for-facilitators#1",
+  "book": "green-lynn-smoking",
+  "title": "3. Before You Start: Tips for Facilitators (2/3)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "theory",
+  "words": 2125,
+  "terms": [
+   "smoking",
+   "participants",
+   "reduction",
+   "stop",
+   "motivation",
+   "change",
+   "goal",
+   "facilitators",
+   "cessation",
+   "readiness",
+   "self",
+   "abstinence",
+   "people",
+   "support"
+  ],
+  "bcts": [
+   "assess-readiness",
+   "smoking-contacts",
+   "not-a-puff",
+   "discuss-cravings"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/01-3-before-you-start-tips-for-facilitators#2",
+  "book": "green-lynn-smoking",
+  "title": "3. Before You Start: Tips for Facilitators (3/3)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "theory",
+  "words": 2278,
+  "terms": [
+   "smoking",
+   "participants",
+   "urge",
+   "smoke",
+   "stop",
+   "life",
+   "facilitators",
+   "program",
+   "stress",
+   "change",
+   "time",
+   "habit",
+   "motivation",
+   "often"
+  ],
+  "bcts": [
+   "discuss-cravings",
+   "identify-triggers",
+   "prompt-commitment",
+   "assess-readiness"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/02-4-beginning-the-program-the-first-treatment-session#0",
+  "book": "green-lynn-smoking",
+  "title": "4. Beginning the Program: The First Treatment Session (1/8)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "theory",
+  "words": 2155,
+  "terms": [
+   "program",
+   "smoking",
+   "first",
+   "participants",
+   "session",
+   "winning",
+   "edge",
+   "provide",
+   "handouts",
+   "behavioral",
+   "learn",
+   "each",
+   "trainer",
+   "materials"
+  ],
+  "bcts": [
+   "objective-verification",
+   "check-nrt"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/02-4-beginning-the-program-the-first-treatment-session#1",
+  "book": "green-lynn-smoking",
+  "title": "4. Beginning the Program: The First Treatment Session (2/8)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "exercise",
+  "words": 1755,
+  "terms": [
+   "smoking",
+   "program",
+   "number",
+   "people",
+   "nicotine",
+   "help",
+   "smoke",
+   "stop",
+   "participants",
+   "after",
+   "first",
+   "used",
+   "health",
+   "cigarettes"
+  ],
+  "bcts": [
+   "check-nrt",
+   "discuss-withdrawal",
+   "discuss-cravings"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/02-4-beginning-the-program-the-first-treatment-session#2",
+  "book": "green-lynn-smoking",
+  "title": "4. Beginning the Program: The First Treatment Session (3/8)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "theory",
+  "words": 2175,
+  "terms": [
+   "smoking",
+   "stop",
+   "reasons",
+   "participants",
+   "program",
+   "goal",
+   "support",
+   "list",
+   "stopping",
+   "friend",
+   "think",
+   "know",
+   "people",
+   "treatment"
+  ],
+  "bcts": [
+   "prompt-commitment",
+   "smoking-contacts",
+   "identify-triggers"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/02-4-beginning-the-program-the-first-treatment-session#3",
+  "book": "green-lynn-smoking",
+  "title": "4. Beginning the Program: The First Treatment Session (4/8)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "exercise",
+  "words": 2196,
+  "terms": [
+   "smoking",
+   "weight",
+   "stop",
+   "participants",
+   "gain",
+   "people",
+   "after",
+   "program",
+   "yourself",
+   "smoke",
+   "effects",
+   "time",
+   "nonsmoker",
+   "goal"
+  ],
+  "bcts": [
+   "discuss-cravings",
+   "discuss-withdrawal",
+   "review-progress",
+   "identify-triggers",
+   "objective-verification"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/02-4-beginning-the-program-the-first-treatment-session#4",
+  "book": "green-lynn-smoking",
+  "title": "4. Beginning the Program: The First Treatment Session (5/8)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "exercise",
+  "words": 2100,
+  "terms": [
+   "smoking",
+   "smoke",
+   "program",
+   "mindfulness",
+   "urge",
+   "change",
+   "exercise",
+   "help",
+   "good",
+   "feelings",
+   "time",
+   "keep",
+   "yourself",
+   "goal"
+  ],
+  "bcts": [
+   "discuss-cravings",
+   "identify-triggers",
+   "change-routine"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/02-4-beginning-the-program-the-first-treatment-session#5",
+  "book": "green-lynn-smoking",
+  "title": "4. Beginning the Program: The First Treatment Session (6/8)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "exercise",
+  "words": 2172,
+  "terms": [
+   "urge",
+   "smoking",
+   "participants",
+   "smoke",
+   "something",
+   "yourself",
+   "reward",
+   "rewards",
+   "come",
+   "program",
+   "back",
+   "monster",
+   "talk",
+   "first"
+  ],
+  "bcts": [
+   "discuss-cravings",
+   "relapse-prevention",
+   "high-risk-ahead",
+   "smoking-contacts",
+   "identify-triggers"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/02-4-beginning-the-program-the-first-treatment-session#6",
+  "book": "green-lynn-smoking",
+  "title": "4. Beginning the Program: The First Treatment Session (7/8)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "exercise",
+  "words": 2173,
+  "terms": [
+   "hypnosis",
+   "program",
+   "smoking",
+   "time",
+   "people",
+   "participants",
+   "smoke",
+   "first",
+   "listen",
+   "green",
+   "stop",
+   "give",
+   "winning",
+   "edge"
+  ],
+  "bcts": [
+   "relapse-prevention",
+   "discuss-cravings"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/02-4-beginning-the-program-the-first-treatment-session#7",
+  "book": "green-lynn-smoking",
+  "title": "4. Beginning the Program: The First Treatment Session (8/8)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "exercise",
+  "words": 626,
+  "terms": [
+   "hypnosis",
+   "program",
+   "help",
+   "suggestions",
+   "smoking",
+   "self",
+   "people",
+   "stop",
+   "experience",
+   "practice",
+   "control",
+   "yourself",
+   "good",
+   "winning"
+  ],
+  "bcts": []
  },
  {
   "id": "green-lynn-smoking/03-5-interview-with-a-coping-model-and-self-hypnosis-script-1",
@@ -1692,67 +2709,182 @@ export const LIBRARY = [
   ]
  },
  {
-  "id": "green-lynn-smoking/04-6-handouts-and-worksheets-to-accompany-session-1",
+  "id": "green-lynn-smoking/04-6-handouts-and-worksheets-to-accompany-session-1#0",
   "book": "green-lynn-smoking",
-  "title": "6. Handouts and Worksheets to Accompany Session 1",
+  "title": "6. Handouts and Worksheets to Accompany Session 1 (1/2)",
   "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
   "kind": "exercise",
-  "words": 4005,
+  "words": 2186,
   "terms": [
    "smoking",
+   "smoke",
    "session",
    "stop",
-   "smoke",
    "people",
-   "number",
+   "reasons",
+   "feel",
    "hypnosis",
-   "date",
+   "participants",
    "handouts",
    "worksheets",
-   "feel",
-   "accompany",
-   "program",
-   "times"
+   "goal",
+   "reward",
+   "accompany"
   ],
   "bcts": [
-   "discuss-cravings",
    "prompt-commitment",
    "objective-verification",
    "review-progress",
    "identify-triggers",
-   "smoking-contacts"
+   "smoking-contacts",
+   "discuss-cravings"
   ]
  },
  {
-  "id": "green-lynn-smoking/05-7-completing-the-program-the-second-treatment-session",
+  "id": "green-lynn-smoking/04-6-handouts-and-worksheets-to-accompany-session-1#1",
   "book": "green-lynn-smoking",
-  "title": "7. Completing the Program: The Second Treatment Session",
+  "title": "6. Handouts and Worksheets to Accompany Session 1 (2/2)",
   "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
   "kind": "exercise",
-  "words": 6525,
+  "words": 1819,
   "terms": [
    "smoking",
-   "self",
-   "yourself",
-   "hypnosis",
-   "smoke",
-   "nonsmoker",
-   "urge",
-   "life",
+   "stop",
    "session",
+   "date",
+   "people",
+   "number",
+   "after",
+   "weight",
+   "smoke",
+   "everyone",
+   "times",
+   "week",
+   "cigs",
+   "learning"
+  ],
+  "bcts": [
+   "discuss-cravings",
+   "review-progress",
+   "objective-verification"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/05-7-completing-the-program-the-second-treatment-session#0",
+  "book": "green-lynn-smoking",
+  "title": "7. Completing the Program: The Second Treatment Session (1/4)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "exercise",
+  "words": 2044,
+  "terms": [
    "participants",
+   "smoking",
+   "second",
+   "week",
+   "session",
+   "program",
+   "hypnosis",
+   "treatment",
+   "smoke",
+   "self",
+   "group",
+   "stop",
+   "nicotine",
+   "reduce"
+  ],
+  "bcts": [
+   "check-nrt",
+   "review-progress",
+   "objective-verification",
+   "discuss-cravings",
+   "identify-triggers"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/05-7-completing-the-program-the-second-treatment-session#1",
+  "book": "green-lynn-smoking",
+  "title": "7. Completing the Program: The Second Treatment Session (2/4)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "theory",
+  "words": 1966,
+  "terms": [
+   "nonsmoker",
+   "become",
+   "hypnosis",
+   "self",
+   "experience",
+   "just",
+   "life",
+   "like",
+   "intention",
+   "smoke",
+   "each",
+   "aware",
+   "deeper",
+   "smoking"
+  ],
+  "bcts": [
+   "discuss-cravings",
+   "identify-triggers",
+   "prompt-commitment"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/05-7-completing-the-program-the-second-treatment-session#2",
+  "book": "green-lynn-smoking",
+  "title": "7. Completing the Program: The Second Treatment Session (3/4)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "exercise",
+  "words": 1947,
+  "terms": [
+   "yourself",
+   "urge",
+   "smoking",
+   "think",
+   "feel",
+   "self",
+   "smoke",
+   "life",
+   "time",
+   "nonsmoker",
    "just",
    "like",
-   "second",
+   "take",
    "each"
   ],
   "bcts": [
    "discuss-cravings",
-   "check-nrt",
+   "prompt-commitment"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/05-7-completing-the-program-the-second-treatment-session#3",
+  "book": "green-lynn-smoking",
+  "title": "7. Completing the Program: The Second Treatment Session (4/4)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "exercise",
+  "words": 568,
+  "terms": [
+   "awake",
+   "self",
+   "practice",
+   "alert",
+   "phrase",
+   "anchor",
+   "please",
+   "life",
+   "best",
+   "feel",
+   "word",
+   "need",
+   "mind",
+   "just"
+  ],
+  "bcts": [
    "identify-triggers",
-   "prompt-commitment",
-   "review-progress",
-   "objective-verification"
+   "smoking-contacts",
+   "discuss-cravings",
+   "prompt-commitment"
   ]
  },
  {
@@ -1781,66 +2913,597 @@ export const LIBRARY = [
   "bcts": []
  },
  {
-  "id": "green-lynn-smoking/07-9-common-questions-individualizing-treatment",
+  "id": "green-lynn-smoking/07-9-common-questions-individualizing-treatment#0",
   "book": "green-lynn-smoking",
-  "title": "9. Common Questions, Individualizing Treatment,",
+  "title": "9. Common Questions, Individualizing Treatment, (1/6)",
   "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
-  "kind": "exercise",
-  "words": 11317,
+  "kind": "theory",
+  "words": 2128,
   "terms": [
-   "smoking",
    "weight",
-   "nicotine",
-   "cessation",
+   "smoking",
    "gain",
-   "cigarettes",
-   "treatment",
+   "cessation",
    "women",
-   "participants",
-   "health",
    "likely",
-   "associated",
-   "among",
-   "program"
+   "treatment",
+   "concerns",
+   "participants",
+   "gender",
+   "stop",
+   "average",
+   "reported",
+   "based"
   ],
   "bcts": [
    "check-nrt",
    "discuss-withdrawal",
    "discuss-cravings",
-   "identify-triggers",
-   "relapse-prevention",
-   "assess-dependence"
+   "relapse-prevention"
   ]
  },
  {
-  "id": "green-lynn-smoking/08-10-review-of-overall-program-scheme-and-forms-to-aid",
+  "id": "green-lynn-smoking/07-9-common-questions-individualizing-treatment#1",
   "book": "green-lynn-smoking",
-  "title": "10. Review of Overall Program Scheme and Forms to Aid",
+  "title": "9. Common Questions, Individualizing Treatment, (2/6)",
   "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
   "kind": "exercise",
-  "words": 26850,
+  "words": 1687,
+  "terms": [
+   "smoking",
+   "weight",
+   "exercise",
+   "cigarettes",
+   "cessation",
+   "smokers",
+   "gain",
+   "regular",
+   "light",
+   "health",
+   "among",
+   "program",
+   "treatment",
+   "tobacco"
+  ],
+  "bcts": [
+   "discuss-withdrawal",
+   "discuss-cravings",
+   "identify-triggers"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/07-9-common-questions-individualizing-treatment#2",
+  "book": "green-lynn-smoking",
+  "title": "9. Common Questions, Individualizing Treatment, (3/6)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "theory",
+  "words": 1750,
+  "terms": [
+   "nicotine",
+   "cigs",
+   "cigarettes",
+   "associated",
+   "smoking",
+   "risks",
+   "health",
+   "exposure",
+   "effects",
+   "brain",
+   "vapor",
+   "safety",
+   "combustible",
+   "flavorings"
+  ],
+  "bcts": [
+   "not-a-puff",
+   "discuss-withdrawal",
+   "check-nrt"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/07-9-common-questions-individualizing-treatment#3",
+  "book": "green-lynn-smoking",
+  "title": "9. Common Questions, Individualizing Treatment, (4/6)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "exercise",
+  "words": 2190,
+  "terms": [
+   "smoking",
+   "nicotine",
+   "water",
+   "medications",
+   "cigarette",
+   "effects",
+   "tobacco",
+   "using",
+   "chantix",
+   "cigarettes",
+   "cessation",
+   "although",
+   "side",
+   "medication"
+  ],
+  "bcts": [
+   "check-nrt",
+   "assess-dependence",
+   "discuss-withdrawal",
+   "relapse-prevention",
+   "discuss-cravings",
+   "prompt-commitment"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/07-9-common-questions-individualizing-treatment#4",
+  "book": "green-lynn-smoking",
+  "title": "9. Common Questions, Individualizing Treatment, (5/6)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "theory",
+  "words": 1647,
+  "terms": [
+   "smoking",
+   "women",
+   "during",
+   "pregnant",
+   "abstinence",
+   "participants",
+   "treatment",
+   "among",
+   "alcohol",
+   "individuals",
+   "stop",
+   "strategies",
+   "pregnancy",
+   "quit"
+  ],
+  "bcts": [
+   "identify-triggers",
+   "not-a-puff",
+   "relapse-prevention",
+   "smoking-contacts",
+   "check-nrt",
+   "discuss-cravings"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/07-9-common-questions-individualizing-treatment#5",
+  "book": "green-lynn-smoking",
+  "title": "9. Common Questions, Individualizing Treatment, (6/6)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "exercise",
+  "words": 1915,
+  "terms": [
+   "smoking",
+   "weight",
+   "treatment",
+   "program",
+   "participants",
+   "gain",
+   "approach",
+   "strategies",
+   "individual",
+   "flowers",
+   "goal",
+   "cessation",
+   "time",
+   "self"
+  ],
+  "bcts": [
+   "identify-triggers",
+   "discuss-cravings"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/08-10-review-of-overall-program-scheme-and-forms-to-aid#0",
+  "book": "green-lynn-smoking",
+  "title": "10. Review of Overall Program Scheme and Forms to Aid (1/14)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "exercise",
+  "words": 2171,
+  "terms": [
+   "program",
+   "participants",
+   "smoking",
+   "week",
+   "session",
+   "nicotine",
+   "follow",
+   "hypnosis",
+   "stop",
+   "approximately",
+   "provide",
+   "assessment",
+   "self",
+   "name"
+  ],
+  "bcts": [
+   "check-nrt",
+   "objective-verification",
+   "review-progress",
+   "discuss-cravings",
+   "identify-triggers"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/08-10-review-of-overall-program-scheme-and-forms-to-aid#1",
+  "book": "green-lynn-smoking",
+  "title": "10. Review of Overall Program Scheme and Forms to Aid (2/14)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "exercise",
+  "words": 2021,
+  "terms": [
+   "program",
+   "nicotine",
+   "smoking",
+   "hypnosis",
+   "treatment",
+   "information",
+   "session",
+   "stop",
+   "replacement",
+   "during",
+   "group",
+   "week",
+   "provide",
+   "study"
+  ],
+  "bcts": [
+   "check-nrt",
+   "discuss-withdrawal",
+   "discuss-cravings",
+   "smoking-contacts"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/08-10-review-of-overall-program-scheme-and-forms-to-aid#10",
+  "book": "green-lynn-smoking",
+  "title": "10. Review of Overall Program Scheme and Forms to Aid (11/14)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "exercise",
+  "words": 1979,
+  "terms": [
+   "health",
+   "smoking",
+   "cessation",
+   "journal",
+   "department",
+   "national",
+   "human",
+   "services",
+   "disease",
+   "nicotine",
+   "tobacco",
+   "prevention",
+   "medicine",
+   "report"
+  ],
+  "bcts": [
+   "check-nrt",
+   "assess-dependence",
+   "assess-readiness",
+   "discuss-cravings",
+   "relapse-prevention"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/08-10-review-of-overall-program-scheme-and-forms-to-aid#11",
+  "book": "green-lynn-smoking",
+  "title": "10. Review of Overall Program Scheme and Forms to Aid (12/14)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "theory",
+  "words": 2060,
+  "terms": [
+   "smoking",
+   "journal",
+   "cessation",
+   "tobacco",
+   "health",
+   "williams",
+   "nicotine",
+   "world",
+   "systematic",
+   "review",
+   "medicine",
+   "psychology",
+   "research",
+   "quit"
+  ],
+  "bcts": [
+   "check-nrt"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/08-10-review-of-overall-program-scheme-and-forms-to-aid#12",
+  "book": "green-lynn-smoking",
+  "title": "10. Review of Overall Program Scheme and Forms to Aid (13/14)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "exercise",
+  "words": 1948,
+  "terms": [
+   "smoking",
+   "cessation",
+   "risks",
+   "health",
+   "approach",
+   "program",
+   "hypnosis",
+   "cognitive",
+   "rates",
+   "behavioral",
+   "treatment",
+   "therapy",
+   "self",
+   "index"
+  ],
+  "bcts": [
+   "check-nrt",
+   "assess-readiness",
+   "objective-verification",
+   "discuss-cravings",
+   "prompt-commitment"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/08-10-review-of-overall-program-scheme-and-forms-to-aid#13",
+  "book": "green-lynn-smoking",
+  "title": "10. Review of Overall Program Scheme and Forms to Aid (14/14)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "exercise",
+  "words": 613,
   "terms": [
    "smoking",
    "hypnosis",
-   "cessation",
+   "self",
    "program",
-   "journal",
-   "nicotine",
-   "health",
-   "clinical",
-   "tobacco",
+   "cessation",
+   "urge",
+   "management",
+   "winning",
+   "edge",
    "treatment",
    "study",
-   "research",
+   "worksheets",
+   "monitoring",
+   "success"
+  ],
+  "bcts": [
+   "discuss-cravings",
+   "check-nrt"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/08-10-review-of-overall-program-scheme-and-forms-to-aid#2",
+  "book": "green-lynn-smoking",
+  "title": "10. Review of Overall Program Scheme and Forms to Aid (3/14)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "exercise",
+  "words": 2118,
+  "terms": [
+   "smoking",
+   "program",
+   "study",
    "stop",
-   "review"
+   "session",
+   "treatment",
+   "sessions",
+   "week",
+   "nicotine",
+   "approximately",
+   "people",
+   "hypnosis",
+   "complete",
+   "follow"
   ],
   "bcts": [
    "check-nrt",
    "discuss-cravings",
+   "discuss-withdrawal",
+   "prompt-commitment"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/08-10-review-of-overall-program-scheme-and-forms-to-aid#3",
+  "book": "green-lynn-smoking",
+  "title": "10. Review of Overall Program Scheme and Forms to Aid (4/14)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "theory",
+  "words": 2189,
+  "terms": [
+   "study",
+   "smoking",
+   "name",
+   "information",
+   "somewhat",
+   "program",
+   "time",
+   "contact",
+   "research",
+   "many",
+   "circle",
+   "smoke",
+   "able",
+   "days"
+  ],
+  "bcts": [
+   "check-nrt",
+   "discuss-cravings"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/08-10-review-of-overall-program-scheme-and-forms-to-aid#4",
+  "book": "green-lynn-smoking",
+  "title": "10. Review of Overall Program Scheme and Forms to Aid (5/14)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "exercise",
+  "words": 2000,
+  "terms": [
+   "smoking",
+   "last",
+   "program",
+   "strong",
+   "somewhat",
+   "months",
+   "smoke",
+   "hours",
+   "time",
+   "cigarette",
+   "days",
+   "helpful",
+   "stop",
+   "please"
+  ],
+  "bcts": [
+   "check-nrt",
+   "discuss-cravings"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/08-10-review-of-overall-program-scheme-and-forms-to-aid#5",
+  "book": "green-lynn-smoking",
+  "title": "10. Review of Overall Program Scheme and Forms to Aid (6/14)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "exercise",
+  "words": 2025,
+  "terms": [
+   "smoking",
+   "journal",
+   "hypnosis",
+   "tobacco",
+   "clinical",
+   "cessation",
+   "american",
+   "nicotine",
+   "health",
+   "among",
+   "disease",
+   "therapy",
+   "smokers",
+   "cigarettes"
+  ],
+  "bcts": [
+   "check-nrt",
+   "assess-dependence",
    "assess-readiness",
+   "relapse-prevention",
+   "discuss-cravings"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/08-10-review-of-overall-program-scheme-and-forms-to-aid#6",
+  "book": "green-lynn-smoking",
+  "title": "10. Review of Overall Program Scheme and Forms to Aid (7/14)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "exercise",
+  "words": 1947,
+  "terms": [
+   "smoking",
+   "journal",
+   "cessation",
+   "tobacco",
+   "health",
+   "hypnosis",
+   "clinical",
+   "research",
+   "psychology",
+   "effects",
+   "american",
+   "control",
+   "cigarette",
+   "study"
+  ],
+  "bcts": [
+   "assess-dependence",
+   "assess-readiness",
+   "relapse-prevention",
+   "coping-plan"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/08-10-review-of-overall-program-scheme-and-forms-to-aid#7",
+  "book": "green-lynn-smoking",
+  "title": "10. Review of Overall Program Scheme and Forms to Aid (8/14)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "exercise",
+  "words": 1954,
+  "terms": [
+   "smoking",
+   "hypnosis",
+   "journal",
+   "cessation",
+   "clinical",
+   "green",
+   "international",
+   "meta",
+   "cognitive",
+   "psychology",
+   "review",
+   "therapy",
+   "american",
+   "psychological"
+  ],
+  "bcts": [
    "assess-dependence",
    "relapse-prevention",
+   "assess-readiness",
+   "check-nrt"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/08-10-review-of-overall-program-scheme-and-forms-to-aid#8",
+  "book": "green-lynn-smoking",
+  "title": "10. Review of Overall Program Scheme and Forms to Aid (9/14)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "exercise",
+  "words": 1965,
+  "terms": [
+   "smoking",
+   "hypnosis",
+   "cessation",
+   "journal",
+   "clinical",
+   "lynn",
+   "nicotine",
+   "treatment",
+   "tobacco",
+   "american",
+   "smokers",
+   "kirsch",
+   "research",
+   "weight"
+  ],
+  "bcts": [
+   "assess-readiness",
+   "relapse-prevention",
+   "assess-dependence",
+   "check-nrt"
+  ]
+ },
+ {
+  "id": "green-lynn-smoking/08-10-review-of-overall-program-scheme-and-forms-to-aid#9",
+  "book": "green-lynn-smoking",
+  "title": "10. Review of Overall Program Scheme and Forms to Aid (10/14)",
+  "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
+  "kind": "exercise",
+  "words": 1860,
+  "terms": [
+   "smoking",
+   "tobacco",
+   "cessation",
+   "clinical",
+   "nicotine",
+   "journal",
+   "hypnosis",
+   "cognitive",
+   "cancer",
+   "psychology",
+   "therapy",
+   "cigarettes",
+   "miller",
+   "behavioral"
+  ],
+  "bcts": [
+   "assess-readiness",
+   "discuss-cravings",
+   "check-nrt",
    "discuss-withdrawal"
   ]
  },
@@ -2737,36 +4400,94 @@ export const LIBRARY = [
   "bcts": []
  },
  {
-  "id": "ncsct-stp/00-session-1-pre-quit-assessment",
+  "id": "ncsct-stp/00-session-1-pre-quit-assessment#0",
   "book": "ncsct-stp",
-  "title": "Session 1: Pre-quit Assessment",
+  "title": "Session 1: Pre-quit Assessment (1/3)",
   "src": "NCSCT Standard Treatment Programme",
   "kind": "theory",
-  "words": 5566,
+  "words": 2156,
   "terms": [
    "smoking",
    "quit",
    "client",
    "stop",
-   "date",
-   "smoke",
    "medication",
-   "nicotine",
-   "session",
    "attempt",
-   "after",
+   "assess",
+   "support",
+   "explain",
+   "session",
    "assessment",
-   "cigarettes",
-   "pre-quit"
+   "inform",
+   "dependence",
+   "smoke"
   ],
   "bcts": [
    "check-nrt",
+   "assess-dependence",
    "prompt-commitment",
+   "past-attempts",
+   "discuss-withdrawal",
+   "discuss-cravings"
+  ]
+ },
+ {
+  "id": "ncsct-stp/00-session-1-pre-quit-assessment#1",
+  "book": "ncsct-stp",
+  "title": "Session 1: Pre-quit Assessment (2/3)",
+  "src": "NCSCT Standard Treatment Programme",
+  "kind": "theory",
+  "words": 2190,
+  "terms": [
+   "smoking",
+   "client",
+   "nicotine",
+   "medication",
+   "smoke",
+   "symptoms",
+   "stop",
+   "champix",
+   "carbon",
+   "monoxide",
+   "reading",
+   "quit",
+   "withdrawal",
+   "smokers"
+  ],
+  "bcts": [
+   "check-nrt",
    "discuss-cravings",
    "discuss-withdrawal",
-   "assess-dependence",
-   "not-a-puff",
-   "past-attempts"
+   "prompt-commitment"
+  ]
+ },
+ {
+  "id": "ncsct-stp/00-session-1-pre-quit-assessment#2",
+  "book": "ncsct-stp",
+  "title": "Session 1: Pre-quit Assessment (3/3)",
+  "src": "NCSCT Standard Treatment Programme",
+  "kind": "theory",
+  "words": 1220,
+  "terms": [
+   "quit",
+   "date",
+   "client",
+   "cigarettes",
+   "smoke",
+   "smoking",
+   "before",
+   "appointment",
+   "last",
+   "cigarette",
+   "session",
+   "confirm",
+   "need",
+   "using"
+  ],
+  "bcts": [
+   "prompt-commitment",
+   "check-nrt",
+   "not-a-puff"
   ]
  },
  {
@@ -2793,9 +4514,9 @@ export const LIBRARY = [
    "using"
   ],
   "bcts": [
-   "discuss-cravings",
-   "check-nrt",
    "prompt-commitment",
+   "check-nrt",
+   "discuss-cravings",
    "discuss-withdrawal",
    "high-risk-ahead",
    "not-a-puff"
@@ -2825,11 +4546,11 @@ export const LIBRARY = [
    "smoke"
   ],
   "bcts": [
-   "discuss-cravings",
    "prompt-commitment",
    "high-risk-ahead",
-   "discuss-withdrawal",
    "not-a-puff",
+   "discuss-withdrawal",
+   "discuss-cravings",
    "check-nrt"
   ]
  },
@@ -2858,39 +4579,140 @@ export const LIBRARY = [
   ],
   "bcts": [
    "prompt-commitment",
-   "discuss-cravings",
    "check-nrt",
+   "discuss-cravings",
    "not-a-puff",
    "discuss-withdrawal",
    "assess-dependence"
   ]
  },
  {
-  "id": "padesky-mind-over-mood/00-mind-over-mood",
+  "id": "padesky-mind-over-mood/00-mind-over-mood#0",
   "book": "padesky-mind-over-mood",
-  "title": "Mind Over Mood",
+  "title": "Mind Over Mood (1/5)",
   "src": "Mind Over Mood — Greenberger & Padesky",
   "kind": "exercise",
-  "words": 9292,
+  "words": 2002,
   "terms": [
-   "thoughts",
    "mood",
-   "thought",
-   "life",
-   "moods",
-   "help",
-   "marissa",
-   "changes",
    "mind",
-   "physical",
-   "feel",
+   "skills",
+   "help",
+   "moods",
+   "time",
+   "learn",
+   "read",
+   "therapist",
+   "life",
    "problems",
+   "feel",
    "think",
-   "linda"
+   "chapters"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "padesky-mind-over-mood/00-mind-over-mood#1",
+  "book": "padesky-mind-over-mood",
+  "title": "Mind Over Mood (2/5)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "theory",
+  "words": 1979,
+  "terms": [
+   "linda",
+   "friends",
+   "sylvie",
+   "life",
+   "changes",
+   "depression",
+   "panic",
+   "problems",
+   "cancer",
+   "thinking",
+   "heart",
+   "years",
+   "things",
+   "death"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "padesky-mind-over-mood/00-mind-over-mood#2",
+  "book": "padesky-mind-over-mood",
+  "title": "Mind Over Mood (3/5)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 2176,
+  "terms": [
+   "marissa",
+   "life",
+   "changes",
+   "problems",
+   "moods",
+   "situations",
+   "better",
+   "help",
+   "therapist",
+   "physical",
+   "thoughts",
+   "years",
+   "feel",
+   "mood"
   ],
   "bcts": [
-   "check-nrt",
    "discuss-cravings"
+  ]
+ },
+ {
+  "id": "padesky-mind-over-mood/00-mind-over-mood#3",
+  "book": "padesky-mind-over-mood",
+  "title": "Mind Over Mood (4/5)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "theory",
+  "words": 1942,
+  "terms": [
+   "thought",
+   "thoughts",
+   "moods",
+   "behavior",
+   "mood",
+   "think",
+   "example",
+   "marissa",
+   "feel",
+   "possible",
+   "just",
+   "things",
+   "doing",
+   "people"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "padesky-mind-over-mood/00-mind-over-mood#4",
+  "book": "padesky-mind-over-mood",
+  "title": "Mind Over Mood (5/5)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 1193,
+  "terms": [
+   "physical",
+   "thoughts",
+   "thought",
+   "reactions",
+   "heart",
+   "beliefs",
+   "linda",
+   "athletic",
+   "connection",
+   "think",
+   "even",
+   "attack",
+   "environment",
+   "experiences"
+  ],
+  "bcts": [
+   "check-nrt"
   ]
  },
  {
@@ -2919,27 +4741,154 @@ export const LIBRARY = [
   "bcts": []
  },
  {
-  "id": "padesky-mind-over-mood/02-is-changing-the-way-you-think-the-only-way",
+  "id": "padesky-mind-over-mood/02-is-changing-the-way-you-think-the-only-way#0",
   "book": "padesky-mind-over-mood",
-  "title": "Is Changing The Way You Think The Only Way",
+  "title": "Is Changing The Way You Think The Only Way (1/6)",
   "src": "Mind Over Mood — Greenberger & Padesky",
   "kind": "exercise",
-  "words": 11250,
+  "words": 2138,
   "terms": [
    "moods",
-   "thoughts",
-   "mood",
-   "thought",
    "situation",
-   "mind",
-   "worksheet",
-   "feel",
+   "mood",
+   "thoughts",
+   "situations",
    "help",
-   "automatic",
-   "questions",
+   "identifying",
+   "rating",
+   "feel",
+   "worksheet",
+   "mind",
+   "identify",
+   "changes",
+   "learn"
+  ],
+  "bcts": [
+   "discuss-cravings"
+  ]
+ },
+ {
+  "id": "padesky-mind-over-mood/02-is-changing-the-way-you-think-the-only-way#1",
+  "book": "padesky-mind-over-mood",
+  "title": "Is Changing The Way You Think The Only Way (2/6)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 2197,
+  "terms": [
+   "worksheet",
+   "mood",
+   "goals",
+   "moods",
+   "mind",
+   "skills",
+   "advantages",
+   "reaching",
+   "help",
+   "disadvantages",
+   "anxiety",
+   "read",
+   "goal",
+   "depression"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "padesky-mind-over-mood/02-is-changing-the-way-you-think-the-only-way#2",
+  "book": "padesky-mind-over-mood",
+  "title": "Is Changing The Way You Think The Only Way (3/6)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 2190,
+  "terms": [
+   "thought",
+   "thoughts",
+   "moods",
+   "mood",
+   "column",
    "record",
    "images",
-   "situations"
+   "situation",
+   "mind",
+   "each",
+   "marissa",
+   "automatic",
+   "skills",
+   "rate"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "padesky-mind-over-mood/02-is-changing-the-way-you-think-the-only-way#3",
+  "book": "padesky-mind-over-mood",
+  "title": "Is Changing The Way You Think The Only Way (4/6)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 2138,
+  "terms": [
+   "thoughts",
+   "thought",
+   "situation",
+   "mood",
+   "automatic",
+   "marissa",
+   "moods",
+   "supervisor",
+   "going",
+   "feel",
+   "therapist",
+   "help",
+   "happen",
+   "mind"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "padesky-mind-over-mood/02-is-changing-the-way-you-think-the-only-way#4",
+  "book": "padesky-mind-over-mood",
+  "title": "Is Changing The Way You Think The Only Way (5/6)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 2044,
+  "terms": [
+   "thoughts",
+   "questions",
+   "mood",
+   "moods",
+   "think",
+   "automatic",
+   "mean",
+   "helpful",
+   "feel",
+   "people",
+   "general",
+   "shame",
+   "identify",
+   "mind"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "padesky-mind-over-mood/02-is-changing-the-way-you-think-the-only-way#5",
+  "book": "padesky-mind-over-mood",
+  "title": "Is Changing The Way You Think The Only Way (6/6)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 543,
+  "terms": [
+   "mood",
+   "thoughts",
+   "situation",
+   "automatic",
+   "column",
+   "identifying",
+   "feel",
+   "questions",
+   "identify",
+   "help",
+   "worksheet",
+   "general",
+   "moods",
+   "circle"
   ],
   "bcts": []
  },
@@ -2969,54 +4918,287 @@ export const LIBRARY = [
   "bcts": []
  },
  {
-  "id": "padesky-mind-over-mood/04-mood-check-up",
+  "id": "padesky-mind-over-mood/04-mood-check-up#0",
   "book": "padesky-mind-over-mood",
-  "title": "Mood Check-Up",
+  "title": "Mood Check-Up (1/9)",
   "src": "Mind Over Mood — Greenberger & Padesky",
   "kind": "exercise",
-  "words": 17519,
+  "words": 2104,
+  "terms": [
+   "judy",
+   "thoughts",
+   "thought",
+   "evidence",
+   "mood",
+   "care",
+   "worksheet",
+   "drink",
+   "record",
+   "interpretation",
+   "mind",
+   "automatic",
+   "look",
+   "columns"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "padesky-mind-over-mood/04-mood-check-up#1",
+  "book": "padesky-mind-over-mood",
+  "title": "Mood Check-Up (2/9)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "dialogue",
+  "words": 2146,
+  "terms": [
+   "thought",
+   "evidence",
+   "thoughts",
+   "column",
+   "marissa",
+   "record",
+   "support",
+   "mood",
+   "help",
+   "feel",
+   "therapist",
+   "moods",
+   "situation",
+   "find"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "padesky-mind-over-mood/04-mood-check-up#2",
+  "book": "padesky-mind-over-mood",
+  "title": "Mood Check-Up (3/9)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 2168,
   "terms": [
    "thought",
    "evidence",
    "thoughts",
    "mood",
-   "alternative",
    "record",
-   "balanced",
+   "linda",
+   "heart",
+   "feel",
    "column",
-   "marissa",
-   "help",
    "support",
+   "questions",
    "moods",
+   "rate",
+   "write"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "padesky-mind-over-mood/04-mood-check-up#3",
+  "book": "padesky-mind-over-mood",
+  "title": "Mood Check-Up (4/9)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 1773,
+  "terms": [
+   "thought",
+   "evidence",
+   "thoughts",
    "judy",
-   "feel"
+   "mood",
+   "support",
+   "worksheet",
+   "record",
+   "akiko",
+   "mind",
+   "moods",
+   "yuki",
+   "column",
+   "anger"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "padesky-mind-over-mood/04-mood-check-up#4",
+  "book": "padesky-mind-over-mood",
+  "title": "Mood Check-Up (5/9)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "theory",
+  "words": 2182,
+  "terms": [
+   "thought",
+   "balanced",
+   "evidence",
+   "alternative",
+   "situation",
+   "thinking",
+   "column",
+   "thoughts",
+   "record",
+   "columns",
+   "write",
+   "mood",
+   "marissa",
+   "information"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "padesky-mind-over-mood/04-mood-check-up#5",
+  "book": "padesky-mind-over-mood",
+  "title": "Mood Check-Up (6/9)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 2195,
+  "terms": [
+   "thought",
+   "alternative",
+   "evidence",
+   "balanced",
+   "mood",
+   "record",
+   "heart",
+   "thoughts",
+   "moods",
+   "heartbeat",
+   "change",
+   "feel",
+   "linda",
+   "attack"
   ],
   "bcts": [
    "coping-plan"
   ]
  },
  {
-  "id": "padesky-mind-over-mood/05-acceptance",
+  "id": "padesky-mind-over-mood/04-mood-check-up#6",
   "book": "padesky-mind-over-mood",
-  "title": "Acceptance",
+  "title": "Mood Check-Up (7/9)",
   "src": "Mind Over Mood — Greenberger & Padesky",
   "kind": "exercise",
-  "words": 5860,
+  "words": 1901,
   "terms": [
-   "heart",
+   "thought",
+   "alternative",
+   "balanced",
    "thoughts",
-   "linda",
-   "underlying",
-   "experiments",
-   "acceptance",
-   "assumptions",
-   "anxiety",
-   "time",
-   "assumption",
    "mood",
+   "evidence",
+   "record",
+   "worksheet",
+   "think",
+   "records",
+   "help",
+   "column",
+   "language",
+   "write"
+  ],
+  "bcts": [
+   "coping-plan"
+  ]
+ },
+ {
+  "id": "padesky-mind-over-mood/04-mood-check-up#7",
+  "book": "padesky-mind-over-mood",
+  "title": "Mood Check-Up (8/9)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "theory",
+  "words": 1900,
+  "terms": [
+   "marissa",
+   "action",
+   "plan",
+   "help",
+   "thought",
+   "supervisor",
+   "work",
+   "therapist",
+   "better",
+   "time",
+   "problem",
+   "performance",
+   "problems",
+   "improve"
+  ],
+  "bcts": [
+   "coping-plan"
+  ]
+ },
+ {
+  "id": "padesky-mind-over-mood/04-mood-check-up#8",
+  "book": "padesky-mind-over-mood",
+  "title": "Mood Check-Up (9/9)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 1150,
+  "terms": [
+   "problems",
+   "plan",
+   "action",
+   "judy",
+   "anger",
+   "time",
+   "angry",
+   "progress",
+   "help",
+   "begin",
+   "strategies",
+   "work",
+   "before",
+   "marriage"
+  ],
+  "bcts": [
+   "coping-plan"
+  ]
+ },
+ {
+  "id": "padesky-mind-over-mood/05-acceptance#0",
+  "book": "padesky-mind-over-mood",
+  "title": "Acceptance (1/3)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 2079,
+  "terms": [
+   "acceptance",
    "father",
-   "attack",
-   "mind"
+   "thoughts",
+   "rodney",
+   "mood",
+   "lupe",
+   "important",
+   "mind",
+   "time",
+   "each",
+   "moods",
+   "help",
+   "accept",
+   "values"
+  ],
+  "bcts": [
+   "coping-plan"
+  ]
+ },
+ {
+  "id": "padesky-mind-over-mood/05-acceptance#1",
+  "book": "padesky-mind-over-mood",
+  "title": "Acceptance (2/3)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 2026,
+  "terms": [
+   "underlying",
+   "assumptions",
+   "thoughts",
+   "time",
+   "moods",
+   "trey",
+   "thought",
+   "heart",
+   "shauntelle",
+   "worksheet",
+   "assumption",
+   "home",
+   "even",
+   "mood"
   ],
   "bcts": [
    "coping-plan",
@@ -3024,31 +5206,183 @@ export const LIBRARY = [
   ]
  },
  {
-  "id": "padesky-mind-over-mood/06-identifying-underlying-assumptions",
+  "id": "padesky-mind-over-mood/05-acceptance#2",
   "book": "padesky-mind-over-mood",
-  "title": "Identifying Underlying Assumptions",
+  "title": "Acceptance (3/3)",
   "src": "Mind Over Mood — Greenberger & Padesky",
   "kind": "exercise",
-  "words": 12673,
+  "words": 1755,
   "terms": [
-   "core",
-   "beliefs",
-   "belief",
-   "people",
-   "assumptions",
-   "worksheet",
+   "heart",
+   "linda",
    "experiments",
+   "anxiety",
+   "assumption",
+   "fast",
+   "attack",
+   "racing",
+   "rate",
+   "dangerous",
+   "behavioral",
+   "therapist",
+   "breathing",
+   "began"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "padesky-mind-over-mood/06-identifying-underlying-assumptions#0",
+  "book": "padesky-mind-over-mood",
+  "title": "Identifying Underlying Assumptions (1/6)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 2169,
+  "terms": [
+   "assumptions",
    "underlying",
-   "mood",
-   "negative",
+   "people",
+   "experiment",
+   "assumption",
+   "claudia",
+   "experiments",
    "even",
-   "experiences",
-   "mean",
-   "world"
+   "something",
+   "perfect",
+   "know",
+   "daughter",
+   "identify",
+   "sentence"
   ],
   "bcts": [
    "identify-triggers"
   ]
+ },
+ {
+  "id": "padesky-mind-over-mood/06-identifying-underlying-assumptions#1",
+  "book": "padesky-mind-over-mood",
+  "title": "Identifying Underlying Assumptions (2/6)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 1935,
+  "terms": [
+   "assumption",
+   "experiments",
+   "assumptions",
+   "underlying",
+   "worksheet",
+   "experiment",
+   "worry",
+   "test",
+   "good",
+   "mother",
+   "children",
+   "alternative",
+   "gabriela",
+   "make"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "padesky-mind-over-mood/06-identifying-underlying-assumptions#2",
+  "book": "padesky-mind-over-mood",
+  "title": "Identifying Underlying Assumptions (3/6)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 2200,
+  "terms": [
+   "beliefs",
+   "core",
+   "automatic",
+   "people",
+   "thoughts",
+   "negative",
+   "assumptions",
+   "positive",
+   "marissa",
+   "belief",
+   "time",
+   "identify",
+   "many",
+   "thought"
+  ],
+  "bcts": [
+   "coping-plan"
+  ]
+ },
+ {
+  "id": "padesky-mind-over-mood/06-identifying-underlying-assumptions#3",
+  "book": "padesky-mind-over-mood",
+  "title": "Identifying Underlying Assumptions (4/6)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 2165,
+  "terms": [
+   "core",
+   "beliefs",
+   "world",
+   "mean",
+   "true",
+   "situation",
+   "people",
+   "negative",
+   "worksheet",
+   "mood",
+   "belief",
+   "identifying",
+   "life",
+   "others"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "padesky-mind-over-mood/06-identifying-underlying-assumptions#4",
+  "book": "padesky-mind-over-mood",
+  "title": "Identifying Underlying Assumptions (5/6)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 2151,
+  "terms": [
+   "core",
+   "belief",
+   "experiences",
+   "beliefs",
+   "worksheet",
+   "positive",
+   "time",
+   "marissa",
+   "small",
+   "people",
+   "confidence",
+   "example",
+   "lovable",
+   "write"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "padesky-mind-over-mood/06-identifying-underlying-assumptions#5",
+  "book": "padesky-mind-over-mood",
+  "title": "Identifying Underlying Assumptions (6/6)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 2053,
+  "terms": [
+   "core",
+   "experiments",
+   "behaviors",
+   "even",
+   "beliefs",
+   "behavior",
+   "scale",
+   "belief",
+   "control",
+   "rating",
+   "people",
+   "carla",
+   "wanted",
+   "because"
+  ],
+  "bcts": []
  },
  {
   "id": "padesky-mind-over-mood/07-gratitude",
@@ -3076,32 +5410,187 @@ export const LIBRARY = [
   "bcts": []
  },
  {
-  "id": "padesky-mind-over-mood/08-acts-of-kindness",
+  "id": "padesky-mind-over-mood/08-acts-of-kindness#0",
   "book": "padesky-mind-over-mood",
-  "title": "Acts Of Kindness",
+  "title": "Acts Of Kindness (1/7)",
   "src": "Mind Over Mood — Greenberger & Padesky",
   "kind": "exercise",
-  "words": 13539,
+  "words": 1857,
   "terms": [
-   "mood",
    "depression",
-   "anxiety",
-   "activities",
-   "mind",
-   "feel",
-   "help",
-   "better",
-   "people",
+   "core",
+   "mood",
+   "beliefs",
+   "acts",
    "time",
+   "positive",
+   "people",
+   "feel",
    "worksheet",
-   "things",
+   "kindness",
+   "kind",
+   "life",
+   "mind"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "padesky-mind-over-mood/08-acts-of-kindness#1",
+  "book": "padesky-mind-over-mood",
+  "title": "Acts Of Kindness (2/7)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 2196,
+  "terms": [
+   "depression",
+   "thoughts",
+   "negative",
+   "mood",
+   "mind",
+   "inventory",
+   "depressed",
+   "symptoms",
+   "future",
+   "each",
+   "scores",
+   "worksheet",
+   "time",
+   "thinking"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "padesky-mind-over-mood/08-acts-of-kindness#2",
+  "book": "padesky-mind-over-mood",
+  "title": "Acts Of Kindness (3/7)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 2130,
+  "terms": [
+   "depression",
+   "medication",
+   "mood",
+   "help",
+   "depressed",
    "activity",
-   "negative"
+   "activities",
+   "record",
+   "people",
+   "better",
+   "physician",
+   "experiences",
+   "take",
+   "self"
+  ],
+  "bcts": [
+   "check-nrt",
+   "change-routine"
+  ]
+ },
+ {
+  "id": "padesky-mind-over-mood/08-acts-of-kindness#3",
+  "book": "padesky-mind-over-mood",
+  "title": "Acts Of Kindness (4/7)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 2199,
+  "terms": [
+   "activities",
+   "better",
+   "week",
+   "doing",
+   "mood",
+   "feel",
+   "activity",
+   "help",
+   "things",
+   "worksheet",
+   "felt",
+   "people",
+   "record",
+   "enjoyable"
+  ],
+  "bcts": [
+   "change-routine"
+  ]
+ },
+ {
+  "id": "padesky-mind-over-mood/08-acts-of-kindness#4",
+  "book": "padesky-mind-over-mood",
+  "title": "Acts Of Kindness (5/7)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 2184,
+  "terms": [
+   "anxiety",
+   "mood",
+   "mind",
+   "activities",
+   "activity",
+   "feel",
+   "depression",
+   "anxious",
+   "worksheet",
+   "inventory",
+   "scores",
+   "experience",
+   "something",
+   "depressed"
   ],
   "bcts": [
    "change-routine",
    "check-nrt"
   ]
+ },
+ {
+  "id": "padesky-mind-over-mood/08-acts-of-kindness#5",
+  "book": "padesky-mind-over-mood",
+  "title": "Acts Of Kindness (6/7)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 1983,
+  "terms": [
+   "anxiety",
+   "anxious",
+   "speech",
+   "mood",
+   "mind",
+   "things",
+   "changes",
+   "time",
+   "felt",
+   "class",
+   "symptoms",
+   "help",
+   "danger",
+   "behaviors"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "padesky-mind-over-mood/08-acts-of-kindness#6",
+  "book": "padesky-mind-over-mood",
+  "title": "Acts Of Kindness (7/7)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 990,
+  "terms": [
+   "safety",
+   "behaviors",
+   "anxiety",
+   "coping",
+   "behavior",
+   "anxious",
+   "even",
+   "roberta",
+   "tyra",
+   "door",
+   "time",
+   "daughter",
+   "because",
+   "danger"
+  ],
+  "bcts": []
  },
  {
   "id": "padesky-mind-over-mood/09-anxious-thoughts",
@@ -3131,33 +5620,189 @@ export const LIBRARY = [
   ]
  },
  {
-  "id": "padesky-mind-over-mood/10-fear-ladder",
+  "id": "padesky-mind-over-mood/10-fear-ladder#0",
   "book": "padesky-mind-over-mood",
-  "title": "Fear Ladder",
+  "title": "Fear Ladder (1/7)",
   "src": "Mind Over Mood — Greenberger & Padesky",
   "kind": "exercise",
-  "words": 14315,
+  "words": 1865,
   "terms": [
    "anxiety",
-   "anger",
-   "mood",
-   "people",
-   "feel",
+   "fear",
+   "ladder",
+   "step",
+   "situations",
+   "steps",
+   "stay",
+   "each",
+   "situation",
+   "paul",
+   "exposure",
+   "time",
+   "mind",
+   "once"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "padesky-mind-over-mood/10-fear-ladder#1",
+  "book": "padesky-mind-over-mood",
+  "title": "Fear Ladder (2/7)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 2126,
+  "terms": [
+   "anxiety",
+   "relaxation",
+   "practice",
+   "mindfulness",
+   "anxious",
+   "muscle",
+   "mind",
+   "breathing",
+   "felt",
+   "tension",
+   "minutes",
    "help",
+   "imagery",
+   "each"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "padesky-mind-over-mood/10-fear-ladder#2",
+  "book": "padesky-mind-over-mood",
+  "title": "Fear Ladder (3/7)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 1892,
+  "terms": [
+   "anxiety",
+   "anxious",
+   "thoughts",
+   "learn",
+   "mood",
+   "skills",
+   "medication",
+   "help",
+   "chapters",
+   "people",
+   "cope",
    "mind",
    "fear",
-   "angry",
-   "ladder",
-   "thoughts",
-   "shame",
-   "worksheet",
-   "person"
+   "ladder"
   ],
   "bcts": [
    "check-nrt",
-   "smoking-contacts",
-   "coping-plan"
+   "discuss-withdrawal",
+   "relapse-prevention",
+   "coping-plan",
+   "discuss-cravings"
   ]
+ },
+ {
+  "id": "padesky-mind-over-mood/10-fear-ladder#3",
+  "book": "padesky-mind-over-mood",
+  "title": "Fear Ladder (4/7)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 2136,
+  "terms": [
+   "anger",
+   "mood",
+   "angry",
+   "worksheet",
+   "rick",
+   "john",
+   "moods",
+   "shame",
+   "shirt",
+   "feel",
+   "guilt",
+   "felt",
+   "time",
+   "rating"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "padesky-mind-over-mood/10-fear-ladder#4",
+  "book": "padesky-mind-over-mood",
+  "title": "Fear Ladder (5/7)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 2197,
+  "terms": [
+   "anger",
+   "angry",
+   "rick",
+   "john",
+   "people",
+   "think",
+   "person",
+   "situation",
+   "help",
+   "feel",
+   "want",
+   "yourself",
+   "likely",
+   "someone"
+  ],
+  "bcts": [
+   "smoking-contacts"
+  ]
+ },
+ {
+  "id": "padesky-mind-over-mood/10-fear-ladder#5",
+  "book": "padesky-mind-over-mood",
+  "title": "Fear Ladder (6/7)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 2173,
+  "terms": [
+   "anger",
+   "person",
+   "forgiveness",
+   "hurt",
+   "need",
+   "help",
+   "letter",
+   "someone",
+   "done",
+   "assertion",
+   "assertive",
+   "want",
+   "forgive",
+   "management"
+  ],
+  "bcts": [
+   "smoking-contacts"
+  ]
+ },
+ {
+  "id": "padesky-mind-over-mood/10-fear-ladder#6",
+  "book": "padesky-mind-over-mood",
+  "title": "Fear Ladder (7/7)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 1926,
+  "terms": [
+   "serious",
+   "shame",
+   "responsibility",
+   "actions",
+   "marissa",
+   "feel",
+   "guilt",
+   "seriousness",
+   "action",
+   "rating",
+   "people",
+   "worksheet",
+   "toby",
+   "mother"
+  ],
+  "bcts": []
  },
  {
   "id": "padesky-mind-over-mood/11-responsibility-pie",
@@ -3185,34 +5830,224 @@ export const LIBRARY = [
   "bcts": []
  },
  {
-  "id": "padesky-mind-over-mood/12-when-you-complete-this-chapter",
+  "id": "padesky-mind-over-mood/12-when-you-complete-this-chapter#0",
   "book": "padesky-mind-over-mood",
-  "title": "When You Complete This Chapter",
+  "title": "When You Complete This Chapter (1/8)",
   "src": "Mind Over Mood — Greenberger & Padesky",
   "kind": "exercise",
-  "words": 15591,
+  "words": 2183,
+  "terms": [
+   "skills",
+   "mood",
+   "mind",
+   "moods",
+   "helpful",
+   "worksheet",
+   "anger",
+   "thoughts",
+   "using",
+   "rate",
+   "thought",
+   "life",
+   "skill",
+   "help"
+  ],
+  "bcts": [
+   "relapse-prevention",
+   "change-routine",
+   "coping-plan"
+  ]
+ },
+ {
+  "id": "padesky-mind-over-mood/12-when-you-complete-this-chapter#1",
+  "book": "padesky-mind-over-mood",
+  "title": "When You Complete This Chapter (2/8)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 2161,
   "terms": [
    "mood",
+   "skills",
+   "plan",
+   "mind",
+   "help",
+   "warning",
+   "worksheet",
+   "early",
+   "signs",
+   "relapse",
+   "better",
+   "depression",
+   "moods",
+   "people"
+  ],
+  "bcts": [
+   "relapse-prevention",
+   "high-risk-ahead"
+  ]
+ },
+ {
+  "id": "padesky-mind-over-mood/12-when-you-complete-this-chapter#2",
+  "book": "padesky-mind-over-mood",
+  "title": "When You Complete This Chapter (3/8)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 2191,
+  "terms": [
+   "worksheet",
+   "depression",
+   "mood",
+   "therapy",
+   "scores",
+   "mind",
+   "marissa",
+   "thought",
+   "helped",
    "thoughts",
+   "felt",
+   "life",
+   "week",
+   "core"
+  ],
+  "bcts": [
+   "change-routine",
+   "discuss-cravings",
+   "relapse-prevention",
+   "coping-plan"
+  ]
+ },
+ {
+  "id": "padesky-mind-over-mood/12-when-you-complete-this-chapter#3",
+  "book": "padesky-mind-over-mood",
+  "title": "When You Complete This Chapter (4/8)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "theory",
+  "words": 2008,
+  "terms": [
+   "poow",
+   "spoow",
+   "paduejeq",
+   "yyhnoy",
+   "uoisn",
+   "yhnoy",
+   "aysaped",
+   "sanb",
+   "duod",
+   "peojumop",
+   "jjasunoa",
+   "ydea",
+   "aysapeg",
+   "puajo"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "padesky-mind-over-mood/12-when-you-complete-this-chapter#4",
+  "book": "padesky-mind-over-mood",
+  "title": "When You Complete This Chapter (5/8)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 2187,
+  "terms": [
+   "core",
+   "belief",
+   "worksheet",
+   "problems",
+   "mood",
+   "rating",
+   "poow",
+   "additional",
+   "spoow",
+   "mind",
+   "behaviors",
+   "behavior",
+   "action",
+   "plan"
+  ],
+  "bcts": [
+   "coping-plan"
+  ]
+ },
+ {
+  "id": "padesky-mind-over-mood/12-when-you-complete-this-chapter#5",
+  "book": "padesky-mind-over-mood",
+  "title": "When You Complete This Chapter (6/8)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 2191,
+  "terms": [
+   "mood",
    "worksheet",
    "mind",
+   "second",
+   "edition",
+   "dennis",
+   "greenberger",
+   "christine",
+   "padesky",
+   "download",
+   "additional",
+   "copies",
+   "contents",
+   "each"
+  ],
+  "bcts": []
+ },
+ {
+  "id": "padesky-mind-over-mood/12-when-you-complete-this-chapter#6",
+  "book": "padesky-mind-over-mood",
+  "title": "When You Complete This Chapter (7/8)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "exercise",
+  "words": 2165,
+  "terms": [
+   "thoughts",
    "thought",
    "moods",
-   "skills",
-   "core",
+   "example",
+   "case",
    "anxiety",
-   "depression",
-   "plan",
-   "life",
-   "poow",
-   "example"
+   "record",
+   "core",
+   "overview",
+   "connection",
+   "beliefs",
+   "evidence",
+   "automatic",
+   "mood"
   ],
   "bcts": [
    "relapse-prevention",
    "change-routine",
    "coping-plan",
-   "high-risk-ahead",
-   "discuss-cravings"
+   "check-nrt"
+  ]
+ },
+ {
+  "id": "padesky-mind-over-mood/12-when-you-complete-this-chapter#7",
+  "book": "padesky-mind-over-mood",
+  "title": "When You Complete This Chapter (8/8)",
+  "src": "Mind Over Mood — Greenberger & Padesky",
+  "kind": "theory",
+  "words": 505,
+  "terms": [
+   "mood",
+   "anxiety",
+   "mind",
+   "cognitive",
+   "therapy",
+   "depression",
+   "inventory",
+   "identifying",
+   "scores",
+   "moods",
+   "activity",
+   "california",
+   "relapse",
+   "management"
+  ],
+  "bcts": [
+   "relapse-prevention"
   ]
  },
  {
@@ -3241,3 +6076,6 @@ export const LIBRARY = [
   "bcts": []
  }
 ];
+
+//  אינדקס BM25 על הטקסט המלא. מסודר **באותו סדר כמו LIBRARY**.
+export const BM25 = {"len":[949,900,845,1780,1105,1030,1036,1216,538,1132,1371,400,966,868,293,281,985,907,968,1008,412,1336,583,219,1060,941,998,591,103,183,327,340,1303,1114,944,754,996,938,708,105,524,939,667,1367,342,376,463,992,942,304,94,1173,585,784,311,229,1355,787,1058,744,1034,872,203,487,993,918,148,127,101,1050,653,1301,432,121,1127,589,1018,435,154,857,917,1067,1103,1087,765,224,1215,1293,728,1220,1160,1195,1096,895,1023,1120,1049,1004,1082,289,1530,1036,868,1023,852,925,262,721,1218,984,999,1249,980,1083,1238,1014,1100,790,728,194,1049,958,858,1079,1038,1011,1036,992,220,186,166,89,92,71,792,105,65,61,96,155,722,100,107,73,122,143,107,62,132,93,122,144,220,290,272,1245,153,149,676,274,337,443,147,1032,1022,543,1484,923,1566,924,996,1070,923,619,202,971,963,1053,964,908,228,949,947,912,985,797,980,1050,882,878,574,933,962,885,1010,899,1062,960,986,887,933,892,986,981,1018,1051,928,480,1542,865,1032,902,962,1011,944,830,897,1027,1027,1085,955,965,897,1072,191,288],"avg":758.7,"post":{"introduction":[[0,3],[1,3],[2,2],[4,1],[56,5],[57,3],[58,3],[82,2],[83,3],[84,2],[119,1],[211,1]],"cognitive":[[0,17],[1,16],[2,11],[3,13],[4,15],[5,9],[6,5],[7,19],[8,6],[9,5],[10,6],[11,3],[12,4],[13,4],[14,3],[15,4],[16,6],[17,6],[18,9],[19,5],[20,2],[21,5],[22,2],[23,4],[24,7],[25,3],[26,4],[27,1],[28,1],[29,2],[30,3],[31,2],[32,7],[33,8],[34,6],[35,4],[36,3],[37,4],[38,2],[39,2],[40,2],[41,7],[42,5],[43,6],[44,4],[45,2],[46,3],[47,6],[48,6],[49,1],[51,8],[52,3],[53,3],[54,1],[55,1],[56,9],[57,3],[58,4],[59,2],[60,8],[61,3],[63,4],[64,5],[65,4],[69,3],[70,4],[71,4],[72,2],[74,9],[75,6],[76,4],[79,6],[80,32],[81,37],[82,24],[83,28],[84,15],[85,3],[86,3],[87,1],[89,2],[91,1],[92,8],[94,1],[95,1],[98,1],[109,3],[110,1],[112,2],[113,4],[114,4],[115,1],[118,8],[123,3],[124,5],[125,10],[126,7],[127,10],[128,1],[134,1],[140,1],[151,1],[152,5],[160,7],[161,4],[169,1],[175,1],[202,4],[203,7],[206,2],[208,1],[224,5],[225,7]],"behavior":[[0,18],[1,6],[2,10],[3,10],[4,9],[5,7],[6,6],[7,25],[8,4],[9,3],[10,5],[11,1],[12,4],[13,7],[14,1],[15,1],[16,3],[17,7],[18,7],[19,6],[20,6],[21,4],[22,3],[23,4],[24,5],[25,3],[26,4],[27,2],[30,1],[31,1],[32,6],[33,13],[34,3],[35,2],[36,3],[37,3],[38,2],[39,1],[40,7],[41,9],[42,6],[43,7],[44,3],[45,2],[46,2],[47,4],[48,4],[49,2],[51,7],[52,3],[53,2],[54,1],[55,1],[56,5],[57,7],[58,4],[59,2],[60,7],[61,3],[63,7],[64,4],[65,6],[67,1],[69,3],[70,3],[71,6],[72,2],[74,5],[75,5],[79,1],[80,8],[81,8],[82,3],[83,1],[84,3],[85,2],[88,1],[89,1],[90,1],[91,4],[92,1],[93,1],[95,2],[96,3],[97,1],[98,1],[103,1],[109,1],[111,3],[112,1],[113,2],[115,1],[116,4],[117,1],[118,4],[120,1],[122,1],[123,1],[124,3],[125,4],[126,1],[127,7],[160,1],[170,7],[171,1],[172,15],[173,1],[174,2],[175,3],[176,1],[177,1],[192,6],[194,6],[195,4],[196,3],[198,2],[199,14],[202,1],[203,1],[205,2],[207,9],[208,1],[212,1],[213,4],[215,1],[216,3],[217,1],[218,1],[221,9],[223,8],[225,1]],"therapy":[[0,23],[1,16],[2,10],[3,34],[4,5],[5,3],[6,4],[7,7],[8,3],[9,11],[10,11],[11,3],[12,7],[13,11],[14,5],[15,4],[16,10],[17,14],[18,8],[19,13],[20,3],[21,5],[22,3],[23,2],[24,11],[25,6],[26,9],[27,4],[28,2],[29,1],[30,8],[31,4],[32,15],[33,16],[34,6],[35,5],[36,12],[37,5],[38,6],[40,3],[41,5],[42,4],[43,4],[44,2],[45,4],[46,3],[47,3],[48,3],[49,1],[50,2],[51,16],[52,6],[53,3],[54,1],[55,2],[56,6],[57,3],[58,4],[59,5],[60,11],[61,3],[62,1],[63,12],[64,3],[65,4],[66,1],[69,4],[70,3],[71,22],[72,7],[73,3],[74,27],[75,14],[79,7],[80,52],[81,44],[82,18],[83,14],[84,18],[85,4],[86,6],[87,5],[88,1],[89,3],[92,7],[94,1],[95,1],[96,1],[100,1],[101,1],[103,2],[107,1],[108,3],[109,1],[114,4],[115,4],[116,4],[117,2],[118,7],[120,2],[121,1],[122,2],[123,8],[124,3],[125,10],[126,2],[127,9],[128,3],[129,5],[130,5],[134,1],[140,2],[151,2],[152,1],[160,3],[164,3],[169,4],[170,2],[171,5],[175,3],[177,2],[183,3],[192,1],[202,2],[203,7],[206,1],[210,1],[213,1],[214,3],[215,1],[217,1],[218,2],[219,15],[223,3],[224,5],[225,9]],"year-old":[[0,1],[79,1],[169,1],[171,1],[173,2],[185,1],[186,2]],"divorced":[[0,1],[3,1],[65,1],[76,1],[171,2]],"european":[[0,1],[76,1],[111,2],[118,1],[124,3],[125,1],[127,1]],"heritage":[[0,1],[76,2]],"became":[[0,1],[1,1],[3,3],[5,1],[6,20],[7,1],[10,4],[24,1],[40,1],[56,4],[58,1],[62,1],[63,1],[66,1],[76,10],[100,1],[109,2],[113,1],[170,5],[171,3],[172,1],[173,1],[175,3],[178,2],[184,1],[187,1],[189,1],[190,1],[191,1],[193,2],[196,2],[198,1],[199,1],[201,2],[205,2],[206,1],[210,2],[212,1],[213,1],[217,1],[218,2],[219,3]],"severely":[[0,1],[6,1],[21,1],[76,1],[201,1],[212,1]],"depressed":[[0,3],[1,5],[3,3],[4,1],[5,5],[6,6],[12,3],[13,9],[14,2],[16,3],[17,21],[18,7],[19,7],[20,4],[21,9],[22,1],[23,1],[24,2],[26,1],[27,1],[30,1],[33,3],[34,1],[35,2],[37,2],[41,2],[43,1],[49,1],[53,2],[56,13],[57,1],[58,4],[60,2],[61,10],[64,4],[65,1],[66,3],[71,8],[72,2],[76,5],[80,1],[81,1],[88,1],[111,2],[112,3],[129,1],[170,5],[171,6],[172,4],[174,1],[175,4],[176,2],[177,1],[178,1],[179,1],[183,1],[184,1],[186,1],[187,1],[189,6],[191,1],[196,1],[197,1],[201,4],[202,15],[203,12],[204,2],[205,8],[217,3],[218,4],[219,4],[221,1]],"years":[[0,3],[1,2],[2,2],[6,2],[7,1],[10,1],[12,1],[36,1],[53,1],[58,5],[61,1],[62,1],[70,4],[76,10],[79,1],[87,1],[89,1],[90,1],[91,1],[92,1],[93,4],[94,1],[95,1],[96,1],[100,2],[101,1],[102,1],[105,1],[106,1],[108,3],[109,1],[110,2],[114,1],[116,1],[120,3],[121,1],[126,3],[127,1],[134,1],[168,1],[170,7],[171,7],[172,1],[173,1],[175,1],[182,4],[183,2],[185,1],[186,1],[189,1],[190,1],[191,1],[195,1],[200,1],[201,1],[203,1],[211,1],[215,6],[219,3],[224,1],[225,2]],"following":[[0,2],[4,2],[5,1],[6,2],[9,3],[10,3],[13,1],[14,1],[18,1],[19,1],[20,2],[21,2],[23,1],[25,2],[27,1],[32,3],[35,3],[36,1],[37,1],[38,1],[41,1],[42,1],[43,1],[45,1],[47,1],[48,2],[51,1],[52,3],[53,4],[56,1],[58,1],[63,1],[65,1],[68,1],[69,2],[70,2],[71,2],[72,1],[74,2],[75,3],[79,1],[81,1],[83,3],[86,1],[87,2],[88,1],[89,2],[90,4],[91,2],[92,1],[94,1],[95,1],[100,4],[101,1],[103,5],[107,2],[108,7],[109,1],[110,2],[112,3],[113,2],[114,4],[115,1],[116,3],[120,1],[121,6],[122,3],[124,1],[134,2],[135,1],[145,1],[149,1],[164,1],[165,1],[167,1],[171,2],[172,4],[173,1],[174,1],[175,3],[176,1],[178,3],[179,2],[180,1],[181,4],[182,2],[183,1],[184,1],[186,2],[187,2],[188,1],[189,1],[190,1],[191,1],[193,1],[194,2],[195,2],[196,1],[199,1],[201,1],[202,2],[203,1],[204,1],[205,1],[208,1],[217,2],[218,1],[222,1]],"significant":[[0,1],[3,3],[4,1],[5,1],[6,2],[7,1],[8,1],[15,1],[25,1],[32,1],[33,1],[44,1],[56,1],[57,2],[58,1],[62,1],[64,1],[70,1],[76,3],[85,1],[87,2],[88,4],[89,2],[90,1],[91,1],[94,1],[96,1],[108,2],[113,2],[115,1],[120,1],[133,1],[136,1],[139,1],[155,3],[196,1],[202,1],[212,1],[219,1],[222,1],[224,1],[225,2]],"diffi-":[[0,1],[5,1],[41,1],[74,1]],"culties":[[0,1],[74,1]],"work":[[0,3],[1,1],[2,3],[3,5],[4,1],[5,2],[6,11],[7,4],[8,1],[9,6],[10,5],[11,1],[12,7],[13,5],[14,1],[15,2],[17,1],[18,2],[19,4],[21,2],[23,1],[24,4],[25,6],[26,3],[27,2],[30,2],[31,2],[32,8],[33,5],[34,5],[35,3],[36,5],[37,10],[38,1],[40,1],[42,2],[43,2],[45,4],[47,2],[48,3],[49,2],[51,2],[52,1],[53,2],[56,3],[57,1],[58,4],[59,3],[60,3],[61,7],[62,1],[63,1],[64,1],[65,6],[66,1],[69,5],[70,2],[71,1],[72,1],[74,9],[75,3],[76,9],[77,1],[79,5],[80,2],[81,4],[83,1],[84,2],[85,1],[86,1],[88,1],[89,4],[90,2],[91,3],[94,2],[95,1],[96,3],[97,2],[98,3],[99,1],[100,3],[101,3],[102,1],[104,1],[107,2],[108,1],[109,1],[111,1],[112,1],[113,4],[114,1],[117,1],[126,1],[128,1],[131,1],[134,2],[135,2],[136,1],[140,3],[150,1],[151,2],[155,7],[159,1],[160,1],[165,1],[167,1],[168,2],[169,2],[170,1],[171,5],[172,4],[175,2],[176,3],[177,3],[178,6],[182,3],[185,2],[187,1],[188,1],[189,16],[190,6],[191,6],[192,1],[194,4],[195,1],[196,5],[197,5],[198,2],[199,1],[200,1],[201,3],[202,1],[203,2],[204,1],[206,1],[208,1],[209,2],[210,4],[211,1],[212,1],[213,3],[214,6],[216,1],[218,1],[219,2]],"marriage":[[0,1],[6,4],[40,1],[65,1],[76,1],[171,1],[189,5],[190,5],[198,1],[203,2],[212,1],[215,1],[219,2]],"time":[[0,4],[1,2],[2,2],[3,8],[4,3],[5,4],[6,5],[9,6],[10,6],[11,1],[12,13],[13,3],[14,1],[16,9],[17,7],[18,1],[19,5],[20,2],[21,5],[22,5],[24,5],[25,7],[26,10],[27,3],[31,2],[32,13],[33,6],[34,9],[35,3],[36,8],[37,2],[38,13],[40,2],[41,6],[42,3],[43,6],[45,4],[46,2],[47,7],[48,2],[49,3],[51,5],[52,3],[53,3],[54,1],[55,1],[56,3],[57,3],[58,9],[60,3],[61,4],[62,4],[63,1],[64,4],[65,6],[66,1],[67,2],[68,1],[69,5],[70,6],[71,5],[72,2],[74,5],[76,5],[77,2],[78,1],[79,4],[84,2],[86,4],[87,1],[89,5],[90,4],[91,9],[92,6],[93,5],[94,4],[95,9],[96,8],[97,5],[98,12],[99,3],[100,7],[101,6],[102,7],[103,2],[104,4],[105,11],[106,2],[107,6],[108,3],[109,4],[111,3],[112,3],[113,6],[114,4],[115,3],[120,7],[121,11],[122,12],[128,1],[129,1],[130,2],[133,1],[134,4],[139,1],[144,2],[146,1],[149,1],[152,1],[154,1],[155,4],[159,3],[161,1],[163,2],[164,6],[165,2],[166,5],[167,4],[168,7],[169,13],[170,4],[171,3],[172,3],[173,1],[175,4],[176,4],[177,4],[178,2],[179,1],[182,3],[183,3],[184,2],[185,3],[186,1],[187,5],[188,2],[189,8],[190,9],[191,8],[192,11],[193,6],[194,4],[195,3],[196,10],[198,12],[199,4],[200,5],[201,14],[202,10],[203,5],[204,4],[205,5],[206,8],[207,6],[208,3],[209,7],[210,6],[211,6],[212,8],[213,3],[214,6],[215,2],[216,9],[217,5],[218,2],[219,7],[221,6],[222,8]],"started":[[0,1],[1,3],[6,6],[10,1],[26,1],[27,2],[33,1],[34,1],[35,1],[36,1],[37,1],[40,1],[43,1],[44,1],[48,1],[51,2],[56,1],[58,2],[59,2],[61,1],[64,1],[66,2],[76,5],[77,1],[104,1],[105,1],[111,1],[121,1],[122,1],[163,1],[164,1],[165,1],[166,2],[172,1],[176,1],[177,5],[178,1],[179,3],[180,1],[181,6],[182,1],[183,2],[184,5],[185,2],[186,1],[187,3],[188,1],[190,1],[193,2],[198,1],[199,1],[201,1],[202,1],[205,1],[208,2],[212,1],[215,2],[216,1],[217,1],[219,1]],"treating":[[0,1],[3,1],[10,2],[14,1],[47,1],[80,1],[86,2],[87,1],[89,2],[92,1],[123,2],[124,1],[125,1],[126,1],[204,1],[208,2]],"fairly":[[0,1],[1,1],[4,1],[5,1],[6,3],[18,1],[36,1],[43,1],[64,1],[101,1],[164,1],[195,1],[202,1],[215,1],[218,1]],"isolated":[[0,1],[32,1],[170,1],[186,1]],"inactive":[[0,1],[5,1],[19,1],[20,1],[21,1],[22,1]],"spending":[[0,1],[6,1],[12,2],[21,1],[57,1],[72,1],[76,2],[77,2],[97,2],[172,1],[175,1],[182,1],[185,1],[186,1],[191,3],[198,1],[202,1],[209,1],[210,1],[214,1],[222,1]],"apartment":[[0,1],[5,2],[6,1],[9,1],[10,1],[18,3],[19,2],[21,5],[31,1],[32,4],[33,5],[34,5],[35,1],[37,1],[38,1],[40,1],[43,1],[48,1],[49,1],[57,2],[59,1],[64,3],[66,1],[69,3],[71,1],[72,1],[76,4],[77,2],[219,1]],"watching":[[0,1],[3,1],[9,1],[13,1],[18,1],[20,1],[21,3],[31,1],[53,2],[57,2],[76,1],[79,2],[95,2],[145,1],[158,1],[159,1],[171,1],[173,1],[182,1],[194,1],[200,1],[204,1],[206,1]],"television":[[0,1],[4,1],[6,1],[8,1],[13,1],[20,1],[31,1],[53,1],[57,1],[69,1],[76,1],[86,1],[95,1],[96,2],[98,1],[113,1],[157,1],[158,2],[159,1],[171,1],[185,1],[194,1]],"surfing":[[0,1],[7,1],[20,1],[31,1],[63,1],[76,1],[89,1],[91,2],[97,1],[105,1],[123,1]],"occasionally":[[0,1],[1,1],[3,1],[8,1],[11,1],[19,2],[26,1],[27,1],[37,1],[63,1],[65,1],[74,1],[75,1],[114,1],[167,1],[168,1],[193,2],[201,1],[205,1]],"playing":[[0,1],[18,1],[20,1],[60,1],[63,1],[65,2],[79,1],[82,1],[92,1],[97,1],[138,1],[200,1],[204,3],[210,2]],"video":[[0,1],[3,2],[20,1],[33,1],[63,1],[92,1],[93,1],[99,1],[113,3]],"games":[[0,1],[12,1],[20,1],[56,1],[195,3]],"total":[[0,1],[48,2],[51,1],[77,1],[88,1],[89,1],[90,7],[91,1],[97,2],[99,1],[101,2],[102,2],[107,1],[109,1],[110,1],[112,1],[114,1],[115,1],[120,2],[186,1],[198,1],[206,1],[221,1]],"sessions":[[0,5],[1,1],[2,1],[3,15],[4,3],[5,1],[7,2],[9,5],[10,7],[11,1],[12,3],[13,7],[15,2],[17,1],[19,1],[21,1],[22,1],[24,6],[27,1],[28,2],[29,1],[30,1],[31,1],[32,6],[33,14],[34,4],[35,6],[36,14],[37,5],[38,4],[42,1],[44,1],[46,2],[50,4],[51,2],[52,1],[53,1],[57,1],[59,3],[60,2],[61,1],[65,1],[69,2],[71,22],[72,10],[74,9],[75,4],[76,1],[77,4],[82,18],[83,7],[84,6],[87,6],[88,2],[89,1],[92,3],[98,1],[101,3],[102,1],[103,2],[107,1],[112,1],[113,3],[114,6],[115,6],[120,12],[124,1],[128,1],[131,1],[146,2],[151,1],[155,1],[163,1],[165,1],[167,8],[168,1],[170,1],[183,1],[189,2],[210,2],[214,2],[215,1]],"months":[[0,1],[3,2],[6,1],[10,1],[13,2],[21,2],[34,1],[47,1],[56,1],[61,1],[72,1],[76,1],[77,2],[86,3],[87,5],[88,4],[97,1],[100,1],[101,2],[103,3],[104,1],[108,3],[109,2],[111,4],[112,2],[113,2],[114,4],[115,1],[120,2],[121,3],[122,13],[163,2],[164,1],[168,2],[169,2],[170,5],[171,2],[172,2],[183,1],[189,2],[191,3],[193,1],[196,2],[198,3],[209,1],[217,1],[218,3],[219,2]],"using":[[0,1],[1,2],[2,3],[3,5],[7,1],[8,1],[9,2],[10,2],[15,1],[18,2],[21,3],[22,2],[24,1],[25,1],[27,1],[30,1],[31,1],[34,2],[35,1],[41,2],[42,2],[43,3],[44,2],[47,1],[48,2],[49,1],[50,1],[51,2],[52,2],[53,5],[55,2],[57,4],[58,5],[59,2],[60,5],[61,5],[62,1],[63,2],[64,2],[65,3],[69,3],[70,1],[71,4],[72,1],[74,1],[77,1],[79,3],[80,1],[81,2],[82,2],[83,12],[84,12],[87,2],[88,3],[93,3],[95,1],[96,1],[99,2],[100,2],[101,1],[103,3],[104,1],[106,1],[108,1],[110,1],[111,9],[112,1],[114,6],[115,2],[116,2],[117,1],[120,1],[121,3],[123,1],[124,1],[125,1],[126,1],[127,2],[129,1],[130,1],[134,6],[140,5],[141,1],[145,1],[148,1],[150,2],[151,2],[155,4],[156,1],[157,1],[158,2],[160,2],[163,2],[164,9],[165,5],[166,12],[167,3],[168,4],[169,4],[170,1],[176,2],[177,1],[178,1],[183,1],[188,1],[192,2],[193,1],[195,1],[197,3],[198,2],[199,1],[201,1],[203,2],[205,1],[207,1],[208,1],[209,1],[210,1],[211,1],[212,1],[213,2],[214,3],[215,1],[216,3],[217,10],[218,6],[219,4],[224,1]],"both":[[0,3],[2,1],[3,6],[4,1],[5,2],[7,1],[8,1],[10,1],[11,2],[12,1],[16,1],[18,2],[19,1],[21,1],[27,1],[30,1],[32,1],[34,1],[35,1],[36,1],[40,2],[43,3],[46,1],[49,2],[52,1],[56,3],[57,1],[58,1],[59,4],[60,6],[61,5],[63,1],[64,1],[65,1],[67,1],[68,1],[72,1],[73,1],[74,7],[75,2],[76,1],[84,1],[85,1],[88,2],[89,1],[92,1],[96,1],[103,1],[109,2],[111,1],[112,2],[113,2],[114,1],[124,1],[128,1],[140,2],[143,2],[153,2],[163,1],[164,1],[170,3],[171,2],[172,1],[173,1],[176,3],[181,2],[182,1],[183,1],[185,1],[186,4],[187,1],[188,1],[193,2],[196,3],[197,1],[200,1],[201,1],[202,1],[203,1],[205,1],[209,1],[210,1],[211,1],[212,2],[213,1],[214,1],[215,1],[219,1],[222,1]],"traditional":[[0,2],[1,3],[2,1],[7,4],[9,1],[16,1],[33,1],[34,1],[40,1],[56,2],[59,1],[65,1],[71,1],[82,2],[83,4],[84,2],[92,1],[109,1],[110,1]],"recovery-":[[0,1],[1,1]],"oriented":[[0,1],[1,1],[3,2],[21,1],[37,1],[62,1],[89,2],[113,1],[208,1]],"ct-r":[[0,3],[1,5],[2,3],[16,1],[82,1],[83,1],[84,2]],"conceptualization":[[0,3],[2,5],[3,11],[4,19],[5,6],[6,2],[7,10],[8,9],[9,3],[10,1],[11,3],[14,2],[15,2],[20,2],[23,1],[28,1],[29,1],[30,1],[32,3],[33,4],[43,1],[58,1],[63,1],[67,1],[73,1],[74,7],[75,4],[76,5],[81,4],[82,12],[83,15],[84,10]],"interventions":[[0,2],[2,1],[3,3],[4,1],[9,1],[18,1],[29,1],[31,1],[32,1],[33,3],[43,1],[69,1],[71,1],[72,1],[74,2],[77,1],[80,2],[81,2],[83,1],[84,1],[86,5],[87,9],[88,4],[89,2],[96,1],[101,1],[108,1],[109,2],[113,1],[116,2],[117,2],[123,2],[124,4],[125,1],[126,1],[127,2],[140,2],[161,1],[168,1],[202,1],[203,1],[206,1],[223,1]],"you'll":[[0,4],[1,3],[2,5],[3,7],[4,4],[7,4],[9,9],[10,2],[11,2],[12,3],[13,1],[14,5],[15,4],[16,5],[18,5],[19,6],[20,2],[21,2],[22,3],[23,1],[24,10],[25,1],[27,2],[28,2],[30,2],[32,1],[33,7],[34,11],[35,7],[36,1],[38,3],[41,2],[42,3],[43,2],[44,3],[45,4],[46,3],[48,1],[49,1],[51,2],[52,3],[53,1],[54,3],[56,2],[58,1],[59,3],[60,2],[61,1],[64,10],[65,3],[67,1],[69,5],[70,2],[71,10],[72,1],[74,1],[75,1],[175,1],[205,1],[206,1]],"read":[[0,1],[1,1],[2,3],[3,2],[4,1],[9,3],[10,2],[11,1],[12,1],[13,4],[17,7],[19,3],[22,1],[24,6],[25,4],[26,2],[27,1],[32,1],[33,4],[34,3],[35,2],[46,1],[48,1],[50,1],[51,9],[52,3],[55,1],[59,1],[60,1],[62,1],[63,1],[68,1],[71,3],[74,2],[92,1],[94,1],[98,1],[104,1],[114,1],[121,2],[158,1],[169,11],[176,10],[181,2],[182,1],[184,1],[185,1],[187,1],[196,1],[200,2],[201,4],[203,1],[209,1],[211,7],[212,1],[214,3],[218,1],[225,1]],"recovery":[[0,2],[1,2],[2,1],[3,1],[34,1],[40,1],[56,1],[59,1],[65,1],[71,1],[72,1],[81,1],[136,1],[182,2],[185,3]],"orientation":[[0,2],[1,1],[2,1],[3,3],[30,2],[34,1],[40,1],[53,1],[56,1],[59,1],[64,1],[65,1],[74,1],[76,2],[83,1],[115,1],[120,1]],"throughout":[[0,3],[1,1],[3,4],[4,3],[6,1],[7,3],[8,1],[9,3],[10,1],[12,1],[13,1],[15,1],[24,3],[27,1],[30,1],[33,1],[34,1],[35,1],[38,1],[43,1],[44,1],[53,1],[59,2],[60,1],[63,1],[65,1],[71,4],[72,1],[74,1],[75,1],[76,1],[84,1],[89,1],[91,1],[92,1],[94,3],[97,1],[101,4],[114,2],[115,2],[120,2],[133,1],[163,3],[166,3],[167,2],[168,2],[169,2],[170,2],[172,2],[173,1],[175,1],[176,1],[178,1],[180,1],[182,1],[186,1],[194,1],[200,2],[201,4],[204,2],[205,3],[208,1],[210,3],[211,1],[212,1],[222,2]],"first":[[0,4],[1,8],[2,2],[3,4],[4,3],[5,2],[6,2],[7,3],[8,2],[9,8],[10,4],[11,3],[12,4],[13,1],[14,4],[15,7],[16,6],[17,4],[18,3],[19,9],[20,2],[21,6],[22,2],[23,1],[24,6],[25,4],[26,2],[27,2],[32,6],[33,4],[34,2],[35,4],[36,4],[37,2],[40,1],[41,2],[42,3],[43,2],[46,1],[47,3],[48,2],[49,1],[51,2],[52,2],[53,1],[54,1],[56,1],[57,2],[58,5],[59,1],[60,2],[61,4],[64,2],[65,3],[66,1],[69,8],[70,1],[71,2],[74,1],[75,1],[76,1],[77,1],[79,2],[80,1],[81,4],[82,12],[83,7],[84,5],[86,1],[87,2],[89,3],[90,2],[91,2],[92,21],[93,6],[94,6],[95,6],[96,6],[97,7],[98,10],[99,3],[100,5],[101,7],[102,6],[103,7],[104,1],[105,7],[107,3],[108,2],[109,1],[110,1],[112,3],[113,1],[114,5],[115,5],[117,1],[118,1],[120,6],[121,1],[122,1],[130,1],[134,1],[140,3],[141,1],[147,1],[148,1],[154,1],[155,4],[158,1],[163,7],[164,4],[165,2],[166,7],[167,3],[168,5],[169,2],[170,7],[171,6],[172,2],[175,2],[176,5],[177,10],[178,5],[179,4],[180,2],[181,2],[182,3],[183,2],[184,4],[185,3],[186,1],[187,1],[188,4],[189,3],[190,1],[191,4],[192,1],[193,7],[194,1],[195,2],[196,4],[198,2],[199,4],[200,2],[201,3],[202,2],[203,5],[204,2],[205,3],[206,3],[207,2],[208,1],[209,4],[210,2],[211,1],[213,1],[214,1],[215,2],[216,1],[217,4],[218,1],[219,4],[221,1],[222,2],[223,4],[225,1]],"conducted":[[0,1],[1,1],[87,2],[89,1],[108,2],[120,1]],"diagnostic":[[0,1],[11,1],[13,3],[30,1],[74,1],[75,1],[76,1],[79,1],[82,1],[83,2]],"evaluation":[[0,1],[2,1],[3,1],[4,1],[7,3],[11,16],[12,7],[13,4],[14,6],[15,2],[16,1],[19,3],[21,2],[23,1],[30,1],[33,1],[35,2],[41,1],[42,1],[45,2],[47,4],[48,2],[50,1],[51,2],[52,3],[56,1],[57,2],[58,1],[60,1],[64,1],[75,1],[76,1],[81,2],[82,6],[83,4],[84,2],[122,1],[123,1],[124,2],[125,1],[197,1],[215,1],[216,1]],"next":[[0,1],[2,1],[7,2],[8,1],[9,4],[10,1],[12,6],[13,6],[14,3],[16,5],[17,11],[18,4],[19,5],[21,4],[22,2],[23,1],[24,1],[25,9],[26,4],[27,2],[30,1],[32,6],[33,6],[34,7],[35,7],[36,7],[37,5],[38,7],[41,1],[42,2],[43,1],[45,1],[46,1],[47,5],[48,2],[51,1],[52,6],[54,3],[56,3],[58,6],[60,3],[62,1],[64,4],[65,3],[69,3],[70,4],[71,4],[74,1],[79,4],[91,1],[92,2],[93,2],[94,5],[95,5],[96,5],[97,5],[98,5],[100,4],[102,4],[103,3],[104,3],[105,2],[114,5],[115,3],[120,4],[121,3],[122,2],[143,1],[155,1],[163,1],[165,5],[166,8],[167,7],[168,3],[169,1],[171,2],[173,1],[175,2],[176,4],[177,3],[178,1],[179,1],[180,1],[181,4],[182,1],[184,1],[185,2],[188,1],[190,1],[192,2],[193,3],[194,1],[195,3],[197,1],[198,3],[200,1],[201,3],[204,4],[205,3],[206,1],[208,4],[209,2],[210,1],[211,1],[212,1],[214,1],[215,1],[216,1],[217,4],[218,1],[219,2],[222,3]],"session":[[0,5],[1,4],[2,6],[3,17],[4,1],[5,1],[7,1],[8,2],[9,14],[10,10],[11,24],[12,14],[13,6],[14,12],[15,15],[16,19],[17,7],[18,4],[19,16],[20,1],[21,5],[23,4],[24,18],[25,7],[26,8],[27,2],[29,1],[30,2],[32,24],[33,35],[34,12],[35,10],[36,20],[37,9],[38,21],[40,3],[41,2],[42,2],[43,6],[44,1],[45,3],[46,4],[47,1],[48,5],[50,2],[51,6],[52,6],[53,4],[56,3],[58,2],[59,3],[60,1],[61,1],[62,1],[63,1],[64,2],[65,1],[66,1],[69,2],[71,8],[72,1],[74,26],[75,7],[77,2],[81,6],[82,28],[83,16],[84,10],[86,1],[87,4],[88,2],[91,2],[92,15],[93,4],[94,5],[95,4],[96,5],[97,6],[98,8],[99,3],[100,4],[101,17],[102,19],[103,17],[104,7],[105,2],[106,1],[107,13],[114,19],[115,12],[116,1],[117,1],[120,16],[124,1],[125,1],[126,1],[163,10],[164,6],[165,6],[166,14],[167,5],[168,16],[171,1],[177,1],[202,1],[210,1],[219,1]],"treatment":[[0,13],[1,5],[2,8],[3,45],[4,8],[5,3],[6,1],[7,6],[8,3],[9,13],[10,1],[11,15],[12,16],[13,15],[14,10],[15,7],[16,4],[17,2],[18,1],[19,4],[20,1],[21,1],[23,2],[24,2],[25,1],[27,2],[28,5],[29,5],[30,15],[31,3],[32,11],[33,6],[34,1],[35,1],[36,4],[38,3],[43,4],[44,2],[45,3],[48,1],[53,1],[55,1],[56,4],[57,2],[58,4],[59,5],[60,2],[65,1],[69,1],[71,9],[72,7],[73,1],[74,12],[75,7],[76,7],[77,12],[79,5],[80,3],[81,14],[82,8],[83,11],[84,10],[86,24],[87,14],[88,12],[89,12],[90,3],[91,1],[92,6],[93,3],[94,7],[95,4],[96,5],[97,7],[98,5],[99,2],[100,1],[101,2],[102,3],[103,12],[104,2],[105,2],[107,11],[108,15],[109,6],[110,2],[111,2],[112,8],[113,12],[114,10],[115,13],[116,2],[117,3],[118,7],[119,3],[120,15],[121,1],[122,5],[123,6],[124,6],[125,4],[126,11],[127,6],[160,3],[163,5],[167,1],[168,1],[170,5],[171,1],[173,1],[177,1],[184,1],[191,1],[201,1],[203,2],[206,1],[208,1],[211,5],[219,1],[223,2]],"gave":[[0,1],[14,1],[17,1],[25,1],[33,1],[34,1],[48,1],[59,1],[94,1],[100,2],[155,3],[177,1],[182,1],[194,1],[208,1],[212,1],[213,2],[215,1],[219,2],[222,1]],"information":[[0,1],[2,1],[4,5],[5,7],[6,1],[7,4],[8,2],[9,2],[10,2],[11,6],[12,4],[14,2],[16,2],[21,2],[31,1],[33,1],[34,1],[51,1],[56,5],[58,3],[60,1],[64,1],[75,1],[76,5],[80,1],[81,4],[83,2],[85,1],[87,1],[89,1],[90,1],[92,7],[93,1],[98,1],[101,1],[102,1],[103,3],[107,1],[108,3],[109,1],[113,1],[114,5],[115,13],[116,1],[120,2],[121,15],[122,2],[123,1],[131,1],[134,3],[146,1],[148,1],[149,2],[151,1],[152,1],[155,18],[158,1],[163,4],[164,1],[165,1],[168,16],[170,2],[172,5],[174,3],[175,2],[177,1],[182,3],[183,8],[184,5],[185,5],[186,8],[193,1],[203,1],[205,1],[207,2],[213,3],[219,1]],"diagnosis":[[0,1],[4,2],[5,1],[11,4],[12,2],[13,1],[14,2],[15,1],[16,1],[17,5],[19,1],[29,1],[74,4],[75,1],[76,2],[80,1],[82,1],[83,3],[84,1],[109,1],[126,1],[160,1],[191,2],[202,1],[206,1]],"theory":[[0,2],[2,1],[79,2],[80,4],[81,3],[111,1],[117,1],[118,1],[123,2],[125,2],[126,1],[127,2],[160,1],[161,1]],"process":[[0,1],[1,3],[3,4],[4,3],[5,3],[8,3],[9,3],[16,1],[17,1],[24,1],[29,1],[30,1],[32,3],[36,1],[37,1],[40,1],[44,1],[45,3],[46,2],[47,3],[52,1],[53,6],[54,2],[55,1],[58,1],[64,3],[65,1],[69,3],[74,2],[76,1],[81,2],[82,1],[83,1],[84,1],[98,2],[103,1],[110,1],[113,1],[123,1],[124,1],[129,1],[131,1],[134,2],[136,1],[139,1],[140,2],[141,1],[142,1],[148,2],[149,1],[150,2],[151,1],[152,1],[154,1],[155,10],[160,1],[161,7],[175,1],[192,1],[198,1],[203,1],[210,1],[214,2],[216,1],[222,1]],"proposed":[[0,1],[80,1]],"plan":[[0,2],[1,1],[2,1],[3,8],[4,2],[9,3],[10,3],[11,8],[12,3],[13,20],[14,7],[15,11],[16,9],[17,5],[18,1],[19,8],[21,8],[22,1],[23,2],[24,20],[25,30],[26,28],[27,14],[28,6],[29,2],[30,7],[31,8],[32,14],[33,14],[34,9],[35,9],[36,2],[37,2],[38,4],[41,1],[46,1],[47,2],[48,4],[49,1],[51,1],[52,4],[53,1],[54,1],[59,2],[60,3],[63,1],[64,1],[66,1],[67,1],[71,5],[72,1],[73,1],[74,4],[75,4],[77,3],[79,1],[81,2],[82,17],[83,6],[84,1],[88,1],[89,1],[90,1],[92,1],[94,1],[95,1],[96,2],[97,4],[100,1],[102,1],[108,1],[113,1],[115,1],[120,2],[153,1],[155,1],[163,1],[166,3],[167,1],[168,3],[174,1],[178,1],[185,1],[186,1],[187,3],[188,1],[189,20],[190,15],[191,2],[192,1],[193,3],[194,2],[195,3],[201,1],[202,2],[203,1],[204,5],[205,2],[209,2],[211,2],[213,3],[214,1],[216,2],[217,1],[218,20],[219,3],[221,8],[222,3],[223,10],[224,1]],"asked":[[0,1],[1,2],[5,4],[6,3],[9,4],[10,2],[12,1],[14,1],[25,1],[36,1],[37,2],[43,3],[47,2],[48,2],[57,1],[59,6],[62,4],[65,2],[74,2],[76,1],[91,1],[92,3],[100,1],[101,1],[113,2],[114,1],[115,1],[118,1],[119,1],[120,6],[121,1],[155,4],[166,1],[169,1],[172,2],[175,2],[181,4],[183,5],[184,4],[185,2],[186,3],[187,1],[189,4],[191,1],[206,1],[207,1],[208,2],[212,2],[213,1],[219,1]],"aspira-":[[0,1],[3,1]],"tions":[[0,1],[3,2],[4,1],[5,3],[8,1],[10,1],[12,2],[24,1],[33,1],[41,2],[43,4],[44,1],[46,1],[48,2],[51,1],[56,1],[57,1],[58,1],[60,2],[61,1],[65,1],[71,1],[80,1],[85,1],[86,1],[87,1],[91,2],[92,1],[95,1],[98,1],[100,1],[111,2],[113,2],[120,1],[174,1],[179,1],[185,1],[188,1],[191,1],[192,1],[194,1],[195,2],[197,1],[203,1],[209,1],[218,1]],"wanted":[[0,3],[3,1],[4,1],[22,1],[25,1],[32,2],[34,1],[43,4],[48,2],[64,2],[105,1],[168,1],[171,3],[175,1],[176,1],[181,2],[182,1],[185,1],[186,1],[188,1],[189,5],[190,3],[191,2],[194,2],[195,2],[198,1],[199,8],[201,1],[213,1],[221,2]],"life":[[0,2],[2,1],[3,7],[6,5],[7,8],[8,1],[10,1],[12,3],[13,4],[18,9],[19,2],[21,6],[26,7],[29,1],[35,1],[36,3],[37,1],[38,2],[40,1],[41,4],[42,1],[43,2],[53,4],[54,3],[56,1],[58,7],[59,1],[64,2],[69,2],[70,3],[71,2],[74,2],[76,5],[80,1],[81,1],[83,1],[84,1],[87,1],[89,5],[90,3],[91,11],[92,3],[93,5],[94,5],[95,5],[96,7],[97,2],[98,2],[99,2],[100,13],[101,4],[102,4],[103,3],[104,10],[105,11],[106,4],[108,1],[110,1],[112,2],[113,4],[114,1],[115,2],[120,4],[122,2],[123,1],[124,1],[125,1],[129,1],[130,2],[133,2],[145,2],[147,2],[152,1],[164,2],[166,2],[168,2],[169,9],[170,12],[171,17],[172,6],[173,2],[174,1],[175,6],[176,5],[177,3],[178,1],[179,4],[180,2],[181,5],[183,3],[184,3],[185,1],[187,2],[188,5],[189,4],[190,2],[191,3],[192,3],[194,1],[195,2],[196,8],[197,13],[198,8],[199,1],[200,11],[201,9],[202,7],[203,1],[205,1],[206,1],[208,4],[210,1],[211,3],[212,2],[213,1],[214,4],[215,3],[216,8],[217,9],[218,6],[219,8],[221,4],[222,8],[223,9],[225,2]],"values":[[0,1],[1,2],[2,2],[3,8],[4,1],[5,1],[6,7],[7,1],[8,1],[9,1],[10,1],[11,1],[15,3],[18,7],[19,3],[20,1],[21,3],[24,2],[26,1],[27,1],[29,3],[30,2],[31,2],[33,1],[43,2],[49,1],[51,1],[53,1],[56,1],[63,1],[64,1],[65,2],[69,1],[71,1],[72,1],[74,5],[75,1],[76,3],[77,1],[81,1],[82,2],[83,2],[84,1],[85,2],[89,2],[91,4],[94,1],[96,2],[100,7],[102,1],[103,1],[104,3],[105,1],[106,1],[173,1],[176,1],[177,1],[191,7],[192,1],[200,2],[204,4],[205,2],[215,3],[216,3],[217,1],[218,2],[222,1]],"really":[[0,1],[1,1],[2,1],[3,1],[4,4],[7,1],[9,3],[10,6],[12,2],[13,2],[14,1],[16,1],[17,10],[18,10],[19,4],[20,1],[21,6],[22,1],[25,2],[26,2],[27,3],[32,3],[33,2],[34,8],[35,2],[36,4],[37,3],[38,1],[39,1],[40,1],[41,8],[42,7],[43,5],[44,1],[47,2],[48,2],[49,2],[52,1],[56,2],[57,2],[58,5],[59,2],[60,2],[61,4],[64,1],[65,5],[69,7],[70,9],[71,3],[72,1],[79,10],[89,1],[90,2],[94,1],[96,1],[100,11],[102,1],[105,2],[107,4],[121,1],[134,1],[140,1],[152,1],[154,3],[155,1],[158,2],[163,1],[164,1],[165,2],[166,5],[167,4],[168,2],[172,4],[173,2],[176,1],[181,2],[182,6],[188,1],[189,4],[190,3],[191,1],[194,1],[196,1],[197,1],[198,2],[200,1],[205,1],[206,2],[207,1],[208,2],[210,1],[214,7],[225,1]],"impor-":[[0,1],[3,1],[10,1],[20,1],[24,1],[33,1],[35,1],[36,1],[42,1],[45,1],[94,1],[95,1],[103,1],[218,1]],"tant":[[0,1],[3,1],[10,1],[20,1],[24,1],[33,1],[35,1],[36,1],[45,1],[94,1],[95,1],[103,1],[218,1]],"goals":[[0,2],[1,2],[2,4],[3,14],[4,1],[8,2],[9,6],[11,2],[12,3],[13,10],[14,2],[15,4],[16,2],[17,1],[18,3],[19,28],[23,1],[24,5],[25,1],[26,1],[28,1],[29,1],[30,4],[31,2],[32,7],[33,5],[34,4],[36,1],[37,8],[38,1],[39,1],[40,1],[43,4],[44,1],[45,1],[51,1],[57,1],[58,1],[65,1],[69,2],[71,6],[72,2],[74,15],[75,3],[77,1],[82,3],[83,4],[84,1],[85,1],[88,1],[89,1],[90,3],[93,2],[95,1],[96,4],[97,1],[98,1],[99,1],[101,1],[104,6],[105,1],[113,1],[140,2],[149,1],[168,2],[175,2],[176,27],[177,2],[189,1],[190,1],[191,3],[192,3],[201,1],[206,1],[211,2],[217,2],[219,1],[223,2],[224,2],[225,2]],"better":[[0,2],[1,2],[2,5],[3,9],[4,2],[5,4],[6,3],[7,1],[9,1],[10,3],[12,1],[13,7],[15,1],[16,1],[17,3],[18,6],[19,7],[20,2],[21,19],[23,2],[24,1],[25,5],[26,5],[27,3],[28,1],[30,1],[31,2],[32,9],[33,11],[34,4],[35,1],[36,4],[37,10],[38,5],[39,1],[41,3],[42,1],[43,5],[46,1],[47,2],[48,2],[51,4],[52,8],[53,2],[58,2],[59,4],[60,1],[61,2],[63,1],[64,1],[66,1],[69,5],[70,6],[71,17],[72,3],[74,4],[75,2],[77,3],[79,1],[87,2],[88,2],[89,3],[91,2],[92,1],[93,3],[94,3],[95,3],[97,1],[98,3],[99,2],[100,3],[101,1],[102,2],[103,1],[104,1],[105,1],[106,1],[109,1],[111,2],[112,1],[113,2],[114,1],[116,1],[120,3],[123,1],[127,1],[130,1],[138,1],[140,1],[148,1],[165,1],[166,3],[167,1],[168,1],[169,6],[170,2],[171,9],[172,2],[174,1],[175,6],[176,6],[177,2],[178,5],[180,1],[181,6],[182,6],[183,7],[184,5],[185,3],[186,6],[187,8],[188,2],[189,9],[190,1],[191,3],[192,2],[194,5],[195,2],[196,2],[198,4],[199,2],[200,3],[201,5],[202,5],[203,10],[204,24],[205,5],[206,4],[207,1],[210,2],[211,4],[212,3],[214,4],[216,5],[217,6],[218,11],[219,5],[222,2],[225,1]],"productive":[[0,1],[3,1],[6,3],[7,2],[9,1],[12,1],[16,1],[18,5],[19,1],[21,3],[29,1],[31,1],[34,1],[43,1],[44,1],[63,1],[64,4],[71,1],[76,2],[89,1],[93,1],[96,1],[118,1],[135,1],[214,1]],"helpful":[[0,1],[2,1],[3,2],[4,2],[7,5],[8,1],[10,2],[11,1],[12,2],[13,1],[16,2],[17,2],[18,1],[20,1],[25,3],[26,1],[27,1],[28,1],[30,2],[31,1],[32,4],[33,1],[34,1],[36,1],[37,1],[41,1],[42,1],[43,2],[44,1],[46,3],[47,1],[48,6],[50,1],[51,3],[52,4],[53,2],[54,2],[55,1],[56,2],[59,2],[60,2],[63,1],[65,3],[66,1],[67,1],[70,1],[71,1],[72,2],[74,1],[76,1],[77,1],[81,1],[82,3],[83,1],[90,2],[92,1],[93,1],[96,2],[97,3],[98,1],[101,2],[107,2],[113,1],[114,2],[121,7],[122,10],[140,2],[148,1],[152,1],[163,1],[164,1],[165,2],[166,2],[169,5],[171,3],[172,1],[174,1],[175,4],[176,5],[177,2],[178,1],[179,14],[180,1],[181,7],[182,1],[183,6],[184,6],[185,4],[186,6],[187,2],[188,3],[189,1],[190,1],[191,4],[192,2],[193,1],[194,1],[195,2],[196,3],[197,3],[198,4],[199,2],[200,6],[201,6],[203,2],[204,5],[205,2],[206,1],[208,2],[209,5],[210,2],[211,5],[213,7],[214,1],[215,5],[217,11],[218,4],[219,2],[222,2]],"others":[[0,6],[3,3],[4,5],[5,6],[6,7],[7,4],[8,5],[9,1],[10,3],[17,1],[18,1],[20,1],[21,4],[22,1],[29,1],[31,1],[37,1],[38,2],[41,1],[45,1],[48,6],[56,12],[57,4],[59,1],[60,4],[61,2],[62,1],[63,1],[65,3],[66,1],[67,1],[70,1],[71,1],[72,1],[74,1],[76,5],[77,1],[83,1],[86,1],[87,1],[88,1],[89,2],[90,2],[91,7],[94,4],[98,1],[99,1],[100,6],[101,2],[103,1],[104,1],[105,1],[107,2],[112,1],[120,2],[121,1],[122,2],[130,2],[134,5],[140,1],[142,3],[143,1],[144,1],[146,1],[148,2],[155,5],[156,4],[158,14],[159,5],[165,1],[168,4],[170,3],[171,3],[172,2],[173,2],[175,2],[179,4],[180,1],[181,4],[184,2],[185,1],[188,1],[189,2],[192,1],[194,3],[195,1],[196,6],[197,13],[198,3],[199,4],[200,11],[201,8],[202,2],[203,1],[208,2],[210,1],[212,1],[213,3],[214,3],[215,2],[216,8],[217,1],[218,1],[222,4],[223,1]],"optimistic":[[0,1],[9,2],[43,1],[74,1],[93,1],[98,1],[99,1],[107,3]],"resilient":[[0,1],[43,1],[71,1],[76,1],[188,1]],"control":[[0,1],[3,1],[4,1],[5,3],[6,3],[13,1],[18,2],[19,5],[20,4],[21,8],[23,1],[24,1],[26,2],[29,1],[31,1],[33,4],[34,1],[35,1],[36,1],[37,3],[43,1],[44,1],[48,1],[53,2],[56,6],[57,1],[58,1],[59,1],[71,2],[74,2],[76,2],[77,2],[78,2],[79,1],[86,3],[87,5],[88,1],[89,3],[90,1],[91,1],[93,1],[95,1],[96,1],[98,5],[99,4],[100,2],[104,1],[105,1],[109,1],[112,2],[113,2],[114,1],[115,2],[116,9],[117,2],[118,1],[119,1],[120,1],[122,1],[123,5],[124,7],[125,2],[127,6],[134,2],[140,2],[155,1],[156,1],[157,2],[158,3],[159,1],[160,1],[164,1],[170,1],[171,1],[175,5],[177,1],[178,1],[179,1],[181,1],[183,1],[189,4],[199,12],[206,1],[208,4],[209,2],[212,1],[213,6],[214,1],[219,2]],"specifically":[[0,1],[16,1],[26,1],[32,2],[43,1],[53,1],[62,1],[69,1],[79,1],[91,1],[92,1],[110,1],[115,1],[164,1],[165,1],[175,1]],"important":[[0,2],[1,3],[2,5],[3,10],[4,2],[5,4],[6,2],[7,12],[8,3],[9,4],[10,8],[11,2],[12,4],[13,7],[14,2],[15,3],[16,10],[17,1],[18,14],[19,7],[20,3],[21,12],[22,2],[23,1],[24,8],[25,3],[26,7],[27,4],[30,2],[32,5],[33,8],[34,9],[35,8],[36,5],[37,3],[38,4],[39,1],[40,2],[41,3],[43,12],[44,2],[45,8],[46,2],[48,2],[49,1],[50,2],[51,3],[52,3],[53,3],[56,3],[57,3],[58,3],[59,6],[60,2],[63,1],[64,3],[65,2],[68,1],[71,3],[72,5],[74,3],[75,4],[76,1],[77,1],[79,3],[82,1],[86,2],[89,4],[90,3],[91,4],[92,8],[93,1],[94,7],[95,7],[96,3],[97,2],[98,8],[99,1],[100,3],[101,4],[102,4],[103,5],[104,2],[105,1],[106,1],[107,1],[108,2],[109,2],[111,1],[115,1],[120,3],[134,2],[140,1],[146,1],[150,1],[153,3],[154,3],[155,1],[163,6],[164,1],[165,5],[166,5],[167,1],[169,5],[171,2],[172,1],[174,2],[175,5],[176,2],[177,2],[178,3],[179,4],[180,1],[181,3],[182,3],[183,5],[184,2],[185,3],[186,1],[187,3],[188,2],[191,10],[192,1],[193,1],[195,1],[196,1],[197,2],[198,2],[199,6],[200,2],[201,4],[203,5],[204,2],[208,3],[209,2],[210,3],[211,4],[212,2],[213,1],[214,2],[215,3],[216,4],[218,3],[222,1]],"manage":[[0,1],[9,1],[26,1],[61,1],[89,1],[91,1],[92,1],[93,1],[95,2],[98,2],[99,1],[102,2],[103,1],[112,2],[113,3],[120,1],[128,1],[152,1],[163,1],[167,1],[169,1],[170,1],[176,1],[179,1],[188,1],[191,3],[192,1],[205,1],[206,1],[207,1],[209,5],[210,4],[211,5],[212,1],[214,1],[217,4],[218,1],[219,3]],"home":[[0,1],[3,1],[5,1],[6,8],[7,1],[9,1],[12,3],[13,1],[18,2],[20,1],[21,3],[23,1],[24,3],[26,1],[31,1],[32,1],[33,1],[34,2],[40,1],[41,1],[42,3],[43,2],[46,1],[47,1],[52,3],[53,2],[54,1],[59,1],[60,1],[61,1],[63,1],[70,1],[74,1],[76,2],[79,3],[88,2],[92,1],[94,3],[96,1],[97,1],[98,5],[99,1],[100,1],[101,3],[110,1],[115,3],[118,3],[119,2],[120,3],[121,1],[158,3],[170,1],[171,4],[172,2],[175,1],[176,4],[177,2],[178,1],[182,1],[183,5],[185,3],[186,3],[187,2],[190,2],[191,2],[192,8],[193,2],[194,2],[195,2],[196,1],[198,1],[199,1],[201,1],[205,2],[207,1],[208,2],[209,2],[212,2],[214,1],[215,4],[219,2]],"find":[[0,2],[1,2],[2,3],[3,1],[4,2],[8,1],[9,5],[10,3],[12,2],[13,2],[15,1],[16,2],[18,1],[19,1],[20,2],[21,1],[22,2],[25,2],[26,6],[27,3],[30,1],[31,2],[32,3],[33,6],[34,3],[36,2],[37,1],[38,3],[45,1],[46,1],[48,1],[49,1],[50,1],[51,4],[52,2],[53,2],[54,1],[55,1],[56,2],[57,2],[58,1],[59,1],[60,3],[61,2],[63,1],[64,5],[65,2],[69,1],[71,4],[73,1],[86,1],[90,6],[91,1],[92,1],[93,1],[94,1],[96,1],[97,3],[98,5],[100,3],[102,1],[103,1],[104,3],[105,2],[106,1],[107,1],[113,2],[120,2],[121,1],[122,1],[134,2],[136,1],[138,1],[139,1],[140,2],[142,1],[151,1],[152,1],[153,1],[155,4],[163,3],[164,1],[165,2],[166,1],[167,2],[168,4],[169,4],[170,2],[171,1],[172,1],[173,1],[175,1],[176,3],[177,1],[179,1],[180,1],[181,3],[182,2],[183,9],[186,1],[187,3],[188,1],[191,1],[192,4],[193,1],[194,1],[195,1],[196,3],[197,1],[198,1],[200,1],[201,1],[202,1],[203,2],[204,1],[205,6],[206,3],[209,2],[210,2],[212,2],[213,5],[216,1],[217,3],[218,2],[222,1]],"improve":[[0,2],[3,3],[16,1],[21,1],[23,2],[26,1],[28,1],[29,1],[31,2],[32,1],[33,1],[37,2],[47,1],[49,2],[59,1],[64,1],[75,3],[77,2],[81,2],[86,2],[90,1],[98,1],[99,1],[109,1],[117,1],[127,1],[151,1],[163,2],[164,1],[168,2],[169,2],[175,3],[176,4],[177,2],[178,1],[183,1],[187,1],[188,1],[189,7],[190,3],[196,2],[198,1],[199,1],[200,2],[201,1],[202,2],[203,5],[204,2],[205,2],[210,3],[212,1],[213,1],[214,3],[218,1],[219,2],[222,1]],"relationships":[[0,2],[4,4],[7,3],[9,1],[10,5],[17,1],[18,3],[58,1],[64,1],[76,1],[77,1],[81,3],[84,1],[130,1],[144,1],[155,1],[169,2],[176,3],[178,1],[192,1],[196,3],[197,2],[198,1],[199,4],[200,3],[201,5],[203,3],[205,1],[208,2],[212,1],[213,3],[214,4],[217,1],[218,1]],"ex-wife":[[0,1],[9,2],[10,1],[31,4],[34,2],[40,1],[41,2],[42,1],[48,5],[64,1],[65,2],[69,1],[76,1],[77,1],[79,2]],"children":[[0,1],[6,4],[7,2],[10,1],[12,1],[31,1],[46,1],[47,1],[48,1],[63,1],[75,1],[76,2],[81,1],[91,3],[93,1],[98,1],[125,1],[134,1],[152,1],[163,1],[169,1],[170,2],[171,5],[173,2],[176,1],[178,1],[183,1],[186,3],[187,1],[189,4],[191,1],[194,3],[195,11],[196,8],[197,2],[198,1],[200,1],[204,1],[212,1],[214,4],[215,1],[216,2],[219,2]],"reconnect":[[0,1],[13,1],[31,2],[48,1],[52,1],[77,1],[80,1]],"friends":[[0,1],[5,1],[6,4],[7,3],[9,1],[10,1],[12,2],[18,4],[19,2],[20,1],[21,3],[22,4],[25,1],[31,2],[40,2],[43,1],[47,3],[48,1],[51,1],[65,4],[76,6],[77,3],[89,2],[90,3],[91,6],[94,2],[96,1],[97,3],[98,4],[100,6],[102,4],[105,1],[114,1],[120,1],[155,4],[165,2],[166,3],[169,1],[170,13],[171,2],[172,6],[173,1],[175,1],[176,2],[178,1],[183,1],[191,2],[192,1],[194,1],[195,1],[197,1],[198,1],[199,3],[200,1],[201,2],[203,1],[206,2],[209,1],[212,1],[214,2],[218,5],[219,3]],"start":[[0,2],[1,1],[2,3],[3,2],[4,1],[7,2],[8,2],[9,6],[10,3],[12,3],[13,7],[14,3],[16,4],[17,4],[18,1],[19,1],[20,3],[21,7],[24,2],[26,1],[27,2],[32,2],[33,2],[34,4],[35,1],[38,2],[41,2],[42,1],[44,1],[48,1],[52,1],[53,2],[54,2],[55,1],[56,2],[57,1],[58,3],[61,3],[62,1],[64,6],[65,2],[70,1],[71,2],[74,1],[79,2],[89,3],[90,2],[91,2],[92,2],[95,2],[96,4],[100,1],[104,1],[105,3],[111,1],[112,1],[113,1],[114,1],[121,1],[131,1],[138,1],[140,1],[142,1],[145,1],[149,1],[150,1],[155,2],[158,1],[163,1],[164,3],[165,1],[166,3],[167,1],[169,1],[172,2],[173,1],[177,2],[179,1],[192,2],[193,1],[194,2],[195,2],[201,2],[202,1],[203,1],[205,1],[206,1],[207,2],[208,2],[210,2],[213,3],[214,4],[216,1],[217,2],[218,1]],"going":[[0,1],[2,1],[3,2],[4,2],[5,1],[7,1],[9,5],[10,2],[12,2],[13,4],[16,2],[17,8],[18,6],[19,6],[21,4],[22,4],[24,3],[25,3],[26,2],[27,4],[32,1],[34,1],[35,1],[36,3],[37,3],[38,1],[40,4],[41,10],[42,14],[43,7],[46,1],[51,2],[52,1],[54,4],[56,2],[58,3],[59,2],[60,2],[61,1],[64,5],[65,2],[69,5],[70,1],[71,3],[75,2],[76,1],[79,1],[92,1],[93,1],[94,3],[96,1],[97,5],[100,2],[101,1],[103,3],[107,1],[113,1],[114,1],[128,1],[132,1],[138,1],[139,1],[140,1],[155,5],[156,3],[157,3],[158,9],[163,3],[164,2],[165,3],[166,16],[167,6],[168,5],[170,1],[171,3],[172,1],[173,1],[175,2],[176,3],[177,6],[178,10],[179,6],[180,2],[181,7],[182,4],[183,5],[184,7],[185,5],[186,1],[187,5],[188,1],[190,1],[191,2],[192,1],[194,1],[195,2],[197,1],[201,1],[202,1],[204,2],[205,1],[206,1],[207,1],[208,5],[211,1],[212,2],[213,1],[214,4],[215,1],[217,1]],"church":[[0,1],[12,1],[18,1],[58,1],[65,1],[76,3],[204,5],[219,2]],"again":[[0,1],[6,1],[7,1],[10,2],[13,2],[17,1],[18,1],[21,1],[26,1],[27,2],[32,1],[34,4],[36,2],[37,1],[38,1],[40,1],[41,4],[43,1],[45,1],[47,1],[51,4],[53,1],[54,1],[58,1],[59,1],[60,1],[61,1],[64,2],[66,1],[70,2],[71,4],[72,1],[76,1],[77,1],[79,1],[93,1],[94,3],[95,3],[96,1],[97,3],[98,1],[99,2],[100,4],[102,5],[103,1],[113,1],[114,1],[115,1],[120,2],[134,1],[154,1],[155,1],[163,1],[166,3],[168,3],[170,1],[171,3],[177,1],[181,1],[182,1],[185,1],[187,1],[189,4],[192,1],[195,1],[197,1],[201,1],[202,1],[203,1],[204,2],[205,1],[208,2],[210,3],[212,1],[215,1],[217,3],[218,4],[222,1]],"shape":[[0,1],[5,1],[6,1],[18,1],[34,1],[56,1],[76,1],[86,1],[92,1],[106,1],[110,1],[113,2],[125,1],[173,1]],"discussed":[[0,1],[3,1],[9,1],[14,1],[19,1],[24,2],[26,1],[33,1],[35,2],[38,3],[40,1],[47,1],[48,1],[51,1],[57,1],[58,1],[59,1],[60,1],[69,1],[74,2],[77,1],[101,1],[108,2],[109,1],[111,1],[113,1],[114,1],[155,1],[158,1],[165,1],[189,2],[191,1],[193,2],[208,1],[215,1]],"become":[[0,2],[1,2],[2,6],[3,1],[4,2],[6,2],[7,1],[18,1],[19,1],[20,1],[21,2],[22,2],[23,1],[24,2],[28,1],[30,2],[32,1],[33,1],[36,3],[37,2],[40,1],[42,2],[44,1],[46,1],[49,2],[52,1],[53,1],[54,2],[55,1],[56,3],[59,1],[61,1],[62,1],[63,3],[64,1],[69,1],[71,5],[72,2],[76,1],[78,2],[86,1],[89,1],[90,1],[92,2],[93,1],[95,1],[96,1],[97,1],[98,1],[100,14],[101,1],[104,15],[105,6],[106,2],[112,1],[113,1],[120,1],[131,1],[137,1],[142,1],[145,2],[153,1],[155,2],[165,1],[166,1],[168,3],[169,4],[170,1],[171,1],[172,1],[177,3],[178,1],[179,1],[180,1],[181,1],[188,1],[189,5],[190,1],[191,3],[193,2],[196,1],[197,2],[198,2],[200,1],[201,3],[204,1],[205,1],[208,4],[209,3],[210,4],[212,2],[213,3],[217,5],[218,2],[225,1]],"active":[[0,1],[3,5],[5,4],[6,2],[7,1],[12,1],[16,1],[17,1],[20,3],[21,5],[22,1],[30,1],[35,1],[40,1],[71,1],[74,1],[82,1],[86,1],[87,2],[91,2],[92,1],[96,2],[98,2],[105,1],[108,1],[111,1],[113,1],[115,1],[137,1],[154,1],[158,1],[172,1],[192,1],[194,1],[196,3],[197,2],[198,1],[200,2],[201,3],[203,1],[204,2],[218,2]],"coming":[[0,3],[1,1],[3,3],[14,1],[16,1],[17,1],[19,5],[22,2],[24,2],[26,3],[27,1],[31,1],[32,1],[33,1],[34,8],[35,1],[40,1],[41,1],[43,1],[48,1],[53,1],[59,1],[60,1],[64,1],[65,2],[70,1],[71,1],[72,1],[74,1],[97,2],[114,1],[140,1],[163,1],[166,5],[167,5],[168,2],[173,1],[179,1],[204,2],[205,1],[209,1],[214,1],[215,1],[219,1]],"week":[[0,3],[1,4],[3,6],[9,3],[10,4],[12,4],[13,12],[14,4],[16,18],[17,5],[18,3],[19,10],[21,11],[22,2],[24,6],[25,2],[26,11],[27,4],[31,1],[32,9],[33,14],[34,20],[35,7],[36,4],[37,16],[38,4],[40,2],[41,3],[42,3],[43,4],[45,2],[46,1],[48,1],[49,1],[50,1],[51,4],[52,1],[53,2],[58,7],[59,6],[60,3],[61,3],[64,2],[65,4],[69,1],[71,12],[74,4],[75,1],[77,1],[87,3],[88,2],[90,1],[100,1],[101,3],[102,8],[103,18],[104,3],[107,20],[108,1],[111,2],[113,1],[114,21],[115,8],[120,10],[121,1],[129,1],[163,2],[164,3],[165,4],[166,13],[167,15],[168,6],[170,1],[171,1],[176,1],[178,1],[181,1],[188,2],[190,5],[191,2],[198,1],[200,6],[202,5],[203,5],[204,19],[205,6],[207,2],[210,1],[212,5],[218,3],[219,8],[221,1],[222,8]],"agreed":[[0,1],[1,1],[3,1],[16,1],[19,1],[21,1],[24,1],[25,1],[32,1],[38,1],[59,1],[74,1],[77,1],[113,1],[170,2],[171,2],[189,1],[190,2],[199,1]],"action":[[0,1],[3,15],[4,1],[9,2],[10,2],[11,3],[13,11],[14,2],[15,8],[16,8],[17,3],[18,2],[19,9],[20,1],[21,7],[22,4],[23,12],[24,46],[25,41],[26,50],[27,26],[30,2],[31,2],[32,9],[33,12],[34,10],[35,10],[36,3],[37,2],[38,5],[40,1],[42,1],[43,1],[45,1],[46,1],[48,2],[49,4],[51,3],[52,3],[53,2],[54,1],[57,1],[59,2],[60,3],[63,3],[64,3],[66,1],[69,1],[71,4],[72,1],[74,11],[75,3],[77,1],[79,1],[81,2],[82,18],[83,9],[84,5],[85,1],[89,2],[91,1],[93,2],[94,1],[95,1],[96,1],[99,1],[100,1],[104,1],[105,8],[106,1],[107,1],[109,1],[110,1],[111,1],[122,1],[123,1],[126,1],[131,1],[139,1],[140,1],[155,1],[168,3],[175,1],[187,4],[188,2],[189,23],[190,14],[191,3],[192,6],[196,3],[201,1],[207,1],[208,1],[211,2],[214,1],[215,12],[216,3],[217,3],[218,7],[219,1],[221,8],[223,9]],"homework":[[0,1],[3,3],[6,1],[23,1],[76,1],[80,1],[81,2],[125,1],[146,1],[152,1],[204,1]],"elicited":[[0,1],[1,1],[10,1],[45,1],[47,1],[59,2],[74,2]],"reaction":[[0,2],[2,1],[3,1],[4,2],[5,1],[7,1],[8,1],[9,1],[14,1],[19,1],[25,1],[32,2],[34,1],[35,1],[36,1],[37,1],[40,2],[41,3],[43,1],[56,2],[71,2],[83,2],[103,1],[111,1],[134,2],[139,1],[149,1],[175,1],[177,1],[178,5],[181,1],[185,2],[186,1],[194,2],[205,1],[212,1],[215,1]],"changed":[[0,3],[2,1],[5,1],[6,2],[10,1],[21,1],[33,1],[46,1],[47,1],[51,2],[56,1],[58,2],[60,1],[61,1],[70,2],[71,1],[76,2],[86,1],[96,2],[104,1],[110,1],[113,1],[170,1],[172,2],[175,1],[178,3],[182,4],[185,1],[186,1],[191,1],[192,1],[194,1],[199,1],[203,1],[204,1],[219,1]],"name":[[0,2],[8,1],[16,1],[19,1],[21,1],[33,1],[34,2],[36,1],[37,3],[38,1],[46,1],[48,1],[59,1],[63,1],[74,1],[87,2],[92,1],[93,1],[101,2],[109,1],[114,10],[115,7],[117,4],[118,1],[120,7],[121,17],[123,1],[132,1],[153,1],[158,1],[170,1],[175,2],[191,1],[203,1]],"identifying":[[0,2],[2,1],[3,2],[4,1],[15,2],[18,9],[19,2],[28,1],[30,1],[32,1],[37,1],[38,2],[39,2],[40,3],[41,5],[42,8],[43,1],[48,2],[52,1],[56,2],[57,3],[59,2],[64,1],[69,1],[71,2],[72,1],[74,2],[76,1],[81,1],[82,25],[83,21],[84,5],[95,2],[96,1],[101,1],[127,1],[130,1],[140,1],[170,1],[172,1],[175,12],[176,1],[177,1],[178,1],[180,5],[181,6],[182,1],[183,1],[184,1],[185,1],[192,3],[194,3],[195,1],[196,1],[197,14],[198,4],[200,1],[201,1],[202,2],[203,1],[205,3],[208,2],[218,3],[223,14],[224,4]],"characteristics":[[0,3],[3,2],[9,1],[24,1],[29,1],[30,1],[32,1],[39,1],[40,1],[56,1],[73,1],[74,1],[80,1],[81,1],[82,2],[83,1],[123,1],[170,1],[211,1]],"basics":[[0,4],[1,2],[2,2],[3,5],[4,3],[5,3],[6,3],[7,3],[8,2],[9,3],[10,4],[11,1],[12,3],[13,3],[14,1],[15,1],[16,3],[17,3],[18,4],[19,4],[20,2],[21,4],[22,2],[23,1],[24,3],[25,3],[26,4],[27,1],[30,1],[31,1],[32,4],[33,3],[34,3],[35,2],[36,3],[37,3],[38,2],[40,1],[41,4],[42,3],[43,4],[44,2],[45,1],[46,2],[47,3],[48,3],[49,1],[51,3],[52,2],[53,2],[54,1],[55,1],[56,4],[57,2],[58,4],[59,2],[60,4],[61,3],[63,1],[64,3],[65,4],[69,3],[70,3],[71,4],[72,2],[74,4],[75,2],[80,1],[84,1],[103,1],[160,1]],"beyond":[[0,3],[1,2],[2,2],[3,4],[4,3],[5,3],[6,4],[7,3],[8,2],[9,3],[10,4],[11,1],[12,4],[13,3],[14,1],[15,1],[16,3],[17,3],[18,4],[19,4],[20,2],[21,4],[22,2],[23,1],[24,3],[25,3],[26,4],[27,1],[30,1],[31,1],[32,4],[33,3],[34,3],[35,2],[36,3],[37,3],[38,2],[40,1],[41,4],[42,3],[43,4],[44,2],[45,1],[46,2],[47,3],[48,4],[49,1],[51,3],[52,2],[53,2],[54,1],[55,1],[56,5],[57,2],[58,4],[59,2],[60,4],[61,3],[63,1],[64,3],[65,4],[69,3],[70,3],[71,4],[72,2],[74,4],[75,2],[80,1],[81,2],[97,1],[103,1],[108,1],[113,4],[120,1],[127,1],[160,1],[164,1],[191,1],[200,1]],"major":[[0,1],[2,1],[3,1],[4,1],[5,2],[13,1],[17,2],[43,1],[52,1],[71,1],[74,1],[76,5],[80,1],[81,1],[91,1],[123,1],[128,1],[169,1],[170,2],[200,1],[210,1]],"part":[[0,1],[3,6],[4,3],[6,1],[7,1],[8,2],[11,6],[12,4],[13,3],[14,1],[15,2],[16,4],[17,7],[19,3],[21,1],[22,1],[23,1],[24,5],[25,1],[26,2],[27,2],[32,2],[33,7],[34,5],[35,3],[36,3],[37,2],[38,1],[40,1],[41,1],[43,1],[45,2],[46,1],[47,3],[48,1],[49,3],[51,1],[52,1],[53,1],[56,2],[57,1],[58,1],[60,1],[61,8],[65,1],[66,1],[69,2],[70,1],[71,1],[72,1],[74,2],[76,5],[77,2],[78,1],[79,1],[81,2],[82,7],[84,2],[86,1],[88,1],[91,1],[92,2],[93,1],[96,1],[98,2],[99,1],[105,2],[108,1],[111,1],[113,1],[115,2],[120,4],[121,6],[122,3],[127,1],[134,1],[141,1],[144,3],[146,1],[148,2],[150,1],[152,10],[153,9],[154,2],[155,1],[158,1],[160,1],[161,1],[164,1],[169,1],[170,1],[171,1],[172,1],[175,3],[177,2],[183,3],[184,1],[191,1],[192,3],[193,1],[194,5],[195,5],[197,1],[198,1],[199,1],[200,1],[201,2],[202,1],[203,1],[206,2],[209,1],[210,1],[211,2],[213,1],[215,2],[216,2],[217,1],[218,3],[219,1],[223,1]],"each":[[0,1],[1,4],[3,7],[7,2],[8,1],[9,2],[10,1],[11,1],[21,3],[22,1],[24,3],[26,2],[29,1],[30,4],[32,2],[33,5],[34,1],[35,1],[36,4],[38,1],[43,1],[47,1],[51,1],[58,5],[59,3],[62,1],[64,6],[65,2],[69,1],[74,2],[75,1],[77,1],[79,1],[87,2],[88,1],[89,1],[91,3],[92,10],[94,3],[95,1],[96,3],[97,2],[100,10],[101,3],[102,2],[103,4],[104,9],[105,10],[106,1],[107,3],[108,1],[110,1],[111,2],[112,1],[113,1],[114,4],[115,1],[120,4],[121,1],[134,1],[135,1],[140,1],[142,1],[150,4],[163,1],[164,1],[165,1],[166,1],[167,1],[168,1],[169,6],[170,6],[171,4],[172,5],[175,5],[176,4],[177,14],[178,2],[179,4],[180,2],[181,15],[182,6],[183,4],[184,10],[185,3],[186,4],[187,7],[188,3],[190,1],[191,8],[192,7],[193,1],[194,2],[195,3],[196,2],[199,3],[200,3],[201,4],[202,11],[203,7],[204,5],[205,5],[206,2],[207,4],[208,5],[209,8],[210,7],[211,1],[212,4],[213,1],[214,3],[215,1],[216,1],[217,3],[218,2],[219,3],[221,3],[222,10]],"subsequent":[[0,1],[4,1],[7,1],[9,1],[21,1],[26,1],[35,2],[36,1],[46,1],[59,1],[60,1],[87,1],[112,1],[113,1],[114,1]],"focused":[[0,1],[3,3],[47,1],[49,1],[71,1],[80,1],[87,1],[90,1],[95,1],[97,2],[98,2],[104,1],[155,2],[170,1],[177,3],[179,1],[183,2],[191,1],[202,1],[205,1],[207,2],[208,1],[209,1],[210,2],[225,1]],"helping":[[0,1],[1,1],[2,1],[3,2],[4,1],[5,3],[6,1],[10,3],[13,1],[16,1],[18,2],[20,1],[22,1],[29,1],[32,3],[33,3],[34,1],[37,1],[38,1],[41,1],[43,2],[47,1],[52,1],[56,1],[59,1],[60,1],[64,1],[65,1],[69,3],[71,1],[73,1],[76,3],[80,1],[82,1],[84,3],[91,1],[92,1],[93,1],[104,1],[114,1],[120,1],[122,2],[127,1],[140,1],[163,1],[164,1],[168,1],[169,1],[170,1],[176,2],[187,1],[190,1],[200,1],[201,1],[203,1],[204,1]],"identify":[[0,1],[1,3],[2,3],[3,5],[4,1],[5,1],[7,2],[10,1],[12,1],[15,2],[16,1],[17,1],[19,3],[22,1],[24,2],[25,1],[26,2],[27,2],[29,1],[30,5],[31,2],[32,2],[33,2],[36,1],[38,1],[39,1],[40,3],[41,2],[42,6],[43,3],[46,1],[47,2],[48,1],[50,1],[51,1],[52,3],[56,2],[57,5],[58,3],[59,1],[60,2],[64,2],[65,1],[68,2],[69,4],[71,1],[73,1],[74,7],[75,1],[79,2],[82,5],[83,1],[84,3],[87,1],[95,2],[101,1],[112,1],[113,1],[115,1],[129,1],[133,1],[134,5],[140,1],[163,1],[166,2],[168,6],[169,1],[172,2],[175,9],[176,1],[177,2],[178,4],[179,11],[180,4],[181,9],[182,4],[183,1],[184,2],[187,1],[188,1],[190,2],[191,1],[192,4],[194,7],[195,2],[196,10],[197,5],[198,3],[199,1],[200,1],[201,2],[202,1],[203,2],[204,1],[207,1],[208,1],[210,1],[211,2],[212,1],[213,1],[217,7],[218,2],[219,2],[221,5]],"decide":[[0,1],[2,1],[3,1],[9,1],[11,1],[13,3],[16,2],[18,1],[19,1],[23,1],[24,2],[25,3],[28,1],[32,4],[34,2],[38,1],[43,4],[45,3],[47,2],[48,1],[51,1],[56,1],[58,1],[69,1],[71,2],[72,2],[74,3],[79,1],[91,1],[93,1],[96,1],[98,1],[115,1],[120,1],[134,1],[158,1],[163,1],[176,1],[181,1],[182,1],[188,1],[195,1],[196,2],[197,1],[200,2],[202,1],[204,1],[205,2],[206,1],[208,1],[211,1],[214,3]],"steps":[[0,2],[1,4],[3,3],[19,1],[20,1],[21,3],[24,3],[30,6],[31,2],[34,3],[35,1],[40,2],[41,1],[43,1],[47,1],[55,4],[64,5],[65,1],[71,1],[78,2],[79,1],[80,1],[83,1],[94,1],[105,1],[158,1],[159,2],[169,1],[176,1],[181,1],[187,1],[189,4],[192,4],[193,3],[195,1],[196,1],[199,1],[201,1],[202,1],[205,1],[206,2],[208,1],[209,11],[210,1],[211,2],[213,1],[216,1],[217,2],[218,1],[219,1],[222,3],[225,2]],"take":[[0,1],[1,3],[3,3],[4,1],[5,1],[10,1],[11,1],[12,4],[13,4],[16,7],[17,1],[18,3],[19,6],[20,1],[21,8],[22,1],[24,4],[25,1],[26,5],[27,1],[31,1],[32,1],[33,5],[34,6],[35,3],[36,2],[37,1],[38,1],[40,1],[41,2],[47,1],[48,1],[51,3],[52,4],[53,2],[55,2],[58,1],[59,1],[60,1],[61,3],[64,5],[65,1],[71,2],[74,1],[79,1],[89,2],[90,1],[91,6],[93,2],[94,4],[95,1],[96,4],[97,5],[98,3],[99,3],[100,5],[101,1],[102,3],[103,2],[104,8],[105,10],[106,2],[107,2],[108,1],[111,1],[112,1],[120,3],[121,2],[140,1],[147,1],[153,1],[154,3],[155,3],[158,2],[159,1],[163,1],[164,3],[166,6],[168,1],[169,3],[171,1],[172,1],[173,1],[176,3],[178,2],[180,2],[183,1],[184,2],[186,2],[187,3],[189,2],[190,5],[192,3],[193,1],[194,2],[195,1],[196,3],[197,1],[198,1],[200,2],[201,2],[202,2],[203,8],[204,6],[206,2],[207,1],[209,2],[210,3],[211,2],[212,1],[213,3],[215,1],[216,3],[217,4],[218,3],[221,2],[225,1]],"create":[[0,1],[1,1],[2,1],[3,1],[10,1],[11,1],[14,1],[15,1],[17,1],[21,1],[22,2],[26,1],[28,2],[31,1],[32,2],[33,1],[37,1],[38,1],[40,1],[43,1],[63,2],[65,1],[68,1],[69,1],[70,1],[75,1],[91,1],[92,1],[100,2],[106,1],[108,1],[110,1],[113,1],[134,1],[148,1],[149,1],[151,2],[155,2],[169,1],[171,1],[172,1],[186,1],[191,2],[193,1],[195,1],[196,1],[197,2],[198,1],[204,1],[209,1],[210,1],[211,1],[214,1],[218,2]],"solutions":[[0,1],[2,1],[3,1],[30,1],[64,3],[71,1],[80,2],[109,2],[110,1],[155,1],[168,1],[174,1],[184,1]],"potential":[[0,1],[3,1],[21,2],[23,1],[25,3],[26,1],[31,7],[32,1],[34,2],[37,1],[43,1],[64,7],[69,1],[71,2],[72,1],[81,1],[90,1],[91,1],[95,1],[98,1],[102,1],[103,1],[104,1],[108,1],[109,4],[110,3],[111,2],[114,3],[117,1],[125,2],[133,1],[141,1],[152,2],[154,1],[155,1],[157,1],[158,4],[159,2],[161,2],[166,2],[167,2],[168,2],[200,1],[211,2]],"obstacles":[[0,1],[1,3],[2,2],[3,10],[4,1],[9,1],[13,1],[16,1],[18,1],[21,2],[24,3],[25,5],[26,3],[30,5],[31,12],[32,3],[34,1],[35,1],[39,1],[43,4],[45,1],[47,1],[51,1],[64,2],[69,1],[70,1],[71,2],[72,1],[74,2],[75,2],[82,1],[89,2],[90,1],[91,1],[114,1],[176,1]],"reduce":[[0,2],[2,1],[10,1],[13,1],[17,1],[31,1],[49,1],[52,1],[53,1],[54,1],[56,1],[60,1],[63,1],[65,1],[69,1],[71,3],[74,1],[77,2],[89,1],[90,2],[91,2],[94,1],[95,1],[103,7],[107,2],[109,4],[111,3],[112,1],[113,1],[126,1],[127,1],[132,1],[148,1],[151,1],[159,2],[161,1],[164,1],[165,1],[166,1],[168,1],[175,1],[176,2],[185,1],[186,1],[187,1],[189,1],[190,4],[193,1],[199,1],[203,1],[204,1],[206,5],[207,2],[209,2],[211,5],[213,2],[214,2],[216,1],[217,2],[218,7],[219,1],[223,1],[224,1]],"negative":[[0,3],[1,2],[2,3],[3,3],[4,7],[5,12],[6,10],[7,2],[8,1],[9,8],[10,11],[11,1],[15,1],[16,2],[17,4],[18,1],[19,2],[20,4],[22,1],[23,1],[24,2],[25,6],[26,4],[29,2],[31,1],[32,4],[34,3],[35,1],[36,5],[37,2],[38,1],[39,2],[40,3],[41,1],[43,15],[44,14],[47,1],[48,5],[49,1],[50,1],[53,5],[55,2],[56,23],[57,11],[58,6],[59,4],[60,7],[61,1],[62,3],[63,7],[68,2],[69,6],[70,3],[71,1],[74,4],[75,1],[76,5],[77,2],[79,2],[81,2],[82,6],[83,16],[84,5],[87,1],[89,2],[91,4],[92,1],[94,1],[95,1],[97,1],[98,1],[100,1],[103,1],[106,2],[108,1],[109,2],[110,1],[111,1],[112,2],[113,1],[118,4],[120,2],[123,1],[124,1],[126,1],[134,5],[135,2],[139,2],[140,4],[142,2],[149,1],[155,2],[161,3],[169,1],[170,2],[171,2],[172,3],[173,1],[174,1],[179,1],[182,7],[183,4],[185,1],[186,7],[187,2],[188,1],[189,2],[191,5],[194,4],[196,17],[197,16],[198,8],[199,1],[200,6],[201,6],[202,24],[203,4],[204,2],[205,5],[208,2],[213,1],[215,1],[216,2],[217,2],[218,4],[219,1],[223,3]],"mood":[[0,4],[1,1],[2,3],[3,5],[4,2],[5,1],[6,4],[9,1],[12,1],[15,3],[16,10],[17,3],[18,3],[19,2],[20,6],[21,6],[22,1],[23,1],[24,1],[25,1],[27,1],[29,1],[32,3],[33,19],[34,1],[35,2],[36,4],[37,11],[41,1],[42,1],[43,1],[46,1],[47,3],[48,1],[51,3],[52,1],[56,1],[58,2],[59,1],[63,2],[65,1],[66,1],[67,2],[69,2],[70,1],[71,3],[72,1],[74,1],[75,2],[79,1],[80,1],[82,7],[83,5],[88,1],[103,1],[109,2],[111,3],[112,1],[129,7],[133,10],[134,2],[154,1],[155,1],[160,1],[161,1],[169,26],[170,6],[171,7],[172,14],[173,2],[174,3],[175,21],[176,31],[177,25],[178,17],[179,22],[180,12],[181,27],[182,14],[183,13],[184,19],[185,13],[186,10],[187,20],[188,20],[189,1],[190,1],[191,14],[192,7],[193,3],[194,5],[195,7],[196,9],[197,15],[198,6],[199,4],[200,12],[201,17],[202,22],[203,18],[204,18],[205,24],[206,10],[207,1],[208,8],[209,5],[210,2],[211,13],[212,32],[213,1],[214,4],[215,5],[216,4],[217,19],[218,24],[219,17],[221,11],[222,33],[223,18],[224,6],[225,1]],"increase":[[0,1],[1,1],[7,1],[9,1],[10,2],[16,1],[20,2],[23,1],[24,1],[25,1],[29,3],[30,1],[31,4],[32,2],[37,1],[42,1],[43,4],[44,1],[59,1],[63,1],[64,3],[65,1],[67,1],[69,2],[70,1],[71,2],[72,1],[77,1],[87,2],[92,1],[93,1],[95,2],[96,3],[104,1],[105,1],[108,1],[109,2],[110,2],[111,3],[112,4],[113,2],[115,1],[122,2],[125,1],[128,1],[129,3],[136,3],[140,4],[155,1],[157,1],[158,3],[164,1],[165,2],[175,1],[176,1],[188,1],[189,1],[190,1],[191,1],[198,1],[201,1],[203,1],[204,4],[205,2],[206,2],[207,3],[208,2],[209,3],[210,2],[214,1],[218,1],[222,1]],"positive":[[0,2],[1,5],[2,3],[3,13],[4,7],[5,10],[6,2],[7,7],[9,9],[10,1],[11,2],[12,1],[13,1],[15,1],[16,4],[18,1],[19,1],[20,1],[22,2],[23,1],[24,2],[26,4],[29,3],[30,4],[31,4],[32,3],[33,5],[34,12],[35,1],[37,1],[38,1],[39,1],[43,18],[44,3],[47,1],[48,3],[51,1],[56,12],[58,2],[59,18],[63,3],[64,1],[67,1],[68,3],[69,11],[70,2],[71,8],[74,6],[76,1],[77,5],[79,3],[80,6],[81,3],[82,4],[83,11],[84,5],[85,1],[86,7],[87,2],[88,3],[89,6],[90,2],[91,2],[92,4],[93,1],[94,2],[95,3],[96,2],[97,4],[98,3],[99,1],[100,3],[102,2],[103,1],[105,1],[106,1],[108,1],[113,2],[114,1],[118,1],[126,1],[129,1],[135,2],[140,4],[141,2],[146,1],[149,3],[155,1],[163,2],[166,5],[169,1],[170,1],[171,5],[172,6],[174,8],[175,1],[176,3],[177,4],[178,1],[183,1],[186,8],[187,2],[188,2],[189,2],[190,2],[191,1],[195,1],[196,15],[197,4],[198,13],[199,2],[200,13],[201,12],[202,3],[203,4],[205,6],[210,1],[212,3],[214,2],[216,1],[217,3],[218,8],[219,1],[222,2],[223,4]],"often":[[0,4],[1,2],[2,1],[3,2],[4,2],[5,6],[6,2],[7,2],[8,7],[9,4],[10,3],[11,1],[12,1],[13,1],[14,2],[18,1],[20,3],[21,1],[22,1],[23,2],[24,6],[26,2],[27,4],[33,2],[34,2],[35,2],[36,1],[37,1],[38,1],[39,2],[40,3],[41,3],[42,1],[43,4],[44,1],[45,3],[46,1],[47,5],[48,1],[51,1],[56,4],[57,2],[59,2],[60,1],[61,1],[63,1],[64,3],[65,4],[69,2],[71,2],[72,2],[73,1],[75,1],[76,2],[79,2],[86,5],[87,3],[88,1],[89,3],[90,3],[91,8],[92,1],[93,1],[94,4],[95,2],[96,3],[97,4],[98,3],[101,8],[102,2],[103,4],[104,2],[105,2],[107,5],[108,2],[109,1],[111,1],[112,4],[114,3],[115,2],[120,4],[122,4],[128,1],[131,1],[132,3],[133,1],[134,6],[139,2],[140,1],[142,1],[144,1],[148,1],[149,1],[151,1],[153,2],[155,5],[161,1],[164,2],[166,2],[167,1],[168,2],[169,2],[170,5],[171,4],[172,7],[173,2],[175,6],[176,7],[177,3],[178,1],[180,1],[182,1],[183,2],[185,2],[186,3],[187,1],[188,2],[190,1],[191,2],[192,4],[194,1],[195,2],[196,2],[197,3],[198,1],[199,3],[200,2],[201,3],[202,1],[203,4],[204,4],[205,4],[206,5],[207,2],[208,14],[209,3],[211,7],[212,6],[213,7],[214,7],[215,3],[216,4],[217,7],[218,2],[219,2],[222,3]],"problem":[[0,1],[1,2],[3,2],[4,2],[5,2],[6,1],[9,3],[10,9],[12,1],[13,3],[19,2],[22,2],[24,1],[25,2],[26,9],[27,8],[28,1],[29,1],[30,2],[31,2],[32,13],[33,2],[34,2],[35,3],[36,9],[37,6],[38,16],[41,1],[43,1],[44,1],[45,2],[47,2],[48,4],[49,2],[53,1],[58,5],[63,4],[64,15],[65,1],[69,1],[70,3],[71,1],[72,1],[74,16],[75,10],[76,2],[77,1],[81,1],[82,2],[84,1],[91,1],[100,4],[113,1],[124,1],[128,7],[129,3],[130,11],[131,1],[140,3],[145,8],[152,1],[155,1],[164,1],[166,1],[168,4],[169,1],[172,1],[174,1],[178,1],[188,3],[189,8],[190,2],[191,1],[192,1],[193,1],[197,1],[198,1],[202,2],[204,1],[205,1],[206,1],[208,2],[212,2],[213,1],[217,1],[219,2],[221,4],[223,1]],"solving":[[0,1],[1,1],[3,1],[9,1],[12,1],[13,1],[14,1],[21,1],[22,1],[24,1],[26,2],[29,1],[31,1],[32,4],[33,1],[35,1],[36,1],[37,2],[38,2],[41,1],[43,1],[44,1],[45,1],[48,3],[49,1],[53,1],[63,1],[64,6],[71,1],[72,2],[74,4],[76,2],[81,1],[82,2],[83,1],[84,1],[100,2],[124,1],[140,1],[145,1],[152,1],[155,1],[168,4],[178,1],[188,2],[189,1],[190,1],[191,1],[219,2],[223,1]],"skill":[[0,1],[1,2],[2,2],[10,2],[17,1],[27,1],[30,1],[31,2],[41,2],[42,2],[49,2],[52,1],[53,1],[59,1],[64,6],[65,2],[86,1],[87,1],[98,1],[124,2],[169,4],[178,1],[181,2],[184,1],[210,4],[211,1],[214,1],[217,9]],"building":[[0,1],[2,2],[9,1],[32,1],[69,1],[71,1],[79,1],[80,1],[81,1],[84,2],[95,1],[103,1],[113,1],[127,1],[155,10],[158,1],[163,1],[165,1],[209,1],[219,1]],"especially":[[0,1],[1,1],[2,1],[3,3],[4,2],[6,4],[7,1],[8,1],[9,2],[10,1],[11,1],[12,1],[13,3],[16,2],[18,3],[19,2],[21,1],[22,2],[24,3],[30,2],[31,1],[32,1],[33,1],[34,2],[38,3],[39,1],[40,1],[41,1],[43,2],[44,1],[45,2],[48,1],[51,1],[55,1],[56,1],[58,1],[59,2],[60,1],[63,3],[64,2],[65,1],[66,1],[72,1],[76,1],[87,1],[89,2],[94,1],[97,1],[98,1],[100,1],[109,1],[111,1],[112,2],[120,1],[139,1],[151,1],[163,1],[166,2],[167,1],[168,2],[171,1],[176,1],[177,2],[185,1],[187,1],[191,1],[193,1],[194,1],[196,2],[199,4],[201,3],[204,2],[205,3],[212,1],[213,1],[216,2],[218,1],[219,1],[222,1]],"skills":[[0,2],[1,1],[2,10],[3,6],[4,1],[6,2],[7,3],[9,8],[10,3],[11,1],[13,3],[18,1],[19,3],[23,1],[24,5],[25,1],[26,2],[29,1],[30,1],[31,2],[32,2],[33,1],[35,2],[36,1],[47,1],[53,1],[59,1],[61,1],[63,1],[64,7],[65,4],[67,1],[71,13],[72,2],[73,2],[74,3],[75,1],[76,1],[77,2],[81,2],[82,4],[83,1],[84,4],[87,1],[88,1],[89,2],[92,6],[98,1],[99,1],[100,2],[106,1],[112,1],[117,1],[124,1],[126,1],[163,1],[166,1],[167,1],[168,5],[169,21],[173,2],[176,14],[177,11],[178,1],[181,1],[183,1],[186,1],[188,3],[192,1],[196,3],[201,2],[202,1],[203,3],[205,5],[206,1],[207,1],[209,5],[210,1],[211,13],[212,1],[214,4],[217,40],[218,21],[219,5],[223,1],[224,1],[225,1]],"related":[[0,1],[1,1],[3,1],[4,2],[6,2],[7,3],[10,2],[19,2],[26,2],[27,1],[36,1],[45,1],[56,2],[57,3],[59,1],[63,1],[64,1],[73,1],[74,2],[76,1],[80,1],[82,2],[84,1],[87,1],[90,4],[91,1],[93,2],[96,2],[98,1],[102,1],[107,1],[108,3],[109,4],[111,3],[113,3],[117,1],[118,1],[120,1],[121,3],[122,4],[124,1],[125,5],[126,2],[156,1],[157,3],[158,4],[160,1],[170,1],[178,1],[179,1],[181,2],[188,1],[196,1],[197,2],[199,1],[208,2],[210,1],[211,1],[213,1],[221,1]],"thinking":[[0,2],[1,3],[2,3],[3,6],[4,5],[5,4],[6,1],[7,3],[10,1],[12,3],[13,7],[15,1],[16,1],[17,10],[18,6],[19,4],[20,2],[21,2],[22,3],[23,2],[24,3],[25,2],[30,1],[32,3],[33,7],[35,2],[36,2],[37,3],[39,1],[40,4],[41,13],[42,8],[43,3],[44,2],[45,1],[46,5],[47,4],[48,11],[51,10],[52,1],[53,2],[54,1],[55,1],[56,2],[59,2],[60,1],[61,2],[63,3],[64,5],[65,1],[67,1],[69,3],[70,1],[71,2],[74,1],[75,1],[79,1],[82,1],[84,1],[85,1],[89,4],[91,1],[93,2],[94,1],[95,5],[99,1],[100,1],[102,2],[105,1],[108,1],[114,1],[118,1],[123,1],[131,2],[132,1],[134,1],[136,1],[139,1],[140,6],[146,1],[149,1],[151,4],[152,2],[153,3],[154,1],[155,2],[158,1],[159,1],[161,2],[165,1],[169,2],[170,8],[171,4],[172,7],[174,5],[175,7],[177,1],[178,1],[181,1],[182,1],[183,2],[184,5],[185,5],[186,15],[187,9],[188,5],[191,2],[193,1],[197,2],[198,1],[199,1],[200,1],[202,10],[203,1],[204,2],[205,4],[206,1],[208,3],[210,2],[212,1],[213,1],[214,1],[217,1],[218,4],[222,1],[223,4],[224,1],[225,1]],"used":[[0,5],[1,2],[3,2],[10,1],[18,5],[19,1],[20,2],[22,4],[27,1],[32,1],[34,1],[41,1],[42,1],[47,1],[49,1],[52,1],[53,1],[54,1],[55,1],[59,1],[60,4],[61,1],[62,2],[65,4],[66,1],[67,1],[70,3],[71,2],[79,1],[86,2],[87,1],[88,4],[89,2],[90,1],[93,6],[96,1],[97,1],[98,1],[99,1],[100,9],[101,1],[103,1],[110,4],[111,2],[112,1],[113,1],[115,1],[117,1],[120,4],[122,1],[129,1],[134,3],[137,1],[138,1],[139,1],[140,5],[142,1],[143,1],[147,1],[149,1],[155,2],[161,4],[163,6],[164,4],[166,11],[167,4],[168,4],[169,2],[170,1],[171,2],[172,3],[176,2],[177,1],[183,1],[186,2],[187,1],[189,5],[190,3],[192,1],[197,4],[198,1],[200,1],[201,1],[202,1],[203,2],[205,6],[206,3],[208,1],[209,1],[210,3],[211,5],[212,2],[213,3],[216,1],[217,6],[218,2],[219,1],[222,1]],"various":[[0,1],[3,3],[4,2],[9,1],[11,1],[20,1],[24,1],[27,1],[30,1],[35,1],[42,1],[53,1],[54,1],[56,1],[58,1],[63,1],[65,1],[70,1],[90,1],[92,4],[101,1],[114,2],[115,1],[120,2],[145,1],[157,1],[158,1],[165,1],[195,1],[206,1],[208,1],[209,1],[210,2],[211,2]],"inter-":[[0,1],[2,1],[5,1],[32,2],[36,2],[37,1],[42,2],[59,2],[74,1],[80,1],[100,1],[114,1],[185,1],[205,1]],"ventions":[[0,1],[2,1],[74,1],[80,1]],"taught":[[0,1],[1,1],[3,1],[10,1],[12,1],[33,1],[53,1],[63,1],[74,1],[77,2],[87,1],[169,2],[173,2],[181,1],[195,4],[196,1],[199,1],[203,2],[205,2],[206,1],[211,4],[214,2],[217,1],[219,1]],"himself":[[0,1],[1,1],[3,7],[4,1],[5,3],[6,13],[7,2],[9,1],[10,1],[16,1],[18,1],[21,1],[22,1],[26,1],[27,1],[29,1],[32,1],[34,1],[56,4],[59,3],[61,1],[64,1],[65,1],[69,1],[76,8],[77,1],[79,1],[155,3],[170,2],[171,2],[173,1],[181,3],[182,1],[191,1],[197,2],[198,2],[201,1],[206,1],[207,2],[208,1],[213,3],[218,1],[219,1]],"build":[[0,1],[4,1],[10,1],[19,1],[21,1],[26,1],[29,1],[30,1],[32,2],[71,3],[89,2],[96,1],[105,1],[107,1],[163,1],[165,1],[166,2],[167,1],[168,6],[198,1],[199,1],[201,1],[207,3],[217,1]],"resilience":[[0,1],[3,1],[4,1],[29,1],[30,1],[43,1],[71,4],[84,1],[160,1]],"prevent":[[0,2],[9,1],[23,1],[29,1],[31,1],[32,1],[42,1],[53,1],[56,1],[71,1],[109,3],[111,1],[115,1],[121,1],[156,1],[158,1],[161,1],[164,1],[168,1],[184,1],[193,1],[207,3],[208,3],[214,2],[217,1],[218,1]],"relapse":[[0,1],[1,1],[3,2],[29,1],[30,1],[31,1],[32,1],[33,1],[37,1],[53,1],[71,13],[72,5],[80,1],[84,6],[87,1],[88,3],[89,1],[90,1],[95,1],[97,3],[98,2],[108,2],[111,2],[112,4],[113,1],[114,1],[116,2],[118,1],[119,1],[123,2],[124,1],[125,3],[126,3],[167,1],[168,6],[203,1],[205,1],[211,3],[217,7],[218,13],[219,2],[223,11],[224,2]],"structure":[[0,1],[2,2],[3,3],[5,1],[9,1],[11,2],[12,1],[15,4],[16,1],[29,1],[31,1],[33,2],[35,3],[36,17],[37,2],[38,2],[52,1],[74,1],[75,2],[76,1],[82,1],[83,2],[85,1],[107,1]],"techniques":[[0,6],[1,2],[2,8],[3,11],[8,1],[10,2],[24,1],[25,1],[27,3],[29,3],[30,1],[32,3],[37,1],[42,4],[43,1],[44,7],[45,3],[47,1],[48,2],[49,1],[53,2],[54,1],[56,1],[57,2],[58,1],[59,1],[60,8],[61,2],[62,3],[63,13],[64,4],[65,3],[67,7],[68,1],[69,6],[70,10],[71,5],[72,2],[74,1],[75,1],[79,4],[81,1],[82,2],[83,8],[84,2],[88,1],[89,2],[90,2],[91,1],[92,5],[93,2],[100,2],[101,1],[113,4],[115,3],[116,2],[117,1],[118,3],[127,1],[155,1],[160,2],[172,1],[175,1]],"essential":[[0,1],[9,4],[10,1],[20,1],[21,1],[22,1],[25,1],[27,1],[38,1],[48,1],[84,2],[85,1],[92,1],[110,1],[126,1],[134,1],[140,3],[152,1],[153,1]],"development":[[0,1],[1,1],[2,2],[5,1],[6,1],[7,2],[8,1],[75,1],[76,2],[81,1],[82,3],[83,1],[87,1],[92,3],[110,2],[124,1],[127,1],[129,1],[140,1],[146,1],[169,1],[177,1],[210,1],[217,1]],"good":[[0,3],[1,5],[2,2],[3,4],[4,5],[5,4],[6,6],[7,8],[8,2],[9,8],[10,9],[11,3],[12,13],[13,9],[14,1],[16,7],[17,6],[18,24],[19,15],[20,1],[21,15],[22,4],[23,2],[24,4],[25,4],[26,9],[27,2],[29,1],[31,3],[32,1],[33,4],[34,14],[35,4],[36,3],[37,3],[38,1],[41,2],[42,3],[43,4],[47,9],[48,5],[51,6],[52,4],[53,1],[54,2],[56,11],[57,1],[58,2],[59,1],[60,2],[61,1],[63,1],[64,8],[65,4],[69,2],[70,2],[71,5],[72,3],[76,8],[77,2],[78,1],[79,2],[80,1],[81,1],[86,2],[90,2],[91,4],[92,1],[93,5],[94,4],[95,6],[96,9],[97,4],[98,2],[99,4],[100,10],[103,2],[104,3],[105,8],[106,2],[107,2],[109,1],[113,1],[114,1],[115,2],[120,1],[130,1],[135,1],[150,1],[152,2],[154,2],[155,1],[163,6],[164,3],[166,7],[167,2],[168,1],[170,4],[171,7],[172,2],[173,3],[175,2],[176,3],[177,1],[178,5],[179,1],[182,1],[185,1],[186,1],[188,2],[189,2],[190,1],[191,4],[192,1],[193,3],[194,5],[195,13],[196,4],[197,1],[198,1],[199,1],[200,3],[201,4],[202,4],[203,2],[205,5],[206,6],[207,4],[208,2],[209,2],[210,1],[212,1],[213,1],[214,3],[215,1],[216,2],[217,2],[218,6],[219,1]],"therapeutic":[[0,3],[1,2],[2,2],[3,12],[4,2],[8,1],[9,11],[10,6],[11,1],[12,1],[14,1],[21,1],[25,1],[28,1],[29,4],[30,1],[32,2],[33,3],[34,2],[36,2],[37,1],[38,3],[40,1],[43,1],[45,1],[58,1],[73,1],[74,6],[75,2],[77,2],[80,2],[81,2],[82,3],[83,6],[84,9],[85,2],[86,1],[89,2],[118,3],[119,1],[123,1],[124,1],[127,1],[203,1],[225,1]],"relationship":[[0,2],[1,1],[2,3],[3,8],[4,1],[5,1],[6,1],[7,2],[8,2],[9,12],[10,11],[12,2],[14,1],[21,1],[22,1],[32,2],[34,1],[36,1],[37,1],[38,1],[45,1],[47,1],[53,1],[57,1],[58,1],[70,1],[72,1],[73,1],[74,3],[75,1],[76,2],[77,3],[80,2],[82,2],[83,6],[84,5],[85,1],[89,1],[90,2],[101,2],[116,1],[120,1],[125,1],[126,2],[160,1],[166,1],[169,1],[170,2],[171,1],[172,3],[188,1],[189,1],[190,1],[191,4],[192,1],[194,1],[197,1],[198,1],[201,2],[202,1],[203,5],[213,3],[214,1],[215,1],[216,1],[223,1],[225,1]],"learning":[[0,2],[1,5],[2,5],[3,1],[4,1],[5,1],[8,1],[17,1],[18,1],[22,1],[27,3],[35,1],[40,1],[41,1],[49,2],[52,1],[53,1],[63,2],[65,1],[74,2],[76,1],[79,1],[80,1],[85,2],[89,2],[93,1],[98,1],[100,2],[101,1],[102,8],[103,1],[112,1],[114,2],[115,2],[116,1],[119,1],[120,1],[125,1],[151,2],[155,1],[160,2],[169,2],[170,3],[172,2],[175,7],[176,3],[177,1],[178,1],[179,1],[180,2],[181,1],[183,3],[185,1],[186,1],[187,1],[188,3],[191,1],[196,1],[197,3],[199,2],[200,1],[201,1],[203,1],[204,2],[205,1],[206,2],[208,2],[209,2],[211,3],[212,2],[213,3],[216,1],[217,2],[218,4],[219,2],[222,1],[223,1],[224,1]],"much":[[0,4],[1,4],[2,1],[3,4],[4,1],[5,5],[6,3],[9,4],[10,4],[11,1],[12,3],[16,3],[17,5],[18,1],[19,1],[20,2],[21,7],[22,1],[24,5],[26,3],[27,1],[30,1],[32,8],[33,4],[34,2],[35,3],[36,4],[37,2],[38,3],[39,1],[40,1],[41,4],[43,1],[44,1],[45,2],[46,2],[47,9],[49,1],[51,2],[52,1],[53,2],[55,1],[56,3],[57,1],[58,5],[60,6],[61,2],[64,4],[65,10],[66,1],[67,1],[69,1],[70,2],[71,2],[72,2],[74,2],[76,2],[77,2],[79,8],[89,1],[90,2],[91,2],[93,1],[96,1],[100,4],[103,1],[105,1],[111,2],[113,4],[120,1],[121,3],[122,4],[129,2],[131,1],[134,1],[140,3],[143,2],[147,1],[149,1],[150,1],[152,3],[154,2],[155,4],[158,1],[161,1],[164,2],[165,1],[166,2],[167,4],[168,1],[169,2],[176,1],[177,3],[179,1],[181,2],[182,3],[183,5],[184,6],[185,3],[186,1],[187,5],[188,1],[191,6],[194,1],[195,3],[196,1],[197,1],[198,1],[200,2],[201,2],[202,1],[205,2],[206,3],[209,2],[210,1],[212,1],[214,1],[215,2],[216,3],[217,2],[219,1],[221,2],[222,1],[225,1]],"treat-":[[0,1],[3,1],[4,1],[10,1],[14,1],[17,2],[19,1],[33,1],[36,1],[74,1],[76,1],[81,1],[86,4],[89,1],[97,1],[103,1],[121,1],[122,1],[170,1],[202,1]],"ment":[[0,1],[3,1],[4,1],[6,1],[10,1],[13,1],[14,2],[17,2],[18,2],[19,1],[23,1],[33,1],[34,1],[36,1],[53,1],[58,2],[59,1],[61,1],[64,1],[74,1],[76,1],[79,2],[81,1],[85,1],[86,5],[91,1],[97,1],[98,1],[103,1],[108,2],[109,2],[112,2],[114,1],[121,2],[122,1],[170,1],[179,1],[194,1],[202,1],[205,1],[211,1],[218,1],[219,1]],"follow":[[0,1],[1,1],[3,1],[21,1],[24,2],[25,1],[35,1],[36,1],[38,1],[48,1],[58,1],[65,1],[69,1],[71,2],[86,6],[87,7],[88,5],[90,1],[93,1],[94,1],[97,1],[100,1],[103,4],[104,4],[107,8],[108,4],[109,1],[110,1],[113,1],[114,16],[115,6],[116,2],[118,2],[120,9],[121,4],[122,6],[123,2],[124,1],[125,2],[144,1],[154,1],[164,1],[165,1],[169,1],[170,2],[176,1],[189,2],[194,2],[195,3],[196,1],[197,2],[198,1],[200,1],[203,2],[223,1],[225,1]],"maria":[[0,5],[4,2],[9,1],[10,22],[21,23],[22,14],[24,2],[25,38],[26,13],[27,6],[32,16],[36,13],[37,27],[38,4],[40,1],[41,26],[42,4],[43,18],[44,6],[46,1],[52,7],[57,4],[60,3],[62,3],[64,7],[65,4],[66,9],[70,11],[71,14],[82,1],[83,1]],"recurrent":[[0,1],[13,1],[57,2],[81,1],[197,1],[202,1],[222,1]],"severe":[[0,2],[3,2],[5,1],[13,3],[17,1],[72,1],[76,3],[84,1],[95,1],[102,1],[103,1],[113,1],[121,3],[163,1],[168,1],[201,3],[203,1],[205,2],[208,1],[217,2],[218,1],[219,1]],"depression":[[0,3],[1,5],[2,1],[3,8],[5,2],[6,11],[7,1],[8,1],[9,2],[11,2],[12,1],[13,5],[15,2],[16,3],[17,12],[18,1],[19,6],[20,3],[21,3],[22,1],[24,2],[25,1],[28,1],[31,2],[33,3],[34,1],[35,1],[36,1],[37,1],[47,1],[53,1],[56,6],[59,1],[60,3],[61,3],[64,1],[66,2],[69,1],[71,3],[75,1],[76,8],[77,5],[79,3],[80,8],[81,10],[82,1],[83,4],[84,2],[88,1],[91,1],[98,1],[108,3],[109,1],[111,4],[112,3],[113,1],[116,1],[117,1],[118,2],[120,1],[122,1],[123,2],[124,1],[126,1],[127,2],[129,1],[130,1],[133,1],[134,2],[152,1],[153,1],[155,1],[160,1],[162,1],[164,1],[169,3],[170,11],[171,6],[172,1],[175,2],[176,8],[177,1],[179,9],[180,1],[181,4],[182,2],[184,2],[185,3],[188,3],[189,2],[192,2],[195,2],[197,1],[201,26],[202,32],[203,18],[204,5],[205,15],[211,1],[212,1],[217,3],[218,10],[219,20],[221,1],[222,1],[223,14],[224,4],[225,3]],"traits":[[0,1],[9,1],[40,1],[59,1],[84,1]],"borderline":[[0,1],[81,1],[84,1]],"per-":[[0,1],[36,1],[63,1],[78,1],[80,1],[101,1],[121,1],[170,1],[197,1],[200,1],[208,1],[212,1],[216,1],[217,1]],"disorder":[[0,2],[1,2],[3,5],[4,3],[6,1],[7,1],[10,2],[11,3],[12,1],[16,1],[17,4],[28,1],[30,3],[43,1],[48,1],[59,1],[65,2],[67,1],[75,2],[76,3],[79,1],[80,3],[81,4],[83,1],[111,5],[112,2],[117,1],[122,1],[124,1],[125,1],[126,3],[127,2],[132,1],[134,1],[160,3],[162,1],[163,1],[205,3],[208,3],[211,3],[223,2]],"complex":[[0,1],[4,1],[5,2],[7,1],[8,1],[56,1],[74,1],[80,1],[81,1],[84,1],[140,1],[153,1]],"lasted":[[0,1],[76,1],[171,1],[212,1],[222,1]],"deal":[[0,1],[1,1],[4,1],[17,1],[36,1],[42,1],[43,1],[49,1],[51,1],[53,1],[56,1],[60,1],[65,1],[71,2],[76,1],[78,1],[79,1],[91,1],[92,1],[95,1],[97,3],[102,1],[115,1],[120,1],[155,1],[158,1],[161,1],[163,1],[166,4],[167,1],[168,5],[192,1],[204,1]],"longer":[[0,2],[3,2],[13,1],[26,1],[33,1],[56,1],[96,1],[97,2],[98,1],[100,1],[103,1],[107,1],[110,1],[111,1],[114,1],[115,1],[120,2],[121,1],[151,1],[153,1],[158,1],[159,1],[163,1],[164,1],[168,1],[170,2],[178,1],[182,1],[183,1],[186,1],[187,1],[191,4],[193,2],[195,1],[200,1],[203,2],[205,1],[209,2],[210,2],[214,1],[218,3],[219,1]],"herself":[[0,1],[7,2],[21,3],[25,1],[32,2],[36,1],[40,1],[61,1],[62,1],[65,3],[70,1],[74,1],[79,1],[92,1],[113,1],[147,1],[169,1],[171,3],[173,2],[184,5],[187,2],[189,4],[193,5],[194,3],[195,2],[196,2],[198,1],[199,4],[201,1],[207,2],[208,1],[210,2],[215,2]],"helpless":[[0,2],[5,4],[6,2],[47,1],[56,3],[57,2],[58,1],[76,1],[83,1],[212,2]],"inferior":[[0,1],[5,1],[10,1],[57,1],[62,1]],"unlovable":[[0,1],[5,2],[47,1],[56,4],[57,4],[62,1],[84,1],[172,2],[173,1],[196,2],[197,2],[198,5],[201,1],[202,2]],"emotionally":[[0,1],[4,1],[8,1],[16,1],[18,1],[20,1],[24,1],[33,1],[43,5],[45,1],[47,3],[58,1],[60,1],[61,1],[74,1],[101,1],[130,2],[143,1],[152,1],[155,1],[161,1],[170,1],[181,1],[206,1]],"vulnerable":[[0,1],[5,1],[6,2],[7,1],[58,1],[76,1],[79,1],[110,1],[155,1],[195,1],[197,1]],"viewed":[[0,1],[3,1],[6,2],[21,1],[30,1],[43,2],[56,4],[59,1],[76,1],[86,1],[89,1],[111,1],[145,1],[192,1],[196,1],[198,1],[214,1],[222,1]],"potentially":[[0,1],[1,1],[4,1],[6,3],[7,1],[16,1],[24,1],[32,1],[36,1],[76,1],[110,1],[111,1],[112,1]],"critical":[[0,1],[2,2],[3,1],[6,3],[7,1],[8,1],[9,1],[10,1],[12,1],[16,1],[24,1],[25,3],[26,1],[32,1],[40,2],[48,1],[51,1],[52,1],[56,1],[60,4],[64,1],[65,1],[71,2],[76,2],[77,2],[87,1],[97,1],[100,1],[110,1],[117,1],[125,1],[127,1],[160,1],[178,1],[191,1],[194,1],[202,1],[208,1],[216,2],[219,1],[222,1]],"uncaring":[[0,1],[10,1],[173,1]],"likely":[[0,3],[2,2],[4,4],[5,1],[8,1],[10,5],[11,1],[15,1],[17,1],[18,1],[19,2],[20,1],[21,3],[22,2],[24,4],[25,3],[26,2],[27,2],[32,3],[33,1],[34,2],[35,3],[38,1],[42,1],[45,3],[46,1],[47,2],[48,3],[49,1],[51,3],[52,2],[53,1],[55,1],[58,2],[60,1],[65,3],[69,3],[71,1],[74,1],[75,1],[87,2],[88,1],[89,1],[90,1],[91,2],[94,1],[95,5],[96,1],[98,1],[101,4],[102,2],[103,3],[105,2],[108,17],[109,2],[110,3],[111,2],[112,4],[113,1],[120,2],[121,4],[122,4],[134,5],[135,3],[142,1],[144,1],[154,2],[158,1],[163,1],[164,1],[165,1],[168,4],[169,2],[172,4],[173,1],[176,1],[179,2],[180,1],[181,2],[186,2],[187,2],[188,1],[191,3],[192,3],[193,1],[195,1],[196,1],[197,1],[198,1],[199,1],[200,3],[201,1],[203,2],[204,3],[205,2],[206,1],[207,2],[208,2],[209,1],[210,3],[211,1],[213,7],[214,6],[215,1],[217,5],[218,4]],"hurt":[[0,2],[5,1],[10,1],[27,1],[56,1],[57,1],[87,1],[125,1],[141,1],[171,2],[172,1],[175,1],[177,1],[179,5],[180,1],[181,4],[184,2],[185,2],[188,1],[196,2],[197,1],[198,1],[199,1],[201,1],[206,1],[208,2],[212,7],[213,1],[214,16],[216,7],[222,4]],"beliefs":[[0,8],[1,2],[3,9],[4,27],[5,31],[6,12],[7,19],[8,7],[9,3],[10,8],[18,1],[24,1],[26,2],[27,2],[29,2],[30,3],[31,1],[32,2],[33,2],[34,1],[36,3],[38,2],[40,1],[43,4],[44,5],[45,1],[53,3],[56,50],[57,25],[58,24],[59,23],[60,26],[61,6],[62,10],[65,2],[70,1],[71,3],[72,2],[74,8],[75,1],[76,4],[77,2],[79,6],[81,4],[82,27],[83,37],[84,12],[88,2],[95,1],[98,1],[101,4],[113,2],[118,2],[123,3],[124,1],[125,4],[134,25],[137,3],[140,8],[142,1],[144,10],[161,2],[169,1],[172,4],[173,7],[175,2],[176,1],[177,1],[182,1],[183,2],[187,2],[188,1],[192,1],[195,2],[196,44],[197,50],[198,21],[199,15],[200,10],[201,17],[211,1],[212,1],[214,1],[215,1],[217,5],[218,1],[219,3],[221,4],[223,20]],"triggered":[[0,1],[6,1],[7,1],[10,1],[109,1],[134,1],[138,1],[208,2]],"during":[[0,1],[3,4],[4,1],[6,1],[7,8],[9,2],[10,2],[11,1],[13,2],[14,1],[15,2],[16,2],[18,1],[19,2],[20,1],[21,4],[32,1],[33,3],[34,2],[35,1],[36,4],[37,3],[38,4],[40,1],[42,1],[43,2],[45,1],[50,1],[51,2],[53,3],[56,2],[59,1],[60,2],[61,1],[64,1],[65,1],[69,2],[71,2],[74,4],[75,1],[77,1],[81,1],[86,5],[87,1],[88,1],[89,1],[91,2],[92,5],[93,1],[94,1],[95,1],[97,2],[98,2],[101,5],[103,2],[104,1],[105,3],[107,2],[108,3],[109,2],[110,1],[111,2],[112,10],[114,3],[115,8],[116,1],[117,3],[120,9],[121,5],[122,2],[124,2],[127,1],[129,1],[137,1],[151,1],[154,1],[155,1],[160,1],[163,1],[164,2],[166,5],[167,2],[168,3],[169,1],[170,3],[171,4],[173,1],[175,2],[177,2],[179,1],[182,1],[183,1],[185,1],[193,3],[194,1],[200,1],[201,3],[202,2],[203,2],[204,6],[205,2],[208,1],[210,1],[212,1],[213,1],[216,2],[218,2],[219,1],[222,1]],"initially":[[0,1],[3,7],[5,1],[7,2],[9,1],[13,1],[19,1],[22,1],[23,1],[24,3],[25,1],[32,2],[36,1],[37,3],[42,1],[43,1],[46,1],[53,3],[60,1],[64,1],[69,2],[71,1],[77,2],[79,1],[90,1],[112,1],[140,1],[141,2],[169,1],[192,1],[208,1],[209,1],[219,1]],"quite":[[0,3],[2,1],[4,2],[5,1],[6,3],[10,3],[13,1],[18,1],[22,1],[24,2],[40,2],[41,1],[53,2],[58,3],[60,2],[63,1],[65,4],[71,1],[76,2],[79,1],[90,1],[93,2],[95,1],[96,1],[97,1],[98,1],[100,1],[102,1],[120,1],[130,1],[140,2],[144,1],[153,1],[155,2],[168,1],[170,1],[172,1],[176,1],[184,1],[193,1],[198,1],[199,1],[201,1],[203,1],[205,1],[206,1],[208,1],[209,2],[210,2],[213,2],[216,1],[218,1],[219,2]],"suspicious":[[0,1],[9,1],[43,2]],"guard":[[0,1],[10,1],[212,1]],"lest":[[0,1],[217,1]],"harm":[[0,1],[61,1],[63,1],[90,1],[97,1],[113,2],[117,1],[118,2],[119,1],[122,2],[125,1],[126,3],[127,4],[163,1],[215,1],[216,2],[217,1]],"difficult":[[0,1],[2,1],[3,3],[5,2],[7,1],[8,1],[9,2],[10,1],[13,1],[17,1],[24,2],[26,2],[27,3],[32,1],[35,1],[37,1],[41,1],[43,1],[51,2],[56,1],[57,1],[58,1],[59,3],[60,2],[69,1],[70,2],[71,2],[77,2],[78,1],[83,2],[86,1],[88,1],[89,1],[90,2],[91,3],[93,1],[94,1],[95,3],[96,1],[97,2],[98,2],[100,2],[101,5],[103,1],[107,1],[108,2],[109,1],[110,1],[111,2],[128,1],[134,2],[139,1],[140,3],[142,1],[144,1],[148,1],[151,2],[152,1],[155,1],[163,4],[166,4],[167,4],[168,3],[171,1],[173,2],[175,1],[176,1],[185,1],[187,1],[189,2],[191,2],[192,1],[194,1],[201,2],[207,1],[208,1],[209,3],[214,1],[216,1],[219,2]],"establish":[[0,1],[1,1],[3,1],[9,1],[15,1],[17,1],[25,2],[77,1],[86,1],[111,1],[166,1],[167,2]],"strong":[[0,1],[2,1],[3,3],[5,1],[6,1],[7,1],[9,2],[10,2],[16,1],[26,1],[27,1],[30,1],[36,1],[37,2],[38,1],[51,1],[53,1],[56,2],[57,1],[58,3],[59,1],[60,1],[61,1],[65,2],[71,1],[74,1],[90,1],[93,2],[95,2],[96,1],[97,2],[98,1],[100,1],[101,1],[102,3],[104,2],[105,1],[106,1],[108,1],[116,1],[121,8],[122,16],[124,1],[134,5],[166,7],[167,2],[168,3],[171,1],[172,1],[173,3],[175,4],[176,1],[177,1],[178,5],[179,5],[181,4],[182,3],[183,3],[184,1],[187,1],[188,2],[192,1],[194,3],[195,1],[196,2],[197,9],[208,1],[212,1],[222,1]],"intense":[[0,1],[5,1],[6,2],[7,1],[43,1],[45,2],[51,1],[53,1],[54,1],[56,1],[78,2],[108,1],[132,1],[134,4],[139,1],[143,2],[161,1],[171,2],[172,2],[181,1],[205,1],[211,1],[213,2]],"ness":[[0,1],[17,2],[32,1],[37,1],[53,1],[55,1],[89,1],[95,1],[96,1],[114,1],[170,1],[206,1],[208,1]],"anxiety":[[0,1],[1,1],[2,1],[3,1],[7,2],[16,4],[20,2],[31,3],[41,3],[42,1],[43,2],[47,2],[51,3],[55,2],[56,1],[57,1],[58,1],[64,1],[65,9],[69,1],[71,1],[72,3],[75,1],[76,4],[77,1],[78,12],[79,3],[80,10],[81,6],[82,2],[83,1],[91,3],[95,2],[96,1],[98,1],[109,2],[111,1],[112,3],[113,2],[125,2],[127,2],[128,1],[130,1],[134,4],[137,7],[138,4],[139,2],[140,2],[141,1],[150,7],[151,2],[152,1],[153,5],[154,4],[155,1],[156,2],[157,1],[158,7],[159,2],[160,6],[161,2],[162,15],[169,2],[170,7],[171,6],[173,1],[174,3],[175,6],[176,10],[177,2],[179,11],[180,2],[181,15],[182,2],[184,9],[185,4],[187,1],[188,4],[191,7],[192,3],[193,18],[194,1],[195,2],[197,1],[201,4],[205,26],[206,50],[207,13],[208,52],[209,35],[210,26],[211,40],[213,1],[217,4],[218,5],[219,6],[222,9],[223,25],[224,5],[225,4]],"interfered":[[0,1],[3,1],[196,1]],"fully":[[0,1],[4,1],[5,1],[6,2],[8,1],[16,1],[21,1],[22,1],[32,3],[33,1],[38,1],[41,2],[44,1],[47,1],[54,1],[55,1],[56,1],[65,1],[76,2],[86,1],[87,1],[90,3],[92,6],[94,4],[95,2],[96,4],[98,1],[100,3],[101,2],[102,3],[106,1],[107,1],[108,1],[110,1],[111,2],[113,2],[114,1],[155,2],[161,1],[167,1],[168,1],[169,1],[172,1],[192,3],[195,1],[201,1],[207,1],[210,1],[211,1],[215,1],[216,1]],"engaging":[[0,1],[2,2],[3,1],[7,1],[9,1],[18,1],[19,1],[20,3],[22,2],[23,1],[24,3],[27,1],[34,1],[36,1],[44,2],[51,1],[52,1],[53,3],[57,1],[60,1],[63,2],[65,2],[71,1],[82,3],[83,1],[97,1],[100,1],[140,1],[141,1],[155,1]],"while":[[0,4],[1,2],[3,4],[5,1],[6,1],[8,1],[9,3],[11,1],[12,2],[13,2],[16,2],[17,1],[18,1],[19,1],[25,1],[26,1],[32,3],[34,1],[37,1],[38,1],[42,2],[47,1],[49,1],[51,1],[53,3],[54,1],[55,1],[56,1],[58,1],[61,2],[63,1],[65,1],[68,1],[70,1],[71,5],[76,1],[86,1],[89,6],[90,4],[91,3],[92,1],[93,2],[94,1],[95,1],[96,4],[97,1],[98,3],[100,4],[101,3],[102,2],[103,4],[104,1],[105,1],[107,1],[109,5],[110,1],[111,4],[113,4],[115,2],[116,1],[120,2],[127,1],[133,1],[134,2],[135,1],[140,1],[142,1],[151,1],[154,3],[155,2],[158,3],[159,1],[169,1],[170,1],[171,1],[172,1],[173,1],[175,2],[176,1],[177,1],[178,1],[181,1],[184,2],[185,2],[186,1],[187,2],[188,2],[191,3],[192,1],[194,1],[195,1],[198,2],[200,1],[204,3],[205,5],[206,1],[207,2],[208,1],[209,1],[210,1],[211,4],[212,2],[213,1],[215,2],[217,2],[218,1],[219,1]],"standard":[[0,1],[2,2],[3,1],[15,1],[26,1],[36,3],[37,1],[38,1],[44,1],[48,1],[60,1],[70,1],[74,1],[77,1],[80,1],[86,1],[87,1],[88,1],[93,1],[98,1],[112,1],[116,1],[122,1],[134,1],[150,1]],"approach":[[0,2],[1,1],[4,1],[10,1],[31,1],[34,1],[56,1],[64,1],[65,1],[67,1],[74,1],[80,5],[81,6],[86,8],[87,2],[88,1],[89,5],[90,5],[91,2],[92,8],[93,3],[96,1],[98,2],[112,2],[113,9],[114,2],[118,10],[123,1],[124,1],[125,1],[126,2],[134,1],[150,1],[154,2],[158,2],[159,2],[160,1],[164,1],[191,2],[192,1],[193,1],[196,2],[197,3],[200,1],[202,1],[203,1],[204,4],[206,1],[207,1],[208,6],[209,4],[211,1],[213,1],[217,1],[218,1],[219,1],[222,1]],"adapt":[[0,1],[1,1],[2,1],[3,1],[4,1],[9,1],[30,1],[55,1],[65,1],[112,1]],"considerably":[[0,1],[3,1],[111,1],[187,1]],"rest":[[0,1],[2,1],[13,1],[26,2],[33,1],[34,1],[39,1],[40,1],[96,3],[97,1],[101,3],[105,1],[109,1],[115,1],[168,2],[169,1],[170,1],[177,1],[178,1],[191,1],[196,1],[200,1],[202,1],[212,1],[213,1],[217,2]],"answers":[[0,1],[4,1],[9,1],[11,1],[15,1],[16,1],[20,1],[23,1],[25,1],[33,1],[36,1],[39,1],[43,1],[45,1],[46,1],[49,2],[50,1],[51,2],[52,2],[53,1],[56,1],[59,1],[63,1],[68,1],[71,1],[73,1],[92,2],[155,5],[163,1],[177,1],[178,2],[179,2],[182,1],[184,2],[201,1],[202,5],[204,4],[205,1],[206,1],[218,1],[222,1]],"questions":[[0,1],[1,1],[2,2],[3,2],[4,2],[5,1],[7,5],[8,2],[9,2],[10,5],[11,1],[12,4],[14,3],[15,1],[16,4],[18,3],[19,3],[20,1],[22,3],[23,1],[24,2],[25,1],[26,2],[27,1],[28,1],[32,4],[33,1],[34,1],[35,3],[36,5],[37,2],[38,1],[39,1],[41,4],[42,3],[43,2],[45,2],[46,14],[47,13],[48,7],[49,3],[50,2],[51,4],[52,12],[53,1],[54,1],[56,1],[57,3],[58,4],[59,1],[60,4],[62,1],[63,1],[64,2],[67,1],[68,1],[70,2],[71,2],[72,1],[73,1],[74,1],[75,3],[81,1],[82,3],[83,4],[84,11],[89,9],[90,6],[91,2],[92,5],[94,1],[100,2],[102,1],[103,3],[108,4],[109,1],[110,2],[111,3],[112,1],[113,2],[114,4],[115,3],[118,2],[119,1],[120,1],[121,4],[122,1],[127,1],[155,12],[163,2],[164,1],[165,3],[166,5],[167,2],[168,7],[171,3],[173,5],[175,1],[177,2],[179,27],[180,4],[181,14],[182,1],[183,7],[184,13],[185,5],[186,6],[187,3],[188,6],[195,1],[196,2],[197,1],[198,1],[200,1],[201,1],[204,5],[205,2],[207,2],[213,1],[215,5],[216,1],[219,1],[222,1],[223,1]],"behind":[[0,1],[47,1],[92,1],[103,1],[135,1],[140,2],[146,1],[148,1],[154,1],[158,1],[159,2],[185,1],[188,1]],"research":[[0,3],[2,1],[3,1],[9,4],[12,1],[15,1],[16,1],[17,1],[19,1],[21,2],[24,1],[27,1],[46,1],[55,1],[65,1],[71,1],[79,1],[80,8],[81,11],[82,1],[84,1],[86,1],[87,2],[90,2],[92,2],[94,1],[95,1],[96,1],[101,2],[102,2],[103,2],[107,1],[108,1],[109,3],[110,1],[111,1],[114,9],[115,5],[116,5],[117,5],[120,5],[121,10],[122,2],[123,7],[124,11],[125,7],[126,10],[127,7],[139,1],[157,1],[158,1],[160,4],[163,1],[164,1],[166,1],[169,1],[173,3],[188,1],[200,1],[203,1],[211,3],[218,1],[225,1]],"tell":[[0,1],[2,1],[3,1],[9,1],[10,5],[12,9],[13,2],[16,3],[17,2],[18,1],[19,4],[23,1],[24,1],[25,2],[26,1],[27,1],[33,1],[34,2],[35,1],[36,6],[37,2],[38,1],[41,2],[42,1],[46,2],[47,3],[48,5],[49,1],[51,2],[52,1],[54,3],[57,1],[58,4],[59,2],[60,1],[63,1],[70,2],[71,1],[79,1],[90,2],[93,1],[94,3],[95,1],[100,2],[102,1],[120,1],[122,1],[152,1],[164,1],[165,2],[166,5],[167,1],[168,1],[172,1],[174,1],[175,1],[176,2],[177,1],[182,2],[183,5],[184,3],[185,1],[186,2],[189,6],[190,1],[197,1],[199,1],[200,2],[202,1],[207,1],[213,1],[214,3],[215,3],[216,2]],"effectiveness":[[0,1],[4,2],[28,1],[32,1],[34,1],[53,1],[56,3],[61,1],[65,1],[79,1],[81,3],[86,4],[87,5],[89,1],[92,1],[93,1],[100,1],[103,1],[107,1],[110,1],[111,1],[114,2],[116,4],[117,2],[118,1],[119,1],[124,1],[125,1],[126,2],[127,1],[164,1],[175,1],[176,1],[211,1]],"developed":[[0,3],[2,1],[4,4],[5,1],[6,7],[8,1],[36,1],[53,1],[76,4],[87,2],[88,1],[92,1],[113,1],[114,1],[120,1],[140,1],[145,1],[151,1],[161,1],[175,1],[186,1],[189,2],[190,2],[193,1],[196,1],[199,1],[203,1],[208,1],[210,1],[217,1],[218,1],[219,1]],"typical":[[0,1],[1,2],[4,1],[7,2],[8,1],[9,1],[10,1],[12,3],[14,1],[21,1],[22,1],[24,1],[27,1],[33,2],[36,2],[37,1],[38,2],[48,1],[53,1],[70,1],[75,1],[79,1],[82,3],[83,1],[84,1],[89,1],[93,1],[111,1],[120,1],[121,1],[170,1],[171,3]],"intervention":[[0,1],[1,2],[16,1],[25,1],[26,1],[32,2],[33,1],[34,2],[38,2],[43,1],[53,1],[61,2],[74,4],[80,2],[82,2],[83,1],[84,1],[86,5],[87,6],[88,5],[89,1],[92,1],[100,1],[101,1],[103,1],[107,1],[108,2],[109,1],[111,2],[112,1],[113,1],[114,3],[116,3],[117,4],[118,1],[122,2],[123,1],[125,1],[127,1],[129,2],[131,1],[141,1],[168,1],[203,1],[211,2]],"look":[[0,1],[5,1],[7,1],[9,2],[10,1],[12,2],[13,2],[15,1],[16,4],[18,5],[19,2],[22,1],[24,1],[25,2],[26,2],[27,1],[31,6],[32,4],[34,2],[35,2],[36,1],[37,1],[39,1],[41,2],[42,1],[46,2],[47,2],[49,1],[51,1],[52,1],[55,1],[57,3],[58,2],[59,5],[60,1],[61,2],[64,4],[65,3],[68,1],[69,3],[70,1],[71,2],[72,1],[77,1],[78,2],[79,5],[94,1],[102,1],[104,1],[129,1],[135,1],[138,1],[143,1],[150,1],[153,2],[155,2],[158,1],[159,1],[161,1],[167,1],[168,1],[169,2],[171,3],[172,1],[175,1],[176,2],[177,1],[179,2],[180,1],[181,2],[182,9],[183,6],[184,3],[185,2],[186,2],[187,1],[189,2],[191,1],[192,2],[194,6],[195,2],[197,2],[198,3],[199,1],[200,2],[202,1],[203,2],[204,1],[205,4],[208,2],[211,1],[213,1],[215,1]],"like":[[0,2],[1,2],[2,6],[3,3],[4,5],[5,1],[6,1],[7,3],[9,6],[10,4],[12,8],[13,8],[14,1],[16,10],[17,12],[18,13],[19,10],[20,4],[21,8],[22,3],[24,3],[25,6],[26,1],[27,1],[32,3],[33,5],[34,8],[35,5],[36,5],[37,12],[38,2],[39,1],[40,2],[41,7],[42,2],[43,11],[44,1],[46,2],[47,3],[48,4],[49,1],[51,6],[52,1],[53,5],[54,4],[56,5],[57,3],[58,17],[59,7],[60,4],[61,8],[64,7],[65,5],[66,2],[69,12],[70,3],[71,6],[76,1],[79,8],[80,1],[85,1],[86,2],[89,2],[90,4],[91,2],[93,1],[94,7],[95,5],[96,4],[98,1],[100,16],[101,5],[102,3],[103,3],[104,10],[105,10],[106,3],[110,2],[120,1],[122,1],[128,1],[132,1],[134,2],[138,1],[144,1],[152,3],[154,1],[155,12],[158,2],[161,1],[163,2],[164,2],[165,3],[166,5],[167,1],[168,5],[169,2],[170,1],[171,2],[172,4],[174,1],[175,4],[176,2],[177,1],[178,3],[179,3],[182,7],[183,1],[188,4],[190,2],[191,3],[192,3],[193,1],[194,6],[195,4],[196,3],[197,2],[198,7],[199,1],[200,3],[201,2],[202,2],[203,1],[204,5],[205,5],[206,1],[207,2],[208,2],[210,2],[211,1],[213,1],[214,5],[215,4],[217,2],[218,3],[221,4]],"effective":[[0,2],[1,3],[2,6],[3,1],[4,4],[8,1],[9,2],[12,1],[13,1],[15,1],[21,2],[26,1],[28,1],[29,1],[32,1],[33,1],[35,1],[42,1],[44,1],[47,1],[48,3],[51,2],[53,2],[54,1],[55,2],[56,1],[60,1],[64,1],[65,1],[76,1],[82,2],[86,5],[87,6],[89,2],[90,1],[91,1],[92,1],[95,1],[97,2],[100,1],[109,1],[110,1],[111,3],[113,1],[114,2],[115,2],[116,1],[118,1],[120,3],[123,2],[125,1],[126,1],[134,1],[150,1],[163,5],[164,6],[165,1],[166,1],[169,2],[189,1],[190,1],[203,3],[205,2],[206,1],[208,1],[213,4],[217,1],[218,1],[225,1]],"therapist":[[0,3],[1,4],[2,7],[4,2],[8,1],[9,3],[10,4],[11,1],[12,2],[13,1],[18,5],[19,2],[26,2],[27,4],[32,1],[33,3],[36,9],[37,3],[38,2],[40,1],[46,1],[47,7],[56,1],[57,6],[63,1],[65,2],[71,4],[72,3],[74,4],[75,2],[80,1],[82,4],[83,2],[123,1],[125,2],[127,1],[128,1],[129,1],[130,1],[133,1],[134,1],[142,1],[143,1],[145,1],[146,1],[147,1],[148,1],[149,1],[150,1],[155,19],[169,11],[170,6],[171,8],[175,4],[176,1],[177,10],[178,9],[182,4],[183,11],[184,5],[185,1],[186,2],[187,2],[189,10],[190,2],[192,3],[193,9],[194,4],[199,1],[203,1],[215,1],[218,5],[219,6]],"best":[[0,1],[2,3],[4,1],[6,1],[7,1],[12,1],[13,3],[16,2],[18,2],[28,1],[32,2],[33,1],[34,4],[46,2],[47,5],[48,1],[51,2],[55,1],[56,4],[57,3],[60,1],[62,1],[64,2],[70,1],[71,1],[76,2],[78,1],[86,1],[87,1],[90,2],[91,6],[93,4],[94,3],[96,3],[97,3],[98,3],[99,2],[100,7],[101,2],[102,3],[103,2],[104,1],[105,3],[106,4],[112,3],[113,2],[120,1],[121,3],[122,4],[134,1],[136,1],[138,1],[140,5],[142,1],[143,1],[145,1],[148,1],[155,1],[161,1],[165,1],[167,1],[169,1],[170,1],[171,4],[172,2],[176,1],[179,1],[183,3],[184,1],[186,1],[188,1],[192,1],[194,4],[195,1],[196,2],[197,3],[198,3],[201,1],[202,2],[203,1],[204,5],[205,2],[208,1],[210,4],[211,4],[213,2],[214,4],[215,2],[217,1],[218,2],[221,2],[222,1]],"i've":[[0,1],[1,1],[10,1],[178,1],[197,1],[216,1]],"aaron":[[0,1],[1,1],[2,1],[9,1],[48,1],[75,2],[82,1],[202,1],[223,1],[224,1],[225,2]],"beck":[[0,11],[1,16],[2,1],[3,4],[4,3],[7,4],[9,3],[15,1],[16,8],[18,3],[19,2],[23,1],[24,2],[26,1],[33,3],[34,1],[40,1],[42,1],[48,2],[51,3],[55,1],[56,7],[57,3],[60,3],[62,2],[64,2],[68,1],[69,1],[74,1],[75,16],[76,3],[77,1],[78,1],[79,6],[80,31],[81,5],[82,8],[83,3],[84,5],[85,1],[117,1],[123,1],[160,1],[202,3],[203,1],[223,1],[224,1],[225,4]],"psychotherapy":[[0,4],[1,1],[3,4],[46,1],[63,2],[79,2],[80,12],[81,16],[82,1],[86,1],[89,1],[116,1],[117,4],[122,1],[123,2],[124,4],[125,1],[126,5],[127,4],[160,1],[169,1],[225,2]],"originally":[[0,2],[186,1],[203,1],[211,1]],"term":[[0,1],[3,1],[69,1],[89,1],[90,2],[93,1],[103,2],[104,1],[108,1],[109,4],[110,3],[114,1],[117,1],[120,1],[123,1],[124,1],[125,1],[126,1],[151,1],[168,1],[199,2],[211,2]],"field":[[0,2],[1,2],[2,1],[80,1],[84,1],[92,1],[93,1],[144,1],[153,1],[173,1],[224,1],[225,1]],"devised":[[0,1],[30,1],[112,1],[193,1]],"structured":[[0,1],[2,2],[3,2],[40,1],[52,1],[82,2],[93,1],[163,1]],"short-term":[[0,1],[3,1],[161,1],[191,1],[209,2],[211,1]],"since":[[0,2],[2,1],[3,1],[15,1],[16,1],[32,1],[47,1],[48,1],[59,1],[63,1],[76,1],[102,2],[110,1],[122,3],[123,1],[166,1],[167,2],[168,2],[170,3],[172,2],[173,1],[177,1],[178,1],[180,1],[181,1],[182,2],[187,1],[189,4],[192,1],[193,1],[194,1],[196,3],[198,1],[199,1],[200,1],[201,2],[208,1],[215,1]],"around":[[0,1],[2,1],[6,3],[12,3],[13,2],[17,1],[18,2],[21,4],[22,1],[23,1],[25,1],[26,1],[33,1],[34,1],[38,1],[40,1],[42,1],[48,1],[51,1],[56,1],[57,2],[58,1],[64,1],[69,5],[74,1],[76,5],[77,1],[82,1],[83,1],[84,1],[87,1],[91,1],[94,1],[98,2],[101,2],[102,1],[113,1],[138,1],[155,2],[164,2],[166,5],[167,3],[169,1],[172,2],[185,1],[192,1],[194,1],[196,2],[202,1],[204,1],[218,1]],"world":[[0,3],[1,1],[3,1],[4,4],[5,2],[6,4],[7,3],[19,2],[21,6],[24,1],[29,1],[48,1],[56,11],[74,1],[76,6],[80,1],[83,1],[84,1],[87,1],[96,1],[104,1],[110,1],[116,1],[117,6],[119,1],[125,1],[152,2],[172,2],[183,2],[196,4],[197,32],[198,1],[200,6],[201,4],[206,1],[208,1],[223,2]],"successfully":[[0,1],[1,1],[12,1],[23,1],[26,2],[44,1],[52,5],[56,1],[65,2],[88,2],[89,1],[90,2],[91,1],[94,2],[95,2],[97,1],[98,1],[100,2],[102,2],[103,3],[108,1],[113,1],[114,1],[115,1],[120,1],[123,1],[163,2],[164,1],[166,3],[167,1],[168,2],[181,1],[193,1],[208,2],[209,2],[211,2],[217,1],[219,1]],"adapted":[[0,3],[1,1],[3,2],[7,2],[48,1],[67,1],[78,1],[79,1],[89,1]],"surprisingly":[[0,1],[90,1],[107,1],[109,1],[111,1],[193,1]],"diverse":[[0,2]],"populations":[[0,1],[122,1]],"wide":[[0,2],[1,1],[40,1],[65,1],[86,1],[89,1],[91,1],[100,4],[106,3],[165,1],[174,1],[211,1]],"range":[[0,3],[1,1],[13,1],[21,1],[40,1],[58,1],[74,1],[87,2],[89,1],[91,1],[104,1],[110,1],[112,1],[135,1],[140,1],[148,1],[152,1],[164,2],[165,1],[166,2],[174,1],[198,1],[211,2],[212,1],[217,1]],"disorders":[[0,3],[1,1],[2,3],[3,4],[4,1],[11,2],[13,2],[29,1],[32,1],[38,1],[39,1],[53,1],[60,2],[64,1],[71,1],[74,1],[76,1],[79,6],[80,10],[81,4],[86,2],[111,2],[113,1],[116,1],[123,1],[124,1],[125,1],[126,2],[127,1],[134,1],[153,1],[157,2],[158,2],[160,3],[164,1],[169,1],[211,1],[223,1],[225,1]],"problems":[[0,2],[1,3],[2,1],[3,4],[5,1],[6,1],[7,2],[9,3],[10,2],[11,3],[12,6],[14,1],[16,4],[17,3],[18,1],[19,2],[21,3],[23,2],[24,2],[25,6],[26,7],[27,5],[29,1],[30,2],[32,4],[33,2],[35,1],[36,14],[37,7],[38,7],[43,3],[44,1],[45,2],[49,1],[52,1],[53,2],[55,1],[56,1],[57,1],[61,1],[64,8],[69,3],[70,2],[71,9],[72,3],[73,11],[74,15],[75,5],[76,5],[77,1],[80,2],[82,21],[83,16],[84,12],[90,1],[108,1],[110,1],[111,4],[113,2],[115,1],[120,1],[126,1],[128,2],[129,1],[130,3],[134,4],[136,2],[140,3],[149,1],[151,1],[152,3],[153,2],[155,7],[163,1],[169,9],[170,9],[171,13],[172,1],[174,1],[177,1],[181,2],[186,1],[188,1],[189,8],[190,17],[191,2],[192,3],[193,6],[194,5],[195,6],[196,2],[197,2],[202,2],[203,1],[205,1],[206,3],[208,3],[211,2],[212,1],[213,2],[214,1],[216,1],[219,3],[221,12],[222,1],[223,5],[224,1],[225,1]],"many":[[0,7],[1,2],[2,4],[3,5],[4,3],[5,3],[6,3],[7,2],[8,1],[9,4],[10,4],[12,6],[13,3],[14,1],[16,3],[19,1],[20,1],[22,1],[24,4],[27,1],[32,3],[34,1],[35,2],[38,4],[41,1],[42,1],[43,2],[47,4],[48,4],[51,1],[53,2],[54,1],[56,3],[57,2],[58,4],[59,2],[60,1],[61,3],[62,1],[63,3],[64,2],[65,2],[67,2],[68,1],[69,3],[70,2],[71,4],[73,1],[76,4],[79,1],[86,1],[87,1],[88,1],[89,3],[90,5],[91,7],[92,6],[93,5],[94,3],[95,8],[96,4],[97,3],[98,4],[99,1],[101,6],[102,4],[103,2],[104,2],[105,3],[106,1],[107,2],[108,1],[109,5],[110,3],[111,2],[112,5],[113,4],[114,5],[115,1],[120,4],[121,9],[122,7],[128,2],[130,1],[132,1],[134,2],[140,1],[141,2],[144,1],[147,1],[151,2],[153,2],[154,1],[155,5],[161,1],[163,5],[164,1],[165,2],[166,1],[167,1],[168,4],[169,4],[170,1],[171,3],[172,5],[173,3],[174,1],[176,3],[177,4],[179,3],[182,1],[183,1],[184,1],[185,1],[188,1],[189,1],[190,1],[191,3],[192,6],[193,1],[195,1],[196,9],[198,2],[200,1],[201,7],[202,2],[203,3],[205,3],[206,1],[208,4],[209,5],[210,2],[211,4],[212,2],[213,2],[214,1],[215,4],[216,2],[217,3],[218,3],[222,1]],"settings":[[0,2],[98,1],[101,1],[125,1]],"formats":[[0,2],[52,1]],"focus":[[0,2],[1,1],[2,3],[3,4],[5,1],[9,2],[10,1],[12,1],[14,1],[16,2],[18,1],[22,3],[25,1],[27,1],[28,1],[30,1],[32,2],[34,1],[35,1],[36,1],[37,1],[38,1],[40,2],[43,1],[45,4],[48,2],[49,2],[53,5],[54,6],[55,1],[57,1],[63,2],[64,2],[66,1],[74,3],[75,2],[79,4],[82,3],[83,3],[84,1],[87,1],[91,3],[92,2],[93,1],[94,1],[95,2],[96,3],[98,1],[100,1],[102,2],[104,1],[105,1],[108,1],[112,2],[113,1],[114,1],[120,1],[129,2],[130,3],[134,2],[140,1],[145,1],[154,5],[156,2],[158,14],[161,1],[168,8],[170,2],[175,2],[177,1],[183,2],[191,2],[193,1],[195,1],[199,2],[200,2],[203,1],[205,1],[206,1],[207,1],[210,1],[212,1],[214,1],[217,1],[221,1]],"length":[[0,1],[34,1],[37,2],[77,1],[86,2],[93,1],[97,1],[103,1],[109,1],[166,1]],"assumptions":[[0,2],[5,6],[6,2],[7,6],[8,6],[27,1],[57,3],[75,1],[76,1],[82,1],[84,2],[134,2],[137,2],[146,2],[185,3],[192,27],[193,2],[194,26],[195,21],[196,16],[197,1],[199,1],[201,1],[211,2],[213,1],[214,2],[217,2],[223,15]],"themselves":[[0,1],[1,1],[2,1],[4,5],[5,1],[6,1],[7,1],[8,1],[9,4],[10,3],[12,1],[17,1],[19,1],[20,2],[23,2],[24,7],[25,1],[26,2],[29,1],[32,1],[36,1],[40,1],[42,2],[43,1],[52,1],[54,1],[55,1],[56,2],[57,1],[60,3],[61,3],[62,1],[64,2],[65,5],[66,2],[70,1],[71,2],[72,1],[74,1],[75,1],[79,1],[86,1],[89,1],[91,2],[93,1],[95,4],[96,1],[97,2],[100,1],[102,2],[103,1],[105,1],[107,1],[110,1],[113,2],[122,1],[134,1],[140,1],[165,1],[166,1],[167,1],[168,2],[171,1],[173,1],[183,1],[189,2],[212,1],[216,1],[222,1]],"remained":[[0,1],[76,1],[167,1],[171,1],[174,1],[184,1],[187,1],[219,1]],"constant":[[0,1],[113,1]],"forms":[[0,2],[11,1],[12,2],[13,1],[16,5],[27,2],[33,1],[35,1],[36,10],[39,1],[41,2],[51,2],[59,1],[81,1],[82,2],[83,2],[88,1],[92,2],[98,1],[101,3],[103,4],[107,7],[114,4],[115,3],[118,2],[119,1],[120,1],[121,2],[158,1],[159,1],[163,1],[169,1],[217,1],[225,1]],"derived":[[0,2],[46,2],[86,1],[93,1],[108,1]],"model":[[0,4],[1,3],[2,2],[3,1],[4,2],[5,2],[6,1],[7,2],[8,1],[10,3],[12,1],[14,1],[15,3],[16,3],[17,3],[18,3],[21,1],[24,2],[26,1],[29,1],[30,1],[31,1],[33,3],[34,3],[35,2],[36,1],[37,1],[38,1],[39,2],[40,1],[41,3],[42,1],[43,2],[44,1],[45,1],[53,1],[56,1],[59,1],[74,1],[75,2],[79,1],[81,1],[82,9],[83,6],[84,4],[91,2],[92,1],[99,1],[100,10],[114,1],[126,1],[131,1],[134,5],[135,2],[137,1],[138,2],[139,3],[140,4],[141,1],[151,3],[160,2],[170,4],[171,4],[202,1],[206,1],[223,13]],"clinicians":[[0,1],[2,1],[11,1],[75,1],[80,1],[81,1],[84,1],[85,1],[86,1],[87,1],[92,1],[103,1],[112,1],[114,1],[127,1],[169,1]],"base":[[0,2],[3,1],[8,1],[86,2]],"formulation":[[0,1],[1,1],[4,3],[11,1],[30,1],[32,1],[80,2],[81,3],[134,7],[149,1]],"maladaptive":[[0,3],[1,1],[3,3],[4,2],[6,1],[7,1],[8,1],[10,1],[22,1],[26,1],[40,1],[44,1],[45,1],[53,2],[56,9],[57,3],[58,1],[60,1],[62,2],[63,1],[82,2],[83,5],[89,1],[94,1],[97,1],[112,1],[134,2],[146,1]],"behavioral":[[0,4],[1,1],[2,2],[3,4],[4,3],[5,1],[6,1],[7,1],[8,1],[10,2],[11,1],[22,1],[23,2],[24,3],[25,1],[26,1],[27,2],[31,1],[32,1],[34,1],[36,1],[40,1],[43,1],[44,1],[45,3],[46,2],[47,2],[48,6],[51,1],[53,1],[56,4],[57,1],[60,7],[63,1],[65,1],[74,1],[76,2],[77,4],[80,10],[81,11],[82,9],[83,2],[84,1],[85,1],[86,6],[87,8],[88,9],[89,5],[90,1],[91,1],[92,10],[93,3],[94,4],[95,3],[96,1],[97,1],[98,2],[100,1],[101,3],[103,2],[104,1],[105,1],[106,1],[109,2],[110,1],[111,3],[112,1],[113,5],[114,5],[115,6],[116,1],[118,7],[123,3],[124,4],[125,8],[126,6],[127,8],[160,2],[169,1],[170,1],[192,7],[193,10],[194,5],[195,6],[199,8],[201,2],[202,1],[203,7],[204,1],[205,1],[206,2],[211,3],[214,1],[217,2],[218,1],[219,1],[221,1],[223,11]],"strategies":[[0,1],[1,1],[2,1],[3,5],[4,1],[6,2],[7,6],[8,7],[10,3],[11,1],[13,1],[26,1],[30,2],[32,1],[48,2],[49,2],[51,1],[53,2],[55,1],[57,1],[59,1],[62,1],[69,2],[76,2],[81,4],[82,2],[83,3],[85,1],[86,2],[87,2],[89,11],[90,1],[91,1],[92,6],[93,2],[94,1],[95,2],[96,6],[98,6],[99,3],[100,2],[101,1],[102,1],[103,1],[109,1],[112,6],[113,6],[114,3],[115,7],[116,2],[118,2],[120,5],[123,1],[126,2],[127,1],[134,5],[140,1],[145,1],[151,1],[160,1],[161,4],[163,2],[166,4],[167,3],[168,4],[169,3],[175,1],[176,1],[189,3],[190,6],[192,1],[193,2],[194,2],[195,2],[202,1],[203,2],[206,2],[209,1],[211,1],[212,1],[213,1],[214,6],[219,5],[221,6],[223,2],[224,1],[225,1]],"maintaining":[[0,1],[1,1],[3,1],[4,1],[7,1],[32,1],[33,1],[36,1],[53,1],[55,1],[58,1],[61,1],[71,1],[72,2],[74,1],[76,2],[89,1],[90,1],[92,2],[105,1],[108,2],[201,1],[217,2],[218,2],[219,1],[223,2],[225,1]],"factors":[[0,1],[1,2],[3,2],[4,1],[5,1],[6,4],[11,1],[32,1],[33,1],[37,2],[65,1],[71,1],[74,2],[76,2],[81,1],[83,1],[87,2],[89,2],[90,1],[101,1],[108,1],[109,1],[113,1],[116,1],[120,1],[122,1],[124,3],[125,1],[126,1],[130,1],[155,1],[175,3],[193,3],[223,2]],"characterize":[[0,1],[3,1],[206,1]],"spe-":[[0,1],[71,1]],"cific":[[0,1],[71,1]],"alford":[[0,1],[79,1],[80,1]],"understanding":[[0,1],[2,1],[3,1],[7,1],[8,1],[9,2],[10,1],[17,2],[32,1],[35,3],[56,1],[58,1],[60,1],[62,1],[74,5],[75,1],[83,2],[85,1],[97,1],[100,1],[104,1],[105,1],[125,2],[126,2],[127,1],[140,1],[163,1],[169,2],[170,5],[171,7],[172,1],[174,1],[175,1],[178,3],[182,1],[185,1],[186,4],[191,1],[192,1],[196,1],[197,2],[201,3],[202,3],[203,3],[204,2],[205,2],[206,3],[208,4],[209,2],[210,3],[211,3],[212,5],[213,2],[214,3],[215,1],[216,6],[217,1],[219,1],[222,2],[223,4],[224,2]],"individual":[[0,2],[2,1],[3,5],[8,1],[9,5],[10,1],[11,1],[12,2],[15,1],[24,3],[27,1],[28,1],[29,1],[30,1],[32,2],[33,1],[35,1],[44,1],[54,1],[56,1],[74,1],[75,1],[82,1],[83,1],[84,2],[85,1],[86,1],[87,2],[88,2],[90,1],[92,1],[94,1],[95,2],[98,1],[101,3],[102,1],[103,1],[104,1],[108,2],[109,1],[111,1],[112,5],[113,6],[114,6],[115,2],[118,1],[120,1],[121,1],[124,1],[125,1],[134,1],[137,1],[161,2],[169,4],[179,1],[183,1],[186,1],[187,1],[193,1],[208,1],[212,1]],"specific":[[0,5],[1,1],[3,2],[4,1],[5,2],[6,1],[7,1],[12,2],[13,1],[16,1],[19,3],[21,3],[22,1],[24,1],[28,1],[29,1],[30,2],[31,2],[32,3],[33,1],[36,1],[37,2],[41,1],[42,2],[43,4],[46,2],[47,1],[48,1],[49,1],[51,1],[54,1],[56,2],[57,1],[58,2],[59,1],[60,2],[61,1],[64,2],[67,1],[69,1],[71,3],[74,2],[75,2],[77,2],[79,2],[82,1],[83,1],[84,1],[86,1],[87,1],[89,2],[92,2],[93,1],[97,2],[101,1],[108,1],[109,1],[113,1],[121,2],[122,5],[125,1],[126,1],[127,2],[128,4],[130,1],[134,6],[140,2],[152,1],[155,1],[158,1],[159,1],[160,1],[161,1],[163,1],[166,2],[167,1],[168,9],[170,2],[175,4],[176,3],[177,8],[179,9],[180,1],[181,3],[182,1],[183,1],[184,2],[185,2],[187,1],[188,1],[189,2],[190,3],[192,2],[193,2],[194,1],[203,1],[205,1],[208,3],[210,1],[213,1],[216,1],[221,2]],"underlying":[[0,4],[1,1],[3,2],[6,1],[27,1],[43,1],[45,1],[48,1],[49,1],[71,1],[84,1],[192,28],[193,7],[194,23],[195,19],[196,8],[199,1],[201,1],[202,1],[211,1],[217,2],[219,1],[221,2],[223,15]],"patterns":[[0,1],[3,1],[6,1],[7,4],[8,2],[22,1],[57,1],[76,1],[101,1],[112,2],[113,1],[120,1],[123,1],[131,1],[146,1],[161,1],[169,1],[171,1],[181,1],[188,1],[202,2],[204,3],[205,1],[210,3]],"failure":[[0,3],[3,2],[4,1],[5,1],[6,3],[7,7],[36,1],[43,2],[48,6],[51,2],[53,1],[54,1],[56,5],[57,2],[59,1],[60,2],[61,13],[64,1],[76,2],[79,5],[86,3],[89,1],[90,2],[92,1],[94,5],[95,5],[101,8],[102,2],[109,1],[110,1],[171,4],[172,1],[173,1],[174,1],[178,1],[183,1],[184,1],[194,3],[195,2],[197,1],[199,3],[202,1],[207,1],[216,1],[217,3]],"engaged":[[0,1],[9,1],[12,1],[20,1],[22,1],[36,1],[40,1],[43,1],[53,2],[55,1],[77,2],[86,1],[98,1],[155,1],[195,1],[210,1]],"extensive":[[0,1],[38,1],[44,1],[46,1],[60,1]],"avoidance":[[0,2],[6,3],[20,1],[27,3],[37,1],[55,1],[56,2],[60,2],[63,1],[65,7],[71,1],[76,4],[77,1],[82,1],[113,1],[134,4],[139,1],[168,2],[170,1],[175,1],[194,2],[204,2],[205,2],[206,6],[207,1],[208,5],[209,4],[210,1],[211,3],[217,1],[218,1],[222,1],[223,1]],"perceived":[[0,1],[4,1],[6,8],[36,1],[37,1],[56,1],[76,1],[89,2],[90,2],[91,1],[112,1],[128,1],[134,1],[154,1],[161,1],[215,1]],"incompetence":[[0,2],[5,4],[6,4],[7,1],[10,1],[56,2],[57,1],[59,1],[76,3]],"wouldn't":[[0,1],[6,1],[21,1],[22,2],[25,1],[43,2],[47,1],[57,1],[60,1],[71,2],[72,1],[76,1],[169,1],[179,1],[206,1],[208,1]],"apparent":[[0,1],[65,1],[74,1],[113,1],[175,2]],"ironically":[[0,1],[110,1],[155,1],[191,1],[208,1],[209,1]],"strength-":[[0,1],[198,1],[221,1]],"belief":[[0,3],[1,1],[3,4],[4,3],[5,20],[6,11],[7,10],[8,5],[10,2],[16,1],[27,1],[32,2],[34,1],[44,1],[45,1],[47,7],[48,1],[49,1],[52,1],[53,2],[56,18],[57,22],[58,38],[59,10],[60,20],[61,11],[62,5],[64,1],[71,1],[74,1],[75,2],[76,2],[77,1],[79,9],[80,1],[82,2],[83,2],[84,3],[90,1],[91,3],[94,1],[95,2],[99,1],[100,1],[101,1],[102,2],[108,1],[125,1],[134,1],[140,7],[142,2],[144,3],[166,1],[172,5],[173,1],[177,1],[183,2],[186,6],[187,2],[192,2],[193,1],[196,11],[197,14],[198,70],[199,13],[200,1],[201,4],[207,1],[211,1],[212,2],[219,8],[221,23],[223,4]],"trained":[[0,1],[60,1],[96,1],[163,3],[166,1],[173,1]],"psychoanalyst":[[0,1],[1,1]],"drew":[[0,1],[58,1],[61,1],[155,1]],"multiple":[[0,1],[37,1],[43,2],[49,1],[56,1],[57,1],[62,1],[63,1],[79,1],[86,2],[87,4],[112,1],[113,1],[114,1],[116,2],[117,1],[119,1],[120,1],[124,1],[125,1],[155,2],[161,1],[175,1],[176,2],[187,1],[193,2],[213,1],[219,1],[223,7]],"sources":[[0,1],[12,1],[62,1],[65,1],[87,1],[103,2],[116,1],[164,1],[167,1]],"including":[[0,1],[3,2],[7,3],[11,1],[12,2],[14,1],[27,1],[29,1],[30,1],[34,1],[36,1],[46,1],[53,1],[57,1],[60,1],[63,1],[64,1],[65,1],[72,2],[76,2],[84,1],[85,1],[86,2],[87,4],[89,2],[90,1],[92,1],[93,1],[96,2],[98,1],[100,1],[101,1],[108,1],[109,2],[110,3],[111,1],[112,4],[113,2],[114,4],[115,1],[123,1],[163,2],[166,2],[173,1],[175,1],[188,2],[195,1],[205,1],[206,1],[211,2],[212,3],[222,1]],"early":[[0,1],[1,1],[5,2],[7,1],[8,1],[10,1],[16,2],[21,1],[25,1],[30,2],[32,1],[35,1],[38,2],[41,1],[47,1],[48,1],[56,5],[57,1],[58,2],[59,1],[60,1],[62,1],[71,1],[72,3],[74,2],[79,7],[81,1],[82,1],[83,3],[84,3],[88,2],[89,2],[90,1],[96,2],[108,2],[110,1],[113,1],[124,3],[125,1],[129,1],[134,1],[154,1],[163,1],[167,1],[168,1],[169,1],[170,3],[171,2],[173,1],[176,1],[177,3],[183,1],[189,1],[190,2],[191,2],[196,1],[201,2],[206,1],[208,1],[210,1],[213,4],[214,2],[217,3],[218,14],[223,1]],"theorists":[[0,2]],"kelly":[[0,1],[194,1]],"albert":[[0,2]],"ellis":[[0,2],[4,1],[80,1]],"lazarus":[[0,1],[12,2],[81,2]],"turn":[[0,1],[5,1],[10,2],[12,1],[18,3],[22,1],[25,1],[32,2],[38,1],[46,1],[48,2],[51,3],[54,1],[57,1],[64,1],[74,1],[75,1],[88,1],[89,1],[91,2],[93,1],[95,2],[97,1],[98,2],[100,2],[103,1],[105,2],[107,1],[109,1],[115,1],[120,1],[155,3],[164,1],[167,1],[191,1],[193,1],[195,2],[202,2],[208,2],[211,1],[213,2],[217,1],[219,1],[221,2]],"expanded":[[0,1],[86,1],[88,1],[95,1],[113,1],[123,1],[225,2]],"host":[[0,1],[53,1]],"researchers":[[0,1],[1,1],[23,1],[53,1],[80,1],[86,4],[87,2],[88,2],[90,2],[103,1],[108,1],[110,2],[111,1],[112,1],[114,1],[177,1]],"numerous":[[0,1],[84,1],[155,1],[208,1],[225,1]],"united":[[0,1],[1,1],[3,1],[71,2],[108,1],[116,1],[123,2],[124,2],[125,1],[126,1],[218,2]],"states":[[0,1],[1,1],[3,1],[71,2],[80,1],[108,1],[112,1],[116,1],[123,2],[124,2],[125,1],[126,1],[163,1],[218,3]],"abroad":[[0,1],[168,1]],"historical":[[0,1],[7,1],[56,1],[59,2],[60,1],[61,1],[76,2],[80,1],[81,1],[83,2],[164,1]],"provide":[[0,1],[2,1],[3,2],[7,1],[10,1],[11,3],[12,2],[13,1],[15,5],[18,2],[23,1],[24,5],[27,1],[30,1],[31,1],[33,1],[34,2],[36,4],[37,1],[41,1],[43,2],[51,1],[52,1],[58,2],[60,1],[61,1],[65,1],[67,1],[70,1],[73,2],[74,1],[75,2],[86,1],[87,2],[90,2],[91,1],[92,13],[93,2],[97,4],[98,2],[101,3],[103,3],[104,1],[107,4],[108,1],[112,2],[113,1],[114,12],[115,8],[120,1],[121,8],[122,4],[128,1],[131,1],[163,7],[164,1],[165,2],[166,6],[167,3],[168,21],[175,1],[178,1],[182,1],[183,1],[184,1],[189,2],[193,2],[203,1]],"rich":[[0,1],[7,1]],"description":[[0,1],[4,1],[12,2],[16,1],[32,1],[33,2],[34,2],[37,1],[43,1],[44,1],[60,1],[79,1],[82,2],[83,1],[84,1],[92,1],[116,1],[118,1],[177,2],[182,1],[185,1]],"different":[[0,2],[1,1],[2,4],[3,3],[4,3],[5,5],[8,1],[12,3],[16,2],[17,2],[18,2],[19,4],[21,1],[25,2],[26,1],[27,1],[28,1],[33,1],[36,1],[37,3],[38,1],[39,1],[43,2],[44,1],[47,1],[53,2],[57,3],[58,1],[60,1],[61,2],[69,3],[77,1],[79,1],[87,3],[88,2],[90,1],[92,1],[93,3],[96,4],[98,5],[99,1],[100,2],[104,3],[105,2],[108,1],[110,1],[114,1],[116,1],[120,2],[123,1],[128,1],[129,1],[134,1],[139,1],[155,5],[160,1],[164,2],[168,1],[169,2],[170,2],[172,6],[175,3],[176,7],[177,1],[178,1],[179,4],[180,2],[181,2],[183,3],[184,1],[186,1],[187,1],[188,3],[189,3],[190,1],[192,4],[195,2],[196,2],[198,1],[199,3],[200,1],[201,4],[202,4],[203,3],[204,3],[205,1],[206,2],[207,1],[208,3],[210,3],[211,2],[212,4],[213,1],[214,2],[215,1],[216,1],[217,1],[218,1],[219,1],[222,5]],"originated":[[0,1],[3,1],[58,2],[62,1],[96,1],[111,1]],"grew":[[0,1],[173,1],[176,1],[192,1],[196,2],[201,2],[208,2],[209,1]],"arnkoff":[[0,1],[79,1]],"glass":[[0,1],[41,2],[79,1],[97,1],[156,1],[158,2],[164,1],[185,1],[193,1]],"dobson":[[0,2],[12,2],[48,2],[65,2],[80,5]],"dozois":[[0,1],[80,1]],"thoma":[[0,1],[81,1]],"share":[[0,1],[4,1],[7,1],[8,1],[29,1],[32,1],[60,1],[74,1],[89,1],[90,1],[92,1],[93,2],[101,4],[110,1],[114,1],[115,1],[120,1],[153,2]],"formulations":[[0,1],[134,10]],"emphases":[[0,1],[71,1]],"vary":[[0,1],[2,3],[3,3],[5,1],[9,1],[32,1],[45,1],[48,2],[60,1],[75,1],[108,1],[112,1],[114,1],[163,1],[166,1],[167,1],[168,1],[175,1],[210,1],[213,1]],"degree":[[0,1],[3,1],[6,1],[9,2],[12,2],[16,1],[21,1],[25,1],[30,1],[32,1],[43,1],[46,1],[48,1],[53,2],[57,1],[58,1],[59,2],[60,2],[61,1],[63,2],[72,1],[74,1],[75,2],[79,1],[91,1],[97,1],[108,1],[193,1],[196,1],[206,2],[208,1],[213,1]],"include":[[0,1],[2,1],[3,1],[7,1],[8,1],[10,1],[18,1],[26,1],[27,2],[37,1],[38,1],[47,3],[59,2],[63,1],[69,1],[71,1],[75,1],[86,5],[87,1],[88,1],[89,1],[90,1],[92,1],[93,2],[95,1],[97,1],[98,3],[99,1],[101,2],[102,1],[103,1],[109,2],[111,4],[114,1],[122,1],[128,1],[130,1],[132,1],[134,5],[138,1],[164,1],[165,2],[166,1],[181,1],[183,1],[192,1],[198,1],[202,6],[203,1],[204,1],[206,2],[208,2],[210,1],[211,4],[213,2],[215,1],[217,1],[218,1],[222,1]],"rational":[[0,1],[5,1],[84,1],[127,1],[161,1],[210,1]],"emotional":[[0,1],[3,3],[4,2],[5,1],[6,1],[7,1],[8,2],[9,3],[10,2],[20,2],[24,3],[30,1],[32,1],[34,1],[40,2],[42,2],[44,2],[45,1],[47,1],[48,2],[51,1],[56,1],[57,1],[59,1],[60,4],[61,6],[62,2],[72,1],[74,1],[75,2],[76,3],[79,2],[81,2],[83,2],[84,1],[94,3],[95,2],[101,3],[102,1],[109,1],[110,2],[111,1],[112,1],[113,3],[114,1],[115,1],[123,2],[126,1],[132,1],[133,1],[134,4],[139,1],[142,2],[151,1],[153,4],[155,3],[160,3],[161,5],[169,1],[175,2],[176,1],[178,1],[179,1],[180,1],[181,2],[182,2],[184,1],[185,1],[187,2],[188,4],[194,3],[195,1],[202,2],[206,1],[208,2],[210,1],[225,1]],"linehan":[[0,1],[44,2],[54,1],[63,1],[80,1],[81,2]],"problem-solving":[[0,1],[6,1],[36,1],[37,1],[47,1],[64,1],[76,1],[80,1],[84,3]],"zurilla":[[0,1],[64,1],[80,1]],"nezu":[[0,1],[64,1],[80,1]],"acceptance":[[0,1],[3,1],[9,1],[45,1],[48,1],[49,3],[53,1],[63,2],[80,2],[82,2],[89,2],[96,7],[100,2],[105,2],[106,1],[110,1],[112,1],[113,1],[118,2],[123,1],[124,1],[125,5],[126,3],[127,2],[154,1],[175,1],[187,4],[188,2],[189,2],[191,23],[192,6],[196,3],[198,1],[209,1],[210,6],[211,4],[216,2],[217,1],[218,1],[223,6],[225,1]],"commitment":[[0,1],[2,1],[3,1],[9,1],[63,1],[76,1],[80,1],[82,1],[88,1],[89,2],[91,3],[94,5],[96,1],[100,2],[101,5],[102,1],[104,2],[105,3],[106,2],[118,1],[120,2],[125,1],[126,1],[163,2],[165,1],[166,3],[167,2],[168,6],[210,1],[219,1]],"hayes":[[0,1],[44,1],[49,1],[54,1],[63,1],[80,2],[96,1],[117,2],[124,2],[125,1]],"exposure":[[0,1],[44,1],[65,12],[80,1],[82,2],[83,5],[86,2],[89,2],[96,1],[110,9],[111,1],[122,1],[123,1],[124,2],[126,2],[141,2],[150,2],[151,3],[160,1],[163,1],[164,1],[165,1],[166,2],[167,3],[208,6],[209,7],[211,1],[223,1]],"rothbaum":[[0,1],[80,1]],"pro-":[[0,1],[3,1],[9,1],[19,1],[24,1],[32,2],[34,1],[68,1],[86,1],[87,1],[90,2],[115,1],[120,1],[122,1]],"resick":[[0,1],[81,1]],"schnicke":[[0,1],[81,1]],"analy-":[[0,1],[87,1]],"system":[[0,1],[21,1],[24,2],[64,1],[71,1],[81,1],[82,1],[93,3],[110,1],[116,1],[118,1],[125,1],[126,1],[153,9],[161,1],[177,1],[208,5],[218,1]],"mccullough":[[0,1],[81,1]],"activation":[[0,1],[6,2],[8,1],[56,3],[60,1],[80,2],[82,1],[203,5],[223,4]],"lewinsohn":[[0,1],[81,1]],"martell":[[0,1],[81,1]],"modi-":[[0,1],[8,1]],"fication":[[0,1],[8,1]],"meichenbaum":[[0,1],[81,1],[89,1],[127,1]],"incorporates":[[0,1],[85,1],[109,1],[140,1]],"therapies":[[0,1],[16,1],[80,2],[87,1],[93,1],[98,1],[116,1],[118,2],[123,1],[125,4],[164,1]],"well":[[0,4],[1,2],[2,2],[3,2],[5,4],[6,6],[8,1],[9,2],[10,10],[11,1],[12,4],[14,1],[16,4],[17,6],[18,4],[19,3],[20,2],[21,2],[25,6],[26,3],[27,1],[29,1],[32,6],[33,1],[34,2],[35,1],[36,1],[37,2],[38,1],[41,1],[42,1],[45,1],[46,2],[47,6],[48,3],[49,2],[51,2],[52,1],[53,1],[56,4],[58,7],[59,2],[60,6],[61,11],[64,3],[65,3],[66,1],[69,6],[70,2],[71,4],[72,3],[75,1],[76,4],[77,1],[79,2],[84,1],[87,1],[88,1],[90,1],[91,4],[92,1],[93,3],[94,1],[95,6],[96,2],[97,3],[98,5],[99,1],[100,5],[101,2],[103,2],[104,2],[106,1],[107,2],[109,2],[110,2],[111,1],[112,1],[113,1],[120,1],[123,1],[127,2],[128,1],[140,1],[141,1],[145,1],[155,3],[163,1],[166,2],[167,5],[168,3],[169,3],[170,4],[171,5],[173,4],[176,2],[177,1],[178,2],[181,1],[183,2],[185,2],[188,2],[189,2],[191,2],[193,1],[195,4],[196,3],[197,1],[198,2],[199,2],[201,2],[202,1],[203,1],[206,2],[208,3],[209,1],[210,1],[211,5],[212,2],[213,1],[215,1],[216,1],[218,3],[219,2],[221,2]],"evidence-based":[[0,2],[3,1],[63,1],[77,1],[80,2],[81,2]],"psychotherapies":[[0,1],[80,1],[89,1],[225,1]],"within":[[0,3],[2,1],[3,3],[4,1],[5,2],[12,1],[32,1],[56,4],[63,1],[71,1],[76,1],[86,3],[87,1],[88,1],[89,1],[91,2],[92,3],[93,1],[95,1],[96,2],[97,2],[98,1],[100,3],[101,1],[102,1],[103,1],[105,3],[106,2],[107,2],[109,1],[110,5],[111,5],[112,2],[113,1],[114,3],[125,3],[134,4],[144,1],[152,1],[153,1],[160,1],[161,2],[163,3],[164,2],[166,1],[168,1],[180,1],[193,2],[211,1],[216,1]],"framework":[[0,2],[3,2],[4,1],[86,1],[117,1],[127,1]],"goes":[[0,1],[7,1],[19,1],[27,1],[36,1],[42,1],[48,1],[52,1],[58,1],[60,3],[71,1],[96,1],[100,1],[111,1],[168,2],[178,3],[179,1],[182,1],[190,1],[207,2],[211,1],[212,1]],"useful":[[0,1],[1,1],[4,1],[11,1],[12,1],[18,1],[19,1],[21,3],[22,1],[24,1],[25,1],[27,1],[31,1],[32,3],[43,1],[46,1],[47,2],[51,2],[52,1],[53,2],[54,1],[56,1],[57,2],[60,3],[61,2],[63,2],[64,4],[65,1],[69,1],[71,1],[72,1],[73,1],[86,1],[88,1],[89,2],[90,1],[93,1],[97,1],[104,1],[113,1],[128,1],[129,2],[130,4],[131,2],[133,1],[134,2],[135,1],[140,4],[143,2],[147,1],[149,1],[151,4],[155,3],[163,2],[164,1],[166,2],[167,1],[183,1],[204,1]],"learn":[[0,4],[2,8],[3,3],[4,2],[11,2],[12,1],[13,4],[15,1],[17,2],[19,2],[23,2],[24,1],[28,1],[32,1],[33,3],[34,1],[35,1],[41,3],[43,1],[44,2],[45,2],[46,2],[48,1],[53,2],[54,2],[56,1],[60,1],[64,2],[65,2],[67,1],[71,2],[72,1],[74,1],[75,1],[89,2],[91,1],[92,10],[93,1],[94,1],[95,1],[96,5],[97,2],[98,3],[99,3],[100,2],[101,1],[102,3],[103,3],[106,1],[113,1],[114,2],[115,4],[120,7],[121,1],[134,1],[135,1],[159,1],[166,1],[167,1],[169,11],[172,2],[175,8],[176,6],[177,5],[181,4],[182,1],[183,1],[187,2],[188,1],[191,1],[193,3],[194,1],[195,3],[196,6],[198,2],[199,2],[201,3],[202,1],[203,3],[204,4],[205,5],[206,6],[207,1],[208,6],[209,4],[210,5],[211,14],[212,2],[213,2],[214,3],[217,4],[218,1],[219,4],[222,1],[225,1]],"over-":[[0,1],[3,2],[7,1],[27,1],[35,1],[46,1],[56,1],[61,1],[94,1],[177,1],[204,1],[216,1]],"depth":[[0,1],[12,1],[33,1],[74,1],[75,1],[111,1],[200,1]],"still":[[0,2],[3,3],[6,3],[11,1],[16,1],[17,2],[18,1],[19,1],[20,1],[21,1],[25,2],[26,4],[32,4],[34,2],[35,2],[36,2],[38,1],[42,1],[43,1],[47,3],[48,1],[51,2],[56,2],[59,1],[60,3],[61,4],[64,1],[65,3],[69,4],[71,6],[76,1],[77,1],[86,1],[87,1],[88,1],[89,5],[90,3],[91,1],[94,1],[97,2],[100,6],[104,1],[105,2],[108,1],[109,1],[110,1],[111,1],[112,1],[113,2],[115,1],[126,1],[134,1],[154,1],[155,2],[163,1],[164,1],[166,2],[167,3],[168,1],[171,1],[172,1],[183,3],[186,2],[187,4],[188,1],[189,1],[191,6],[192,2],[193,2],[194,3],[195,1],[196,4],[198,1],[201,3],[206,3],[209,1],[210,1],[211,2],[215,1],[217,6],[218,1]],"encourage":[[0,1],[2,1],[3,3],[12,2],[23,1],[24,2],[38,1],[53,1],[54,1],[55,1],[63,1],[64,2],[71,4],[72,1],[89,1],[90,4],[91,2],[92,4],[93,1],[94,1],[95,3],[96,1],[97,2],[98,1],[101,1],[102,1],[103,2],[109,1],[112,3],[113,4],[114,5],[115,2],[120,2],[128,1],[129,1],[131,1],[152,1],[159,1],[164,1],[166,2],[168,2],[177,1],[205,1],[215,1]],"master":[[0,1],[1,1],[2,2],[3,1],[4,2],[8,2],[104,2],[177,1],[183,1],[205,2],[208,1]],"additional":[[0,1],[1,1],[2,2],[3,5],[6,1],[7,2],[8,1],[9,2],[10,3],[11,1],[12,2],[14,1],[15,1],[16,1],[17,1],[23,1],[24,1],[26,1],[31,1],[33,1],[34,1],[35,1],[41,3],[43,1],[45,1],[47,2],[50,1],[58,1],[59,1],[60,1],[62,1],[63,3],[64,6],[65,4],[67,1],[71,1],[75,1],[76,1],[82,1],[86,3],[87,2],[91,1],[94,1],[97,2],[98,2],[99,1],[101,1],[102,1],[103,1],[107,2],[108,1],[109,1],[112,1],[113,2],[114,4],[115,3],[120,1],[122,1],[140,2],[160,1],[163,1],[168,2],[169,1],[171,1],[172,1],[174,1],[175,3],[176,5],[177,1],[178,1],[179,3],[180,1],[181,6],[182,1],[184,2],[185,3],[186,1],[187,2],[188,2],[189,1],[190,3],[191,1],[194,3],[195,3],[197,4],[198,3],[199,2],[200,5],[201,2],[202,3],[204,1],[205,1],[206,1],[208,1],[209,2],[210,1],[211,1],[212,4],[213,1],[214,2],[215,1],[216,3],[217,3],[218,1],[219,1],[221,10],[222,10],[223,1],[225,1]],"implement":[[0,1],[2,1],[3,1],[34,1],[64,1],[91,3],[103,1],[104,1]],"cogni-":[[0,1],[3,1],[4,1],[24,1],[44,1],[48,1],[79,1],[80,2]],"tive":[[0,2],[3,1],[4,3],[9,1],[16,3],[21,2],[24,1],[36,1],[43,3],[47,1],[56,4],[57,1],[59,2],[60,1],[67,1],[69,2],[79,1],[80,3],[87,1],[90,1],[96,1],[102,1],[111,1],[169,2],[171,1],[176,1],[179,1],[186,2],[188,1],[196,2],[199,1],[200,1],[202,1],[203,1],[213,1]],"levels":[[0,2],[4,1],[20,1],[22,1],[38,1],[43,1],[56,3],[60,1],[82,1],[85,1],[88,2],[89,1],[90,3],[109,1],[110,3],[111,5],[112,2],[134,1],[139,1],[142,1],[154,1],[155,2],[163,1],[164,2],[166,2],[167,2],[168,3],[171,1],[183,1],[196,7],[201,1],[203,1],[205,1],[208,1],[210,5]],"education":[[0,1],[18,1],[41,1],[74,1],[76,1],[85,1],[87,1],[89,2],[93,3],[118,2],[121,1],[124,2],[127,1],[152,1]],"income":[[0,1],[112,2],[121,1],[123,1]],"variety":[[0,1],[1,1],[3,3],[6,1],[19,1],[29,1],[45,1],[54,1],[57,1],[65,1],[67,1],[70,1],[71,1],[75,1],[84,1],[86,2],[89,1],[112,1],[113,1],[134,1],[175,1],[176,1],[179,1],[182,1],[188,1],[189,4],[193,1],[195,1],[198,1],[200,1],[204,2],[209,2],[212,1],[217,1],[218,1],[219,1],[222,1]],"cultures":[[0,1],[3,3],[9,1],[173,1],[195,1],[200,1]],"ages":[[0,1],[75,1],[166,1],[171,1],[196,1]],"young":[[0,1],[3,1],[9,2],[46,1],[60,1],[61,1],[62,2],[81,2],[109,1],[110,1],[116,4],[117,1],[123,1],[124,1],[126,1],[127,1],[155,1],[170,2],[191,1],[196,3],[201,1],[212,1]],"chil-":[[0,1],[170,1],[183,1],[217,1]],"dren":[[0,1],[170,1],[183,1],[217,1]],"older":[[0,1],[2,1],[79,8],[80,2],[81,1],[83,1],[87,5],[105,1],[108,1],[110,1],[169,1],[171,2],[172,1],[186,1],[196,6],[216,2],[218,1]],"adults":[[0,1],[2,1],[80,1],[81,2],[87,4],[88,1],[95,1],[108,2],[109,1],[110,1],[116,3],[117,1],[123,3],[124,1],[125,1],[126,1],[127,1],[171,1],[196,1]],"hospitals":[[0,1],[103,1]],"clinics":[[0,1],[81,1],[116,2],[127,1]],"schools":[[0,1],[1,1]],"vocational":[[0,1],[76,1]],"programs":[[0,1],[75,3],[87,2],[100,1],[103,1],[109,1],[112,1],[113,3],[114,1],[120,1],[121,2],[122,1],[123,1],[127,1],[158,1],[203,2],[210,1]],"group":[[0,1],[62,1],[81,1],[85,1],[86,3],[88,9],[92,5],[94,1],[100,2],[101,4],[102,3],[103,9],[107,2],[108,3],[112,3],[113,1],[114,6],[115,8],[116,2],[118,1],[120,6],[121,3],[124,1],[126,2],[155,1],[173,1],[206,2],[208,1],[210,1]],"couple":[[0,1],[9,1],[12,2],[18,1],[21,1],[26,1],[27,1],[33,1],[34,1],[35,1],[36,1],[43,1],[51,1],[65,1],[70,1],[71,1],[92,1],[93,1],[94,2],[95,2],[97,3],[98,4],[100,2],[101,2],[102,1],[103,1],[105,2],[120,1],[121,1],[122,1],[164,1],[166,3],[167,2],[203,1],[213,1],[214,2],[217,1],[219,2],[223,1]],"family":[[0,1],[1,1],[2,1],[3,2],[5,2],[6,3],[7,4],[8,1],[10,1],[11,3],[12,5],[13,2],[18,2],[19,1],[21,1],[22,1],[24,1],[26,1],[29,1],[31,2],[32,1],[33,3],[34,1],[35,1],[38,1],[47,1],[51,1],[61,3],[64,1],[68,1],[69,3],[74,1],[76,7],[77,3],[90,1],[91,5],[94,7],[96,1],[97,1],[98,2],[100,1],[102,1],[107,1],[109,1],[113,4],[115,1],[120,3],[124,2],[125,1],[127,2],[165,2],[166,3],[168,1],[170,1],[171,4],[172,3],[173,3],[175,1],[176,2],[178,1],[183,5],[186,4],[191,5],[192,7],[196,2],[199,8],[200,1],[201,1],[203,2],[213,1],[214,4],[215,2],[217,1],[218,5],[219,1],[223,1]],"described":[[0,1],[3,1],[6,1],[7,1],[9,1],[17,1],[33,2],[36,3],[37,1],[42,1],[47,1],[48,2],[50,1],[52,3],[55,1],[56,2],[60,2],[61,1],[63,3],[69,1],[71,1],[114,1],[118,1],[153,2],[166,1],[167,1],[170,3],[171,2],[175,5],[176,1],[177,6],[179,3],[181,1],[182,1],[186,3],[187,5],[191,1],[196,2],[202,1],[203,2],[205,1],[206,1],[208,4],[209,2],[211,1],[212,1],[213,6],[214,3],[217,1],[219,3]],"focuses":[[0,1],[57,1],[94,1],[115,1],[177,1],[186,1],[200,1],[216,1]],"minute":[[0,1],[10,1],[19,1],[21,2],[26,1],[27,2],[34,2],[36,1],[38,1],[40,1],[43,1],[53,1],[54,1],[65,1],[77,1],[79,1],[154,1],[155,1],[164,1],[190,1],[191,1],[195,1],[199,1],[205,1],[210,2],[217,1]],"interactions":[[0,1],[5,2],[6,2],[7,1],[8,1],[31,2],[38,1],[77,1],[91,1],[114,1],[130,1],[155,1],[168,1],[173,1],[189,1],[190,1],[196,1],[197,1],[214,1],[217,1]],"full":[[0,2],[3,1],[22,1],[32,1],[33,1],[34,1],[35,1],[49,1],[61,1],[66,1],[76,1],[77,1],[81,1],[85,1],[90,1],[94,2],[97,1],[98,2],[102,2],[105,1],[112,1],[113,1],[123,1],[140,1],[163,1],[169,1],[191,1],[196,2],[203,2],[209,1],[214,1]],"individuals":[[0,1],[1,4],[2,1],[3,1],[4,3],[5,1],[40,1],[46,1],[56,2],[80,1],[84,1],[87,2],[88,2],[89,1],[90,2],[91,2],[95,2],[97,2],[98,1],[101,1],[103,1],[107,1],[108,7],[110,2],[111,6],[112,6],[113,1],[114,1],[120,2],[122,1],[124,1],[127,1],[129,1],[132,1],[140,4],[153,1],[161,2]],"hospitalized":[[0,1],[86,2]],"schizophrenia":[[0,1],[3,1],[80,4],[111,1],[116,1]],"health":[[0,2],[1,2],[9,3],[11,2],[14,4],[16,1],[17,1],[18,2],[19,1],[32,1],[38,1],[58,1],[74,1],[76,2],[80,1],[81,4],[83,2],[85,1],[87,1],[88,1],[89,8],[90,7],[91,3],[93,6],[94,7],[95,3],[98,1],[100,1],[102,2],[104,5],[105,1],[106,1],[107,1],[108,2],[109,7],[110,9],[111,5],[112,4],[113,4],[114,4],[116,42],[117,10],[118,11],[119,2],[121,1],[122,5],[123,10],[124,14],[125,8],[126,8],[127,7],[136,1],[138,3],[153,1],[155,1],[157,1],[158,2],[160,1],[163,8],[164,1],[166,1],[167,2],[168,3],[170,1],[171,1],[173,2],[176,1],[177,1],[191,2],[202,3],[203,3],[205,1],[206,2],[208,2],[211,1],[217,1],[223,1],[225,1]],"care":[[0,3],[4,1],[5,1],[9,1],[10,13],[11,1],[14,2],[18,2],[19,1],[24,1],[31,1],[32,1],[43,2],[47,1],[48,1],[56,1],[58,1],[61,1],[70,1],[74,2],[76,1],[80,1],[81,1],[87,1],[91,4],[93,1],[100,4],[104,1],[105,2],[106,1],[112,1],[116,1],[117,4],[121,1],[124,4],[125,2],[126,1],[127,1],[155,1],[160,1],[163,3],[166,1],[170,2],[171,3],[176,1],[178,6],[182,14],[185,5],[186,2],[189,1],[190,1],[191,1],[192,1],[196,1],[199,1],[201,1],[202,2],[203,1],[204,2],[206,1],[212,5],[214,5],[216,1],[217,2],[218,1]],"allied":[[0,1],[113,1]],"providers":[[0,1],[14,1]],"without":[[0,1],[1,2],[3,1],[6,1],[9,1],[16,2],[21,1],[26,1],[33,1],[36,1],[42,1],[48,4],[51,1],[52,2],[53,2],[56,2],[60,1],[64,1],[65,1],[70,1],[71,1],[76,2],[78,2],[86,1],[87,1],[88,2],[89,1],[90,1],[91,3],[92,1],[93,3],[94,1],[95,2],[96,5],[97,3],[100,3],[101,1],[102,1],[103,1],[105,4],[108,1],[109,1],[111,1],[112,2],[113,1],[115,3],[120,1],[121,6],[122,4],[123,1],[127,2],[131,1],[132,1],[139,1],[144,1],[151,1],[155,1],[158,5],[163,2],[164,6],[166,10],[167,2],[168,4],[169,1],[171,1],[188,2],[189,1],[190,2],[191,4],[192,1],[193,1],[194,2],[197,1],[198,1],[199,1],[200,1],[201,1],[208,1],[209,1],[210,2],[212,1],[213,1],[214,1],[217,4],[218,2]],"conducting":[[0,1],[1,1],[11,1],[12,1],[83,1],[89,1],[107,1],[201,1]],"brief":[[0,1],[4,1],[15,1],[16,1],[19,1],[32,1],[33,3],[40,1],[42,1],[51,1],[53,1],[63,1],[80,1],[84,1],[86,1],[87,5],[88,1],[89,1],[92,4],[94,1],[97,1],[100,1],[101,1],[103,2],[104,1],[106,1],[107,1],[109,3],[114,2],[115,1],[116,1],[118,1],[120,2],[122,1],[123,1],[124,2],[125,1],[126,1],[169,1],[172,1],[193,1]],"medical":[[0,3],[1,1],[8,1],[11,1],[16,1],[53,1],[74,1],[75,3],[76,1],[85,1],[86,2],[88,1],[91,1],[93,2],[103,1],[111,2],[112,1],[114,2],[116,1],[117,1],[121,3],[122,3],[123,2],[124,1],[125,3],[126,1],[127,1],[138,1],[157,3],[158,3],[169,1],[205,2],[218,1]],"rehabilitation":[[0,1],[126,1]],"ments":[[0,1],[10,1],[12,1],[64,1],[92,1],[178,1],[193,4],[194,1],[214,1],[219,1]],"medication":[[0,1],[1,1],[11,1],[15,2],[16,6],[19,1],[24,1],[32,1],[33,6],[71,1],[74,1],[75,2],[76,1],[80,2],[81,1],[82,1],[83,3],[87,3],[108,2],[111,7],[115,1],[116,1],[122,2],[125,1],[133,1],[161,1],[163,15],[164,15],[165,4],[166,15],[167,9],[168,15],[171,1],[173,1],[202,1],[203,18],[205,2],[211,13],[223,3]],"checks":[[0,1],[157,1],[159,1],[206,1],[207,1]],"peer":[[0,1],[2,1],[27,1],[35,1],[36,1],[74,1],[105,1],[203,1]],"appropriately":[[0,1],[10,1],[38,1],[74,2],[77,1],[115,1],[164,2],[166,3],[167,2],[168,10]],"theoretical":[[0,1],[1,1],[82,2],[83,1],[84,1]],"proposes":[[0,1],[1,1]],"dysfunctional":[[0,2],[2,3],[3,6],[4,5],[5,4],[7,3],[8,1],[9,2],[19,1],[25,1],[26,1],[27,2],[30,1],[31,1],[32,1],[36,2],[38,2],[40,2],[41,1],[43,1],[44,4],[45,2],[47,1],[48,1],[49,1],[51,2],[52,2],[53,4],[56,3],[57,4],[58,8],[60,3],[61,3],[62,1],[63,1],[64,1],[65,1],[69,1],[72,1],[74,4],[75,2],[76,1],[79,6],[82,10],[83,16],[84,7],[94,2],[95,1],[118,1]],"influences":[[0,1],[2,1],[39,1],[75,1],[124,1],[170,1],[173,1]],"client":[[0,1],[1,2],[2,14],[3,15],[4,8],[5,2],[7,15],[8,8],[9,18],[10,22],[11,9],[12,10],[13,2],[14,11],[15,7],[16,7],[17,1],[18,6],[19,3],[21,1],[22,3],[23,6],[24,9],[25,4],[26,9],[27,3],[28,2],[29,2],[30,2],[32,48],[33,7],[34,8],[35,5],[36,23],[37,3],[38,16],[40,5],[41,3],[42,9],[43,7],[44,2],[45,5],[46,4],[47,11],[48,4],[49,2],[52,6],[54,1],[56,3],[57,16],[58,12],[60,3],[61,1],[62,1],[63,3],[64,2],[65,3],[67,2],[68,1],[69,3],[70,2],[71,4],[72,1],[73,6],[74,30],[75,24],[77,1],[79,7],[81,1],[82,6],[83,6],[84,3],[89,1],[94,1],[112,1],[118,1],[119,1],[125,1],[126,1],[127,1],[128,5],[129,3],[134,3],[140,9],[141,6],[152,1],[155,18],[163,32],[164,20],[165,13],[166,52],[167,39],[168,40]],"common":[[0,1],[1,2],[2,1],[6,2],[7,1],[10,1],[17,2],[20,6],[26,2],[33,1],[36,7],[37,2],[40,2],[47,1],[48,2],[57,1],[58,1],[60,1],[69,1],[71,1],[80,1],[81,1],[82,2],[83,1],[86,2],[87,2],[89,2],[90,3],[91,1],[92,2],[94,4],[97,1],[98,3],[102,3],[103,3],[107,1],[108,4],[109,1],[110,2],[111,3],[112,2],[113,2],[120,1],[121,1],[127,1],[128,1],[130,1],[134,2],[139,1],[152,2],[162,1],[163,1],[164,5],[165,1],[166,4],[168,3],[170,2],[175,1],[176,1],[192,1],[201,1],[202,1],[203,1],[205,2],[206,3],[208,6],[210,1],[211,5]],"psychological":[[0,3],[4,1],[6,1],[11,1],[16,1],[26,1],[39,1],[40,2],[56,2],[61,1],[64,1],[71,1],[76,2],[79,3],[80,6],[81,5],[82,1],[86,1],[87,3],[88,1],[92,1],[111,1],[112,1],[113,1],[117,1],[123,2],[124,6],[125,9],[126,6],[127,2],[134,3],[140,1],[149,1],[153,1],[154,1],[161,1],[180,1],[224,1],[225,1]],"disturbances":[[0,1],[109,1]],"people":[[0,2],[1,2],[2,1],[3,2],[4,14],[5,4],[6,3],[7,5],[9,2],[10,7],[12,2],[13,3],[14,1],[16,1],[17,5],[18,6],[19,2],[21,8],[22,1],[23,1],[24,3],[26,3],[29,1],[31,1],[32,5],[33,1],[39,1],[40,1],[41,1],[42,1],[47,1],[48,3],[51,1],[52,1],[56,10],[57,7],[59,5],[60,8],[61,5],[62,1],[63,1],[64,3],[65,1],[66,4],[67,1],[69,3],[70,1],[71,1],[76,4],[77,2],[79,1],[80,1],[83,2],[85,1],[86,5],[89,1],[90,8],[91,7],[92,3],[93,10],[94,8],[95,15],[96,3],[97,3],[98,12],[99,6],[100,4],[101,14],[102,14],[103,2],[105,5],[107,1],[109,1],[110,1],[111,6],[112,3],[114,4],[115,3],[117,1],[120,9],[121,2],[126,1],[127,2],[128,1],[132,4],[134,7],[139,2],[140,2],[142,1],[144,1],[147,2],[148,1],[151,2],[152,2],[153,4],[155,10],[156,1],[158,7],[159,4],[161,2],[163,1],[164,3],[165,3],[166,11],[167,4],[168,5],[169,3],[170,6],[171,3],[172,7],[173,3],[174,2],[175,3],[176,7],[177,4],[178,2],[179,12],[180,1],[181,5],[182,1],[183,1],[184,2],[185,1],[187,1],[188,4],[189,2],[191,2],[192,4],[194,15],[195,4],[196,18],[197,17],[198,11],[199,12],[200,13],[201,11],[202,9],[203,10],[204,11],[205,8],[206,3],[207,1],[208,14],[209,5],[210,6],[211,12],[212,6],[213,15],[214,6],[215,9],[216,14],[217,5],[218,8],[219,2],[221,2],[222,2],[223,1],[225,1]],"evaluate":[[0,2],[1,1],[2,1],[3,2],[4,1],[10,1],[11,1],[12,1],[13,3],[17,2],[23,1],[24,1],[26,1],[30,1],[31,4],[32,1],[33,3],[34,1],[35,2],[36,2],[37,2],[40,2],[41,4],[43,3],[44,2],[45,7],[46,4],[47,5],[48,2],[49,3],[50,1],[51,1],[52,5],[56,2],[58,2],[59,1],[60,3],[61,1],[64,2],[71,1],[72,1],[74,2],[80,1],[81,2],[82,3],[84,1],[88,1],[93,1],[103,1],[104,1],[107,1],[112,1],[175,1],[176,2],[181,1],[182,2],[184,1],[192,1],[193,1],[196,3],[198,2],[199,1],[203,2],[208,1],[211,1],[215,3],[216,1],[221,1]],"think-":[[0,1],[5,1],[17,1],[27,1],[42,1],[47,1],[63,2],[174,1],[175,1],[183,1],[185,1],[209,1],[217,2]],"realistic":[[0,2],[1,1],[4,1],[5,1],[10,1],[13,1],[46,1],[47,3],[56,5],[59,1],[60,2],[64,1],[76,1],[92,1],[95,1],[97,1],[98,1],[102,1],[163,2],[164,1],[166,2]],"adaptive":[[0,2],[1,2],[4,6],[5,2],[6,3],[7,16],[8,1],[16,1],[17,1],[29,2],[30,1],[31,1],[34,1],[42,2],[43,1],[45,1],[46,2],[47,4],[48,1],[56,14],[58,1],[59,13],[60,3],[62,3],[63,1],[65,1],[69,3],[74,1],[76,2],[79,1],[80,1],[82,11],[83,9],[95,1],[113,1],[134,2],[141,1],[149,1],[177,1],[181,1],[191,1],[196,1],[203,1],[206,2],[212,1],[213,1]],"experience":[[0,2],[1,5],[3,2],[5,3],[7,2],[8,3],[10,3],[12,2],[16,1],[17,1],[21,1],[22,2],[23,1],[24,4],[26,4],[27,2],[31,1],[32,1],[33,1],[38,1],[40,2],[41,1],[43,5],[44,1],[48,4],[49,1],[50,1],[53,14],[54,1],[55,3],[56,5],[57,1],[58,5],[59,4],[60,6],[63,4],[64,1],[68,1],[69,4],[70,2],[71,2],[72,2],[75,1],[76,1],[78,2],[79,7],[80,1],[85,1],[86,2],[87,1],[89,3],[90,2],[91,3],[93,1],[94,1],[95,2],[96,2],[97,3],[98,8],[99,5],[100,21],[101,2],[102,1],[103,1],[104,12],[105,3],[106,2],[108,3],[112,4],[113,1],[115,5],[117,1],[120,3],[125,1],[127,1],[130,1],[132,1],[134,2],[137,2],[140,1],[146,1],[151,1],[152,1],[155,5],[158,1],[161,1],[163,3],[164,2],[166,5],[167,3],[168,1],[169,1],[170,1],[171,1],[172,4],[173,3],[175,4],[177,5],[178,1],[179,4],[180,1],[183,3],[184,1],[186,2],[188,2],[191,5],[192,2],[193,1],[196,5],[197,1],[198,4],[199,2],[200,6],[201,3],[202,1],[203,2],[205,9],[206,3],[207,2],[208,6],[209,5],[210,6],[211,3],[212,5],[213,1],[215,4],[217,3],[218,2],[219,1],[222,2]],"decrease":[[0,2],[20,1],[21,1],[25,1],[30,1],[31,3],[43,2],[47,2],[51,1],[52,1],[58,1],[63,1],[64,1],[65,2],[72,2],[74,1],[77,1],[78,1],[125,1],[164,1],[202,1],[203,2],[206,1],[207,4],[208,1],[210,1],[211,1],[222,1]],"emotion":[[0,2],[1,1],[2,3],[3,1],[4,1],[5,2],[7,5],[17,1],[18,1],[19,1],[22,1],[24,1],[30,1],[33,2],[34,1],[35,2],[39,1],[40,3],[41,15],[42,1],[43,35],[44,12],[45,4],[49,1],[51,2],[53,4],[54,1],[55,2],[56,1],[57,5],[63,6],[65,1],[70,2],[74,1],[79,2],[80,4],[82,1],[83,3],[84,1],[112,1],[117,1],[124,1],[127,1],[132,1],[134,2],[135,1],[136,1],[139,1],[149,1],[154,4],[158,2],[161,3],[175,1],[181,1],[182,1],[188,2],[194,2],[195,1],[196,1],[200,1],[201,1],[212,1]],"example":[[0,3],[1,2],[2,3],[3,3],[4,4],[5,7],[6,1],[8,1],[9,7],[10,8],[11,1],[12,1],[13,3],[14,1],[15,2],[17,2],[18,5],[19,2],[21,1],[24,6],[25,1],[26,3],[27,3],[28,1],[30,1],[32,3],[33,2],[35,1],[36,1],[37,1],[39,1],[40,5],[41,2],[43,5],[44,2],[47,2],[48,13],[51,12],[53,4],[56,5],[57,4],[58,4],[59,2],[60,1],[61,1],[63,1],[64,3],[65,3],[66,2],[69,2],[70,2],[71,1],[74,3],[81,1],[82,6],[83,8],[84,2],[86,4],[87,2],[89,1],[90,2],[91,1],[95,3],[96,2],[97,3],[98,1],[102,2],[103,1],[104,3],[108,5],[109,3],[111,1],[112,2],[113,5],[120,1],[121,2],[122,2],[128,1],[130,1],[132,1],[134,4],[139,1],[140,4],[142,1],[144,1],[147,1],[150,1],[154,1],[155,4],[157,1],[158,2],[159,4],[166,1],[168,1],[169,3],[170,2],[171,1],[172,10],[173,3],[175,4],[176,4],[177,4],[178,1],[179,5],[181,1],[182,3],[183,1],[184,2],[186,2],[188,2],[189,2],[191,5],[192,2],[194,2],[195,2],[196,7],[197,6],[198,9],[199,4],[200,2],[201,1],[202,8],[203,1],[204,2],[205,3],[206,1],[207,1],[208,6],[209,5],[210,2],[211,5],[212,3],[213,5],[214,5],[215,5],[217,2],[218,5],[221,1],[222,2],[223,29]],"difficulty":[[0,1],[3,1],[5,2],[9,1],[18,2],[19,1],[21,1],[22,2],[24,1],[25,1],[26,6],[27,3],[28,1],[33,1],[34,1],[35,2],[36,7],[37,6],[38,2],[39,1],[42,4],[43,4],[47,1],[49,1],[52,1],[57,1],[59,1],[60,1],[64,2],[74,3],[75,2],[76,3],[83,3],[84,1],[87,1],[89,1],[108,1],[112,1],[121,1],[122,1],[130,1],[164,2],[165,1],[170,2],[171,4],[178,1],[183,1],[187,1],[195,1],[197,2],[202,6],[205,2],[206,2],[208,2],[216,1],[217,1],[218,1],[222,3]],"concentrating":[[0,1],[2,1],[17,1],[37,1],[49,1],[76,1],[94,1],[151,1],[189,2],[193,1],[201,1],[202,2],[205,1],[222,2]],"paying":[[0,2],[5,1],[6,1],[33,1],[35,1],[51,1],[57,1],[59,3],[64,2],[65,1],[72,1],[169,1],[191,1],[194,1],[208,1]],"bills":[[0,2],[5,1],[6,1],[7,2],[33,1],[35,1],[41,1],[48,1],[56,1],[57,1],[58,1],[59,3],[65,1],[72,1],[204,1],[215,1],[216,1]],"automatic":[[0,4],[1,1],[2,4],[3,2],[4,10],[5,8],[6,2],[7,33],[8,2],[9,4],[10,3],[12,1],[15,2],[16,2],[17,6],[18,12],[19,7],[20,4],[21,2],[22,3],[23,1],[24,4],[25,4],[26,1],[27,2],[30,2],[31,6],[32,2],[33,7],[34,3],[35,7],[36,3],[37,2],[38,3],[39,10],[40,25],[41,38],[42,17],[43,10],[45,13],[46,16],[47,27],[48,15],[49,8],[50,6],[51,7],[52,17],[56,4],[57,18],[58,9],[60,5],[62,1],[65,4],[66,1],[68,2],[69,3],[71,2],[72,3],[74,10],[75,1],[76,1],[77,4],[79,2],[81,2],[82,15],[83,16],[84,19],[91,2],[96,2],[98,2],[112,1],[113,1],[127,1],[131,1],[134,2],[135,1],[140,1],[142,1],[149,1],[161,4],[169,2],[172,1],[177,12],[178,16],[179,15],[180,6],[181,18],[182,9],[183,6],[184,6],[185,3],[186,5],[187,4],[188,4],[189,2],[192,5],[194,1],[195,2],[196,19],[197,4],[201,2],[208,2],[212,1],[215,1],[217,7],[218,2],[223,19]],"thought":[[0,3],[1,2],[2,2],[3,1],[4,2],[5,1],[6,5],[7,26],[8,1],[9,3],[10,7],[12,4],[14,2],[16,7],[17,8],[18,13],[19,6],[20,2],[21,2],[22,2],[24,2],[25,4],[26,7],[27,3],[33,3],[34,1],[35,12],[36,1],[37,1],[40,13],[41,32],[42,5],[43,9],[44,2],[45,21],[46,18],[47,32],[48,7],[49,6],[50,1],[51,7],[52,18],[53,7],[54,2],[55,1],[56,4],[57,7],[58,6],[59,1],[60,2],[61,3],[64,2],[65,1],[68,1],[69,5],[70,1],[71,1],[74,3],[76,2],[77,1],[82,2],[83,2],[84,2],[89,1],[96,1],[97,5],[100,2],[104,1],[105,2],[113,1],[119,1],[122,1],[123,1],[125,1],[128,2],[129,1],[131,3],[132,1],[135,3],[139,3],[140,19],[142,3],[143,8],[149,6],[152,1],[153,1],[155,14],[161,1],[166,1],[169,1],[170,5],[171,4],[172,29],[173,11],[174,1],[175,4],[176,2],[177,41],[178,29],[179,3],[180,2],[181,30],[182,23],[183,39],[184,51],[185,27],[186,61],[187,61],[188,43],[189,17],[190,3],[191,6],[192,10],[193,2],[194,3],[195,4],[196,9],[197,6],[199,1],[201,1],[202,7],[203,1],[205,1],[206,3],[208,3],[209,2],[210,1],[211,4],[212,6],[213,5],[215,2],[217,9],[218,4],[219,9],[223,53],[224,1]],"idea":[[0,1],[1,2],[3,1],[10,1],[11,1],[12,1],[13,5],[16,1],[17,3],[19,2],[21,1],[22,1],[25,1],[26,4],[27,1],[34,2],[37,1],[40,1],[41,2],[47,1],[48,3],[49,1],[53,1],[56,2],[57,1],[58,9],[60,3],[65,1],[69,1],[71,2],[75,1],[79,1],[86,1],[90,1],[91,1],[93,1],[94,2],[95,2],[96,1],[97,5],[98,2],[103,1],[105,2],[111,1],[115,1],[140,4],[146,1],[148,1],[149,1],[154,2],[155,4],[161,1],[164,1],[167,1],[169,2],[173,1],[175,1],[183,1],[184,1],[191,1],[192,1],[193,2],[194,1],[196,1],[197,1],[201,1],[206,1],[208,1],[210,1],[217,1]],"words":[[0,1],[3,1],[5,1],[8,1],[9,4],[10,1],[15,1],[16,1],[17,2],[18,1],[35,3],[36,1],[38,1],[41,6],[43,1],[45,1],[53,1],[56,2],[57,3],[61,4],[68,1],[69,1],[74,2],[90,1],[95,3],[96,2],[100,1],[105,1],[109,1],[134,1],[140,1],[154,2],[155,1],[169,3],[171,1],[172,1],[173,1],[175,2],[177,2],[178,1],[179,1],[182,1],[188,1],[196,1],[198,1],[199,1],[206,2],[208,3],[209,1],[211,4],[212,1],[217,1]],"images":[[0,1],[5,1],[16,1],[39,1],[40,2],[41,2],[42,2],[43,1],[45,2],[47,1],[52,1],[53,2],[56,1],[59,2],[68,8],[69,27],[70,7],[74,1],[82,4],[83,11],[84,1],[89,1],[98,1],[99,1],[100,2],[103,1],[109,1],[113,3],[132,1],[155,2],[172,2],[175,2],[177,18],[178,3],[179,8],[180,2],[181,13],[182,3],[183,3],[184,10],[185,4],[186,2],[187,6],[188,2],[196,1],[206,1],[208,21],[211,9],[212,5],[215,2],[217,3],[223,1]],"just":[[0,1],[1,2],[2,1],[3,1],[4,4],[5,2],[7,2],[8,1],[9,2],[10,6],[12,8],[13,1],[16,7],[17,11],[18,12],[19,2],[20,3],[21,7],[22,2],[24,2],[25,12],[26,3],[27,2],[32,7],[33,2],[34,3],[35,7],[36,6],[37,11],[38,4],[40,2],[41,3],[42,7],[43,1],[44,2],[45,2],[46,1],[47,3],[48,3],[49,3],[51,8],[52,4],[53,1],[54,3],[55,2],[56,2],[57,3],[58,3],[59,2],[60,1],[61,7],[63,2],[64,6],[65,2],[69,7],[71,2],[74,2],[76,1],[77,1],[78,2],[79,7],[85,1],[87,1],[90,1],[91,1],[92,1],[93,2],[94,5],[95,3],[96,2],[97,5],[98,4],[99,2],[100,18],[101,3],[102,4],[103,3],[104,11],[105,10],[106,3],[107,1],[108,1],[113,1],[128,2],[132,1],[139,1],[140,1],[145,1],[153,1],[154,1],[155,10],[156,1],[157,1],[158,1],[165,1],[166,1],[167,2],[168,2],[169,3],[170,3],[171,2],[172,9],[173,2],[174,1],[175,1],[176,1],[177,7],[178,6],[179,7],[180,1],[181,7],[182,2],[183,2],[184,7],[185,2],[186,1],[187,5],[188,4],[189,1],[191,3],[192,2],[193,3],[194,4],[195,3],[196,1],[197,2],[198,2],[199,2],[200,2],[202,2],[203,3],[204,4],[205,4],[206,3],[207,2],[208,6],[209,3],[210,1],[212,1],[213,1],[214,2],[215,1],[216,2],[217,2],[218,1]],"seemed":[[0,1],[6,1],[16,1],[47,2],[59,1],[60,1],[64,1],[65,1],[76,1],[77,1],[100,1],[169,1],[170,1],[171,1],[172,1],[177,1],[178,1],[181,1],[182,1],[183,1],[185,1],[191,1],[194,3],[196,1],[200,2],[201,1],[208,1],[212,1],[217,1]],"mind":[[0,1],[1,1],[2,1],[3,1],[4,4],[5,4],[7,2],[9,3],[10,3],[15,1],[17,1],[18,4],[19,1],[22,5],[24,2],[25,2],[26,2],[27,1],[29,1],[32,1],[33,1],[34,1],[35,2],[36,2],[37,4],[38,2],[40,1],[41,12],[42,15],[43,5],[45,1],[46,1],[47,1],[48,3],[51,1],[52,2],[53,3],[54,5],[55,2],[56,3],[57,1],[58,3],[61,4],[68,1],[69,6],[70,5],[71,1],[74,3],[79,4],[83,1],[89,1],[91,4],[96,4],[97,4],[98,3],[100,7],[104,2],[105,4],[106,3],[112,1],[129,1],[130,2],[132,1],[134,2],[135,2],[139,1],[140,3],[142,1],[143,1],[145,3],[148,1],[149,2],[151,2],[153,2],[154,7],[155,24],[160,1],[161,5],[163,1],[165,1],[166,1],[167,1],[168,1],[169,24],[170,3],[171,3],[172,3],[173,1],[174,2],[175,9],[176,20],[177,16],[178,6],[179,11],[180,2],[181,12],[182,9],[183,6],[184,9],[185,8],[186,5],[187,8],[188,7],[189,1],[190,1],[191,8],[192,7],[193,3],[194,7],[195,9],[196,5],[197,7],[198,5],[199,3],[200,7],[201,8],[202,17],[203,4],[204,5],[205,19],[206,9],[207,1],[208,10],[209,6],[210,9],[211,11],[212,8],[213,2],[214,6],[215,5],[216,4],[217,15],[218,17],[219,15],[221,9],[222,14],[223,1],[224,5],[225,1]],"anything":[[0,2],[1,1],[3,2],[5,1],[9,3],[10,3],[12,8],[13,6],[14,1],[16,2],[17,3],[18,10],[19,7],[21,3],[22,1],[24,1],[25,2],[27,1],[32,8],[33,1],[34,6],[35,4],[36,1],[37,4],[38,2],[40,2],[41,1],[43,1],[45,1],[47,4],[48,2],[49,2],[51,3],[53,1],[56,1],[57,2],[58,2],[60,2],[61,1],[65,3],[70,1],[71,1],[77,2],[78,1],[79,3],[91,1],[93,1],[98,1],[100,2],[104,1],[111,1],[122,1],[134,1],[145,1],[153,1],[155,3],[156,1],[158,3],[159,1],[164,1],[166,2],[169,2],[173,1],[176,1],[177,1],[183,3],[186,1],[194,1],[195,2],[198,3],[200,1],[202,1],[204,4],[214,2],[217,1],[218,1],[221,2]],"right":[[0,1],[1,1],[2,1],[3,1],[4,3],[5,2],[6,1],[7,2],[9,6],[10,3],[12,4],[13,3],[14,3],[16,5],[17,8],[18,7],[19,3],[21,6],[22,2],[24,4],[25,2],[26,1],[31,1],[32,2],[33,1],[34,2],[35,3],[36,1],[37,5],[38,2],[40,1],[41,1],[42,3],[43,4],[47,3],[48,3],[51,1],[53,1],[54,2],[56,2],[57,1],[58,5],[59,4],[60,3],[61,5],[63,1],[64,3],[65,1],[69,2],[70,2],[71,1],[79,3],[90,2],[91,1],[93,1],[94,1],[95,3],[97,2],[100,4],[101,2],[102,2],[103,1],[104,5],[105,4],[121,1],[130,1],[153,1],[155,1],[167,1],[171,1],[172,1],[176,1],[178,4],[182,1],[183,1],[186,1],[199,2],[203,3],[208,1],[210,1],[214,1],[215,1]],"leads":[[0,1],[5,1],[12,1],[20,2],[46,1],[70,1],[137,1],[140,2],[166,1],[186,1],[202,1],[206,2],[208,1],[209,2],[210,1],[212,1],[214,1]],"particular":[[0,1],[2,1],[5,1],[7,1],[8,1],[10,1],[11,2],[24,1],[28,1],[32,2],[37,1],[38,1],[43,2],[52,1],[58,1],[63,1],[64,1],[67,1],[72,1],[86,1],[88,1],[90,1],[98,1],[99,1],[100,1],[104,1],[105,1],[108,1],[112,1],[113,1],[114,2],[121,1],[122,1],[129,1],[133,1],[140,1],[146,1],[147,1],[151,2],[153,2],[155,1],[158,2],[159,3],[161,2],[166,1],[169,2],[171,1],[174,1],[175,2],[176,1],[179,3],[188,1],[197,1],[199,1],[201,1],[203,1],[205,4],[207,1],[210,1],[211,1],[216,1]],"feel":[[0,1],[1,5],[2,2],[3,4],[4,5],[5,4],[6,4],[9,10],[10,10],[12,2],[13,7],[14,1],[15,1],[16,5],[17,5],[18,14],[19,5],[20,5],[21,17],[22,1],[24,1],[25,6],[26,5],[27,3],[32,7],[33,2],[34,2],[35,2],[36,6],[37,7],[38,3],[39,1],[40,3],[41,7],[42,4],[43,23],[45,2],[46,4],[47,4],[48,6],[49,2],[51,3],[52,2],[53,2],[54,3],[55,2],[56,1],[57,2],[58,6],[59,4],[61,5],[62,1],[63,1],[64,6],[65,1],[67,1],[68,1],[69,5],[70,5],[71,5],[72,3],[74,5],[75,1],[76,1],[78,1],[79,3],[90,5],[91,3],[93,3],[94,6],[95,8],[96,6],[97,5],[98,1],[100,12],[101,13],[102,3],[104,5],[105,14],[106,3],[115,1],[121,1],[122,1],[130,1],[131,1],[132,1],[134,10],[138,4],[140,4],[142,1],[143,1],[144,4],[145,2],[146,2],[150,2],[152,4],[154,4],[155,5],[158,1],[160,1],[163,5],[164,1],[166,3],[167,1],[168,10],[169,8],[170,7],[171,7],[172,9],[173,2],[174,3],[175,11],[176,8],[177,10],[178,9],[179,13],[180,5],[181,16],[182,6],[183,11],[184,14],[185,5],[186,6],[187,10],[188,6],[189,6],[191,4],[192,2],[194,2],[195,2],[196,2],[197,1],[198,4],[199,7],[200,5],[201,10],[202,2],[203,7],[204,18],[205,16],[206,5],[207,5],[208,14],[209,5],[210,7],[211,2],[212,10],[213,10],[214,5],[215,13],[216,8],[217,8],[218,8],[219,5],[221,1],[222,2],[225,1]],"help":[[0,2],[1,4],[2,5],[3,14],[4,6],[5,5],[6,7],[7,10],[8,4],[9,11],[10,9],[11,1],[12,6],[13,8],[15,1],[16,6],[17,3],[18,3],[19,8],[20,1],[21,6],[22,4],[23,1],[24,8],[25,10],[26,7],[27,4],[28,1],[29,2],[30,3],[31,3],[32,8],[33,4],[34,2],[35,1],[36,5],[37,10],[38,6],[39,1],[42,7],[43,9],[44,6],[45,2],[46,2],[47,8],[48,8],[49,2],[50,2],[51,1],[52,6],[53,4],[56,2],[57,7],[58,1],[59,2],[60,32],[61,9],[63,5],[64,13],[65,1],[67,3],[68,1],[69,8],[70,8],[71,11],[72,4],[73,2],[74,9],[76,3],[77,2],[78,1],[79,5],[84,1],[86,1],[87,1],[88,2],[89,1],[90,2],[91,1],[92,7],[93,9],[94,2],[95,4],[96,10],[98,5],[99,8],[100,4],[101,3],[102,4],[103,3],[104,4],[105,1],[106,1],[107,2],[111,1],[112,1],[113,1],[114,6],[115,2],[116,2],[117,1],[120,6],[121,2],[122,5],[126,1],[128,1],[129,4],[130,5],[133,1],[134,1],[136,1],[138,1],[140,5],[142,1],[143,1],[144,1],[145,1],[146,1],[151,3],[154,2],[155,1],[156,1],[158,1],[163,3],[164,9],[165,2],[166,5],[167,4],[168,6],[169,19],[170,4],[171,9],[172,3],[173,3],[175,13],[176,12],[177,10],[178,7],[179,9],[180,4],[181,6],[182,3],[183,11],[184,6],[185,5],[186,6],[187,6],[188,8],[189,19],[190,6],[191,7],[192,4],[193,2],[194,5],[195,4],[196,6],[197,6],[198,1],[199,1],[200,6],[201,7],[202,5],[203,13],[204,14],[205,6],[206,7],[207,3],[208,1],[209,4],[210,8],[211,12],[212,1],[213,11],[214,12],[215,2],[216,8],[217,8],[218,17],[219,7],[223,3],[225,1]],"exam-":[[0,1],[3,1],[9,1],[41,1],[56,1],[72,1],[172,1]],"validity":[[0,1],[3,3],[4,1],[10,1],[24,1],[37,1],[46,1],[47,1],[48,3],[53,1],[57,1],[60,1],[82,1],[84,1],[134,2],[172,1]],"conclude":[[0,1],[25,1],[32,1],[48,1],[58,3],[59,1],[79,1],[90,1],[94,1],[95,1],[97,1],[98,2],[102,1],[108,1],[110,1],[203,1],[205,1],[208,1],[216,1]],"overgeneralized":[[0,1],[5,1],[47,2],[56,1],[58,1]],"fact":[[0,1],[3,2],[4,1],[5,1],[9,1],[13,2],[17,1],[18,1],[19,1],[22,2],[26,1],[37,2],[53,1],[61,1],[64,1],[71,1],[86,2],[90,2],[92,1],[93,3],[95,3],[96,3],[97,3],[98,2],[99,2],[100,1],[101,2],[102,6],[103,1],[105,1],[108,1],[109,2],[110,1],[111,1],[114,5],[115,3],[120,2],[121,3],[122,4],[127,2],[131,1],[152,1],[164,1],[166,1],[168,1],[170,1],[171,1],[172,3],[174,2],[176,1],[178,2],[182,6],[184,1],[185,1],[191,1],[192,1],[194,3],[195,2],[197,1],[198,1],[202,1],[208,1],[209,1],[213,1],[214,1],[216,1],[217,1]],"things":[[0,2],[4,5],[5,3],[6,1],[7,5],[9,1],[10,5],[12,2],[13,3],[16,4],[17,3],[18,5],[19,5],[21,14],[22,3],[24,1],[25,1],[26,3],[27,1],[32,3],[33,3],[34,3],[35,2],[37,4],[38,4],[40,1],[47,1],[48,2],[49,1],[51,1],[53,1],[54,1],[56,5],[58,2],[59,5],[61,2],[63,1],[64,1],[66,1],[69,7],[71,5],[72,3],[76,2],[77,1],[79,2],[90,1],[95,3],[96,2],[97,4],[98,1],[99,1],[100,4],[101,3],[102,2],[104,4],[105,1],[107,1],[129,2],[130,1],[139,1],[145,1],[150,1],[152,1],[154,1],[155,4],[158,4],[159,7],[165,1],[166,2],[167,1],[168,3],[169,1],[170,7],[172,7],[174,1],[175,2],[176,1],[177,1],[179,1],[182,9],[183,4],[184,2],[185,1],[186,1],[187,1],[188,4],[189,4],[190,3],[191,5],[192,1],[193,1],[194,4],[195,5],[196,4],[197,3],[198,1],[199,6],[200,21],[201,5],[202,7],[203,2],[204,14],[205,4],[206,9],[207,5],[208,7],[209,2],[210,1],[211,2],[213,6],[215,2],[216,5],[217,1],[218,1],[221,4],[222,2]],"despite":[[0,1],[1,1],[6,1],[9,1],[53,1],[60,1],[88,1],[97,1],[112,3],[161,1],[166,1],[171,4],[192,1],[195,1],[196,1],[197,2],[205,1],[212,1],[217,1]],"looking":[[0,1],[1,1],[5,1],[9,2],[10,2],[13,2],[17,5],[18,1],[19,1],[20,1],[21,2],[25,1],[33,1],[34,1],[35,1],[37,1],[43,1],[51,1],[52,1],[53,2],[54,1],[56,1],[57,3],[58,1],[61,2],[64,3],[70,2],[76,1],[77,1],[81,1],[82,1],[83,1],[100,2],[102,1],[140,1],[155,3],[169,1],[171,1],[174,1],[177,3],[178,1],[179,1],[181,3],[182,2],[183,1],[184,1],[185,4],[186,3],[188,1],[194,2],[198,2],[199,1],[200,2],[204,2],[205,2],[206,1],[208,1],[214,1]],"perspec-":[[0,1],[80,1]],"probably":[[0,3],[1,1],[4,3],[5,1],[7,2],[9,2],[10,1],[12,1],[16,2],[17,2],[18,7],[19,2],[20,1],[21,3],[25,4],[26,1],[34,2],[35,2],[41,4],[42,5],[43,2],[46,2],[47,5],[48,5],[51,5],[52,2],[56,1],[58,1],[60,2],[61,4],[65,1],[66,1],[69,1],[70,1],[71,2],[72,3],[77,1],[79,3],[91,1],[96,1],[98,1],[104,1],[106,1],[112,1],[113,1],[138,1],[140,1],[164,1],[165,1],[166,5],[167,4],[168,1],[170,1],[172,4],[173,1],[175,1],[176,1],[179,1],[182,2],[183,3],[184,1],[186,2],[188,2],[190,1],[192,1],[193,2],[198,1],[199,1],[201,1],[203,1],[205,2],[211,1],[212,2],[216,1],[217,1],[218,2]],"dysphoria":[[0,1],[5,1],[6,1],[20,2],[65,1]],"engage":[[0,1],[1,1],[3,1],[4,1],[8,2],[10,2],[12,1],[18,1],[20,1],[22,2],[34,2],[38,1],[40,2],[41,1],[46,1],[51,1],[53,3],[55,1],[59,1],[63,3],[65,4],[76,1],[79,1],[84,1],[88,1],[91,1],[95,2],[97,3],[103,2],[107,1],[113,1],[131,1],[132,1],[133,1],[151,1],[159,1],[201,1],[206,1],[208,1],[210,1],[214,1],[218,1]],"functional":[[0,1],[3,1],[4,1],[5,1],[6,1],[26,1],[33,1],[36,1],[53,1],[56,5],[58,2],[65,1],[74,4],[79,1]],"recovery-oriented":[[0,1],[1,1],[34,1],[80,2],[83,1],[84,1]],"thoughts":[[0,5],[1,7],[2,11],[3,8],[4,17],[5,11],[6,10],[7,13],[8,1],[9,5],[10,4],[12,2],[13,3],[14,2],[15,2],[17,9],[18,15],[19,9],[20,9],[21,4],[22,8],[23,2],[24,9],[25,5],[26,3],[27,6],[30,2],[31,7],[32,5],[33,8],[34,4],[35,4],[36,6],[37,5],[38,6],[39,12],[40,39],[41,40],[42,29],[43,21],[44,4],[45,20],[46,11],[47,10],[48,13],[49,9],[50,8],[51,15],[52,16],[53,15],[54,5],[55,1],[56,3],[57,18],[58,6],[60,4],[62,1],[65,5],[66,1],[68,1],[69,2],[70,1],[71,8],[72,4],[74,11],[75,4],[76,1],[77,6],[78,1],[79,2],[81,6],[82,21],[83,18],[84,19],[89,1],[91,3],[92,2],[93,1],[94,1],[95,1],[96,2],[97,2],[98,4],[100,3],[101,1],[102,1],[103,3],[105,1],[111,3],[115,1],[129,1],[130,1],[132,12],[134,7],[135,3],[136,5],[138,1],[139,8],[140,3],[142,3],[143,3],[147,1],[149,1],[154,1],[155,31],[158,2],[159,3],[160,1],[161,7],[164,1],[169,4],[170,5],[171,8],[172,26],[173,13],[174,9],[175,17],[177,32],[178,35],[179,37],[180,11],[181,43],[182,27],[183,17],[184,19],[185,14],[186,12],[187,16],[188,22],[189,4],[191,19],[192,24],[193,1],[194,1],[195,3],[196,17],[197,1],[201,4],[202,24],[203,1],[204,1],[205,5],[206,5],[208,42],[210,2],[211,17],[212,7],[213,7],[214,7],[215,4],[217,10],[218,6],[219,8],[222,5],[223,72],[224,1]],"less":[[0,1],[3,2],[4,1],[5,1],[6,2],[9,2],[10,1],[11,1],[12,1],[13,1],[16,1],[20,3],[24,1],[25,3],[27,1],[31,1],[33,1],[34,1],[35,1],[36,2],[43,2],[48,1],[49,1],[51,2],[52,1],[56,1],[57,1],[60,3],[65,3],[70,2],[72,1],[76,5],[77,1],[87,3],[90,2],[91,3],[93,2],[94,2],[95,2],[100,3],[103,2],[108,7],[109,3],[110,3],[111,6],[112,2],[115,1],[122,1],[154,1],[155,1],[158,1],[163,4],[164,5],[165,1],[166,4],[168,5],[169,1],[170,1],[171,2],[172,1],[173,3],[176,7],[183,1],[184,1],[186,1],[187,2],[191,2],[193,1],[194,4],[195,5],[197,1],[198,1],[199,2],[202,4],[203,1],[204,1],[205,1],[206,1],[208,3],[210,4],[211,1],[212,4],[213,4],[214,1],[215,3],[216,2],[217,1],[218,1],[219,2],[221,1],[222,1]],"cognitions":[[0,3],[1,2],[3,9],[4,2],[6,1],[7,2],[9,1],[10,3],[11,1],[23,2],[24,1],[25,2],[26,5],[27,3],[30,1],[32,3],[36,4],[38,1],[40,3],[43,2],[44,3],[56,2],[57,1],[58,2],[59,1],[60,2],[63,2],[64,5],[65,1],[71,1],[72,2],[74,9],[75,3],[82,9],[83,3],[84,1],[117,1],[134,3]],"already":[[0,1],[2,2],[3,1],[4,2],[14,1],[17,1],[18,1],[21,2],[25,2],[32,1],[34,3],[35,3],[38,1],[63,1],[64,1],[69,1],[79,1],[96,3],[98,1],[100,1],[105,2],[152,1],[159,1],[165,2],[167,1],[168,1],[170,1],[171,1],[176,1],[177,1],[192,1],[200,2],[204,1],[206,1],[208,1],[209,1],[211,1],[213,2],[217,1],[225,1]],"arisen":[[0,1],[4,1]],"arise":[[0,1],[3,1],[5,1],[10,1],[16,1],[19,1],[24,1],[27,3],[31,1],[33,2],[36,2],[37,1],[40,1],[42,2],[50,1],[52,1],[64,1],[69,1],[72,1],[73,3],[75,2],[89,1],[92,1],[104,1],[134,1],[167,1],[190,1],[213,1],[221,2]],"interfere":[[0,1],[2,1],[10,1],[19,1],[20,1],[21,1],[22,1],[23,1],[24,1],[26,1],[27,1],[30,1],[32,1],[35,1],[36,1],[40,2],[43,1],[44,1],[52,1],[57,1],[64,2],[74,1],[75,2],[82,1],[83,1],[172,1],[189,3],[190,2],[195,1],[202,1],[211,1],[214,2],[221,2]],"taking":[[0,1],[1,4],[5,1],[10,2],[13,1],[16,5],[17,3],[18,1],[19,2],[20,1],[21,4],[24,2],[30,5],[31,1],[33,3],[34,5],[37,1],[40,1],[43,1],[44,1],[48,1],[53,2],[56,1],[59,1],[63,1],[64,1],[65,1],[71,1],[74,1],[76,2],[91,1],[94,1],[95,1],[96,1],[98,1],[100,2],[105,3],[106,1],[109,2],[111,3],[112,1],[113,3],[114,1],[115,2],[120,3],[121,2],[140,1],[154,1],[155,1],[161,1],[163,1],[164,1],[166,2],[168,1],[169,1],[172,2],[175,1],[177,1],[186,1],[202,1],[203,5],[204,1],[209,1],[210,1],[211,3],[212,1],[213,3],[214,1],[215,1],[217,1]],"achieve":[[0,1],[3,1],[29,1],[30,1],[32,2],[36,1],[44,1],[56,1],[57,3],[74,1],[75,1],[86,1],[88,1],[89,3],[90,3],[91,2],[92,3],[93,2],[94,3],[95,3],[96,4],[97,1],[98,4],[99,2],[100,3],[101,2],[104,6],[105,3],[106,2],[108,2],[109,1],[110,1],[111,3],[112,3],[114,2],[115,1],[120,2],[123,1],[155,1],[163,1],[164,1],[197,1],[198,1],[203,3],[211,1],[212,1],[213,1]],"goal":[[0,1],[1,5],[2,1],[3,7],[8,1],[9,1],[12,1],[13,1],[19,13],[21,1],[24,2],[26,1],[27,1],[28,2],[30,4],[31,2],[32,25],[33,3],[34,8],[35,4],[37,5],[38,6],[40,1],[41,1],[43,2],[45,1],[53,1],[57,1],[63,2],[64,4],[65,1],[67,1],[71,1],[74,1],[77,1],[82,5],[83,5],[84,2],[89,9],[90,11],[91,4],[92,5],[93,3],[94,13],[95,9],[96,8],[97,7],[98,5],[99,3],[100,3],[101,11],[102,1],[103,1],[104,6],[105,4],[106,2],[107,1],[112,1],[113,6],[114,4],[115,3],[118,2],[120,3],[124,2],[125,1],[140,1],[165,1],[167,1],[168,3],[171,1],[172,1],[175,1],[176,9],[187,1],[190,4],[191,4],[192,1],[199,1],[205,1],[209,2],[214,1],[217,1],[221,4],[223,2]],"occur":[[0,1],[42,1],[64,2],[71,1],[74,1],[86,1],[90,1],[93,1],[95,1],[97,1],[102,1],[108,1],[111,3],[112,1],[113,1],[114,1],[115,1],[120,2],[121,1],[128,1],[132,1],[134,1],[139,1],[146,1],[148,2],[155,2],[156,1],[157,2],[158,1],[161,1],[166,2],[168,2],[172,1],[177,1],[191,1],[193,1],[194,1],[196,2],[201,1],[202,1],[206,2],[208,3],[210,1],[211,2],[213,1],[215,1],[217,3],[218,2]],"tired":[[0,1],[5,1],[7,1],[10,1],[17,3],[18,5],[19,1],[20,2],[21,9],[22,3],[26,1],[34,4],[37,1],[40,1],[49,2],[64,1],[66,2],[79,2],[98,2],[120,1],[169,1],[170,2],[171,2],[175,1],[188,1],[191,2],[194,1],[202,1],[214,3],[215,1],[216,2]],"superficial":[[0,1],[2,1],[5,1],[47,1],[51,1],[52,2]],"level":[[0,2],[1,2],[3,2],[4,3],[5,3],[6,2],[9,1],[10,1],[11,1],[12,1],[13,1],[16,1],[17,1],[21,1],[24,4],[29,2],[32,3],[44,1],[45,1],[47,1],[51,1],[52,1],[59,2],[60,7],[61,2],[62,2],[65,3],[72,1],[74,6],[75,2],[76,2],[77,1],[79,2],[80,1],[83,1],[90,1],[96,1],[100,5],[104,1],[105,3],[110,2],[114,2],[121,2],[123,1],[129,1],[134,4],[142,1],[151,1],[154,1],[161,1],[163,1],[164,1],[168,1],[171,1],[175,2],[176,2],[189,2],[192,1],[195,1],[196,3],[197,1],[201,2],[205,1],[208,2],[209,2],[210,4],[211,1],[212,2],[214,1],[216,1],[218,2],[222,1]],"intermediate":[[0,1],[4,1],[5,9],[6,3],[7,6],[8,4],[32,1],[56,3],[57,10],[58,2],[59,2],[62,1],[65,1],[81,1],[82,7],[83,7],[84,3]],"initiate":[[0,1],[4,1],[11,1],[108,1],[111,1]],"i'll":[[0,1],[3,1],[4,2],[5,2],[6,2],[7,3],[8,8],[12,4],[13,8],[16,1],[17,3],[18,4],[19,3],[25,1],[26,3],[31,2],[32,1],[35,1],[36,4],[41,6],[42,3],[43,1],[44,2],[47,1],[48,5],[51,5],[52,1],[53,1],[56,1],[57,2],[60,1],[61,3],[69,1],[71,2],[75,2],[76,1],[77,2],[79,3],[171,2],[172,2],[178,2],[179,1],[181,1],[191,1],[192,1],[197,1],[202,1],[208,1],[211,1],[217,1]],"rejected":[[0,1],[4,1],[5,1],[8,1],[205,1],[208,3]],"deepest":[[0,1],[100,3],[134,2],[140,1],[142,1]],"core":[[0,3],[1,1],[4,8],[5,27],[6,9],[7,18],[8,6],[10,2],[16,1],[24,1],[32,3],[34,1],[47,3],[49,1],[52,1],[56,36],[57,19],[58,25],[59,4],[60,6],[61,1],[62,5],[65,1],[70,1],[71,1],[72,1],[76,3],[79,3],[81,2],[82,9],[83,12],[84,4],[117,1],[134,4],[140,2],[144,1],[161,1],[187,3],[195,1],[196,42],[197,60],[198,71],[199,28],[200,11],[201,20],[217,6],[219,8],[221,24],[223,23]],"yourself":[[0,2],[1,8],[2,7],[3,1],[4,3],[5,1],[7,2],[8,1],[9,3],[10,8],[12,2],[13,9],[17,4],[18,10],[19,4],[20,2],[21,1],[22,2],[24,2],[25,4],[26,3],[27,7],[32,15],[34,4],[35,5],[36,1],[37,1],[38,3],[42,2],[43,1],[45,1],[46,1],[47,1],[48,5],[49,1],[51,5],[52,3],[53,3],[54,2],[55,4],[56,4],[57,3],[58,8],[60,1],[61,1],[64,2],[65,1],[66,6],[67,3],[69,12],[70,3],[71,3],[73,1],[74,2],[75,2],[78,2],[79,2],[90,2],[91,6],[93,1],[94,5],[95,11],[96,8],[97,11],[98,3],[99,4],[100,20],[101,5],[102,4],[103,5],[104,7],[105,24],[106,3],[107,1],[114,1],[115,4],[120,4],[130,2],[134,5],[135,1],[138,3],[140,1],[142,3],[147,2],[148,2],[149,1],[151,3],[154,1],[155,2],[158,2],[159,1],[165,1],[166,6],[167,3],[168,1],[169,2],[170,1],[171,2],[175,1],[178,2],[179,9],[180,3],[181,2],[183,3],[184,3],[185,3],[186,2],[187,1],[188,6],[196,5],[197,9],[198,5],[199,2],[200,1],[201,1],[202,2],[203,1],[205,5],[206,1],[209,1],[210,2],[213,9],[214,2],[215,4],[216,5],[217,1],[218,1],[221,1],[222,2]],"dangerous":[[0,1],[4,2],[5,1],[44,1],[56,2],[78,2],[108,1],[111,1],[139,1],[167,1],[173,1],[184,2],[187,4],[193,10],[196,5],[206,2],[207,3],[208,5],[211,1]],"lasting":[[0,1],[2,1],[92,1],[110,1],[114,3],[115,2],[120,5],[149,1],[171,1],[174,1],[186,1],[200,1],[205,1],[207,1],[208,1],[211,1],[215,2],[225,1]],"improvement":[[0,1],[9,1],[30,1],[37,1],[71,5],[74,2],[81,1],[104,1],[129,1],[171,1],[173,1],[175,1],[176,6],[177,2],[187,1],[192,1],[196,1],[200,1],[202,3],[205,1],[206,1],[211,6],[217,2],[218,1],[219,3],[223,2]],"modifying":[[0,2],[23,1],[56,2],[58,1],[59,3],[60,6],[61,3],[62,2],[63,1],[69,1],[71,1],[82,4],[83,6],[84,1],[89,2],[103,1],[197,1]],"auto-":[[0,1],[5,1],[7,2],[18,1],[20,1],[24,1],[25,1],[32,1],[41,2],[43,2],[47,1],[56,1],[57,1],[70,1],[95,1]],"matic":[[0,1],[5,1],[7,2],[18,1],[20,1],[24,1],[25,1],[32,1],[41,2],[43,1],[47,1],[56,1],[57,1],[70,1],[79,1],[95,1]],"produces":[[0,1],[3,1],[42,1],[87,1],[111,1],[135,1],[142,1],[143,1]],"change":[[0,1],[2,3],[3,5],[4,1],[5,1],[9,2],[11,1],[12,2],[13,3],[15,1],[18,1],[19,4],[20,2],[21,2],[23,1],[24,3],[25,2],[26,1],[27,1],[28,1],[31,1],[32,1],[36,2],[37,2],[38,1],[41,4],[44,1],[46,1],[48,4],[52,1],[53,2],[56,2],[57,1],[58,3],[60,11],[61,2],[62,1],[63,3],[64,6],[69,1],[70,1],[71,2],[74,5],[79,3],[80,4],[81,2],[82,2],[83,2],[86,3],[87,3],[88,2],[89,16],[90,11],[91,9],[92,2],[93,2],[94,4],[95,2],[96,11],[97,1],[100,2],[101,2],[102,3],[103,1],[104,4],[105,2],[106,1],[109,3],[111,1],[113,4],[114,1],[115,1],[117,2],[118,2],[120,1],[121,1],[122,1],[123,2],[124,1],[125,1],[126,2],[127,5],[130,1],[140,5],[141,1],[144,1],[146,4],[148,5],[149,1],[159,3],[160,2],[166,2],[169,2],[170,4],[172,3],[173,2],[174,1],[175,5],[176,3],[177,2],[178,6],[180,1],[181,1],[185,2],[186,5],[187,11],[188,4],[190,2],[191,3],[194,2],[195,2],[196,1],[197,3],[198,3],[199,1],[200,1],[202,4],[203,2],[204,3],[205,1],[208,1],[210,2],[211,1],[212,1],[215,1],[216,4],[217,3],[218,2],[219,2],[221,4],[222,1],[223,8],[225,2]],"continually":[[0,1],[3,3],[4,2],[7,1],[8,2],[43,1],[56,1],[74,3]],"underestimate":[[0,1],[179,1],[208,2]],"ties":[[0,1],[19,1],[21,1],[26,1],[37,1],[58,1],[60,1],[89,1],[91,1],[203,1],[204,1],[205,1]],"general":[[0,1],[3,2],[7,1],[9,1],[10,2],[11,2],[12,1],[13,4],[14,1],[15,1],[17,1],[21,1],[24,1],[30,2],[32,2],[36,2],[52,1],[57,2],[58,3],[60,1],[65,1],[70,1],[71,1],[75,1],[79,1],[80,2],[82,4],[83,1],[84,1],[87,3],[88,2],[91,1],[93,1],[100,1],[103,1],[107,1],[108,1],[111,3],[112,2],[113,1],[116,8],[117,2],[121,1],[122,1],[123,2],[124,2],[125,2],[126,1],[134,1],[140,1],[146,1],[148,1],[163,1],[168,14],[170,1],[171,1],[175,1],[179,12],[180,4],[181,16],[184,8],[185,4],[188,4],[200,1],[202,2],[203,1]],"seeing":[[0,1],[3,1],[4,2],[9,1],[19,1],[36,1],[41,1],[43,1],[48,1],[56,1],[59,1],[70,1],[76,2],[79,1],[114,1],[120,1],[166,2],[170,1],[184,2],[187,1],[192,1],[195,1],[197,1],[202,2],[205,1],[207,1],[222,3]],"light":[[0,1],[4,2],[9,1],[18,1],[21,1],[33,1],[43,1],[56,1],[59,1],[74,1],[77,1],[108,2],[109,8],[116,1],[118,1],[124,1],[126,6],[127,3],[156,1],[158,1],[181,1],[189,2],[210,1]],"alter":[[0,1],[47,2],[88,1],[96,1],[113,1]],"perception":[[0,1],[5,1],[6,1],[10,1],[37,1],[47,1],[48,1],[131,1],[152,1],[160,2],[161,2],[197,1],[206,1],[208,2],[211,1],[212,1],[217,1],[223,2]],"situations":[[0,2],[3,1],[5,5],[6,2],[7,7],[8,2],[32,1],[38,2],[39,2],[40,2],[43,6],[44,1],[47,1],[51,2],[53,1],[56,3],[57,4],[58,1],[60,6],[65,4],[69,1],[71,4],[76,1],[78,2],[84,7],[88,2],[89,3],[90,1],[91,4],[95,2],[96,3],[97,3],[100,2],[101,1],[102,2],[103,2],[105,1],[112,5],[113,3],[114,1],[134,5],[137,1],[140,1],[141,2],[150,1],[155,2],[156,2],[157,3],[158,4],[159,1],[163,2],[166,9],[167,13],[168,9],[169,2],[170,2],[171,10],[172,3],[173,1],[175,14],[176,1],[177,7],[178,5],[179,4],[180,1],[182,1],[184,2],[187,1],[188,6],[189,2],[190,2],[191,4],[192,4],[193,2],[194,2],[195,1],[197,3],[205,7],[206,5],[207,4],[208,15],[209,11],[210,6],[211,3],[212,3],[213,6],[214,1],[215,1],[217,5],[218,7],[222,3],[223,5]],"encounter":[[0,1],[24,1],[38,2],[73,1],[75,1],[89,1],[91,1],[96,1]],"daily":[[0,1],[3,1],[12,3],[17,1],[20,1],[21,1],[22,1],[24,2],[25,2],[26,3],[27,1],[33,2],[34,1],[35,1],[36,1],[51,1],[55,1],[63,1],[65,2],[74,1],[83,2],[87,2],[88,2],[90,1],[93,1],[98,3],[100,2],[101,2],[102,2],[103,2],[104,1],[107,2],[111,3],[113,3],[114,4],[115,3],[117,1],[120,5],[127,1],[145,1],[159,1],[167,2],[172,1],[193,1],[195,1],[201,1],[212,1],[218,1],[219,1],[222,1]],"theme":[[0,1],[7,1],[57,2],[58,2],[79,1],[208,1],[211,1]],"incom-":[[0,1],[5,1],[6,2],[24,1],[58,1],[61,2]],"petence":[[0,1],[5,1],[6,1],[24,1],[59,1]],"instead":[[0,1],[6,3],[10,2],[13,1],[16,2],[17,2],[18,1],[19,3],[20,1],[21,1],[22,1],[25,3],[27,2],[32,1],[34,1],[36,1],[37,2],[41,2],[43,1],[45,1],[46,1],[47,2],[48,3],[51,1],[53,3],[56,1],[63,1],[64,1],[66,1],[69,2],[71,1],[74,3],[75,1],[79,1],[86,2],[90,1],[91,1],[92,1],[94,1],[96,2],[97,4],[98,1],[101,3],[103,1],[105,1],[109,1],[111,1],[113,2],[120,1],[149,1],[154,1],[158,2],[174,1],[175,1],[177,3],[182,1],[185,1],[187,2],[188,1],[191,1],[192,1],[193,3],[194,1],[195,3],[196,1],[197,2],[198,1],[199,5],[200,1],[201,1],[206,1],[207,4],[208,2],[209,1],[210,2],[211,1],[213,2],[214,1],[215,2],[216,4],[221,2],[222,2]],"make":[[0,1],[1,4],[2,3],[3,6],[4,5],[5,4],[6,4],[7,2],[8,3],[9,6],[10,6],[11,3],[12,5],[13,7],[14,2],[16,7],[17,4],[18,4],[19,7],[20,1],[21,12],[22,3],[23,1],[24,5],[25,6],[26,8],[27,2],[29,1],[31,1],[32,4],[33,3],[35,7],[36,4],[37,8],[38,4],[41,1],[43,3],[44,3],[45,1],[46,2],[47,1],[48,8],[49,1],[50,1],[51,4],[52,3],[54,2],[55,1],[57,1],[58,3],[59,1],[60,2],[62,1],[63,2],[64,8],[65,4],[67,4],[69,2],[71,2],[72,6],[74,2],[75,3],[77,1],[79,2],[84,1],[90,1],[91,3],[92,1],[93,3],[94,5],[95,6],[96,5],[98,1],[100,6],[101,3],[102,4],[103,1],[104,4],[105,3],[106,2],[107,1],[109,1],[111,1],[113,1],[114,1],[115,1],[120,1],[123,1],[127,1],[128,1],[130,2],[133,1],[134,1],[136,1],[138,1],[140,2],[141,1],[144,1],[145,2],[146,4],[152,2],[154,3],[155,3],[157,1],[158,3],[159,3],[161,1],[163,3],[164,2],[165,4],[166,6],[167,2],[169,3],[170,1],[171,2],[172,3],[173,3],[175,4],[176,4],[177,2],[178,6],[179,2],[181,3],[182,3],[184,1],[185,4],[186,3],[187,3],[188,2],[189,3],[190,4],[191,2],[192,4],[193,4],[194,5],[195,9],[196,6],[197,1],[198,2],[199,4],[200,4],[201,2],[202,1],[203,2],[204,4],[205,1],[206,6],[207,1],[208,6],[209,2],[210,5],[211,3],[212,2],[213,2],[214,3],[215,2],[216,10],[217,2],[218,4],[221,4],[222,2],[225,1]],"mistakes":[[0,1],[10,1],[26,3],[27,2],[47,1],[48,1],[52,2],[57,1],[63,1],[70,1],[178,2],[186,5],[194,4],[202,1],[203,1],[206,1],[216,3]],"think":[[0,1],[1,3],[3,1],[4,5],[6,1],[9,4],[10,11],[12,8],[13,3],[14,1],[16,7],[17,11],[18,16],[19,16],[20,1],[21,13],[22,2],[23,1],[24,7],[25,8],[26,8],[27,4],[29,1],[31,1],[32,7],[33,8],[34,7],[35,11],[36,5],[37,9],[38,7],[40,1],[41,4],[42,5],[43,12],[45,1],[46,6],[47,9],[48,8],[49,3],[51,9],[52,9],[53,1],[54,1],[56,2],[57,2],[58,12],[59,8],[60,8],[61,6],[62,1],[63,1],[64,8],[65,5],[66,1],[69,8],[70,3],[71,7],[72,2],[74,1],[75,4],[79,6],[80,1],[89,5],[90,3],[91,6],[92,1],[93,2],[94,9],[95,1],[96,3],[97,5],[98,1],[99,1],[100,21],[101,2],[102,2],[103,1],[104,5],[105,16],[106,1],[113,1],[115,1],[120,1],[121,3],[122,1],[130,1],[131,1],[134,3],[140,1],[145,3],[146,2],[147,1],[148,1],[151,1],[152,2],[153,4],[155,12],[158,1],[160,1],[163,1],[164,1],[165,2],[166,7],[167,1],[168,3],[169,7],[170,5],[171,2],[172,12],[173,5],[174,1],[175,1],[176,2],[178,5],[179,16],[180,2],[181,8],[182,2],[183,4],[184,6],[185,4],[186,2],[187,1],[188,10],[191,5],[193,3],[194,2],[195,5],[196,7],[197,4],[198,3],[199,3],[200,3],[201,4],[202,2],[203,2],[204,4],[205,2],[206,6],[207,2],[208,11],[211,3],[212,2],[213,13],[214,4],[215,5],[216,3],[217,4],[218,5],[219,2],[221,3],[222,4],[223,3]],"task":[[0,1],[1,1],[5,3],[7,1],[20,2],[24,4],[25,1],[26,2],[27,1],[33,2],[35,2],[36,1],[53,1],[63,2],[64,2],[82,1],[83,3],[92,1],[120,1],[155,1],[191,1],[198,2]],"addition":[[0,1],[3,2],[6,2],[14,1],[15,1],[19,1],[24,1],[32,1],[36,1],[43,1],[51,1],[56,1],[63,1],[64,1],[75,1],[86,2],[87,1],[88,1],[90,1],[91,1],[92,2],[95,2],[96,1],[98,1],[101,1],[103,2],[107,1],[108,1],[110,1],[111,4],[112,3],[113,1],[114,1],[115,3],[127,1],[169,2],[170,2],[171,1],[172,1],[175,1],[176,2],[177,1],[179,1],[181,2],[183,1],[186,1],[192,1],[198,1],[201,1],[203,2],[206,2],[207,1],[208,2],[209,1],[211,2],[213,2],[219,2]],"cultivate":[[0,1],[10,1],[200,1]],"realistically":[[0,1],[3,1],[4,3],[6,1],[7,1],[9,2],[59,1],[69,1],[70,1],[74,1]],"interme-":[[0,1],[8,1],[76,1]],"diate":[[0,1],[8,1],[76,1]],"persevere":[[0,1],[1,1]],"need":[[0,1],[1,3],[2,5],[3,8],[4,6],[5,2],[7,1],[9,10],[10,1],[11,1],[12,13],[13,5],[16,1],[18,2],[19,6],[21,9],[22,2],[23,1],[24,2],[25,6],[26,3],[27,3],[28,1],[32,11],[33,2],[35,2],[36,3],[37,7],[38,6],[41,3],[42,1],[43,1],[44,2],[45,1],[46,2],[47,4],[48,2],[49,3],[54,3],[56,4],[57,1],[58,3],[60,6],[61,3],[62,1],[64,6],[65,4],[67,2],[69,1],[70,1],[71,8],[72,2],[74,2],[75,2],[79,1],[87,2],[89,4],[90,3],[91,2],[92,2],[94,1],[95,2],[96,3],[97,3],[98,2],[99,1],[100,9],[102,2],[104,3],[105,4],[106,3],[110,1],[111,1],[112,2],[113,1],[114,2],[115,2],[117,1],[120,2],[127,1],[128,1],[129,1],[130,1],[134,1],[145,2],[147,1],[149,1],[150,2],[152,1],[153,1],[154,2],[155,4],[156,1],[158,2],[159,3],[163,6],[164,3],[165,5],[166,7],[167,4],[168,4],[169,2],[170,3],[171,1],[175,1],[176,1],[177,1],[178,1],[179,2],[180,1],[181,1],[182,1],[183,1],[185,1],[186,7],[187,6],[188,3],[191,2],[192,2],[193,3],[194,1],[195,2],[196,4],[197,1],[201,1],[202,1],[203,3],[204,2],[205,1],[206,2],[208,2],[209,1],[210,5],[211,1],[213,1],[214,12],[216,3],[217,2],[218,2],[222,1]],"strengths":[[0,1],[1,1],[3,2],[4,4],[6,2],[7,5],[11,1],[13,1],[24,1],[30,2],[32,1],[44,1],[56,1],[59,1],[61,2],[63,2],[74,1],[76,2],[81,1],[83,2],[85,3],[122,1],[176,1],[177,1],[183,1],[200,1],[216,1],[219,1]],"weaknesses":[[0,1],[4,2],[6,2],[10,1],[56,1],[59,1],[73,1],[122,1],[216,1]],"everyone":[[0,1],[8,1],[9,1],[10,1],[25,1],[40,1],[41,1],[56,1],[59,1],[61,1],[64,1],[69,1],[71,1],[91,2],[94,1],[95,6],[98,1],[100,2],[102,8],[104,1],[109,1],[120,1],[147,1],[155,1],[164,1],[165,1],[170,1],[172,5],[174,1],[179,1],[182,1],[188,1],[192,2],[194,1],[195,1],[197,1],[198,1],[200,1],[201,2],[202,1],[203,2],[205,1],[206,1],[213,1],[214,1],[218,1],[222,1],[225,1]],"else":[[0,1],[1,2],[3,1],[10,2],[12,5],[13,2],[16,3],[17,2],[18,6],[19,3],[21,4],[22,1],[25,4],[27,1],[32,4],[33,1],[34,4],[35,1],[37,1],[41,4],[43,4],[45,2],[47,4],[48,2],[49,3],[51,2],[52,1],[56,1],[59,1],[60,2],[61,3],[63,1],[64,1],[65,1],[69,1],[70,1],[71,2],[77,1],[79,1],[90,1],[91,2],[95,1],[96,3],[97,4],[100,4],[105,2],[107,3],[121,1],[122,1],[147,1],[155,1],[166,1],[183,2],[188,1],[194,1],[199,1],[200,2],[204,1],[211,1],[213,2],[214,2],[216,2],[218,2],[222,4]],"extensively":[[0,1],[69,1],[70,1]],"tested":[[0,1],[1,1],[58,1],[88,1],[187,1],[189,2],[192,1],[193,2],[194,2],[195,4],[221,2]],"outcome":[[0,1],[1,1],[2,1],[10,1],[23,1],[24,1],[25,2],[36,1],[45,1],[46,1],[47,3],[49,1],[57,1],[64,1],[65,4],[77,2],[80,1],[81,5],[82,2],[86,2],[87,1],[88,1],[90,1],[92,2],[97,1],[103,2],[108,5],[109,2],[117,1],[118,1],[119,1],[123,1],[124,2],[125,2],[126,1],[127,1],[129,1],[140,2],[151,1],[183,1],[186,3],[193,2],[194,3],[195,5],[199,1],[208,2],[214,1],[216,2],[221,4]],"study":[[0,2],[1,6],[3,1],[81,2],[86,3],[87,1],[88,2],[98,3],[107,1],[108,6],[109,1],[110,1],[112,1],[114,9],[115,8],[116,4],[117,2],[118,3],[119,3],[120,17],[121,26],[122,1],[123,1],[124,7],[125,2],[126,3],[127,2],[160,1],[163,1],[201,1],[216,1]],"pub-":[[0,1],[1,1]],"lished":[[0,1],[1,1]],"rush":[[0,1],[1,1],[80,1],[81,1],[84,1],[172,1],[193,1]],"point":[[0,1],[1,2],[5,1],[6,1],[7,1],[8,2],[12,1],[19,1],[20,1],[21,2],[24,1],[25,1],[30,1],[34,1],[40,1],[41,1],[43,1],[46,1],[48,1],[52,1],[60,1],[61,3],[63,1],[65,1],[66,1],[67,1],[70,3],[71,2],[79,1],[83,1],[85,1],[86,1],[87,1],[88,5],[89,1],[90,1],[91,2],[93,2],[94,2],[95,3],[96,1],[98,1],[99,1],[102,1],[105,2],[107,1],[109,2],[110,1],[120,1],[134,1],[135,1],[136,1],[154,3],[155,3],[161,1],[163,2],[165,1],[172,1],[183,2],[186,1],[187,1],[188,3],[191,2],[199,2],[208,1],[209,1],[212,1],[214,1],[216,1],[217,1]],"out-":[[0,1],[30,1],[60,1],[214,1]],"come":[[0,1],[1,1],[3,2],[8,2],[10,1],[12,1],[13,2],[16,2],[17,1],[18,1],[19,2],[22,2],[25,1],[27,1],[32,1],[37,2],[38,1],[47,1],[48,1],[49,1],[53,1],[54,1],[60,1],[61,1],[63,1],[65,1],[69,3],[71,4],[72,1],[74,2],[79,3],[89,1],[91,2],[93,2],[96,1],[97,8],[99,1],[100,5],[102,1],[105,2],[108,1],[128,1],[130,1],[132,1],[139,1],[140,2],[153,2],[155,4],[158,1],[159,2],[163,1],[165,2],[166,6],[167,2],[168,2],[169,1],[172,1],[178,1],[179,1],[182,1],[191,2],[192,3],[194,2],[195,3],[196,2],[199,2],[200,1],[201,1],[202,1],[203,3],[204,1],[205,1],[214,2],[216,1],[225,1]],"studies":[[0,2],[1,1],[2,1],[3,1],[13,1],[81,2],[86,21],[87,14],[89,2],[90,4],[93,1],[103,1],[108,8],[109,2],[110,3],[112,1],[115,1],[116,2],[117,1],[120,1],[122,1],[124,1],[125,1],[126,2],[134,1],[164,1],[211,1]],"demonstrated":[[0,1],[2,1],[3,2],[9,2],[26,1],[42,1],[50,1],[76,1],[77,1],[110,1],[202,1],[215,1]],"efficacy":[[0,1],[1,1],[80,3],[81,3],[82,1],[86,1],[87,1],[88,1],[89,1],[90,1],[95,1],[104,1],[109,2],[113,1],[116,3],[118,1],[123,4],[124,3],[125,2],[126,4],[127,2]],"psychiatric":[[0,2],[1,3],[9,1],[13,1],[16,1],[43,1],[48,1],[53,1],[65,1],[76,5],[79,1],[80,5],[81,2],[84,1],[116,1],[117,1],[124,2],[126,2],[127,1]],"prob-":[[0,1],[4,1],[6,1],[10,2],[24,1],[27,1],[37,1],[38,2],[49,1],[64,3],[213,1],[217,1]],"lems":[[0,1],[10,1],[64,1],[85,1],[217,1]],"components":[[0,1],[31,1],[71,1],[82,1],[87,1],[92,3],[114,1],[119,1],[178,1]],"shown":[[0,2],[1,1],[13,1],[52,1],[65,1],[93,1],[132,1],[134,1],[136,1],[166,1],[169,1],[177,2],[182,1],[184,2],[185,1],[186,2],[187,1],[189,3],[190,1],[193,1],[194,3],[198,1],[202,1],[203,1],[208,2],[209,1],[212,1]],"helps":[[0,1],[1,1],[3,1],[4,4],[7,3],[9,1],[11,1],[12,2],[16,1],[17,2],[20,1],[21,2],[24,2],[25,2],[26,1],[28,1],[29,1],[30,1],[34,2],[37,1],[42,1],[43,2],[48,1],[53,3],[54,1],[57,1],[58,1],[60,1],[65,1],[69,1],[71,2],[89,1],[93,1],[96,1],[98,1],[100,2],[102,1],[109,1],[114,1],[115,1],[152,1],[154,1],[163,1],[165,4],[169,2],[172,1],[175,3],[176,1],[177,1],[178,1],[179,1],[182,2],[183,3],[184,1],[186,1],[187,2],[188,3],[191,1],[197,1],[198,2],[200,1],[201,1],[203,2],[204,4],[205,3],[206,1],[208,1],[209,1],[210,4],[211,1],[213,3],[218,2],[222,1]],"severity":[[0,1],[33,1],[34,1],[56,1],[117,1],[206,1]],"future":[[0,1],[1,1],[3,3],[4,4],[5,2],[6,3],[7,1],[9,2],[12,1],[15,1],[18,6],[20,1],[21,1],[22,1],[25,1],[29,2],[31,1],[32,3],[33,2],[34,2],[35,1],[42,1],[45,1],[48,2],[51,2],[53,2],[54,1],[56,7],[63,2],[69,1],[70,5],[71,5],[72,4],[74,1],[76,3],[80,1],[83,2],[86,1],[87,1],[89,4],[90,2],[91,1],[98,1],[104,1],[105,4],[110,1],[113,2],[120,1],[124,1],[125,2],[140,1],[145,2],[152,1],[155,2],[156,1],[157,1],[161,2],[166,2],[168,10],[170,2],[171,1],[172,1],[176,1],[179,3],[180,1],[181,4],[184,2],[185,1],[188,2],[199,1],[201,1],[202,12],[203,4],[205,1],[208,6],[210,2],[212,1],[214,2],[217,5],[218,3],[219,2],[221,1],[222,1],[223,1]],"episodes":[[0,1],[56,1],[111,1],[219,1]],"brachel":[[0,1],[81,1]],"colleagues":[[0,1],[1,2],[2,1],[9,1],[12,3],[44,1],[49,1],[60,1],[62,1],[86,1],[87,3],[88,3],[90,1],[109,3],[110,1],[111,2],[113,1],[165,2],[166,2],[197,2],[212,1]],"showed":[[0,1],[18,1],[35,1],[58,1],[59,1],[76,1],[77,1],[87,1],[109,1],[110,1],[170,1],[171,1],[177,1],[199,2],[201,1],[215,1]],"outpatients":[[0,1],[1,1]],"treated":[[0,1],[14,1],[86,1],[90,1],[113,2],[115,1],[121,1],[205,1],[211,2],[212,2],[214,1]],"routine":[[0,1],[3,1],[12,2],[20,1],[80,1],[81,1],[96,3],[103,1],[105,1],[109,1],[113,2],[166,5],[167,1],[168,2],[172,1]],"continued":[[0,1],[6,1],[10,1],[33,2],[41,2],[48,2],[69,1],[77,1],[84,1],[89,2],[90,3],[94,1],[102,1],[109,2],[112,1],[113,1],[125,1],[134,1],[158,1],[166,1],[168,6],[170,1],[178,2],[181,1],[190,2],[193,1],[194,2],[197,1],[199,2],[200,1],[213,1],[217,6],[219,2],[223,1]],"between":[[0,1],[1,2],[3,3],[5,1],[7,1],[10,1],[11,2],[13,2],[14,1],[16,3],[17,1],[24,5],[25,1],[27,1],[33,1],[34,2],[36,1],[42,1],[43,3],[44,1],[46,2],[50,4],[52,1],[53,1],[60,1],[61,5],[64,1],[69,1],[74,2],[75,1],[76,1],[79,1],[80,1],[82,2],[84,1],[86,3],[87,3],[90,4],[91,5],[92,2],[94,2],[96,2],[97,3],[98,4],[101,5],[102,3],[103,4],[108,6],[109,3],[110,1],[111,2],[112,3],[113,4],[114,3],[115,4],[116,3],[117,2],[120,2],[121,2],[124,1],[125,3],[126,3],[127,1],[135,1],[151,1],[152,2],[153,3],[154,1],[155,1],[160,1],[161,1],[163,1],[164,2],[166,1],[167,3],[170,1],[171,3],[173,2],[178,1],[179,1],[181,3],[182,4],[183,1],[188,1],[196,1],[197,1],[202,2],[203,3],[205,2],[207,2],[210,1],[212,2],[213,3],[214,1],[215,1],[222,2]],"after":[[0,1],[1,1],[2,1],[3,6],[4,1],[6,3],[9,1],[10,3],[12,2],[20,3],[21,3],[22,2],[24,3],[26,2],[27,3],[32,2],[35,1],[36,2],[37,2],[40,2],[41,1],[43,5],[47,1],[48,1],[52,1],[53,3],[54,1],[55,1],[56,1],[58,5],[59,1],[60,1],[61,2],[64,2],[65,1],[69,1],[70,2],[71,5],[72,5],[74,4],[76,5],[79,2],[84,3],[86,3],[87,1],[88,1],[90,1],[91,1],[93,7],[94,2],[95,14],[97,1],[98,1],[99,2],[100,4],[101,3],[102,11],[103,5],[104,3],[107,8],[108,7],[109,1],[110,1],[112,5],[113,3],[115,3],[116,1],[120,5],[121,4],[123,1],[124,2],[126,2],[134,1],[135,1],[137,1],[140,4],[143,3],[146,1],[149,1],[151,2],[155,1],[158,1],[163,8],[164,9],[165,4],[166,13],[167,2],[168,6],[169,3],[170,6],[171,3],[172,1],[173,2],[175,1],[176,1],[177,3],[178,4],[179,2],[182,2],[183,3],[184,1],[185,2],[186,7],[187,7],[188,5],[189,6],[190,4],[191,1],[192,1],[193,4],[194,3],[195,5],[196,1],[197,4],[198,1],[199,4],[200,3],[201,4],[202,2],[203,2],[205,2],[206,1],[207,1],[209,1],[210,3],[211,4],[212,2],[214,2],[215,3],[216,6],[217,2],[218,3],[219,4],[221,1],[222,1],[223,7]],"received":[[0,1],[6,2],[60,1],[76,1],[86,6],[87,1],[88,2],[109,3],[110,1],[113,1],[122,2],[169,1],[171,1],[172,1],[173,1],[189,2],[197,2],[199,1],[219,1]],"meta-analyses":[[0,1],[80,1],[81,1]],"reviews":[[0,1],[15,1],[36,1],[38,1],[56,1],[86,1],[87,4],[101,1],[108,1],[111,1],[116,6],[117,1],[118,1],[122,1],[123,1],[124,3],[126,4],[127,2],[164,1]],"butler":[[0,1],[80,2],[160,1]],"carpenter":[[0,1],[80,1],[90,2],[112,1],[116,1],[117,1],[125,1]],"chambless":[[0,1],[80,1]],"ollendick":[[0,1],[80,1]],"dutra":[[0,1],[80,1]],"fairburn":[[0,1],[80,1]],"hanrahan":[[0,1],[80,1]],"hofmann":[[0,1],[44,1],[80,3],[81,3],[89,1],[117,1],[125,2]],"hollon":[[0,1],[59,1],[80,1],[81,3],[86,1],[100,1],[127,2]],"linardon":[[0,1],[81,1]],"magill":[[0,1],[81,1],[89,1],[126,1]],"matusiewicz":[[0,1],[81,1]],"mayo-wilson":[[0,1],[81,1]],"wuthrich":[[0,1],[81,1]],"rapee":[[0,1],[81,2]],"lists":[[0,1],[17,1],[24,1],[33,1],[46,2],[47,3],[51,1],[52,2],[82,2],[83,1],[84,1],[103,1],[111,1],[202,1],[204,1],[217,1]],"conditions":[[0,1],[1,2],[3,1],[8,2],[9,1],[53,2],[67,1],[71,1],[80,2],[86,7],[87,4],[88,1],[89,1],[92,1],[108,1],[111,2],[112,1],[113,3],[118,2],[122,2],[125,1],[134,2],[144,1],[163,1],[203,1]],"treatments":[[0,1],[1,1],[3,1],[11,1],[15,1],[16,1],[33,3],[74,1],[80,1],[81,1],[82,2],[83,2],[86,3],[87,6],[108,2],[113,1],[116,2],[124,1],[125,1],[126,1],[127,1],[160,1],[173,1],[202,1],[203,1],[205,1],[206,1],[208,1]],"nice":[[0,1],[60,1],[72,1],[100,1],[104,3],[105,3],[106,1],[166,1],[167,1],[178,1],[182,1],[185,1],[189,1],[190,2],[191,1],[192,2],[198,1],[200,3]],"grant":[[0,1],[80,3],[111,1],[112,1],[124,1],[125,1],[160,2]],"late":[[1,2],[40,1],[57,1],[70,2],[76,1],[79,2],[98,2],[109,1],[179,1],[189,4],[194,2],[201,1],[215,2],[216,2]],"certified":[[1,1],[75,1]],"couch":[[1,2],[6,2],[7,2],[12,1],[13,1],[16,2],[17,3],[18,3],[19,2],[21,2],[31,1],[42,2],[53,2],[54,1],[66,1],[69,2],[72,1],[76,2]],"made":[[1,3],[6,1],[7,2],[9,2],[10,2],[12,1],[17,1],[19,1],[22,1],[24,1],[26,1],[32,1],[33,1],[34,1],[36,1],[38,1],[41,1],[43,2],[45,2],[46,1],[47,1],[48,2],[51,3],[56,3],[57,1],[59,1],[60,1],[62,1],[63,1],[64,2],[65,3],[70,1],[71,4],[74,4],[76,2],[79,1],[84,1],[95,1],[100,3],[104,1],[107,1],[113,1],[115,1],[121,2],[128,2],[145,1],[146,1],[152,1],[155,3],[163,6],[167,3],[170,2],[171,2],[175,1],[176,1],[178,3],[181,3],[182,2],[183,1],[185,3],[186,4],[187,1],[189,4],[191,2],[193,2],[194,4],[195,1],[197,1],[198,1],[199,3],[201,2],[205,1],[206,6],[208,2],[209,2],[213,1],[216,4],[217,1],[218,2],[219,4]],"interpretations":[[1,1],[8,1],[41,2],[47,1],[56,1],[76,1],[83,2],[172,1],[182,7],[183,1],[184,2],[185,3],[188,1],[223,4]],"recog-":[[1,1],[20,1],[199,1],[216,1]],"nized":[[1,1],[199,1]],"concepts":[[1,2],[2,1],[15,1],[24,1],[58,1],[79,2],[82,1],[83,1],[97,1],[116,1],[122,1],[123,1]],"needed":[[1,1],[2,1],[3,1],[4,2],[8,1],[11,1],[26,1],[29,1],[30,2],[32,1],[34,1],[44,2],[48,2],[51,2],[53,1],[61,3],[64,1],[65,2],[70,1],[71,1],[72,1],[74,8],[77,1],[86,1],[87,1],[89,1],[90,1],[98,1],[100,1],[103,1],[109,1],[113,2],[120,1],[155,1],[164,1],[176,2],[182,2],[183,3],[186,1],[189,2],[193,1],[195,1],[196,1],[203,1],[205,1],[206,1],[209,1],[212,1],[216,1]],"validated":[[1,1],[88,1]],"school":[[1,1],[6,4],[7,1],[10,2],[56,2],[58,1],[62,2],[65,2],[69,2],[76,6],[84,1],[85,2],[110,1],[111,1],[121,5],[123,2],[169,1],[171,2],[173,3],[179,1],[194,1],[196,1],[206,1],[216,2]],"taken":[[1,1],[3,1],[17,1],[70,1],[122,1],[163,1],[164,1],[165,1],[178,2],[192,1],[193,1],[203,2],[214,1]],"seriously":[[1,1],[132,1],[134,1],[139,1],[166,1],[170,1],[201,1],[212,1]],"scientists":[[1,1],[9,1],[93,1],[111,1]],"decided":[[1,1],[3,1],[25,1],[35,1],[43,1],[48,1],[58,1],[64,1],[100,1],[113,1],[155,1],[171,2],[172,1],[176,1],[178,1],[181,1],[182,1],[183,2],[184,1],[185,3],[186,2],[188,1],[189,5],[190,1],[191,1],[193,2],[194,3],[195,3],[199,4],[201,1],[206,1],[210,3],[215,2],[216,3],[218,1],[219,2]],"test":[[1,2],[4,1],[10,2],[16,1],[19,1],[22,2],[24,1],[26,1],[40,1],[43,1],[45,1],[46,1],[48,1],[53,2],[56,1],[65,3],[71,2],[77,3],[103,2],[114,2],[115,2],[120,4],[155,1],[158,1],[163,3],[164,6],[166,6],[167,5],[168,2],[181,1],[182,2],[183,2],[184,1],[185,1],[188,2],[189,1],[191,1],[192,6],[193,6],[194,6],[195,13],[196,1],[197,4],[199,1],[203,1],[205,1],[211,6],[213,3],[214,2],[217,3],[218,1],[219,5],[221,2],[223,1]],"psychoanalytic":[[1,3],[10,1]],"concept":[[1,1],[10,1],[69,1],[82,2],[83,2],[84,1],[95,1],[96,2],[128,1]],"result":[[1,1],[3,1],[4,1],[5,1],[6,3],[38,1],[40,1],[43,1],[69,1],[89,1],[94,1],[110,1],[111,3],[133,2],[134,4],[140,4],[155,2],[161,2],[168,1],[170,1],[171,1],[176,2],[186,1],[196,1],[200,1],[201,1],[205,1],[206,1],[216,1],[217,1]],"hostility":[[1,4],[111,2]],"turned":[[1,1],[22,2],[41,1],[47,1],[53,1],[54,1],[60,1],[76,1],[113,1],[170,1],[179,1],[181,1],[182,1]],"toward":[[1,3],[2,1],[3,9],[9,3],[10,1],[12,3],[13,5],[17,1],[19,1],[21,1],[24,1],[25,1],[26,1],[30,3],[32,5],[34,4],[35,1],[36,2],[37,5],[38,2],[40,1],[43,1],[45,1],[49,2],[56,2],[62,1],[63,1],[64,2],[65,1],[71,3],[72,1],[73,1],[74,6],[75,2],[79,1],[82,3],[83,2],[84,1],[86,2],[88,2],[89,3],[90,5],[91,2],[94,2],[96,3],[100,1],[102,1],[105,5],[107,1],[109,1],[112,1],[113,3],[123,1],[125,1],[126,1],[127,1],[169,1],[175,1],[176,2],[178,1],[182,1],[185,1],[191,1],[192,1],[198,1],[201,4],[202,3],[204,1],[206,1],[208,1],[213,1],[216,1]],"self":[[1,2],[3,1],[4,2],[5,1],[6,1],[9,1],[10,1],[20,1],[21,1],[31,4],[33,4],[46,1],[48,1],[56,3],[57,1],[65,1],[75,1],[76,1],[78,1],[79,21],[80,1],[84,1],[86,8],[87,6],[88,8],[89,9],[90,8],[91,3],[92,6],[93,1],[94,3],[95,4],[96,2],[97,4],[98,8],[99,7],[100,24],[101,4],[102,2],[103,10],[104,12],[105,14],[106,5],[107,3],[109,3],[112,4],[113,6],[114,11],[115,3],[116,2],[117,2],[118,7],[119,4],[120,3],[122,4],[123,2],[124,4],[125,1],[126,2],[127,4],[131,1],[134,2],[140,1],[142,1],[145,6],[155,2],[156,2],[157,3],[158,7],[159,1],[161,2],[178,1],[179,1],[197,1],[201,2],[202,3],[203,7],[223,1]],"investigated":[[1,1],[87,1]],"dreams":[[1,3],[40,1],[111,1],[121,2],[164,1]],"pre-":[[1,1],[6,1],[10,1],[16,1],[22,2],[24,1],[71,1],[86,1],[88,1],[100,1],[114,1],[115,1],[158,1],[194,1],[206,1],[213,1]],"dicted":[[1,1],[71,1],[194,1]],"manifest":[[1,1],[40,1],[42,1],[202,1]],"greater":[[1,3],[3,1],[9,1],[24,1],[30,1],[32,1],[42,2],[44,2],[56,1],[57,1],[59,2],[69,1],[79,1],[86,3],[87,1],[89,1],[90,1],[91,1],[93,1],[96,1],[100,1],[108,5],[110,1],[111,5],[112,1],[113,1],[128,1],[129,1],[140,1],[161,1],[163,1],[169,1],[176,2],[187,1],[188,1],[191,1],[195,2],[197,1],[198,4],[200,1],[201,3],[203,1],[206,1],[208,4],[210,2],[211,2],[213,1],[214,1],[216,1],[218,4]],"themes":[[1,4],[4,1],[7,3],[57,3],[81,1],[82,1],[83,1],[134,1],[171,1],[202,1]],"surprise":[[1,1],[3,1],[166,1],[176,1],[188,1],[202,1]],"ultimately":[[1,1],[6,1],[32,1],[41,1],[61,1]],"found":[[1,2],[3,1],[5,1],[10,1],[13,1],[17,1],[21,1],[22,1],[23,1],[38,1],[48,1],[49,1],[53,1],[60,1],[61,1],[62,1],[64,1],[65,2],[68,1],[75,1],[79,1],[86,1],[87,4],[88,1],[89,1],[98,1],[108,5],[109,2],[110,3],[111,1],[112,5],[113,1],[121,1],[139,1],[163,1],[164,2],[168,1],[169,1],[171,3],[172,1],[173,1],[182,1],[184,2],[185,1],[186,1],[190,1],[191,1],[193,2],[194,1],[201,1],[203,1],[205,2],[209,1],[210,1],[219,1]],"contained":[[1,1],[5,1],[48,2],[51,1],[56,1],[92,4],[93,2],[96,1],[98,1],[100,1],[110,1],[163,1],[171,1]],"fewer":[[1,1],[2,1],[13,1],[86,1],[90,1],[108,1],[109,1],[117,1],[163,1],[165,1],[176,1],[188,2],[201,1],[202,1],[219,1]],"deprivation":[[1,1],[95,1]],"loss":[[1,1],[6,1],[86,2],[91,1],[94,2],[98,1],[102,1],[108,1],[111,1],[113,1],[121,1],[124,1],[126,1],[134,1],[141,1],[158,1],[161,1],[170,2],[172,1],[202,3],[213,1],[222,3]],"recognized":[[1,1],[10,2],[37,1],[43,1],[56,2],[74,1],[112,1],[113,2],[170,1],[175,1],[191,2],[195,1],[218,3]],"paralleled":[[1,1],[87,1]],"awake":[[1,1],[100,7],[104,1],[106,6],[155,1],[194,1]],"results":[[1,1],[24,1],[38,1],[86,3],[87,6],[89,1],[92,1],[93,1],[97,2],[103,2],[114,1],[116,3],[124,1],[125,2],[126,1],[134,1],[140,1],[146,1],[164,1],[166,1],[168,1],[176,1],[186,1],[194,1],[199,4],[200,1],[211,1],[213,1],[214,1],[218,1],[221,3]],"believe":[[1,1],[4,1],[7,1],[9,2],[10,2],[11,1],[16,1],[17,1],[18,1],[19,1],[20,1],[21,1],[25,1],[26,3],[27,1],[33,1],[36,1],[38,1],[41,1],[42,2],[44,1],[45,3],[46,2],[47,4],[48,4],[49,1],[52,1],[56,3],[57,4],[58,5],[59,5],[60,5],[61,6],[62,1],[65,5],[72,2],[74,2],[75,1],[76,1],[79,4],[86,3],[87,1],[90,1],[93,2],[94,2],[95,1],[98,3],[109,1],[111,1],[114,1],[115,1],[120,1],[121,2],[122,3],[134,2],[149,1],[159,1],[168,1],[172,3],[173,2],[177,2],[179,4],[180,1],[181,4],[182,1],[183,4],[184,5],[185,2],[186,2],[187,6],[188,4],[192,3],[193,1],[196,4],[197,2],[198,4],[202,2],[206,2],[208,4],[209,1],[212,1],[214,2],[215,3],[216,1],[217,1],[219,1],[221,1]],"suffer":[[1,2],[11,1],[48,1],[61,1],[121,1],[163,1]],"inaccurate":[[1,1],[3,1],[5,2],[10,1],[18,1],[19,1],[20,2],[22,1],[24,1],[39,1],[45,2],[49,1],[75,1],[146,1],[172,1],[188,1]],"almost":[[1,1],[2,1],[4,1],[6,1],[17,1],[18,1],[21,1],[27,1],[34,1],[39,1],[40,1],[46,2],[49,1],[53,1],[56,1],[58,1],[60,1],[61,1],[71,1],[77,2],[100,1],[164,1],[170,1],[186,1],[201,1],[202,1],[203,3],[212,1],[215,1],[219,1]],"began":[[1,5],[3,1],[6,4],[38,2],[42,1],[56,1],[76,9],[122,1],[155,1],[170,2],[171,3],[172,3],[173,1],[175,4],[182,3],[183,1],[184,3],[185,4],[188,1],[189,5],[190,1],[191,1],[192,3],[193,9],[195,2],[198,2],[199,1],[201,3],[202,1],[205,1],[206,4],[208,1],[209,2],[210,1],[216,1],[219,1]],"fall":[[1,1],[4,1],[12,2],[43,1],[56,2],[58,1],[95,1],[98,4],[100,1],[102,1],[104,2],[107,1],[134,1]],"weren't":[[1,1],[19,1],[25,1],[33,1],[183,1]],"valid":[[1,1],[3,3],[8,1],[46,1],[48,1],[49,1],[105,1],[121,1],[133,1],[154,1]],"understood":[[1,1],[9,1],[35,1],[59,1],[110,1],[111,1],[184,1],[188,1],[191,1],[198,1],[213,1]],"listened":[[1,1],[98,1],[102,7],[107,21],[114,1],[199,1],[210,1]],"realized":[[1,1],[40,1],[43,1],[57,2],[64,1],[65,1],[100,1],[104,1],[172,1],[173,1],[175,1],[176,1],[178,1],[182,1],[184,1],[185,1],[195,1],[199,1],[206,1],[212,1],[213,1],[218,2],[219,1]],"reported":[[1,2],[41,1],[45,1],[68,1],[69,1],[76,2],[77,1],[86,7],[87,12],[88,6],[89,1],[90,2],[93,1],[108,10],[109,3],[110,2],[111,5],[112,1],[113,3],[120,2],[121,1],[175,1]],"types":[[1,1],[22,1],[24,1],[26,1],[35,1],[45,2],[53,1],[74,1],[82,4],[84,1],[93,1],[102,1],[109,1],[111,1],[123,1],[130,1],[131,1],[132,1],[133,1],[134,2],[148,1],[149,1],[155,1],[164,1],[165,1],[170,1],[171,1],[179,1],[182,1],[183,1],[192,1],[194,2],[195,1],[196,1],[197,2],[201,1],[202,1],[203,2],[204,4],[205,6],[206,4],[208,4],[211,4],[212,3],[213,2],[214,1],[218,1],[222,1]],"stream":[[1,2],[5,1],[40,3],[41,1],[42,1],[51,1],[101,1],[210,1]],"quick":[[1,1],[4,1],[16,1],[41,2],[155,1],[173,1],[178,1],[185,1],[191,1],[200,1],[205,1],[207,1],[212,2],[213,1],[222,1]],"evaluative":[[1,1],[4,1]],"woman":[[1,1],[47,1],[169,1],[173,1],[188,1],[191,1],[199,1],[200,1],[217,4]],"detailed":[[1,1],[12,1],[33,1],[37,2],[65,1],[86,1],[94,1],[95,1],[97,1],[113,1],[114,1],[177,1],[197,1]],"sexual":[[1,1],[3,2],[8,1],[9,1],[30,1],[76,1],[108,1],[202,1],[215,5],[216,1],[222,1]],"spontaneously":[[1,1],[4,1],[36,1],[42,1],[45,1],[69,1],[70,1],[182,1]],"feeling":[[1,2],[3,1],[4,1],[5,1],[9,2],[10,1],[13,1],[16,5],[18,5],[19,1],[21,2],[22,1],[23,1],[25,3],[26,4],[27,2],[32,6],[33,9],[35,1],[37,8],[38,2],[40,2],[41,5],[42,6],[43,9],[45,1],[47,1],[51,1],[52,1],[53,1],[54,1],[57,1],[58,1],[59,2],[61,1],[63,2],[69,5],[70,9],[71,8],[72,3],[79,3],[80,1],[82,1],[91,1],[94,1],[95,2],[96,4],[97,3],[100,3],[101,2],[105,1],[106,2],[113,1],[116,1],[120,2],[128,5],[129,1],[130,2],[131,2],[134,2],[138,1],[140,1],[142,1],[143,1],[145,1],[148,1],[149,1],[153,1],[154,7],[155,3],[158,1],[159,1],[161,2],[166,2],[167,1],[168,3],[169,1],[170,4],[171,2],[175,6],[177,4],[178,1],[179,3],[181,1],[182,4],[183,2],[184,3],[185,1],[186,1],[187,3],[190,1],[191,1],[193,3],[195,1],[196,1],[197,1],[198,1],[201,2],[202,1],[204,1],[205,7],[206,2],[208,2],[209,1],[210,5],[211,1],[212,1],[213,1],[214,3],[216,1],[217,2],[218,6],[222,4]],"anxious":[[1,2],[2,1],[4,1],[5,1],[6,2],[7,1],[9,1],[13,2],[16,1],[24,1],[27,1],[37,2],[40,4],[41,2],[42,3],[43,9],[47,1],[51,1],[55,1],[63,1],[64,3],[65,4],[70,1],[71,2],[76,5],[78,4],[100,2],[112,1],[124,1],[137,1],[138,1],[140,1],[150,1],[155,2],[170,3],[171,1],[172,3],[173,1],[174,3],[175,7],[176,4],[178,1],[179,5],[184,1],[187,1],[191,3],[192,2],[193,9],[194,3],[205,15],[206,14],[207,9],[208,25],[209,5],[210,12],[211,20],[216,1],[217,2],[218,2],[222,3]],"interpretation":[[1,1],[4,2],[5,1],[6,1],[19,1],[39,1],[41,1],[56,2],[179,1],[182,10],[185,2],[186,2],[212,1],[213,1],[216,1],[217,1]],"criticizing":[[1,1],[55,1],[76,1],[181,2],[194,3]],"disagreed":[[1,1],[10,1],[199,1],[206,2]],"afraid":[[1,1],[9,1],[32,1],[41,1],[43,1],[44,1],[49,1],[63,1],[94,1],[98,1],[167,1],[170,1],[171,2],[175,2],[179,3],[180,1],[181,6],[184,2],[185,1],[188,1],[194,1],[206,2],[207,1],[208,1],[209,1]],"boring":[[1,1],[5,1],[134,1],[150,1],[194,1]],"questioned":[[1,1],[10,2],[47,1],[111,1],[155,1],[169,1]],"rec-":[[1,1],[81,1]],"experienced":[[1,1],[2,2],[3,1],[10,1],[12,1],[16,1],[17,1],[24,1],[26,1],[28,1],[32,1],[33,2],[36,1],[41,2],[43,1],[47,1],[53,1],[68,1],[69,2],[74,1],[76,1],[85,1],[88,1],[89,1],[91,2],[107,1],[112,1],[145,1],[148,1],[155,1],[161,1],[163,2],[167,5],[168,4],[170,2],[173,2],[174,1],[175,3],[177,1],[180,1],[182,1],[191,1],[194,1],[197,1],[201,2],[202,2],[203,1],[205,2],[208,6],[212,3],[213,1],[219,2],[221,1],[222,2]],"closely":[[1,1],[24,1],[94,1],[102,1],[108,1],[112,1],[113,1],[172,1],[175,2],[180,1],[181,2],[183,1],[195,1],[210,1],[211,2],[214,1]],"tied":[[1,1],[24,1],[97,2],[164,1],[180,1],[181,1],[224,1]],"emotions":[[1,2],[2,2],[4,3],[6,1],[7,14],[8,1],[9,1],[15,1],[18,1],[26,3],[31,1],[33,2],[38,1],[40,1],[41,1],[42,2],[43,34],[44,12],[52,1],[53,4],[58,1],[61,1],[63,3],[67,1],[68,1],[69,2],[75,1],[79,2],[80,2],[81,4],[82,5],[83,8],[91,2],[92,1],[95,2],[98,2],[103,1],[111,1],[113,1],[128,4],[130,2],[134,3],[135,1],[136,1],[143,1],[148,1],[153,4],[154,7],[155,1],[157,1],[158,1],[159,1],[161,3],[183,2],[184,1],[186,1],[187,3],[188,1],[194,1],[201,3],[208,1],[212,1],[214,1],[222,1],[223,1],[225,1]],"respond":[[1,2],[3,3],[9,5],[10,4],[12,1],[16,2],[19,2],[21,1],[22,1],[25,3],[26,1],[27,1],[30,1],[31,1],[32,1],[36,3],[37,2],[38,2],[39,1],[40,3],[45,1],[47,1],[48,1],[50,1],[52,3],[57,1],[59,1],[61,1],[64,1],[70,1],[71,2],[72,2],[74,1],[84,1],[86,2],[90,1],[96,1],[98,4],[99,2],[105,1],[115,2],[120,2],[164,2],[166,3],[167,3],[168,9],[172,1],[188,1],[199,1],[203,1],[208,2],[210,1],[211,1],[213,4],[214,2],[216,1],[218,2]],"unrealistic":[[1,1],[4,1],[7,1],[36,1],[47,1],[49,1],[59,1],[213,1]],"rapidly":[[1,1],[110,1],[155,2],[172,1],[173,1],[187,1],[188,1],[192,2],[193,1]],"improved":[[1,1],[4,1],[33,2],[69,1],[77,2],[86,1],[104,1],[109,1],[164,1],[166,1],[167,1],[168,1],[189,1],[190,1],[192,1],[200,1],[201,2],[217,2],[219,2]],"teach":[[1,1],[2,3],[4,1],[9,1],[10,1],[15,1],[17,2],[19,1],[24,3],[29,2],[30,2],[31,2],[32,1],[35,1],[37,1],[39,1],[42,1],[43,1],[46,1],[48,1],[50,2],[52,2],[53,1],[55,1],[58,1],[61,1],[63,2],[64,1],[65,1],[67,1],[69,2],[70,2],[71,2],[89,1],[92,3],[93,1],[96,1],[99,1],[102,1],[114,1],[115,1],[120,1],[169,2],[173,1],[175,1],[177,1],[185,1],[196,3],[197,1],[203,1],[210,2],[211,1],[214,1],[217,1]],"residents":[[1,2],[9,2],[114,1],[120,1]],"uni-":[[1,1],[81,1],[120,1]],"versity":[[1,1],[81,1],[120,1]],"pennsylvania":[[1,2],[4,1],[7,3],[9,1],[18,1],[19,1],[33,2],[42,1],[51,2],[60,1],[79,1],[84,1]],"responded":[[1,1],[3,1],[19,1],[47,2],[74,2],[77,2],[109,1],[170,1],[199,1]],"chief":[[1,1],[4,1],[76,2]],"john":[[1,1],[84,1],[86,2],[89,2],[92,2],[100,2],[101,2],[103,2],[107,2],[108,2],[114,2],[117,3],[118,2],[122,2],[123,1],[125,2],[212,15],[213,20]],"leading":[[1,1],[5,1],[6,1],[47,1],[60,1],[81,1],[83,1],[84,1],[85,1],[90,1],[91,1],[109,1],[113,1],[134,1],[161,1],[215,1],[216,1]],"dis-":[[1,1],[3,2],[10,3],[14,1],[16,1],[23,1],[26,1],[32,2],[43,1],[70,1],[74,1],[86,1],[93,1],[115,3],[172,1],[188,1],[192,1]],"cussed":[[1,1],[3,1],[23,1]],"trial":[[1,1],[60,1],[80,3],[81,2],[83,1],[84,1],[87,1],[88,1],[109,1],[114,2],[116,3],[117,3],[123,6],[124,3],[125,1],[126,1],[127,1]],"necessary":[[1,1],[2,1],[15,1],[30,1],[32,1],[46,1],[51,1],[78,1],[89,1],[92,1],[102,1],[105,1],[113,1],[114,2],[121,1],[140,1],[145,1],[158,1],[166,2],[171,1],[177,1],[178,1],[179,1],[180,1],[183,1],[191,1],[195,1],[196,1],[198,1],[204,2],[205,1],[207,1],[208,1],[209,1],[214,1],[215,1]],"demonstrate":[[1,1],[8,1],[9,2],[13,1],[19,1],[20,1],[21,1],[24,1],[25,1],[26,1],[33,1],[37,3],[48,1],[52,1],[64,2],[89,1],[97,1],[100,1],[135,1],[155,1],[186,1],[191,1],[199,1],[202,2],[205,1],[208,1],[221,1]],"randomized":[[1,2],[80,5],[81,3],[86,2],[87,6],[88,1],[108,2],[109,3],[110,1],[116,3],[117,1],[123,7],[124,2],[125,1],[126,1],[127,4]],"controlled":[[1,2],[79,1],[80,2],[81,3],[87,1],[89,1],[94,2],[106,1],[108,1],[109,1],[110,1],[116,3],[117,1],[122,1],[123,4],[124,2],[125,2],[126,1],[127,1],[166,1]],"established":[[1,1],[10,1],[92,2],[112,1]],"imipramine":[[1,2],[83,1],[162,1]],"antidepressant":[[1,1],[80,1],[111,3],[117,1],[162,5],[203,6]],"times":[[1,1],[3,2],[5,3],[6,1],[7,1],[8,1],[9,3],[12,1],[16,1],[19,1],[21,4],[22,1],[24,1],[25,2],[26,1],[33,1],[34,2],[36,1],[38,2],[43,7],[47,2],[48,3],[53,1],[54,1],[56,1],[58,6],[59,1],[64,1],[65,1],[67,1],[70,1],[71,1],[73,1],[74,2],[75,2],[77,2],[91,1],[92,1],[93,2],[94,1],[95,3],[96,1],[98,1],[100,3],[101,7],[102,8],[105,1],[107,24],[108,2],[110,1],[111,4],[114,2],[115,2],[120,3],[121,3],[127,1],[134,5],[144,1],[155,1],[158,2],[159,2],[161,1],[163,2],[164,1],[165,3],[166,10],[167,4],[168,4],[170,2],[171,2],[175,1],[176,1],[177,1],[178,2],[179,2],[183,1],[184,1],[186,4],[187,2],[191,2],[193,2],[194,3],[195,1],[197,6],[198,2],[199,1],[200,1],[201,6],[204,7],[205,1],[206,1],[207,2],[208,3],[209,3],[210,1],[212,2],[213,1],[214,1],[216,2],[217,1],[218,1],[219,2],[222,2]],"talk":[[1,4],[10,3],[12,2],[13,3],[16,5],[17,4],[18,2],[19,1],[21,5],[22,1],[25,2],[26,1],[32,5],[33,1],[34,8],[35,2],[36,2],[37,5],[38,4],[40,1],[41,1],[43,3],[47,2],[51,1],[56,1],[58,1],[60,2],[64,2],[65,2],[69,1],[70,1],[71,4],[79,1],[89,7],[94,1],[95,2],[96,1],[97,7],[98,3],[102,1],[118,1],[119,1],[165,1],[169,1],[170,1],[171,1],[172,1],[176,1],[178,1],[185,1],[191,1],[192,4],[194,3],[195,1],[199,2],[200,3],[204,4],[207,1],[208,1],[210,1],[213,1],[214,1],[216,3]],"compared":[[1,1],[5,1],[16,1],[32,2],[33,1],[37,1],[55,1],[56,1],[59,1],[60,1],[86,3],[87,3],[88,5],[95,1],[102,1],[108,8],[110,2],[111,2],[112,2],[122,1],[163,1],[164,1],[195,2],[205,2],[221,2]],"follow-up":[[1,1],[80,1],[81,1],[167,1],[168,1],[219,1]],"preventing":[[1,1],[2,1],[24,1],[27,1],[30,1],[82,1],[83,1],[90,1],[94,1],[102,1],[111,1],[116,1],[124,2]],"published":[[1,1],[2,1],[16,1],[81,1],[86,1],[89,1],[92,1],[100,1],[101,1],[103,1],[107,1],[108,1],[114,1],[116,1],[117,1],[118,1],[122,1]],"manual":[[1,1],[3,1],[9,1],[74,1],[75,1],[76,1],[79,1],[81,2],[88,1],[109,1],[126,1],[160,1],[225,1]],"later":[[1,1],[5,2],[6,2],[7,1],[9,2],[10,1],[13,2],[17,3],[19,1],[21,1],[26,2],[27,1],[32,1],[34,1],[42,1],[43,1],[45,2],[50,1],[53,1],[56,1],[57,1],[58,2],[59,1],[62,1],[70,3],[76,3],[77,1],[86,1],[90,1],[92,2],[94,5],[96,3],[97,1],[98,2],[101,1],[102,1],[108,1],[114,1],[115,1],[130,1],[155,2],[163,1],[164,1],[165,2],[166,2],[168,2],[171,1],[172,1],[175,1],[181,1],[182,1],[185,1],[190,1],[192,1],[193,2],[196,1],[201,1],[204,1],[206,1],[207,1],[208,1],[209,3],[217,1],[219,1]],"starting":[[1,4],[2,1],[7,1],[11,1],[12,2],[16,1],[24,2],[26,1],[27,1],[33,2],[35,1],[53,1],[70,1],[83,1],[85,1],[92,1],[93,1],[104,2],[114,1],[115,2],[120,1],[134,1],[135,1],[136,1],[163,1],[184,2],[187,3],[192,3],[202,1],[208,2],[214,1]],"university":[[1,1],[9,1],[79,1],[80,2],[81,4],[84,2],[85,3],[92,2],[114,4],[115,2],[120,2],[121,7],[126,2],[127,1],[160,2],[216,3]],"substance":[[1,1],[2,1],[3,1],[11,1],[13,1],[33,1],[76,2],[80,2],[89,2],[112,2],[116,3],[123,2],[124,2],[125,2],[126,3],[127,3],[225,1]],"personality":[[1,1],[2,1],[3,3],[4,1],[9,1],[10,2],[13,1],[17,1],[38,1],[59,1],[60,1],[65,4],[75,2],[76,1],[79,1],[80,3],[81,7],[83,1],[84,1],[95,1],[102,1],[114,3],[115,3],[120,1],[123,1],[124,2]],"couples":[[1,1],[80,1],[203,1]],"bipolar":[[1,1],[3,1],[111,2],[112,1]],"clinical":[[1,1],[2,1],[12,2],[15,1],[16,2],[18,2],[19,1],[22,2],[25,1],[27,1],[32,1],[35,1],[36,1],[37,1],[47,2],[51,2],[52,2],[56,2],[57,2],[59,1],[61,1],[63,1],[64,1],[65,2],[67,1],[69,1],[80,10],[81,13],[82,7],[83,8],[84,9],[85,2],[86,1],[87,5],[89,3],[98,2],[103,1],[108,2],[110,2],[111,2],[114,3],[115,2],[116,6],[117,3],[118,3],[119,1],[120,3],[122,5],[123,14],[124,11],[125,19],[126,17],[127,14],[140,1],[160,1],[163,1],[166,1],[167,1],[168,1],[224,2],[225,1]],"observations":[[1,1],[93,1],[191,1],[195,1]],"outlined":[[1,1],[19,1],[35,1],[113,1]],"behaviors":[[1,1],[3,3],[4,1],[7,5],[8,2],[9,2],[10,3],[16,1],[20,1],[22,1],[23,1],[33,2],[38,1],[58,1],[60,1],[65,4],[69,1],[71,1],[74,2],[75,1],[81,1],[82,2],[84,1],[86,2],[87,1],[88,1],[89,3],[90,1],[91,3],[93,4],[94,1],[95,2],[96,3],[97,2],[98,1],[101,3],[103,2],[105,1],[112,3],[113,5],[115,2],[116,2],[117,1],[118,3],[120,1],[123,6],[124,2],[125,6],[126,7],[127,7],[169,3],[170,3],[171,5],[172,6],[175,6],[179,1],[185,1],[192,4],[194,2],[196,1],[198,1],[199,18],[201,1],[206,7],[207,21],[208,3],[209,2],[211,3],[213,1],[217,3],[218,3],[219,1],[221,9],[223,4]],"theories":[[1,1],[116,1],[126,1]],"trials":[[1,1],[79,1],[80,2],[81,1],[87,8],[89,1],[108,2],[110,2],[112,1],[116,1],[123,2],[127,1]],"several":[[1,1],[4,1],[6,1],[7,1],[8,1],[9,1],[24,1],[25,1],[26,2],[27,1],[32,1],[33,1],[38,1],[45,1],[47,2],[48,1],[49,1],[51,1],[53,1],[57,2],[58,1],[59,3],[63,2],[64,2],[69,2],[70,1],[71,3],[74,2],[75,1],[76,1],[84,1],[86,2],[87,2],[91,1],[92,1],[93,1],[95,1],[98,1],[101,1],[102,3],[111,1],[113,1],[114,1],[115,1],[120,2],[121,1],[140,2],[155,2],[163,1],[170,2],[171,2],[178,1],[180,2],[185,1],[187,1],[189,4],[191,1],[192,1],[193,2],[194,2],[196,1],[197,2],[199,4],[200,3],[201,2],[204,4],[205,3],[210,1],[212,1],[213,1],[217,2],[218,3],[219,1],[221,1],[222,2]],"decades":[[1,2],[88,1],[169,1]],"worldwide":[[1,1],[75,1]],"continue":[[1,1],[2,1],[3,1],[4,1],[7,1],[9,1],[10,1],[11,1],[14,1],[16,3],[18,2],[19,1],[21,1],[22,1],[24,1],[26,2],[30,1],[32,1],[33,7],[34,5],[37,1],[38,1],[41,1],[43,1],[60,2],[63,2],[64,1],[70,1],[71,2],[72,1],[78,1],[79,1],[86,1],[88,1],[89,1],[93,1],[95,1],[97,1],[100,1],[103,1],[104,1],[105,2],[111,2],[112,1],[114,3],[120,1],[121,1],[154,1],[155,2],[165,1],[167,2],[168,6],[169,1],[170,1],[177,1],[184,2],[192,2],[193,1],[196,1],[197,3],[198,1],[200,4],[201,1],[203,1],[205,1],[208,2],[209,1],[211,1],[214,1],[217,2],[218,6],[219,1]],"list":[[1,1],[2,1],[7,2],[17,1],[19,5],[21,1],[24,1],[26,1],[32,2],[33,3],[34,1],[35,2],[37,2],[43,6],[46,4],[48,6],[49,1],[51,1],[52,4],[56,1],[57,2],[59,2],[63,2],[64,3],[65,1],[67,1],[71,8],[77,2],[83,2],[84,1],[87,1],[89,2],[94,10],[95,1],[97,2],[101,7],[103,1],[117,1],[120,1],[121,2],[122,6],[128,8],[130,4],[140,4],[141,1],[147,2],[150,4],[152,1],[166,1],[175,6],[177,2],[180,1],[184,1],[187,1],[199,1],[200,1],[204,2],[206,1],[208,3],[209,2],[215,2],[216,4],[217,1],[221,1],[222,2],[223,1]],"graduate":[[1,1],[10,1],[84,1],[85,1],[121,1]],"countries":[[1,1],[111,1],[125,1]],"broadly":[[1,1],[18,1],[57,1],[86,1],[89,1]],"prac-":[[1,1],[30,1],[69,1],[81,1],[92,1],[95,1],[200,1]],"ticed":[[1,1],[69,1]],"david":[[1,1],[2,1],[36,3],[80,1],[117,1],[123,1],[127,3],[140,1],[225,1]],"knapp":[[1,1],[81,1]],"recent":[[1,2],[3,1],[11,1],[59,1],[76,1],[87,1],[89,1],[108,1],[109,1],[110,2],[113,1],[125,1],[170,2],[171,2],[175,2],[193,1],[197,4],[200,1],[202,1],[208,1],[212,2],[219,1]],"men-":[[1,1],[56,1],[79,1]],"movement":[[1,1],[21,1],[107,1],[176,1]],"alternative":[[1,1],[9,2],[26,1],[46,1],[47,4],[48,2],[53,1],[60,1],[65,1],[74,1],[79,1],[81,1],[82,2],[84,2],[86,2],[87,1],[90,1],[91,2],[95,1],[97,2],[101,3],[103,1],[109,1],[110,2],[111,1],[113,1],[116,2],[118,3],[123,2],[134,1],[140,1],[148,1],[149,1],[155,1],[158,5],[159,2],[175,1],[177,6],[182,2],[183,4],[184,9],[185,7],[186,25],[187,26],[188,24],[189,2],[191,1],[192,7],[193,2],[194,2],[195,10],[196,1],[197,1],[210,1],[213,2],[217,3],[219,2],[221,2],[223,11]],"diagnosed":[[1,2],[36,1],[111,1],[122,1],[170,1],[191,1],[201,1],[208,1]],"serious":[[1,1],[8,1],[46,1],[80,1],[92,1],[93,2],[98,1],[107,1],[110,1],[111,3],[112,1],[113,1],[114,1],[121,1],[124,1],[138,1],[163,3],[165,1],[201,1],[206,2],[208,5],[215,23],[216,1]],"mental":[[1,1],[4,1],[5,3],[9,3],[10,2],[11,1],[13,1],[14,2],[17,2],[24,1],[40,1],[46,1],[48,2],[53,1],[68,1],[69,1],[70,1],[74,1],[76,3],[80,1],[81,2],[83,1],[91,1],[92,1],[96,1],[99,1],[104,1],[111,5],[112,2],[116,2],[123,1],[124,2],[126,2],[136,1],[152,1],[153,1],[155,2],[158,1],[159,1],[160,1],[161,3],[163,7],[168,1],[178,1],[193,1],[196,2],[202,1],[203,1],[206,1],[208,3],[210,3],[213,1],[217,1]],"condition":[[1,1],[13,2],[15,1],[17,2],[28,1],[56,1],[75,1],[86,1],[87,1],[88,2],[109,1],[111,1],[163,2]],"insti-":[[1,1],[35,1]],"refining":[[1,1],[2,1],[75,1],[93,1]],"foundation":[[1,1],[3,1],[81,1],[85,1],[92,1],[191,1]],"conceptualizing":[[1,1],[2,1],[8,2],[26,1],[47,1],[73,2],[74,2],[82,2],[84,1],[89,1],[91,1],[118,1]],"planning":[[1,1],[3,2],[21,1],[28,1],[29,2],[30,3],[31,1],[32,6],[33,1],[34,1],[51,1],[74,3],[79,1],[82,4],[83,5],[84,3],[97,1],[134,1],[153,1],[164,2],[165,2],[166,1],[168,3],[174,1],[185,1],[193,2],[217,2],[218,1],[223,3]],"delivering":[[1,1],[9,1],[89,1]],"adds":[[1,1],[58,1],[91,1],[176,1]],"emphasis":[[1,1],[3,3],[23,1],[30,1],[48,1],[56,1],[103,1],[210,1],[212,1]],"maintain":[[1,1],[3,1],[4,1],[5,1],[6,1],[9,1],[20,1],[33,1],[56,1],[65,1],[76,1],[77,1],[96,1],[97,1],[107,1],[108,1],[109,1],[115,1],[152,1],[155,2],[189,2],[207,1],[219,1]],"rather":[[1,1],[2,1],[3,2],[4,2],[5,1],[6,1],[16,1],[19,1],[24,1],[34,1],[37,1],[39,1],[43,1],[54,1],[61,1],[70,1],[86,1],[90,1],[91,1],[95,1],[108,1],[134,1],[140,1],[141,1],[154,1],[155,2],[156,1],[158,1],[166,2],[167,1],[173,2],[176,1],[184,2],[188,1],[191,3],[192,1],[194,1],[201,1],[202,2],[203,1],[204,3],[205,1],[206,2],[208,3],[210,1],[212,2],[213,3],[214,2],[219,2]],"emphasizing":[[1,1],[3,2],[34,1],[75,1],[83,2],[90,1],[95,1],[98,1],[173,1]],"symptoms":[[1,1],[4,2],[6,2],[11,2],[12,2],[13,1],[16,1],[17,7],[23,2],[24,1],[30,1],[32,1],[60,1],[66,1],[72,1],[76,11],[77,1],[81,1],[87,4],[89,1],[93,1],[95,6],[103,1],[108,5],[109,3],[110,1],[111,4],[112,2],[114,1],[116,1],[117,1],[119,1],[120,5],[122,3],[123,2],[126,1],[127,2],[137,1],[138,2],[140,6],[152,1],[154,1],[157,1],[158,3],[163,4],[164,13],[166,11],[167,9],[168,9],[169,1],[170,3],[171,2],[173,1],[184,1],[192,2],[193,8],[201,3],[202,13],[203,1],[205,6],[206,7],[208,1],[210,1],[211,4],[212,1],[217,2],[223,1]],"psychopathology":[[1,1],[80,1],[81,1],[112,2],[123,1],[124,1]],"emphasizes":[[1,1],[3,4],[95,1],[115,1]],"qualities":[[1,1],[3,2],[4,1],[7,5],[10,1],[13,1],[44,1],[48,1],[56,1],[57,1],[59,1],[63,1],[76,1],[84,1],[89,2],[176,4],[177,1],[183,1],[198,1],[200,2],[214,1],[216,2],[222,2]],"resources":[[1,1],[2,1],[3,1],[4,1],[6,1],[7,3],[30,1],[32,1],[64,1],[74,1],[75,2],[76,2],[81,1],[82,1],[83,1],[84,1],[85,1],[86,1],[88,1],[93,1],[109,1],[130,1],[140,1],[144,1],[145,1],[168,1],[176,1],[208,1],[223,1]],"conceptualized":[[1,1],[19,1]],"aspirations":[[1,2],[2,2],[3,5],[4,1],[15,4],[18,11],[19,4],[21,7],[22,3],[23,1],[24,3],[26,1],[28,1],[29,2],[30,2],[31,2],[32,1],[51,1],[57,1],[58,1],[63,3],[64,2],[65,2],[69,2],[71,1],[74,3],[75,1],[76,1],[82,2],[83,1],[85,1]],"deep":[[1,1],[4,1],[10,1],[63,1],[88,1],[91,2],[94,1],[95,1],[97,1],[100,11],[102,1],[104,7],[105,4],[106,1],[110,1],[164,2],[166,1],[171,1],[208,1],[210,4],[211,2],[212,1],[214,1]],"willing":[[1,1],[9,2],[10,1],[12,1],[16,1],[19,4],[21,7],[22,3],[23,1],[24,1],[25,1],[26,1],[32,2],[34,1],[36,1],[37,1],[53,1],[59,1],[60,1],[65,1],[70,1],[77,1],[86,1],[89,1],[90,1],[91,1],[104,2],[105,1],[122,1],[154,1],[189,4],[191,1],[194,1],[195,1],[196,1],[199,1],[203,1],[209,2]],"push":[[1,1],[33,1],[34,2],[48,1],[66,2],[158,1],[159,1],[164,1],[167,1],[191,1]],"interaction":[[1,1],[6,2],[10,1],[24,1],[37,1],[56,1],[70,1],[127,1],[168,9],[198,1]],"rewarding":[[1,1],[49,1],[196,1],[208,1]],"activities":[[1,1],[2,1],[6,3],[9,2],[12,6],[13,1],[14,1],[15,1],[17,1],[19,5],[20,9],[21,30],[22,18],[23,1],[24,6],[30,1],[31,3],[33,3],[34,5],[35,1],[43,1],[44,2],[53,1],[56,1],[59,1],[63,3],[65,3],[71,6],[72,1],[76,2],[77,5],[82,7],[83,3],[84,4],[89,2],[92,1],[96,1],[112,1],[129,1],[130,1],[133,1],[140,1],[155,2],[158,2],[159,4],[168,4],[170,1],[171,1],[172,3],[176,3],[191,1],[194,1],[195,1],[201,1],[202,4],[203,11],[204,54],[205,17],[208,1],[209,1],[210,1],[217,3],[218,6],[219,4],[221,1],[222,9],[223,2]],"helped":[[1,2],[3,1],[6,3],[9,2],[12,1],[16,1],[21,2],[22,1],[26,1],[34,1],[36,1],[37,1],[38,1],[47,3],[48,2],[53,1],[58,1],[59,3],[60,4],[63,1],[64,1],[71,1],[73,1],[74,1],[76,1],[100,6],[103,1],[140,1],[163,1],[170,2],[171,1],[177,1],[181,1],[183,4],[184,4],[186,1],[189,2],[190,1],[191,4],[193,4],[195,1],[196,1],[197,1],[199,2],[200,1],[203,1],[206,2],[208,1],[210,1],[211,1],[213,1],[216,1],[217,4],[218,1],[219,9],[225,1]],"draw":[[1,1],[2,1],[3,1],[8,1],[10,1],[16,2],[17,1],[18,1],[20,1],[22,2],[23,1],[26,1],[29,2],[30,1],[31,1],[32,1],[33,2],[34,2],[43,2],[46,1],[48,1],[51,1],[56,1],[57,1],[58,1],[60,2],[65,1],[71,2],[79,1],[134,1],[163,1],[177,2],[179,1],[183,1],[196,1],[207,1],[208,1],[215,2]],"conclusions":[[1,1],[2,1],[9,1],[18,2],[19,1],[22,2],[23,1],[26,1],[29,2],[30,1],[31,1],[32,1],[33,3],[34,2],[43,1],[46,1],[48,1],[49,2],[53,1],[56,1],[59,3],[65,1],[71,1],[74,1],[79,1],[81,1],[82,1],[83,1],[86,2],[87,1],[108,1],[182,1],[183,5],[185,1],[196,1]],"experiences":[[1,1],[3,5],[4,4],[5,4],[6,2],[7,4],[8,3],[12,1],[16,2],[18,1],[21,1],[22,2],[23,1],[29,4],[30,2],[31,2],[32,3],[33,2],[34,4],[40,2],[41,1],[43,2],[46,1],[48,1],[53,3],[55,2],[56,7],[58,4],[59,7],[62,2],[70,1],[71,3],[72,1],[73,1],[74,2],[76,3],[77,1],[83,2],[86,1],[90,1],[92,1],[95,4],[96,3],[100,1],[101,1],[102,3],[104,1],[105,1],[114,1],[115,1],[120,1],[122,1],[134,2],[159,1],[161,1],[168,7],[169,1],[170,4],[171,2],[172,3],[173,5],[174,1],[175,2],[176,1],[177,1],[181,2],[183,6],[184,1],[185,1],[186,3],[187,3],[188,1],[189,1],[191,5],[192,1],[193,4],[195,2],[196,5],[197,7],[198,22],[199,4],[200,3],[201,6],[202,9],[203,8],[204,1],[205,8],[206,5],[208,4],[209,3],[210,1],[212,1],[214,1],[215,1],[216,2],[217,1],[218,3],[219,3],[221,2],[222,2],[223,5]],"vated":[[1,1],[90,1],[91,1],[114,1],[197,1]],"memories":[[1,1],[6,1],[21,1],[40,2],[43,2],[59,1],[60,1],[62,4],[65,1],[69,2],[71,1],[76,1],[79,4],[82,1],[83,5],[84,1],[125,2],[148,3],[172,1],[175,1],[177,2],[178,1],[179,7],[180,1],[181,6],[182,1],[184,2],[185,1],[188,1],[205,1],[208,2],[212,4],[215,2]],"rela-":[[1,1],[9,1],[40,1],[74,1],[169,1],[191,1]],"tionship":[[1,1],[9,1],[40,1],[74,1],[169,1],[191,1]],"strengthen":[[1,1],[2,1],[4,2],[5,2],[9,1],[10,1],[25,1],[26,1],[29,1],[32,1],[34,2],[43,1],[59,3],[62,1],[69,1],[71,1],[83,1],[93,1],[100,2],[113,1],[168,4],[172,1],[188,1],[189,1],[192,1],[193,1],[196,2],[197,1],[198,3],[199,6],[201,2],[217,4],[219,1],[221,3],[223,1]],"difference":[[1,1],[26,1],[37,1],[42,1],[43,2],[77,1],[82,1],[84,1],[87,1],[88,1],[91,2],[112,1],[118,1],[123,1],[124,1],[155,3],[169,1],[182,2],[187,1],[196,1],[199,1],[205,1],[207,2],[210,1],[213,1]],"ori-":[[1,1],[2,1],[9,1]],"entation":[[1,1],[2,1],[9,1]],"tend":[[1,1],[3,3],[4,3],[5,2],[9,1],[10,3],[16,1],[21,1],[26,1],[33,1],[34,1],[40,2],[48,1],[51,1],[56,3],[64,1],[74,1],[101,1],[104,1],[108,1],[109,1],[112,1],[130,1],[132,1],[134,3],[148,1],[155,1],[166,1],[179,4],[196,1],[199,3],[201,1],[202,1],[203,3],[205,1],[206,2],[208,3],[211,1],[213,2],[214,2],[215,1],[216,1],[218,2],[221,1],[222,1]],"arose":[[1,1],[6,1],[26,1],[36,1],[73,1],[210,1]],"past":[[1,1],[3,3],[4,2],[12,2],[16,4],[17,1],[21,1],[26,1],[27,1],[32,4],[33,3],[34,2],[35,1],[37,2],[38,1],[40,2],[41,1],[42,1],[43,1],[45,2],[46,1],[47,1],[53,1],[58,1],[63,2],[64,1],[70,1],[71,1],[75,1],[76,1],[88,1],[89,3],[90,3],[93,1],[94,3],[95,4],[96,1],[97,3],[98,2],[100,1],[101,8],[102,5],[103,3],[104,1],[107,1],[109,1],[111,3],[112,1],[118,1],[121,4],[122,2],[125,1],[139,1],[140,1],[154,2],[155,2],[156,1],[157,1],[158,3],[161,5],[163,6],[167,4],[168,5],[169,1],[170,2],[171,3],[173,1],[175,1],[176,2],[177,2],[182,1],[183,3],[184,3],[186,3],[187,3],[190,1],[191,1],[195,1],[198,1],[201,1],[205,1],[208,2],[210,2],[212,2],[218,2],[222,1],[224,1],[225,2]],"address":[[1,2],[2,1],[3,1],[9,4],[10,1],[13,1],[19,1],[31,1],[32,2],[35,1],[38,3],[39,1],[43,4],[44,1],[45,4],[48,1],[49,1],[50,1],[52,1],[59,1],[65,1],[68,1],[69,1],[81,2],[82,3],[84,1],[86,1],[91,2],[92,3],[98,1],[100,1],[101,1],[108,1],[112,1],[113,2],[115,1],[120,1],[121,1],[166,5],[167,2],[168,2],[175,1],[182,1]],"usual":[[1,1],[5,1],[36,2],[56,1],[61,1],[71,1],[80,1],[111,1],[122,2],[169,1],[170,1],[202,4],[207,1],[221,2],[222,1]],"tech-":[[1,1],[2,1],[26,1],[51,1],[52,1],[69,1]],"niques":[[1,1],[2,1],[51,1],[69,1]],"overcoming":[[1,1],[2,1],[80,1],[90,1],[115,1],[160,4],[163,2],[204,1],[205,1],[208,3],[211,2],[212,1],[215,5],[218,1],[219,1],[222,1],[223,2]],"challenges":[[1,1],[3,1],[4,1],[7,2],[29,1],[32,1],[75,1],[80,1],[82,1],[84,1],[96,1],[112,1],[122,1],[140,1],[171,1],[203,1],[208,1],[209,1],[218,2],[219,2]],"face":[[1,2],[2,1],[3,3],[5,1],[10,1],[12,1],[18,1],[24,1],[30,1],[35,1],[59,1],[64,2],[68,1],[69,2],[71,1],[75,1],[79,1],[90,1],[91,2],[92,2],[94,1],[96,1],[101,2],[109,1],[114,2],[121,1],[155,1],[156,1],[158,3],[165,1],[174,1],[176,1],[181,2],[182,5],[185,1],[187,1],[188,1],[191,2],[200,2],[202,1],[206,3],[208,2],[209,3],[210,1],[211,9],[212,1],[216,2],[218,1],[219,1]],"below":[[1,1],[3,1],[5,1],[7,1],[9,1],[15,2],[16,3],[18,1],[19,1],[26,2],[33,1],[36,3],[37,2],[38,1],[41,3],[42,1],[43,1],[44,1],[47,2],[48,3],[49,1],[51,2],[52,1],[60,1],[63,1],[69,1],[79,2],[100,1],[101,3],[114,1],[115,1],[122,4],[130,1],[132,1],[136,1],[140,1],[153,1],[155,1],[164,4],[166,1],[167,2],[168,1],[171,1],[172,1],[175,1],[176,1],[177,1],[179,1],[192,2],[198,4],[206,1],[209,3],[212,3],[213,1],[214,1],[218,1],[222,4]],"excerpt":[[1,1],[82,1]],"provides":[[1,1],[2,1],[4,1],[30,1],[32,1],[35,1],[61,1],[84,1],[85,1],[92,1],[93,1],[95,1],[97,1],[100,1],[114,1],[121,1],[169,1],[170,2],[173,1],[177,1],[186,1],[192,1],[200,2]],"flavor":[[1,1],[110,1]],"agree":[[1,1],[2,1],[24,1],[26,4],[32,2],[34,1],[35,1],[36,2],[41,1],[51,1],[59,1],[71,1],[79,1],[101,1],[105,1],[121,1],[182,2],[199,1],[203,1]],"wants":[[1,1],[10,1],[12,2],[13,1],[24,1],[26,1],[32,1],[37,1],[41,1],[47,2],[48,1],[57,1],[59,1],[61,1],[69,1],[79,2],[158,1],[165,1],[177,2],[183,1],[185,1],[186,1],[194,1],[199,1],[207,1],[214,3]],"discuss":[[1,1],[3,2],[9,1],[10,1],[12,1],[15,1],[17,1],[21,3],[24,1],[28,1],[32,10],[33,5],[34,3],[35,4],[38,2],[43,2],[45,1],[53,1],[59,1],[60,1],[61,1],[64,1],[70,1],[71,2],[72,2],[74,1],[79,2],[89,1],[91,1],[92,1],[93,1],[95,2],[96,1],[97,1],[98,1],[103,5],[111,1],[113,3],[114,5],[115,6],[120,7],[121,1],[163,4],[164,2],[165,2],[166,11],[167,6],[168,10],[178,1],[202,1],[203,1],[206,1],[218,1]],"judith":[[1,11],[10,22],[12,25],[13,22],[14,4],[16,22],[17,37],[18,34],[19,18],[21,44],[22,13],[25,29],[26,16],[27,5],[32,16],[33,12],[34,36],[35,15],[36,9],[37,16],[38,6],[41,29],[42,23],[43,31],[44,2],[46,5],[47,19],[48,10],[49,10],[51,3],[52,11],[54,5],[56,15],[57,4],[58,20],[59,2],[60,24],[61,36],[64,12],[65,15],[66,9],[69,42],[70,24],[71,21],[72,1],[75,2],[79,20],[84,1],[225,1]],"okay":[[1,2],[2,2],[4,3],[5,1],[6,4],[7,2],[8,4],[9,1],[10,5],[12,8],[13,9],[14,1],[16,4],[17,9],[18,10],[19,7],[21,10],[22,2],[25,9],[27,1],[32,6],[33,2],[34,12],[35,3],[36,3],[37,3],[38,2],[40,1],[41,1],[42,5],[43,3],[46,2],[47,7],[48,2],[49,1],[51,2],[52,6],[54,2],[56,2],[57,1],[58,4],[60,3],[61,6],[63,1],[64,8],[65,1],[66,1],[69,9],[70,9],[71,5],[74,1],[76,1],[79,4],[94,2],[96,1],[100,1],[104,2],[105,2],[107,1]],"want":[[1,2],[2,2],[3,7],[7,2],[9,2],[10,9],[12,3],[13,7],[15,1],[16,4],[17,8],[18,13],[19,16],[20,1],[21,9],[24,3],[25,6],[26,5],[27,1],[32,7],[33,4],[34,5],[35,3],[36,5],[37,9],[38,2],[39,1],[40,1],[41,3],[42,4],[43,6],[46,2],[47,14],[48,6],[49,5],[51,4],[52,3],[53,1],[54,1],[56,1],[57,3],[60,2],[61,3],[64,8],[65,6],[66,2],[67,1],[69,3],[71,5],[74,1],[77,1],[79,2],[89,1],[90,2],[91,3],[93,1],[94,5],[95,2],[96,4],[97,1],[98,4],[99,2],[100,6],[101,3],[102,6],[103,1],[104,2],[105,3],[106,1],[107,4],[115,2],[116,1],[121,1],[126,2],[130,1],[154,2],[155,5],[163,2],[164,2],[166,6],[167,2],[168,3],[169,2],[171,2],[172,1],[175,4],[176,5],[177,1],[178,2],[180,2],[181,6],[182,2],[183,3],[184,7],[185,2],[186,3],[187,5],[188,2],[191,4],[192,5],[194,2],[195,2],[196,1],[198,3],[199,5],[201,1],[203,4],[204,2],[205,3],[206,1],[207,1],[208,3],[209,3],[210,4],[212,3],[213,10],[214,8],[215,2],[216,1],[217,3],[218,4],[221,2],[222,5]],"talking":[[1,2],[10,3],[14,1],[16,2],[17,2],[18,1],[19,1],[32,2],[33,1],[35,1],[36,5],[37,1],[38,5],[40,1],[42,3],[43,1],[44,1],[46,1],[51,1],[53,1],[63,1],[64,1],[69,1],[70,1],[79,1],[92,1],[115,1],[155,2],[172,2],[178,2],[183,3],[185,1],[186,1],[187,2],[191,1],[194,2],[195,1],[200,1],[202,1],[204,1],[208,1],[215,2],[216,1]],"yeah":[[1,3],[10,1],[12,3],[13,7],[14,1],[16,3],[17,4],[18,2],[19,1],[21,8],[22,4],[25,3],[26,2],[27,2],[32,3],[33,3],[34,11],[35,2],[36,1],[37,2],[38,1],[42,2],[43,6],[46,1],[47,2],[48,3],[49,1],[51,1],[52,3],[56,5],[58,3],[60,4],[61,5],[64,4],[65,5],[69,10],[70,1],[71,3],[79,1],[100,2]],"money":[[1,1],[4,1],[6,2],[7,3],[18,1],[21,1],[37,1],[40,1],[41,1],[43,1],[46,1],[48,1],[49,1],[61,5],[71,1],[76,1],[94,3],[97,2],[104,1],[106,1],[163,1],[178,1]],"step":[[1,2],[13,7],[17,2],[19,2],[21,4],[24,1],[30,1],[31,3],[32,1],[33,1],[41,1],[54,2],[64,14],[65,2],[90,1],[91,3],[92,6],[96,1],[105,2],[114,1],[126,1],[130,1],[140,1],[141,1],[145,2],[163,2],[175,2],[176,1],[178,2],[179,1],[183,1],[191,2],[192,1],[193,3],[194,1],[200,1],[201,1],[204,1],[205,2],[208,6],[209,12],[210,2],[211,4],[218,2],[222,2]],"you'd":[[1,1],[2,1],[3,1],[12,1],[13,1],[16,2],[17,2],[18,1],[19,1],[21,2],[22,2],[25,1],[27,1],[32,1],[34,1],[37,2],[51,2],[54,1],[55,1],[56,1],[64,1],[65,3],[69,2],[178,2]],"sighs":[[1,1],[10,2],[12,2],[13,1],[17,1],[21,4],[25,2],[26,3],[34,1],[36,1],[37,2],[41,1],[66,1],[70,1]],"guess":[[1,3],[10,4],[13,1],[16,1],[17,1],[18,4],[19,1],[21,7],[22,2],[25,6],[26,3],[32,1],[33,2],[34,2],[35,1],[36,3],[37,3],[41,5],[43,3],[44,1],[47,9],[49,1],[52,1],[56,3],[58,2],[60,3],[61,8],[64,2],[65,4],[66,2],[69,3],[70,5],[71,4],[79,1],[155,1],[178,4],[183,1],[184,1],[194,1],[202,1],[204,1]],"update":[[1,1],[10,1],[15,2],[16,6],[17,1],[31,1],[33,4],[34,3],[35,1],[36,1],[37,5],[74,1],[77,1],[81,1],[82,5],[83,1],[84,1],[94,1],[123,2],[124,1],[125,1],[127,1]],"doing":[[1,3],[2,1],[3,1],[4,1],[5,5],[6,7],[10,3],[12,4],[13,4],[16,7],[17,10],[18,3],[19,9],[20,6],[21,7],[22,4],[24,7],[25,8],[26,14],[27,7],[30,2],[33,3],[34,2],[35,5],[36,5],[37,2],[38,2],[40,3],[41,2],[42,3],[44,2],[46,1],[47,1],[48,3],[51,3],[52,2],[53,2],[56,2],[57,1],[59,1],[60,2],[61,2],[63,2],[64,1],[65,3],[66,3],[69,12],[70,2],[71,3],[72,2],[74,2],[75,5],[76,4],[77,3],[79,1],[81,1],[90,1],[91,4],[92,1],[94,1],[96,2],[97,1],[100,8],[101,1],[104,2],[105,2],[106,1],[107,1],[109,1],[112,1],[113,1],[114,1],[115,1],[122,1],[140,1],[151,1],[152,1],[154,3],[155,2],[166,1],[167,3],[169,2],[171,2],[172,7],[175,2],[177,1],[178,1],[179,1],[180,1],[181,4],[183,1],[184,2],[185,1],[187,1],[188,1],[191,1],[192,3],[193,3],[194,5],[195,4],[196,1],[198,2],[199,4],[200,2],[201,2],[202,3],[203,2],[204,18],[205,6],[206,1],[207,1],[209,3],[214,1],[215,1],[217,1],[218,5],[219,3],[222,1]],"don't":[[1,1],[3,1],[10,2],[12,2],[19,1],[38,1],[41,1],[51,1],[55,2],[78,1],[84,1],[194,1],[198,2]],"know":[[1,5],[2,1],[3,2],[4,3],[7,1],[9,3],[10,9],[12,10],[13,4],[16,6],[17,5],[18,3],[19,10],[21,5],[22,2],[24,4],[25,10],[26,3],[27,1],[31,1],[32,4],[33,1],[34,7],[36,8],[37,9],[38,1],[41,3],[42,6],[43,1],[44,1],[46,2],[47,3],[48,7],[49,2],[51,3],[52,3],[56,2],[57,1],[58,1],[59,1],[60,3],[61,3],[63,1],[64,2],[65,4],[69,7],[70,1],[71,2],[72,1],[77,1],[79,5],[93,1],[94,9],[95,2],[96,3],[98,2],[99,1],[100,4],[101,4],[102,3],[104,1],[105,1],[108,1],[111,1],[114,1],[115,2],[120,3],[121,2],[122,1],[140,1],[155,4],[163,1],[164,1],[165,1],[166,4],[167,4],[168,2],[169,4],[170,2],[172,2],[173,1],[176,4],[177,4],[178,2],[179,2],[182,6],[184,1],[185,1],[186,1],[187,1],[188,3],[189,6],[191,4],[192,3],[194,8],[196,2],[197,1],[198,1],[199,3],[200,2],[203,2],[204,1],[206,1],[207,3],[208,4],[209,1],[210,1],[213,1],[214,4],[215,2],[216,1],[217,2],[218,1],[219,1],[221,1]],"haven":[[1,1],[10,2],[14,1],[19,2],[26,1],[34,1],[35,1],[47,1],[56,2],[73,1],[87,1],[102,3],[108,1],[165,1],[167,1]],"even":[[1,1],[3,4],[4,3],[5,4],[6,5],[9,4],[10,3],[12,1],[13,3],[17,3],[18,1],[19,3],[20,2],[21,7],[22,1],[24,2],[25,1],[26,3],[27,1],[32,2],[33,1],[34,3],[35,1],[36,2],[37,2],[39,1],[41,4],[42,1],[43,1],[44,1],[45,1],[47,1],[48,1],[49,2],[56,2],[57,1],[58,6],[59,3],[60,1],[61,3],[65,3],[66,1],[68,1],[69,3],[71,5],[72,2],[73,1],[74,1],[77,2],[78,1],[88,1],[90,7],[91,4],[93,1],[94,3],[95,3],[100,8],[102,5],[104,4],[105,3],[106,3],[108,2],[109,2],[110,1],[112,2],[113,3],[114,1],[134,1],[138,1],[139,1],[140,1],[144,1],[145,1],[150,1],[154,1],[155,6],[163,5],[165,2],[166,1],[167,5],[168,4],[169,2],[170,2],[171,2],[172,2],[173,5],[174,1],[175,1],[176,2],[177,1],[178,1],[183,3],[184,1],[186,5],[187,9],[188,1],[189,6],[191,4],[192,7],[193,6],[194,9],[195,3],[196,6],[197,3],[198,4],[199,15],[200,7],[201,6],[202,2],[203,2],[204,1],[205,7],[206,3],[207,7],[208,3],[209,4],[210,4],[211,1],[212,3],[213,4],[214,4],[215,5],[216,5],[217,2],[218,5],[219,3],[221,1],[222,2],[225,2]],"looked":[[1,1],[32,1],[42,1],[57,1],[79,1],[100,1],[171,1],[175,3],[177,1],[182,1],[185,1],[193,1],[198,2],[203,1],[208,1],[209,1],[218,1]],"sure":[[1,3],[2,1],[3,2],[7,2],[8,1],[9,3],[10,2],[11,2],[12,5],[13,2],[16,5],[17,2],[18,1],[19,3],[20,1],[21,7],[22,1],[24,1],[25,10],[26,6],[27,1],[32,1],[34,2],[35,6],[36,6],[37,6],[38,2],[41,3],[42,4],[43,4],[46,2],[47,1],[48,4],[50,1],[51,5],[52,3],[57,1],[58,2],[59,1],[60,5],[61,4],[64,1],[65,3],[69,3],[70,1],[71,1],[72,2],[75,1],[77,1],[79,1],[90,1],[96,1],[100,2],[102,1],[105,1],[107,3],[134,1],[155,2],[158,1],[161,1],[163,2],[164,1],[166,5],[167,1],[169,1],[179,1],[182,3],[183,1],[186,1],[187,1],[188,2],[189,2],[192,1],[193,2],[194,2],[198,3],[200,1],[203,1],[204,1],[205,2],[208,2],[209,1],[210,1],[216,1],[219,1]],"ways":[[1,1],[2,1],[3,1],[8,1],[9,1],[19,1],[23,1],[24,1],[28,1],[35,1],[42,1],[49,1],[52,1],[55,1],[56,1],[57,2],[58,1],[59,3],[64,1],[65,1],[69,1],[70,2],[71,2],[74,2],[76,1],[79,1],[88,1],[89,2],[90,1],[91,3],[92,1],[94,1],[95,2],[96,1],[97,1],[98,1],[100,2],[104,1],[105,1],[114,2],[115,2],[120,1],[126,1],[154,1],[155,1],[161,1],[169,4],[171,2],[172,1],[174,1],[176,1],[177,2],[178,1],[179,1],[181,2],[183,1],[184,1],[185,1],[186,2],[187,3],[188,5],[191,2],[196,5],[197,3],[198,1],[199,2],[200,2],[201,1],[203,1],[204,1],[205,2],[206,3],[207,1],[208,2],[209,4],[210,2],[211,2],[212,2],[213,6],[214,2],[216,1],[217,1],[218,3],[219,4],[222,1]],"online":[[1,1],[2,1],[8,1],[12,1],[22,1],[31,5],[38,1],[43,1],[51,1],[59,1],[63,1],[64,2],[75,1],[84,1],[103,1],[115,1],[116,1],[117,1],[121,1],[123,1],[157,1],[158,1],[163,1]],"concentration":[[1,1],[5,1],[24,2],[40,1],[49,1],[51,1],[53,1],[61,1],[76,1],[95,2],[102,1],[111,1],[153,1],[164,1],[193,1],[202,1]],"hasn":[[1,1],[21,1],[32,1],[90,1],[194,1]],"lately":[[1,1],[10,1],[12,1],[16,1],[145,1]],"someone":[[1,2],[10,1],[19,1],[24,1],[29,1],[32,1],[38,1],[42,1],[48,1],[49,1],[51,1],[52,1],[53,1],[59,2],[61,7],[65,1],[69,1],[74,1],[77,1],[91,1],[94,4],[95,2],[96,1],[100,1],[105,1],[107,4],[114,1],[121,3],[132,1],[155,1],[156,1],[157,1],[158,1],[163,2],[166,1],[167,1],[169,1],[171,1],[172,2],[173,1],[175,3],[176,1],[179,1],[183,4],[186,2],[191,1],[192,3],[194,4],[196,1],[199,2],[200,3],[201,3],[203,1],[204,4],[207,1],[208,2],[209,1],[210,1],[211,1],[212,3],[213,7],[214,10],[215,2],[216,7],[218,1],[222,5],[224,1]],"knows":[[1,1],[18,1],[36,1],[38,1],[59,1],[61,1],[64,1],[69,1],[168,2],[185,1]],"thinks":[[1,1],[4,3],[5,2],[10,4],[13,2],[16,1],[18,1],[19,1],[21,3],[25,2],[27,1],[34,4],[35,1],[36,1],[40,3],[41,2],[47,2],[56,2],[58,2],[60,2],[61,4],[65,2],[69,1],[70,1],[79,1],[145,1],[178,1],[186,1],[207,1],[213,1]],"calling":[[1,1],[10,1],[16,1],[21,1],[25,4],[33,1],[43,1],[44,1],[46,1],[47,1],[48,1],[57,1],[107,1],[120,1],[123,1],[168,1],[170,2]],"today":[[1,3],[2,2],[10,2],[12,4],[13,1],[14,1],[16,2],[19,3],[21,2],[32,2],[33,1],[34,3],[35,3],[36,2],[37,3],[38,1],[47,1],[58,3],[59,1],[68,1],[79,1],[90,1],[92,1],[94,1],[100,2],[102,2],[103,1],[104,5],[105,3],[106,1],[107,16],[121,1],[122,7],[127,1],[164,1],[166,4],[169,1],[178,1],[179,1],[183,1],[191,1],[198,2],[200,1],[212,1],[214,1],[217,2],[225,1]],"any-":[[1,1],[37,2]],"thing":[[1,1],[2,1],[6,1],[7,2],[9,1],[12,1],[13,1],[16,2],[17,2],[18,1],[19,3],[21,1],[34,1],[35,2],[36,2],[37,3],[40,1],[43,1],[48,2],[51,1],[57,1],[60,2],[61,3],[64,1],[65,1],[69,1],[79,1],[89,1],[91,1],[95,2],[97,1],[100,5],[102,2],[103,1],[104,4],[105,2],[107,1],[147,1],[154,1],[155,1],[161,1],[165,1],[166,1],[169,1],[173,1],[176,1],[181,1],[194,1],[195,3],[198,1],[200,2],[202,1],[204,1],[205,1],[206,1],[208,3],[210,1],[211,1],[215,1],[218,1],[222,1]],"able":[[1,5],[2,3],[3,2],[5,2],[6,4],[7,1],[9,3],[10,2],[11,2],[16,5],[17,6],[19,5],[20,1],[21,3],[23,1],[24,3],[26,5],[31,1],[32,2],[33,3],[34,3],[35,1],[37,1],[38,1],[40,2],[41,8],[43,2],[46,1],[48,8],[49,2],[51,1],[52,4],[53,2],[54,1],[56,4],[57,2],[58,4],[59,1],[60,2],[61,1],[64,3],[65,4],[66,1],[69,1],[70,3],[71,4],[72,1],[73,1],[74,1],[76,2],[77,4],[89,1],[90,1],[91,1],[92,1],[94,2],[95,4],[97,2],[98,1],[100,3],[101,2],[102,3],[103,1],[104,2],[105,2],[106,1],[107,3],[109,1],[111,1],[112,1],[114,2],[121,9],[122,9],[140,1],[144,1],[154,2],[155,2],[158,1],[161,1],[163,2],[164,2],[165,2],[166,3],[169,1],[174,1],[175,1],[176,5],[177,1],[178,3],[181,1],[182,1],[183,2],[184,2],[186,1],[187,4],[188,1],[189,2],[191,5],[192,1],[193,4],[194,1],[195,3],[196,2],[197,3],[198,1],[199,4],[201,1],[204,3],[205,1],[206,2],[207,1],[208,3],[209,3],[210,4],[211,4],[212,1],[214,2],[216,2],[217,1],[218,2],[219,2],[222,5]],"myself":[[1,1],[4,3],[5,1],[6,1],[7,1],[8,2],[9,1],[10,5],[13,3],[17,3],[18,4],[19,6],[21,1],[22,1],[25,3],[26,2],[27,4],[32,1],[34,1],[36,1],[41,1],[46,1],[48,3],[51,3],[52,1],[56,1],[57,1],[61,1],[63,1],[66,2],[69,1],[70,2],[71,4],[74,1],[76,1],[100,13],[101,1],[103,1],[170,3],[171,5],[172,4],[175,1],[176,1],[178,3],[179,3],[180,1],[181,4],[183,5],[184,3],[185,1],[186,1],[187,1],[188,1],[190,1],[191,1],[192,1],[195,1],[199,4],[200,4],[202,3],[204,1],[205,1],[208,1],[209,1],[214,2],[216,6],[219,1],[222,7],[223,1],[224,1]],"bothering":[[1,1],[25,1],[202,1],[206,1]],"interesting":[[1,1],[7,1],[10,1],[12,1],[60,1],[104,1],[105,3],[140,1],[156,1],[158,1],[172,2],[180,1],[196,1],[198,1],[200,1],[201,1],[205,1]],"ever":[[1,2],[9,1],[16,2],[27,1],[37,1],[41,1],[43,1],[47,1],[58,1],[61,1],[64,1],[92,1],[95,2],[100,1],[101,2],[102,2],[104,1],[105,1],[109,1],[110,1],[111,2],[155,2],[163,1],[168,3],[175,1],[178,1],[179,1],[183,2],[186,1],[194,1],[198,1],[201,2],[203,2],[209,1],[210,1],[212,3],[214,2],[215,1],[222,3]],"bother":[[1,1],[10,1],[32,1],[36,2],[47,1],[100,1],[104,2],[214,1]],"remind":[[1,1],[7,1],[10,1],[13,3],[14,1],[17,1],[18,4],[19,2],[21,2],[24,3],[25,4],[27,2],[33,1],[35,3],[42,1],[47,1],[48,1],[51,3],[52,1],[59,2],[67,1],[69,2],[71,1],[91,1],[94,2],[95,3],[96,5],[97,1],[100,1],[103,1],[104,1],[107,2],[110,1],[114,1],[154,1],[164,2],[165,1],[166,8],[167,6],[168,5],[181,1],[183,2],[189,2],[190,2],[193,1],[200,1],[203,1],[207,2],[210,1],[213,2]],"before":[[1,5],[3,1],[4,1],[6,2],[9,1],[10,4],[11,2],[12,4],[14,1],[15,1],[16,1],[18,4],[19,1],[21,1],[22,1],[24,4],[25,2],[26,2],[27,2],[32,5],[34,1],[35,2],[38,4],[40,1],[41,1],[43,1],[45,1],[46,1],[47,1],[48,2],[51,2],[52,1],[53,4],[55,1],[56,5],[58,1],[60,2],[61,1],[64,4],[65,1],[66,3],[69,2],[70,1],[71,5],[72,2],[74,2],[77,1],[79,1],[83,1],[86,2],[87,2],[89,3],[90,3],[91,2],[92,1],[93,2],[94,1],[95,2],[96,1],[97,1],[98,3],[100,4],[101,1],[102,1],[103,2],[104,1],[106,1],[107,3],[108,2],[111,3],[114,3],[115,4],[116,1],[120,3],[121,3],[122,1],[124,2],[128,2],[135,1],[137,1],[140,1],[146,1],[151,1],[155,6],[156,4],[157,4],[158,11],[161,1],[163,5],[164,6],[165,7],[166,2],[167,1],[168,2],[169,1],[170,3],[172,3],[176,2],[177,5],[178,1],[179,3],[180,3],[181,9],[182,3],[183,6],[184,8],[185,5],[186,1],[187,8],[188,2],[189,2],[190,6],[192,3],[193,7],[194,2],[195,2],[196,2],[198,1],[199,1],[201,2],[202,2],[203,1],[204,1],[205,5],[208,4],[210,4],[212,1],[213,3],[214,3],[215,2],[216,2],[217,1],[218,1],[222,1]],"call":[[1,2],[10,3],[11,1],[12,1],[13,1],[17,1],[18,1],[25,8],[26,1],[32,2],[34,2],[37,1],[41,2],[43,2],[47,4],[48,2],[51,1],[58,1],[60,2],[61,1],[64,1],[65,2],[69,2],[71,4],[72,2],[91,1],[93,1],[94,1],[97,3],[98,1],[100,1],[101,1],[103,3],[104,2],[107,5],[114,2],[120,1],[121,2],[152,1],[153,2],[167,1],[169,1],[170,2],[172,1],[175,2],[185,1],[190,1],[192,1],[194,1]],"excellent":[[1,2],[7,1],[13,1],[18,1],[56,1],[61,1],[76,1],[100,1],[141,1],[192,1]],"tonight":[[1,1],[60,1],[182,3]],"easily":[[1,1],[2,1],[10,1],[24,1],[32,2],[35,1],[36,1],[37,1],[38,1],[40,1],[41,1],[43,1],[56,2],[60,1],[64,1],[71,1],[74,1],[77,1],[90,1],[91,1],[92,1],[96,1],[99,1],[105,1],[106,1],[113,1],[114,1],[135,1],[139,1],[150,2],[155,1],[171,1],[172,1],[176,1],[187,1],[188,1],[191,3],[197,2],[198,1],[205,1],[208,3],[209,1],[213,1],[222,1],[225,1]],"unhelpful":[[1,3],[2,2],[7,2],[8,1],[9,1],[10,3],[17,1],[18,2],[21,1],[22,1],[23,1],[24,3],[26,1],[27,1],[30,1],[36,1],[40,5],[41,2],[45,3],[49,1],[51,2],[52,2],[53,4],[54,1],[56,2],[63,2],[64,1],[65,3],[69,1],[71,1],[72,1],[74,1],[75,1],[93,1],[130,1],[192,1]],"posed":[[1,1],[26,1],[155,2]],"obstacle":[[1,1],[21,2],[24,1],[26,2],[34,3],[38,2],[43,2],[44,1],[45,1],[57,2],[64,1],[91,1]],"achieving":[[1,1],[2,1],[4,1],[18,1],[19,1],[21,1],[34,1],[40,1],[43,1],[45,1],[57,1],[58,1],[69,1],[71,1],[86,1],[87,1],[88,1],[89,3],[90,1],[91,1],[92,2],[94,2],[95,2],[97,2],[99,2],[100,1],[101,5],[104,2],[105,1],[106,1],[107,1],[108,2],[109,2],[112,3],[122,1]],"valued":[[1,1],[45,1],[48,1],[49,3],[53,1],[57,1],[63,4],[64,1],[71,1],[74,1],[76,1],[84,1],[94,1],[100,1],[105,7],[106,1],[173,1],[192,1],[196,1],[219,1]],"imagine":[[1,1],[4,1],[18,2],[24,4],[25,5],[26,2],[33,2],[35,2],[42,1],[43,2],[47,1],[52,1],[55,1],[58,5],[59,3],[61,2],[62,1],[65,1],[67,1],[69,13],[70,11],[71,2],[72,1],[75,1],[79,2],[89,2],[90,1],[97,1],[99,1],[100,1],[104,1],[115,1],[120,1],[155,5],[166,3],[172,2],[173,1],[178,1],[179,2],[181,1],[192,1],[193,1],[194,1],[197,2],[202,1],[203,1],[206,2],[208,3],[209,5],[210,5],[211,3],[212,1],[213,2],[214,2],[215,1],[216,1],[218,7],[222,3]],"revised":[[1,1],[58,1],[85,1],[92,1],[123,1],[124,1]],"felt":[[1,1],[3,3],[4,1],[5,2],[6,4],[8,1],[9,2],[10,2],[12,1],[16,1],[17,3],[22,1],[24,1],[25,1],[26,2],[33,2],[34,4],[35,2],[37,5],[41,4],[43,11],[48,1],[51,1],[53,1],[58,1],[59,1],[70,1],[72,1],[74,1],[77,2],[79,1],[100,6],[101,2],[103,1],[107,1],[113,1],[134,1],[145,1],[155,1],[167,2],[170,3],[171,7],[172,1],[173,1],[174,2],[175,7],[176,1],[177,1],[178,1],[179,1],[182,3],[183,5],[185,1],[186,2],[187,1],[189,4],[190,2],[191,2],[193,3],[194,2],[195,2],[198,3],[199,4],[200,2],[201,3],[202,3],[203,1],[204,13],[205,1],[206,8],[208,3],[209,2],[210,9],[212,9],[215,4],[216,4],[218,1],[219,8],[222,6]],"emo-":[[1,1],[43,5],[57,2],[60,1],[61,1],[175,1],[185,1],[194,1]],"tionally":[[1,1],[225,1]],"image":[[1,1],[5,2],[15,1],[18,1],[22,1],[26,1],[42,2],[43,2],[45,1],[47,1],[51,1],[59,1],[69,17],[70,15],[72,1],[82,1],[84,1],[100,1],[104,1],[105,2],[112,1],[145,2],[152,1],[155,1],[177,2],[178,1],[179,2],[208,4],[210,3],[211,4],[213,2]],"facing":[[1,1],[8,1],[65,1],[92,1],[93,1],[170,1],[171,1],[172,1],[176,1],[179,1],[186,1],[191,1],[206,1],[207,1],[208,1],[209,1],[210,1],[217,1]],"similar":[[1,1],[2,1],[4,1],[20,1],[26,1],[32,1],[34,1],[40,1],[47,1],[48,1],[52,1],[56,2],[64,1],[65,1],[77,1],[87,2],[93,1],[94,1],[96,1],[98,1],[109,1],[110,2],[114,1],[120,3],[128,2],[153,2],[155,2],[166,1],[167,2],[179,2],[181,2],[183,1],[195,1],[196,2],[198,1],[199,1],[206,1],[208,2],[212,1],[215,1]],"require":[[1,1],[3,2],[11,1],[13,1],[21,1],[27,1],[37,1],[60,1],[62,1],[77,1],[86,1],[98,1],[112,2],[114,1],[169,1],[175,1],[198,1],[206,1],[215,1]],"effort":[[1,1],[6,1],[21,1],[26,3],[27,1],[32,1],[60,1],[70,1],[86,1],[88,1],[89,1],[90,2],[91,1],[92,1],[93,1],[94,3],[95,1],[96,2],[101,1],[102,4],[107,1],[109,1],[114,2],[115,1],[120,1],[121,1],[127,2],[167,2],[168,3],[169,1],[172,1],[188,1],[197,1],[216,1],[217,3],[218,2],[219,2]],"they're":[[1,1],[17,2],[18,1],[24,1],[27,1],[30,1],[32,1],[33,1],[36,1],[41,1],[43,2],[46,1],[51,2],[52,1],[54,1],[56,1],[58,1],[60,2],[63,1],[71,1],[72,1]],"through":[[1,1],[2,1],[3,5],[4,3],[5,5],[6,2],[7,2],[9,3],[10,3],[12,1],[13,1],[17,3],[18,4],[19,3],[21,1],[22,3],[23,3],[24,4],[25,3],[26,4],[27,2],[29,1],[32,1],[36,4],[37,3],[38,2],[40,1],[41,14],[42,15],[43,7],[45,2],[48,2],[52,2],[53,4],[56,5],[57,2],[58,4],[59,1],[61,5],[63,1],[69,7],[70,2],[71,2],[74,1],[76,1],[79,5],[80,1],[85,1],[87,1],[90,1],[91,2],[92,3],[93,2],[94,3],[96,1],[100,5],[103,4],[104,2],[108,1],[110,2],[111,2],[113,2],[114,1],[117,1],[120,2],[127,2],[130,2],[134,1],[135,1],[139,1],[140,4],[141,1],[143,2],[145,1],[146,1],[148,1],[155,6],[158,1],[160,1],[161,2],[164,1],[165,1],[166,5],[167,1],[168,4],[169,2],[175,2],[176,1],[177,8],[178,4],[179,5],[180,1],[181,7],[182,5],[183,3],[184,5],[185,2],[186,1],[187,3],[188,1],[189,1],[190,1],[191,1],[192,1],[196,1],[197,3],[198,4],[199,2],[200,1],[204,1],[205,3],[206,1],[208,3],[209,1],[210,3],[211,1],[212,3],[213,2],[215,1],[216,1],[217,4],[218,1],[222,1]],"becoming":[[1,1],[13,1],[16,1],[20,1],[21,1],[34,1],[43,1],[56,2],[65,1],[71,1],[82,2],[89,1],[91,1],[92,2],[96,1],[98,2],[100,4],[101,1],[105,2],[107,1],[113,1],[114,1],[120,1],[133,1],[140,1],[166,1],[167,1],[171,1],[181,1],[185,1],[194,1],[213,2],[218,1]],"hope":[[1,2],[2,2],[3,1],[9,2],[13,2],[14,1],[15,1],[17,2],[18,3],[19,1],[23,1],[29,1],[33,1],[53,1],[54,1],[56,1],[61,1],[69,1],[81,3],[90,1],[104,1],[114,1],[115,2],[120,2],[122,1],[160,1],[169,1],[171,1],[173,1],[176,5],[177,1],[183,1],[184,3],[187,1],[193,1],[194,1],[196,1],[202,1],[204,1],[206,1],[208,1],[213,2],[216,1],[217,1],[219,3]],"aspiration":[[1,2]],"hundreds":[[1,1],[45,1],[84,1],[109,1],[192,1],[205,1]],"thousands":[[1,1],[45,1],[53,1],[93,1],[96,1],[109,1],[155,1],[166,1]],"career":[[1,1],[73,1],[176,1]],"keeping":[[1,1],[5,1],[71,1],[96,1],[97,1],[100,2],[104,1],[105,2],[109,1],[133,3],[140,1],[149,1],[154,1],[166,1],[168,2],[177,1],[178,1],[189,2],[191,1],[192,2],[200,4],[201,1],[207,2],[219,1]],"anx-":[[1,1],[41,1],[65,1],[175,1],[207,1],[208,1]],"ious":[[1,1],[41,1],[65,1],[112,1],[175,1]],"reading":[[1,3],[2,5],[4,4],[5,3],[17,3],[24,3],[25,1],[35,1],[41,1],[48,2],[51,2],[69,2],[71,1],[75,1],[83,1],[92,2],[98,1],[123,1],[146,1],[160,1],[164,10],[166,7],[167,10],[168,3],[169,4],[176,1],[180,1],[181,4],[184,1],[201,1],[203,3],[205,1],[211,2],[212,1],[217,2],[218,2]],"nervous":[[1,1],[10,1],[25,1],[32,1],[35,1],[43,1],[44,1],[64,1],[69,3],[70,1],[123,1],[163,2],[166,2],[170,1],[171,4],[172,3],[174,1],[175,4],[178,6],[179,1],[181,15],[187,1],[194,2],[199,1],[205,1],[206,2],[207,1],[208,2],[210,1],[222,1]],"remember":[[1,4],[3,1],[9,3],[10,1],[13,1],[15,1],[16,1],[17,4],[18,1],[19,3],[21,1],[23,1],[24,5],[25,1],[26,3],[32,2],[34,1],[35,2],[36,2],[38,1],[40,1],[41,2],[42,1],[43,2],[46,1],[47,2],[48,1],[50,1],[51,7],[52,1],[55,1],[58,3],[59,1],[64,3],[66,1],[69,2],[71,3],[72,3],[74,2],[78,1],[79,5],[86,1],[92,1],[94,1],[95,1],[96,1],[98,2],[99,1],[100,3],[101,1],[102,2],[103,2],[104,1],[105,3],[115,1],[120,1],[129,1],[155,3],[164,1],[166,1],[172,1],[180,2],[182,1],[183,3],[185,1],[188,1],[197,1],[198,3],[200,1],[202,4],[203,1],[204,3],[205,1],[207,1],[210,1],[212,1],[213,1],[214,2],[217,2],[218,2]],"tools":[[1,1],[40,2],[58,1],[71,3],[89,1],[92,2],[93,1],[95,1],[96,1],[101,1],[102,2],[104,1],[107,1],[129,1],[196,3],[202,1],[206,1],[217,1]],"kinds":[[1,1],[2,1],[3,3],[5,1],[6,1],[21,2],[24,1],[32,1],[41,1],[44,1],[45,2],[53,1],[56,1],[57,1],[58,1],[59,1],[60,1],[63,1],[69,2],[75,1],[83,1],[129,1],[200,1]],"meanwhile":[[1,1],[38,1],[49,1]],"expectations":[[1,1],[6,1],[7,1],[9,2],[10,2],[11,3],[13,2],[14,1],[48,1],[49,1],[74,2],[75,1],[76,4],[82,1],[83,2],[86,1],[90,1],[92,1],[95,1],[102,1],[118,1],[126,1],[128,1],[163,1],[164,1],[166,2],[168,1],[208,1],[212,1],[213,7],[214,2],[217,1]],"reasonable":[[1,1],[3,2],[6,1],[7,2],[9,1],[13,1],[24,1],[25,1],[28,1],[32,1],[47,1],[48,3],[51,1],[58,2],[60,1],[64,2],[66,1],[73,2],[74,1],[79,1],[88,1],[158,1],[213,2]],"wasn":[[1,1],[3,1],[4,1],[6,3],[10,2],[27,2],[43,1],[47,2],[53,1],[56,1],[65,1],[66,1],[76,2],[79,1],[100,3],[107,1],[164,1],[166,1],[167,1],[169,1],[170,1],[183,1],[189,2],[219,1]],"never":[[1,1],[3,1],[4,5],[5,1],[7,1],[8,2],[32,1],[36,2],[40,2],[41,5],[42,1],[43,1],[44,2],[48,1],[49,2],[51,2],[53,1],[54,1],[56,1],[57,1],[60,1],[61,5],[72,1],[76,1],[77,2],[79,1],[89,1],[93,1],[96,1],[97,2],[98,4],[100,4],[102,1],[103,3],[105,1],[108,1],[109,1],[155,1],[163,1],[164,2],[170,1],[171,3],[172,2],[176,3],[177,5],[178,4],[179,1],[182,1],[183,1],[184,2],[187,3],[193,1],[194,2],[195,1],[196,2],[197,1],[198,1],[201,1],[202,4],[203,1],[208,1],[209,1],[211,1],[212,1],[213,2],[214,1],[215,4],[216,2],[217,1],[222,1]],"done":[[1,1],[2,2],[4,2],[5,1],[6,1],[9,1],[10,1],[13,1],[14,1],[16,6],[19,1],[20,2],[21,2],[25,3],[27,2],[32,1],[33,4],[34,4],[35,2],[36,1],[37,1],[38,2],[41,1],[46,2],[48,2],[51,1],[56,1],[57,1],[58,3],[59,4],[61,2],[64,1],[70,1],[74,4],[76,1],[79,1],[91,2],[95,1],[98,3],[100,2],[102,1],[103,2],[111,1],[114,1],[120,1],[129,1],[134,1],[140,1],[163,1],[164,1],[166,2],[167,2],[168,1],[176,2],[178,1],[179,4],[180,1],[181,4],[183,1],[184,3],[185,1],[186,1],[188,2],[193,1],[195,1],[199,1],[200,1],[202,2],[204,1],[205,1],[208,1],[209,1],[214,10],[215,2],[216,8],[217,3],[219,2],[222,6]],"give":[[1,3],[3,1],[5,1],[6,1],[8,1],[9,1],[10,1],[12,3],[13,9],[14,1],[16,2],[17,5],[19,7],[20,1],[22,2],[24,1],[26,3],[31,2],[32,2],[33,2],[34,3],[35,2],[36,1],[37,3],[38,2],[40,1],[43,5],[46,2],[56,1],[60,1],[64,6],[67,1],[71,1],[72,1],[76,1],[77,1],[78,2],[79,1],[90,1],[91,3],[92,2],[93,2],[94,1],[95,1],[96,2],[97,3],[98,8],[99,3],[100,4],[101,1],[102,2],[103,3],[104,3],[114,4],[115,1],[120,2],[121,1],[134,1],[152,1],[154,1],[158,5],[159,1],[163,1],[164,1],[165,1],[166,4],[168,6],[171,1],[172,3],[173,1],[176,1],[179,2],[180,1],[183,1],[187,1],[190,1],[196,1],[198,1],[199,2],[204,2],[206,1],[208,3],[209,1],[210,1],[212,2],[214,2],[215,5],[217,3],[218,2],[222,1]],"break":[[1,1],[24,1],[31,1],[53,1],[64,2],[89,2],[91,3],[92,1],[95,1],[96,1],[97,2],[101,1],[103,1],[105,1],[106,1],[114,1],[140,1],[146,1],[172,1],[179,3],[180,1],[181,4],[184,2],[185,1],[188,1],[190,4],[193,1],[194,1],[200,1],[207,1],[209,1],[217,1]],"youre":[[1,1],[2,1],[10,1],[13,1],[19,1],[20,2],[26,1],[32,1],[35,3],[43,1],[48,1],[53,1],[56,1],[58,1],[61,1],[64,1],[69,3],[70,1]],"you're":[[1,2],[2,1],[3,1],[4,2],[5,1],[9,1],[10,3],[12,4],[13,4],[16,2],[17,6],[18,10],[19,5],[20,2],[21,9],[22,1],[24,1],[25,4],[26,3],[27,2],[32,4],[33,2],[34,3],[35,2],[36,5],[37,3],[38,5],[41,4],[42,8],[43,2],[46,1],[48,3],[49,1],[54,1],[55,1],[56,4],[57,2],[58,6],[59,4],[60,1],[61,5],[64,2],[65,1],[69,10],[70,2],[71,6],[72,1],[74,1],[75,3],[78,1],[79,4],[171,1],[172,1]],"company":[[1,1],[6,1],[91,1],[102,1],[164,1],[167,1],[168,1],[170,1],[189,4],[191,1],[212,1],[216,1],[219,1]],"recognize":[[1,1],[2,1],[3,2],[4,1],[5,1],[9,2],[21,1],[23,1],[25,1],[32,2],[34,1],[35,1],[41,1],[43,2],[47,2],[53,1],[56,1],[57,1],[58,4],[64,1],[70,1],[71,1],[77,1],[96,1],[102,1],[105,1],[112,1],[174,1],[175,2],[187,1],[191,2],[197,1],[198,1],[208,1],[213,2],[216,1],[217,3],[218,1],[219,1]],"credit":[[1,2],[3,1],[9,1],[13,6],[17,3],[19,2],[20,3],[21,2],[24,6],[25,1],[26,1],[31,2],[33,5],[34,2],[35,3],[43,1],[44,1],[58,1],[59,2],[60,1],[71,4],[77,2],[83,1],[198,1],[199,1],[215,1],[216,1],[219,1]],"answering":[[1,1],[175,1],[177,1],[179,2],[183,1],[184,1],[215,4],[218,1]],"reflection":[[1,1],[2,1],[3,1],[4,1],[8,1],[10,1],[14,1],[19,1],[22,1],[27,1],[32,1],[35,1],[38,1],[42,3],[44,1],[49,1],[52,1],[55,1],[58,1],[62,1],[67,1],[70,1],[72,1],[75,1],[84,1],[85,1],[89,1],[90,2],[129,1]],"practice":[[1,1],[2,10],[3,1],[8,1],[9,3],[10,2],[11,2],[12,2],[14,1],[16,1],[19,1],[22,1],[23,2],[24,3],[26,3],[27,3],[32,1],[35,1],[36,1],[38,1],[41,1],[42,1],[44,1],[49,2],[51,1],[52,3],[53,10],[54,2],[55,5],[58,1],[59,1],[62,1],[63,1],[64,3],[67,1],[69,4],[70,3],[71,1],[72,2],[75,2],[80,7],[81,7],[83,2],[84,1],[85,4],[86,1],[87,2],[88,1],[89,1],[91,1],[93,2],[94,1],[95,1],[98,3],[99,5],[100,4],[101,1],[102,1],[103,3],[105,5],[106,5],[111,3],[114,1],[115,3],[118,4],[119,1],[120,3],[123,3],[124,2],[125,3],[126,4],[127,2],[140,1],[150,1],[160,1],[169,6],[173,1],[175,2],[176,2],[177,3],[178,2],[179,1],[180,1],[181,2],[182,1],[183,2],[185,3],[187,1],[188,2],[191,2],[192,1],[196,2],[198,1],[200,3],[201,1],[205,2],[206,2],[207,3],[208,3],[209,3],[210,18],[211,3],[213,2],[214,6],[217,5],[218,6],[225,1]],"exercises":[[1,1],[2,2],[3,1],[44,1],[54,2],[55,1],[63,6],[65,1],[67,1],[82,1],[84,1],[85,1],[87,1],[88,1],[100,2],[107,1],[134,2],[135,1],[140,13],[142,1],[144,3],[157,1],[169,3],[176,3],[197,1],[198,2],[201,2],[202,1],[203,1],[205,1],[210,1],[211,1],[213,1],[215,1],[217,2],[225,1]],"compare":[[1,2],[65,2],[66,6],[67,1],[70,1],[86,2],[111,1],[155,1],[195,1],[202,1],[210,1],[211,1],[214,1]],"peers":[[1,1],[8,2],[215,1]],"expert":[[1,1],[9,1],[93,1],[163,1],[179,1]],"therapists":[[1,1],[2,4],[3,8],[9,1],[10,1],[12,3],[16,2],[21,1],[22,1],[23,1],[24,2],[26,1],[27,1],[32,2],[33,1],[35,2],[38,3],[41,1],[49,1],[53,1],[68,1],[69,1],[73,2],[75,2],[80,1],[81,2],[82,2],[84,2],[108,1],[112,2],[123,1],[140,1],[148,1],[161,3],[169,1],[170,1],[218,1],[225,1]],"analogies":[[1,1],[3,1]],"metaphors":[[1,1],[44,1],[60,4],[63,1],[81,1],[83,2]],"stott":[[1,1],[60,1],[81,1]],"drive":[[1,1],[65,1],[78,1],[105,1],[158,1],[159,2],[171,1],[208,1],[209,1]],"play":[[1,1],[3,1],[35,1],[38,1],[42,8],[44,2],[52,1],[61,7],[62,1],[64,5],[79,7],[82,1],[83,1],[84,2],[86,1],[89,1],[92,1],[97,1],[100,1],[110,1],[185,1],[190,1],[200,1],[204,3],[213,1],[214,1]],"musical":[[1,1],[173,1]],"little":[[1,1],[5,1],[6,2],[7,1],[9,4],[10,2],[12,2],[13,2],[14,2],[16,2],[17,4],[18,1],[20,1],[21,1],[22,2],[24,1],[25,2],[26,1],[33,8],[34,1],[35,1],[37,2],[38,1],[40,2],[42,1],[43,4],[45,1],[47,1],[52,1],[56,1],[58,3],[59,4],[60,1],[61,1],[64,1],[65,2],[69,1],[70,4],[71,8],[76,3],[77,1],[79,1],[86,2],[89,1],[90,1],[91,2],[93,1],[95,1],[96,2],[98,4],[100,6],[102,1],[103,2],[105,1],[109,1],[123,1],[135,1],[152,1],[154,1],[155,5],[158,1],[163,1],[165,2],[167,1],[171,1],[172,1],[175,1],[178,1],[184,1],[185,1],[187,1],[191,1],[203,1],[204,1],[205,2],[206,1],[217,1]],"awkward":[[1,1],[172,1],[188,1],[217,1]],"great":[[1,1],[2,1],[4,1],[5,1],[6,1],[7,2],[8,1],[9,1],[16,2],[21,1],[26,1],[27,1],[32,1],[40,1],[42,1],[53,1],[56,1],[65,1],[66,1],[67,1],[76,2],[92,1],[93,1],[95,2],[96,2],[97,2],[98,1],[99,1],[100,2],[101,1],[104,1],[107,1],[117,1],[122,1],[123,1],[124,1],[170,1],[183,2],[186,1],[188,1],[192,1],[208,1],[209,1],[212,1],[216,1],[218,1],[222,1]],"attention":[[1,1],[2,1],[3,1],[7,1],[10,1],[11,1],[16,1],[19,1],[22,3],[31,1],[35,1],[43,3],[45,1],[48,1],[51,1],[53,4],[54,2],[55,3],[63,3],[64,2],[70,1],[82,1],[83,1],[95,1],[96,2],[98,3],[100,2],[109,1],[112,1],[113,1],[114,1],[121,2],[126,1],[130,1],[134,1],[139,1],[140,1],[151,1],[153,1],[154,1],[155,1],[159,1],[161,1],[169,2],[170,1],[175,3],[177,3],[180,1],[186,5],[189,2],[191,3],[195,2],[199,2],[200,1],[205,1],[207,2],[209,2],[210,4],[214,1],[218,1],[219,1]],"small":[[1,2],[13,3],[17,1],[20,1],[21,2],[23,1],[32,1],[37,1],[58,1],[65,1],[76,1],[87,2],[88,2],[89,2],[90,2],[94,1],[96,1],[98,1],[102,1],[108,1],[109,1],[110,3],[112,1],[113,2],[120,2],[130,1],[152,1],[155,2],[158,1],[159,2],[161,1],[164,2],[166,2],[167,2],[168,1],[170,2],[171,3],[172,1],[173,1],[174,1],[177,3],[183,1],[187,3],[191,1],[193,4],[195,1],[198,12],[200,1],[201,2],[205,3],[208,1],[215,5],[216,1],[217,1],[218,1]],"details":[[1,1],[12,1],[16,1],[28,1],[35,1],[37,1],[70,1],[93,1],[94,1],[97,3],[130,2],[163,1],[208,1],[212,1],[216,1]],"motions":[[1,1],[21,1]],"smoothly":[[1,1],[97,1],[209,1]],"automatically":[[1,1],[2,1],[3,1],[5,3],[17,1],[32,1],[40,1],[56,2],[70,1],[91,1],[92,1],[109,1],[131,2],[139,1],[148,1],[154,2],[161,2],[172,1],[178,1],[188,2],[192,1],[196,1],[201,1],[217,3],[218,3]],"discouraged":[[1,1],[43,1],[170,1],[178,1],[198,1],[199,1],[201,1],[205,2],[219,1]],"progressed":[[1,1],[59,1],[66,1],[184,1],[191,1]],"sense":[[1,1],[2,1],[3,5],[4,4],[5,4],[6,4],[7,2],[8,1],[9,3],[12,1],[13,7],[16,5],[17,7],[18,1],[19,1],[20,6],[21,4],[22,4],[23,2],[24,1],[29,2],[30,2],[32,2],[33,1],[36,1],[37,1],[40,3],[43,3],[44,1],[53,1],[56,2],[58,1],[59,1],[61,1],[62,1],[64,2],[71,3],[74,4],[76,1],[77,7],[89,2],[90,2],[91,2],[93,1],[94,3],[96,1],[100,2],[102,2],[103,1],[104,2],[105,2],[106,1],[107,1],[113,1],[154,1],[169,1],[170,1],[171,1],[173,1],[175,1],[176,2],[177,1],[178,5],[184,1],[188,1],[192,1],[194,1],[196,4],[197,1],[198,1],[201,2],[203,2],[204,2],[206,1],[208,5],[209,2],[210,1],[214,2],[215,1],[218,2],[219,3],[222,2]],"comfortable":[[1,1],[2,1],[3,1],[9,2],[16,1],[36,1],[54,1],[55,1],[64,1],[100,4],[104,5],[105,2],[122,1],[163,1],[176,1],[181,1],[189,2],[209,3],[210,2]],"finally":[[1,1],[4,1],[6,1],[8,1],[9,1],[10,1],[21,1],[25,1],[27,1],[35,2],[40,1],[43,2],[48,1],[52,1],[56,1],[58,1],[61,1],[62,1],[70,2],[71,1],[73,1],[75,1],[91,1],[93,2],[94,1],[95,1],[98,2],[100,1],[103,1],[104,1],[111,1],[112,2],[114,1],[115,1],[121,1],[170,1],[175,1],[184,1],[189,3],[190,1],[193,2],[213,1],[215,1],[218,1],[219,1]],"perform":[[1,1],[6,2],[7,1],[61,1],[77,1],[92,1],[158,1],[159,1],[173,2],[177,1]],"relative":[[1,1],[4,1],[20,1],[21,1],[22,1],[56,1],[65,1],[73,1],[75,1],[87,1],[95,1],[103,1],[108,2],[109,2],[113,1],[121,1],[124,1],[202,1],[215,1]],"ease":[[1,1],[86,1],[89,1],[98,1],[100,2],[104,4],[105,1],[114,1],[115,1],[163,1],[208,1]],"confidence":[[1,2],[3,1],[15,1],[21,1],[24,1],[31,1],[53,1],[69,1],[70,1],[71,3],[78,1],[87,1],[89,4],[90,1],[91,3],[92,1],[93,1],[94,3],[103,2],[104,1],[105,1],[109,1],[114,1],[125,1],[141,1],[166,4],[168,2],[188,2],[193,3],[196,1],[198,10],[199,5],[201,1],[206,1],[207,3],[208,4],[209,1],[210,3],[211,2],[213,2],[217,3],[218,3],[219,1],[221,5],[223,2]],"proficient":[[1,1],[2,2],[32,1],[63,1],[177,1]],"beginning":[[1,1],[2,1],[3,3],[4,1],[5,2],[6,1],[9,1],[12,2],[16,1],[23,1],[24,2],[25,1],[26,1],[28,1],[30,1],[32,1],[33,1],[35,1],[37,1],[38,1],[43,1],[58,1],[59,3],[71,1],[77,2],[90,1],[92,5],[93,3],[94,5],[95,4],[96,5],[97,5],[98,5],[99,2],[103,1],[104,1],[109,1],[114,1],[129,1],[142,1],[169,2],[170,1],[173,1],[175,1],[176,1],[177,1],[179,1],[182,3],[183,1],[188,1],[190,1],[194,1],[196,1],[199,1],[200,1],[210,1],[213,1]],"keep":[[1,1],[2,1],[4,1],[9,2],[10,5],[13,2],[15,1],[16,2],[17,2],[18,1],[19,2],[21,5],[24,2],[25,1],[33,4],[35,4],[36,1],[38,2],[41,1],[46,2],[47,1],[51,5],[53,1],[54,2],[55,1],[59,2],[60,3],[69,2],[70,4],[71,1],[72,1],[74,3],[77,1],[89,1],[91,1],[95,3],[96,8],[97,3],[98,1],[100,2],[101,3],[102,4],[103,5],[105,4],[106,2],[107,1],[113,2],[114,1],[121,1],[126,1],[130,1],[134,6],[145,1],[154,3],[155,4],[156,2],[157,1],[158,2],[161,1],[166,3],[168,1],[169,2],[172,1],[176,2],[177,1],[183,1],[184,1],[188,1],[189,3],[190,4],[191,1],[192,3],[194,2],[195,1],[198,3],[200,2],[202,1],[203,2],[205,1],[206,2],[207,1],[210,2],[214,1],[216,1],[217,3],[218,3],[219,1],[221,2]],"defined":[[1,1],[26,1],[82,2],[83,3],[85,1],[98,1],[129,1]],"prog-":[[1,1],[16,1],[27,1],[32,1]],"ress":[[1,1],[16,1],[27,1],[32,1]],"ability":[[1,1],[2,3],[3,1],[9,1],[36,2],[40,1],[43,1],[53,1],[54,1],[74,1],[75,2],[76,1],[85,1],[86,1],[87,1],[89,4],[90,2],[91,5],[98,1],[99,1],[100,1],[104,3],[105,1],[110,1],[112,1],[115,1],[122,1],[136,1],[157,1],[158,2],[161,2],[163,2],[164,1],[166,3],[168,3],[175,1],[179,1],[196,1],[206,2],[208,14],[210,1],[211,4],[216,1],[218,1],[219,2]],"careful":[[1,1],[3,1],[7,1],[9,1],[10,1],[16,1],[18,1],[24,1],[38,1],[42,1],[49,1],[52,1],[57,1],[64,1],[98,1],[100,1],[109,1],[113,1],[152,1],[158,1],[212,1],[216,1]],"under-":[[1,1],[3,1],[25,1],[36,1],[43,1],[56,1],[57,1],[74,1],[75,1],[91,1],[175,1],[181,1],[182,1],[192,1],[195,2],[197,1],[225,1]],"mine":[[1,1],[9,1]],"contrasting":[[1,1],[127,1]],"current":[[1,1],[2,1],[3,3],[4,2],[5,1],[7,16],[8,1],[11,2],[12,2],[14,2],[20,1],[24,1],[32,1],[43,1],[48,1],[53,1],[56,1],[59,2],[60,1],[62,2],[64,2],[69,1],[74,2],[76,5],[79,3],[80,3],[87,1],[88,2],[90,1],[94,1],[96,1],[97,1],[99,1],[108,1],[111,2],[114,1],[116,1],[121,2],[124,2],[126,1],[127,1],[154,1],[155,1],[163,7],[168,3],[169,1],[189,2],[196,1],[202,1],[204,1],[208,1],[210,2],[212,1],[215,1]],"ultimate":[[1,1],[2,1],[90,1],[98,1]],"objective":[[1,1],[4,1],[5,1],[9,1],[10,1],[15,1],[16,1],[32,1],[33,1],[36,1],[47,1],[58,1],[71,1],[74,2],[103,1],[164,1],[166,1],[167,1],[168,1],[182,1]],"coping":[[1,2],[2,1],[3,2],[6,1],[7,6],[8,6],[9,1],[10,6],[13,1],[15,1],[24,1],[30,1],[32,1],[57,4],[60,1],[65,2],[69,4],[70,3],[76,2],[80,1],[81,1],[82,1],[83,5],[87,1],[88,1],[89,1],[92,1],[100,10],[105,1],[112,2],[113,2],[114,1],[116,1],[118,2],[119,2],[123,1],[124,1],[134,4],[140,1],[145,1],[161,1],[167,3],[168,6],[189,1],[190,2],[191,1],[193,1],[196,1],[206,3],[207,11],[208,3],[209,1],[211,4],[218,1],[219,1],[221,2],[223,1]],"card":[[1,4],[2,2],[9,3],[10,2],[21,1],[24,2],[47,1],[50,1],[94,1],[101,1],[114,3],[121,2],[168,1],[177,2],[185,4],[186,1],[215,1],[216,1]],"physical":[[1,1],[4,2],[8,1],[19,1],[43,1],[58,1],[65,3],[76,3],[94,1],[96,1],[100,1],[109,1],[112,1],[116,1],[121,1],[122,1],[123,1],[125,2],[127,3],[154,1],[157,1],[158,1],[159,1],[161,2],[163,2],[169,3],[170,7],[171,8],[172,2],[173,14],[174,3],[175,7],[176,1],[177,6],[178,1],[187,1],[191,1],[192,1],[193,2],[200,1],[202,2],[205,3],[206,5],[208,11],[210,3],[211,1],[212,1],[215,1],[217,1],[218,2],[219,2],[223,8]],"virtual":[[1,1],[9,1],[65,2]],"index":[[1,1],[24,1],[50,1],[51,1],[81,2],[82,5],[83,3],[84,2],[108,1],[109,1],[116,1],[117,4],[118,6],[119,1],[126,1],[163,2],[223,6],[224,1]],"written":[[1,2],[3,1],[19,3],[24,2],[51,1],[58,1],[63,1],[84,2],[88,1],[143,1],[155,4],[171,1],[176,1],[179,1],[186,2],[188,2],[190,1],[191,1],[192,1],[193,1],[200,5],[208,1],[209,1],[221,2],[225,1]],"statements":[[1,1],[9,1],[10,1],[26,1],[37,1],[48,1],[51,1],[83,1],[84,1],[88,1],[89,3],[90,3],[91,1],[95,1],[97,1],[98,1],[99,1],[106,1],[142,1],[182,1],[186,1],[196,1],[201,1],[214,5],[223,1]],"cards":[[1,1],[51,1],[83,1],[89,1],[94,6],[95,1],[96,1],[97,1],[100,2],[101,4],[118,1],[188,1]],"because":[[1,1],[2,1],[3,1],[5,4],[7,3],[8,1],[9,1],[10,3],[12,1],[13,2],[15,1],[16,1],[17,8],[18,2],[19,3],[20,3],[21,3],[24,1],[25,1],[26,2],[27,1],[34,1],[35,1],[36,4],[37,5],[38,1],[40,1],[41,2],[42,1],[43,3],[45,1],[47,2],[48,6],[49,1],[51,4],[54,1],[56,2],[57,5],[58,2],[60,7],[61,11],[64,1],[65,1],[66,1],[69,2],[71,4],[74,1],[75,3],[78,1],[79,5],[86,2],[87,5],[90,3],[91,1],[92,3],[94,1],[95,3],[96,2],[97,2],[98,5],[99,1],[100,2],[101,2],[102,1],[103,3],[104,1],[105,1],[107,2],[108,1],[109,1],[110,2],[112,2],[113,1],[114,2],[115,3],[120,1],[121,2],[122,1],[130,1],[132,1],[134,2],[140,2],[148,2],[153,1],[154,1],[155,8],[160,1],[161,1],[164,2],[165,3],[166,3],[168,3],[169,3],[170,4],[171,6],[172,4],[173,3],[175,2],[176,2],[177,2],[178,2],[179,2],[181,3],[182,2],[183,3],[184,1],[185,2],[186,1],[187,4],[188,2],[189,2],[191,5],[192,6],[193,3],[194,6],[195,3],[196,9],[197,3],[198,4],[199,8],[200,2],[201,1],[202,4],[203,3],[204,2],[205,3],[206,6],[207,5],[208,7],[209,2],[210,3],[211,1],[212,7],[213,4],[214,2],[215,1],[216,2],[217,4],[218,1],[222,2]],"down":[[1,1],[3,1],[5,2],[6,2],[9,1],[10,3],[13,3],[16,1],[17,3],[18,2],[19,4],[21,8],[22,1],[24,2],[26,4],[27,1],[31,1],[32,1],[34,2],[35,3],[37,2],[40,2],[41,3],[42,4],[43,4],[46,2],[47,2],[48,1],[49,1],[51,4],[52,3],[55,1],[57,3],[58,1],[60,2],[61,2],[64,7],[65,1],[66,2],[67,1],[69,2],[70,2],[71,2],[72,1],[78,1],[79,1],[82,1],[84,1],[90,3],[92,1],[93,1],[94,2],[96,1],[98,1],[100,3],[101,1],[102,1],[103,3],[104,1],[107,1],[112,3],[114,2],[115,1],[118,3],[119,1],[120,2],[121,1],[124,1],[131,1],[136,1],[139,1],[140,4],[143,4],[147,1],[150,2],[152,1],[153,3],[155,2],[159,1],[161,1],[163,3],[164,6],[165,2],[166,3],[167,4],[168,4],[170,1],[171,2],[172,1],[175,1],[176,1],[177,3],[178,1],[179,5],[182,1],[183,1],[184,7],[185,1],[186,1],[187,2],[188,1],[189,3],[190,1],[191,3],[193,7],[194,1],[195,1],[197,1],[198,7],[199,6],[200,3],[201,2],[202,5],[203,3],[204,5],[205,3],[206,2],[207,1],[208,1],[209,3],[210,3],[212,1],[213,2],[217,2],[218,3],[219,1],[221,3],[222,1]],"discussion":[[1,1],[3,1],[9,1],[19,2],[21,1],[26,1],[32,5],[34,2],[36,1],[38,4],[40,1],[46,2],[47,1],[60,1],[64,1],[74,1],[82,2],[86,4],[87,2],[89,3],[91,2],[92,1],[95,2],[100,1],[101,1],[103,5],[108,2],[110,1],[112,1],[113,1],[114,1],[133,1],[147,1],[150,1],[160,1],[163,2],[182,1],[186,1],[195,1]],"addresses":[[1,1],[98,1],[108,1],[112,1],[113,1],[114,1],[115,1],[121,1]],"individualized":[[1,1],[2,1],[3,1],[9,2],[12,1],[112,2],[113,1],[126,1]],"generally":[[1,1],[4,1],[5,1],[6,3],[8,1],[10,2],[16,1],[35,1],[37,4],[46,1],[56,5],[60,3],[86,1],[87,1],[88,2],[89,2],[92,1],[103,1],[108,1],[110,1],[111,1],[115,1],[131,1],[134,1],[137,1],[140,3],[148,1],[165,1],[172,1],[173,1],[176,1],[177,2],[179,1],[182,1],[191,1],[192,2],[196,1],[200,1],[201,1],[204,1],[207,1],[208,1],[210,3],[212,1],[213,1]],"says":[[1,1],[4,2],[6,1],[10,2],[17,4],[19,3],[22,1],[59,1],[62,1],[69,2],[172,1],[176,1],[178,1],[185,1],[194,1],[214,1]],"something":[[1,1],[4,2],[5,2],[7,1],[10,6],[12,1],[13,5],[16,4],[17,5],[18,6],[19,8],[20,2],[21,4],[24,1],[25,4],[26,2],[27,3],[32,2],[34,4],[36,1],[37,2],[38,3],[41,3],[42,3],[43,2],[45,1],[46,1],[47,4],[48,3],[49,1],[51,5],[52,1],[56,1],[57,1],[58,5],[60,3],[61,2],[62,1],[63,2],[64,2],[65,2],[69,2],[70,2],[71,3],[75,3],[77,1],[79,3],[89,1],[90,2],[91,4],[93,1],[95,2],[96,6],[97,11],[98,1],[100,9],[102,1],[104,1],[105,3],[107,2],[113,2],[128,1],[132,2],[139,4],[152,1],[154,1],[155,2],[156,2],[157,1],[158,4],[159,1],[161,1],[169,4],[170,1],[171,3],[172,6],[175,2],[176,2],[178,3],[179,6],[180,1],[181,4],[183,2],[184,2],[185,1],[188,3],[189,2],[191,1],[192,6],[194,9],[195,5],[198,2],[199,1],[200,3],[201,1],[203,1],[204,8],[205,8],[208,6],[210,2],[211,3],[212,1],[214,4],[215,2],[217,6],[218,1],[222,2]],"follows":[[1,1],[4,1],[5,1],[91,1],[92,1],[94,1],[96,1],[100,1],[103,1],[134,1],[155,1],[194,1],[205,1]],"cure":[[1,1],[19,1],[26,1],[164,1]],"expects":[[1,1],[9,1],[163,1],[164,1],[166,1]],"inspire":[[1,1],[3,1],[15,1],[17,1],[18,1],[89,1],[100,1]],"observer":[[2,1],[145,1],[213,1]],"sometimes":[[2,2],[3,3],[4,2],[6,1],[7,1],[9,1],[10,4],[12,7],[17,2],[19,2],[24,1],[25,2],[28,1],[32,2],[33,1],[36,1],[37,4],[38,1],[40,1],[41,4],[42,5],[43,1],[45,1],[46,3],[47,3],[48,4],[53,2],[56,3],[58,2],[63,1],[65,1],[69,1],[70,1],[72,1],[76,1],[91,1],[95,3],[96,1],[100,1],[101,1],[102,2],[110,1],[111,1],[112,1],[113,1],[138,1],[139,1],[143,1],[144,1],[155,4],[168,1],[170,1],[171,2],[172,3],[176,1],[178,1],[179,4],[182,1],[183,3],[184,1],[185,1],[186,1],[187,3],[188,1],[191,6],[192,2],[195,1],[196,2],[197,4],[198,3],[199,2],[200,2],[201,1],[202,1],[203,3],[205,2],[207,3],[208,4],[209,3],[212,4],[214,3],[216,1],[217,3],[219,1],[221,1],[222,1]],"appears":[[2,1],[32,1],[48,1],[86,1],[87,4],[88,1],[90,1],[98,1],[108,1],[111,3],[155,1]],"simple":[[2,2],[26,1],[27,1],[65,1],[89,1],[96,1],[97,2],[100,2],[104,2],[113,1],[124,1],[136,1],[155,1],[163,2],[169,3],[188,1],[197,2],[213,1],[214,2],[225,1]],"proposition":[[2,1],[24,1],[25,2],[52,1],[82,1],[93,1]],"influ-":[[2,1],[3,1],[5,1],[9,1],[18,1],[56,1],[67,1],[68,1],[174,1]],"ence":[[2,1],[5,1],[45,1],[53,1],[54,1],[55,1],[67,1],[90,1],[100,2],[108,1],[174,1],[198,2],[210,1],[211,1]],"physiology":[[2,1],[4,2],[5,1],[74,1],[117,1],[128,2],[131,2]],"straightforward":[[2,1],[3,1],[13,1],[26,1],[86,1],[213,1],[214,1]],"however":[[2,2],[4,3],[6,1],[8,2],[10,1],[24,1],[27,1],[28,1],[36,1],[37,1],[39,1],[40,1],[45,1],[61,1],[64,1],[70,1],[87,1],[88,1],[90,1],[91,1],[95,3],[96,1],[98,1],[101,1],[102,2],[109,1],[110,1],[111,1],[112,1],[115,1],[121,1],[128,2],[130,1],[132,1],[134,1],[138,1],[139,1],[140,2],[146,1],[155,3],[163,2],[164,2],[165,2],[166,2],[167,2],[169,1],[170,1],[172,1],[173,1],[174,1],[176,1],[179,2],[181,1],[182,1],[183,3],[188,1],[189,3],[190,1],[191,1],[192,3],[193,1],[196,3],[197,2],[198,1],[200,2],[201,2],[205,1],[206,3],[207,1],[208,3],[211,1],[212,2],[213,1],[214,2],[216,1],[218,1],[219,1]],"seamlessly":[[2,1],[85,1]],"accomplish":[[2,1],[3,1],[12,1],[14,2],[26,1],[28,3],[30,1],[32,2],[33,1],[35,1],[59,1],[64,1],[83,1],[84,1],[91,1],[92,1],[93,1],[94,2],[95,1],[100,3],[104,3],[177,1],[204,6],[205,1],[213,1],[217,1],[222,1]],"tasks":[[2,2],[6,3],[8,1],[9,1],[21,1],[31,1],[35,1],[36,2],[40,1],[53,1],[59,1],[64,3],[65,1],[71,2],[77,1],[113,1],[168,1],[177,1],[191,1]],"once":[[2,2],[3,1],[4,2],[5,2],[6,2],[9,1],[10,2],[13,6],[21,1],[27,1],[32,1],[35,1],[37,1],[38,1],[41,1],[51,3],[53,1],[56,1],[58,1],[59,2],[60,1],[61,1],[65,1],[71,3],[76,2],[77,2],[78,1],[87,1],[88,1],[91,1],[92,1],[95,1],[96,4],[98,7],[100,3],[101,1],[102,1],[103,1],[104,1],[105,1],[113,1],[115,1],[120,1],[121,2],[131,2],[134,1],[135,1],[140,2],[143,1],[145,2],[149,1],[159,2],[163,2],[164,2],[166,1],[168,1],[169,2],[170,2],[172,2],[173,1],[176,4],[177,2],[178,2],[181,3],[182,2],[184,3],[189,3],[190,3],[191,2],[195,3],[196,6],[198,2],[199,3],[200,3],[201,1],[202,1],[203,4],[204,1],[205,4],[209,6],[210,4],[211,2],[212,2],[214,2],[215,2],[217,1],[218,5],[222,1]],"rapport":[[2,1],[9,2],[15,1],[19,1],[26,1],[32,1],[33,1],[86,1],[89,2],[118,1],[124,1],[163,2],[165,2],[166,1],[167,1],[168,5]],"socializing":[[2,2],[5,1],[36,2],[72,1],[74,1],[82,2],[84,2]],"edu-":[[2,1],[120,1]],"collecting":[[2,1],[9,1],[12,1],[14,1],[21,1],[92,1],[101,1],[103,1],[115,1],[120,1]],"data":[[2,3],[3,4],[4,4],[5,12],[7,9],[8,7],[11,1],[12,1],[14,2],[15,1],[21,2],[22,1],[23,1],[25,1],[32,1],[33,1],[34,2],[35,1],[37,2],[43,1],[47,1],[56,2],[57,1],[58,4],[59,6],[82,1],[83,1],[85,1],[87,1],[88,3],[92,2],[101,4],[103,3],[107,1],[108,1],[109,1],[114,5],[115,6],[118,1],[120,2],[121,3],[122,1],[123,1],[124,1],[125,2],[182,2],[183,1],[187,1],[219,1]],"case":[[2,3],[3,1],[4,1],[9,1],[10,2],[11,1],[12,2],[14,1],[17,2],[19,1],[22,1],[25,1],[26,1],[29,1],[36,1],[37,2],[41,1],[46,1],[47,1],[51,1],[58,1],[65,1],[75,1],[76,4],[77,1],[80,3],[81,9],[82,6],[83,8],[84,1],[86,1],[89,1],[90,1],[91,1],[93,2],[94,1],[103,1],[104,1],[110,1],[111,1],[112,1],[113,1],[124,1],[127,3],[134,4],[155,2],[156,1],[157,2],[158,1],[168,2],[170,1],[179,1],[188,1],[192,1],[193,1],[196,1],[203,1],[205,1],[206,1],[207,2],[208,1],[213,2],[214,2],[216,1],[219,1],[223,29]],"working":[[2,1],[3,4],[6,1],[9,2],[10,3],[13,4],[16,1],[17,1],[18,2],[19,2],[21,2],[25,1],[32,3],[33,4],[34,1],[35,1],[36,1],[37,3],[40,1],[44,1],[56,1],[58,1],[59,3],[61,4],[64,1],[66,1],[67,2],[71,3],[73,1],[74,3],[75,3],[76,2],[81,3],[82,1],[85,1],[89,2],[91,1],[92,1],[95,1],[96,1],[97,1],[98,1],[100,2],[101,1],[102,1],[103,3],[104,1],[128,2],[129,1],[130,2],[140,1],[141,1],[147,1],[148,1],[154,1],[155,3],[157,1],[161,1],[170,1],[171,3],[175,1],[176,1],[178,1],[179,1],[184,2],[185,1],[188,1],[189,4],[190,2],[192,1],[194,1],[197,1],[200,2],[201,1],[204,1],[206,3],[209,1],[211,1],[212,1],[215,1],[216,2],[219,1]],"teaching":[[2,2],[3,2],[13,1],[19,1],[32,1],[33,2],[35,1],[36,1],[41,1],[42,2],[45,1],[48,1],[51,1],[55,1],[64,1],[69,2],[71,2],[81,1],[82,2],[83,3],[98,1],[177,2]],"sum-":[[2,1],[35,1],[186,1]],"eliciting":[[2,1],[3,1],[4,1],[7,1],[9,2],[10,1],[11,1],[12,1],[14,2],[15,1],[16,1],[18,2],[19,1],[21,2],[25,1],[34,1],[36,1],[37,1],[41,2],[42,2],[43,1],[56,1],[57,3],[59,3],[74,1],[75,2],[81,1],[82,7],[83,6],[84,5]],"feedback":[[2,1],[3,4],[4,1],[8,1],[9,9],[10,5],[11,2],[12,1],[13,3],[14,2],[15,3],[16,2],[19,9],[25,3],[30,1],[32,4],[33,5],[35,6],[36,3],[38,1],[40,1],[64,2],[74,6],[75,2],[77,1],[81,3],[82,3],[83,4],[84,1],[92,2],[103,3],[104,1],[107,1],[114,1],[116,1],[168,2],[171,1],[177,2],[216,1],[219,1]],"accomplishing":[[2,1],[5,1],[29,1],[74,2],[75,1],[83,1],[84,1],[93,1]],"sound":[[2,2],[3,3],[8,1],[12,2],[13,4],[16,1],[17,1],[21,1],[22,1],[26,1],[29,2],[36,2],[37,1],[43,1],[46,1],[48,1],[60,1],[71,1],[74,1],[75,1],[102,1],[194,3],[206,1]],"conversational":[[2,1],[16,2],[18,1],[34,1],[107,1]],"deliberate":[[2,1],[9,1],[95,1],[110,1],[217,4],[218,1]],"elements":[[2,3],[3,1],[4,1],[15,1],[33,2],[35,1],[74,1],[84,1],[85,1],[113,1],[163,1],[166,1],[167,1],[168,1]],"although":[[2,1],[6,2],[13,1],[16,1],[32,1],[35,1],[40,1],[48,1],[57,1],[64,1],[69,1],[71,2],[76,1],[77,1],[86,1],[87,5],[88,3],[89,2],[90,2],[91,1],[92,1],[93,3],[94,1],[95,1],[97,1],[98,1],[101,1],[108,4],[110,5],[111,7],[112,1],[113,2],[114,2],[115,2],[120,2],[121,2],[129,1],[134,3],[136,1],[148,1],[149,1],[155,1],[163,1],[166,2],[168,3],[169,1],[170,2],[171,2],[174,1],[175,1],[182,1],[185,1],[186,1],[189,2],[192,1],[194,2],[199,1],[201,1],[203,5],[204,1],[206,1],[212,1],[215,2],[216,3],[219,2]],"interweave":[[2,1],[15,1],[33,1],[35,3]],"conduct":[[2,1],[3,1],[4,1],[11,3],[14,1],[15,1],[24,1],[32,1],[33,2],[35,1],[71,1],[86,1],[87,1],[92,1],[114,1],[115,1],[120,2],[163,3],[166,3],[167,1],[181,1]],"effectively":[[2,1],[3,1],[24,1],[41,1],[43,1],[45,1],[46,1],[47,1],[52,1],[69,1],[71,1],[74,2],[81,1],[93,1],[98,3],[113,1],[115,2],[130,1],[176,1],[196,1],[210,3],[214,1]],"efficiently":[[2,1],[3,1],[32,1],[36,1]],"possible":[[2,1],[3,3],[10,2],[11,2],[19,1],[24,1],[25,3],[26,1],[31,1],[33,1],[35,1],[47,2],[48,1],[49,2],[56,2],[58,1],[60,2],[65,2],[69,1],[71,2],[72,1],[81,1],[82,1],[86,1],[90,1],[91,2],[94,4],[96,1],[97,3],[98,2],[100,1],[101,2],[102,3],[103,3],[105,1],[109,1],[111,2],[114,2],[115,1],[120,3],[121,2],[122,4],[125,1],[127,1],[128,2],[130,1],[140,2],[143,2],[154,1],[155,1],[156,1],[158,2],[164,2],[165,1],[166,4],[167,5],[168,1],[171,1],[172,9],[176,2],[182,1],[190,5],[191,3],[192,1],[193,1],[194,4],[195,5],[199,1],[204,1],[206,1],[208,2],[209,2],[212,1],[213,1],[217,1],[221,6]],"develop":[[2,3],[3,3],[4,4],[5,1],[7,1],[8,1],[9,1],[11,1],[12,2],[15,1],[29,2],[30,1],[44,1],[46,1],[47,1],[53,1],[59,1],[60,1],[65,2],[73,1],[90,1],[92,1],[96,2],[99,1],[100,1],[105,2],[112,1],[113,1],[140,1],[144,1],[161,1],[169,6],[175,1],[178,3],[184,1],[185,1],[187,3],[189,1],[190,2],[191,1],[192,1],[195,2],[196,4],[197,2],[198,1],[199,3],[200,3],[208,1],[211,7],[213,1],[214,1],[217,2],[218,2],[221,4]],"conceptualize":[[2,1],[3,2],[4,1],[8,1],[9,1],[10,2],[11,1],[14,1],[19,1],[20,2],[22,1],[23,1],[26,1],[27,2],[30,1],[32,2],[34,2],[36,2],[38,3],[43,1],[45,3],[52,1],[70,1],[73,2],[74,1],[75,2],[86,1],[91,2],[94,1]],"modalities":[[2,2],[3,1],[63,1],[67,1],[86,1]],"step-by-step":[[2,1],[166,1],[169,2],[208,1],[225,1]],"manner":[[2,1],[3,1],[5,1],[79,1],[86,1],[91,1],[95,1],[98,1],[110,1],[111,1],[113,1],[115,1],[121,1],[140,2],[168,1],[213,1]],"view":[[2,3],[3,1],[5,2],[6,1],[9,4],[10,2],[18,2],[21,1],[27,1],[28,1],[33,1],[42,1],[43,2],[47,1],[48,3],[54,1],[56,3],[58,1],[59,2],[60,3],[61,1],[69,4],[71,1],[73,1],[74,4],[76,3],[77,1],[78,1],[79,1],[85,1],[86,1],[91,1],[98,1],[101,1],[113,1],[152,3],[154,3],[166,1],[183,1],[186,7],[187,1],[188,3],[196,1],[197,2],[198,1],[199,1],[205,1],[213,2],[215,2],[216,3],[217,1],[222,2]],"expertise":[[2,1],[10,1],[73,1],[75,1],[92,1]],"four":[[2,1],[7,1],[9,3],[12,1],[19,1],[21,4],[32,1],[33,2],[35,2],[48,1],[52,1],[75,1],[76,2],[87,3],[88,1],[93,1],[100,1],[101,1],[108,1],[111,1],[113,2],[116,1],[117,1],[125,1],[127,1],[134,1],[163,1],[164,1],[166,1],[168,2],[170,4],[171,1],[172,4],[176,1],[181,1],[183,1],[195,1],[201,1],[203,1],[204,1],[206,1],[210,4],[214,1],[217,2],[219,2],[222,1]],"stages":[[2,1],[5,1],[52,1],[82,1],[154,1],[217,1],[218,1]],"descriptions":[[2,1],[65,2],[188,1],[211,1]],"assume":[[2,1],[9,1],[10,2],[24,1],[26,1],[28,1],[51,1],[57,2],[63,1],[89,1],[155,1],[192,2],[214,1]],"basic":[[2,6],[3,1],[4,1],[6,1],[9,3],[41,1],[42,1],[56,1],[58,1],[63,1],[65,1],[80,1],[85,1],[91,1],[101,1],[107,1],[113,2],[114,3],[122,1],[160,1],[165,1]],"counseling":[[2,1],[3,1],[9,7],[10,1],[76,1],[83,1],[84,3],[86,4],[87,14],[88,5],[89,1],[108,2],[109,1],[111,1],[112,1],[116,1],[118,1],[124,1]],"listening":[[2,1],[21,1],[44,1],[51,1],[74,2],[89,2],[92,1],[98,5],[100,1],[101,1],[103,2],[104,1],[107,2],[114,1],[118,1],[145,1],[158,1],[163,1],[166,1],[167,2],[168,6],[204,1]],"empathy":[[2,1],[4,1],[8,1],[9,5],[10,2],[25,1],[75,1],[80,1],[83,1],[89,5],[91,1],[105,1],[118,1],[125,1],[127,1]],"concern":[[2,1],[4,1],[9,2],[10,1],[12,1],[33,1],[36,1],[37,1],[87,1],[91,1],[92,1],[99,1],[108,3],[109,2],[111,1],[112,1],[113,1],[124,1],[126,1],[169,1]],"regard":[[2,1],[4,1],[7,1],[8,1],[9,3],[84,1],[88,1],[90,1],[172,1],[197,1]],"genuineness":[[2,1],[9,3],[10,1],[83,1]],"accurate":[[2,1],[4,2],[8,2],[9,1],[10,1],[11,1],[17,1],[22,1],[28,1],[35,1],[36,1],[45,1],[46,1],[56,2],[58,1],[59,1],[60,1],[61,2],[65,2],[70,1],[163,1],[165,1],[167,1],[178,1],[182,1],[184,1],[186,1],[188,3],[191,1],[196,4],[211,1]],"reflec-":[[2,1],[75,1]],"tion":[[2,1],[3,1],[4,2],[6,1],[7,1],[9,1],[10,2],[13,1],[16,1],[21,1],[22,1],[25,1],[28,1],[29,1],[32,1],[35,2],[36,1],[37,1],[43,1],[48,1],[52,1],[57,1],[58,1],[67,1],[71,1],[73,1],[80,1],[81,1],[86,2],[87,1],[89,1],[96,1],[98,1],[100,1],[103,1],[108,1],[109,1],[110,1],[111,1],[115,1],[120,1],[121,1],[172,1],[183,2],[184,1],[194,1],[200,1],[203,1],[211,1],[212,1],[213,1],[215,1],[216,2],[217,1],[221,1]],"summarizing":[[2,1],[3,1],[11,1],[14,2],[16,1],[22,1],[32,1],[35,2],[41,2],[42,1],[47,1],[48,1],[58,1],[60,3],[61,1],[69,2],[70,1],[71,1],[82,1],[83,1],[186,2]],"stage":[[2,5],[3,1],[29,1],[32,2],[33,2],[86,1],[98,1],[112,1],[128,1],[217,3]],"concep-":[[2,2],[3,1],[8,1],[47,1]],"terms":[[2,1],[4,2],[5,2],[8,1],[16,1],[18,1],[37,1],[38,1],[59,1],[60,1],[87,1],[90,1],[91,3],[95,1],[98,1],[100,2],[103,1],[111,1],[150,1],[153,1],[198,1],[199,4],[207,1],[215,1],[217,1],[221,3]],"based":[[2,3],[3,5],[4,2],[5,1],[8,2],[11,1],[12,1],[13,1],[30,1],[32,1],[42,1],[43,1],[56,1],[59,1],[74,4],[75,1],[79,1],[80,1],[86,2],[87,5],[88,8],[90,1],[92,2],[93,4],[96,6],[98,2],[99,1],[100,1],[108,9],[109,1],[113,1],[114,5],[115,4],[116,2],[118,1],[120,4],[123,2],[124,3],[125,3],[126,6],[127,1],[128,1],[129,1],[140,2],[146,1],[152,2],[153,1],[155,1],[161,3],[164,1],[168,1],[169,1],[173,1],[174,2],[177,1],[181,4],[186,2],[187,2],[188,2],[192,1],[194,1],[195,2],[196,2],[199,3],[209,1],[215,1],[216,1],[217,1],[218,2],[221,1],[222,1]],"intake":[[2,1],[5,1],[15,1],[76,4],[77,1],[81,1],[108,1],[112,1]],"collected":[[2,1],[88,1],[103,1],[182,1],[186,1],[188,1],[217,1]],"thera-":[[2,2],[3,2],[5,1],[8,1],[33,1],[71,1],[193,1]],"peutic":[[2,2],[8,1]],"considering":[[2,1],[20,1],[26,1],[30,1],[48,3],[88,1],[152,1],[174,1],[175,1],[182,1],[219,1]],"integrating":[[2,1],[53,4],[54,2],[55,2],[80,1],[111,1],[113,1],[118,3],[119,1],[125,1]],"tualization":[[2,1],[3,1],[8,1]],"knowledge":[[2,1],[86,1],[89,2],[92,2],[93,4],[98,1],[112,1],[123,1],[146,5],[164,2],[166,1],[176,2],[215,1]],"understand":[[2,2],[3,3],[4,9],[5,1],[6,1],[8,3],[9,1],[10,4],[11,1],[14,2],[19,1],[21,1],[22,1],[24,1],[26,1],[30,1],[35,1],[36,1],[37,1],[38,1],[40,1],[43,2],[46,2],[48,2],[52,1],[53,1],[56,1],[58,2],[60,1],[69,1],[71,1],[74,4],[79,1],[85,1],[90,2],[91,1],[93,2],[95,1],[103,1],[104,1],[105,1],[111,1],[114,2],[155,3],[166,2],[167,1],[169,3],[170,7],[171,5],[172,2],[175,1],[177,1],[178,3],[179,6],[180,1],[181,4],[183,3],[185,1],[186,2],[189,1],[190,1],[191,3],[192,1],[194,2],[197,1],[198,2],[199,1],[201,2],[205,1],[206,1],[208,2],[210,2],[212,2],[213,1],[214,4],[215,2],[216,1],[218,2],[222,3],[223,5]],"flow":[[2,1],[3,1],[30,1],[36,1],[43,2],[94,1],[96,1],[100,4],[104,4],[181,1],[188,1]],"objectives":[[2,1],[3,2],[11,3],[28,1],[29,4],[30,1],[32,1],[33,4],[35,1],[71,2],[73,1],[74,2],[82,2],[83,1],[84,2]],"con-":[[2,2],[3,1],[4,2],[5,1],[7,1],[8,1],[13,2],[16,1],[17,1],[18,1],[20,1],[23,1],[26,2],[28,1],[34,1],[37,1],[40,1],[44,1],[51,1],[60,1],[63,1],[71,1],[74,1],[78,1],[80,1],[81,1],[86,2],[87,2],[88,2],[89,1],[90,2],[95,1],[96,1],[169,1],[170,1],[173,2],[175,1],[183,1],[186,1],[187,1],[194,1],[201,1],[204,1],[214,1],[216,1],[218,1],[219,1]],"decisions":[[2,1],[3,1],[9,1],[17,1],[26,1],[32,1],[63,1],[64,3],[74,1],[76,2],[92,1],[96,1],[100,1],[120,1],[168,4],[202,1],[208,1],[212,1]],"expand":[[2,1],[54,1],[64,1],[86,1],[126,1],[166,1]],"selecting":[[2,1],[22,1],[45,1],[74,1],[82,2]],"timing":[[2,1],[10,1],[91,1]],"implementing":[[2,1],[3,1],[24,1],[36,2],[80,1],[83,1],[95,1],[100,1],[109,1],[113,1]],"appropriate":[[2,2],[4,1],[7,1],[10,1],[11,3],[13,1],[22,1],[25,1],[35,1],[46,2],[60,1],[61,1],[69,1],[74,4],[79,2],[87,2],[89,1],[107,1],[163,3],[165,1],[166,3],[168,4],[186,1],[199,1],[215,1]],"strengthening":[[2,1],[5,1],[10,1],[30,1],[33,1],[43,1],[56,1],[58,1],[59,2],[62,1],[71,2],[72,1],[82,2],[83,4],[192,2],[198,2],[199,1],[200,3],[221,1],[223,8]],"integrate":[[2,1],[4,1],[33,1],[196,1]],"ceptualization":[[2,1],[4,1],[8,1],[28,1],[63,1]],"refine":[[2,1],[3,1],[4,2],[8,1],[14,1],[25,1],[32,1],[33,1],[73,2],[75,1]],"hypotheses":[[2,1],[4,2],[7,1],[8,4],[57,1],[74,1],[122,1],[182,1],[185,1]],"confirm":[[2,1],[4,1],[7,1],[11,1],[14,1],[58,1],[72,1],[155,1],[164,1],[165,6],[166,9],[167,5],[168,7],[183,1],[185,1],[207,1]],"particularly":[[2,1],[3,1],[4,1],[6,1],[10,1],[13,1],[26,1],[32,1],[34,1],[37,1],[51,1],[53,1],[61,1],[87,1],[89,1],[90,2],[97,1],[98,1],[99,1],[107,1],[108,2],[110,1],[111,2],[112,1],[113,1],[128,1],[132,1],[134,1],[171,1],[179,1],[181,1],[192,1],[202,3],[210,1],[215,1],[219,1]],"skilled":[[2,1],[177,1],[180,1],[181,2],[184,1],[193,1],[210,2]],"repairing":[[2,1],[9,1],[10,2],[84,1]],"ruptures":[[2,1],[9,2],[10,2],[84,1]],"alliance":[[2,1],[3,5],[9,2],[10,1],[11,1],[12,1],[25,1],[29,2],[30,1],[32,1],[33,1],[36,1],[74,1],[75,1],[81,2],[85,1],[123,1],[127,1]],"sional":[[2,1],[89,1]],"every":[[2,1],[3,3],[4,1],[7,1],[9,3],[10,1],[12,3],[13,12],[14,1],[16,2],[17,6],[18,1],[21,2],[23,3],[24,2],[26,3],[32,2],[33,2],[34,1],[35,1],[46,2],[47,2],[52,1],[53,1],[54,1],[55,1],[56,2],[58,1],[61,2],[62,1],[64,2],[65,2],[69,1],[71,5],[73,3],[75,1],[77,3],[96,1],[97,1],[100,2],[101,1],[102,1],[103,1],[104,1],[105,3],[106,1],[107,1],[108,1],[115,1],[121,1],[128,1],[163,1],[166,4],[169,1],[171,1],[176,1],[179,2],[180,1],[183,1],[188,1],[191,2],[192,1],[194,1],[195,1],[196,2],[198,3],[199,1],[200,1],[201,2],[202,1],[204,3],[205,2],[206,1],[207,1],[208,2],[210,1],[218,2],[219,2],[221,1]],"treat":[[2,2],[9,1],[18,1],[43,1],[70,1],[75,1],[76,1],[84,1],[97,1],[108,1],[109,1],[110,1],[112,2],[113,2],[134,1],[166,2],[211,1]],"participate":[[2,1],[11,1],[76,1],[114,2],[115,5],[120,3],[121,4],[206,1]],"weekly":[[2,1],[3,2],[13,1],[21,1],[29,1],[77,2],[116,1],[123,2],[163,4],[165,1],[168,1],[176,1],[191,1],[200,1],[202,2],[205,1],[206,1],[207,1],[217,1],[218,1],[219,2]],"conferences":[[2,2]],"consult":[[2,1],[10,1],[27,1],[28,1],[74,2],[93,1],[96,1],[109,1],[111,1],[114,1],[115,5],[120,2],[217,1]],"matters":[[2,1],[108,1]],"stay":[[2,1],[12,1],[16,1],[19,1],[21,1],[25,2],[40,1],[47,1],[48,1],[65,1],[70,1],[71,1],[72,1],[74,1],[76,1],[86,1],[96,1],[97,1],[98,4],[100,1],[103,1],[107,2],[123,1],[134,1],[154,2],[158,2],[159,1],[163,1],[165,2],[167,1],[168,1],[169,1],[177,1],[182,1],[186,2],[187,1],[189,1],[190,1],[191,2],[196,2],[199,3],[201,2],[203,1],[206,2],[207,1],[208,3],[209,9],[210,5],[211,1],[212,1],[219,1]],"books":[[2,1],[64,1],[71,1],[75,1],[80,1],[84,1],[169,2],[203,1],[210,1],[224,1],[225,1]],"articles":[[2,1],[75,1],[84,1],[127,1]],"regularly":[[2,1],[6,1],[10,1],[24,1],[51,1],[69,1],[72,1],[74,3],[85,1],[88,1],[96,3],[99,1],[103,1],[107,2],[109,3],[113,1],[122,2],[163,1],[166,1],[170,2],[188,2],[199,1],[205,1],[210,1],[214,1],[218,1]],"attending":[[2,1],[4,1],[9,1],[76,1],[88,1],[89,1],[104,1],[169,1],[219,1]],"adopt":[[2,1],[36,1],[47,1],[48,1],[58,1],[89,1],[111,1],[168,3]],"attitude":[[2,1],[5,1],[25,1],[57,7],[75,1],[81,1],[83,1],[88,1],[92,1],[94,1],[96,2],[98,1],[102,1],[163,1],[185,1],[187,1],[191,3],[192,1],[200,1],[202,1],[211,1]],"importance":[[2,1],[3,1],[18,1],[21,1],[25,1],[31,1],[33,1],[34,1],[43,1],[52,1],[64,1],[74,1],[82,6],[83,15],[84,4],[87,2],[88,2],[89,2],[90,1],[91,2],[94,4],[95,1],[96,1],[97,1],[98,1],[100,1],[106,1],[113,1],[115,1],[119,1],[125,1],[126,1],[128,1],[154,1],[155,1],[163,1],[164,1],[165,1],[166,6],[167,4],[168,7],[181,1],[183,1],[203,1],[218,1]],"lifelong":[[2,1],[171,2]],"another":[[2,1],[4,4],[5,1],[9,1],[10,8],[11,2],[12,1],[13,2],[17,2],[19,1],[21,1],[24,4],[25,3],[26,1],[27,2],[32,7],[33,1],[34,2],[35,1],[36,1],[38,1],[40,2],[41,1],[42,1],[43,3],[44,1],[45,1],[46,1],[47,2],[48,3],[49,2],[50,1],[51,2],[52,2],[53,1],[55,1],[57,2],[58,2],[59,2],[60,3],[61,3],[64,5],[65,3],[67,1],[69,5],[70,4],[71,2],[73,1],[74,1],[84,1],[90,1],[91,1],[92,1],[94,2],[95,1],[96,1],[100,3],[101,1],[102,1],[103,1],[105,2],[107,1],[111,1],[113,2],[114,3],[115,1],[126,1],[152,1],[163,1],[164,2],[166,1],[168,1],[172,1],[175,1],[176,2],[178,5],[180,1],[182,2],[186,3],[188,1],[192,2],[193,2],[194,1],[197,3],[198,1],[200,1],[201,1],[202,3],[203,4],[204,1],[205,1],[206,3],[210,1],[213,3],[214,1],[216,3],[218,1],[222,1]],"psychotherapeutic":[[2,2],[53,1],[63,1],[80,1],[81,2]],"modality":[[2,1],[11,1],[36,1],[86,1]],"imple-":[[2,1],[64,1]],"menting":[[2,1],[105,1]],"existing":[[2,1],[111,1],[113,1],[195,1]],"collaboratively":[[2,1],[3,3],[10,1],[11,2],[15,1],[17,1],[19,1],[20,1],[21,1],[24,5],[25,2],[26,1],[27,1],[30,1],[32,2],[33,1],[34,2],[35,2],[38,3],[43,1],[45,1],[48,1],[52,1],[53,1],[58,1],[63,1],[64,1],[74,4],[75,1],[79,1],[83,1]],"describe":[[2,1],[3,1],[7,1],[9,1],[12,1],[16,1],[17,1],[21,1],[24,1],[31,1],[35,1],[36,3],[41,1],[42,4],[43,1],[53,1],[55,1],[56,1],[64,1],[65,1],[86,2],[87,1],[91,3],[92,3],[98,3],[109,1],[115,1],[120,2],[164,1],[166,2],[167,2],[168,2],[169,1],[171,2],[173,1],[175,3],[177,6],[179,1],[180,1],[181,4],[184,2],[185,1],[188,1],[195,2],[196,1],[199,1],[202,1],[203,4],[205,3],[206,1],[208,3],[212,3],[215,1],[216,1],[221,1]],"differently":[[2,1],[4,2],[9,1],[17,1],[18,1],[19,2],[32,1],[35,1],[37,2],[56,1],[71,1],[76,1],[86,1],[98,1],[128,1],[134,1],[145,2],[168,1],[170,1],[175,1],[183,5],[186,1],[187,1],[201,2],[213,1],[214,1],[215,1],[218,1]],"rationale":[[2,1],[12,1],[13,1],[16,6],[19,1],[21,3],[22,1],[24,4],[26,5],[34,1],[36,3],[38,1],[48,1],[61,1],[64,1],[65,1],[67,1],[74,2],[83,1],[86,3],[87,1],[88,2],[92,1],[122,1],[166,2],[167,2]],"seek":[[2,1],[10,2],[14,1],[24,2],[37,1],[40,1],[44,1],[56,1],[64,1],[89,1],[90,1],[98,1],[101,2],[102,1],[111,1],[116,1],[121,2],[157,1],[158,1],[206,1]],"agreement":[[2,1],[9,1],[10,1],[12,1],[24,2],[34,1],[67,1],[74,2],[119,1]],"changes":[[2,1],[4,1],[13,3],[16,1],[17,1],[19,1],[23,1],[32,2],[33,4],[37,1],[51,1],[64,1],[67,1],[71,4],[75,1],[86,1],[90,4],[91,1],[93,1],[95,3],[96,5],[98,2],[104,2],[105,3],[108,1],[110,3],[111,3],[112,1],[113,3],[115,1],[120,1],[124,1],[127,1],[128,3],[133,1],[135,1],[136,1],[145,1],[149,1],[151,1],[152,1],[161,1],[163,1],[166,2],[167,1],[169,3],[170,11],[171,16],[172,4],[173,2],[174,3],[175,8],[176,7],[177,5],[178,2],[180,1],[181,1],[186,1],[187,1],[192,2],[193,2],[195,1],[196,4],[198,2],[199,2],[201,1],[202,5],[203,3],[204,1],[205,4],[206,8],[208,2],[212,2],[214,1],[218,3],[223,1],[225,1]],"phrased":[[2,1],[8,1]],"positively":[[2,2],[9,2],[10,1],[12,1],[25,1],[26,1],[32,1],[36,1],[37,1],[38,1],[59,1],[69,1],[75,1],[89,2],[113,1],[191,1],[198,1],[200,1],[201,1],[203,1],[206,1]],"benefit":[[2,1],[8,1],[10,1],[19,1],[21,1],[22,2],[24,1],[27,2],[47,1],[62,1],[63,1],[64,1],[65,1],[70,2],[74,1],[75,1],[85,1],[87,1],[90,4],[91,1],[92,1],[93,2],[98,2],[100,2],[107,1],[111,1],[114,1],[115,1],[124,1],[125,1],[155,2],[169,3],[173,1],[184,1],[189,1],[190,1],[195,1],[203,2],[204,1],[207,1],[211,2],[214,1],[216,1],[217,1],[222,1]],"hesitant":[[2,1],[16,1],[61,1],[111,1],[199,1]],"suggest":[[2,1],[3,1],[10,1],[13,1],[16,2],[18,2],[19,1],[21,1],[22,3],[24,8],[26,2],[27,1],[32,1],[37,2],[38,1],[42,1],[46,1],[48,1],[51,1],[52,1],[60,1],[65,1],[70,2],[71,1],[89,2],[90,1],[91,3],[100,1],[103,1],[109,2],[110,2],[111,2],[112,1],[113,1],[137,1],[155,1],[166,2],[167,1],[169,1],[176,1],[183,1],[186,3],[191,1],[203,1]],"setting":[[2,2],[11,2],[12,4],[13,5],[14,2],[16,1],[18,2],[19,10],[22,1],[23,1],[25,2],[30,1],[32,1],[33,2],[35,1],[36,1],[37,9],[65,1],[69,1],[71,1],[74,3],[75,1],[81,4],[82,17],[83,11],[92,1],[97,2],[113,2],[114,1],[115,1],[118,1],[124,1],[167,1],[168,3],[176,3],[177,1],[214,1],[223,3],[224,1],[225,1]],"agenda":[[2,2],[3,3],[11,1],[12,3],[15,2],[16,10],[17,1],[21,1],[30,1],[32,18],[33,19],[34,15],[35,4],[36,4],[37,20],[38,13],[41,1],[43,1],[57,1],[74,7],[75,2],[81,2],[82,16],[83,3]],"experiment":[[2,1],[3,1],[21,4],[23,1],[25,3],[27,1],[36,2],[37,1],[44,1],[48,5],[53,1],[60,1],[71,2],[77,1],[81,1],[140,1],[146,2],[170,1],[193,6],[194,13],[195,17],[199,1],[201,1],[210,1],[221,7],[223,2]],"motivate":[[2,1],[18,1],[21,2],[24,2],[26,1],[27,1],[29,1],[43,1],[51,1],[53,1],[56,1],[58,1],[59,2],[60,1],[72,1],[74,1],[105,1]],"making":[[2,3],[3,1],[6,1],[10,1],[11,1],[12,1],[13,3],[16,1],[17,3],[18,1],[19,1],[21,2],[25,1],[31,2],[32,3],[34,1],[36,1],[42,1],[48,1],[57,2],[58,1],[64,1],[65,1],[71,4],[75,1],[76,2],[79,2],[81,1],[82,4],[83,1],[84,2],[90,2],[93,1],[96,6],[104,1],[105,1],[107,3],[109,1],[111,1],[113,2],[115,1],[129,1],[134,1],[138,1],[146,1],[159,1],[161,1],[164,1],[166,1],[167,1],[169,2],[170,1],[175,2],[176,2],[177,1],[183,1],[184,2],[186,1],[187,1],[189,3],[190,3],[191,1],[194,2],[196,1],[199,1],[202,3],[203,1],[204,1],[206,1],[207,2],[208,4],[209,3],[211,1],[214,1],[215,1],[216,8],[217,1],[219,2],[221,4],[222,2],[224,2]],"ideas":[[2,2],[3,3],[4,2],[9,1],[17,1],[21,1],[22,2],[24,2],[40,1],[48,1],[49,1],[51,1],[56,6],[57,1],[58,3],[64,1],[65,1],[71,1],[95,1],[96,1],[98,1],[99,1],[103,1],[106,1],[134,2],[140,3],[155,5],[161,1],[166,2],[169,2],[172,1],[176,1],[183,1],[187,2],[191,1],[204,1],[206,2],[210,1],[211,1],[218,2],[223,1]],"faster":[[2,1],[172,1],[173,2],[181,1],[184,2],[187,2],[206,1],[209,2],[210,1]],"collaborative":[[2,1],[3,2],[9,2],[10,1],[12,1],[13,1],[16,2],[21,1],[46,1],[61,1],[64,1],[71,1],[74,2],[81,1],[83,1],[89,2],[91,1],[98,2],[114,1],[118,4],[134,1]],"called":[[2,1],[4,1],[10,1],[17,4],[18,1],[36,1],[38,1],[40,1],[43,4],[44,1],[47,1],[48,7],[52,1],[61,3],[64,1],[71,1],[79,2],[91,1],[92,1],[94,1],[96,1],[97,1],[107,1],[110,1],[111,1],[139,1],[153,1],[170,1],[177,1],[178,1],[181,2],[196,1],[197,1],[202,1],[203,1],[204,1],[206,2],[208,2],[213,1],[215,1],[217,1]],"means":[[2,1],[6,1],[7,1],[10,1],[16,4],[20,1],[21,2],[22,1],[26,1],[37,1],[41,1],[47,2],[48,2],[51,1],[57,2],[58,2],[60,2],[71,1],[72,1],[93,1],[95,1],[96,1],[97,1],[98,1],[102,1],[109,1],[110,1],[111,1],[113,1],[115,1],[123,1],[132,1],[134,3],[140,2],[155,1],[166,2],[173,2],[188,1],[189,1],[191,2],[192,2],[194,3],[200,2],[203,1],[208,1],[209,1],[210,1],[211,1],[214,4],[216,2],[217,1],[222,2]],"issues":[[2,1],[3,3],[9,2],[12,1],[13,1],[16,3],[32,5],[33,3],[34,6],[35,1],[37,4],[38,2],[74,3],[83,1],[88,1],[91,1],[92,1],[107,1],[108,1],[110,2],[111,1],[124,1],[125,1],[127,2],[146,1],[168,1],[169,3],[175,1],[176,1],[211,1],[213,1],[214,1],[219,1],[223,1]],"getting":[[2,1],[3,1],[4,1],[5,2],[9,2],[13,1],[16,1],[17,1],[18,3],[19,1],[21,7],[24,2],[25,5],[26,1],[27,5],[31,1],[32,3],[33,2],[34,2],[38,1],[42,1],[46,1],[47,1],[48,4],[49,2],[51,4],[52,1],[56,2],[58,2],[59,2],[64,1],[65,3],[69,2],[70,1],[71,2],[72,1],[74,1],[76,1],[77,2],[89,1],[90,1],[95,2],[100,2],[105,1],[106,1],[111,1],[122,1],[127,1],[155,1],[163,4],[164,2],[166,6],[167,2],[168,4],[169,2],[170,2],[175,1],[176,1],[178,3],[183,1],[186,2],[190,1],[192,2],[194,1],[202,2],[204,1],[208,1],[209,1],[212,1],[213,3],[218,1],[219,1]],"house":[[2,1],[5,1],[6,1],[24,1],[27,2],[33,1],[34,1],[42,1],[43,1],[56,2],[58,1],[64,1],[69,2],[76,3],[77,1],[80,1],[84,1],[92,1],[122,1],[170,1],[176,1],[178,3],[182,6],[185,1],[190,2],[193,1],[194,1],[199,1],[218,1]],"spend":[[2,1],[3,2],[9,2],[12,2],[14,1],[16,2],[19,1],[20,1],[24,2],[26,6],[31,1],[32,3],[34,1],[38,5],[43,1],[45,1],[47,1],[58,1],[65,1],[74,2],[92,1],[101,1],[134,1],[144,1],[155,1],[159,1],[161,1],[166,1],[169,5],[188,1],[191,1],[195,1],[196,3],[198,2],[199,1],[204,2],[209,2],[218,1]],"pause":[[2,1],[4,1],[10,5],[12,5],[13,7],[14,1],[16,5],[17,7],[18,4],[19,5],[21,2],[22,3],[25,3],[26,1],[27,1],[32,1],[33,2],[34,5],[35,4],[36,3],[37,3],[38,1],[41,2],[43,2],[48,1],[49,1],[54,2],[56,1],[58,4],[60,1],[61,1],[65,1],[69,3],[71,2],[74,1],[79,1],[94,7],[96,1],[97,3],[100,2],[104,3],[105,5],[106,2],[155,1],[203,2]],"intended":[[2,1],[126,1],[187,1]],"students":[[2,1],[84,1],[85,2],[110,1],[111,3],[123,3],[125,1],[127,1],[206,2],[210,2]],"expe-":[[2,1],[3,1],[5,1],[33,1],[34,2],[44,1],[55,1],[56,1],[59,1],[62,2],[73,1],[75,1],[178,1],[182,1],[197,1],[214,1],[216,1],[222,2]],"rience":[[2,1],[5,1],[34,1],[55,1],[62,1],[75,1],[178,1]],"lack":[[2,1],[5,2],[9,1],[20,2],[21,1],[22,1],[24,2],[26,3],[27,1],[31,1],[33,1],[65,1],[74,1],[76,2],[82,2],[83,2],[86,1],[89,1],[91,1],[94,1],[95,1],[102,2],[110,2],[112,1],[123,1],[146,1],[166,2],[169,1],[218,1]],"mastery":[[2,1],[5,2],[20,3],[21,4],[22,5],[23,1],[24,1],[31,1],[37,1],[59,1],[71,1],[82,4],[83,2],[100,2],[124,1]],"fundamental":[[2,1],[4,1],[5,1],[46,1],[85,1],[176,1]],"blocks":[[2,1],[164,1]],"incorporate":[[2,1],[3,1],[74,1],[87,1],[96,1],[103,1],[114,2],[210,1],[218,1]],"principles":[[2,1],[3,8],[30,1],[75,1],[81,1],[82,1],[84,1],[89,1],[92,1],[93,1],[98,1],[100,1],[103,1],[104,1],[113,1],[115,1],[120,1],[165,1],[203,1],[215,1]],"it's":[[2,2],[7,1],[11,1],[43,1],[65,1],[71,1],[172,1],[173,1]],"chapters":[[2,3],[14,1],[40,1],[56,1],[69,1],[84,1],[92,1],[112,1],[118,1],[169,7],[170,1],[171,1],[175,2],[176,7],[177,1],[178,1],[179,1],[180,1],[189,2],[192,2],[196,9],[198,1],[201,5],[203,4],[205,1],[208,1],[209,1],[211,12],[213,2],[214,1],[217,1]],"designed":[[2,1],[27,1],[44,1],[49,1],[55,1],[60,1],[69,1],[74,1],[87,1],[92,2],[93,2],[94,1],[112,1],[114,1],[115,3],[120,3],[121,1],[136,1],[140,1],[144,1],[145,1],[151,1],[164,1],[169,4],[175,2],[179,1],[180,1],[182,2],[187,1],[188,1],[192,1],[200,1],[207,2],[216,1]],"order":[[2,1],[7,1],[31,1],[32,1],[41,1],[59,1],[90,1],[91,2],[92,4],[94,2],[95,2],[96,1],[97,1],[98,3],[100,1],[102,2],[103,2],[107,1],[113,1],[114,1],[115,1],[134,1],[144,1],[158,1],[159,2],[169,3],[171,1],[175,3],[176,3],[177,1],[178,1],[183,1],[188,2],[189,2],[190,2],[191,3],[193,2],[195,2],[204,1],[205,1],[206,1],[207,1],[208,2],[209,3],[211,4],[214,2],[222,2]],"presented":[[2,1],[5,2],[48,1],[58,1],[81,2],[91,1],[92,1],[100,1],[103,1],[108,1],[115,2],[120,2],[155,1],[198,1]],"eager":[[2,1],[5,2],[43,1],[169,1],[175,1]],"skip":[[2,1],[10,1],[27,1],[37,2],[48,1],[52,1],[169,1],[214,1]],"introductory":[[2,1],[33,1],[86,1]],"jump":[[2,1],[37,1],[64,1],[70,1],[208,1]],"merely":[[2,1],[38,1],[47,1],[69,1],[74,1],[86,1],[186,2],[188,1],[192,1],[213,1]],"among":[[2,1],[7,4],[8,1],[11,1],[43,1],[44,1],[56,1],[58,1],[63,1],[71,1],[87,4],[88,2],[89,2],[90,5],[95,2],[108,6],[109,6],[110,4],[111,4],[112,8],[113,1],[116,4],[117,3],[122,4],[123,9],[124,3],[125,2],[126,4],[127,3],[134,1],[139,1],[169,1],[170,1],[171,1],[175,2],[178,1],[196,1],[202,1],[215,1],[217,1]],"selection":[[2,1],[129,1]],"visit":[[2,1],[25,3],[43,1],[54,1],[64,5],[65,2],[71,1],[75,1],[104,1],[114,2],[158,1],[163,2],[191,1],[200,1],[201,1],[204,2],[209,1],[218,1]],"beckinstitute":[[2,1],[3,2],[8,1],[12,2],[32,1],[33,1],[38,1],[54,1],[74,1],[75,3],[76,1],[84,1]],"cbtresources":[[2,1],[3,2],[8,1],[12,2],[32,1],[33,1],[38,1],[54,1],[74,1],[75,1],[76,1]],"videos":[[2,1],[9,1],[38,1],[54,1],[65,1],[75,2],[84,1]],"downloadable":[[2,1],[84,1]],"worksheets":[[2,5],[19,1],[24,1],[33,1],[46,1],[51,4],[52,4],[63,1],[71,2],[75,1],[82,2],[84,2],[101,11],[102,5],[103,1],[118,2],[119,3],[122,1],[140,1],[153,1],[169,3],[175,1],[176,1],[177,1],[188,1],[195,1],[197,3],[198,6],[199,1],[200,10],[201,5],[202,1],[203,1],[205,1],[206,1],[209,2],[212,1],[217,2],[219,1],[222,1],[224,1],[225,1]],"appendix":[[2,1],[12,1],[14,1],[55,1],[70,1],[75,1],[76,3],[77,1],[78,1],[79,4],[163,1],[168,2],[169,1],[176,1],[188,1],[190,1],[195,1],[212,1],[219,1]],"note":[[2,2],[3,4],[4,2],[5,3],[7,1],[8,1],[9,1],[10,3],[12,2],[17,4],[18,1],[19,2],[25,1],[32,2],[33,1],[34,1],[36,1],[48,1],[51,2],[52,1],[53,2],[56,1],[58,1],[60,1],[61,2],[62,1],[72,1],[79,1],[81,1],[89,1],[91,1],[92,1],[94,1],[95,1],[96,1],[101,2],[120,1],[122,1],[155,1],[163,1],[164,1],[165,1],[166,1],[193,1],[200,2]],"print":[[2,2],[51,1],[70,1],[101,1],[121,1],[134,1],[176,1],[225,1]],"work-":[[2,1],[12,1],[32,1],[33,1],[35,1],[52,1],[60,1],[76,1],[171,1],[175,1],[181,1],[185,1],[198,2],[208,1],[212,1],[225,1]],"sheets":[[2,1],[21,1],[52,1],[92,2],[98,1],[101,1],[102,4],[103,2],[104,1],[107,2],[114,4],[115,6],[120,5],[121,4],[122,3],[134,2],[140,1],[141,1],[150,2],[152,1],[182,1],[192,1],[195,1],[198,2],[225,1]],"record":[[2,1],[3,2],[5,1],[16,1],[17,1],[19,1],[22,3],[24,3],[26,4],[27,2],[32,1],[35,2],[41,1],[43,1],[46,2],[49,1],[50,1],[51,3],[52,3],[62,1],[64,1],[65,1],[71,1],[72,1],[74,4],[75,1],[82,1],[83,2],[84,1],[98,1],[101,4],[102,4],[104,2],[107,2],[114,2],[115,3],[120,4],[129,1],[133,1],[143,1],[149,1],[172,1],[176,1],[177,25],[178,5],[179,1],[180,2],[181,4],[182,10],[183,13],[184,16],[185,10],[186,12],[187,20],[188,13],[189,3],[190,1],[191,1],[192,4],[198,3],[202,1],[203,11],[204,10],[205,2],[208,2],[209,1],[211,1],[212,2],[213,1],[217,3],[219,6],[221,1],[222,1],[223,25],[224,2]],"testing":[[2,1],[40,1],[44,1],[46,1],[50,1],[51,4],[52,4],[69,1],[70,1],[81,1],[82,3],[83,4],[84,3],[88,1],[117,1],[118,1],[167,1],[175,1],[187,1],[193,2],[195,2],[197,2],[211,1],[213,1],[214,2],[217,1],[218,1],[219,1],[223,3]],"worksheet":[[2,1],[4,1],[7,4],[10,1],[18,7],[19,2],[24,2],[33,3],[36,1],[42,1],[46,1],[50,3],[51,9],[52,24],[60,2],[62,1],[71,1],[75,1],[80,1],[81,1],[82,4],[83,2],[84,2],[97,3],[101,4],[119,1],[150,1],[171,6],[172,1],[173,2],[174,1],[175,11],[176,32],[177,4],[178,4],[179,7],[180,4],[181,14],[182,12],[184,11],[185,10],[187,4],[188,13],[190,4],[191,3],[192,8],[193,3],[194,7],[195,18],[197,16],[198,14],[199,7],[200,16],[201,10],[202,10],[203,1],[204,13],[205,12],[206,1],[208,3],[209,6],[210,4],[212,17],[214,6],[215,8],[216,14],[217,11],[218,15],[219,21],[221,22],[222,30],[223,3]],"contain":[[2,1],[24,1],[46,1],[47,1],[48,1],[52,1],[57,1],[72,1],[110,2],[115,2],[121,1],[134,2],[153,1],[164,2],[165,1],[211,1]],"amount":[[2,1],[6,1],[7,1],[9,1],[10,1],[15,1],[33,1],[34,1],[43,3],[45,1],[51,1],[56,1],[74,2],[75,1],[79,1],[94,2],[102,1],[103,1],[107,2],[108,1],[109,1],[111,2],[112,1],[115,1],[126,1],[155,4],[164,3],[174,1],[187,1],[198,1],[208,3],[210,2],[215,2]],"familiar":[[2,1],[48,1],[86,1],[92,1],[101,1],[102,1],[177,1],[188,2],[201,1]],"material":[[2,1],[5,2],[7,1],[24,1],[33,1],[43,1],[61,1],[62,1],[74,1],[75,1],[84,1],[92,3],[95,1],[98,2],[101,3],[102,1],[114,1],[131,1]],"preferable":[[2,1],[38,1],[70,1],[148,1]],"hand":[[2,1],[4,1],[6,1],[10,1],[18,1],[20,1],[21,2],[38,1],[42,1],[46,1],[47,2],[53,1],[58,2],[60,1],[63,1],[69,1],[70,1],[93,5],[94,1],[95,1],[97,1],[110,1],[111,1],[118,1],[124,1],[154,4],[164,1],[172,1],[173,1],[178,2],[192,1],[194,2],[201,1],[204,1],[207,2],[210,4],[213,1]],"allows":[[2,1],[4,1],[17,1],[21,1],[43,1],[70,1],[92,1],[101,1],[164,2],[165,1],[175,1],[176,1],[184,1],[192,1],[197,1],[198,1]],"avoid":[[2,1],[3,1],[4,2],[5,1],[6,1],[7,3],[8,1],[9,1],[13,1],[17,1],[19,1],[27,1],[31,1],[32,1],[36,1],[43,1],[44,2],[48,2],[51,1],[52,1],[53,1],[55,2],[64,1],[65,3],[72,1],[73,1],[74,2],[78,3],[82,1],[84,1],[89,1],[91,1],[97,2],[100,3],[110,1],[111,1],[114,1],[122,2],[134,2],[140,1],[155,4],[156,6],[157,3],[158,14],[159,9],[161,1],[167,1],[171,2],[172,1],[175,1],[176,1],[193,1],[194,5],[196,1],[199,1],[201,1],[204,2],[206,4],[208,4],[209,4],[210,1],[213,1],[218,1],[219,1],[222,3]],"formal":[[2,1],[53,9],[54,1],[55,2],[71,1],[83,2],[92,2],[101,1],[103,1],[113,1],[121,1],[193,1]],"growth":[[2,1],[113,1]],"enhanced":[[2,1],[3,1],[16,1],[80,2],[81,1],[89,1],[93,1],[105,1],[106,1],[108,1],[160,1]],"applying":[[2,2],[5,2],[53,1],[58,1],[93,1],[125,3]],"exercise":[[2,2],[9,1],[10,1],[14,1],[18,1],[19,2],[20,1],[21,1],[22,1],[24,2],[26,2],[27,1],[31,1],[32,1],[35,1],[38,1],[42,1],[44,1],[47,1],[49,1],[51,2],[52,1],[53,6],[54,1],[55,2],[58,1],[62,1],[63,1],[70,1],[72,1],[75,1],[77,1],[78,1],[83,1],[88,1],[93,1],[94,1],[95,4],[96,11],[97,1],[98,1],[100,1],[103,5],[105,2],[108,1],[109,19],[113,5],[114,3],[116,4],[117,2],[118,1],[120,1],[122,2],[124,2],[125,1],[126,3],[127,5],[135,1],[140,16],[142,6],[145,4],[151,2],[154,2],[155,1],[166,1],[169,1],[171,1],[173,1],[175,2],[176,4],[178,2],[179,4],[180,1],[181,2],[182,1],[184,2],[187,2],[188,1],[190,1],[191,1],[193,1],[194,7],[195,1],[197,7],[198,3],[199,2],[200,5],[201,1],[202,2],[203,1],[204,3],[205,1],[206,1],[207,2],[208,3],[209,1],[210,3],[212,4],[214,4],[215,1],[216,3],[217,1],[218,3],[221,4],[222,5]],"chap-":[[2,1],[169,1],[178,1],[181,1],[196,1],[201,1],[203,1],[225,1]],"directed":[[2,1],[3,1],[92,1],[93,1],[115,1],[140,1],[182,2]],"refocus":[[2,1],[48,1],[63,2]],"turning":[[2,1],[38,1],[43,1],[52,1],[54,1],[63,1],[86,1],[97,1],[113,1],[181,2],[191,1]],"spotlight":[[2,1],[171,1],[207,1]],"boost":[[2,1],[71,1],[89,1],[96,1],[99,1],[106,1],[110,1],[111,1],[163,4],[166,2],[167,3],[168,6],[176,1],[196,1],[200,1],[201,1],[203,1],[204,1],[205,2],[208,1],[210,1],[218,2]],"modify":[[2,1],[4,2],[5,1],[17,1],[23,1],[24,1],[25,1],[27,1],[29,1],[30,1],[32,1],[33,1],[38,3],[44,1],[53,1],[56,3],[57,1],[58,2],[59,3],[60,7],[62,3],[65,1],[67,1],[70,1],[74,1],[79,1],[82,1],[83,8],[84,3],[121,1]],"influence":[[2,1],[5,3],[9,2],[10,1],[19,1],[63,1],[74,1],[123,2],[124,1],[126,1],[127,2],[136,1],[149,1],[170,1],[172,1],[173,2],[175,1],[191,1],[192,1],[200,1],[201,1]],"receptive":[[2,1],[7,1],[34,1],[99,1],[106,1],[163,1]],"role-play":[[2,2],[31,2],[35,1],[47,1],[79,1]],"friend":[[2,1],[5,1],[6,1],[7,1],[10,2],[11,2],[12,3],[13,2],[18,2],[34,1],[35,1],[36,1],[37,1],[38,1],[40,1],[41,1],[43,4],[46,2],[47,7],[48,1],[51,1],[56,1],[57,2],[62,1],[64,1],[67,1],[68,1],[70,4],[71,1],[72,1],[76,1],[77,3],[89,1],[91,6],[94,9],[97,3],[98,3],[101,1],[102,7],[115,1],[116,1],[118,1],[120,1],[121,1],[122,1],[170,2],[172,3],[178,1],[182,1],[183,3],[184,2],[186,2],[189,4],[191,1],[195,1],[200,2],[201,2],[202,2],[204,3],[207,1],[209,1],[214,1],[215,2],[216,2]],"colleague":[[2,1],[9,2],[10,1],[35,1],[36,1],[74,1],[93,1],[97,1],[108,1],[172,1],[213,1]],"member":[[2,1],[11,2],[12,2],[13,2],[35,1],[38,1],[47,1],[51,1],[64,1],[91,1],[94,3],[98,1],[102,1],[104,1],[107,1],[115,1],[120,2],[206,1],[209,1]],"partner":[[2,1],[7,1],[11,1],[18,1],[19,1],[21,1],[37,1],[69,1],[75,1],[101,1],[107,1],[127,1],[144,1],[192,2],[209,1],[212,1],[213,1],[214,2],[215,1]],"write":[[2,1],[3,1],[9,1],[10,1],[13,3],[14,1],[15,1],[16,1],[17,3],[18,3],[19,2],[21,4],[22,1],[25,4],[26,3],[32,1],[35,2],[41,1],[46,2],[49,1],[51,2],[52,3],[58,1],[60,1],[61,1],[64,1],[65,1],[66,2],[67,1],[70,1],[71,3],[72,1],[75,1],[78,1],[92,1],[93,1],[94,4],[95,1],[97,1],[101,2],[121,4],[122,4],[140,1],[143,3],[147,1],[149,1],[150,1],[155,1],[172,1],[175,2],[176,8],[177,6],[178,3],[179,5],[181,1],[182,2],[183,7],[184,11],[185,6],[186,11],[187,6],[188,7],[190,3],[191,3],[192,1],[193,3],[194,3],[195,6],[198,9],[199,6],[200,7],[201,2],[202,3],[203,3],[204,6],[205,2],[208,1],[209,3],[210,1],[212,3],[213,1],[214,7],[215,1],[216,1],[217,1],[218,3],[219,1],[221,7],[222,5]],"transcript":[[2,1],[38,1]],"imaginary":[[2,1],[14,1],[148,1],[166,1],[179,1],[193,1]],"vocabulary":[[2,1],[43,1],[74,1],[79,1]],"subject":[[2,1],[8,1],[40,1],[118,5],[119,1],[121,2],[171,1]],"enhance":[[2,1],[9,1],[49,1],[53,1],[86,4],[89,4],[90,4],[92,2],[100,2],[104,1],[109,2],[111,1],[127,1],[129,1],[134,1],[163,1],[166,1],[167,1],[168,1],[218,1]],"added":[[2,2],[3,2],[35,2],[59,1],[110,1],[153,1],[197,2],[199,1],[200,1],[209,1]],"relevant":[[2,1],[3,2],[5,2],[6,1],[7,8],[8,2],[9,1],[11,2],[12,1],[14,2],[15,1],[19,1],[22,1],[26,1],[28,1],[32,2],[33,3],[35,1],[36,1],[45,2],[47,1],[56,1],[58,3],[60,1],[61,1],[62,2],[64,1],[69,1],[70,1],[74,5],[76,2],[79,1],[86,1],[93,1],[108,1],[112,1],[113,1],[129,1],[179,1],[180,1],[186,1],[192,1],[195,1],[201,1],[202,1]],"self-disclosure":[[2,1],[3,1],[9,3],[10,5],[15,1],[24,1],[34,2],[48,3],[60,1],[61,3],[64,1],[82,1],[83,1],[84,2]],"course":[[2,1],[3,3],[6,1],[8,2],[9,1],[10,2],[12,2],[15,1],[17,1],[25,1],[26,1],[32,1],[33,1],[38,1],[60,1],[61,2],[64,1],[65,1],[71,2],[73,1],[75,1],[77,2],[81,1],[85,1],[86,1],[87,1],[91,1],[92,3],[93,2],[95,1],[97,1],[98,1],[101,1],[102,1],[103,6],[105,2],[107,2],[108,1],[109,2],[111,1],[113,1],[114,1],[120,2],[121,1],[122,2],[124,1],[134,1],[163,1],[172,1],[201,1],[205,1]],"opportunities":[[2,1],[6,2],[13,1],[15,1],[20,1],[23,1],[29,1],[31,1],[33,1],[71,1],[75,1],[78,1],[83,1],[100,1],[104,1],[112,2],[176,1],[201,2],[211,1]],"grasp":[[2,1],[8,1],[24,1],[69,1]],"kind":[[2,1],[3,1],[5,2],[7,2],[9,2],[12,3],[14,1],[16,2],[17,1],[18,1],[22,1],[25,1],[26,1],[31,1],[35,2],[37,2],[38,1],[40,2],[42,1],[43,1],[45,1],[48,1],[49,2],[56,1],[61,2],[64,1],[65,1],[69,5],[70,2],[73,2],[94,2],[100,3],[102,2],[105,1],[183,1],[195,1],[196,2],[197,1],[198,2],[200,1],[201,9],[216,1],[222,1]],"doesn":[[2,4],[5,3],[7,1],[11,1],[13,3],[18,1],[21,3],[25,3],[26,3],[27,1],[31,1],[32,1],[35,1],[37,1],[41,1],[42,2],[43,6],[47,10],[48,4],[51,3],[52,1],[56,1],[57,1],[58,2],[59,1],[60,1],[61,3],[63,2],[65,2],[71,1],[78,2],[79,1],[89,2],[93,2],[95,1],[97,1],[98,5],[101,2],[109,2],[112,1],[130,1],[164,1],[165,1],[166,1],[167,1],[172,4],[173,1],[176,1],[178,2],[182,7],[183,2],[184,2],[185,4],[186,3],[187,1],[194,1],[195,1],[197,2],[198,1],[203,1],[207,1],[210,1],[214,1],[216,1],[217,1]],"cover":[[2,1],[7,1],[12,1],[16,2],[19,1],[26,1],[33,3],[34,3],[46,1],[53,1],[115,1],[121,1],[156,1],[158,1],[163,1],[165,1],[166,1],[167,1],[168,1],[225,1]],"variations":[[2,1],[11,1],[12,1],[124,1],[134,2]],"youth":[[2,1],[5,2],[6,1],[58,1],[60,2],[75,1],[84,1],[116,2],[117,1],[123,1],[216,2]],"topics":[[2,1],[10,1],[13,1],[33,1],[34,5],[37,1],[38,1],[74,1],[84,2],[91,1],[92,1],[100,1],[122,1],[206,1]],"suicidality":[[2,1],[12,1],[16,2],[84,1]],"supplement":[[2,1],[115,1],[116,1],[120,1]],"substantially":[[2,1],[56,1],[110,1],[172,1]],"summary":[[2,1],[3,1],[7,1],[8,1],[10,1],[14,1],[15,1],[19,4],[22,1],[27,2],[32,1],[33,3],[35,8],[37,1],[38,1],[42,1],[44,1],[46,1],[49,1],[51,3],[52,1],[55,1],[58,1],[62,2],[67,2],[70,1],[72,2],[75,2],[76,3],[77,2],[81,2],[82,7],[83,10],[84,5],[92,1],[101,1],[102,1],[116,1],[120,1],[127,1],[163,1],[164,1],[165,4],[166,2],[167,2],[168,2],[176,1],[179,1],[182,1],[185,1],[193,1],[199,1],[221,1]],"considered":[[2,1],[5,1],[6,2],[46,1],[49,1],[86,1],[87,2],[108,1],[121,1],[164,1],[165,1],[167,1],[181,1],[182,1],[184,1],[185,1],[187,2],[189,4],[191,2],[193,1],[199,2],[200,1],[205,1],[213,1],[215,3]],"gold":[[2,1],[80,1],[86,1],[87,1],[93,1],[124,1]],"psy-":[[2,1],[80,4],[81,2]],"chotherapy":[[2,1],[80,1]],"cli-":[[2,1],[3,1],[7,1],[8,1],[10,1],[11,1],[12,3],[14,1],[18,1],[19,1],[21,1],[22,1],[32,7],[35,1],[36,1],[38,4],[40,1],[41,1],[42,1],[49,1],[52,1],[55,1],[57,1],[59,1],[61,1],[63,1],[64,1],[65,1],[71,1],[73,1],[74,2],[79,1],[89,2]],"ents":[[2,1],[3,1],[7,1],[11,1],[12,1],[18,1],[19,1],[22,1],[32,2],[36,1],[38,2],[40,1],[42,1],[49,1],[52,1],[55,1],[57,1],[59,1],[61,1],[63,1],[65,1],[71,1],[74,1]],"bring":[[2,1],[9,1],[10,4],[12,2],[19,1],[22,1],[32,3],[40,1],[45,2],[48,1],[53,4],[54,4],[55,2],[59,1],[64,1],[65,1],[77,1],[84,1],[90,1],[91,2],[92,4],[93,1],[94,2],[100,2],[102,4],[103,1],[104,1],[106,1],[130,1],[139,1],[140,1],[141,1],[142,1],[144,1],[148,2],[154,1],[155,1],[165,1],[166,1],[178,1],[190,1],[193,1],[195,1],[196,1],[200,1],[202,1],[203,1],[206,1],[210,2],[211,1]],"employ":[[2,1],[3,1],[32,2],[49,1],[67,1],[86,2],[101,1]],"applied":[[2,1],[117,1],[121,1],[125,2],[126,1],[140,1],[194,1]],"context":[[2,1],[3,2],[6,3],[10,2],[34,1],[41,1],[43,1],[60,2],[63,1],[81,1],[90,1],[113,1],[114,1],[125,2],[127,1],[196,1]],"recently":[[2,1],[47,1],[56,1],[61,1],[69,1],[87,1],[88,1],[93,1],[110,1],[111,2],[123,1],[184,1]],"drawing":[[2,1],[18,1],[26,1],[43,1],[53,1],[59,2],[64,2],[71,2],[82,1],[109,1],[135,1],[140,1],[195,1]],"day-to-day":[[2,1],[53,1]],"experiencing":[[2,2],[4,1],[8,1],[9,2],[18,1],[42,1],[43,1],[44,3],[53,1],[55,1],[57,2],[58,1],[65,1],[80,1],[87,1],[91,1],[95,2],[96,1],[100,1],[105,1],[111,1],[112,2],[120,1],[128,1],[130,1],[132,1],[133,1],[134,3],[138,1],[140,3],[145,1],[149,1],[151,1],[154,2],[161,2],[163,2],[170,2],[171,1],[175,2],[176,1],[177,1],[179,2],[183,2],[187,1],[188,1],[191,1],[200,2],[201,1],[202,1],[205,1],[206,1],[213,2],[214,1],[217,2],[218,2]],"outside":[[2,1],[10,1],[16,1],[18,1],[24,1],[44,1],[48,1],[53,1],[73,1],[80,1],[104,1],[113,1],[126,1],[145,1],[146,1],[148,1],[161,1],[173,1],[176,1],[182,1],[192,1],[193,2],[204,1],[205,1],[208,1]],"learned":[[2,1],[3,3],[4,1],[6,1],[9,1],[10,3],[18,1],[41,1],[53,1],[56,1],[58,1],[60,1],[61,1],[71,1],[79,1],[87,1],[88,1],[89,1],[92,1],[93,1],[100,3],[104,1],[106,1],[107,1],[113,1],[115,1],[120,1],[146,1],[169,3],[170,2],[172,2],[173,1],[175,3],[176,2],[177,6],[181,1],[182,1],[183,1],[186,1],[188,3],[189,1],[190,1],[191,1],[192,2],[193,1],[194,2],[195,5],[196,5],[197,1],[199,4],[201,1],[203,1],[204,3],[206,2],[209,1],[210,3],[213,1],[214,2],[215,1],[217,7],[218,7],[219,5],[221,4]],"readers":[[2,1],[84,1],[85,2],[109,1],[113,1],[155,4],[169,3],[225,1]],"deter":[[2,1],[108,1]],"responses":[[2,1],[4,1],[9,2],[12,1],[22,2],[35,1],[36,3],[42,1],[45,1],[46,1],[50,2],[51,7],[52,2],[53,1],[63,1],[83,2],[84,1],[88,1],[91,1],[98,1],[100,1],[101,1],[110,1],[121,1],[122,1],[127,1],[161,3],[169,1],[173,2],[175,4],[177,1],[179,1],[187,1],[192,1],[196,1],[199,1],[206,5],[213,4],[214,3],[215,1],[216,1],[223,2]],"noticing":[[2,1],[5,2],[6,1],[32,1],[53,1],[54,1],[63,1],[100,1],[104,1],[109,1],[135,1],[145,1],[154,1],[155,1],[156,2],[158,3],[161,1],[171,1],[172,1],[176,1],[178,2],[195,1],[200,1],[205,1],[210,1],[223,1]],"intensified":[[2,1],[6,1],[10,1],[112,1],[173,1],[197,1]],"direction":[[2,1],[3,1],[4,1],[47,1],[75,1],[191,1],[192,1],[196,1],[199,1]],"having":[[2,1],[4,3],[6,1],[9,1],[10,2],[12,1],[15,3],[16,2],[17,4],[18,3],[19,3],[21,3],[24,2],[26,4],[27,1],[30,1],[32,9],[33,2],[34,1],[35,1],[37,1],[42,1],[43,1],[45,1],[47,2],[48,2],[51,3],[56,1],[57,1],[58,3],[60,1],[63,1],[64,2],[65,4],[69,1],[70,2],[71,3],[74,4],[76,1],[77,2],[82,1],[93,1],[95,1],[98,1],[112,1],[125,1],[130,1],[132,1],[139,1],[140,1],[151,1],[155,1],[163,2],[164,2],[165,1],[166,8],[167,5],[168,3],[170,3],[171,2],[172,1],[173,4],[176,1],[178,2],[179,2],[181,1],[184,5],[187,6],[188,2],[191,1],[192,3],[193,3],[195,3],[197,1],[198,1],[200,4],[202,1],[205,3],[206,1],[207,1],[208,2],[209,1],[212,2],[215,3],[218,1],[219,1]],"bodily":[[2,1],[53,1],[63,1],[128,2],[140,1],[155,1],[192,1]],"sensations":[[2,1],[44,1],[53,2],[54,3],[68,1],[78,1],[79,2],[97,1],[98,2],[128,1],[155,1],[158,1],[159,1],[173,1],[175,1],[208,2],[210,1],[219,4]],"associated":[[2,1],[6,1],[7,2],[9,1],[32,2],[33,1],[34,2],[40,2],[41,1],[42,2],[43,2],[44,1],[47,1],[48,1],[56,3],[57,1],[58,2],[64,2],[74,1],[79,1],[86,2],[87,4],[88,1],[89,3],[90,5],[91,5],[92,3],[93,3],[94,2],[95,6],[96,1],[101,1],[102,2],[104,1],[108,2],[109,2],[110,14],[111,5],[112,2],[113,4],[114,1],[117,2],[120,1],[124,1],[127,1],[128,1],[140,2],[144,1],[161,2],[175,1],[179,4],[180,1],[202,2],[206,1],[208,6],[224,1]],"heart":[[2,1],[25,1],[40,1],[41,1],[47,1],[48,2],[81,1],[89,1],[90,2],[93,2],[104,2],[105,1],[109,2],[111,2],[112,1],[114,1],[115,2],[117,2],[120,1],[122,1],[128,2],[139,1],[140,2],[157,1],[158,2],[164,3],[170,8],[173,11],[174,2],[177,1],[178,3],[184,15],[187,19],[192,10],[193,43],[206,3],[208,6],[210,2],[212,1],[217,2],[219,3]],"beating":[[2,1],[40,1],[41,1],[173,1],[187,1],[193,1]],"fast":[[2,1],[21,1],[40,2],[41,1],[75,1],[121,1],[157,1],[158,1],[163,1],[170,1],[172,2],[192,1],[193,14],[201,2],[206,1],[208,1]],"avoiding":[[2,1],[3,1],[6,1],[8,1],[12,1],[20,2],[21,1],[22,1],[27,2],[35,1],[57,3],[65,1],[76,1],[87,1],[89,1],[91,1],[97,1],[100,1],[130,1],[134,2],[139,1],[141,1],[150,1],[151,1],[154,1],[166,2],[167,1],[168,1],[170,2],[172,1],[176,1],[193,1],[194,2],[202,1],[203,1],[204,3],[205,1],[206,5],[207,1],[208,1],[217,2],[218,1],[221,1],[222,3]],"help-":[[2,1],[26,1],[56,2],[210,1],[212,1],[217,1]],"question":[[2,1],[3,1],[6,1],[7,2],[9,1],[10,3],[12,1],[14,1],[16,1],[19,4],[21,1],[25,1],[27,2],[33,1],[34,2],[35,1],[41,2],[42,2],[44,1],[47,2],[48,3],[52,2],[55,1],[57,2],[58,1],[59,1],[61,1],[70,2],[74,1],[81,1],[82,3],[84,1],[87,1],[88,1],[90,4],[94,2],[108,1],[110,1],[112,1],[113,2],[155,3],[163,4],[170,1],[179,8],[180,1],[181,5],[182,2],[183,1],[186,1],[197,8],[207,2],[208,1]],"ones":[[2,1],[3,1],[11,1],[16,1],[18,1],[19,1],[36,1],[37,1],[47,1],[57,1],[65,1],[68,1],[69,1],[89,1],[101,1],[104,1],[105,1],[106,1],[158,1],[163,1],[166,1],[168,1],[178,2],[179,1],[183,1],[191,1],[195,1],[200,1],[202,3],[203,2],[204,1],[207,1],[208,1],[210,2],[214,2],[217,1]],"trying":[[2,1],[3,1],[4,1],[5,1],[7,1],[13,1],[16,1],[19,2],[21,2],[25,1],[26,1],[27,1],[32,2],[34,1],[36,1],[38,1],[41,2],[42,1],[43,1],[53,2],[60,1],[61,1],[70,1],[71,2],[74,2],[78,1],[82,1],[87,1],[90,4],[91,2],[92,1],[93,1],[95,3],[96,3],[97,2],[100,2],[101,2],[102,1],[103,1],[105,3],[108,5],[109,2],[111,1],[114,2],[115,1],[120,1],[121,1],[159,1],[164,1],[169,1],[178,2],[179,2],[182,1],[184,1],[189,4],[191,2],[192,1],[195,1],[197,1],[199,4],[202,1],[206,1],[208,1],[210,1],[213,1],[216,1],[219,1],[221,2]],"hard":[[2,1],[3,1],[4,3],[6,6],[7,5],[8,2],[9,2],[10,1],[13,2],[16,3],[17,5],[18,6],[19,4],[24,1],[25,1],[26,2],[27,1],[33,2],[34,3],[35,1],[37,2],[38,1],[41,2],[42,2],[48,1],[53,1],[56,1],[59,1],[60,2],[61,3],[65,1],[66,1],[69,11],[70,2],[74,1],[76,4],[79,4],[90,1],[97,1],[99,1],[112,1],[155,1],[166,1],[170,2],[171,1],[177,1],[178,2],[182,2],[183,2],[187,1],[189,6],[192,2],[197,2],[199,1],[200,1],[201,2],[203,1],[208,1],[216,3],[219,3],[222,1]],"doesn't":[[2,1],[5,1],[7,1],[10,1],[17,1],[25,1],[32,1],[51,3],[64,5],[172,1],[182,1],[184,1],[205,1]],"whose":[[2,1],[57,2],[58,1],[59,1],[60,1],[155,1],[225,1]],"primary":[[2,1],[43,1],[87,2],[92,2],[103,2],[113,1],[116,1],[117,3],[124,1],[175,1],[211,1]],"aware":[[2,1],[4,4],[26,1],[30,1],[36,2],[40,6],[41,1],[42,4],[53,1],[54,2],[55,2],[69,1],[78,1],[82,2],[83,1],[84,1],[94,1],[95,1],[96,5],[97,1],[98,1],[100,5],[101,1],[102,1],[104,9],[105,4],[106,1],[109,1],[121,1],[133,2],[140,1],[155,2],[172,5],[178,3],[181,1],[185,1],[192,2],[195,1],[197,1],[198,2],[200,1],[205,2],[208,1],[210,2],[211,1],[213,3],[218,2],[219,1]],"won't":[[2,2],[5,1],[7,1],[9,2],[10,1],[12,3],[19,1],[20,3],[25,3],[26,3],[31,2],[34,1],[36,1],[41,2],[43,1],[46,1],[47,3],[48,3],[51,1],[52,2],[56,1],[57,4],[64,1],[65,1],[71,2],[77,2],[172,3],[174,1],[178,1],[186,1],[194,3],[202,1],[206,1],[210,1],[211,2],[214,1]],"overview":[[3,6],[16,1],[81,1],[82,11],[83,8],[84,5],[89,1],[92,3],[114,3],[119,1],[203,1],[223,23],[224,1]],"person":[[3,3],[4,3],[5,1],[7,2],[10,2],[12,3],[18,2],[24,1],[26,1],[31,1],[38,1],[41,2],[42,2],[44,1],[46,1],[48,1],[51,1],[56,4],[57,1],[58,2],[59,8],[60,3],[61,3],[64,3],[69,2],[71,1],[76,1],[77,1],[80,1],[94,1],[95,7],[100,1],[101,5],[102,3],[104,2],[105,5],[106,1],[108,1],[111,1],[112,2],[113,1],[114,1],[115,1],[120,2],[121,3],[140,1],[145,4],[155,1],[158,3],[170,1],[172,3],[178,1],[179,8],[180,2],[181,7],[182,1],[183,1],[184,4],[185,2],[186,2],[188,2],[192,3],[196,2],[197,1],[199,1],[200,4],[201,1],[202,3],[203,2],[204,3],[206,1],[208,5],[209,1],[210,4],[212,1],[213,13],[214,21],[215,1],[216,11],[218,1],[221,1],[222,4]],"certain":[[3,1],[4,1],[5,1],[6,2],[8,2],[10,2],[11,1],[20,1],[21,2],[25,1],[27,1],[37,1],[38,1],[39,1],[43,2],[53,3],[64,1],[65,1],[71,1],[76,1],[91,2],[95,1],[97,1],[100,1],[101,1],[111,2],[115,1],[130,2],[134,1],[139,3],[146,1],[157,1],[158,6],[159,9],[175,1],[178,1],[185,1],[198,1],[199,1],[204,4],[208,1],[213,1],[217,1],[218,1],[219,1]],"apply":[[3,2],[26,1],[31,1],[35,1],[36,3],[38,1],[46,1],[47,2],[51,1],[52,2],[57,1],[59,2],[60,1],[61,2],[67,1],[79,2],[85,1],[93,1],[111,1],[113,2],[140,1],[169,3],[173,1],[174,1],[176,1],[191,1],[192,1],[196,1],[215,1],[217,2]],"worry":[[3,1],[27,1],[42,1],[44,3],[53,3],[55,3],[76,2],[77,1],[80,1],[84,1],[92,1],[97,1],[113,1],[130,1],[152,2],[155,9],[157,1],[158,1],[164,1],[170,3],[171,1],[175,1],[178,1],[194,6],[195,17],[203,1],[208,2],[217,1]],"remembering":[[3,1],[42,1],[43,1],[140,1],[166,2],[168,1],[179,1],[185,1],[186,1],[193,1]],"everything":[[3,1],[4,1],[5,1],[6,1],[10,1],[13,2],[16,3],[17,8],[19,5],[32,1],[33,1],[37,1],[40,1],[48,2],[51,1],[53,1],[54,1],[59,1],[76,1],[92,1],[100,2],[105,1],[152,1],[153,1],[170,1],[171,1],[174,1],[178,3],[196,1],[206,1],[209,1],[216,1]],"exposed":[[3,1],[5,1],[6,1],[58,1],[65,1],[91,1],[93,1],[110,1],[164,2],[167,2]],"points":[[3,2],[4,1],[12,1],[19,1],[21,1],[35,2],[36,1],[43,1],[51,1],[52,1],[71,3],[72,1],[73,2],[74,1],[75,2],[79,1],[82,1],[84,1],[89,1],[91,1],[92,3],[95,2],[103,3],[115,1],[121,1],[163,6],[212,1],[219,1]],"watch":[[3,1],[10,1],[12,2],[18,1],[20,1],[24,1],[48,1],[55,1],[78,4],[79,1],[96,1],[98,2],[100,1],[105,1],[107,1],[115,2],[120,4],[145,1],[157,1],[158,1],[159,1],[170,1],[173,1],[191,1],[207,1]],"ses-":[[3,3],[7,1],[9,1],[10,2],[12,4],[13,1],[16,1],[24,1],[26,1],[32,2],[35,2],[36,1],[47,1],[75,1],[98,1],[102,1],[115,1],[120,1]],"sion":[[3,1],[7,1],[12,4],[13,1],[16,2],[17,1],[19,1],[24,1],[26,1],[32,2],[35,2],[38,1],[47,1],[56,1],[58,1],[59,1],[69,1],[71,1],[76,2],[80,2],[87,2],[90,1],[95,1],[113,1],[179,1],[201,1],[202,1],[203,2],[205,1],[219,1]],"checklist":[[3,2],[26,2],[83,1],[163,1],[166,1],[167,1],[168,1],[217,2],[218,2],[224,1]],"illus-":[[3,1],[172,1]],"plans":[[3,12],[6,1],[9,1],[13,1],[18,1],[20,1],[22,4],[23,12],[24,26],[25,12],[26,22],[27,14],[30,2],[34,1],[35,1],[36,5],[38,2],[43,4],[47,2],[48,1],[51,2],[57,2],[65,2],[69,1],[72,1],[74,6],[75,3],[77,1],[82,8],[83,5],[84,6],[96,1],[113,1],[124,1],[165,4],[166,4],[167,1],[168,4],[182,2],[183,1],[185,2],[187,1],[188,1],[189,6],[190,3],[191,2],[192,5],[194,1],[195,1],[196,3],[201,1],[203,1],[208,2],[211,2],[212,1],[214,1],[217,1],[218,2],[221,2],[225,1]],"ever-evolving":[[3,2]],"requires":[[3,2],[11,1],[26,2],[29,1],[87,1],[93,1],[98,1]],"monitors":[[3,2],[164,2]],"progress":[[3,5],[11,1],[13,1],[14,1],[15,1],[16,1],[23,1],[29,1],[30,1],[32,4],[33,1],[35,1],[44,1],[48,1],[58,1],[71,8],[72,4],[74,4],[75,3],[77,2],[81,3],[82,2],[83,1],[84,3],[90,3],[91,1],[97,2],[100,2],[101,1],[103,2],[113,1],[114,4],[115,2],[116,1],[120,5],[123,1],[128,4],[140,1],[163,1],[167,2],[168,5],[169,6],[170,2],[175,1],[176,6],[177,1],[183,2],[184,1],[187,1],[189,2],[190,7],[192,2],[198,3],[199,3],[202,1],[205,2],[212,3],[217,1],[218,1],[219,2],[221,5],[222,1],[225,2]],"culturally":[[3,5],[9,2],[80,1],[81,1]],"tailors":[[3,2]],"stresses":[[3,2],[71,1],[170,1]],"collaboration":[[3,2],[9,4],[25,1],[43,1],[74,2],[80,1],[83,1],[84,1]],"participation":[[3,2],[16,1],[82,1],[91,1],[92,1],[98,2],[108,1],[113,1],[115,1],[121,2]],"aspirational":[[3,2],[67,1]],"present":[[3,3],[4,1],[7,1],[8,7],[9,2],[11,1],[13,1],[33,1],[35,1],[38,1],[41,1],[42,1],[43,1],[45,1],[53,3],[54,1],[57,2],[65,1],[66,1],[74,1],[76,1],[79,2],[86,1],[89,1],[91,2],[92,1],[93,1],[94,1],[96,2],[100,1],[102,1],[111,1],[114,1],[123,1],[125,1],[134,1],[140,1],[161,2],[166,1],[170,2],[172,1],[173,1],[177,1],[178,1],[182,1],[191,1],[192,1],[193,1],[201,1],[206,1],[209,3],[210,2],[211,1]],"educative":[[3,2]],"sensitive":[[3,2],[7,1],[38,1],[112,1],[208,2],[213,1]],"uses":[[3,4],[203,1]],"guided":[[3,3],[6,1],[31,1],[37,1],[44,1],[71,1],[74,3],[81,1],[83,2],[84,1],[88,1],[103,1],[118,1],[192,1]],"discovery":[[3,2],[31,1],[37,1],[71,1],[74,2],[83,2],[84,1]],"teaches":[[3,2],[40,1],[53,1],[63,1],[91,1],[95,1],[100,1],[169,2],[174,1],[176,1],[179,1],[181,1],[188,1],[192,1],[203,1],[206,1],[211,2],[212,1]],"includes":[[3,2],[11,1],[12,1],[19,1],[84,1],[85,2],[88,1],[92,2],[103,1],[114,3],[140,1],[141,1],[214,1],[216,1]],"principle":[[3,14],[26,1]],"cog-":[[3,1],[17,1],[64,1],[80,2],[86,1]],"nitive":[[3,1],[17,1],[80,2],[86,1]],"informed":[[3,1],[86,1],[89,1],[92,2],[100,1],[101,1],[103,1],[107,1],[108,1],[110,1],[113,1],[114,1],[117,1],[118,1],[122,1],[163,1],[164,1],[225,1]],"lation":[[3,1],[111,1]],"rate":[[3,1],[10,1],[16,2],[21,4],[37,1],[43,2],[47,1],[53,1],[61,1],[64,1],[65,1],[78,1],[79,1],[81,1],[86,2],[87,11],[88,2],[90,1],[107,1],[108,1],[109,2],[111,2],[122,1],[126,1],[128,1],[140,1],[150,1],[154,1],[157,1],[158,2],[173,2],[174,2],[175,3],[176,2],[177,11],[178,1],[179,1],[180,1],[181,11],[182,3],[183,6],[184,11],[185,4],[186,4],[187,9],[188,4],[190,1],[193,11],[198,5],[199,5],[201,2],[202,2],[203,2],[204,1],[205,2],[206,2],[208,1],[209,4],[210,2],[212,7],[214,2],[215,3],[216,1],[217,9],[218,2],[219,2],[221,3],[222,6],[223,1]],"collect":[[3,2],[4,2],[7,1],[8,2],[11,4],[14,1],[15,1],[23,1],[33,1],[34,1],[35,1],[59,3],[61,1],[92,1],[101,1],[114,3],[115,3],[120,3],[121,2],[155,1]],"problematic":[[3,1],[7,2],[22,1],[32,2],[40,1],[41,1],[57,2],[82,1],[83,1],[84,4],[129,1],[141,2],[148,2],[218,2]],"increasing":[[3,1],[14,1],[22,1],[24,1],[30,1],[33,1],[43,2],[44,1],[64,1],[71,1],[77,1],[82,1],[89,2],[95,1],[108,1],[109,1],[111,1],[117,1],[127,1],[141,1],[163,1],[208,1],[209,2],[211,1]],"line":[[3,1],[21,1],[22,1],[48,1],[61,2],[71,1],[74,1],[87,1],[140,1],[155,1],[167,1],[169,3],[177,2],[178,1],[179,1],[182,1],[190,1],[198,2],[201,2],[209,1],[212,2],[213,1],[221,3]],"monitoring":[[3,1],[9,1],[23,1],[24,2],[32,1],[36,1],[63,1],[71,1],[74,1],[80,1],[81,1],[82,1],[83,2],[84,1],[88,1],[92,2],[95,2],[98,1],[101,5],[102,3],[103,3],[113,1],[114,4],[116,1],[118,4],[119,3],[120,1],[122,1],[138,1],[140,1],[161,1],[163,3],[166,2],[168,4],[218,1]],"middle":[[3,1],[8,1],[10,1],[12,1],[13,2],[15,1],[17,1],[18,1],[30,1],[32,1],[33,1],[34,1],[51,1],[58,1],[60,1],[74,1],[76,1],[79,1],[82,2],[84,1],[93,1],[111,2],[113,1],[123,2],[153,1],[155,1],[172,1],[192,1],[197,1],[207,1],[209,2],[213,2]],"undermined":[[3,1],[87,1]],"anticipating":[[3,1],[24,1],[27,1],[82,1],[83,1],[113,1],[213,1],[219,1]],"developing":[[3,2],[7,1],[8,2],[12,1],[14,1],[51,1],[56,1],[73,1],[96,1],[111,1],[175,1],[177,1],[188,3],[191,2],[192,2],[195,1],[196,1],[197,1],[218,1]],"overcome":[[3,1],[4,1],[18,1],[24,1],[27,2],[29,1],[30,2],[31,3],[71,1],[77,1],[96,1],[98,1],[100,1],[120,1],[123,1],[163,1],[166,1],[170,1],[175,2],[176,1],[189,1],[190,5],[192,1],[193,2],[194,2],[195,3],[203,1],[205,1],[206,1],[208,3],[209,3],[211,1],[221,3],[225,1]],"termination":[[3,4],[30,2],[71,10],[72,9],[81,1],[82,2],[84,3],[189,2],[206,1]],"prevention":[[3,1],[33,1],[37,1],[53,1],[71,7],[72,2],[84,3],[87,1],[88,3],[89,1],[97,1],[98,1],[109,1],[113,1],[116,13],[118,2],[119,1],[123,5],[124,4],[125,1],[126,2],[127,1],[168,3],[223,4]],"difficulties":[[3,3],[6,1],[7,8],[10,3],[16,1],[17,1],[19,2],[26,1],[27,1],[30,1],[33,1],[34,1],[36,5],[37,3],[38,3],[42,1],[56,1],[60,1],[64,1],[69,1],[71,1],[73,4],[74,1],[75,4],[76,2],[77,2],[78,1],[81,2],[82,13],[83,5],[84,2],[89,1],[90,2],[100,1],[112,1],[114,1],[117,1],[124,1],[130,4],[136,1],[151,1],[153,1],[155,1],[170,1],[174,1],[175,1],[188,2],[191,1],[192,1],[197,1],[210,1],[211,1],[212,2],[213,1],[217,1]],"behav-":[[3,1],[6,1],[9,1],[57,1],[59,1],[80,1],[88,1],[175,1],[199,1],[206,2],[217,1]],"ioral":[[3,1],[80,1],[88,1],[175,1],[217,1]],"serve":[[3,1],[8,1],[43,1],[53,1],[88,1],[94,2],[95,1],[97,2],[100,1],[101,2],[102,1],[109,1],[112,1],[113,2],[148,1],[209,1]],"inactivity":[[3,1],[5,1],[6,1],[20,6],[21,1],[22,1],[31,1],[37,1],[76,1],[82,2],[83,1],[170,1]],"second":[[3,2],[10,1],[12,1],[20,1],[21,1],[35,2],[36,1],[40,1],[41,2],[47,1],[54,1],[58,2],[59,1],[64,2],[69,1],[71,1],[75,1],[79,1],[92,2],[93,3],[96,1],[97,1],[98,2],[101,2],[102,3],[103,18],[104,5],[105,2],[107,5],[110,1],[111,1],[114,4],[115,5],[118,1],[120,7],[123,1],[124,1],[140,1],[148,1],[154,1],[160,1],[163,1],[166,1],[167,1],[170,1],[171,4],[174,1],[175,3],[176,3],[177,3],[178,1],[179,4],[180,2],[181,4],[182,1],[183,2],[184,2],[185,1],[186,1],[187,2],[188,2],[189,3],[190,4],[191,3],[193,5],[194,2],[195,1],[197,4],[198,3],[199,2],[200,7],[201,1],[202,3],[203,1],[204,1],[205,1],[206,1],[208,2],[209,2],[210,2],[212,3],[214,2],[215,1],[216,3],[217,2],[218,1],[219,2],[221,8],[222,10],[223,1],[225,4]],"precipitating":[[3,1],[32,1]],"influenced":[[3,1],[4,1],[5,2],[6,3],[23,1],[33,1],[41,1],[170,1],[172,1],[173,2],[208,1],[212,1],[217,1]],"abe's":[[3,1],[4,1],[6,1],[10,1]],"perceptions":[[3,1],[5,1],[8,1],[36,1],[63,1],[80,1],[98,2],[122,2],[126,1],[127,1],[214,1],[217,1]],"onset":[[3,1],[4,1],[6,1],[7,6],[56,1],[65,1],[71,1],[76,1]],"struggled":[[3,1],[87,1],[93,1],[171,1],[186,1],[201,2],[212,1]],"lost":[[3,1],[6,1],[17,1],[51,1],[53,1],[56,1],[60,1],[61,3],[65,1],[69,1],[76,2],[87,1],[115,1],[121,1],[155,2],[171,1],[177,1],[190,1],[191,1],[198,1],[201,1],[206,1],[213,2]],"wife":[[3,1],[6,7],[47,1],[53,1],[56,1],[76,6],[77,1],[101,1],[169,1],[171,1],[172,1],[177,1],[178,5],[181,1],[182,2],[183,1],[185,1],[186,3],[198,1],[201,2],[202,1],[203,1],[204,1],[215,1],[216,1],[219,1]],"increasingly":[[3,2],[104,1],[110,1],[140,1],[170,1],[171,1],[185,1]],"events":[[3,5],[4,1],[5,2],[6,3],[7,3],[8,1],[32,1],[34,1],[39,1],[43,1],[62,1],[63,2],[70,2],[71,1],[74,1],[76,1],[81,1],[83,1],[91,2],[95,1],[96,1],[104,1],[109,1],[111,1],[112,1],[117,1],[121,1],[125,1],[134,1],[140,2],[147,1],[148,2],[152,1],[156,1],[158,2],[161,1],[169,2],[170,3],[171,1],[172,1],[173,2],[174,1],[179,2],[183,3],[188,1],[191,2],[196,1],[198,4],[202,4],[203,2],[204,1],[205,1],[208,6],[209,1],[210,1],[212,4],[213,3],[214,2],[215,3],[217,3],[219,1],[222,2],[223,2]],"incompetent":[[3,2],[4,1],[5,5],[6,10],[7,3],[8,2],[10,1],[18,1],[56,6],[57,3],[58,13],[59,1],[60,8],[61,12],[76,1],[77,1]],"third":[[3,1],[10,1],[12,1],[17,1],[21,1],[35,1],[36,3],[37,2],[38,1],[47,1],[56,1],[84,1],[85,4],[88,1],[93,1],[114,2],[172,1],[188,1],[190,1],[191,2],[200,1],[206,1],[210,1],[218,1]],"hypothesize":[[3,1],[7,1],[32,1],[57,4],[58,1]],"developmental":[[3,2],[5,2],[76,1],[79,1]],"enduring":[[3,1],[4,2],[196,1],[211,4],[224,1],[225,1]],"pat-":[[3,1],[8,1],[71,1],[89,1]],"terns":[[3,1],[8,1],[89,1]],"interpreting":[[3,1],[6,1]],"mother":[[3,2],[4,1],[5,4],[6,3],[25,2],[36,4],[38,4],[40,1],[44,1],[56,1],[57,1],[58,2],[60,1],[76,3],[79,4],[113,1],[170,2],[171,2],[194,4],[195,13],[196,1],[202,1],[212,1],[214,1],[215,7]],"expected":[[3,1],[4,1],[5,1],[13,1],[18,1],[41,1],[71,2],[82,2],[83,1],[84,2],[92,2],[93,1],[100,1],[123,1],[171,1],[189,2],[191,1],[192,2],[198,1],[209,1],[210,1],[212,2],[213,2]],"responsibilities":[[3,1],[6,3],[7,1],[38,3],[48,1],[56,1],[61,1],[76,2]],"tally":[[3,1],[56,1],[101,1]],"overwhelmed":[[3,1],[9,1],[13,1],[25,4],[27,1],[37,4],[46,1],[48,1],[64,2],[67,1],[69,1],[79,1],[82,1],[96,1],[177,3],[206,1],[208,2],[214,1],[215,1]],"expecting":[[3,1],[5,1],[79,1],[185,1],[200,1],[214,1]],"interpreted":[[3,1],[5,2],[6,2],[56,3],[76,2],[128,1],[139,1],[182,1],[187,1],[202,1],[212,1]],"criticism":[[3,1],[24,1],[36,1],[63,1],[76,1],[77,1],[86,1],[194,1],[212,1],[216,1]],"though":[[3,2],[4,1],[5,3],[6,1],[9,1],[10,1],[11,1],[12,1],[13,1],[19,2],[21,2],[22,1],[24,1],[32,1],[33,1],[34,3],[35,1],[37,1],[41,2],[42,1],[49,1],[54,1],[56,6],[57,1],[61,3],[64,2],[66,1],[69,1],[70,2],[71,2],[76,1],[79,1],[88,1],[90,3],[97,1],[100,2],[103,2],[114,1],[144,1],[155,2],[170,1],[171,1],[173,1],[175,1],[183,2],[184,1],[186,3],[187,4],[188,1],[189,2],[191,2],[192,3],[193,3],[194,4],[196,1],[198,1],[199,4],[200,1],[201,1],[202,2],[205,1],[207,2],[211,1],[214,2],[216,1],[218,1],[219,1]],"skeptical":[[3,1],[19,2],[22,2],[24,1],[77,1],[170,1]],"rogerian":[[3,1],[9,1],[84,1]],"asking":[[3,3],[5,1],[7,5],[9,1],[10,1],[12,2],[13,1],[16,2],[17,1],[19,1],[24,3],[25,2],[32,2],[33,1],[34,1],[35,1],[36,1],[37,2],[41,2],[43,2],[47,2],[48,1],[56,1],[57,5],[60,8],[61,1],[64,1],[69,1],[70,1],[74,1],[76,1],[79,1],[81,1],[82,2],[91,1],[97,1],[100,1],[128,1],[134,1],[135,1],[155,4],[159,1],[163,1],[167,2],[175,2],[179,7],[181,1],[184,1],[185,1],[192,2],[196,1],[197,5],[198,1],[214,1],[216,1],[218,1]],"viding":[[3,1],[19,1]],"rationales":[[3,1],[33,1],[116,1]],"feed-":[[3,1],[9,1],[10,1],[25,1],[96,1]],"back":[[3,2],[4,1],[6,1],[9,2],[10,4],[12,1],[13,1],[16,2],[17,1],[18,1],[19,5],[21,6],[22,1],[25,2],[26,2],[28,1],[31,1],[32,1],[33,1],[34,1],[36,2],[38,2],[43,4],[47,1],[49,1],[53,5],[54,7],[55,2],[56,1],[58,1],[61,3],[65,1],[69,2],[71,2],[72,2],[76,2],[79,1],[90,1],[91,1],[95,1],[96,1],[97,7],[98,1],[100,5],[102,2],[103,2],[104,2],[106,1],[107,4],[112,1],[128,2],[131,1],[134,2],[140,1],[155,4],[158,1],[159,1],[161,1],[163,1],[164,1],[166,4],[167,6],[168,4],[169,1],[170,1],[171,1],[172,1],[173,1],[176,1],[183,1],[184,1],[191,1],[194,1],[195,3],[196,2],[200,1],[203,1],[205,1],[207,1],[208,2],[210,4],[212,1],[213,2],[214,2],[216,1],[217,1],[218,2],[219,1]],"contributed":[[3,2],[6,1],[7,2],[8,1],[71,1],[76,1],[92,1],[170,1],[172,1],[196,1],[214,1],[215,1],[216,4],[219,1],[222,2]],"enough":[[3,1],[4,1],[5,2],[6,1],[7,1],[9,1],[10,3],[12,1],[16,1],[21,3],[26,4],[27,1],[32,1],[34,2],[35,1],[36,2],[38,2],[41,1],[42,1],[43,1],[45,2],[47,2],[48,4],[49,1],[50,1],[51,3],[52,3],[53,2],[56,7],[58,2],[61,1],[64,1],[72,1],[73,1],[77,2],[82,1],[95,2],[98,1],[105,3],[107,2],[120,1],[144,1],[166,4],[168,1],[169,1],[171,2],[176,1],[177,1],[178,1],[179,1],[183,1],[186,1],[192,1],[197,1],[198,1],[203,3],[208,2],[209,1],[210,2],[211,1],[213,1],[216,1],[217,1],[218,1]],"team":[[3,2],[9,2],[10,2],[12,1],[16,1],[19,2],[25,1],[32,1],[47,1],[59,1],[67,1],[74,1],[95,2],[104,1],[114,1],[120,1],[121,1],[147,1],[163,1],[173,1]],"evidence":[[3,2],[5,1],[9,1],[10,6],[13,2],[33,1],[46,1],[47,11],[48,3],[56,1],[57,1],[58,4],[59,9],[60,6],[61,2],[65,1],[81,1],[83,3],[84,1],[86,10],[87,6],[88,2],[90,2],[99,1],[108,2],[109,2],[110,2],[114,1],[115,1],[116,5],[117,2],[123,2],[125,2],[126,3],[127,2],[134,1],[137,1],[139,2],[140,9],[143,5],[155,3],[160,1],[164,1],[165,2],[177,8],[182,18],[183,25],[184,34],[185,17],[186,28],[187,25],[188,19],[189,6],[192,5],[193,1],[194,1],[195,1],[197,5],[198,6],[208,1],[211,1],[217,5],[219,3],[221,2],[223,20]],"nega-":[[3,1],[21,1],[43,2],[56,1],[57,1],[60,1],[67,1],[69,1],[171,1],[179,1],[186,1],[200,1],[202,2]],"oth-":[[3,1],[6,1],[8,1],[19,1],[37,1],[56,1],[57,1],[197,1]],"maximize":[[3,1],[99,1],[113,1],[211,1]],"resolve":[[3,2],[9,2],[19,1],[30,1],[32,3],[38,1],[69,1],[71,1],[94,2],[97,1],[100,1],[104,1],[105,2],[106,1],[114,1],[130,1],[136,1],[199,1]],"advanced":[[3,1],[79,1],[89,1]],"advised":[[3,1],[115,1],[167,1],[185,1]],"symptom":[[3,1],[16,2],[17,1],[37,1],[46,1],[56,1],[80,1],[93,1],[130,1],[160,1],[202,1],[205,1],[208,1],[221,1],[222,1]],"checklists":[[3,1],[16,2]],"elicit":[[3,2],[7,2],[8,1],[9,3],[11,1],[12,1],[13,2],[14,1],[15,3],[16,3],[18,2],[21,2],[24,2],[25,1],[32,1],[33,1],[34,2],[35,2],[37,1],[39,1],[40,1],[41,1],[43,2],[44,1],[51,1],[56,1],[58,1],[67,1],[71,3],[72,1],[74,1],[79,2],[83,3],[84,4],[168,8],[212,1]],"verbal":[[3,1],[10,1],[19,1],[36,1],[37,1],[40,1],[41,1],[42,2],[60,1],[68,1],[70,4],[152,1],[171,1],[177,1]],"sions":[[3,3],[9,1],[10,2],[16,1],[36,1],[75,1],[86,1],[98,1],[102,1],[110,1],[113,1],[115,1],[120,1]],"improves":[[3,1],[4,1],[20,1],[33,1],[51,1],[71,1],[81,1],[87,1],[98,1],[109,1],[113,1],[127,1],[173,1],[176,1],[211,1]],"outcomes":[[3,5],[9,1],[13,1],[16,1],[26,1],[47,2],[48,1],[64,1],[65,1],[71,1],[80,1],[81,3],[84,1],[86,4],[87,1],[88,3],[89,4],[91,1],[108,2],[109,1],[116,2],[117,1],[122,1],[127,2],[134,1],[140,1],[155,1],[173,1],[179,1],[193,2],[194,2],[195,5],[199,1],[221,2]],"boswell":[[3,1],[30,1],[80,1],[81,1]],"lambert":[[3,1],[9,2],[80,1],[81,3]],"weck":[[3,1],[81,1]],"receive":[[3,1],[65,1],[87,1],[107,2],[109,2],[114,4],[115,4],[120,5],[121,1],[155,1],[163,1],[166,1],[188,1],[216,1]],"progressing":[[3,1],[33,1]],"increased":[[3,1],[6,1],[9,1],[20,4],[23,1],[41,4],[56,1],[57,1],[76,3],[77,2],[87,1],[89,1],[93,2],[95,1],[108,1],[109,1],[110,1],[111,3],[112,2],[113,1],[117,1],[128,2],[134,1],[137,1],[140,3],[164,2],[167,1],[168,1],[170,1],[173,2],[176,1],[181,1],[186,1],[193,4],[199,1],[203,1],[206,1],[208,1],[209,2],[210,1],[212,2],[217,2],[218,1],[219,5]],"measure":[[3,1],[4,1],[5,1],[8,1],[16,1],[34,1],[72,1],[114,1],[115,1],[120,1],[163,1],[167,2],[168,6],[169,3],[170,2],[176,5],[182,1],[185,1],[192,1],[195,1],[198,1],[202,1],[206,1],[212,3],[221,1],[222,2]],"functioning":[[3,1],[4,2],[6,1],[9,1],[11,1],[12,2],[13,1],[24,5],[29,1],[30,1],[31,1],[32,2],[51,1],[74,1],[76,3],[80,1],[155,1],[156,1],[161,1],[163,2],[205,1]],"satisfaction":[[3,2],[20,1],[43,1],[56,2],[58,4],[64,1],[71,1],[111,1],[121,1],[122,1],[126,1],[169,1],[197,1],[198,2],[218,1]],"connection":[[3,1],[5,1],[6,1],[12,1],[20,4],[22,5],[23,1],[43,1],[59,1],[61,1],[90,1],[91,1],[97,1],[98,1],[111,1],[152,1],[154,1],[161,1],[171,1],[172,5],[173,5],[174,2],[179,1],[201,1],[203,2],[215,1],[223,21]],"well-being":[[3,3],[16,4],[29,1],[30,1],[32,1],[33,2],[40,1],[43,1],[53,1],[56,1],[63,1],[71,4],[77,3],[84,1],[196,1],[200,1],[210,1],[218,2]],"traditionally":[[3,1],[23,1],[34,1]],"reflected":[[3,1],[6,1],[91,1],[173,1],[182,1]],"culture":[[3,3],[9,4],[18,1],[30,1],[63,1],[74,1],[81,1],[173,3]],"ethnic":[[3,2]],"cultural":[[3,5],[9,2],[76,1],[81,1],[83,1],[108,1],[125,1]],"backgrounds":[[3,1],[112,1]],"pists":[[3,1],[33,1],[71,1]],"appreciate":[[3,1],[10,1],[25,1],[34,1],[53,1],[88,1],[89,1],[90,1],[98,1],[104,1],[105,1],[112,1],[113,2],[178,2],[182,1],[191,1],[198,1],[200,9],[211,1]],"significance":[[3,1],[5,1],[36,1],[87,1],[155,1]],"differences":[[3,2],[4,1],[9,1],[86,2],[87,3],[88,1],[95,2],[98,1],[102,1],[108,7],[109,1],[110,1],[114,1],[116,3],[117,1],[118,1],[125,2],[126,1],[127,1],[151,1],[170,1],[173,1],[175,1],[178,1],[181,2],[199,1],[202,1],[215,1]],"preferences":[[3,5],[10,1],[24,1],[30,1],[37,1],[74,1],[75,1],[88,1],[112,1],[199,1]],"practices":[[3,1],[9,1],[53,2],[81,1],[83,1],[96,1],[201,1],[218,1]],"smith":[[3,1],[81,1],[108,6],[116,3],[117,2],[118,2],[123,1],[127,1]],"tends":[[3,1],[5,1],[59,1],[65,1],[87,1],[140,2],[170,1],[186,1],[188,1],[204,1]],"emphasize":[[3,1],[23,1],[30,2],[38,1],[45,1],[49,1],[52,1],[56,1],[71,1],[86,1],[89,3],[91,2],[92,3],[98,2],[103,2],[109,2],[112,1],[169,1],[203,2]],"scientific":[[3,1],[80,1],[81,1],[86,1],[104,1],[161,1],[225,1]],"method":[[3,1],[46,4],[80,1],[81,1],[85,1],[86,1],[88,1],[90,1],[101,1],[109,1],[110,1],[111,2],[113,2],[121,3],[134,2],[165,1],[210,4],[214,2]],"hold":[[3,1],[4,5],[11,1],[57,1],[58,1],[64,1],[71,1],[78,1],[86,1],[88,1],[89,1],[105,1],[114,2],[115,1],[120,1],[134,3],[142,1],[149,1],[155,1],[156,1],[157,2],[158,6],[159,1],[164,4],[166,1],[167,1],[191,2],[192,2],[195,1],[196,2],[197,1],[198,1],[212,1],[218,1]],"reasoning":[[3,1],[4,1],[48,2],[51,1],[61,1],[83,1],[94,1],[95,3],[101,4]],"varying":[[3,1],[86,1],[90,1]],"degrees":[[3,1],[22,1],[61,1],[90,1],[134,1],[140,1],[155,1],[185,1],[208,1]],"expression":[[3,1],[6,1],[9,2],[41,1],[58,1],[134,1],[182,4],[185,5],[186,3]],"competency":[[3,1],[81,1],[83,1]],"largely":[[3,1],[86,1],[89,2],[109,1]],"unaware":[[3,2],[40,1],[69,1],[99,1],[155,1],[213,1]],"biases":[[3,2],[9,1],[113,1],[151,2],[152,1]],"extent":[[3,1],[4,1],[7,1],[61,1],[86,1],[100,1],[107,1],[122,1],[215,1]],"bias":[[3,1],[6,1],[48,1],[76,1],[87,4],[109,1],[113,4],[116,1],[117,1],[118,1],[123,1],[151,1],[203,2]],"community":[[3,1],[7,1],[18,1],[22,1],[123,1],[124,4],[127,2],[173,2],[203,1],[215,1]],"majority":[[3,1],[88,1],[89,1],[92,1],[95,1],[108,1],[132,1],[146,1],[148,1],[211,1]],"role":[[3,1],[9,2],[10,1],[35,1],[36,1],[38,1],[42,5],[44,2],[52,1],[60,2],[61,7],[62,1],[63,1],[64,2],[65,5],[74,1],[79,6],[80,1],[82,3],[83,3],[84,4],[86,1],[87,2],[89,1],[99,1],[103,2],[109,1],[110,1],[123,2],[124,1],[127,1],[160,1],[199,1],[200,1],[202,1],[213,1],[216,1]],"differ":[[3,1],[9,1],[88,1],[95,1],[102,1],[111,1],[125,1],[164,1]],"religious":[[3,1],[30,1],[76,1]],"spiritual":[[3,1],[30,1],[65,2],[71,1],[76,1],[94,1],[176,1]],"socioeconomic":[[3,1],[9,1],[30,1],[76,1]],"status":[[3,1],[4,1],[7,1],[9,1],[30,1],[76,4],[80,1],[117,1],[123,1],[125,1],[127,1],[167,1],[168,1],[191,1]],"disability":[[3,1],[9,1],[30,1]],"gender":[[3,1],[9,1],[74,1],[76,1],[108,11],[116,3],[117,1],[118,1],[121,1],[124,1],[125,4],[126,1],[127,1]],"identity":[[3,1],[76,1],[91,1],[97,1],[144,1],[168,5]],"iwamasa":[[3,1],[9,1],[81,1]],"hays":[[3,2],[9,1],[80,1],[81,1]],"educate":[[3,1],[11,2],[23,1],[30,1],[53,2],[56,1],[58,1],[60,1],[68,1],[69,1],[92,1],[115,1],[120,1]],"anticipate":[[3,1],[18,1],[20,1],[23,1],[24,1],[27,1],[34,1],[90,1],[91,1],[97,1],[173,2],[174,1],[193,1],[194,1],[202,1],[208,1],[211,1],[213,2],[214,1],[217,3]],"describes":[[3,1],[12,1],[17,1],[42,1],[56,1],[59,1],[63,1],[65,1],[73,1],[92,1],[170,1],[172,1],[176,1],[177,1],[179,1],[202,1],[205,1],[208,1],[211,1],[212,2],[213,1],[218,2],[221,1],[222,2]],"responsive":[[3,1],[81,1]],"assessing":[[3,2],[47,1],[75,1],[82,3],[86,1],[90,1],[134,1],[163,2],[201,1],[215,2],[217,1]],"needs":[[3,2],[19,1],[36,1],[37,1],[42,1],[56,1],[58,1],[61,1],[63,1],[71,1],[75,3],[101,1],[109,1],[112,5],[113,3],[164,2],[166,1],[167,1],[175,1],[177,1],[187,1],[189,2],[191,1],[192,1],[199,6],[203,1],[207,1],[213,1],[214,5]],"respectful":[[3,1],[46,1],[76,1],[192,1],[199,1]],"supports":[[3,1],[9,1],[47,2],[60,2],[61,1],[163,1],[177,2],[182,3],[183,2],[184,8],[185,3],[186,5],[187,4],[188,3],[189,3],[192,1],[197,2],[198,2],[217,2],[219,1],[221,1],[223,1]],"riences":[[3,1],[34,1],[56,1],[59,1],[182,1],[197,1]],"refrain":[[3,2],[12,1],[49,1],[88,1]],"given":[[3,2],[4,2],[5,1],[7,2],[9,3],[10,1],[12,1],[13,1],[20,1],[22,1],[24,1],[26,1],[29,1],[34,1],[41,1],[43,2],[44,1],[46,1],[56,2],[63,1],[65,2],[69,1],[78,1],[85,1],[86,1],[88,1],[90,1],[91,1],[92,1],[93,2],[101,1],[108,1],[110,1],[113,1],[115,5],[120,2],[121,2],[128,1],[134,1],[149,1],[167,1],[171,1],[172,2],[173,1],[178,1],[196,4],[197,1],[198,1],[200,1],[202,2],[208,1],[212,1]],"cognition":[[3,2],[5,2],[7,1],[26,2],[43,4],[45,1],[46,1],[47,2],[56,1],[57,1],[64,1],[65,1],[70,1],[74,1],[76,1],[82,1],[123,1],[124,1],[125,2]],"chaves":[[3,1],[71,1],[80,1],[117,1],[123,1]],"actively":[[3,1],[20,1],[43,1],[86,1],[90,1],[91,1],[93,1],[97,1],[98,2],[101,1],[102,1],[168,1],[176,1],[183,2],[185,1],[186,1],[188,1],[200,1],[205,2],[218,1]],"cultivating":[[3,1],[9,1],[63,1],[71,1],[89,1]],"moods":[[3,1],[32,1],[37,2],[56,1],[169,13],[170,3],[171,10],[172,15],[173,4],[174,1],[175,73],[176,23],[177,27],[178,14],[179,22],[180,3],[181,9],[182,8],[183,10],[184,12],[185,8],[186,7],[187,14],[188,6],[191,8],[192,10],[195,3],[196,7],[197,1],[198,1],[200,6],[201,7],[203,3],[204,5],[205,5],[208,2],[211,1],[212,13],[215,1],[217,15],[218,9],[219,7],[222,2],[223,34],[224,3],[225,1]],"tended":[[3,1],[6,2],[65,1],[87,1],[155,1],[175,1],[199,1]],"depressive":[[3,1],[6,1],[17,2],[22,1],[31,1],[53,3],[55,1],[56,6],[59,2],[60,1],[76,5],[77,3],[81,1],[82,1],[83,5],[108,2],[111,1],[117,1],[202,1]],"mode":[[3,1],[31,1],[37,1],[56,13],[59,4],[75,1],[82,1],[83,4],[108,1],[110,1],[140,1],[154,1]],"conscious":[[3,1],[38,1],[40,1],[94,1],[95,2],[96,1],[126,1],[131,1],[140,1],[141,1],[148,3],[155,6],[161,2],[217,3],[218,2]],"awareness":[[3,1],[89,1],[95,2],[96,1],[100,1],[104,2],[105,1],[112,2],[113,1],[115,1],[123,1],[124,1],[128,1],[131,2],[134,1],[135,1],[136,1],[139,2],[140,1],[141,1],[142,2],[144,1],[148,3],[154,1],[155,6],[161,3],[172,2],[178,2],[192,1],[200,1],[207,1],[210,1],[211,1]],"selectively":[[3,1],[5,1],[128,1]],"attended":[[3,1],[12,1],[76,1],[121,2],[182,1],[185,1]],"neutral":[[3,1],[4,2],[6,1],[7,3],[36,1],[39,1],[56,3],[76,1],[174,1],[196,1],[199,1],[202,1],[203,2]],"discounted":[[3,1],[5,1],[56,2],[58,1],[197,1],[198,1],[212,1]],"failed":[[3,1],[5,1],[42,1],[48,1],[56,1],[61,1],[69,1],[75,1],[87,2],[88,1],[89,1],[94,1],[95,2],[101,2],[113,1],[163,1],[173,1],[198,1],[216,1]],"processing":[[3,1],[5,2],[6,1],[31,1],[48,1],[56,3],[58,1],[74,2],[81,3],[82,1],[83,3],[84,1],[128,1],[161,1]],"ward":[[3,1],[7,1],[65,1],[108,1],[111,3],[116,1],[117,1],[126,1],[127,2]],"distorted":[[3,2],[5,1],[26,1],[32,1],[46,1],[47,2],[56,1],[63,1],[74,2],[95,1],[172,1],[178,1],[188,1],[198,2],[211,2]],"coun-":[[3,1],[88,2],[95,1]],"feature":[[3,1],[93,1],[113,1],[140,1]],"attend":[[3,1],[12,1],[40,1],[71,1],[91,1],[107,2],[182,1],[184,1],[185,3],[207,1]],"concludes":[[3,1],[111,1]],"resourceful":[[3,1],[7,2],[29,1],[76,1]],"solve":[[3,1],[9,1],[19,1],[21,1],[23,1],[24,1],[25,1],[29,1],[30,2],[32,1],[36,2],[38,4],[43,1],[47,1],[64,1],[71,3],[74,2],[76,1],[140,1],[153,1],[169,1],[188,2],[189,4],[190,1],[191,1],[192,1],[193,1],[202,1],[206,1],[208,1],[211,1],[217,1]],"lead":[[3,2],[4,1],[5,2],[9,1],[13,1],[18,1],[22,1],[29,1],[30,1],[34,1],[37,1],[40,2],[41,1],[45,1],[46,1],[48,1],[49,1],[52,1],[53,2],[56,2],[57,1],[64,2],[65,1],[86,1],[95,1],[108,1],[113,1],[114,1],[127,1],[128,1],[129,3],[134,1],[140,1],[153,1],[155,1],[169,2],[170,1],[171,3],[172,4],[173,4],[174,3],[178,1],[181,1],[186,1],[192,1],[193,3],[195,2],[200,2],[201,2],[203,1],[204,1],[205,2],[206,1],[207,2],[210,2],[211,2],[212,1],[214,5],[216,1]],"satisfying":[[3,1],[29,1],[205,2]],"ther-":[[3,3],[13,1],[23,1],[24,1],[25,1],[30,1],[32,1],[35,2],[69,1],[74,1],[80,1],[183,1]],"together":[[3,1],[5,1],[7,2],[9,2],[10,3],[12,1],[13,4],[16,2],[19,4],[22,1],[25,4],[26,1],[27,2],[32,1],[37,3],[38,1],[40,1],[46,1],[47,6],[48,1],[52,2],[58,1],[59,1],[60,1],[66,1],[67,1],[68,1],[69,1],[71,1],[72,1],[75,1],[77,1],[92,1],[94,3],[96,1],[100,2],[101,1],[104,1],[106,1],[161,1],[164,1],[169,1],[172,1],[175,2],[178,1],[183,1],[186,1],[191,2],[198,1],[200,1],[203,2],[218,1]],"meet":[[3,1],[7,1],[8,1],[9,1],[12,1],[13,1],[14,1],[22,1],[32,2],[59,1],[71,1],[93,1],[112,2],[120,1],[134,2],[172,2],[182,1],[192,1],[194,1],[197,2],[209,1],[213,1]],"suggesting":[[3,2],[21,1],[24,4],[34,1],[38,1],[42,1],[46,1],[58,1],[60,1],[79,1],[91,1],[92,1],[183,1]],"becomes":[[3,1],[5,2],[7,2],[9,1],[21,1],[38,1],[40,1],[56,1],[58,1],[91,2],[93,2],[100,1],[153,2],[155,1],[169,2],[178,1],[187,1],[196,1],[207,3],[208,1],[217,1],[218,1]],"socialized":[[3,1],[6,1],[33,1],[35,1],[36,2],[37,1],[45,1],[75,1]],"deciding":[[3,1],[16,1],[24,1],[26,1],[32,2],[57,1],[58,1],[64,2],[82,2],[83,6],[84,1],[90,1],[148,1],[155,1],[170,1],[196,1]],"evaluating":[[3,3],[24,1],[33,1],[36,1],[42,1],[44,1],[45,2],[46,2],[47,5],[48,4],[49,3],[52,1],[53,1],[58,3],[60,5],[64,2],[82,3],[84,1],[97,1],[116,1],[187,1],[188,1],[191,1],[192,1],[199,1],[219,1],[221,1]],"initial":[[3,1],[5,1],[11,4],[12,2],[13,2],[14,3],[15,3],[16,1],[17,1],[20,1],[23,1],[30,1],[31,1],[33,6],[34,1],[35,1],[41,3],[47,1],[71,1],[82,6],[83,1],[86,1],[87,1],[89,1],[92,1],[98,1],[100,1],[103,1],[105,1],[114,1],[115,1],[120,1],[123,1],[126,1],[127,1],[128,1],[137,1],[139,1],[166,1],[169,1],[186,1],[198,1],[203,1],[210,1],[211,1]],"responsible":[[3,1],[6,3],[7,5],[10,1],[18,1],[31,1],[48,1],[56,1],[71,1],[74,1],[76,4],[77,1],[93,1],[121,1],[140,1],[147,1],[153,1],[155,1],[161,4],[170,1],[195,1],[215,7],[216,5]],"competent":[[3,1],[4,1],[5,2],[6,4],[7,3],[19,1],[21,2],[26,1],[48,1],[51,1],[56,5],[58,8],[59,11],[60,7],[61,5],[74,3],[76,6],[80,1],[134,1],[197,3],[219,2]],"aspired":[[3,1],[76,2]],"regain":[[3,1],[24,1],[175,1]],"optimism":[[3,1],[29,1],[31,1],[56,1],[87,1],[103,2],[113,1]],"included":[[3,1],[47,1],[74,1],[86,2],[87,4],[88,2],[92,1],[98,1],[103,2],[113,1],[114,1],[122,1],[129,2],[134,3],[140,4],[163,1],[166,1],[167,1],[168,5],[171,1],[176,1],[181,1],[191,1],[196,2],[198,1],[201,1],[225,1]],"father":[[3,1],[5,2],[6,2],[7,2],[10,1],[12,1],[18,1],[21,1],[31,1],[76,4],[170,2],[171,4],[191,21],[201,1],[206,1],[215,6],[216,1]],"grandfather":[[3,1],[18,1],[21,1],[31,1],[40,1],[48,1],[79,3],[172,1],[215,1]],"reach":[[3,1],[9,1],[24,1],[27,1],[28,1],[30,3],[32,3],[40,1],[64,2],[71,2],[72,1],[76,1],[86,1],[87,1],[100,1],[103,2],[114,1],[167,1],[172,1],[176,8],[177,1],[188,1],[191,1],[192,1],[196,1],[203,1],[217,1],[223,1]],"involves":[[3,1],[23,1],[36,1],[37,1],[42,1],[46,1],[57,1],[63,1],[69,1],[86,1],[96,1],[114,2],[120,2],[151,1],[161,2],[164,1],[177,1],[191,1],[205,2],[207,1],[211,1],[213,2],[214,1],[216,3],[217,1],[222,1]],"lives":[[3,2],[49,1],[56,1],[60,1],[61,2],[76,1],[89,1],[91,3],[93,1],[104,1],[112,1],[122,1],[130,1],[131,1],[134,1],[144,2],[147,1],[148,1],[155,1],[163,1],[169,1],[170,2],[172,1],[173,2],[176,2],[179,2],[183,1],[189,2],[192,1],[196,2],[200,2],[201,4],[202,2],[203,2],[204,2],[208,2],[212,1],[213,1],[216,1],[218,1]],"consistently":[[3,1],[36,1],[57,1],[71,1],[73,1],[74,1],[75,1],[76,2],[86,1],[89,1],[171,1],[177,1],[197,1]],"stressful":[[3,1],[26,1],[70,2],[71,2],[91,2],[167,1],[171,1],[213,2]],"vittengl":[[3,1],[71,1],[81,1]],"distressing":[[3,1],[4,1],[32,3],[38,1],[40,1],[42,1],[43,1],[44,1],[45,3],[53,2],[56,1],[58,1],[60,1],[68,2],[69,6],[70,4],[79,1],[82,1],[83,2],[130,1],[134,1],[135,1],[140,2],[141,2],[161,1],[169,1],[172,1],[176,3],[180,1],[185,1],[186,2],[188,1],[189,4],[191,1],[197,1],[201,1],[205,1],[215,1]],"solved":[[3,1],[10,1],[48,1],[49,2],[63,2],[64,3],[69,1],[74,1],[84,1],[169,1],[189,2],[191,2],[192,2],[202,1],[211,1]],"worked":[[3,1],[5,1],[6,1],[12,1],[32,2],[37,1],[56,1],[61,1],[69,1],[76,1],[77,3],[89,1],[93,1],[100,2],[113,1],[140,1],[149,1],[155,1],[164,1],[166,1],[168,2],[171,2],[190,1],[194,1],[196,1],[199,1],[200,1],[210,1],[217,2],[219,3]],"experi-":[[3,1],[5,1],[43,1],[53,1],[54,1],[55,1],[75,1],[96,1],[100,3],[104,1],[120,1],[186,1],[188,1],[191,1],[193,4],[194,2],[197,1],[198,2],[210,1],[211,1],[212,1],[217,1],[219,1]],"ences":[[3,1],[5,1],[18,1],[58,1],[96,1],[100,1],[104,1],[120,1],[186,1],[188,1],[197,1]],"indicated":[[3,1],[10,1],[11,1],[16,1],[24,1],[31,1],[47,1],[57,1],[59,1],[74,1],[90,1],[112,1],[193,1]],"shift":[[3,1],[10,2],[32,1],[36,2],[37,1],[41,1],[42,1],[63,1],[74,1],[79,1],[140,1],[175,1],[183,1],[185,1],[186,2],[187,1],[188,2],[198,2],[200,2],[201,1],[219,1]],"circumstances":[[3,1],[6,2],[56,1],[61,1],[64,1],[90,1],[91,1],[92,1],[95,1],[98,1],[101,2],[102,2],[113,1],[114,1],[121,1],[122,2],[176,1],[191,3],[192,1],[194,1],[197,1],[209,1],[216,3]],"expresses":[[3,1],[12,1],[36,1],[57,3],[91,1]],"desire":[[3,1],[31,1],[37,1],[72,1],[88,1],[89,2],[90,1],[95,1],[96,2],[98,1],[100,1],[102,2],[103,1],[104,2],[112,1],[123,1],[127,1],[168,1],[172,1],[187,1],[202,1],[211,1],[222,1]],"insufficient":[[3,2],[25,1],[36,1],[45,1],[47,1],[48,1],[69,1],[71,1],[110,1]],"judge":[[3,1],[25,1],[34,1],[36,1],[38,1],[43,1],[55,1],[61,1],[74,1],[97,1],[173,1],[208,1],[214,1],[215,1],[216,2]],"maintained":[[3,1],[4,1],[5,1],[6,1],[7,1],[56,1],[58,1],[62,1],[140,1],[161,1],[202,1]],"afterward":[[3,1],[43,1],[53,1],[170,1]],"midway":[[3,1],[81,1]],"briefly":[[3,1],[16,1],[33,1],[34,1],[36,1],[53,1],[55,1],[72,1],[86,1],[92,3],[94,1],[113,1],[120,1],[207,1],[208,1]],"childhood":[[3,2],[4,1],[6,1],[7,1],[8,1],[58,1],[62,1],[74,1],[76,1],[134,2],[171,2],[173,2],[175,1],[181,2],[196,2],[201,1],[208,1],[219,2]],"child":[[3,1],[5,1],[8,1],[10,1],[58,1],[61,4],[62,1],[64,1],[69,1],[79,1],[81,1],[91,1],[95,1],[101,1],[112,2],[140,1],[152,1],[171,4],[196,9],[201,1],[204,1],[208,1],[213,4],[215,1],[216,1],[219,1]],"iask":[[3,1],[76,1]],"spent":[[3,1],[9,1],[33,2],[66,1],[76,1],[97,1],[183,2],[186,1],[189,2],[191,2],[195,1],[196,1]],"discussing":[[3,2],[9,1],[10,1],[21,1],[25,1],[26,1],[27,1],[32,1],[33,1],[34,1],[35,2],[38,5],[41,1],[43,2],[45,1],[48,1],[59,1],[60,1],[62,1],[81,1],[82,4],[94,1],[95,1],[99,1],[114,2],[121,1],[182,1],[184,1],[191,1],[219,2]],"history":[[3,2],[4,2],[7,5],[10,1],[11,1],[12,1],[32,1],[56,1],[57,1],[59,1],[76,7],[79,1],[81,2],[90,1],[92,2],[108,1],[111,2],[112,1],[113,1],[114,2],[115,4],[116,1],[119,1],[120,3],[122,4],[126,1],[127,1],[163,1],[168,1],[190,1],[219,1]],"origin":[[3,1],[82,1],[83,3],[84,1]],"understandable":[[3,1],[16,1],[89,1],[163,1],[166,1],[168,1],[173,1],[196,1],[197,1]],"knew":[[3,1],[22,1],[48,1],[64,1],[100,3],[155,2],[170,1],[171,1],[175,1],[179,2],[182,1],[183,1],[184,2],[186,1],[189,4],[191,1],[192,2],[193,1],[198,2],[213,1],[215,3],[216,1]],"expect":[[3,1],[5,1],[12,1],[13,1],[19,1],[21,1],[26,1],[41,1],[47,1],[52,1],[55,1],[58,1],[73,1],[78,1],[79,2],[86,1],[95,1],[100,1],[101,1],[102,1],[104,1],[109,1],[114,1],[120,2],[121,1],[134,2],[152,1],[163,3],[164,4],[166,4],[167,5],[168,2],[169,1],[174,1],[176,2],[182,4],[198,1],[199,2],[202,1],[205,1],[206,2],[209,1],[214,1],[218,1]],"clearly":[[3,1],[8,1],[10,1],[34,1],[36,1],[43,2],[56,1],[70,1],[94,1],[96,1],[97,1],[102,2],[104,1],[105,1],[109,1],[111,1],[120,1],[129,2],[134,1],[183,1],[192,1],[219,1]],"stood":[[3,1],[56,1],[169,1],[182,1]],"concrete":[[3,1],[13,1],[18,2],[60,1],[69,1],[74,1],[95,1]],"proceed":[[3,1],[13,1],[35,1],[36,1],[58,1],[201,1],[208,1],[209,1],[210,1],[212,1]],"educated":[[3,1],[58,1],[173,1]],"nature":[[3,3],[18,1],[29,1],[32,1],[44,1],[47,1],[53,1],[58,1],[64,1],[74,1],[79,1],[85,1],[86,1],[91,2],[92,2],[93,1],[98,4],[134,1],[160,1],[163,1],[166,2],[176,1],[200,1],[209,1],[215,1],[225,1]],"provided":[[3,1],[12,1],[36,1],[38,1],[71,1],[74,1],[76,1],[77,3],[86,1],[91,2],[95,1],[98,3],[100,1],[101,1],[103,1],[107,1],[109,1],[113,1],[114,3],[120,1],[121,1],[122,1],[169,1],[175,1],[189,1],[190,1],[193,1],[200,1]],"psychoeducation":[[3,1],[15,5],[17,5],[31,1],[41,1],[63,1],[69,1],[70,1],[77,1],[82,5],[83,4],[84,2]],"presenting":[[3,1],[7,1],[11,1],[32,1],[74,1],[83,2],[92,1],[134,1]],"ongoing":[[3,2],[6,1],[8,2],[24,1],[26,1],[32,1],[33,1],[74,1],[75,1],[77,1],[110,1],[114,2],[129,1],[168,2],[171,2],[192,1],[214,1],[219,1]],"refined":[[3,1],[74,1],[112,1]],"diagrams":[[3,2],[7,3],[8,1],[20,1],[75,1],[80,1],[82,3],[83,5],[84,4]],"reactions":[[3,1],[4,3],[7,1],[8,1],[9,5],[10,8],[20,2],[24,1],[25,1],[32,1],[36,1],[37,2],[41,1],[44,1],[45,1],[58,1],[72,1],[74,1],[82,2],[83,1],[84,2],[98,1],[110,1],[111,5],[113,1],[114,1],[120,1],[121,1],[128,3],[129,1],[134,3],[140,6],[153,4],[158,1],[161,3],[169,1],[170,5],[171,6],[172,2],[173,11],[174,4],[175,6],[177,6],[178,2],[179,1],[181,1],[182,1],[187,2],[188,2],[191,4],[192,2],[194,4],[195,1],[206,1],[207,1],[208,4],[210,1],[211,1],[212,1],[213,1],[214,1],[217,1],[223,8]],"boisvert":[[3,1],[80,1]],"ahmed":[[3,1],[80,1]],"educating":[[3,1],[14,1],[36,1],[58,1],[83,2],[90,1]],"pist":[[3,1],[5,1],[193,1]],"encouraged":[[3,1],[74,1],[88,1],[91,1],[96,1],[97,1],[109,1],[113,1],[114,1],[115,2],[120,1],[141,1],[183,1],[193,1],[194,1],[197,1],[216,1]],"review":[[3,5],[6,1],[8,1],[12,4],[13,2],[15,3],[16,4],[17,1],[19,1],[20,1],[21,3],[22,1],[23,1],[26,1],[32,6],[33,7],[34,4],[35,3],[36,1],[37,2],[38,2],[39,1],[43,1],[48,1],[51,1],[57,2],[58,1],[61,1],[70,1],[71,1],[74,3],[79,1],[80,8],[81,11],[82,6],[83,1],[86,3],[87,5],[88,1],[89,1],[92,2],[93,1],[94,2],[97,2],[98,3],[100,1],[101,3],[102,1],[103,6],[107,2],[108,1],[110,1],[112,1],[114,5],[115,5],[116,6],[117,5],[120,3],[121,5],[122,5],[123,4],[124,5],[125,10],[126,5],[127,8],[129,1],[160,1],[165,1],[167,3],[168,4],[178,2],[179,1],[187,2],[189,2],[190,2],[192,2],[193,1],[200,2],[201,2],[202,1],[204,1],[217,1],[218,5],[219,1],[222,1],[223,1]],"understandings":[[3,1],[4,1],[5,1],[56,1],[73,1],[74,1]],"reviewed":[[3,1],[9,1],[17,1],[18,1],[24,1],[74,1],[87,2],[88,1],[98,1],[101,1],[102,1],[107,1],[112,1],[113,1],[121,1],[176,1],[186,2],[188,1],[218,1]],"notes":[[3,4],[10,1],[12,2],[13,2],[15,1],[16,2],[17,2],[19,1],[24,5],[25,1],[26,3],[30,1],[31,3],[32,2],[33,10],[34,4],[35,6],[38,1],[46,1],[48,1],[50,1],[51,17],[52,3],[69,1],[71,6],[72,4],[74,1],[82,4],[84,3],[92,3],[153,1],[177,1],[204,1],[208,1]],"slipping":[[3,1],[140,1]],"short":[[3,1],[4,1],[10,1],[25,1],[27,1],[38,1],[41,1],[43,1],[48,1],[75,1],[90,2],[93,1],[94,4],[95,1],[97,2],[101,2],[102,1],[103,1],[104,3],[109,2],[110,1],[114,3],[115,2],[116,2],[117,1],[120,3],[126,1],[134,1],[155,1],[156,1],[158,1],[159,1],[163,1],[166,1],[177,1],[189,2],[198,1],[199,1],[206,1],[211,2],[213,1]],"fulfilling":[[3,2],[26,2],[35,1],[65,1],[93,1],[105,1]],"recover":[[3,1],[13,1],[21,1],[56,1],[71,1],[203,2],[218,1]],"pressing":[[3,1],[19,1],[21,1],[32,1],[38,1],[87,1],[91,1],[92,1],[109,2]],"promote":[[3,2],[43,1],[44,1],[56,1],[71,1],[73,1],[89,3],[90,1],[96,2],[109,1],[112,1],[113,2],[168,1]],"enjoyment":[[3,1],[22,1],[58,3],[89,1],[129,1],[183,1],[204,1],[205,4],[208,1]],"suicidal":[[3,1],[12,1],[33,2],[81,1],[111,3],[189,2],[202,2],[222,1]],"arranged":[[3,1],[92,1],[176,1]],"frequent":[[3,2],[6,1],[24,1],[70,1],[163,1],[166,1],[168,2],[170,1],[171,2],[172,2],[189,1],[190,1],[193,2],[205,1],[206,1],[212,2],[214,1],[215,1],[219,1]],"somewhat":[[3,1],[6,2],[10,1],[20,1],[32,1],[33,1],[40,1],[53,1],[56,2],[70,2],[71,1],[76,3],[77,2],[90,2],[101,3],[107,2],[121,12],[122,14],[154,1],[184,1],[192,1]],"monthly":[[3,1],[71,1],[75,1],[77,1],[111,1],[181,1],[218,2],[219,1],[223,1]],"planned":[[3,1],[23,1],[27,1],[68,1],[91,1],[113,1],[158,1],[164,1],[193,3],[194,2],[204,1],[209,3],[218,2]],"periodic":[[3,2],[8,1],[13,1],[33,2],[35,3],[74,1],[83,1],[84,1],[171,2]],"booster":[[3,1],[13,2],[69,1],[71,2],[72,5],[77,1],[82,2],[83,1]],"year":[[3,2],[6,1],[12,1],[18,2],[21,1],[32,1],[49,1],[58,4],[61,1],[69,1],[70,1],[71,1],[80,2],[81,1],[88,1],[93,2],[95,1],[96,1],[101,1],[108,1],[109,1],[111,1],[113,1],[116,2],[117,1],[121,3],[122,4],[123,1],[124,2],[125,1],[126,1],[166,1],[169,2],[170,1],[171,3],[182,1],[185,1],[190,1],[192,1],[198,1],[201,1],[211,2],[215,1],[216,1]],"period":[[3,1],[4,1],[7,1],[12,1],[24,1],[53,2],[56,2],[69,2],[76,1],[86,1],[88,1],[97,1],[98,1],[107,1],[108,2],[111,1],[121,3],[122,2],[155,1],[158,1],[171,1],[187,1],[193,1],[202,1],[203,2],[211,2],[216,1]],"chaotic":[[3,1],[197,1],[208,1]],"poverty":[[3,1],[8,1],[75,1],[108,1]],"chronic":[[3,1],[8,1],[13,1],[81,1],[116,6],[123,1],[124,2],[212,1]],"orders":[[3,1],[194,2],[201,1],[211,1]],"entrenched":[[3,1],[60,1],[140,1]],"eating":[[3,1],[10,1],[11,1],[18,1],[19,1],[21,1],[31,1],[53,1],[58,1],[80,1],[81,1],[95,1],[96,6],[105,3],[107,2],[109,1],[113,3],[116,1],[123,1],[169,2],[202,1],[223,1],[225,1]],"usually":[[3,2],[4,2],[5,1],[6,1],[7,1],[8,1],[9,1],[10,2],[12,9],[13,1],[15,1],[16,3],[17,3],[20,2],[21,1],[22,1],[24,4],[25,2],[33,1],[34,2],[37,4],[38,3],[40,1],[41,1],[42,3],[43,1],[46,3],[47,2],[48,1],[49,1],[51,3],[56,2],[57,3],[60,2],[61,1],[63,1],[64,1],[65,3],[69,3],[70,1],[74,1],[86,1],[87,1],[90,1],[92,1],[98,1],[101,1],[102,1],[103,2],[109,1],[115,1],[120,1],[134,3],[135,1],[155,4],[161,1],[163,1],[164,6],[166,1],[167,1],[168,1],[170,1],[172,2],[174,1],[175,2],[176,1],[177,1],[178,1],[179,3],[182,1],[183,1],[185,1],[188,1],[192,1],[193,1],[195,3],[196,3],[197,2],[198,1],[199,1],[201,1],[204,3],[206,1],[207,1],[208,1],[211,1],[212,1],[213,1],[214,1],[219,1]],"shorter":[[3,1],[51,1],[71,1],[212,2]],"courses":[[3,1],[84,1]],"quickly":[[3,2],[16,3],[23,1],[33,1],[36,1],[41,2],[74,2],[91,2],[96,1],[106,2],[140,1],[141,1],[155,3],[163,1],[164,1],[168,1],[169,1],[170,1],[171,2],[176,1],[185,1],[190,1],[194,2],[196,1],[198,2],[206,1],[207,2],[208,4],[209,5],[210,1],[211,1],[212,1],[217,5]],"format":[[3,3],[33,3],[50,1],[52,1],[74,1],[82,3],[88,2],[92,1],[100,1],[115,2],[120,1]],"facilitates":[[3,1],[12,1],[25,1],[40,1],[85,1],[126,1]],"unless":[[3,1],[4,1],[12,1],[24,1],[25,1],[32,1],[40,1],[51,1],[55,1],[59,1],[140,1],[155,1],[158,1],[164,1],[167,1],[182,1],[184,1],[196,1]],"objects":[[3,1],[53,1],[96,1],[158,1],[159,2]],"negotiate":[[3,1],[36,2]],"office":[[3,1],[10,1],[12,2],[22,1],[24,2],[26,2],[35,1],[38,1],[41,1],[47,1],[65,1],[70,1],[71,1],[73,1],[97,1],[101,1],[116,7],[123,1],[125,1],[155,1],[171,1],[177,2],[181,1],[189,2],[190,3],[192,2],[193,5],[201,2],[207,2],[219,1]],"chart":[[3,1],[20,2],[21,12],[22,6],[32,1],[37,1],[43,4],[58,1],[59,8],[60,10],[65,5],[77,1],[82,6],[83,8],[84,2],[203,1],[212,2],[219,3],[222,2],[224,1]],"previous":[[3,2],[5,1],[8,1],[10,1],[11,1],[12,3],[13,1],[14,1],[21,1],[26,2],[31,1],[32,4],[33,3],[34,2],[35,1],[38,1],[43,1],[50,2],[51,1],[52,3],[56,1],[59,2],[69,1],[76,1],[89,1],[103,1],[105,1],[111,1],[113,2],[114,1],[115,2],[120,2],[121,1],[161,1],[163,3],[164,2],[166,1],[168,1],[170,1],[175,1],[178,1],[179,1],[183,1],[184,1],[185,2],[188,1],[189,5],[190,2],[194,1],[217,3],[219,1]],"behave":[[3,1],[4,3],[5,2],[9,1],[13,1],[48,1],[74,1],[131,2],[134,2],[152,1],[158,1],[174,1],[175,1],[198,2],[199,1],[201,1]],"enced":[[3,1],[9,1],[43,1],[56,1],[75,1]],"strength":[[3,1],[19,2],[29,1],[43,2],[56,1],[60,3],[77,1],[89,1],[93,2],[94,1],[101,1],[105,3],[106,2],[110,1],[112,1],[113,2],[119,1],[168,2],[173,1],[176,1],[200,1],[212,7],[217,1],[218,2],[222,6],[223,2]],"reestablish":[[3,1],[4,1],[32,1],[33,1]],"prioritize":[[3,1],[32,1],[33,3],[34,3],[38,1],[74,2]],"discussions":[[3,1],[36,1],[86,1],[90,1],[91,1],[94,1],[191,1],[206,1]],"naturally":[[3,2],[97,2],[100,2],[104,1],[128,1],[161,1]],"final":[[3,1],[14,1],[19,2],[30,1],[32,1],[33,1],[35,5],[41,1],[52,1],[64,1],[71,1],[77,1],[81,1],[82,1],[83,1],[84,1],[86,1],[93,1],[98,1],[140,1],[163,1],[166,1],[167,1],[191,2],[195,1],[217,2]],"summarizes":[[3,1],[46,1],[186,1],[188,2],[203,1],[206,1],[208,1]],"deviate":[[3,1],[33,1],[36,1],[89,1]],"novice":[[3,1],[24,1],[26,1],[32,1],[36,1],[38,1],[47,1]],"specified":[[3,1],[32,1],[53,1],[86,1]],"utility":[[3,2],[46,1],[49,1],[84,1],[123,1],[126,1]],"number":[[3,1],[16,1],[28,1],[33,1],[44,1],[46,1],[61,2],[64,2],[71,2],[77,1],[86,2],[87,2],[88,2],[89,3],[90,4],[92,4],[93,12],[95,3],[96,3],[97,2],[98,1],[100,1],[101,10],[102,13],[103,2],[107,39],[108,1],[109,1],[110,1],[111,1],[113,1],[114,6],[115,5],[120,8],[121,7],[122,3],[123,1],[128,1],[158,1],[159,2],[163,1],[164,1],[165,1],[167,1],[168,7],[170,2],[177,1],[178,1],[179,1],[181,1],[183,1],[188,1],[189,1],[190,1],[193,4],[195,1],[198,2],[199,1],[202,2],[203,2],[204,1],[205,4],[206,2],[209,3],[210,1],[211,1],[212,2],[214,1],[215,1],[218,1],[219,2],[221,2],[222,3]],"devise":[[3,1],[14,1],[47,2],[56,1],[60,1],[64,3],[71,1]],"gentle":[[3,1],[7,1],[27,1],[36,2],[37,1],[38,1],[46,1],[70,1]],"socratic":[[3,1],[21,1],[24,1],[26,1],[31,3],[45,1],[46,7],[48,3],[51,2],[52,3],[53,1],[60,3],[62,1],[70,1],[71,1],[72,1],[79,1],[80,3],[81,1],[82,1],[83,1],[84,2]],"questioning":[[3,2],[21,1],[24,1],[26,1],[31,3],[36,1],[37,1],[41,1],[43,1],[45,2],[46,4],[48,4],[51,1],[53,2],[57,2],[60,3],[62,1],[70,2],[74,1],[79,1],[80,1],[81,1],[82,2],[83,1],[84,2],[91,1],[142,1],[155,2],[170,1]],"foster":[[3,1],[9,1],[80,1],[214,1]],"truly":[[3,1],[37,1],[43,1],[59,1],[61,4],[74,1],[75,1],[92,1],[110,1],[168,1],[172,1],[188,1],[193,1],[216,2],[225,1]],"interested":[[3,1],[4,1],[9,1],[43,1],[85,1],[86,1],[87,1],[90,1],[92,3],[93,2],[101,1],[103,2],[107,1],[114,3],[115,2],[153,1],[158,1],[169,2],[194,2],[195,1]],"empiricism":[[3,1],[9,1],[46,1],[83,1]],"determine":[[3,1],[4,1],[7,1],[8,1],[11,2],[12,1],[16,1],[28,1],[32,1],[33,1],[36,2],[43,1],[50,1],[56,1],[70,1],[86,1],[90,1],[103,1],[120,1],[136,1],[161,1],[163,1],[172,1],[175,1],[187,1],[188,1],[202,1],[205,1],[206,1],[217,1]],"accuracy":[[3,1],[7,1],[9,1],[36,1],[47,1],[49,1],[53,1],[63,1],[125,1],[172,1],[183,1],[208,1],[219,1]],"challenging":[[3,1],[46,2],[49,1],[75,1],[80,1],[81,1],[84,1],[89,1],[90,1],[101,1],[105,1],[109,1],[112,1],[134,2],[135,2],[140,15],[143,2],[144,2],[149,1],[151,1],[175,1],[176,1],[205,1],[209,1],[218,1],[225,1]],"stating":[[3,1],[104,1],[114,1],[121,1]],"convince":[[3,1],[193,1],[196,1],[208,1]],"aren":[[3,1],[9,1],[10,1],[16,1],[17,1],[23,1],[27,1],[40,1],[41,2],[44,1],[45,1],[51,2],[52,1],[56,2],[78,1],[92,1],[103,1],[208,1]],"restructuring":[[3,1],[24,1],[29,1],[44,1],[46,1],[47,2],[60,1],[62,3],[64,2],[70,1],[79,4],[82,2],[83,5],[84,1],[116,1],[168,3],[208,1]],"responding":[[3,1],[12,1],[15,1],[24,1],[25,1],[30,1],[32,1],[39,1],[40,1],[42,1],[44,1],[47,2],[48,1],[50,1],[51,4],[52,2],[53,1],[58,2],[64,1],[72,1],[74,3],[75,1],[82,6],[83,3],[84,3],[210,1],[213,1]],"meaning":[[3,1],[6,2],[7,12],[8,1],[16,1],[18,1],[25,1],[32,1],[33,2],[34,1],[37,2],[41,2],[42,3],[49,1],[56,2],[57,2],[58,1],[59,2],[60,1],[62,4],[70,3],[76,1],[79,7],[82,1],[83,2],[84,2],[93,1],[115,1],[128,1],[135,1],[140,2],[169,2],[176,1],[185,1],[186,1],[191,2],[196,1],[201,1],[204,2],[212,1],[215,1],[216,2],[217,2]],"uncover":[[3,1],[37,1],[64,2],[65,1],[74,1],[75,1],[177,1],[179,1],[183,1],[184,2],[197,1]],"holds":[[3,1],[10,1],[57,1],[86,1],[91,1],[192,2]],"guide":[[3,1],[21,1],[24,1],[32,4],[33,1],[41,2],[43,2],[44,1],[46,1],[53,2],[56,1],[57,1],[58,1],[63,1],[64,2],[67,1],[70,1],[71,2],[72,2],[80,4],[81,4],[83,2],[84,1],[106,1],[111,1],[123,1],[124,1],[127,1],[160,4],[189,1],[190,1],[194,1],[195,2],[196,1],[201,1],[203,2],[213,1],[214,1],[215,1],[216,1],[222,1],[225,1]],"functionality":[[3,1],[5,1]],"fortify":[[3,1],[79,1]],"guiding":[[3,1],[38,1],[104,1],[172,2],[192,1]],"conclu-":[[3,1],[16,1],[87,1]],"depending":[[3,2],[9,1],[25,1],[42,1],[64,1],[75,1],[112,1],[114,1],[139,1],[164,1],[167,1],[172,1],[196,1],[203,1],[204,1],[205,1],[211,1]],"you've":[[3,1],[4,1],[10,1],[12,3],[16,8],[17,4],[18,2],[21,1],[24,3],[33,2],[35,6],[36,2],[37,6],[38,1],[47,2],[49,1],[51,1],[52,1],[58,4],[60,2],[61,5],[63,1],[64,1],[69,2],[70,1],[74,1],[75,1],[79,1],[178,2],[192,1],[200,1],[202,1],[209,1]],"substitute":[[3,1],[25,1],[35,1],[69,1],[86,1],[91,1],[96,1],[105,1],[109,1],[113,2],[115,1],[166,1],[191,1]],"above":[[3,1],[13,1],[17,1],[18,1],[21,1],[33,1],[38,1],[43,1],[51,1],[65,1],[78,2],[87,1],[90,1],[91,1],[101,1],[109,1],[111,1],[113,2],[114,1],[115,2],[121,2],[164,3],[166,1],[167,3],[168,1],[176,2],[177,1],[179,1],[183,1],[191,3],[196,1],[199,2],[200,1],[207,1],[212,1],[214,2],[218,1],[219,3],[221,3],[222,1]],"rumination":[[3,1],[6,1],[22,1],[24,1],[31,2],[45,1],[53,8],[54,5],[55,2],[63,1],[72,1],[76,1],[77,4],[82,1],[83,2],[84,1],[126,1],[152,3],[155,6],[161,1]],"obsession":[[3,1],[45,1]],"continual":[[3,1],[8,1],[10,1],[55,1]],"self-criticism":[[3,1],[6,1],[24,1],[31,1],[33,1],[45,1],[53,2],[55,1],[72,1],[76,1],[77,1],[202,4],[223,1]],"accept":[[3,1],[4,1],[8,1],[10,2],[42,1],[44,2],[51,1],[53,2],[55,1],[64,4],[78,2],[89,1],[91,1],[96,2],[97,1],[100,4],[104,1],[191,7],[198,3],[210,1],[214,2]],"nonjudgmentally":[[3,1],[10,1],[44,2],[53,2],[96,1]],"allow":[[3,1],[27,2],[36,1],[37,1],[53,2],[65,1],[69,1],[90,1],[91,2],[92,1],[94,1],[97,1],[98,1],[100,4],[103,2],[104,3],[112,1],[158,3],[159,2],[163,2],[164,2],[166,2],[167,1],[196,1],[205,1],[213,1],[214,1],[216,1],[222,2]],"imagery":[[3,1],[18,1],[25,1],[43,1],[44,2],[59,1],[60,1],[62,1],[63,2],[68,3],[69,7],[70,6],[80,1],[83,1],[88,1],[89,1],[98,1],[99,1],[103,2],[105,5],[113,2],[118,3],[119,1],[122,1],[123,1],[125,1],[127,1],[208,1],[209,2],[210,8],[211,3],[213,7],[214,2],[217,3],[218,3],[219,2],[223,1]],"story":[[3,1],[60,1],[169,1],[170,1],[176,1],[186,1],[197,1],[216,1],[217,1]],"offer":[[3,1],[5,2],[10,1],[12,1],[13,1],[17,2],[18,1],[34,1],[35,1],[36,1],[37,1],[38,1],[43,1],[57,1],[64,1],[74,1],[91,1],[92,1],[95,1],[98,1],[101,1],[103,4],[105,1],[107,2],[112,1],[114,3],[115,1],[120,1],[129,1],[134,2],[155,2],[158,1],[163,1],[168,1],[176,1],[177,1],[211,2],[213,1]],"meta-":[[3,1],[81,3]],"experiential":[[3,1],[60,1],[79,2],[80,1],[83,2],[114,1],[127,1],[128,1],[134,3],[140,3],[146,3],[151,2],[161,1]],"role-playing":[[3,1],[9,1]],"experiments":[[3,1],[22,1],[24,2],[26,1],[27,1],[31,1],[45,1],[46,1],[48,3],[60,5],[63,1],[65,1],[77,3],[80,1],[82,2],[83,1],[124,1],[140,2],[146,4],[152,2],[158,4],[159,2],[192,7],[193,27],[194,11],[195,21],[196,4],[199,19],[201,2],[209,1],[211,6],[214,1],[217,3],[218,1],[219,5],[221,6],[223,8]],"usu-":[[3,1],[53,1],[65,1],[192,1]],"ally":[[3,1],[18,1],[53,1],[65,1],[90,1],[91,1],[170,1],[192,1],[205,1],[213,1]],"consist":[[3,1],[182,1],[194,1]],"practicing":[[3,1],[24,1],[26,1],[41,1],[53,2],[63,1],[65,1],[71,1],[79,1],[82,1],[88,1],[98,1],[105,1],[169,3],[176,1],[177,2],[200,2],[210,1],[216,1],[217,1],[218,3],[222,1],[223,1]],"forget":[[3,1],[34,1],[38,2],[43,2],[100,1],[155,1],[176,1],[204,2],[208,1],[214,1],[216,2],[222,2]],"occurs":[[3,1],[5,2],[22,1],[57,1],[69,1],[110,1],[139,1],[140,1],[146,1],[154,1],[161,2],[179,1],[195,1],[208,4],[210,1],[214,1],[217,1]],"poorer":[[3,1],[108,1]],"rule":[[3,1],[5,1],[12,2],[57,7],[58,1],[74,1],[90,1],[134,8],[140,2],[144,3],[155,1],[157,1],[158,1],[163,2],[164,3],[165,2],[166,2],[167,5],[168,6],[175,1],[179,1],[192,2],[194,1],[195,3],[198,1]],"thumb":[[3,1],[94,5],[100,1],[104,1],[106,1],[155,1]],"recorded":[[3,1],[12,1],[24,1],[35,1],[50,1],[64,1],[84,1],[129,1],[177,3],[186,1],[188,1],[198,1]],"either":[[3,1],[10,2],[21,3],[25,1],[27,1],[32,1],[33,1],[34,1],[35,1],[37,2],[43,2],[47,1],[48,1],[49,1],[52,2],[53,1],[54,2],[56,1],[58,1],[59,1],[60,1],[61,2],[65,1],[69,2],[70,1],[87,1],[88,2],[92,1],[93,2],[94,1],[97,2],[103,4],[108,1],[111,2],[114,1],[169,1],[171,1],[175,1],[176,1],[177,1],[182,1],[187,1],[193,1],[195,1],[196,2],[197,2],[200,2],[201,1],[202,2],[208,2],[209,3],[211,3],[212,2],[214,1],[215,1]],"paper":[[3,1],[8,1],[13,1],[18,1],[24,1],[27,1],[41,1],[42,1],[46,1],[50,1],[51,1],[52,2],[64,1],[81,2],[101,1],[102,1],[120,1],[155,1],[157,1],[158,2],[176,1],[182,1],[185,1],[200,1],[218,1]],"phone":[[3,2],[10,6],[11,1],[12,1],[14,1],[18,1],[21,1],[24,1],[26,1],[33,1],[34,1],[38,1],[41,1],[42,1],[43,1],[47,1],[50,1],[51,1],[54,1],[55,1],[63,1],[69,1],[88,1],[98,1],[101,1],[107,7],[109,1],[115,1],[120,2],[121,4],[166,1],[169,1],[170,2],[171,2],[172,1],[175,3],[178,1],[188,1],[189,1],[215,6],[218,2]],"tablet":[[3,1],[111,1],[164,2]],"cell":[[3,1],[24,1],[41,1],[90,2],[121,1]],"composed":[[3,1],[4,1],[13,1],[16,1],[56,1],[69,1]],"issue":[[3,2],[9,2],[10,1],[15,2],[16,4],[24,2],[26,1],[28,1],[32,14],[34,5],[35,3],[36,1],[37,3],[38,6],[41,2],[43,3],[57,2],[82,2],[83,1],[84,1],[90,1],[109,1],[116,2],[117,1],[123,1],[163,1],[166,2],[213,1]],"craft":[[3,1],[92,1]],"carefully":[[3,1],[26,1],[47,2],[90,1],[92,1],[94,1],[100,1],[111,1],[112,1],[169,1]],"practical":[[3,1],[7,1],[21,1],[24,1],[25,2],[26,7],[27,4],[32,1],[36,1],[38,1],[51,1],[80,1],[81,1],[82,2],[83,1],[102,1],[113,1],[135,1],[169,1],[225,1]],"considerations":[[3,1],[32,1],[86,1],[108,1],[124,1]],"energy":[[3,1],[12,1],[21,2],[24,1],[26,2],[27,3],[31,1],[33,1],[43,2],[48,2],[49,1],[56,2],[64,1],[66,1],[77,1],[78,1],[89,1],[91,1],[96,1],[97,1],[100,3],[108,2],[120,1],[122,1],[171,1],[188,1],[202,1],[206,1],[222,1]],"oppor-":[[3,1],[65,1],[73,1]],"tunity":[[3,1],[65,1]],"variables":[[3,1],[87,1],[88,1],[108,2],[112,1],[115,1],[118,1],[124,1]],"motivation":[[3,2],[13,1],[21,1],[24,3],[29,2],[31,1],[40,1],[53,1],[58,1],[61,1],[66,1],[69,3],[74,2],[83,1],[84,1],[86,3],[87,1],[88,1],[89,5],[90,12],[91,8],[92,1],[94,6],[95,1],[96,1],[99,1],[100,1],[101,1],[102,2],[104,2],[105,1],[106,1],[107,2],[109,1],[112,1],[113,3],[114,1],[117,1],[118,3],[121,1],[124,2],[125,1],[127,2],[129,1],[136,1],[163,7],[166,7],[167,3],[168,12],[169,1],[176,2],[177,1],[202,1],[205,1],[209,1],[211,1]],"mistake":[[3,1],[10,3],[36,2],[48,1],[51,3],[56,1],[64,1],[74,2],[171,2],[178,3],[194,3],[195,2],[196,4],[197,1],[213,2],[216,4]],"psycho-":[[3,1],[6,1],[41,1],[81,3]],"dialectical":[[3,1],[46,1],[63,1],[83,1]],"gestalt":[[3,1],[63,1]],"interpersonal":[[3,1],[4,2],[7,1],[9,1],[31,2],[37,1],[42,1],[57,1],[60,1],[63,1],[70,1],[80,1],[81,1],[92,1],[124,1],[140,1]],"meta-cognitive":[[3,1],[63,1]],"mindfulness-based":[[3,1],[63,1],[79,1],[81,2]],"psychodynamic":[[3,1],[63,1],[81,1]],"schema":[[3,1],[5,9],[7,1],[56,7],[57,2],[63,1],[81,2]],"wider":[[3,1],[112,1],[163,1]],"clinician":[[3,1],[11,1],[80,1],[124,1]],"worthwhile":[[3,1],[4,2],[6,2],[22,1],[56,1],[76,1],[191,1],[192,1],[196,1],[199,2],[202,1],[203,2],[209,1],[214,1],[221,1]],"tailor":[[3,1],[9,1],[15,1],[24,2],[25,1],[71,1],[168,1]],"takes":[[3,1],[6,1],[9,1],[10,1],[12,1],[15,1],[29,1],[48,1],[51,2],[52,1],[90,1],[91,1],[93,1],[95,2],[96,1],[101,1],[105,1],[107,1],[123,1],[168,1],[169,1],[175,1],[186,2],[194,1],[196,2],[198,1],[206,1],[208,1],[210,1],[211,1]],"account":[[3,1],[12,1],[37,2],[38,1],[41,1],[43,1],[186,3]],"bond":[[3,1],[9,1],[10,1],[34,1]],"always":[[3,1],[4,3],[7,2],[8,1],[10,1],[16,1],[17,1],[18,3],[19,1],[21,1],[25,1],[27,1],[36,1],[40,5],[44,1],[47,1],[48,2],[51,1],[56,1],[57,3],[61,1],[65,1],[70,1],[71,1],[74,1],[76,3],[78,1],[79,1],[86,1],[94,1],[96,1],[97,2],[98,1],[100,1],[103,1],[105,1],[107,2],[109,2],[113,1],[115,1],[120,1],[134,1],[140,1],[163,1],[166,1],[168,4],[170,3],[172,1],[175,1],[177,3],[178,2],[182,6],[184,1],[185,1],[187,1],[188,1],[192,5],[193,1],[194,5],[195,1],[197,3],[198,3],[199,2],[201,1],[202,1],[203,1],[208,3],[214,2],[215,1],[216,1],[223,1]],"solid":[[3,1],[29,1],[32,1],[75,1],[76,1]],"prin-":[[3,2],[53,1],[216,1]],"compose":[[3,1],[25,1],[48,1],[50,1],[63,1]],"consider":[[3,1],[5,1],[7,1],[10,1],[18,1],[24,1],[25,1],[29,1],[47,2],[48,1],[59,1],[60,1],[61,2],[65,1],[71,2],[72,1],[75,1],[89,2],[90,1],[91,1],[92,1],[94,1],[108,1],[131,1],[166,1],[167,1],[168,3],[171,1],[172,1],[174,1],[176,2],[181,1],[182,1],[184,1],[188,1],[189,2],[191,2],[194,2],[195,1],[200,2],[208,2],[213,6],[214,1],[215,4],[216,1],[217,1],[218,2]],"entire":[[3,1],[9,1],[16,1],[21,2],[34,1],[51,1],[74,1],[84,1],[92,1],[98,3],[101,1],[103,1],[114,1],[115,1],[120,1],[122,1],[170,1],[177,1],[196,1],[201,1],[211,1]],"ciples":[[3,1],[53,1],[216,1]],"tian":[[4,1],[108,2],[116,1]],"complete":[[4,1],[7,2],[8,1],[15,1],[19,2],[23,1],[24,4],[25,4],[26,1],[27,2],[33,1],[52,3],[58,1],[61,1],[64,1],[71,1],[74,2],[89,2],[90,1],[92,3],[94,4],[95,1],[96,1],[97,2],[100,1],[101,3],[104,1],[106,1],[107,1],[110,1],[111,1],[112,2],[114,4],[115,2],[120,9],[121,4],[122,4],[130,2],[134,3],[135,1],[140,3],[142,1],[145,1],[150,2],[157,3],[158,5],[159,5],[167,2],[169,1],[172,1],[175,2],[177,5],[180,1],[181,1],[183,3],[184,5],[185,2],[186,1],[187,3],[188,5],[190,2],[194,3],[195,1],[196,3],[197,5],[198,1],[202,1],[205,1],[208,2],[209,2],[217,2],[221,4],[222,1],[223,1]],"diagram":[[4,1],[5,2],[7,9],[8,4],[17,2],[26,1],[58,5],[67,1],[71,1],[76,3],[81,1],[82,6],[83,7],[84,4],[134,1],[153,1],[155,2],[196,2]],"across":[[4,1],[6,1],[12,1],[20,1],[28,1],[30,1],[32,1],[36,1],[38,2],[57,1],[65,1],[67,1],[74,5],[75,1],[83,1],[86,6],[87,8],[88,2],[89,1],[96,1],[101,1],[103,1],[108,4],[110,2],[111,3],[112,1],[114,1],[120,1],[125,1],[159,2],[160,1],[172,1],[178,1],[192,2],[198,1],[200,1],[202,1],[205,1],[208,2],[225,1]],"select":[[4,1],[37,1],[45,1],[54,1],[64,1],[67,1],[74,2],[88,1],[143,1],[145,1]],"stuck":[[4,1],[38,1],[52,1],[54,1],[61,1],[63,1],[73,2],[75,1],[82,1],[84,1],[86,1],[97,1],[169,1],[182,1],[185,1],[188,1],[203,1],[206,1],[208,1],[219,1]],"organic":[[4,1],[11,1],[74,1]],"efficient":[[4,1],[8,1],[28,1],[33,1],[35,1]],"effec-":[[4,2],[50,1],[64,1],[203,1]],"kuyken":[[4,2],[12,1],[79,1],[81,1]],"needleman":[[4,1],[81,1]],"persons":[[4,1],[12,1],[81,1],[85,1],[87,2],[124,1],[214,2],[217,1],[222,2]],"tarrier":[[4,1],[81,1]],"begin":[[4,2],[7,2],[12,1],[24,3],[32,1],[34,1],[42,1],[46,1],[57,1],[58,3],[60,1],[61,1],[70,1],[71,2],[79,1],[86,1],[92,3],[93,2],[94,2],[95,1],[96,1],[97,1],[100,1],[102,2],[103,1],[104,2],[105,1],[114,5],[115,1],[120,1],[139,1],[147,1],[154,1],[164,1],[165,1],[166,1],[169,2],[170,1],[171,2],[172,1],[175,1],[176,4],[178,1],[179,2],[181,1],[182,2],[188,2],[189,3],[190,6],[192,1],[193,1],[197,2],[198,6],[199,2],[201,3],[202,1],[204,3],[208,2],[209,3],[210,2],[211,1],[214,3],[217,5],[218,5],[221,4],[222,1]],"construct":[[4,1],[177,1],[186,2],[188,2],[213,1],[215,1]],"contact":[[4,1],[8,1],[9,2],[14,3],[16,1],[19,1],[31,1],[33,1],[47,2],[65,1],[76,1],[77,1],[94,1],[101,3],[104,1],[109,1],[110,1],[114,1],[115,5],[120,2],[121,10],[156,1],[158,1],[163,4],[165,1],[166,1],[168,1],[171,1],[194,2],[201,1],[203,1],[207,2],[213,1],[214,1]],"whether":[[4,2],[8,1],[10,7],[11,5],[12,8],[16,5],[17,1],[19,4],[21,5],[25,2],[26,4],[27,1],[28,1],[32,2],[34,6],[35,2],[36,4],[37,1],[38,2],[41,2],[43,5],[45,3],[47,1],[48,6],[51,1],[56,4],[57,5],[58,5],[59,1],[60,1],[61,2],[64,4],[65,3],[72,1],[74,1],[77,1],[78,1],[79,1],[83,2],[86,1],[87,2],[88,1],[90,3],[91,1],[92,1],[95,1],[98,1],[100,1],[103,1],[105,1],[107,6],[108,1],[110,2],[111,2],[112,1],[113,3],[114,2],[115,1],[120,2],[121,1],[134,3],[140,1],[152,1],[163,4],[164,1],[166,5],[167,5],[168,4],[170,1],[178,1],[181,1],[182,1],[183,2],[184,1],[185,1],[188,1],[191,1],[192,2],[194,1],[195,4],[196,1],[198,1],[199,1],[202,1],[203,1],[208,2],[210,2],[211,2],[213,3],[217,1],[218,2],[219,1]],"fits":[[4,1],[24,1],[58,1],[163,1],[187,1],[188,1],[189,1],[193,1],[194,1],[195,4],[198,4],[221,3]],"summarize":[[4,1],[6,1],[7,1],[8,1],[10,1],[11,1],[14,2],[15,1],[16,1],[17,2],[18,1],[19,2],[24,1],[31,3],[33,2],[35,9],[36,2],[38,2],[47,1],[51,3],[57,1],[58,2],[74,2],[79,1],[170,2],[178,1],[186,2],[199,1],[221,1]],"heard":[[4,1],[41,1],[43,1],[47,2],[100,1],[169,1],[173,1],[196,1],[210,1],[215,2]],"check":[[4,3],[7,1],[8,1],[10,2],[15,5],[16,7],[17,2],[21,1],[24,1],[25,1],[32,2],[33,10],[34,2],[35,4],[36,3],[40,1],[61,1],[63,1],[70,2],[74,3],[81,1],[82,12],[83,5],[84,1],[114,1],[121,1],[122,1],[123,1],[157,1],[158,3],[159,5],[161,1],[163,1],[164,1],[165,1],[166,4],[167,4],[168,3],[172,1],[176,1],[207,1],[208,1]],"didn":[[4,1],[5,1],[6,4],[7,1],[9,1],[10,7],[12,1],[13,1],[14,1],[16,1],[17,1],[18,2],[19,1],[21,1],[22,2],[24,1],[25,5],[26,5],[27,2],[33,1],[34,5],[35,1],[37,1],[38,1],[40,1],[42,1],[43,4],[44,1],[47,6],[50,1],[53,1],[56,1],[57,1],[58,4],[60,3],[61,2],[62,1],[64,1],[65,4],[69,1],[70,1],[71,1],[72,2],[76,5],[77,1],[79,2],[86,1],[88,4],[92,1],[100,9],[105,1],[107,1],[108,2],[109,1],[110,1],[112,1],[155,1],[168,1],[169,5],[170,3],[171,2],[172,1],[176,1],[178,1],[182,6],[185,2],[186,1],[189,2],[193,2],[195,3],[198,1],[199,1],[200,1],[203,1],[205,1],[212,2],[213,3],[215,3],[216,1],[217,2],[219,1],[221,1]],"worthlessness":[[4,2],[56,3],[84,1],[171,2],[194,1],[201,1]],"until":[[4,1],[6,2],[7,1],[8,2],[9,1],[10,1],[12,4],[13,1],[17,1],[20,1],[25,2],[26,2],[33,1],[38,1],[40,1],[41,2],[44,1],[48,1],[49,1],[52,1],[56,2],[58,2],[59,1],[64,1],[65,2],[69,1],[70,2],[71,1],[76,2],[79,2],[86,1],[95,1],[97,1],[98,1],[103,2],[105,2],[111,1],[112,2],[113,1],[140,1],[142,1],[147,1],[150,3],[151,1],[161,1],[165,1],[169,1],[170,3],[171,1],[173,1],[175,1],[176,2],[177,2],[178,2],[179,1],[181,2],[183,1],[188,1],[189,5],[190,2],[192,1],[193,1],[194,1],[200,1],[201,1],[203,3],[204,1],[205,2],[208,4],[209,3],[213,2],[215,1],[217,1],[218,3],[225,1]],"shouting":[[4,1],[213,1],[216,1]],"match":[[4,1],[16,1],[32,1],[43,3],[103,1],[187,2],[195,2],[221,2]],"sister":[[4,1],[19,1],[25,1],[32,3],[36,2],[41,2],[43,1],[48,1],[185,2],[194,1],[195,3]],"came":[[4,2],[5,1],[6,1],[10,1],[18,1],[19,1],[22,1],[24,1],[36,1],[37,1],[47,2],[60,3],[71,1],[87,1],[100,2],[113,1],[120,1],[155,2],[164,1],[166,1],[169,1],[170,2],[171,1],[178,1],[182,2],[185,1],[195,3],[215,1],[218,2]],"pattern":[[4,2],[7,1],[47,1],[48,1],[57,1],[87,1],[166,1],[167,1],[170,1],[202,3],[212,1],[219,1],[222,1]],"identified":[[4,2],[19,2],[32,2],[33,3],[34,1],[35,1],[37,1],[41,1],[43,1],[45,2],[47,2],[48,1],[57,1],[58,2],[59,3],[61,1],[69,1],[74,2],[75,1],[91,1],[110,1],[115,1],[121,1],[128,1],[131,1],[134,3],[135,1],[140,2],[166,1],[167,3],[168,7],[172,1],[175,4],[176,3],[177,1],[179,1],[181,1],[182,2],[184,3],[185,1],[186,3],[188,1],[192,2],[194,3],[195,2],[196,1],[197,3],[198,2],[201,1],[204,1],[205,1],[208,2],[215,1],[218,1],[219,2],[221,1]],"rings":[[4,1],[8,1],[95,1]],"true":[[4,2],[5,1],[8,4],[10,2],[12,2],[13,6],[14,2],[17,7],[18,11],[24,3],[26,1],[33,3],[35,7],[37,1],[40,2],[41,4],[42,2],[45,1],[46,7],[47,3],[48,5],[49,2],[51,7],[52,1],[56,1],[57,3],[58,5],[60,1],[61,8],[63,1],[65,1],[69,3],[71,2],[74,1],[79,3],[81,1],[82,1],[84,1],[88,2],[89,1],[90,1],[91,1],[95,3],[98,1],[102,4],[134,2],[135,1],[140,2],[142,1],[149,1],[171,1],[172,1],[178,1],[182,2],[183,4],[184,1],[188,2],[189,2],[194,2],[195,2],[196,6],[197,21],[198,1],[199,1],[213,1],[225,1]],"seems":[[4,2],[5,2],[8,1],[10,1],[13,1],[17,4],[18,1],[25,1],[32,1],[33,1],[35,2],[45,1],[46,1],[47,2],[52,1],[57,1],[58,2],[60,1],[64,1],[71,1],[88,1],[90,3],[144,1],[155,1],[172,1],[183,1],[187,1],[188,1],[191,1],[200,1],[204,2],[205,1],[209,1],[214,1],[219,1]],"invariably":[[4,1],[16,1],[94,1]],"wrong":[[4,1],[5,1],[7,1],[9,1],[13,1],[14,1],[17,1],[18,1],[22,2],[35,1],[38,1],[40,1],[46,1],[47,3],[48,1],[49,1],[51,1],[57,2],[78,1],[96,1],[132,1],[134,1],[139,1],[144,1],[155,5],[167,1],[170,2],[172,1],[179,3],[182,1],[184,1],[185,2],[191,1],[192,1],[194,3],[196,1],[201,1],[207,1],[208,3],[211,2],[214,3],[215,7],[216,3],[217,2]],"exactly":[[4,1],[10,1],[12,2],[17,3],[21,1],[35,1],[36,1],[41,2],[65,1],[71,1],[104,1],[154,1],[155,1],[213,1]],"strengthens":[[4,1],[19,1],[20,1],[56,1],[59,1]],"alli-":[[4,1],[9,2],[32,1]],"ance":[[4,1],[5,1],[9,1],[16,1],[32,1],[96,1],[107,1],[113,1],[206,1]],"accurately":[[4,1],[10,2],[11,1],[14,1],[35,1],[86,1],[92,1],[102,1],[174,1],[187,1],[192,1],[212,1],[222,1]],"sharing":[[4,1],[9,1],[100,1],[111,1]],"itself":[[4,3],[11,1],[24,1],[38,1],[39,1],[40,1],[41,1],[42,1],[44,1],[47,1],[88,1],[89,1],[91,1],[92,2],[93,1],[95,1],[96,1],[98,1],[100,1],[104,1],[105,2],[111,1],[120,1],[139,1],[161,1],[173,1],[181,1],[192,1],[202,1],[205,1],[208,1]],"ezzamel":[[4,1],[80,1]],"johnstone":[[4,1],[81,1],[108,1],[117,1],[126,1]],"suggested":[[4,1],[15,1],[48,1],[58,1],[77,2],[84,1],[90,1],[98,1],[100,1],[108,2],[113,1],[125,1],[155,1],[170,1],[171,1],[187,1],[189,4],[194,2]],"strongly":[[4,1],[6,2],[7,1],[9,1],[26,1],[32,1],[36,1],[38,1],[43,3],[47,1],[48,2],[56,1],[57,3],[58,2],[59,3],[61,1],[74,1],[76,1],[87,1],[90,1],[93,1],[94,2],[97,1],[113,1],[134,2],[154,3],[161,1],[172,1],[177,1],[181,1],[186,1],[187,2],[188,1],[198,1],[212,5],[222,4]],"seem":[[4,2],[5,1],[10,2],[17,1],[26,3],[32,1],[33,1],[35,1],[36,1],[41,1],[43,2],[48,1],[54,1],[57,1],[58,2],[60,1],[63,1],[65,1],[69,1],[74,1],[98,1],[112,1],[120,1],[169,2],[171,2],[176,1],[178,1],[179,1],[182,1],[185,1],[186,2],[187,1],[188,2],[189,1],[192,1],[194,3],[195,1],[197,1],[199,1],[200,1],[205,2],[206,1],[207,1],[209,1],[212,1],[213,1],[215,4],[216,1],[217,1]],"shoes":[[4,1],[121,1],[169,1],[171,1]],"perceive":[[4,1],[5,1],[9,4],[10,1],[18,1],[35,1],[36,1],[43,1],[45,1],[58,1],[71,1],[76,1],[117,1],[197,1]],"eyes":[[4,1],[18,1],[54,4],[55,1],[97,1],[100,5],[104,1],[106,3],[169,2],[170,1],[171,1],[210,2]],"percep-":[[4,2],[58,1]],"vulnerabilities":[[4,1],[6,1]],"attributes":[[4,2],[11,1],[74,1],[77,1]],"biology":[[4,1],[75,1],[116,1]],"genetics":[[4,1],[160,1]],"initiating":[[4,1],[20,1],[22,1],[24,2],[27,1],[83,1],[105,1]],"com-":[[4,1],[18,1],[22,2],[25,1],[56,2],[59,1],[61,1],[63,1],[64,2],[65,1],[74,1],[79,1],[87,2],[91,1],[92,2],[93,1],[94,1],[95,1],[98,2],[99,1],[102,1],[171,1],[183,1],[186,3],[187,1],[192,1],[208,2],[210,2],[214,1],[215,1],[222,1]],"psychi-":[[4,1],[80,1]],"atric":[[4,1],[80,1]],"medications":[[4,1],[16,2],[76,2],[81,1],[82,1],[88,1],[108,1],[111,12],[112,1],[114,1],[115,2],[116,2],[118,5],[119,2],[120,1],[122,1],[162,1],[163,6],[164,5],[166,3],[168,3],[173,1],[203,3],[211,7]],"concurrent":[[4,1],[76,1]],"lifetime":[[4,1],[7,1],[56,2],[58,1],[71,1],[76,1],[81,1],[106,1],[126,1],[155,1],[216,1]],"aspects":[[4,1],[12,1],[48,1],[69,2],[80,1],[84,1],[87,1],[89,1],[113,2],[133,2],[140,1],[168,9],[172,1],[175,1],[178,1],[187,1],[191,1],[197,1],[199,2],[200,3],[202,4],[203,2],[205,1],[215,3],[216,1],[222,1],[224,1]],"gather":[[4,1],[7,1],[27,1],[32,1],[92,1],[182,2],[184,3],[187,2],[188,1],[189,1],[194,1],[198,1],[208,1],[217,1],[219,2]],"explain":[[4,1],[9,1],[13,1],[16,1],[17,1],[24,1],[26,1],[39,1],[41,1],[46,1],[58,3],[59,1],[60,1],[83,3],[86,1],[108,1],[138,1],[140,1],[155,6],[163,11],[164,6],[165,1],[166,2],[167,2],[168,9],[169,1],[171,1],[172,1],[178,2],[191,1],[192,1],[194,2],[197,1],[199,1]],"external":[[4,1],[5,1],[7,1],[33,1],[37,2],[40,2],[53,2],[64,1],[71,1],[74,1],[75,1],[83,1],[96,1],[133,1],[158,4],[161,2],[191,2]],"failing":[[4,1],[5,1],[6,2],[32,1],[37,1],[38,2],[48,1],[58,1],[76,3],[82,1],[84,1],[177,1],[197,1]],"internal":[[4,1],[5,1],[7,1],[40,1],[53,5],[54,1],[55,3],[65,1],[74,1],[76,1],[83,1],[90,1],[96,1],[101,1],[104,1],[116,1],[117,1],[126,3],[127,1],[133,1],[155,1],[191,2],[208,1],[216,1],[222,1]],"situation":[[4,10],[5,6],[7,19],[8,2],[13,1],[16,1],[17,4],[18,2],[19,1],[20,4],[27,2],[32,5],[33,2],[34,2],[36,1],[38,1],[39,2],[40,5],[41,7],[42,12],[43,7],[45,3],[46,2],[47,10],[48,6],[51,2],[55,2],[56,5],[57,2],[58,1],[59,3],[60,1],[63,1],[64,3],[65,6],[69,5],[70,1],[71,3],[74,1],[75,1],[77,1],[79,6],[82,1],[83,1],[84,1],[91,1],[96,3],[97,3],[100,1],[104,2],[105,4],[112,1],[113,2],[134,2],[137,2],[146,1],[147,1],[151,3],[155,1],[158,2],[161,2],[166,1],[168,1],[172,2],[174,1],[175,24],[177,17],[178,21],[179,9],[180,6],[181,8],[182,5],[183,10],[184,5],[185,3],[186,17],[187,7],[188,4],[191,7],[192,1],[194,2],[195,1],[196,1],[197,17],[198,1],[199,7],[206,6],[207,4],[208,17],[209,8],[210,2],[211,1],[212,5],[213,13],[215,3],[216,6],[218,1],[221,6]],"event":[[4,2],[16,1],[26,1],[40,1],[43,1],[59,1],[60,3],[64,1],[70,1],[91,1],[95,1],[98,1],[111,1],[112,1],[121,1],[158,2],[169,1],[172,1],[173,2],[186,2],[204,1],[208,1],[209,2],[212,2],[215,4],[216,3]],"physiological":[[4,2],[5,2],[7,1],[9,1],[34,1],[40,4],[41,6],[42,2],[43,1],[45,2],[56,2],[67,1],[68,1],[76,1],[83,1],[108,1],[128,3],[134,1],[135,1],[140,1],[142,1],[163,2]],"text":[[4,4],[5,2],[18,2],[47,4],[84,1],[85,3],[101,2],[120,1],[123,1],[166,1],[192,2]],"minds":[[4,1],[15,1],[36,1],[41,1],[42,1],[50,1],[54,1],[63,1],[68,1],[97,1],[134,1],[152,1],[154,1],[155,4],[166,1],[179,1],[182,1],[196,2],[205,1],[208,2],[214,1]],"reader":[[4,11],[5,10],[8,2]],"makes":[[4,2],[5,1],[9,1],[10,2],[12,2],[13,5],[16,1],[17,8],[19,1],[20,3],[24,1],[26,1],[32,1],[33,3],[35,4],[41,1],[46,2],[47,3],[48,1],[51,2],[61,2],[64,1],[69,1],[71,1],[96,1],[98,1],[117,1],[123,1],[131,2],[134,1],[150,1],[167,2],[172,1],[179,1],[181,2],[184,2],[187,2],[193,1],[196,1],[199,1],[200,2],[203,1],[204,1],[205,1],[208,4],[209,2],[210,1],[212,1],[213,1],[216,1],[222,2]],"feels":[[4,4],[5,3],[12,1],[25,1],[32,2],[36,1],[37,1],[40,4],[41,1],[43,1],[47,2],[52,2],[54,1],[57,1],[61,2],[64,1],[67,1],[70,1],[79,1],[100,1],[145,2],[148,1],[154,1],[161,2],[163,1],[166,1],[169,1],[199,2],[207,1],[210,1],[217,1],[221,1]],"mildly":[[4,1],[43,1],[172,1],[204,1],[212,3]],"excited":[[4,1],[34,1],[41,1],[43,2],[69,1],[72,1],[166,1],[167,1],[168,1],[175,1],[200,1],[208,2]],"keeps":[[4,2],[7,1],[52,1],[61,1],[97,1],[207,3]],"simplistic":[[4,1],[134,1],[174,1]],"disappointed":[[4,1],[40,1],[43,1],[47,1],[72,1],[94,1],[173,1],[175,2],[186,1],[202,1],[213,1],[214,1]],"closes":[[4,1],[54,1]],"waste":[[4,1],[12,1],[36,1],[41,2]],"disgusted":[[4,1],[175,1],[215,1]],"altogether":[[4,1],[22,1],[45,1],[47,1],[90,1],[112,1],[167,1],[186,1]],"pages":[[4,1],[9,1],[19,1],[24,1],[34,1],[52,1],[76,1],[101,1],[169,1],[176,1],[179,1],[183,2],[184,2],[188,1],[189,1],[190,1],[203,1],[204,1],[214,1]],"dumb":[[4,1],[8,1]],"turns":[[4,1],[8,1],[21,1],[35,1],[41,1],[47,1],[49,2],[179,1],[219,1]],"asso-":[[4,1],[88,1]],"ciated":[[4,1],[88,1],[108,1],[110,1]],"interpret":[[4,4],[5,1],[8,1],[56,1],[58,1],[179,1],[202,1],[203,2],[213,2]],"situa-":[[4,1],[5,1],[32,1],[52,1],[58,1],[60,1],[71,1],[95,1],[183,2],[184,1],[209,1],[217,1],[218,1],[221,1]],"directly":[[4,1],[5,2],[7,1],[15,1],[17,1],[19,1],[30,1],[36,1],[45,1],[56,3],[57,3],[58,2],[59,1],[61,1],[74,1],[97,2],[101,2],[111,1],[121,1],[144,1],[146,1],[178,2],[182,1],[194,1],[200,2],[214,2]],"operate":[[4,1],[5,1],[56,1],[134,1],[192,3],[218,1]],"simultaneously":[[4,1],[87,1],[129,1],[198,1],[203,1]],"obvious":[[4,1],[94,1],[141,1],[196,1]],"surface":[[4,2],[92,1],[110,1],[153,1],[192,2],[194,1],[196,1]],"notice":[[4,2],[5,2],[6,2],[16,1],[18,2],[19,1],[24,2],[25,1],[27,1],[36,1],[41,1],[42,1],[44,1],[46,1],[51,1],[52,1],[53,1],[54,7],[55,1],[56,1],[57,1],[58,1],[69,1],[95,1],[96,1],[100,1],[104,2],[105,6],[107,1],[114,2],[119,1],[128,2],[133,1],[142,1],[145,1],[149,1],[155,2],[164,1],[166,1],[169,1],[170,3],[171,2],[174,1],[175,2],[176,2],[177,6],[178,4],[179,1],[181,3],[182,1],[183,2],[186,3],[187,1],[189,2],[191,3],[192,2],[196,4],[197,1],[198,6],[199,2],[200,5],[201,4],[202,3],[203,3],[204,3],[205,3],[206,4],[208,2],[209,1],[210,3],[211,1],[212,2],[216,1],[217,5],[218,1],[219,1],[221,1]],"focusing":[[4,1],[41,1],[44,2],[53,4],[63,2],[64,1],[69,4],[79,1],[83,1],[84,1],[85,1],[134,1],[140,1],[151,1],[154,1],[168,9],[191,1],[193,1],[195,1],[200,1],[202,1],[208,1],[209,1],[210,1]],"factual":[[4,1],[134,1],[183,4],[184,3],[185,3],[188,1]],"deliberation":[[4,1],[42,1],[112,1]],"spring":[[4,2],[87,1],[108,1],[109,1],[116,2],[127,1],[177,1]],"rapid":[[4,1],[5,1],[87,1],[110,1],[111,1],[161,1],[171,1],[174,2],[175,1],[184,3],[187,4],[193,2],[205,1],[206,2],[208,2],[211,1],[219,2],[222,1]],"barely":[[4,1],[40,1],[100,1]],"uncritically":[[4,1],[6,1]],"believing":[[4,2],[46,1],[47,1],[58,2],[59,1],[71,1],[79,1],[172,1],[187,1],[191,1],[192,2]],"question-":[[4,1],[46,1],[72,1],[121,1]],"shifts":[[4,1],[36,1],[185,1],[187,1]],"affect":[[4,1],[5,2],[9,2],[10,2],[13,1],[17,1],[18,1],[19,2],[21,2],[24,1],[29,1],[31,1],[32,2],[36,5],[37,2],[41,1],[42,1],[43,1],[44,1],[47,1],[59,1],[60,1],[62,1],[63,2],[67,2],[74,1],[76,1],[77,1],[79,2],[82,1],[83,1],[84,1],[86,1],[88,1],[97,1],[103,1],[108,2],[109,1],[110,2],[112,3],[116,1],[118,3],[120,1],[121,1],[123,2],[124,2],[126,1],[127,1],[134,3],[140,1],[151,1],[152,1],[163,2],[170,1],[172,2],[173,2],[174,1],[175,1],[191,1],[196,2],[200,1],[201,3],[203,1],[204,2],[208,1],[212,2],[214,1],[216,2],[218,1],[222,2]],"dysphoric":[[4,1],[6,1],[43,1]],"inclined":[[4,1],[134,1],[161,1]],"behaving":[[4,1],[41,1],[48,1],[140,1],[169,1],[171,1],[205,1],[213,1],[217,1]],"body":[[4,1],[5,1],[9,2],[36,1],[53,2],[70,1],[76,1],[79,1],[93,3],[95,2],[96,5],[100,4],[102,1],[104,3],[105,5],[106,1],[108,1],[110,1],[111,1],[112,1],[113,3],[114,1],[120,1],[121,1],[123,2],[125,1],[126,3],[128,3],[135,3],[138,1],[140,8],[142,1],[145,1],[149,2],[154,4],[157,3],[158,3],[161,4],[163,1],[164,5],[165,1],[166,1],[167,1],[168,1],[173,3],[175,2],[193,1],[206,2],[208,1],[210,6]],"distress":[[4,1],[5,1],[7,1],[9,2],[10,2],[24,1],[26,1],[29,1],[32,2],[34,1],[38,1],[40,2],[43,1],[44,1],[45,2],[47,1],[49,1],[56,1],[57,2],[58,1],[61,1],[64,1],[69,3],[72,1],[74,4],[76,1],[79,2],[82,2],[83,1],[108,1],[128,1],[129,1],[133,1],[134,1],[139,1],[140,2],[142,1],[151,1],[154,3],[155,1],[161,3],[179,1],[182,1],[185,1],[188,1],[191,6],[192,1],[194,1],[197,3],[201,1],[205,1],[206,1],[218,2],[225,1]],"shortness":[[4,1],[122,1],[205,1],[206,1],[222,1]],"breath":[[4,1],[48,1],[53,5],[54,5],[55,1],[63,2],[77,1],[93,1],[97,1],[100,7],[103,1],[104,6],[105,3],[114,2],[115,1],[120,3],[122,1],[157,2],[158,2],[163,1],[164,8],[166,2],[167,3],[182,1],[205,1],[206,1],[210,1],[222,1]],"racing":[[4,1],[40,1],[128,1],[170,2],[177,1],[178,1],[182,1],[187,1],[192,2],[193,11],[217,1]],"ably":[[4,1],[213,1]],"finished":[[4,1],[5,2],[6,1],[20,1],[24,1],[25,2],[26,2],[35,3],[59,3],[70,1],[71,1],[76,1],[187,1],[216,1]],"reality":[[4,1],[25,1],[34,1],[40,3],[56,1],[59,1],[65,1],[69,1],[70,3],[74,1],[83,1],[84,1],[91,2],[102,1],[105,1],[123,1],[140,1],[161,1],[191,1],[209,1]],"recalling":[[4,1],[43,1],[69,1],[79,1],[133,1]],"reminding":[[4,1],[21,1],[64,1],[148,1],[166,1],[167,2],[168,1],[192,1]],"erroneous":[[4,1],[46,1]],"correct":[[4,1],[8,1],[14,1],[57,1],[74,1],[75,1],[87,1],[105,1],[165,1],[166,1],[188,1],[194,1],[196,1],[202,1]],"discover":[[4,1],[13,1],[21,1],[25,1],[41,1],[71,1],[96,1],[100,4],[104,3],[105,6],[106,2],[163,1],[169,1],[181,1],[184,1],[185,2],[188,3],[189,1],[195,1],[196,1],[197,1],[203,4],[205,1],[209,1],[211,1]],"arousal":[[4,1],[42,1],[43,2],[63,2],[67,1],[82,2],[95,1]],"decreases":[[4,1],[78,1],[154,1],[207,1],[209,2]],"sub-":[[4,1],[80,1],[93,1]],"answer":[[4,1],[10,3],[12,1],[19,1],[35,1],[42,1],[47,1],[52,1],[70,1],[71,1],[90,1],[93,1],[112,1],[113,2],[114,1],[115,1],[120,1],[121,1],[122,1],[155,3],[163,3],[164,3],[168,5],[171,1],[179,5],[180,1],[181,6],[183,2],[184,2],[185,1],[188,1],[195,1],[200,1],[207,1],[208,1],[215,3]],"them-":[[4,1],[24,1],[26,1],[47,1],[56,2],[65,1],[70,1],[196,1]],"selves":[[4,1],[24,1],[26,1],[47,1],[56,2],[65,1],[70,1],[196,1]],"central":[[4,1],[7,2],[45,1],[47,2],[56,1],[57,2],[74,4],[81,1],[82,1],[83,1],[158,1],[160,1],[169,1],[175,2],[177,1],[208,1]],"articulate":[[4,1],[57,1]],"absolute":[[4,1],[56,1],[71,1],[96,1],[196,4],[197,4],[198,1]],"truths":[[4,1],[58,2],[140,1],[144,1]],"well-":[[4,1],[13,1],[16,1],[32,1]],"adjusted":[[4,1],[163,1]],"primarily":[[4,2],[6,1],[32,1],[34,1],[56,2],[59,1],[76,1],[87,1],[90,1],[110,1],[216,1]],"latent":[[4,2],[5,1],[6,1],[56,2]],"partially":[[4,1],[20,1],[38,1],[59,1],[82,1],[108,1],[183,3],[184,1],[186,1],[187,1],[188,1],[199,2],[205,1],[221,1]],"activated":[[4,1],[5,1],[6,1],[7,2],[10,1],[32,1],[35,1],[43,1],[56,6],[57,3],[58,1],[60,2],[76,2],[79,2],[109,1],[193,1],[196,3],[197,1],[198,2],[200,1],[201,1],[208,1]],"presence":[[4,2],[53,1],[60,1],[62,1],[124,1],[175,1]],"thematically":[[4,1],[56,1]],"stressors":[[4,1],[6,1],[53,1],[76,1]],"predominantly":[[4,1],[144,1]],"psychologically":[[4,2],[43,1],[74,1],[128,1]],"healthy":[[4,2],[10,1],[18,1],[31,1],[56,2],[64,1],[91,2],[95,3],[96,7],[102,3],[103,1],[105,3],[106,1],[107,2],[109,3],[112,2],[113,3],[114,1],[115,2],[116,1],[120,2],[123,2],[134,1],[184,1],[193,2],[197,1],[204,1],[205,1],[208,1],[212,1],[216,1],[222,1]],"reasonably":[[4,7],[5,1],[6,3],[48,1],[56,1],[58,1],[59,1],[60,1],[65,1],[76,1],[86,1],[132,1]],"basically":[[4,2],[6,1],[56,1],[62,1],[76,1],[134,1]],"lived":[[4,1],[170,2],[197,1],[201,1],[214,1],[217,1]],"environments":[[4,2],[175,1],[197,1]],"mostly":[[4,2],[6,4],[16,1],[17,1],[22,1],[27,1],[35,1],[58,1],[60,1],[69,1],[77,1],[107,1],[111,1],[149,1],[171,1],[175,1],[182,1],[185,1],[187,2],[188,2],[189,3],[201,1],[204,1],[214,1],[219,1]],"safe":[[4,1],[6,1],[7,1],[9,1],[10,5],[16,1],[43,1],[56,1],[63,1],[76,1],[100,1],[104,2],[110,1],[111,1],[115,2],[120,1],[134,1],[138,1],[140,2],[148,9],[155,4],[158,4],[159,2],[164,3],[166,1],[189,2],[193,2],[195,3],[200,1],[206,1],[208,2],[210,1]],"flexible":[[4,1],[7,1],[56,1],[89,1],[112,1],[144,1],[152,1],[166,1],[185,1],[196,2],[197,2],[213,1]],"reality-based":[[4,2]],"worlds":[[4,1],[56,1],[79,1],[126,1]],"likeable":[[4,2],[6,2],[7,2],[9,1],[26,1],[56,1],[62,1],[76,1]],"views":[[4,1],[43,1],[56,1],[59,1],[82,1],[86,3],[88,1],[118,1],[125,1],[168,4],[177,1],[187,3],[199,1]],"benign":[[4,2],[6,2],[7,1],[56,1],[76,2]],"hurtful":[[4,1],[196,1],[198,2],[216,1]],"believed":[[4,2],[6,2],[9,1],[10,2],[20,1],[43,1],[53,1],[58,6],[59,3],[62,1],[76,1],[87,1],[172,2],[173,1],[184,1],[186,2],[187,1],[188,2],[192,2],[193,3],[196,2],[197,2],[199,1],[211,1],[213,1]],"protect":[[4,2],[8,1],[26,1],[56,1],[60,1],[94,3],[100,2],[102,2],[104,1],[105,1],[109,1],[115,1],[121,2],[134,1],[170,1],[194,2],[195,1],[196,1],[209,1],[212,2],[214,2],[215,1]],"mixture":[[4,1],[31,1],[93,1],[109,1],[172,1]],"safety":[[4,1],[65,5],[84,1],[104,1],[110,6],[116,1],[124,2],[125,1],[130,1],[134,6],[137,2],[138,2],[139,1],[149,2],[152,4],[155,1],[156,1],[157,2],[158,6],[159,2],[161,1],[166,1],[167,2],[175,1],[206,6],[207,26],[208,3],[209,2],[211,1],[217,1],[223,1]],"danger":[[4,1],[78,2],[110,1],[112,2],[172,1],[173,1],[179,1],[193,2],[201,1],[205,1],[206,7],[207,5],[208,24],[211,6],[219,1],[222,1]],"cope":[[4,2],[5,1],[6,1],[7,3],[41,2],[43,1],[46,1],[47,3],[58,1],[60,1],[64,1],[89,2],[91,1],[94,1],[98,1],[102,1],[103,1],[113,1],[115,3],[120,2],[121,1],[122,1],[134,1],[137,1],[138,1],[155,2],[157,1],[158,2],[164,1],[166,2],[167,1],[168,3],[169,1],[170,2],[174,2],[175,1],[179,2],[182,1],[190,1],[191,1],[192,1],[193,3],[195,1],[197,1],[205,1],[206,6],[207,2],[208,19],[211,11],[219,1],[222,1]],"hav-":[[4,1],[58,2],[178,1],[184,1],[187,1]],"successful":[[4,1],[23,1],[25,2],[32,1],[46,1],[48,1],[61,8],[74,1],[76,1],[87,1],[88,1],[89,1],[90,2],[91,1],[92,2],[94,1],[95,2],[96,2],[99,1],[100,2],[101,4],[107,1],[108,2],[109,1],[117,1],[124,1],[134,3],[160,1],[164,1],[177,1],[189,1],[190,1],[193,1],[195,1],[196,1],[197,1],[199,2],[202,1],[208,1],[209,1],[216,1],[219,1]],"productivity":[[4,1],[6,1],[18,1],[76,1]],"achievement":[[4,1],[20,2],[124,2],[129,1],[163,1],[167,1],[173,2]],"freedom":[[4,1],[89,1],[96,1],[101,1],[118,2],[176,1],[214,1]],"lovable":[[4,2],[197,2],[198,9],[199,2],[221,2]],"desirable":[[4,1],[11,1],[12,1],[17,1],[24,1],[41,1],[51,1],[72,1],[102,1]],"attractive":[[4,1],[7,1],[172,1]],"cared":[[4,1],[9,1],[182,3],[185,1],[186,3],[208,1]],"impair":[[4,1],[21,1],[38,1],[45,1]],"loved":[[4,1],[5,1],[26,1],[47,1],[89,1],[90,1],[95,1],[104,1],[112,1],[158,1],[170,1],[183,2],[185,1],[189,1],[190,1],[197,1]],"unlikely":[[4,1],[24,1],[32,2],[47,2],[64,2],[74,1],[90,1],[115,1],[121,1],[140,1],[210,1],[213,1]],"abandoned":[[4,1],[5,1],[76,2]],"alone":[[4,1],[5,1],[9,1],[12,2],[18,1],[19,1],[32,1],[37,1],[42,2],[69,1],[70,1],[72,1],[74,3],[75,1],[76,1],[81,1],[86,2],[87,4],[93,1],[105,1],[109,1],[111,1],[115,1],[123,1],[133,1],[136,1],[142,1],[152,1],[155,1],[158,1],[170,1],[171,1],[175,4],[181,6],[186,1],[192,2],[198,1],[203,1],[204,2],[205,1],[209,1],[219,1]],"worthy":[[4,1],[43,1]],"acceptable":[[4,1],[10,1],[121,1],[198,5],[199,2]],"moral":[[4,2],[179,1]],"packet":[[4,1],[7,4],[18,1],[19,1],[33,2],[42,1],[51,2],[60,1],[75,1],[80,1]],"institute":[[4,1],[7,4],[18,1],[19,1],[33,2],[42,1],[51,2],[60,1],[75,5],[76,3],[77,1],[80,4],[81,1],[82,2],[84,1],[108,1],[109,1],[110,1],[116,2],[118,1],[126,3],[127,2],[225,1]],"phila-":[[4,1],[18,1]],"delphia":[[4,1],[18,1]],"negatively":[[4,1],[6,1],[9,2],[17,1],[36,2],[48,2],[91,2],[102,1],[108,1],[109,1],[112,1],[171,1],[191,2],[194,1],[199,1],[201,1],[202,1],[213,1],[216,1]],"setback":[[4,1],[71,3],[72,4],[217,2]],"took":[[4,1],[5,1],[7,1],[10,1],[16,1],[18,1],[34,3],[58,1],[59,1],[71,1],[90,1],[95,1],[98,1],[100,2],[121,1],[122,1],[170,1],[173,1],[178,3],[182,1],[189,2],[193,2],[199,2],[200,1],[206,1],[210,1],[217,1]],"contrary":[[4,1],[47,1],[48,1],[56,1],[58,1],[86,1],[134,1],[199,1]],"code":[[4,1],[33,1]],"acute":[[4,2],[56,1],[60,1],[79,1],[108,1],[110,1],[116,2],[117,1],[123,1],[125,1],[127,2]],"happens":[[4,1],[13,1],[16,1],[25,3],[32,1],[33,1],[37,1],[41,1],[47,1],[51,1],[63,1],[69,2],[70,5],[71,1],[95,1],[98,2],[100,1],[121,1],[154,1],[155,3],[158,6],[191,1],[192,4],[194,2],[195,5],[196,1],[198,2],[200,1],[207,1],[208,1],[212,1],[223,1]],"weak":[[4,1],[5,1],[65,1],[70,1],[95,1],[98,1],[99,1],[102,1],[134,1],[142,1],[155,1],[191,1],[211,1]],"actually":[[4,1],[7,1],[10,1],[13,2],[16,1],[21,3],[22,4],[24,1],[26,1],[27,2],[33,1],[36,4],[41,1],[44,1],[46,1],[48,2],[51,1],[52,1],[54,1],[56,2],[57,2],[60,3],[61,2],[63,1],[69,2],[70,2],[91,1],[96,1],[100,1],[105,1],[111,1],[138,1],[155,1],[158,6],[164,1],[166,1],[169,1],[173,2],[177,1],[179,1],[184,1],[188,2],[189,1],[190,1],[193,1],[195,2],[200,1],[201,1],[202,1],[205,1],[206,3],[207,2],[208,4],[209,1],[211,1],[217,1],[218,1],[219,1]],"growing":[[4,1],[6,1],[7,1],[8,1],[18,1],[79,1],[86,1],[96,1],[104,1],[109,1],[110,1],[111,1],[160,1],[169,2],[172,1]],"adulthood":[[4,1],[173,1],[175,1],[196,1]],"overly":[[4,1],[10,1],[21,1],[64,1],[78,1],[147,1],[174,1],[213,1]],"manic":[[4,1],[40,1],[112,1]],"hypomanic":[[4,1],[40,1]],"unrealistically":[[4,1],[76,1]],"viewing":[[4,1],[6,1],[9,1],[60,1],[63,1],[177,1],[197,1],[198,1]],"live":[[4,1],[5,1],[6,2],[53,1],[58,1],[74,1],[76,1],[89,1],[90,1],[91,4],[92,4],[93,1],[94,2],[95,1],[96,3],[97,1],[100,6],[101,1],[102,3],[103,1],[104,4],[105,2],[106,2],[114,1],[115,1],[120,1],[131,1],[144,1],[145,1],[155,1],[165,1],[166,4],[170,1],[173,1],[176,1],[191,2],[192,1],[200,1],[214,1],[219,1]],"function":[[4,1],[5,1],[6,1],[13,2],[43,2],[48,1],[51,1],[56,1],[87,1],[90,1],[93,1],[123,1],[163,1],[189,2]],"poorly":[[4,1],[40,1],[91,1],[110,1],[172,1],[202,1],[213,1],[217,1]],"troubled":[[4,1],[214,1]],"episode":[[4,1],[6,1],[7,6],[56,1],[76,2],[167,1],[219,1]],"extreme":[[4,1],[5,1],[9,1],[26,1],[37,1],[40,1],[48,1],[56,2],[72,1],[139,1],[155,1],[172,1],[202,1],[208,1]],"highly":[[4,1],[5,1],[6,5],[7,2],[12,1],[13,1],[21,1],[24,2],[32,1],[35,1],[52,1],[53,1],[56,3],[57,3],[64,1],[74,1],[76,4],[86,1],[87,1],[90,1],[94,3],[95,1],[96,1],[101,1],[110,1],[112,3],[114,1],[115,1],[121,1],[122,3],[129,1],[130,1],[144,1],[150,1],[161,2],[171,1],[172,1],[187,1],[189,2],[197,1],[198,1],[204,1],[206,1],[207,1],[210,1],[215,1]],"categories":[[4,2],[21,2],[33,1],[43,1],[48,2],[56,3],[57,1],[58,1],[61,2],[74,1],[82,1],[83,2],[93,1],[200,1],[204,1],[217,2],[222,1]],"helplessness":[[4,1],[6,2],[24,1],[56,2],[74,1]],"ineffective":[[4,1],[5,4],[45,1],[47,2],[52,1],[56,1],[70,1],[74,2],[82,1]],"self-":[[4,1],[10,1],[18,1],[24,1],[27,1],[53,1],[63,1],[216,1]],"protection":[[4,1],[79,1],[110,1],[129,1]],"measuring":[[4,1],[71,1],[74,1],[123,1],[124,1],[176,1],[182,1],[185,1],[188,1],[192,1],[195,1],[201,1],[202,1],[205,1],[212,2],[219,1],[222,1],[224,1]],"unlovability":[[4,1],[56,2],[198,1]],"resulting":[[4,1],[47,1],[89,1],[108,1],[161,1],[202,1],[206,1]],"inability":[[4,1],[37,1],[89,2],[91,1],[208,1],[211,1]],"love":[[4,1],[43,1],[56,2],[94,2],[95,1],[103,1],[113,1],[171,2],[172,1],[178,1],[179,1],[185,1],[186,2],[191,2],[192,1],[197,1],[198,2],[200,1],[203,1],[212,1],[213,2],[214,2]],"intimacy":[[4,1],[56,1],[208,1],[213,1]],"immoral":[[4,1],[5,1],[57,1]],"sinner":[[4,1],[5,1],[57,1]],"category":[[4,1],[21,5],[56,9],[57,5],[87,1],[204,1],[208,1],[222,1]],"frequently":[[4,1],[8,1],[12,1],[13,1],[16,1],[20,2],[63,1],[74,1],[91,1],[92,1],[101,1],[108,1],[118,1],[140,1],[168,1],[175,1],[192,1],[198,1],[202,2],[205,1],[208,2],[212,3],[213,1],[217,3],[218,1],[222,1]],"useless":[[5,2],[155,1]],"powerless":[[5,1],[56,1],[57,1]],"loser":[[5,1],[48,1],[51,1],[178,1],[192,1],[194,1],[202,1]],"defective":[[5,2],[26,1],[56,1],[196,1]],"unlikeable":[[5,1],[62,2]],"unattractive":[[5,1],[57,1]],"unimportant":[[5,1],[38,1],[199,2]],"unwanted":[[5,1],[53,1]],"accepted":[[5,1],[6,1],[43,1],[63,1],[100,1],[105,2],[191,1],[210,1]],"nothing":[[5,2],[6,1],[10,2],[12,3],[16,1],[18,1],[19,1],[20,1],[34,2],[37,1],[41,1],[42,1],[43,1],[57,1],[64,2],[76,1],[98,1],[100,3],[104,4],[134,1],[155,2],[173,1],[177,1],[178,2],[183,1],[184,2],[186,1],[187,1],[192,1],[195,2],[204,1],[205,1],[207,1],[213,1]],"bound":[[5,1],[75,1]],"worthless":[[5,2],[36,1],[43,1],[47,1],[56,2],[57,1],[58,1],[62,1],[142,1],[155,1],[171,3],[173,1],[192,1],[194,3],[196,6],[198,1],[202,4],[222,1]],"unacceptable":[[5,1],[199,1]],"toxic":[[5,1],[74,1],[93,1],[110,1],[111,2],[127,1]],"crazy":[[5,1],[17,1],[48,1],[169,1],[178,1],[184,2],[203,3],[205,1],[208,1]],"deserve":[[5,1],[9,1],[20,2],[24,2],[25,1],[71,2],[91,2],[106,1],[122,1],[166,1],[175,1],[192,1],[219,1]],"figuring":[[5,1],[34,1],[42,3]],"bank":[[5,2],[24,1],[43,2]],"loan":[[5,2],[24,1],[48,1]],"state":[[5,1],[19,2],[29,1],[41,1],[56,1],[71,1],[74,2],[79,1],[80,1],[81,1],[86,2],[90,1],[92,4],[93,1],[98,1],[100,2],[103,2],[114,3],[121,3],[123,1],[126,1],[128,1],[129,1],[140,1],[154,1],[158,1],[160,1],[161,2],[208,1]],"mant":[[5,1],[87,1],[112,1],[116,3],[117,1]],"interprets":[[5,1],[56,1]],"lens":[[5,1],[76,1],[197,1],[198,2]],"basis":[[5,1],[75,1],[87,1],[88,2],[89,1],[90,1],[94,1],[103,1],[105,1],[108,1],[110,1],[111,2],[112,6],[115,1],[116,1],[120,2],[132,1],[151,1],[172,1],[193,1],[195,1],[210,1],[211,1],[212,1],[218,4],[219,1],[223,1]],"invalid":[[5,1],[48,1],[49,2],[60,2],[83,1]],"confirms":[[5,2]],"discounting":[[5,1],[6,1],[48,2],[51,1],[58,2],[59,2],[83,1],[172,2],[183,1],[198,1]],"intelligent":[[5,1],[7,1],[12,1],[43,1]],"possibility":[[5,1],[13,1],[27,1],[47,1],[48,1],[71,1],[95,1],[111,3],[113,3],[115,1],[121,2],[170,1],[189,2],[192,1],[193,1],[197,1],[211,1],[213,1]],"author":[[5,1],[79,1],[84,1],[117,1],[134,1],[225,1]],"comprehension":[[5,1],[41,1]],"forgot":[[5,1],[36,1],[43,1],[51,1],[56,2],[57,1],[60,1],[105,1],[217,1]],"track":[[5,1],[12,1],[16,2],[17,1],[21,4],[25,1],[33,1],[38,2],[51,1],[52,1],[60,1],[97,1],[101,1],[103,3],[107,1],[114,5],[133,2],[171,1],[172,1],[175,1],[176,8],[177,1],[178,1],[183,1],[190,1],[194,1],[198,3],[199,2],[202,2],[203,2],[205,3],[206,1],[212,5],[217,1],[221,2],[222,3],[225,1]],"self-critical":[[5,1],[6,3],[16,1],[20,1],[23,1],[24,2],[36,1],[42,1],[51,1],[52,1],[63,1],[130,1],[170,2],[171,2],[179,1],[202,4],[218,1],[222,1]],"purposely":[[5,1],[193,1]],"illustrates":[[5,1],[6,1],[87,1],[88,1],[100,1],[101,1],[172,1],[183,1],[193,1],[196,1],[197,1],[202,1]],"circle":[[5,1],[21,1],[46,1],[64,2],[65,4],[94,4],[101,1],[106,1],[121,9],[122,5],[168,1],[177,5],[178,1],[180,3],[181,8],[182,2],[183,4],[184,10],[185,5],[186,2],[187,6],[188,2],[202,1],[205,1],[212,5],[215,2],[221,1],[222,5]],"opening":[[5,1],[18,1],[115,1],[201,1]],"represents":[[5,1],[16,1],[86,1],[155,1],[208,1]],"piagetian":[[5,1],[56,1]],"hypothesized":[[5,1],[41,1]],"went":[[5,2],[6,1],[7,2],[10,2],[18,1],[19,1],[22,4],[26,1],[34,1],[36,1],[37,1],[38,1],[41,6],[43,1],[45,2],[47,1],[48,1],[57,1],[59,1],[71,1],[79,1],[90,1],[100,3],[167,1],[170,1],[172,1],[173,1],[177,2],[179,1],[182,1],[185,1],[193,2],[194,1],[195,1],[199,1],[201,2],[205,2],[206,2],[209,1],[210,1],[212,2],[216,1],[217,1],[218,1],[219,4]],"please":[[5,2],[57,1],[90,4],[100,3],[101,1],[104,1],[105,3],[106,4],[107,1],[114,1],[120,1],[121,4],[122,9],[134,1],[140,1],[171,1],[185,1],[214,3]],"paperwork":[[5,1],[24,1],[163,1],[166,1],[167,1],[168,1]],"figured":[[5,1],[12,1],[19,1],[32,1],[58,2],[60,1],[178,1]],"ambiguous":[[5,1],[60,1],[208,1]],"long":[[5,2],[6,2],[10,2],[12,2],[13,3],[14,1],[16,4],[17,1],[20,1],[21,1],[24,1],[25,1],[26,3],[34,1],[36,1],[47,2],[51,1],[58,3],[65,1],[71,2],[87,2],[88,1],[89,1],[90,1],[92,1],[93,1],[94,1],[96,1],[98,2],[100,2],[103,1],[105,2],[108,1],[109,2],[110,2],[112,2],[114,2],[120,2],[123,1],[124,1],[125,1],[154,1],[155,1],[158,1],[163,1],[164,5],[166,6],[168,6],[169,2],[171,2],[175,1],[176,1],[183,1],[187,1],[188,1],[190,1],[191,1],[192,1],[196,1],[198,2],[199,2],[200,1],[203,4],[205,1],[206,1],[208,1],[209,2],[210,3],[211,1],[212,2],[213,1],[214,1],[215,1],[216,1],[217,2],[218,1],[219,2],[222,1]],"demonstrates":[[5,1],[9,1],[41,1],[100,1],[209,1],[215,1]],"immediately":[[5,2],[8,1],[10,1],[17,1],[21,1],[24,2],[25,1],[33,1],[35,1],[38,1],[40,1],[51,1],[52,1],[56,1],[74,1],[100,1],[101,1],[108,1],[110,1],[114,1],[131,1],[152,1],[155,2],[165,1],[169,1],[175,1],[176,1],[185,2],[206,1],[208,1]],"processed":[[5,2],[155,1]],"unnoticed":[[5,1],[156,1],[158,1]],"organizes":[[5,1],[7,1],[51,1]],"rectangles":[[5,2],[56,2]],"confirming":[[5,1],[56,3],[57,1],[155,1]],"stronger":[[5,3],[6,2],[26,1],[58,3],[79,1],[91,1],[97,1],[100,2],[103,1],[106,1],[107,2],[110,1],[115,1],[120,1],[171,2],[172,1],[179,1],[184,1],[187,1],[193,1],[196,1],[198,2],[201,2]],"triangles":[[5,1],[56,2]],"cannot":[[5,1],[9,1],[57,1],[86,2],[91,1],[114,1],[115,2],[120,1],[121,1],[134,1],[142,1],[144,1],[146,1],[187,1],[191,1],[192,1],[208,1],[211,2]],"discounts":[[5,1],[47,1]],"essence":[[5,1],[56,1]],"angles":[[5,1],[174,1],[184,1]],"competence":[[5,2],[7,1],[9,1],[10,1],[20,1],[56,1],[58,1],[59,7],[60,8],[74,1],[76,1],[77,1],[81,2],[83,4],[84,1],[117,1],[156,1],[158,1],[219,1]],"actions":[[5,1],[21,1],[59,1],[74,1],[78,1],[89,1],[98,1],[105,2],[111,1],[113,2],[161,2],[172,1],[175,1],[189,2],[190,4],[192,2],[213,4],[214,3],[215,15],[216,3],[217,1],[221,2],[222,1],[224,1]],"sup-":[[5,1],[90,1],[97,1],[114,1],[182,2],[186,2],[203,1]],"discount":[[5,1],[6,1],[7,1],[52,1],[58,1],[59,1],[172,1],[199,1]],"fortunately":[[5,1],[12,1],[17,1],[95,1],[100,1],[102,1],[177,1],[185,1]],"contains":[[5,1],[7,1],[52,1],[57,1],[98,2],[101,1],[102,1],[103,1],[111,1],[225,1]],"attitudes":[[5,6],[6,1],[7,5],[8,6],[56,1],[57,1],[82,1],[86,4],[88,2],[89,2],[91,1],[118,1],[122,1],[123,2],[124,3],[125,2],[127,2],[168,1],[173,1],[175,1],[191,1],[214,1]],"rules":[[5,5],[6,1],[7,6],[8,7],[56,1],[57,1],[84,1],[134,21],[140,3],[144,5],[179,3],[180,1],[181,4],[184,2],[185,1],[188,1],[192,1],[194,2],[195,1],[196,4],[212,4],[213,1],[214,2],[215,1],[217,1]],"global":[[5,1],[48,1],[56,2],[84,1],[111,2],[117,3],[124,1],[127,2]],"rigid":[[5,1],[6,1],[56,1],[58,2],[152,1],[206,1]],"actual":[[5,1],[8,3],[9,1],[21,1],[22,2],[35,1],[41,6],[42,2],[56,1],[59,1],[60,1],[64,1],[65,2],[67,1],[74,1],[78,1],[90,2],[92,1],[96,1],[108,1],[110,1],[182,1],[193,1],[207,1],[210,1],[211,1],[213,1]],"exist":[[5,1],[10,1]],"class":[[5,1],[57,1],[76,1],[188,1],[206,8]],"consists":[[5,1],[92,1],[185,1],[208,1]],"unarticulated":[[5,1],[47,1],[56,1]],"indicate":[[5,1],[7,1],[12,2],[16,1],[17,1],[34,1],[43,1],[48,1],[51,1],[65,1],[71,1],[72,1],[77,1],[81,1],[86,1],[90,3],[101,1],[110,1],[111,2],[115,1],[121,3],[122,2],[175,1],[176,1],[202,1],[213,1]],"terrible":[[5,1],[8,1],[13,1],[17,2],[48,1],[51,1],[57,2],[60,1],[79,2],[95,1],[102,2],[105,1],[129,1],[175,1],[178,2],[179,2],[195,3],[205,2],[208,1],[211,1],[215,1],[217,1],[222,1]],"fail":[[5,2],[6,1],[7,1],[8,4],[20,1],[25,2],[26,1],[37,1],[38,4],[47,1],[52,1],[57,1],[68,1],[71,1],[74,1],[75,1],[76,1],[91,1],[94,3],[95,1],[96,1],[97,1],[102,2],[197,1]],"challenge":[[5,1],[8,1],[43,2],[45,1],[46,1],[69,2],[74,1],[89,1],[91,2],[94,1],[95,3],[97,1],[101,2],[113,1],[134,5],[140,1],[144,1],[152,1],[166,2],[209,1],[212,1]],"behaves":[[5,1],[145,1]],"environment":[[5,1],[51,1],[63,1],[64,1],[74,1],[75,2],[76,1],[89,1],[90,1],[95,1],[96,4],[104,1],[124,1],[127,1],[129,1],[139,1],[155,1],[161,1],[170,5],[171,6],[172,1],[173,5],[175,4],[217,1],[223,5]],"organize":[[5,1],[7,2],[25,2],[26,1],[43,1],[59,1],[71,1],[92,1],[101,1],[204,2],[219,1]],"adaptively":[[5,2],[58,2]],"rosen":[[5,1],[81,1]],"genetic":[[5,2],[6,3],[56,1],[124,1],[160,1]],"predisposition":[[5,1],[56,1]],"accu-":[[5,1],[10,1],[22,1]],"racy":[[5,1],[22,1]],"unlearned":[[5,1],[93,1]],"strengthened":[[5,1],[9,1],[56,1],[62,1],[93,2],[96,1],[193,1],[196,1],[200,1],[201,1]],"accomplished":[[5,1],[14,1],[21,1],[24,1],[33,1],[34,1],[35,2],[77,1],[216,1]],"constructive":[[5,1],[92,1],[103,1],[212,1]],"cases":[[5,1],[25,1],[32,1],[81,1],[82,1],[84,1],[90,1],[110,2],[113,1],[116,1],[129,1],[134,1],[140,1],[144,1],[163,1],[166,1],[191,1]],"indirectly":[[5,2],[56,1],[59,1],[126,1]],"identification":[[5,1],[118,1],[134,1],[168,4],[223,7]],"trigger":[[5,2],[7,1],[32,1],[41,1],[56,1],[65,3],[84,3],[89,1],[91,1],[97,2],[98,1],[101,1],[102,1],[103,1],[111,1],[112,1],[113,2],[128,1],[134,1],[139,1],[141,1],[155,1],[158,1],[159,1],[161,1],[173,1],[206,1],[213,1]],"unsafe":[[5,1],[44,1],[57,1],[158,1]],"hierarchy":[[5,1],[65,2],[208,3],[223,1]],"explained":[[5,1],[12,1],[21,1],[121,1],[165,1],[166,1],[185,1]],"illustrated":[[5,1],[16,1],[25,1],[41,1],[42,1],[44,1],[48,1],[49,1],[56,1],[113,1],[170,1],[186,1]],"sequence":[[5,2],[6,2],[155,2],[169,2],[176,1],[211,2]],"reac-":[[5,2],[7,1],[61,1],[174,1]],"trig-":[[5,1],[91,1]],"gering":[[5,1],[186,1]],"unemployed":[[5,1],[9,2],[31,1],[76,1],[194,1]],"memory":[[5,1],[7,1],[22,2],[43,1],[68,1],[69,2],[79,3],[81,2],[98,1],[110,1],[111,1],[125,1],[129,1],[133,1],[139,1],[151,2],[155,1],[161,1],[177,1],[178,1],[181,3],[183,1],[207,1],[215,1]],"fired":[[5,1],[6,1],[61,1],[77,1],[171,3],[178,5],[181,3],[189,2],[211,1],[213,1]],"boss":[[5,1],[6,2],[7,1],[19,1],[24,1],[37,1],[41,1],[42,1],[43,2],[48,1],[60,1],[61,1],[70,1],[171,2],[188,1],[189,2],[208,2],[211,3]],"staying":[[5,1],[19,1],[20,1],[21,5],[25,1],[64,1],[98,2],[127,1],[151,1],[161,2],[171,1],[172,1],[176,1],[194,1],[205,1],[209,1],[211,1],[216,1],[218,1],[222,1]],"heartbeat":[[5,1],[121,1],[171,1],[175,1],[184,7],[187,13],[193,3],[205,1],[206,2],[208,1],[222,1]],"triggering":[[5,1],[104,1],[112,1],[130,1],[137,1],[171,1]],"extended":[[5,1],[39,1],[41,3],[60,1],[83,2],[91,1],[97,1],[103,1],[134,1],[201,1],[211,2]],"clear":[[5,1],[14,1],[19,1],[32,1],[35,1],[36,1],[37,1],[56,2],[74,1],[75,1],[89,1],[92,1],[93,1],[97,1],[98,1],[110,1],[140,1],[164,1],[170,1],[171,1],[183,1],[199,1],[213,1],[214,6]],"suffering":[[5,1],[170,1]],"persistent":[[5,1],[22,1],[70,1],[121,2],[197,1],[205,2]],"sadness":[[5,1],[7,1],[10,1],[20,2],[41,1],[43,4],[53,1],[54,1],[56,1],[71,1],[79,1],[94,1],[171,1],[173,1],[175,4],[179,1],[183,2],[186,3],[187,4],[191,2],[192,2],[201,2],[202,1]],"anxi-":[[5,1],[16,1],[47,1],[78,2],[91,1],[206,1],[211,2],[218,1]],"loneliness":[[5,1],[25,1]],"diagnose":[[5,1],[14,1],[17,1],[75,1],[202,1],[206,1]],"worst":[[5,1],[36,2],[37,1],[40,1],[46,2],[47,6],[49,1],[51,1],[57,2],[61,3],[65,1],[66,1],[70,2],[100,1],[155,3],[165,1],[178,1],[179,5],[180,1],[181,6],[183,1],[184,2],[185,1],[186,1],[188,1],[215,2]],"tells":[[5,1],[10,1],[52,1],[79,1],[166,1],[178,1],[182,1],[193,1]],"pretty":[[5,1],[6,1],[14,1],[16,1],[18,4],[21,2],[25,1],[26,1],[32,2],[34,1],[35,1],[36,1],[37,2],[41,1],[43,1],[46,1],[49,1],[54,1],[56,3],[59,2],[60,1],[64,1],[67,1],[69,2],[71,1],[79,4],[105,1],[152,1],[173,2],[189,2]],"perhaps":[[5,1],[34,1],[36,1],[48,1],[71,2],[89,1],[91,2],[92,1],[94,1],[96,2],[97,4],[98,3],[100,8],[103,1],[104,3],[105,7],[106,1],[107,3],[108,1],[109,1],[136,1],[144,1],[150,1],[155,1],[166,2],[167,1],[172,1],[183,1],[188,1],[199,1],[203,1],[206,2],[208,2],[212,1],[213,1],[214,1]],"worse":[[5,1],[6,1],[9,1],[18,3],[19,1],[20,1],[21,2],[22,1],[26,3],[27,1],[33,3],[34,1],[36,1],[37,5],[42,1],[44,2],[46,1],[51,1],[52,1],[60,1],[61,1],[64,1],[65,1],[66,1],[72,1],[138,1],[155,1],[167,2],[170,5],[171,1],[172,1],[174,1],[177,1],[182,1],[199,1],[201,2],[204,5],[206,3],[211,1],[215,1],[217,1],[218,1],[219,1]],"evenings":[[5,1],[113,1]],"evening":[[5,1],[21,1],[26,1],[37,1],[43,1],[98,2],[102,1],[106,1],[107,1],[113,2],[121,1],[166,1],[182,1],[184,1],[187,1],[192,1],[195,1],[204,1],[216,1]],"obtain":[[5,1],[14,2],[16,1],[61,1],[77,1],[104,1],[107,1],[114,3],[163,1],[165,1],[166,1],[168,5]],"sample":[[5,1],[21,1],[26,1],[31,2],[43,1],[86,1],[87,2],[88,2],[90,1],[92,1],[102,1],[109,1],[123,2],[126,2],[127,1],[160,1],[177,1]],"reports":[[5,2],[11,1],[12,1],[13,1],[14,1],[37,1],[47,1],[74,1],[87,1],[96,1],[99,1],[103,1],[124,2],[125,2],[164,1],[219,1]],"cleaning":[[5,2],[10,1],[18,3],[34,1],[43,1],[69,1],[76,2],[77,1],[79,1],[159,2],[194,1]],"picture":[[5,1],[8,3],[10,1],[14,1],[22,1],[25,2],[36,1],[37,3],[41,1],[42,1],[48,1],[51,2],[58,3],[69,8],[70,5],[79,1],[85,1],[96,1],[97,4],[101,1],[103,2],[105,1],[114,1],[120,1],[152,1],[153,1],[177,1],[188,1],[191,4],[192,1],[202,1],[211,1],[213,1]],"flashed":[[5,1],[69,1],[178,1]],"sometime":[[5,1],[15,1]],"sitting":[[5,1],[16,2],[17,2],[18,3],[19,1],[21,2],[24,1],[34,1],[35,3],[40,1],[42,3],[53,1],[54,1],[59,1],[68,1],[69,6],[70,2],[76,1],[113,1],[120,2],[178,2],[184,2],[187,1],[191,1],[192,1],[204,1],[205,2],[207,1],[209,2]],"dark":[[5,1],[17,1],[56,1],[93,1],[123,1],[169,1],[201,1],[206,1]],"hope-":[[5,1],[72,1],[74,1],[77,1],[202,1]],"avoid-":[[5,1],[10,1],[16,1],[60,1],[65,1],[206,1]],"avoids":[[5,1],[7,3]],"errands":[[5,1],[21,1],[40,1],[65,1],[69,1],[76,2],[178,1]],"therefore":[[5,1],[20,1],[75,2],[94,4],[95,5],[99,1],[101,4],[102,1],[111,2],[115,1],[151,1],[155,1],[169,1],[173,1],[179,3],[180,1],[188,1],[196,2],[199,2],[200,2],[201,1],[204,1],[206,1],[209,1],[212,1],[214,2],[215,1],[216,1],[218,3]],"pleasure":[[5,1],[6,1],[12,1],[17,1],[20,6],[21,5],[22,8],[23,1],[24,1],[31,1],[37,1],[56,1],[59,1],[71,1],[76,1],[82,4],[83,2],[90,1],[110,1],[111,1],[191,1],[194,1],[202,1],[205,1],[219,1],[221,1]],"passive":[[5,1],[10,1],[27,1],[31,1],[86,1],[98,1],[127,1],[145,1],[213,2],[214,1]],"reinforce":[[5,1],[12,1],[18,2],[19,1],[21,1],[24,2],[25,2],[26,1],[32,1],[33,2],[35,1],[36,1],[37,2],[38,1],[59,2],[60,1],[70,1],[71,1],[82,1],[83,1],[88,1],[89,2],[90,1],[95,1],[97,1],[100,1],[113,1],[134,1],[140,1],[164,1],[166,5],[167,5],[168,4]],"tried":[[5,1],[6,3],[7,2],[12,1],[21,1],[24,1],[25,1],[32,2],[37,1],[38,1],[60,1],[61,1],[64,1],[69,2],[100,2],[121,2],[163,3],[171,1],[172,1],[178,1],[182,1],[197,1]],"direct":[[5,1],[19,1],[36,1],[37,1],[64,1],[82,1],[84,1],[87,1],[105,1],[109,1],[112,1],[124,1],[127,1],[170,2],[199,1]],"observation":[[5,1],[179,1]],"laid":[[5,1],[43,1],[139,1],[172,1]],"oldest":[[5,1],[76,1],[194,1]],"boys":[[5,1],[173,2],[196,3]],"left":[[5,2],[20,1],[32,2],[35,2],[38,2],[64,1],[65,1],[76,2],[158,1],[159,1],[169,1],[170,1],[171,1],[178,3],[182,2],[183,1],[186,1],[193,2],[215,1]],"returned":[[5,1],[53,1],[77,1],[183,1],[185,1],[193,1],[194,1]],"single":[[5,1],[25,1],[47,1],[76,1],[79,1],[87,2],[108,1],[111,1],[112,1],[113,1],[116,1],[123,1],[124,1],[126,1],[163,2],[164,1],[165,1],[166,2],[171,2],[175,2],[177,1],[192,1],[194,4],[197,1],[209,2],[213,1],[219,1]],"parent":[[5,1],[7,1],[79,1],[101,1],[124,1],[171,1],[186,6],[195,1]],"jobs":[[5,1],[6,1],[31,1],[57,1],[58,1],[64,1],[76,1],[153,2],[161,1],[207,1],[213,2]],"relied":[[5,1],[94,1],[102,1],[113,1]],"heavily":[[5,1],[9,1],[79,1],[111,1],[171,1],[216,1]],"clean":[[5,1],[19,2],[21,1],[34,1],[79,4],[158,1],[159,1],[164,2],[204,1],[212,1]],"laundry":[[5,1],[12,1],[24,1],[204,1],[212,1]],"younger":[[5,1],[6,1],[34,1],[76,2],[79,13],[87,5],[108,2],[171,1],[172,1],[192,1],[195,4],[215,1],[216,4]],"brothers":[[5,4],[6,1],[56,1],[58,1],[76,2],[79,5],[170,1]],"value":[[5,1],[9,3],[10,1],[12,1],[34,1],[86,1],[91,6],[93,2],[94,1],[100,6],[103,1],[108,2],[111,1],[116,1],[169,1],[173,2],[179,1],[191,5],[192,1],[197,1],[200,3],[202,1],[203,1],[204,2],[222,1]],"occasions":[[5,1],[37,1],[95,1],[168,1],[171,1]],"said":[[5,2],[9,2],[10,4],[12,1],[13,2],[17,3],[19,2],[21,2],[24,2],[26,1],[32,2],[33,1],[34,2],[35,4],[36,1],[38,3],[42,3],[43,3],[47,1],[58,1],[61,2],[64,1],[66,1],[69,1],[71,1],[74,2],[77,1],[79,7],[93,1],[95,1],[98,1],[100,4],[102,1],[103,1],[113,1],[155,1],[156,2],[158,2],[169,3],[170,4],[172,3],[178,4],[182,1],[184,1],[185,2],[191,3],[193,1],[194,1],[195,1],[199,1],[200,5],[211,1],[214,1],[216,2]],"blame":[[5,1],[17,1],[21,1],[68,1],[74,1],[75,2],[91,1],[94,1],[102,1],[140,1],[214,2]],"criticized":[[5,1],[6,1],[7,1],[8,1],[10,2],[60,2],[61,1],[64,1],[76,1],[79,1],[177,1],[194,1],[205,1]],"running":[[5,1],[21,1],[24,1],[38,1],[172,3],[179,1],[204,1],[205,1],[206,1]],"wild":[[5,1],[216,2]],"kitchen":[[5,1],[6,1],[25,3],[42,2],[56,1],[69,1],[79,3],[95,2],[96,1],[104,1],[113,2],[182,1],[185,3],[213,1]],"messy":[[5,1],[6,1],[27,1],[48,1],[56,1],[57,2],[58,1],[72,1],[79,2]],"upset":[[5,1],[7,1],[9,2],[10,6],[24,1],[25,1],[32,3],[36,1],[38,3],[40,2],[42,1],[44,4],[48,3],[51,2],[52,1],[57,2],[61,1],[79,1],[98,1],[128,1],[152,2],[169,1],[170,1],[178,1],[181,2],[182,4],[185,5],[191,1],[192,3],[195,1],[199,3],[211,1],[213,1]],"told":[[5,1],[9,4],[10,7],[12,4],[13,3],[14,4],[16,1],[19,1],[21,1],[25,1],[26,1],[27,1],[32,1],[34,1],[36,4],[37,1],[38,2],[43,3],[52,1],[79,1],[100,4],[169,1],[170,2],[171,2],[172,1],[178,1],[182,2],[183,1],[184,4],[185,4],[187,2],[189,1],[190,1],[191,1],[196,2],[197,1],[206,1],[212,1],[215,1],[216,3],[219,2]],"letting":[[5,1],[6,1],[25,1],[40,2],[54,1],[72,1],[94,1],[96,1],[104,1],[171,1],[189,2],[201,1],[214,1],[215,1]],"distressed":[[5,1],[10,1],[18,1],[21,1],[25,1],[32,1],[36,1],[38,3],[40,1],[43,2],[45,1],[47,1],[51,1],[53,1],[63,1],[74,2],[82,1],[130,1],[131,1],[134,1],[148,1],[151,1],[152,1],[154,1],[161,1],[172,1],[182,1],[185,1],[191,1],[192,1],[194,1]],"room":[[5,1],[6,1],[18,2],[35,1],[42,3],[53,1],[56,1],[65,1],[69,1],[92,5],[104,1],[110,1],[113,1],[114,1],[115,3],[119,1],[120,1],[140,1],[158,1],[159,1],[165,1],[169,1],[170,1],[171,1],[172,1],[173,1],[178,1],[179,1],[181,1],[183,1],[185,1],[192,1],[193,1],[196,1],[204,1],[205,1],[210,1]],"ruminated":[[5,1],[6,1],[63,1]],"shortcomings":[[5,1],[216,1]],"erode":[[6,1],[47,1]],"failures":[[6,4],[7,1],[25,1],[76,1],[86,1],[87,1],[90,1],[97,1],[100,1],[126,1],[194,1],[216,1]],"accomplishments":[[6,1],[7,2]],"cleaned":[[6,1],[71,1],[164,1],[194,1]],"living":[[6,2],[7,2],[8,1],[18,1],[38,3],[42,2],[53,1],[56,2],[58,1],[65,1],[69,2],[72,1],[74,1],[76,1],[81,1],[89,5],[91,2],[96,1],[100,3],[103,1],[104,1],[105,2],[109,1],[112,1],[120,1],[126,1],[127,1],[166,2],[167,1],[169,1],[170,1],[176,1],[185,1],[191,1],[215,1],[219,3]],"couldn":[[6,2],[10,1],[36,1],[41,1],[60,1],[64,1],[71,1],[72,1],[104,2],[155,1],[169,1],[170,2],[172,2],[178,2],[182,1],[194,1],[203,1]],"stop":[[6,1],[19,1],[20,2],[27,1],[42,1],[44,1],[53,1],[54,1],[64,1],[77,1],[78,1],[79,1],[86,1],[87,4],[89,11],[90,13],[91,12],[92,8],[93,8],[94,23],[95,18],[96,7],[97,6],[98,8],[99,6],[100,10],[101,16],[102,19],[103,8],[104,8],[105,4],[107,8],[108,11],[109,1],[111,2],[112,6],[113,1],[114,13],[115,10],[116,3],[117,2],[118,3],[120,16],[121,6],[122,10],[123,2],[124,1],[125,1],[126,1],[130,1],[154,1],[157,1],[158,2],[163,24],[164,12],[165,4],[166,8],[167,7],[168,16],[169,1],[170,1],[171,1],[175,1],[182,1],[189,1],[190,1],[191,1],[192,1],[203,1],[205,1],[207,1],[211,2],[214,1],[215,1],[217,2],[218,2]],"fighting":[[6,1],[32,1],[78,1],[96,1],[103,1],[182,1],[206,1]],"wonder":[[6,1],[10,4],[13,1],[16,1],[17,1],[18,6],[21,1],[26,2],[41,1],[47,1],[51,1],[56,1],[57,1],[61,1],[64,1],[65,2],[67,1],[79,2],[90,3],[91,1],[93,1],[104,1],[105,2],[179,1],[185,2]],"putting":[[6,1],[19,1],[26,1],[34,1],[38,1],[42,1],[43,1],[47,1],[69,1],[95,1],[100,1],[134,1],[171,1],[178,1],[192,1],[197,1],[199,1],[213,1],[214,1],[218,1]],"weight":[[6,1],[70,1],[87,1],[89,2],[90,1],[95,21],[96,4],[102,10],[105,2],[108,54],[109,21],[111,1],[112,4],[113,20],[114,2],[115,1],[116,1],[117,1],[118,2],[119,2],[120,2],[121,8],[123,6],[124,4],[125,3],[126,9],[127,4],[164,1],[194,4],[202,3],[203,1],[222,2]],"average":[[6,1],[7,1],[76,1],[87,5],[93,4],[95,2],[101,2],[108,10],[110,1],[121,4],[122,5]],"grades":[[6,1],[7,1],[177,1],[194,1]],"teachers":[[6,1],[8,2],[173,1],[177,1],[196,1]],"satisfied":[[6,2],[43,1],[121,8],[164,1],[191,1],[201,1]],"performance":[[6,3],[76,1],[125,1],[147,1],[156,1],[158,2],[168,2],[171,4],[173,4],[177,1],[189,8],[212,1]],"above-average":[[6,1],[7,1]],"athlete":[[6,1],[7,1],[76,1],[171,1],[173,1],[196,1]],"praise":[[6,1],[24,1],[34,1],[166,1],[167,2],[168,2]],"support":[[6,2],[47,2],[58,1],[60,1],[70,1],[71,1],[74,1],[76,1],[77,1],[81,1],[86,1],[87,5],[88,1],[89,2],[90,8],[91,3],[94,11],[95,1],[97,3],[98,4],[100,1],[101,7],[102,5],[103,3],[106,2],[107,2],[109,3],[112,1],[113,1],[114,4],[115,4],[117,1],[119,2],[120,6],[121,1],[122,2],[127,3],[140,2],[163,12],[165,2],[166,12],[167,3],[168,7],[170,1],[172,1],[176,1],[177,3],[182,8],[183,13],[184,14],[185,10],[186,6],[187,7],[188,4],[189,6],[191,1],[192,1],[193,2],[194,1],[195,1],[196,1],[197,4],[198,5],[199,2],[201,2],[203,1],[207,1],[209,1],[217,2],[219,1],[221,2],[223,3]],"coaches":[[6,1],[7,1],[76,1],[173,1],[196,1]],"sports":[[6,3],[18,3],[51,1],[56,1],[76,1],[170,1],[171,1],[191,1],[196,1],[209,1]],"performed":[[6,1],[11,1],[88,1],[198,1],[201,1]],"relatively":[[6,2],[7,1],[10,2],[21,1],[33,1],[38,1],[43,2],[51,1],[56,2],[74,1],[76,3],[87,3],[89,2],[90,2],[108,1],[110,1],[113,1],[134,2],[194,1],[210,1]],"unpredictable":[[6,1],[7,1],[76,2],[197,1]],"high":[[6,4],[7,2],[8,1],[43,1],[45,1],[48,2],[51,2],[56,2],[58,1],[69,2],[76,10],[88,2],[89,2],[90,1],[94,1],[96,1],[97,2],[98,1],[105,1],[107,2],[110,1],[111,4],[112,2],[113,1],[121,2],[123,2],[134,1],[139,1],[142,1],[155,2],[167,2],[168,1],[175,1],[186,1],[193,2],[194,1],[196,1],[197,2],[203,1],[205,1],[206,1],[208,1],[209,1],[211,3],[213,4],[217,1],[218,2],[219,1],[222,1]],"employed":[[6,1],[61,1],[75,1],[86,1]],"moved":[[6,2],[56,1],[64,1],[76,1],[209,1],[219,1]],"exercised":[[6,1],[76,1],[109,1],[122,4],[193,1]],"kept":[[6,2],[22,1],[48,1],[53,1],[76,1],[79,1],[121,1],[155,2],[161,1],[176,1],[191,1],[194,1],[198,1],[218,1],[219,2]],"saving":[[6,1],[76,1],[178,1]],"hon-":[[6,1],[9,1]],"worker":[[6,1],[18,1],[29,1],[76,1]],"pleasant":[[6,1],[63,1],[69,5],[76,1],[89,1],[104,1],[105,1],[113,1],[120,1],[201,1],[205,3]],"married":[[6,2],[10,1],[65,1],[76,1],[171,1],[192,1]],"meeting":[[6,1],[7,1],[21,1],[32,1],[48,1],[51,1],[70,1],[71,1],[81,1],[87,1],[92,1],[102,3],[103,2],[104,1],[113,2],[114,2],[115,1],[120,1],[169,2],[170,2],[171,2],[172,1],[173,1],[182,2],[185,4],[190,1],[197,1],[207,1],[208,2],[210,3],[214,1],[219,3]],"criticize":[[6,3],[10,1],[17,1],[19,1],[26,1],[36,1],[38,1],[41,1],[47,1],[54,1],[55,2],[60,2],[181,3],[199,2],[205,1],[208,1]],"nevertheless":[[6,3],[24,1],[59,1],[71,1],[86,1],[87,1],[88,1],[89,1],[90,1],[101,1],[108,2],[110,1],[111,2],[112,2]],"vulnerability":[[6,4],[10,1],[208,3]],"imposed":[[6,1],[90,1],[98,1]],"stressed":[[6,2],[26,1],[79,3],[94,1],[97,1],[98,1],[100,2],[107,1],[121,4],[122,4],[166,1],[171,1]],"performing":[[6,1],[76,1],[201,1]],"lower":[[6,1],[24,1],[33,1],[71,1],[87,1],[88,2],[93,1],[108,1],[109,1],[110,2],[112,3],[117,1],[150,1],[153,1],[161,1],[168,1],[202,1],[204,1],[205,2],[206,1],[209,1],[213,1],[219,2]],"shows":[[6,1],[15,1],[16,3],[17,2],[19,1],[21,1],[22,1],[24,1],[26,2],[27,1],[33,2],[46,1],[49,1],[55,1],[57,1],[58,3],[59,3],[60,2],[61,1],[71,3],[86,1],[92,1],[93,1],[94,1],[95,1],[114,1],[120,1],[155,1],[163,1],[164,1],[165,1],[169,1],[172,1],[173,1],[175,1],[177,3],[182,1],[186,1],[189,2],[196,1],[199,1],[200,1],[204,1],[215,1],[218,1],[219,1]],"previously":[[6,1],[8,1],[9,1],[20,2],[33,1],[48,1],[52,1],[58,1],[86,2],[87,1],[91,1],[92,1],[95,1],[96,1],[103,1],[113,1],[114,1],[115,1],[154,1],[155,1],[196,1],[208,1],[211,1]],"amenable":[[6,1],[36,1]],"reliable":[[6,1],[7,4],[12,1],[18,1],[76,2],[178,1]],"considerate":[[6,1],[7,3]],"honor":[[6,1],[7,1],[98,1]],"commitments":[[6,1],[7,2]],"lesser":[[6,1],[30,1]],"idon":[[6,1],[25,1],[41,1]],"p'll":[[6,1],[42,1]],"show":[[6,1],[7,2],[8,1],[18,3],[19,1],[21,1],[26,1],[34,1],[41,1],[43,1],[46,1],[52,3],[54,1],[56,2],[58,1],[59,1],[64,2],[71,1],[89,1],[90,1],[92,1],[93,1],[95,1],[96,1],[98,1],[99,2],[114,1],[120,1],[155,1],[164,2],[166,1],[167,1],[168,1],[170,1],[188,1],[189,1],[190,1],[191,2],[192,1],[203,2],[204,1],[205,1],[207,1],[211,1],[212,2],[214,1],[222,1]],"discomfort":[[6,1],[10,1],[36,1],[93,1],[100,2],[166,1],[169,2],[191,1],[199,6],[207,1],[209,2]],"connected":[[6,2],[7,1],[8,1],[26,1],[27,1],[40,1],[110,1],[120,1],[128,1],[134,3],[140,1],[141,1],[144,1],[152,1],[155,1],[161,5],[169,1],[170,1],[171,4],[172,3],[175,1],[177,1],[179,3],[180,2],[181,5],[182,1],[183,1],[184,1],[187,1],[192,1],[196,1],[197,3],[199,1],[203,1],[204,2],[214,2],[215,1]],"play-":[[6,1],[63,1]],"standards":[[6,1],[7,1],[8,1],[76,1],[189,2],[194,1],[206,1],[216,1],[217,1]],"rarely":[[6,1],[17,1],[46,1],[171,1],[176,1],[211,1],[213,3],[215,1],[225,1]],"feared":[[6,1],[65,6],[69,1],[76,1],[150,1],[159,3],[175,1],[208,3],[209,5],[222,2]],"incompe-":[[6,1],[10,1],[56,1],[57,1],[58,2]],"tent":[[6,1],[10,1],[56,1],[57,1],[58,3],[59,1],[89,1],[186,1]],"inflexible":[[6,1],[8,1],[134,1],[196,1]],"along":[[6,1],[9,2],[11,1],[12,1],[16,1],[17,1],[29,1],[31,1],[34,1],[36,1],[38,3],[45,1],[52,1],[58,1],[62,1],[64,1],[69,2],[71,1],[75,1],[76,3],[84,1],[87,1],[90,1],[91,1],[92,2],[93,1],[98,2],[99,1],[108,2],[109,1],[111,1],[113,1],[154,1],[163,1],[166,1],[175,1],[179,1],[195,1],[199,1],[208,1],[210,1],[211,1],[212,2],[216,1],[225,1]],"petent":[[6,1],[56,1],[58,1],[61,3]],"mild":[[6,1],[7,1],[10,1],[47,1],[65,1],[71,1],[76,2],[95,1],[102,2],[108,1],[109,2],[112,1],[121,2],[127,1],[162,1],[164,1],[201,2],[205,1],[212,2],[217,1],[222,2]],"resolved":[[6,1],[10,1],[26,1],[32,1],[36,1],[70,1],[71,1],[145,1],[219,1]],"preceding":[[6,1],[75,1],[103,2],[107,1],[170,1],[197,1]],"joseph":[[6,6],[56,1],[86,2],[87,1],[89,2],[92,2],[100,1],[101,1],[103,1],[107,1],[108,1],[114,2],[116,1],[117,2],[118,1],[120,1],[122,1],[125,1]],"charge":[[6,1],[9,1],[56,1],[71,1],[86,1],[99,1],[100,1],[110,1],[114,2],[115,4],[120,1],[121,3],[134,1],[145,1],[152,1],[181,1],[182,1]],"customer":[[6,1],[76,1],[194,2],[213,2]],"service":[[6,1],[43,1],[76,1],[110,1],[112,1],[116,1],[121,1],[123,2],[163,5],[166,1],[167,2],[168,3],[177,2],[194,1],[201,1],[225,1]],"enjoyed":[[6,1],[89,1],[94,1],[102,1],[122,1],[172,1],[190,1],[200,2],[201,1],[205,2]],"customers":[[6,1],[169,1],[194,2],[201,1]],"interacting":[[6,1],[12,1],[63,1],[89,1],[130,1],[170,1],[219,1]],"whom":[[6,1],[8,1],[9,1],[24,1],[47,1],[59,1],[60,1],[91,1],[94,1],[97,2],[100,1],[103,2],[121,1],[166,2],[167,1],[170,1],[189,2],[213,1]],"supervised":[[6,1],[10,1]],"inventory":[[6,1],[16,1],[61,3],[75,3],[80,1],[81,1],[82,1],[114,2],[176,2],[182,2],[185,2],[188,2],[192,2],[195,2],[201,2],[202,16],[204,2],[205,11],[206,5],[218,5],[219,7],[221,1],[222,3],[224,4]],"management":[[6,1],[24,2],[31,1],[58,1],[64,1],[88,2],[90,2],[95,1],[96,2],[97,1],[103,1],[106,2],[109,2],[110,1],[112,2],[113,1],[116,1],[118,2],[119,4],[124,1],[126,1],[161,1],[209,1],[211,1],[213,1],[214,8],[218,1],[219,1],[223,8],[224,2]],"required":[[6,1],[92,1],[111,1],[115,3],[120,1],[121,2],[127,1],[150,1],[155,2],[161,1],[164,2],[166,1],[167,2],[168,1],[170,1],[173,1],[174,1],[183,1],[195,1],[199,1]],"program":[[6,1],[75,1],[86,7],[87,4],[88,8],[89,14],[90,7],[91,10],[92,45],[93,17],[94,15],[95,12],[96,14],[97,8],[98,17],[99,11],[100,13],[101,9],[102,6],[103,15],[104,5],[105,2],[107,11],[108,2],[109,6],[111,3],[112,5],[113,11],[114,41],[115,31],[118,9],[119,4],[120,25],[121,11],[122,19],[123,1],[124,4],[125,2],[126,2],[166,1],[182,2],[185,3],[225,1]],"unfamiliar":[[6,1],[196,1]],"mis-":[[6,1],[194,1]],"what's":[[6,1],[14,1],[17,1],[19,1],[32,1],[37,1],[42,4],[46,4],[47,1],[51,1],[57,1],[61,1],[187,1],[194,1]],"matter":[[6,1],[54,1],[86,1],[97,2],[98,2],[110,2],[111,1],[134,1],[160,1],[165,1],[168,1],[176,2],[178,1],[196,1],[198,2],[209,1],[210,1]],"shouldn":[[6,1],[26,1],[31,1],[36,1],[40,1],[56,1],[57,1],[64,1],[72,1],[96,1],[97,1],[108,1],[111,1],[169,1],[198,1]],"dif-":[[6,2],[8,1],[18,1],[25,1],[36,1],[43,1],[54,1],[76,1],[170,1],[188,1],[199,1],[209,1],[210,1],[214,1]],"ficulties":[[6,2],[36,1],[43,1]],"saying":[[6,1],[10,4],[12,1],[17,1],[18,1],[25,1],[26,1],[35,1],[36,2],[37,1],[41,1],[58,1],[61,1],[75,4],[79,2],[95,2],[100,2],[113,1],[134,1],[154,3],[155,4],[166,1],[169,1],[172,2],[175,1],[178,2],[192,1],[206,1],[213,3],[214,1],[215,2]],"continuing":[[6,1],[19,1],[24,1],[25,1],[30,1],[32,2],[34,1],[56,1],[71,1],[76,1],[89,1],[112,1],[126,1],[151,1],[165,2],[219,1]],"harder":[[6,1],[7,1],[10,1],[13,1],[24,1],[69,1],[97,5],[127,1],[134,1],[140,1],[155,1],[171,2],[184,1],[187,2],[202,1],[203,1],[221,1]],"fulfill":[[6,1],[11,1],[43,1],[56,1]],"ask-":[[6,2],[34,1],[43,1],[61,1]],"soon":[[6,1],[7,2],[22,1],[24,2],[26,1],[37,1],[47,1],[48,2],[71,2],[93,1],[96,1],[97,1],[98,1],[100,1],[102,1],[131,1],[152,1],[155,2],[163,2],[168,1],[169,1],[170,1],[171,1],[177,1],[178,1],[185,1],[189,2],[191,2],[193,1],[208,1],[211,1],[213,1],[217,1]],"fatigue":[[6,1],[56,1],[76,2],[86,1],[109,1],[127,2],[169,1],[170,1],[218,1]],"withdraw":[[6,1],[76,1],[115,3],[155,1],[170,1],[199,1]],"includ-":[[6,1],[173,1]],"dinner":[[6,2],[12,2],[21,1],[33,1],[43,1],[60,2],[68,1],[69,5],[97,1],[104,1],[113,1],[178,1],[215,2],[216,1]],"silently":[[6,1],[184,1],[213,1]],"efforts":[[6,1],[7,1],[20,1],[90,2],[91,3],[94,1],[96,1],[97,1],[98,1],[102,2],[108,1],[110,1],[112,2],[121,1],[178,1],[193,1],[197,1],[199,2],[206,1],[217,1],[218,1]],"open":[[6,1],[17,1],[43,1],[53,2],[54,2],[55,3],[77,1],[89,3],[99,1],[100,5],[106,3],[114,1],[118,1],[123,1],[185,1],[205,1],[208,1],[213,1]],"household":[[6,1],[65,3]],"ruminating":[[6,1],[53,4],[63,1],[72,1],[152,1],[155,4]],"weekends":[[6,1],[12,1],[204,3]],"hours":[[6,2],[11,1],[12,2],[18,1],[21,1],[41,1],[93,1],[105,3],[114,1],[115,3],[120,6],[121,6],[122,12],[155,1],[163,1],[164,2],[166,1],[168,1],[170,1],[171,1],[191,1],[194,2],[204,6],[212,5],[213,1],[216,2],[222,5]],"impatient":[[6,1],[47,1]],"reluctant":[[6,1],[12,1],[26,1],[36,2],[69,1],[90,1],[199,1],[221,1]],"social":[[6,3],[10,1],[11,2],[20,1],[21,1],[22,2],[24,2],[29,1],[31,1],[34,1],[43,1],[44,1],[47,2],[63,2],[65,4],[70,1],[71,2],[75,2],[76,4],[77,5],[80,1],[81,3],[82,1],[84,2],[87,3],[88,1],[89,2],[90,5],[91,1],[94,6],[97,2],[101,1],[103,1],[105,2],[106,2],[108,2],[112,1],[113,1],[114,1],[115,2],[119,1],[120,1],[122,1],[123,3],[124,7],[126,1],[127,2],[134,1],[137,7],[153,1],[156,6],[158,8],[160,7],[162,3],[168,7],[170,1],[176,1],[191,1],[192,1],[194,2],[199,1],[205,2],[208,3],[211,1],[221,1],[223,1]],"spoke":[[6,1],[76,1],[171,1],[182,1],[188,3],[199,1]],"crucial":[[6,1],[8,1],[88,1],[91,1]],"pleasurable":[[6,1],[19,1],[22,1],[29,1],[34,1],[43,1],[44,1],[63,1],[71,1],[110,1],[202,1],[204,6],[205,1],[217,1],[218,1],[222,1],[223,1]],"enjoy-":[[6,1],[58,1],[195,1],[204,1],[205,1]],"lifted":[[6,2],[20,1],[183,1],[218,1]],"yard":[[6,1],[51,1],[76,1],[208,1]],"likelihood":[[6,1],[10,1],[15,1],[23,1],[24,1],[25,2],[31,1],[52,1],[69,1],[72,1],[82,1],[91,1],[95,1],[96,1],[98,1],[109,1],[155,1],[161,1],[167,1],[173,1],[187,1],[203,1],[217,2],[218,1]],"hopeless":[[6,2],[12,2],[13,1],[23,1],[32,1],[36,1],[37,5],[40,1],[65,1],[69,1],[72,2],[82,1],[95,2],[101,3],[170,2],[171,1],[184,1],[189,2],[201,2],[202,2],[222,1]],"innate":[[6,1],[56,1],[57,1],[58,1]],"generalized":[[6,1],[7,1],[16,1],[80,3],[83,1],[125,1],[205,1],[208,1],[211,1],[223,1]],"further":[[6,1],[10,2],[19,1],[25,2],[26,1],[32,1],[33,1],[36,2],[37,3],[43,1],[53,1],[61,1],[65,1],[69,1],[70,1],[97,1],[112,1],[113,1],[128,1],[137,1],[150,2],[151,1],[154,1],[155,4],[158,2],[166,2],[168,3],[170,2],[183,1],[185,1],[215,1],[217,1]],"strained":[[6,1],[13,1],[194,1]],"conflict":[[6,2],[9,1],[31,1],[76,2],[77,1],[90,1],[134,1],[199,5]],"husband":[[6,2],[34,1],[61,1],[68,2],[100,1],[101,1],[113,2],[169,1],[171,1],[178,1]],"signifi-":[[6,1],[8,1],[49,1],[56,1]],"filed":[[6,1],[155,1]],"divorce":[[6,1],[7,1],[8,1],[65,2],[77,1],[112,1],[171,1]],"preoccupied":[[6,1],[16,1]],"mercy":[[6,1],[69,1],[97,1]],"feelings":[[6,1],[7,1],[23,1],[25,2],[27,1],[37,1],[40,1],[41,2],[43,3],[72,2],[76,1],[78,1],[80,1],[89,1],[91,2],[92,1],[93,2],[94,5],[95,4],[96,9],[97,3],[98,1],[101,4],[102,2],[103,4],[106,3],[110,1],[113,1],[128,2],[130,3],[131,1],[134,2],[136,4],[139,1],[141,2],[145,1],[150,1],[151,3],[152,1],[154,8],[155,4],[158,1],[159,3],[161,2],[171,5],[176,1],[177,1],[178,1],[179,1],[185,1],[187,1],[191,3],[202,2],[203,1],[205,1],[208,1],[210,3],[211,3],[212,3],[213,1],[214,1],[215,1],[216,1],[219,2],[221,1],[223,1]],"responsibility":[[6,1],[10,1],[26,1],[36,1],[48,1],[64,1],[65,1],[74,1],[77,2],[91,2],[94,1],[102,1],[134,1],[140,5],[147,4],[183,1],[196,1],[215,18],[216,15],[217,2],[223,1],[224,1]],"biased":[[6,1],[19,1],[39,1],[134,1]],"tendency":[[6,1],[76,1],[113,1],[134,2],[137,1],[140,1],[155,2],[209,1],[212,1]],"risk":[[6,1],[16,2],[33,2],[38,2],[48,1],[71,1],[88,1],[90,6],[93,4],[96,1],[97,2],[98,1],[100,2],[105,1],[108,2],[109,2],[110,1],[111,5],[112,4],[113,1],[115,1],[116,2],[117,2],[120,2],[122,1],[123,1],[124,4],[125,4],[126,3],[127,3],[129,1],[155,1],[166,2],[167,2],[168,1],[173,1],[192,1],[196,1],[203,1],[206,1],[213,4],[216,2],[217,1],[218,8],[219,1],[223,1],[224,1]],"vulner-":[[6,1],[10,1]],"abilities":[[6,2],[18,1],[24,1],[114,1],[176,1],[208,1]],"mechanisms":[[6,1],[81,1],[123,1],[125,2],[126,1],[140,1]],"attentional":[[6,1],[76,1],[109,1],[117,1]],"resulted":[[6,1],[109,1],[110,1],[121,1],[218,1]],"accomplishment":[[6,1],[12,1],[89,1],[91,1],[106,1],[196,1],[203,1],[204,2],[205,1],[210,1],[218,1],[219,1],[222,1]],"withdrawal":[[6,1],[56,1],[76,1],[87,4],[89,1],[93,2],[95,3],[102,1],[103,1],[108,4],[109,3],[110,2],[111,4],[113,1],[115,3],[116,1],[119,1],[120,2],[122,1],[123,1],[125,1],[127,2],[163,4],[164,10],[165,1],[166,11],[167,10],[168,9],[202,1],[211,3]],"deterioration":[[6,1],[56,1],[76,1],[87,1],[219,1]],"worrying":[[6,1],[26,1],[134,1],[138,1],[152,1],[155,4],[166,1],[194,1],[195,5],[204,1],[205,1],[222,1]],"affected":[[6,1],[58,1],[110,1],[111,1],[122,1],[176,1],[185,1],[189,2],[200,2],[212,1]],"self-image":[[6,1],[18,1],[31,2]],"main-":[[6,1],[56,1],[58,1],[71,1]],"tain":[[6,1],[21,1],[36,1],[51,1],[56,1],[71,1],[87,1],[109,1],[173,1],[177,1]],"targets":[[6,1],[65,1],[166,1]],"assets":[[6,1],[7,2],[24,1],[32,1],[76,1],[81,1],[83,1]],"unremittingly":[[6,1],[56,1]],"spouses":[[6,1],[64,1]],"offered":[[6,1],[87,1],[107,1],[114,1],[121,1],[150,1],[166,1]],"interacted":[[6,1],[108,1]],"grandchildren":[[6,1],[7,2],[10,2],[13,2],[17,1],[19,1],[31,1],[34,2],[47,1],[48,2],[76,2],[79,1],[91,1],[94,1],[170,4],[183,2],[186,2],[187,1],[204,1],[217,1],[219,1]],"self-care":[[6,1],[10,1],[12,1],[20,1],[21,4],[22,1],[24,1],[31,2],[34,1],[53,1],[63,1],[65,1],[71,3]],"funds":[[6,1],[121,1]],"savings":[[6,1],[41,1],[89,1]],"minimal":[[6,1],[87,1],[109,1],[115,1],[117,1],[123,1],[125,1],[171,2]],"meal":[[6,1],[60,1],[68,1],[95,2],[97,1],[108,1],[113,1],[158,1],[170,1],[177,1],[194,1]],"preparation":[[6,1],[51,1],[129,2],[130,2],[206,1],[214,1]],"historically":[[6,1],[59,1]],"solver":[[6,1],[76,1]],"stemmed":[[6,1],[62,1],[77,1]],"telling":[[6,1],[9,1],[12,1],[22,1],[27,1],[32,1],[36,2],[46,2],[47,1],[48,1],[51,1],[60,1],[69,1],[71,1],[155,2],[158,2],[166,2],[168,1],[171,1],[172,1],[182,2],[189,2],[191,1],[216,1]],"poor":[[6,1],[57,1],[87,1],[91,1],[112,1],[147,1],[153,1],[164,1],[171,2],[189,2],[194,1],[216,1]],"dominant":[[6,1],[140,1]],"stress":[[6,1],[25,2],[26,3],[53,2],[71,1],[76,1],[79,1],[80,1],[81,1],[89,3],[90,1],[91,10],[92,2],[93,1],[95,1],[96,1],[97,3],[98,5],[103,3],[106,1],[107,1],[109,1],[111,1],[112,2],[113,1],[114,1],[119,1],[121,1],[122,2],[126,2],[127,2],[160,4],[167,3],[168,1],[169,3],[171,1],[175,1],[189,2],[190,1],[205,1],[208,1],[211,1],[223,2],[225,1]],"notably":[[6,1],[90,1]],"avoided":[[6,1],[26,2],[27,1],[33,2],[40,2],[60,1],[65,1],[71,1],[77,1],[170,2],[171,2],[172,1],[194,1],[199,1],[206,1],[208,2],[209,2],[211,1],[215,2]],"withdrew":[[6,1],[76,2]],"mal-":[[6,1],[60,1]],"cause":[[6,1],[111,1],[130,1],[164,1],[166,1],[167,1],[170,1],[187,1],[193,1],[210,1]],"undoubtedly":[[6,2],[11,1],[32,1],[34,1],[36,1],[41,1],[74,1],[113,1]],"caused":[[6,1],[63,1],[76,1],[164,1],[167,2],[168,1],[173,2],[184,1],[185,1],[187,1],[192,1],[193,4],[208,1],[215,1],[216,3],[217,1],[219,1]],"biological":[[6,2],[90,1],[108,1],[116,1],[173,1]],"facilitated":[[6,1],[64,1]],"strengths-based":[[7,3],[82,3],[83,5],[84,3]],"problem-based":[[7,2],[84,2]],"ccds":[[7,1],[8,1],[82,1],[83,1]],"considerable":[[7,1],[60,1],[87,1],[88,1],[90,1],[97,1]],"filling":[[7,2],[9,1],[16,1],[24,1],[26,3],[33,1],[36,4],[41,1],[51,1],[60,1],[69,1],[171,2],[177,1],[181,1],[182,1],[188,1],[200,1],[202,1],[203,1],[204,1],[209,1],[217,1],[222,2]],"pertinent":[[7,1],[11,1],[62,1],[178,1]],"begin-":[[7,1],[34,1],[74,1],[199,1],[219,1]],"ning":[[7,1],[34,1],[74,1],[75,1],[199,1],[217,1],[219,1]],"lookout":[[7,1],[9,1],[60,1],[173,1]],"overlook":[[7,1],[174,1],[213,1]],"sb-ccd":[[7,4],[84,2]],"depicts":[[7,2]],"fill":[[7,6],[8,1],[11,1],[16,3],[19,1],[21,4],[26,3],[27,2],[28,1],[35,1],[36,7],[43,3],[51,1],[52,2],[57,1],[60,1],[62,1],[65,1],[94,2],[97,1],[105,1],[164,1],[171,1],[172,1],[175,1],[176,1],[177,2],[182,1],[183,1],[184,1],[188,1],[202,4],[203,2],[204,7],[205,2],[206,1],[209,1],[217,2],[218,2],[222,1]],"prior":[[7,8],[15,1],[16,1],[33,1],[37,1],[41,1],[51,1],[58,1],[83,1],[88,1],[92,1],[103,1],[110,1],[111,2],[113,2],[114,2],[115,2],[124,1],[152,1],[164,1],[165,4],[168,1],[183,1],[190,1]],"maternal":[[7,1],[76,1],[117,2],[126,2]],"uncle":[[7,1],[76,1]],"diploma":[[7,1],[76,1]],"cousin":[[7,2],[32,4],[56,1],[61,2],[64,1],[65,2],[69,2],[76,1],[172,2],[192,3]],"male":[[7,2],[76,2],[108,1],[116,1],[121,1],[158,1],[160,1]],"budgeted":[[7,2]],"saved":[[7,2],[104,1],[170,1]],"motivated":[[7,2],[12,1],[20,2],[21,1],[22,1],[24,1],[38,1],[43,1],[74,2],[86,1],[87,1],[89,2],[90,3],[91,3],[94,3],[95,1],[100,2],[106,1],[107,1],[112,1],[121,4],[122,4],[171,1],[175,1],[176,1],[177,1],[205,1],[209,1]],"humor":[[7,1],[9,2],[176,1],[191,1],[201,1]],"liked":[[7,1],[18,2],[47,1],[56,3],[77,1],[100,1],[122,1],[170,1],[173,1],[198,1]],"sees":[[7,3],[30,2],[33,1],[60,1],[61,1],[178,1],[206,1],[207,1],[208,1]],"grown":[[7,1],[61,1],[76,1],[171,1],[178,1],[183,1],[197,1]],"close":[[7,1],[47,1],[51,1],[54,1],[55,1],[61,1],[64,1],[65,1],[76,2],[77,1],[89,1],[91,1],[94,3],[95,1],[96,1],[97,1],[98,1],[100,2],[101,1],[104,3],[105,1],[114,1],[115,1],[120,1],[132,1],[140,1],[148,1],[156,1],[158,1],[171,2],[172,1],[175,1],[180,1],[191,1],[195,1],[196,3],[197,1],[202,1],[203,1],[207,1],[208,1],[212,1],[213,2],[216,1]],"organizational":[[7,1],[24,1]],"problem-solver":[[7,1],[56,1]],"self-reliant":[[7,2]],"stable":[[7,1],[74,1],[76,2],[111,1],[201,1]],"happen":[[7,1],[9,2],[16,1],[18,1],[26,2],[27,1],[32,1],[34,1],[40,1],[41,4],[43,1],[44,2],[46,7],[47,8],[48,1],[49,2],[51,6],[52,1],[56,1],[57,1],[63,1],[65,2],[66,1],[67,1],[69,1],[70,1],[71,3],[72,1],[78,1],[89,2],[98,1],[120,1],[132,1],[139,2],[146,2],[155,5],[158,1],[166,1],[168,1],[170,1],[171,4],[173,1],[175,2],[178,7],[179,7],[180,2],[181,12],[184,5],[185,2],[187,2],[188,2],[193,1],[194,2],[195,7],[198,1],[199,2],[201,1],[205,1],[208,2],[209,1],[210,1],[211,1],[216,1],[221,3],[222,1]],"persist":[[7,1],[37,1],[71,1],[164,1],[175,1]],"succeed":[[7,1],[89,1],[90,2],[93,3],[94,2],[95,3],[98,1],[101,1],[102,4],[104,1],[112,1],[114,1],[115,2],[172,2],[201,1],[204,1],[207,1]],"sets":[[7,1],[134,1],[186,1]],"works":[[7,1],[60,1],[61,4],[86,1],[93,1],[97,1],[105,1],[111,1],[123,1],[140,2],[155,2],[164,4],[168,1],[179,1],[197,6],[204,1],[210,1],[213,1],[218,1]],"tries":[[7,1],[69,1],[90,1],[194,1],[207,1]],"fixing":[[7,1],[58,1],[170,1],[204,1]],"neighbor":[[7,1],[9,1],[38,1],[42,2],[43,1],[59,1],[60,6],[64,3],[98,1],[201,1]],"buddies":[[7,1],[12,1],[42,1]],"breakfast":[[7,3],[12,3],[25,1],[42,1],[69,1],[166,1],[203,1],[204,1]],"disappoint":[[7,1],[94,1]],"disappointment":[[7,1],[98,1],[168,1]],"philadelphia":[[7,4],[19,1],[33,2],[42,1],[60,1],[75,1],[79,1],[80,3],[84,1]],"whole":[[7,1],[21,1],[27,2],[48,1],[54,1],[57,1],[66,1],[69,1],[70,1],[74,1],[129,1],[140,1],[155,1],[173,2],[177,1],[186,1],[195,1],[209,1]],"gottman":[[7,6],[80,4],[203,1]],"specify":[[7,1],[10,1],[25,2],[27,1],[30,1],[33,2],[37,1],[38,2],[39,1],[41,1],[43,1],[64,1],[74,2],[84,1],[94,1],[97,2],[205,1]],"blank":[[7,2],[8,1],[10,2],[57,1],[70,2],[123,1],[134,2],[175,2],[183,1],[209,1],[222,1]],"copy":[[7,1],[13,2],[34,1],[37,1],[46,1],[51,1],[92,1],[98,4],[99,1],[100,1],[101,2],[103,2],[114,1],[115,3],[120,1],[121,2],[169,1],[175,1],[176,1],[184,1],[188,1],[204,1],[212,1],[222,1]],"choosing":[[7,1],[32,1],[91,1],[96,2],[97,1],[102,1],[107,1]],"wait":[[7,1],[8,1],[20,1],[25,1],[36,1],[40,1],[48,1],[58,1],[66,1],[87,1],[97,1],[155,1],[158,2],[159,1],[192,2],[208,1],[217,1]],"currently":[[7,1],[21,1],[38,1],[45,1],[53,1],[56,1],[65,1],[79,1],[110,1],[111,1],[121,3],[122,2],[155,2],[163,2],[164,1],[166,1],[176,2],[198,1],[203,1],[210,1]],"perceiving":[[7,1],[10,1]],"maintenance":[[7,2],[83,1],[109,1],[126,2],[134,5],[139,1],[140,1],[160,1]],"display":[[7,1],[39,1],[76,1],[101,1]],"loving":[[7,1],[171,1],[175,1],[176,1],[191,1],[196,1]],"cheerful":[[7,1],[43,1],[175,1]],"brave":[[7,1],[35,1]],"thoughtful":[[7,1],[85,1],[185,1]],"generous":[[7,1],[43,1]],"playful":[[7,1],[43,1]],"loyal":[[7,1],[152,1],[155,1]],"caring":[[7,1],[9,1],[10,1],[57,1],[65,1],[69,1],[74,2],[91,1],[100,1],[105,4],[134,1],[172,3],[186,1],[191,3],[212,1],[213,1]],"relaxed":[[7,1],[26,1],[53,1],[63,1],[91,1],[104,1],[169,1],[170,1],[176,1],[192,1],[196,1],[210,4],[211,1],[213,1]],"beautiful":[[7,1],[169,2],[185,1]],"energetic":[[7,1],[20,1],[27,1]],"calm":[[7,1],[43,1],[63,1],[69,1],[100,3],[103,1],[104,5],[105,1],[169,1],[190,1],[193,3],[210,2],[213,3],[219,1]],"committed":[[7,1],[21,1],[32,1],[74,1],[75,1],[98,1],[101,1],[166,1],[167,1],[203,1]],"lively":[[7,1],[200,1]],"creative":[[7,1],[43,1],[96,1],[113,1],[172,1],[208,1]],"involved":[[7,1],[88,1],[100,1],[108,1],[110,1],[115,3],[140,2],[147,2],[164,1],[170,1],[171,1],[208,4]],"assertive":[[7,1],[27,1],[213,2],[214,8],[217,1],[223,1]],"protective":[[7,1],[134,1],[169,2],[196,1]],"reserved":[[7,1],[99,1],[188,1]],"sweet":[[7,1],[96,1],[113,1],[116,1],[123,1]],"supportive":[[7,1],[90,1],[91,1],[92,1],[94,1],[97,1],[98,1],[100,1],[103,1],[107,1],[114,1],[156,1],[157,1],[158,2],[170,1],[175,1],[176,1],[177,1],[191,1],[197,1],[209,1],[213,1]],"adventurous":[[7,1],[43,1]],"tender":[[7,1],[43,1]],"funny":[[7,1],[183,2],[205,1]],"powerful":[[7,1],[46,1],[60,1],[91,1],[98,1],[100,2],[106,1],[114,1],[129,1],[141,1],[144,1],[163,1],[169,2],[173,2],[197,1],[201,1],[208,1],[225,2]],"affectionate":[[7,1],[43,1]],"organized":[[7,1],[18,1],[21,1],[52,1]],"totally":[[7,1],[157,1],[201,1]],"silly":[[7,1],[178,1]],"athletic":[[7,1],[173,7],[196,2]],"warm":[[7,1],[9,2],[10,1],[92,1],[95,1],[98,1],[169,1],[173,1],[177,1],[197,1],[201,1],[205,1]],"precipitants":[[7,3],[76,2]],"leaves":[[7,1],[21,1],[41,2]],"overburdened":[[7,1],[27,1]],"can't":[[7,1],[21,1],[48,1],[170,1],[183,1],[185,1],[207,1],[211,1]],"struggles":[[7,1],[89,2],[100,1],[169,1],[207,1],[212,1]],"loses":[[7,1],[155,1],[212,2]],"conditional":[[7,2],[8,2],[57,1],[58,1],[134,4]],"revising":[[7,1],[30,1],[113,2]],"resume":[[7,1],[163,1],[201,1]],"continues":[[7,1],[53,1],[60,2],[69,1],[84,1],[110,1],[155,1],[214,1],[216,1],[222,2]],"ruminates":[[7,3],[53,1]],"presents":[[7,1],[19,1],[100,1]],"tentative":[[7,2],[8,1],[11,1],[12,2],[13,1],[14,2]],"col-":[[7,1],[21,1],[32,1],[37,1],[45,1],[52,1],[60,1],[62,1],[89,1],[183,1],[184,1]],"expressed":[[7,1],[16,1],[32,1],[39,1],[41,1],[47,2],[56,2],[57,4],[58,1],[74,1],[81,1],[82,1],[83,1],[91,1],[113,3],[155,1],[200,6],[212,1],[216,1],[219,1]],"completed":[[7,1],[12,1],[21,1],[26,4],[27,1],[35,1],[82,1],[92,2],[99,1],[100,2],[101,2],[120,1],[121,3],[130,1],[134,1],[135,1],[140,2],[143,2],[145,1],[151,1],[164,1],[166,1],[167,1],[178,1],[179,1],[182,1],[183,2],[184,2],[186,3],[187,7],[189,2],[192,1],[195,1],[198,1],[201,1],[202,2],[205,1],[206,1],[211,1],[215,1],[216,1],[217,1],[218,1]],"choose":[[7,2],[9,1],[34,1],[36,1],[37,1],[44,1],[48,1],[53,1],[63,1],[65,2],[74,1],[86,1],[88,1],[89,1],[91,3],[92,1],[94,4],[95,1],[96,3],[97,4],[98,2],[99,3],[101,2],[102,1],[103,4],[105,3],[107,2],[114,1],[115,2],[120,3],[121,1],[149,1],[164,1],[165,4],[166,1],[169,1],[175,3],[176,1],[179,1],[184,1],[193,1],[195,1],[198,1],[199,1],[200,3],[203,1],[204,1],[209,1],[210,1],[213,1],[214,1],[221,1]],"overall":[[7,2],[21,2],[22,1],[23,1],[29,1],[31,1],[32,2],[36,1],[74,2],[77,1],[79,2],[87,2],[89,3],[90,1],[96,1],[100,1],[108,1],[109,1],[112,1],[113,1],[114,4],[115,2],[120,1],[121,4],[122,4],[152,1],[161,1],[171,1],[176,1],[196,1],[203,1]],"partial":[[7,1],[14,1],[41,1],[43,1],[58,1],[181,1],[198,1],[199,3],[208,2],[212,1]],"verbally":[[7,1],[8,2],[42,1],[45,1],[46,1],[51,1],[52,2],[71,1],[135,1]],"client's":[[7,1],[22,1],[56,1]],"mean":[[7,1],[10,2],[13,1],[17,1],[18,1],[21,2],[22,1],[25,1],[26,1],[30,1],[33,1],[36,2],[37,1],[41,3],[42,3],[43,1],[47,1],[48,4],[49,1],[51,4],[56,2],[57,3],[58,1],[61,5],[65,1],[68,1],[69,2],[70,1],[71,4],[72,1],[78,1],[94,4],[95,2],[98,2],[101,2],[102,1],[135,1],[142,1],[149,1],[154,1],[155,1],[172,4],[173,1],[175,1],[179,14],[180,3],[181,12],[182,1],[183,1],[184,8],[185,3],[187,2],[188,3],[191,1],[193,1],[194,2],[195,2],[196,5],[197,26],[198,1],[199,2],[200,1],[202,1],[203,3],[204,1],[206,1],[211,1],[212,1],[214,3],[215,4],[216,4],[222,3]],"penn-":[[7,1],[84,1]],"sylvania":[[7,1],[84,1]],"illustrate":[[7,1],[17,1],[18,1],[37,1],[84,1],[107,1],[113,1],[175,1],[186,1],[194,1],[201,1],[202,1],[212,1],[216,1]],"bottom":[[7,2],[8,1],[19,1],[21,1],[64,4],[76,1],[147,1],[152,1],[161,1],[177,3],[180,1],[181,1],[198,1],[199,1],[201,1],[202,1],[205,1],[208,3],[209,2],[210,1],[214,1],[216,1],[221,1],[222,2]],"models":[[7,1],[82,1],[83,1],[109,3],[110,2],[134,2],[136,1],[137,1],[138,1],[139,1],[140,1],[160,1],[161,1],[171,1]],"leave":[[7,1],[24,1],[25,2],[26,1],[34,2],[38,1],[41,1],[48,1],[69,2],[70,1],[94,1],[100,2],[102,1],[103,1],[115,1],[120,1],[140,2],[156,1],[158,7],[159,2],[165,1],[166,1],[175,1],[176,2],[188,1],[190,1],[192,1],[199,1],[209,1]],"boxes":[[7,2],[8,1],[176,1],[213,2]],"items":[[7,2],[10,1],[11,1],[15,1],[16,4],[24,4],[25,2],[32,3],[33,7],[34,5],[35,5],[36,4],[37,1],[38,4],[51,1],[57,1],[64,7],[81,1],[82,4],[94,1],[101,1],[121,1],[122,1],[150,2],[158,3],[159,3],[178,1],[194,3],[200,3],[202,2],[205,2],[209,1],[222,1]],"inferred":[[7,2],[9,1],[10,1]],"mark":[[7,2],[19,1],[25,1],[26,1],[61,1],[74,1],[98,1],[172,4],[173,1],[174,1],[175,2],[176,2],[177,5],[178,1],[180,3],[181,8],[182,2],[183,4],[184,9],[185,3],[186,2],[187,6],[188,1],[198,1],[201,1],[202,4],[205,2],[206,6],[212,4],[215,2],[217,1],[221,2],[222,4],[225,1]],"missing":[[7,1],[43,1],[59,1],[163,1],[187,1]],"half":[[7,1],[13,2],[26,1],[35,1],[36,2],[71,1],[93,1],[100,1],[103,1],[107,1],[108,2],[109,1],[111,1],[115,1],[124,1],[161,1],[163,1],[166,1],[170,1],[177,2],[180,1],[182,1],[193,1],[209,1]],"behaved":[[7,1],[196,1],[199,1],[214,1],[216,1]],"reflect":[[7,1],[8,1],[18,1],[32,2],[34,1],[57,1],[59,1],[60,3],[86,2],[87,2],[90,1],[92,2],[100,1],[116,1],[140,1],[143,1],[149,1],[173,1],[183,1],[188,1],[204,1],[208,1],[215,1],[225,1]],"separate":[[7,1],[78,1],[96,1],[115,2],[120,1],[121,1],[175,1],[177,1],[179,1]],"followed":[[7,1],[40,1],[48,1],[63,1],[108,1],[109,1],[111,1],[140,1],[171,1],[172,1],[185,2],[189,3],[190,1],[191,1],[205,1],[216,1],[218,1]],"evoke":[[7,1],[34,1],[57,1],[179,1]],"meanings":[[7,1],[8,1],[26,1],[58,2],[59,1],[79,1],[172,1],[177,1]],"charlie":[[7,1],[33,6],[34,5],[35,4],[46,2],[47,5],[59,1],[60,1],[72,1]],"cancels":[[7,1],[43,1]],"sunday":[[7,1],[42,1],[48,1],[70,1],[184,1],[187,1],[204,1]],"sits":[[7,1],[27,1],[153,2],[192,1],[207,1]],"adapting":[[7,1],[10,1],[113,1]],"containing":[[7,1],[56,3],[59,1],[110,1],[115,1],[121,1],[217,1]],"gives":[[7,1],[12,1],[13,1],[19,2],[21,1],[24,1],[25,2],[26,1],[34,1],[40,1],[41,2],[51,1],[53,1],[71,1],[85,1],[86,1],[114,1],[120,1],[134,1],[163,1],[164,1],[179,1],[182,1],[191,1],[192,1],[200,1],[201,1],[205,1],[210,1],[214,2]],"rise":[[7,1],[40,1],[43,1],[56,1],[100,1],[104,1],[128,1],[196,1],[208,1],[214,1],[218,1]],"youll":[[7,1],[33,2],[58,1],[64,1]],"arrow":[[7,1],[37,1],[57,4],[58,1],[60,1],[64,1],[81,1],[82,1],[83,1],[134,1],[140,3],[142,4],[196,3],[197,11],[201,1],[223,9]],"technique":[[7,1],[10,1],[24,1],[32,3],[37,1],[41,1],[50,1],[52,1],[53,2],[54,1],[55,4],[57,4],[58,1],[60,3],[61,4],[64,3],[65,2],[69,4],[70,3],[74,2],[78,1],[79,4],[81,1],[82,7],[83,8],[84,3],[86,1],[87,1],[90,1],[94,3],[98,1],[172,1],[196,3],[197,8],[201,1],[210,1],[223,9]],"logically":[[7,1],[40,2],[47,1],[154,1]],"mean-":[[7,1],[12,1],[60,1],[100,1],[188,1]],"pile":[[7,1],[33,1],[35,7],[59,1]],"mail":[[7,1],[27,1],[33,4],[35,9],[56,1],[70,1],[103,2],[104,2],[107,4],[114,2],[115,1],[120,2],[121,1],[185,1]],"meant":[[7,1],[24,1],[38,1],[42,1],[48,1],[61,1],[104,1],[155,1],[169,1],[185,2],[192,1],[193,1],[197,2],[198,1],[199,1],[212,1]],"adoles-":[[7,1],[81,1]],"parents":[[8,4],[40,1],[65,1],[91,2],[97,1],[100,1],[112,1],[124,1],[171,5],[173,1],[177,1],[186,1],[196,1]],"members":[[8,1],[11,1],[22,1],[24,1],[61,1],[74,1],[91,3],[94,1],[96,1],[101,1],[102,1],[103,1],[115,2],[120,1],[121,2],[161,1],[166,1],[171,1],[172,1],[173,1],[175,1],[192,1],[196,1],[199,3],[209,1],[214,2],[215,1],[218,2],[219,1]],"siblings":[[8,2]],"blamed":[[8,1],[10,1],[79,1]],"otherwise":[[8,1],[9,1],[26,1],[42,1],[57,1],[60,1],[93,1],[94,1],[95,2],[98,1],[102,2],[120,1],[121,1],[172,1],[186,1]],"disabilities":[[8,1],[46,1]],"deaths":[[8,1],[93,1],[118,1],[206,1]],"cant":[[8,1],[49,1],[56,1],[178,1],[182,1],[183,1]],"abuse":[[8,1],[76,1],[80,1],[89,2],[108,1],[110,2],[116,3],[118,1],[123,2],[124,2],[125,3],[126,3],[175,3],[196,1],[212,5],[214,2],[215,6],[219,2],[225,1]],"trauma":[[8,2],[79,1],[108,1],[124,1],[160,1],[161,3],[170,1],[197,1],[206,1],[223,1]],"adverse":[[8,1],[70,1],[76,1],[89,1],[111,1],[134,1]],"moving":[[8,1],[31,1],[32,1],[41,1],[42,1],[43,1],[64,2],[90,1],[100,1],[104,2],[161,2],[189,1],[190,1],[209,2]],"discrimination":[[8,1],[127,1],[171,1],[172,1],[175,1],[197,1]],"subtle":[[8,1],[43,1],[65,1],[140,2]],"youths":[[8,1],[111,1]],"expecta-":[[8,1],[80,1]],"sibling":[[8,1],[197,1]],"unhelp-":[[8,1],[10,1],[26,1],[39,1]],"shouldn't":[[8,1],[24,1],[38,1],[41,1],[48,1],[51,1],[57,2],[73,1],[173,1]],"broad":[[8,1],[11,3],[12,2],[13,2],[14,1],[19,3],[28,1],[47,1],[56,1],[65,1],[84,1],[126,1]],"link":[[8,1],[24,1],[27,1],[57,1],[65,1],[74,1],[90,1],[108,1],[109,1],[112,2],[113,2],[163,1],[164,1],[173,1],[197,1],[213,1]],"cop-":[[8,1],[10,1],[206,1]],"strategy":[[8,2],[9,2],[10,3],[27,2],[29,1],[32,1],[38,1],[47,1],[48,1],[53,2],[57,4],[65,2],[86,1],[87,1],[89,1],[94,3],[96,3],[100,1],[103,1],[112,1],[113,1],[129,1],[155,1],[172,1],[175,1],[187,1],[205,1],[213,2]],"moment":[[8,1],[9,1],[10,1],[22,1],[26,1],[27,3],[32,1],[36,1],[37,5],[53,3],[54,2],[57,1],[58,2],[60,1],[61,2],[63,1],[70,1],[74,1],[79,1],[82,1],[86,1],[90,1],[91,2],[93,1],[94,4],[96,4],[100,3],[102,1],[104,3],[105,1],[106,1],[121,2],[122,2],[161,1],[171,1],[172,1],[173,1],[176,1],[193,1],[200,3],[202,1],[205,1],[206,1],[207,1],[208,1],[209,1],[210,5],[213,1],[217,1]],"linked":[[8,1],[30,1],[33,1],[57,1],[94,1],[109,1],[110,2],[122,1],[163,1],[166,1],[179,3],[182,1],[185,1],[187,1],[197,1],[199,2],[200,1],[201,1],[212,2],[216,1]],"normal":[[8,1],[32,3],[51,1],[55,1],[56,2],[65,1],[71,3],[72,1],[76,2],[78,2],[94,2],[95,3],[98,2],[99,1],[100,1],[101,1],[102,4],[105,1],[109,1],[110,1],[111,2],[126,1],[134,1],[158,1],[164,3],[165,2],[166,2],[168,1],[169,1],[184,1],[187,4],[193,2],[196,1],[199,1],[209,1],[212,1],[217,2],[218,1]],"engages":[[8,1],[9,1]],"ficulty":[[8,1],[18,1],[25,1],[76,1]],"broader":[[8,1],[19,1],[37,1],[71,1],[86,1],[90,1],[186,1],[187,1]],"simplified":[[8,2],[82,2],[83,2],[84,1]],"completing":[[8,1],[9,1],[23,1],[24,3],[26,4],[33,2],[35,1],[36,1],[52,1],[71,1],[92,1],[98,1],[102,1],[103,4],[104,2],[105,2],[120,4],[122,1],[129,1],[130,1],[131,1],[134,1],[135,1],[140,1],[142,1],[146,1],[149,1],[159,1],[176,1],[177,1],[181,1],[183,1],[184,1],[185,1],[187,3],[188,3],[190,1],[201,1],[219,2],[221,2],[223,8]],"confusing":[[8,1],[10,1],[188,1]],"attempt":[[8,1],[47,1],[69,1],[89,1],[90,1],[91,2],[94,3],[95,1],[97,1],[108,1],[113,2],[120,1],[137,1],[139,1],[140,1],[155,1],[163,14],[164,3],[165,4],[166,13],[167,5],[168,4],[170,1],[172,1],[186,1],[219,1]],"hypothesis":[[8,1],[36,1],[57,1],[58,2],[122,1],[126,1],[161,1]],"confirmed":[[8,2],[58,1],[86,1],[87,1],[103,1],[154,1]],"larger":[[8,2],[25,1],[27,1],[64,1],[86,1],[89,1],[92,1],[110,1],[114,1],[191,1],[215,1]],"earlier":[[8,1],[9,1],[13,1],[25,1],[27,2],[32,1],[40,1],[42,1],[51,1],[55,1],[60,1],[71,1],[79,1],[86,3],[88,3],[90,1],[93,1],[94,1],[95,1],[103,1],[107,2],[108,1],[109,1],[111,1],[120,1],[142,1],[155,2],[170,2],[189,2],[191,1],[193,2],[195,1],[196,1],[198,1],[205,1],[208,2],[209,1],[211,1],[213,3],[217,2]],"rely":[[8,2],[87,2],[90,1],[101,1],[102,1],[140,1],[206,1],[218,1]],"relying":[[8,1],[209,1]],"reads":[[8,1],[52,2],[60,1],[181,1]],"intellectually":[[8,1],[47,3],[61,2]],"ready":[[8,1],[13,1],[25,1],[42,1],[56,1],[69,1],[71,1],[72,1],[89,1],[90,2],[94,2],[98,1],[100,2],[103,2],[113,1],[114,2],[135,1],[155,1],[156,3],[158,3],[163,5],[166,1],[168,1],[170,1],[181,3],[192,4],[199,1],[205,1],[209,1],[210,2],[211,1],[212,1],[214,1]],"mentioned":[[8,1],[9,1],[16,1],[34,2],[43,1],[60,1],[61,1],[64,1],[87,1],[96,1],[98,1],[104,1],[155,2],[166,2],[185,1],[200,1],[208,1]],"whenever":[[8,1],[13,1],[38,1],[43,1],[55,1],[57,1],[61,1],[71,2],[90,1],[95,3],[104,1],[106,1],[169,1],[170,1],[171,1],[172,1],[175,1],[176,1],[178,1],[182,1],[184,1],[188,1],[189,2],[194,1],[195,1],[196,2],[198,1],[199,1],[206,1],[208,1],[215,1],[218,1]],"confirmation":[[8,1],[87,1],[88,3]],"characters":[[8,1],[60,1]],"movie":[[8,1],[10,2],[43,1],[69,6],[83,2],[97,1],[173,1],[177,1],[206,1],[209,1],[210,1]],"novel":[[8,1],[88,1],[140,1]],"aids":[[8,1],[18,2],[87,2],[116,1],[151,1],[164,1]],"develop-":[[8,1],[16,1],[58,1]],"ingredient":[[8,1],[86,1],[90,2],[94,2],[95,1],[98,3],[111,1]],"establishing":[[8,1],[11,1],[13,1],[14,1],[75,1],[81,1],[82,1],[83,1],[129,1]],"begins":[[8,1],[33,1],[92,1],[93,1],[95,1],[102,1],[108,1],[115,1],[120,1],[139,1],[155,1],[188,1],[194,2],[195,1],[196,1],[203,1],[206,1],[207,1],[213,1],[214,1],[216,1],[217,2],[222,2]],"modification":[[8,1],[61,2],[81,1],[82,1],[91,1],[110,1],[113,2],[118,1],[122,2],[124,1]],"uncovered":[[8,1],[32,1],[47,1],[134,1],[177,1],[178,1],[179,1]],"explanations":[[8,1],[9,1],[48,1],[65,3],[134,1],[185,1],[188,1],[208,1],[213,1],[219,2]],"reasons":[[8,1],[26,1],[37,1],[45,1],[47,2],[53,2],[65,1],[82,1],[83,1],[84,1],[86,2],[90,2],[92,1],[94,20],[96,2],[97,2],[100,1],[101,13],[103,1],[104,3],[109,1],[110,1],[113,1],[118,1],[121,1],[122,1],[129,1],[154,1],[163,3],[164,2],[165,1],[166,6],[167,3],[168,6],[172,1],[176,1],[177,1],[189,4],[199,1],[204,1],[206,1],[218,1]],"ensure":[[8,1],[9,1],[12,1],[14,1],[61,1],[74,2],[92,1],[114,1],[163,2],[164,2],[165,1],[166,1],[167,4],[168,3]],"emphasized":[[8,1],[9,1],[56,1],[59,2]],"download":[[9,1],[12,1],[101,2],[169,1],[171,1],[174,1],[175,2],[176,3],[177,1],[178,1],[179,2],[180,1],[181,4],[182,1],[184,2],[185,1],[187,1],[188,1],[190,1],[191,1],[194,2],[195,1],[197,4],[198,3],[199,2],[200,5],[201,1],[202,3],[204,1],[205,1],[206,1],[208,1],[209,2],[210,1],[212,3],[214,2],[215,1],[216,3],[217,1],[218,1],[221,8],[222,10],[223,1],[225,1]],"adding":[[9,1],[86,1],[87,1],[98,1],[108,1],[109,2],[112,1],[164,1],[191,1],[200,1],[202,1],[204,2],[205,1]],"marks":[[9,1],[48,1],[51,1],[80,1],[215,1]],"courage":[[9,1],[96,1],[105,1],[210,3]],"enter":[[9,1],[10,1],[12,1],[24,1],[38,1],[59,1],[65,1],[90,1],[91,1],[106,1],[155,1],[159,1],[161,1],[190,1],[198,1],[209,1],[210,1],[213,1],[221,1]],"pushes":[[9,1],[139,1],[155,1]],"criticizes":[[9,1],[69,1],[171,1],[203,1]],"through-":[[9,1],[74,1]],"devoted":[[9,1],[123,1],[125,1],[126,1],[144,1],[170,1]],"warmth":[[9,3],[200,1],[201,1]],"trust":[[9,2],[15,1],[25,1],[56,1],[58,1],[59,1],[77,1],[104,1],[105,2],[114,1],[158,1],[209,1],[216,2],[218,1],[219,1]],"prescribed":[[9,1],[33,1],[36,2],[77,1],[87,1],[88,1],[101,1],[107,1],[111,2],[122,1],[161,1],[162,13],[203,4]],"tailoring":[[9,2],[26,1],[83,1],[84,1],[112,1],[113,2],[119,1]],"seeking":[[9,2],[12,1],[31,1],[41,1],[71,1],[75,2],[81,1],[108,1],[112,1],[138,1],[158,1]],"vice":[[9,1],[51,1],[65,1],[85,1]],"versa":[[9,1],[51,1],[65,1]],"guidelines":[[9,2],[12,2],[24,1],[81,2],[82,1],[84,2],[87,2],[89,1],[107,1],[111,3],[117,1],[118,4],[119,1],[124,1],[140,3],[165,1],[193,2]],"monitor":[[9,1],[14,1],[15,1],[24,1],[27,1],[29,1],[33,1],[36,2],[38,1],[60,1],[63,1],[65,3],[75,2],[77,1],[83,2],[96,2],[102,1],[108,1],[112,1],[114,1],[115,1],[120,1],[129,1],[157,1],[158,2],[164,7],[166,3],[167,2],[211,1]],"collaborate":[[9,1],[32,1],[74,1]],"repair":[[9,1],[10,1],[32,1],[161,1],[170,1],[216,2],[219,1]],"generalize":[[9,1],[10,1],[29,1],[84,1]],"express":[[9,3],[10,2],[12,1],[19,2],[36,1],[41,3],[44,1],[47,1],[51,2],[56,1],[57,2],[72,1],[74,1],[90,2],[91,4],[105,1],[108,3],[110,1],[199,3],[200,4],[201,1],[212,2],[214,2],[217,1],[218,2],[219,1]],"supposed":[[9,1],[10,1],[17,1],[43,1],[79,1],[89,1],[98,1],[188,1]],"ances":[[9,1],[64,1],[65,1]],"norcross":[[9,3],[81,3]],"wampold":[[9,1],[81,1],[89,1],[117,1]],"raue":[[9,1],[81,1]],"goldfried":[[9,1],[81,1]],"respected":[[9,2],[43,1],[216,1]],"sufficient":[[9,2],[62,1],[92,2],[112,1],[166,4],[167,3],[196,1]],"alleviate":[[9,1],[29,1],[47,1],[56,1],[74,1],[216,1]],"derubeis":[[9,1],[80,1],[81,2]],"feeley":[[9,1],[80,1]],"zilcha-mano":[[9,1],[81,1]],"seri-":[[9,1],[17,1]],"concerned":[[9,1],[32,1],[33,1],[41,2],[56,1],[72,1],[77,1],[108,2],[111,1],[121,4],[126,1],[127,1],[169,1],[171,1],[180,1],[185,2],[197,1],[199,1],[208,1],[212,1]],"for-":[[9,1],[29,1],[33,1],[54,1],[92,1],[93,1]],"noticed":[[9,1],[10,1],[33,1],[40,1],[74,1],[99,1],[100,1],[105,1],[129,1],[168,1],[170,2],[173,1],[178,2],[186,1],[193,1],[194,2],[198,2],[199,1],[201,2],[210,2],[217,1],[218,2],[219,1]],"facial":[[9,3],[156,1],[158,1],[185,3],[186,3]],"praised":[[9,1],[59,1],[112,1]],"assured":[[9,1],[113,1],[170,1]],"relieved":[[9,1],[35,1],[43,2],[70,1],[113,1],[171,1]],"instances":[[9,1],[93,1],[110,1],[185,1],[188,1],[216,1]],"demonstrating":[[9,1],[10,1],[184,1]],"drawn":[[9,1],[33,1],[48,1],[65,1],[71,1],[86,2],[92,1],[140,1]],"teens":[[9,1],[110,2],[191,1]],"oses":[[9,1],[53,1],[203,1]],"consensus":[[9,1],[53,1]],"promoting":[[9,1],[89,1],[90,1],[91,1],[97,1],[109,1],[113,2]],"credibility":[[9,1],[58,1]],"managing":[[9,1],[10,2],[18,1],[21,4],[84,1],[86,1],[95,1],[96,1],[97,1],[100,1],[113,1],[130,1],[147,1],[163,1],[167,1],[176,2],[191,1],[208,1],[209,1],[211,1],[218,1],[219,1]],"promising":[[9,1],[86,2],[88,1],[113,2]],"sufficiently":[[9,1],[36,1],[47,1],[52,1]],"self-doubt":[[9,1],[171,1],[201,1]],"elliott":[[9,1],[80,1]],"continuously":[[9,2],[43,1],[56,1],[155,1]],"understand-":[[9,1],[17,1],[212,1]],"empathic":[[9,1],[37,1],[65,1],[89,2],[118,1],[209,1]],"choice":[[9,2],[10,1],[16,1],[32,1],[36,1],[37,4],[43,2],[64,1],[72,1],[75,1],[79,1],[89,1],[90,1],[92,1],[94,1],[95,1],[97,1],[101,1],[103,1],[131,1],[134,1],[144,1],[152,1],[163,1],[164,2],[165,2],[168,1],[205,2]],"tone":[[9,2],[18,1],[36,2],[37,1],[68,1],[107,2]],"voice":[[9,2],[32,1],[36,3],[61,2],[68,1],[92,1],[100,1],[104,2],[170,1],[173,1],[174,1],[199,1],[209,1],[215,2],[216,1],[222,1]],"expressions":[[9,2],[18,1],[156,1],[158,1],[200,2],[201,1],[209,1]],"language":[[9,2],[36,1],[70,1],[79,1],[80,1],[89,3],[110,1],[126,1],[188,8]],"implicit":[[9,1],[48,1]],"explicit":[[9,1],[24,2],[29,1],[81,1]],"messages":[[9,2],[20,1],[112,1],[155,1],[173,1],[196,1]],"genuinely":[[9,1],[71,1],[166,1],[167,1],[168,1],[194,3],[195,1]],"endorse":[[9,2],[26,1],[57,1],[109,1]],"confident":[[9,1],[10,1],[13,1],[24,1],[29,1],[31,1],[43,1],[52,1],[69,1],[91,1],[92,2],[93,3],[96,1],[98,1],[100,2],[104,1],[106,1],[108,1],[169,1],[170,1],[171,1],[176,1],[177,1],[186,1],[189,1],[190,1],[192,1],[198,1],[203,1],[208,3],[210,3],[211,1],[213,1],[218,2],[219,2],[225,1]],"yours":[[9,1],[48,1],[89,1],[122,1],[216,1]],"honestly":[[9,1],[72,1]],"supervisor":[[9,2],[10,1],[27,1],[36,1],[56,1],[60,1],[74,4],[75,1],[76,5],[170,2],[171,1],[178,12],[181,4],[185,1],[189,16],[190,1],[191,3],[194,1],[197,1],[219,2]],"training":[[9,1],[10,2],[24,1],[25,1],[29,1],[33,1],[35,1],[40,1],[42,1],[60,1],[63,1],[64,2],[74,1],[75,2],[76,1],[80,1],[81,2],[82,2],[84,1],[87,1],[112,1],[113,3],[118,2],[119,2],[124,2],[140,2],[161,1],[168,1],[213,1]],"supervision":[[9,1],[10,1],[75,1],[81,1]],"examples":[[9,1],[17,1],[24,1],[36,1],[40,1],[41,2],[42,1],[48,1],[51,1],[57,1],[58,1],[59,2],[60,1],[62,1],[86,1],[89,1],[91,1],[93,1],[95,4],[97,1],[113,1],[116,1],[130,1],[132,1],[134,4],[149,1],[155,1],[156,1],[157,2],[158,2],[175,1],[177,1],[178,1],[179,1],[182,1],[186,2],[191,1],[192,1],[194,1],[197,1],[198,1],[200,2],[202,2],[204,1],[206,2],[207,1],[215,2],[216,1],[223,2]],"angry":[[9,1],[10,2],[24,1],[27,1],[32,1],[33,1],[36,1],[37,2],[43,5],[48,9],[52,2],[55,1],[72,1],[103,1],[134,2],[152,1],[170,1],[171,5],[172,2],[174,1],[175,7],[177,2],[178,4],[179,1],[182,8],[185,3],[189,3],[190,9],[191,2],[196,1],[198,2],[199,5],[212,17],[213,24],[214,4],[215,1],[216,2],[217,4],[218,1],[223,2]],"validation":[[9,1],[81,1],[124,1]],"conversations":[[9,1],[64,1],[155,2],[156,2],[158,2],[176,1],[188,1],[200,1]],"inspiring":[[9,1],[33,1],[85,1]],"reason":[[9,1],[16,1],[19,1],[43,1],[47,2],[48,1],[56,1],[66,3],[80,1],[90,1],[91,2],[93,1],[94,2],[95,1],[98,1],[99,1],[100,2],[101,1],[102,2],[103,1],[104,1],[105,2],[108,2],[109,1],[115,2],[120,1],[134,1],[154,1],[163,1],[168,1],[183,1],[187,1],[188,1],[203,1],[208,2],[211,1],[215,1]],"hopeful":[[9,2],[12,1],[22,1],[33,2],[41,1],[43,1],[171,1],[183,4],[184,1],[187,1],[189,2]],"genuine":[[9,2],[10,1],[61,1],[72,1],[165,1],[167,1],[200,1]],"glad":[[9,1],[10,1],[12,1],[19,1],[25,1],[33,1],[34,1],[43,1],[71,1],[100,2],[185,1],[191,1]],"interest":[[9,1],[16,1],[17,1],[76,1],[86,1],[88,1],[90,1],[94,1],[96,1],[102,1],[106,1],[109,1],[125,1],[127,1],[153,1],[169,1],[202,1],[204,5],[221,1]],"grandsons":[[9,1],[33,1],[35,1],[42,2],[56,1]],"offering":[[9,2],[10,1],[17,2],[74,1],[114,1],[151,1],[152,1],[158,1],[167,1],[198,1]],"encouragement":[[9,1],[89,1],[94,2],[101,1],[103,1],[109,1],[113,1],[121,1],[122,1],[165,1],[166,1],[170,1]],"sign":[[9,1],[11,1],[19,2],[22,1],[48,1],[57,1],[59,2],[60,7],[77,1],[85,1],[91,1],[93,1],[94,4],[101,3],[104,2],[114,2],[115,2],[175,1],[184,1],[192,1],[196,1],[199,2],[202,2],[209,1],[213,1],[218,1]],"reinforcement":[[9,1],[10,1],[16,1],[33,1],[34,1],[87,1],[91,3],[118,2],[139,2],[161,1],[166,1]],"taxes":[[9,1],[27,1],[49,1],[70,2]],"sounds":[[9,1],[12,2],[13,2],[16,3],[21,1],[22,3],[27,1],[32,2],[34,1],[35,1],[37,5],[46,1],[47,1],[48,1],[53,1],[54,1],[56,1],[58,3],[59,1],[60,1],[61,1],[64,1],[65,3],[67,1],[69,1],[71,1],[105,2],[120,1],[163,3],[166,2],[178,1],[205,3],[208,2],[209,1],[210,4]],"complicated":[[9,1],[169,1],[176,1],[177,1]],"compassion":[[9,1],[61,1],[105,6],[145,1],[216,1]],"sorry":[[9,1],[10,3],[12,1],[25,1],[26,1],[27,1],[32,1],[36,3],[37,1],[38,1],[43,2],[47,1],[72,1],[79,1],[155,2],[197,1],[198,1],[214,2],[216,3]],"upsetting":[[9,1],[32,2],[36,1],[39,1],[41,1],[44,1],[45,1],[52,1],[60,1],[65,1],[69,1],[70,1],[161,1]],"conversation":[[9,1],[15,1],[65,2],[78,1],[101,1],[107,2],[158,1],[169,1],[172,3],[185,1],[188,1],[189,1],[192,4],[199,4],[201,1],[202,1],[205,1],[214,1]],"seen":[[9,1],[16,1],[24,1],[47,3],[56,1],[76,1],[86,1],[87,1],[140,1],[178,1],[181,1],[197,1],[206,1]],"friendly":[[9,1],[18,1],[43,1],[62,1],[78,1],[101,1],[196,1],[205,1]],"self-efficacy":[[9,1],[20,1],[23,1],[64,1],[71,1],[163,1],[166,1],[167,1],[168,5]],"penn":[[9,1],[58,1],[182,1]],"alert":[[9,2],[10,2],[12,1],[16,2],[24,1],[25,1],[34,3],[40,1],[43,1],[65,2],[71,1],[74,2],[96,2],[100,6],[104,1],[106,5],[109,1],[169,1],[173,1],[175,1],[196,1],[206,1],[208,2],[217,1]],"observe":[[9,1],[10,1],[53,1],[105,4],[106,1],[146,2],[155,1],[158,1],[175,1],[176,1],[191,4],[194,3],[195,1],[204,1],[206,1],[209,1],[210,1]],"infer":[[9,2],[56,1]],"cess":[[9,1],[37,1],[112,1],[113,1],[179,1]],"rein-":[[9,1],[19,1],[51,1],[100,1],[115,1]],"force":[[9,1],[54,1],[85,1],[91,2],[93,1],[98,2],[100,2],[115,1]],"advice":[[9,1],[38,2],[64,1],[67,1],[84,2],[87,3],[89,1],[103,1],[109,1],[112,2],[113,1],[118,1],[126,1],[158,1],[159,1],[165,1],[167,2],[183,1],[186,3],[187,2],[217,1]],"response":[[9,1],[17,2],[18,1],[21,1],[25,1],[26,1],[33,2],[37,1],[39,1],[40,1],[41,4],[42,1],[43,1],[45,1],[46,1],[47,7],[48,3],[52,4],[61,1],[64,2],[65,1],[72,1],[74,1],[76,1],[80,1],[81,1],[82,2],[89,1],[91,1],[96,2],[121,1],[161,7],[167,3],[168,1],[169,1],[171,1],[185,2],[188,2],[206,6],[208,1],[212,1],[213,4],[216,1]],"return":[[9,1],[12,1],[16,1],[19,1],[25,1],[32,1],[36,1],[38,1],[43,1],[64,1],[72,1],[91,1],[95,1],[97,1],[100,1],[103,3],[109,1],[114,3],[122,1],[168,1],[187,2],[189,2],[193,1],[195,1],[199,1],[200,1],[201,1],[207,1],[210,1],[211,1],[217,2]],"discern":[[9,1],[86,1]],"bothered":[[9,1],[19,3],[35,1],[38,1],[171,1]],"misunderstood":[[9,1],[43,1],[77,1]],"significantly":[[9,1],[13,1],[23,1],[24,1],[29,1],[38,1],[43,1],[45,1],[48,1],[57,1],[58,1],[62,1],[64,1],[65,1],[76,3],[89,1],[91,1],[108,1],[109,1],[121,1],[151,1],[163,1],[164,1],[165,1]],"professional":[[9,1],[75,1],[80,1],[81,2],[85,1],[92,1],[93,2],[98,1],[124,1],[125,1],[129,3],[161,2],[176,1],[202,2],[203,1],[206,1],[217,1],[223,1]],"necessarily":[[9,1],[13,1],[18,1],[26,1],[33,1],[42,1],[51,2],[58,2],[61,1],[78,1],[97,1],[108,1],[109,1],[129,1],[165,1],[184,3],[187,4],[196,1],[215,1],[216,1]],"ignore":[[9,1],[43,1],[47,1],[91,1],[155,1],[186,1],[216,1],[222,1]],"teenage":[[9,1],[153,1],[194,1],[212,1]],"adult":[[9,1],[76,1],[81,1],[87,1],[105,1],[116,1],[117,1],[122,1],[127,2],[153,1],[171,1],[173,1],[181,1],[196,1],[208,2],[215,1],[216,1]],"sighed":[[9,2],[170,2]],"wish":[[9,1],[10,1],[16,1],[25,1],[38,1],[40,2],[42,1],[67,1],[69,1],[72,1],[87,1],[91,1],[92,1],[93,2],[94,2],[98,2],[99,1],[100,1],[102,2],[103,2],[104,2],[106,3],[107,4],[114,1],[115,4],[120,3],[122,1],[148,1],[191,2]],"judged":[[9,1],[43,1],[60,1],[115,1],[120,1],[199,1],[208,1]],"needing":[[9,1],[13,1],[27,1],[67,1],[86,2],[114,1],[182,1],[206,1],[218,1]],"collaborating":[[9,1],[74,1]],"jointly":[[9,1],[13,1],[25,1]],"target":[[9,1],[12,1],[87,1],[113,1],[141,1],[166,1],[169,1],[205,1],[212,1]],"self-help":[[9,1],[13,1],[64,1],[160,2],[203,2],[225,1]],"tapering":[[9,1],[71,6],[72,2],[82,1],[83,1],[84,1]],"ending":[[9,1],[36,1],[69,1],[71,1],[72,4],[169,1],[185,1]],"conceptual-":[[9,1],[22,1],[47,1],[58,1]],"ization":[[9,1],[58,1]],"ples":[[9,1],[41,1],[85,1],[93,1]],"assess":[[9,1],[10,1],[14,1],[16,1],[20,1],[22,1],[24,1],[25,1],[27,1],[31,1],[32,3],[33,2],[38,1],[45,1],[47,2],[48,1],[49,1],[64,1],[75,1],[83,3],[86,2],[108,1],[116,1],[128,2],[133,1],[143,1],[145,2],[151,1],[156,1],[158,7],[163,13],[168,12],[202,1],[206,1],[208,1]],"adjust":[[9,1],[15,1],[96,1],[164,3],[166,1]],"iors":[[9,1],[59,1],[206,1]],"overdo":[[9,1],[96,1]],"uncom-":[[9,1],[175,1]],"fortable":[[9,1],[175,1]],"gen-":[[9,1],[30,1],[56,1],[60,2],[173,1]],"ethnicity":[[9,1],[30,1]],"dominating":[[9,1],[10,1],[37,1]],"disrespectful":[[9,1],[179,1]],"suggestions":[[9,2],[16,1],[18,1],[26,1],[79,1],[86,8],[88,2],[96,2],[98,7],[99,7],[100,4],[101,1],[103,3],[104,5],[105,2],[114,1],[115,5],[117,1],[120,1],[152,1],[177,1],[187,1],[189,1],[190,1]],"perspectives":[[9,1],[79,1],[123,1],[124,1],[125,1],[169,1],[183,1],[213,1],[215,1]],"disturbed":[[9,1],[69,1],[210,1]],"background":[[9,1],[113,1],[161,1],[164,1],[192,1],[201,1],[210,1]],"exert":[[9,1],[89,1],[109,1],[201,1]],"speak":[[9,1],[37,1],[61,2],[79,1],[89,1],[101,1],[103,1],[105,1],[154,2],[158,1],[165,1],[174,1],[188,2],[194,1],[199,2],[206,3],[207,1],[208,1],[209,1],[213,2]],"impact":[[9,1],[10,1],[19,1],[47,2],[56,3],[76,1],[77,2],[82,1],[83,2],[84,1],[86,1],[89,1],[109,1],[117,1],[123,1],[124,1],[125,1],[127,1],[129,1],[133,2],[134,1],[136,2],[142,1],[144,1],[151,1],[152,1],[161,1],[172,1],[173,2],[176,1],[186,1],[188,1],[200,1],[201,1],[214,1],[216,1],[222,2]],"introduce":[[9,1],[32,1],[52,3],[53,2],[92,2],[93,1],[95,1],[97,1],[107,1],[158,1],[214,2]],"your-":[[9,1],[10,1],[21,1],[46,1],[48,1],[65,1],[75,1],[78,1],[96,1],[97,2],[98,1],[104,1],[178,1],[179,1]],"respect":[[9,1],[32,1],[74,1],[105,1],[155,1],[175,1],[191,1],[192,1]],"with-":[[9,1],[53,1],[71,1],[95,1],[194,1]],"style":[[9,1],[46,1],[65,1],[89,1],[92,1],[103,1],[152,2],[170,1],[172,1],[202,1],[208,1]],"disclosure":[[10,1],[27,1],[53,1]],"screen":[[10,2],[56,2],[58,7],[59,1],[69,1],[75,1],[113,2],[128,1],[164,1]],"capable":[[10,1],[12,1],[19,1],[26,1],[37,1],[43,1],[95,1],[121,4],[122,4],[141,1],[198,1],[206,1],[208,1],[209,1],[210,2],[211,1],[219,1]],"judi-":[[10,2]],"cious":[[10,2]],"definite":[[10,1],[72,1],[184,1]],"purpose":[[10,1],[18,1],[20,1],[21,1],[24,1],[29,2],[30,1],[32,1],[33,1],[56,1],[114,1],[115,1],[120,1],[168,4],[169,1],[176,1],[192,1],[195,1],[204,1],[217,1]],"normalizing":[[10,1],[90,2]],"modeling":[[10,1],[91,1],[100,2],[118,1],[124,2]],"serving":[[10,1],[177,1],[204,1]],"curious":[[10,1],[43,1],[53,1],[55,2],[158,1],[191,1],[218,1]],"days":[[10,1],[12,3],[21,3],[26,2],[32,1],[37,1],[38,1],[49,1],[70,1],[77,2],[86,1],[88,1],[93,2],[95,1],[100,1],[101,1],[102,1],[103,1],[104,1],[107,1],[110,1],[121,8],[122,10],[155,2],[163,2],[165,3],[166,3],[167,4],[176,1],[183,1],[184,1],[187,1],[190,1],[191,1],[200,1],[201,1],[204,3],[205,1],[212,5],[217,1],[218,1],[219,2],[222,4]],"media":[[10,1],[20,1],[63,1],[94,1],[98,1],[122,2],[173,1]],"post":[[10,2],[24,2],[94,2],[96,1],[97,2],[104,1],[112,1],[114,1],[117,1],[123,1],[155,1],[167,9],[168,11],[194,1],[201,2]],"happy":[[10,1],[16,1],[26,1],[34,1],[41,1],[43,3],[47,1],[60,1],[104,1],[105,1],[134,1],[169,1],[170,1],[171,2],[175,1],[178,1],[182,2],[185,2],[191,1],[193,1],[198,1],[200,2],[204,1],[212,1],[213,1]],"gently":[[10,1],[12,1],[22,1],[27,1],[32,1],[34,3],[36,2],[37,3],[38,1],[41,1],[54,3],[55,1],[70,2],[74,1],[100,1],[104,1],[169,1],[191,1],[205,1],[210,2]],"cussion":[[10,2]],"reveal":[[10,2],[25,1],[90,1],[98,1],[196,1],[216,3]],"inappropriate":[[10,2],[24,1],[25,1],[43,1],[74,1]],"subjects":[[10,1],[98,1],[121,2],[158,1],[159,2],[161,1]],"dating":[[10,1],[125,1],[194,1],[201,1]],"alcohol":[[10,1],[18,1],[32,1],[76,1],[81,2],[82,1],[111,7],[112,7],[113,5],[116,1],[117,1],[118,1],[123,1],[125,4],[126,4],[127,2],[130,1],[155,1],[156,1],[157,1],[158,3],[168,1],[169,3],[171,2],[175,1],[182,2],[185,1],[192,1],[194,1],[215,2],[223,1]],"perfectionistic":[[10,1],[194,3],[199,1]],"sticky":[[10,2],[18,1],[24,1],[32,1]],"desk":[[10,1],[27,1],[43,1],[94,1],[96,1],[100,1],[101,1],[104,2],[178,1],[204,1]],"self-disclosures":[[10,2]],"giving":[[10,1],[13,1],[16,1],[19,1],[20,1],[21,1],[24,2],[33,1],[35,1],[40,2],[41,1],[43,1],[44,1],[58,1],[71,1],[94,3],[95,1],[98,1],[99,2],[101,1],[102,1],[121,1],[128,1],[131,1],[148,1],[166,1],[169,1],[170,1],[182,5],[198,2],[201,1],[206,2]],"watched":[[10,2],[43,1],[69,1],[107,1],[208,1]],"baseball":[[10,1],[33,1],[35,1]],"game":[[10,2],[21,1],[33,1],[35,1],[40,2],[59,1],[63,1],[171,2],[195,2],[204,2]],"grand-":[[10,1],[12,1],[19,1]],"sons":[[10,1],[76,1],[86,2],[89,2],[92,2],[100,2],[101,2],[103,2],[107,2],[108,2],[114,2],[117,3],[118,2],[122,2],[123,1],[125,2],[170,1]],"phillies":[[10,2]],"jupith":[[10,3],[12,2],[13,2],[16,2],[17,1],[18,4],[19,3],[21,4],[25,2],[26,2],[32,2],[35,2],[36,1],[37,2],[41,1],[42,1],[43,2],[46,1],[47,2],[48,1],[49,1],[52,1],[54,1],[57,2],[58,3],[60,4],[61,5],[65,1],[66,1],[69,4],[71,1],[79,3]],"unfortunately":[[10,1],[87,2],[90,1],[107,1],[108,1],[129,1],[196,1],[206,1]],"season":[[10,1],[71,1]],"granddaughters":[[10,1],[33,1],[34,2]],"park":[[10,1],[27,4],[80,1],[81,1],[87,1],[90,1],[91,1],[97,2],[125,1],[126,1],[127,1],[205,1]],"kids":[[10,1],[18,1],[19,3],[21,1],[33,1],[34,3],[49,1],[62,1],[65,1],[72,1],[79,1],[96,1],[100,1],[171,2],[182,5],[183,1],[185,2],[186,3],[187,1]],"teenagers":[[10,1],[95,1],[171,1]],"trouble":[[10,1],[17,2],[24,1],[25,1],[26,1],[27,1],[37,1],[42,2],[52,1],[53,1],[60,1],[61,1],[66,1],[72,1],[76,2],[111,2],[121,1],[170,2],[171,1],[172,1],[175,1],[177,1],[178,1],[192,1],[194,1],[201,1],[202,1],[205,2],[208,3],[209,1],[216,1],[218,1],[222,3]],"throw":[[10,1],[21,2],[97,1],[98,1],[103,3],[114,1],[155,1],[159,2],[166,1],[204,1]],"away":[[10,2],[12,1],[19,1],[21,2],[25,2],[32,1],[43,1],[44,1],[47,2],[48,1],[54,1],[60,1],[64,1],[78,1],[91,1],[93,2],[96,2],[97,1],[98,2],[100,3],[103,2],[104,1],[105,3],[113,3],[121,1],[123,1],[134,1],[154,1],[158,1],[159,4],[161,1],[166,2],[171,1],[179,1],[182,2],[185,1],[186,1],[191,2],[196,1],[198,1],[204,1],[206,2],[208,1],[209,1],[211,1],[214,2],[217,1],[219,1],[222,1]],"piles":[[10,1],[33,1],[35,2]],"definitely":[[10,1],[21,2],[34,2],[42,1],[46,1],[61,1],[100,2]],"uncertain":[[10,2],[35,1],[125,1],[208,2],[212,1]],"nonverbal":[[10,1],[36,1],[37,1],[40,1],[61,1],[74,1]],"narcissistic":[[10,2],[40,1]],"hearing":[[10,1],[43,1],[170,1],[200,1],[205,1]],"revealing":[[10,1],[33,1],[156,1],[158,1],[216,1]],"hear":[[10,1],[12,1],[13,1],[18,1],[37,2],[42,1],[46,1],[47,9],[77,1],[91,1],[94,1],[95,1],[100,1],[102,1],[103,1],[165,1],[166,1],[167,1],[168,1],[208,2],[209,1],[214,2],[218,1]],"happened":[[10,3],[16,2],[17,1],[18,1],[19,1],[22,2],[25,1],[27,1],[32,3],[33,1],[34,3],[40,1],[41,1],[43,1],[46,1],[47,1],[49,1],[51,4],[54,3],[59,1],[60,1],[65,1],[69,1],[71,1],[79,1],[139,2],[140,1],[155,2],[158,1],[170,1],[171,2],[183,1],[189,2],[195,5],[199,1],[200,9],[202,2],[209,2],[215,2],[218,1],[221,3]],"expressing":[[10,3],[12,1],[15,1],[21,1],[36,1],[37,1],[41,1],[42,1],[43,1],[75,1],[79,2],[83,1],[113,1],[130,1],[189,1],[190,1],[199,2],[200,4],[201,1],[206,1],[214,2],[224,1]],"trusting":[[10,1],[196,1]],"passionate":[[10,1],[43,1]],"we've":[[10,1],[18,1],[46,1],[51,1],[60,1]],"loudly":[[10,1],[43,1],[174,1]],"inquire":[[10,1],[13,1],[34,1],[42,1],[90,1],[91,1],[100,1],[107,2],[115,1]],"yelling":[[10,1],[34,1],[58,1],[79,1],[213,1],[216,1]],"inconsistent":[[10,1],[86,1],[87,1]],"produce":[[10,1],[86,1],[91,1],[100,1],[110,3],[111,1],[142,1],[143,1],[156,1],[158,1],[159,1],[164,1],[165,2],[167,2],[203,1],[211,1]],"long-term":[[10,1],[25,1],[81,1],[168,3],[171,2],[204,2],[209,2],[210,1]],"characteristic":[[10,2],[134,1],[202,2],[208,1]],"empathize":[[10,1],[43,1],[44,1],[70,1],[89,1]],"free":[[10,1],[12,1],[27,1],[43,1],[74,1],[86,1],[88,1],[89,8],[90,3],[91,2],[92,2],[93,1],[96,2],[97,1],[98,2],[103,4],[104,5],[105,1],[106,3],[107,1],[108,1],[113,1],[114,6],[115,7],[120,3],[121,2],[122,2],[123,1],[134,1],[167,1],[168,4],[188,1],[193,1]],"faults":[[10,1],[216,1],[222,1]],"fears":[[10,1],[25,1],[47,5],[57,1],[63,1],[65,2],[101,1],[134,2],[137,1],[140,1],[141,1],[142,1],[155,2],[166,1],[191,1],[194,1],[206,1],[207,3],[208,2],[209,5],[210,2],[211,4],[219,1]],"opinions":[[10,1],[65,1],[101,1],[125,1],[199,2]],"assuming":[[10,2],[74,1],[192,1],[215,1]],"manipulative":[[10,1],[74,1]],"controlling":[[10,2],[24,1],[36,1],[37,2],[38,1],[75,1],[98,1],[104,1],[151,1],[189,1],[190,1],[212,1],[217,1]],"resist":[[10,1],[21,1],[82,1],[86,1],[88,1],[89,1],[91,1],[92,1],[105,1],[121,1],[122,1],[167,1]],"insisting":[[10,1],[107,1]],"obviously":[[10,2],[12,1],[26,1],[47,1],[65,2],[69,1],[139,1],[163,1]],"exists":[[10,1],[74,1]],"indi-":[[10,1],[32,1],[89,1],[103,1],[177,1]],"maybe":[[10,4],[12,2],[13,3],[16,1],[17,1],[18,3],[19,2],[21,2],[25,5],[26,3],[32,2],[33,2],[34,5],[36,1],[37,5],[42,1],[43,1],[46,1],[47,3],[49,2],[52,1],[53,1],[56,1],[58,3],[60,1],[61,5],[64,1],[65,3],[66,2],[69,5],[70,1],[71,3],[96,1],[97,3],[100,3],[103,1],[104,2],[105,2],[108,1],[155,2],[171,1],[172,1],[173,1],[178,1],[191,1],[195,1],[203,1],[204,2],[206,2]],"ques-":[[10,1],[12,2],[33,1],[35,1],[41,1],[46,1],[51,1],[85,1],[92,1],[179,1]],"indeed":[[10,1],[24,1],[87,2],[89,1],[90,3],[91,1],[93,1],[95,1],[96,2],[108,3],[109,2],[110,1],[113,1]],"vent":[[10,1],[97,1]],"equivalent":[[10,1],[87,1],[111,1]],"apologizing":[[10,1],[36,1]],"solution":[[10,2],[27,1],[32,1],[38,1],[64,2],[80,1],[174,3],[175,2],[184,1],[186,1],[187,1],[196,1],[218,1],[219,1]],"introducing":[[10,1],[12,1],[52,1],[53,2],[54,1],[61,1],[82,2],[83,2]],"suggestion":[[10,1],[86,1],[87,1],[95,1],[98,1],[99,1],[100,1],[115,1],[120,1],[125,1],[155,1]],"finds":[[10,1],[155,2],[178,1]],"misunderstanding":[[10,1],[38,1],[98,1],[165,1]],"directive":[[10,1],[36,1],[118,1]],"nondirective":[[10,1],[89,1]],"interrupting":[[10,1],[16,1],[34,2],[36,6],[37,1],[38,1],[82,2],[83,2],[91,1]],"jubith":[[10,3],[18,1],[19,1],[26,1],[32,1],[42,1],[46,1],[47,2],[60,1],[61,3],[64,1],[79,1]],"daughter":[[10,2],[34,2],[43,1],[48,1],[56,2],[57,1],[60,1],[69,2],[71,1],[178,1],[183,5],[185,1],[186,5],[188,1],[189,1],[194,8],[195,2],[206,1],[207,5],[219,1]],"misunderstandings":[[10,1],[19,1],[71,1],[75,1],[192,1]],"reinforcing":[[10,1],[16,1],[32,1],[33,1],[37,1],[65,1],[71,1],[81,1],[82,2],[83,1],[89,2],[90,1],[95,1],[97,1],[111,2],[164,1],[166,1]],"calls":[[10,6],[41,1],[47,1],[69,1],[71,1],[74,1],[88,1],[126,1],[153,1],[172,2],[194,1],[213,1],[218,2]],"least":[[10,1],[12,1],[18,1],[19,1],[20,4],[21,1],[22,1],[37,2],[38,1],[46,2],[47,1],[48,1],[49,1],[51,1],[56,2],[58,3],[60,1],[61,1],[63,1],[64,1],[65,1],[71,5],[74,1],[75,1],[76,1],[87,3],[88,1],[90,1],[98,5],[100,1],[101,3],[102,1],[103,2],[104,1],[108,2],[110,1],[115,1],[120,1],[121,1],[122,2],[145,1],[150,1],[159,1],[164,1],[165,1],[166,1],[168,1],[176,2],[181,1],[182,1],[191,1],[194,2],[195,1],[200,1],[203,1],[204,1],[205,1],[208,1],[209,2],[210,1],[218,1],[222,2]],"crisis":[[10,1],[26,1],[70,1],[74,1],[91,1]],"wouldn":[[10,2],[25,1],[32,2],[43,2],[49,1],[60,1],[61,2],[79,1],[89,1],[94,1],[100,2],[102,2],[104,8],[105,8],[106,1],[155,1],[169,1],[182,1],[183,1],[186,1],[193,1],[194,1]],"somewhere":[[10,1],[13,3],[17,1],[51,1],[65,1],[71,1],[79,1],[155,1],[176,1],[218,2]],"side":[[10,2],[16,2],[19,1],[21,2],[24,1],[33,2],[34,1],[47,2],[51,3],[52,4],[60,1],[65,2],[74,1],[75,1],[76,3],[87,1],[95,7],[102,6],[103,1],[108,1],[111,7],[114,1],[115,3],[116,1],[120,3],[121,3],[123,1],[127,1],[155,1],[164,4],[165,2],[166,3],[167,2],[168,1],[169,1],[203,3]],"explanation":[[10,2],[26,1],[33,1],[46,1],[47,4],[48,1],[49,1],[79,1],[82,1],[84,1],[134,1],[155,1],[186,2],[192,1]],"brought":[[10,3],[12,1],[19,1],[34,1],[59,1],[60,1],[71,1],[131,1],[177,2],[183,1],[189,2],[193,3],[194,1]],"incorrect":[[10,2]],"similarly":[[10,1],[87,1],[90,1],[97,1],[108,1],[109,2],[112,1],[169,2],[173,1],[181,1],[182,1],[184,1],[192,1],[197,2],[213,1]],"conclusion":[[10,1],[45,1],[48,3],[49,1],[57,1],[59,1],[64,1],[69,1],[79,2],[83,1],[87,4],[89,1],[90,1],[121,1],[178,1],[182,1],[184,1],[185,2],[188,2],[195,1],[208,1]],"anyone":[[10,1],[25,1],[58,2],[61,3],[71,1],[85,1],[94,1],[95,1],[100,1],[102,1],[114,1],[155,2],[172,1],[182,1],[194,1],[201,1],[212,1],[215,1],[216,1]],"rebecca":[[10,1],[71,1]],"yesterday":[[10,1],[41,1],[43,2],[60,1],[178,1],[179,1]],"texted":[[10,1],[18,1]],"last":[[10,1],[12,1],[14,1],[15,1],[16,7],[17,1],[19,2],[21,2],[22,1],[27,1],[32,3],[33,2],[34,1],[36,1],[37,2],[38,1],[41,1],[43,1],[47,5],[49,1],[51,1],[59,1],[61,4],[65,3],[68,1],[69,2],[70,4],[71,2],[77,1],[79,1],[86,1],[92,1],[96,1],[98,1],[100,1],[101,3],[102,2],[103,2],[105,1],[106,1],[107,1],[111,2],[115,1],[120,4],[121,5],[122,21],[124,1],[140,1],[147,1],[155,1],[164,4],[165,7],[166,5],[167,2],[168,1],[170,2],[171,2],[172,1],[181,2],[182,2],[185,1],[186,2],[187,1],[191,1],[199,1],[200,1],[201,1],[202,1],[203,1],[204,2],[214,1],[215,1],[216,1],[217,1],[218,1],[219,3],[221,1]],"invited":[[10,1],[103,1],[114,1],[115,3],[120,4],[195,1]],"jupiru":[[10,1],[18,1]],"cancelled":[[10,1],[34,1],[43,1],[47,1]],"minutes":[[10,1],[15,1],[16,1],[17,2],[18,1],[21,1],[24,2],[25,1],[26,6],[27,5],[32,1],[35,3],[36,2],[37,3],[38,2],[43,1],[48,1],[51,4],[52,1],[53,4],[55,1],[74,1],[92,1],[97,2],[98,1],[101,1],[107,1],[113,2],[114,1],[115,3],[120,9],[134,1],[163,5],[164,1],[166,3],[167,3],[168,4],[169,1],[170,1],[172,4],[177,1],[178,1],[184,1],[185,1],[187,1],[189,2],[190,5],[191,1],[192,2],[193,6],[200,1],[205,1],[207,1],[210,8],[213,1],[214,1],[215,1],[218,1]],"sick":[[10,1],[32,3],[37,1],[70,2],[185,2],[187,2],[191,1],[206,1]],"comes":[[10,2],[25,1],[30,1],[35,1],[38,1],[51,1],[60,1],[91,2],[97,2],[100,1],[105,1],[133,1],[155,2],[173,1],[191,1]],"reciprocal":[[10,2],[126,1]],"safran":[[10,1],[81,1]],"segal":[[10,1],[53,1],[54,1],[63,1],[81,2]],"react":[[10,2],[36,1],[41,1],[65,1],[71,1],[96,1],[111,1],[115,1],[120,1],[130,1],[131,2],[146,1],[152,1],[161,1],[181,1],[182,1],[188,1],[192,2],[199,1],[212,1],[214,1]],"lots":[[10,1],[14,1],[36,2],[40,1],[61,1],[69,1],[78,1],[155,1],[171,1],[190,1],[205,1],[213,1]],"quiet":[[10,1],[53,1],[55,1],[92,1],[94,1],[98,2],[100,1],[102,1],[104,2],[107,1],[159,1],[192,1],[210,1],[225,1]],"uncomfortable":[[10,1],[33,1],[48,1],[51,1],[54,1],[55,1],[61,1],[134,1],[145,1],[154,1],[155,1],[172,1],[206,1],[211,1]],"conceptualiza-":[[10,1],[25,1],[28,1],[29,1],[81,1]],"schedule":[[10,1],[15,1],[19,1],[20,1],[21,7],[22,4],[24,1],[30,1],[31,1],[33,2],[71,2],[72,4],[96,2],[103,1],[114,1],[129,3],[193,1],[204,6],[205,5],[217,2],[218,1],[219,1],[223,1],[224,1]],"accepting":[[10,2],[43,1],[44,1],[49,1],[53,2],[55,2],[63,1],[71,1],[96,4],[100,4],[104,2],[113,1],[154,1],[175,1],[191,3],[200,1],[209,1],[216,2],[219,1]],"underlie":[[10,1],[196,1]],"curiosity":[[10,2],[53,1],[108,1]],"problem-solve":[[10,1],[25,1],[27,1],[36,1],[37,1],[45,1],[193,1]],"limits":[[10,1],[11,1],[64,1],[76,1],[87,1],[115,1],[214,1]],"breathing":[[10,1],[44,1],[53,1],[54,2],[63,2],[70,1],[82,1],[90,1],[91,2],[93,2],[97,1],[100,1],[104,1],[105,2],[111,2],[120,1],[121,1],[122,2],[158,1],[161,3],[166,1],[170,2],[171,1],[173,4],[174,2],[175,1],[178,1],[187,2],[193,9],[206,2],[208,4],[209,1],[210,9],[211,2],[223,1]],"walk":[[10,1],[13,1],[19,1],[21,2],[43,1],[51,2],[55,1],[59,1],[69,1],[78,1],[90,1],[91,1],[96,1],[97,1],[98,1],[103,1],[113,2],[190,1],[200,1],[203,1],[204,3],[206,1],[208,1],[209,1],[210,1],[211,1]],"mindfulness":[[10,1],[22,1],[24,2],[26,3],[31,1],[44,2],[45,1],[51,1],[53,43],[54,8],[55,7],[63,3],[65,1],[69,3],[70,1],[71,1],[72,1],[77,2],[79,1],[80,3],[81,2],[82,4],[83,4],[85,1],[86,1],[87,1],[89,2],[92,1],[96,14],[100,1],[101,1],[103,1],[105,2],[107,1],[108,1],[112,2],[113,2],[114,1],[116,1],[117,2],[118,2],[122,1],[123,3],[124,1],[125,8],[126,4],[134,1],[161,1],[209,3],[210,12],[211,2],[218,1],[223,1],[225,1]],"provocative":[[10,4]],"fair":[[10,1],[33,1],[40,1],[66,1],[95,1],[102,1],[175,1],[182,1],[183,1],[185,1],[195,1],[212,2],[213,1]],"smarter":[[10,2]],"state-":[[10,1],[84,1]],"hadn":[[10,1],[12,1],[19,1],[43,1],[48,1],[57,1],[58,1],[185,1],[217,1]],"statement":[[10,1],[37,1],[41,2],[113,2],[182,2],[184,1],[186,3],[192,1],[197,4],[202,1],[214,1]],"prepared":[[10,1],[15,1],[21,1],[95,1],[98,1],[102,1],[155,2],[161,1],[165,1],[166,1],[171,1],[210,1],[217,1]],"allowed":[[10,1],[34,1],[100,1],[113,1],[184,1],[186,1],[198,1],[210,1]],"moni-":[[10,1],[114,1]],"deficits":[[10,1],[30,1],[64,1]],"self-reflection":[[10,1],[80,2],[131,1],[141,2]],"self-improvement":[[10,1],[18,1]],"bennett-levy":[[10,1],[24,1],[48,1],[60,1],[75,1],[80,4]],"thwaites":[[10,1],[80,2]],"facilitate":[[10,1],[29,1],[30,1],[32,1],[71,2],[75,1],[79,3],[86,1],[91,2],[108,1],[109,1],[110,1],[112,2],[114,1],[120,1],[168,17]],"thoroughly":[[11,1],[27,1],[47,1],[64,1],[74,1],[85,1],[92,1],[98,1],[225,1]],"formulate":[[11,2],[30,1],[32,1],[58,1],[61,1],[74,1]],"overlap":[[11,1],[48,1]],"assessment":[[11,4],[12,5],[16,1],[19,1],[33,1],[75,1],[79,1],[82,1],[83,1],[86,1],[87,1],[91,1],[92,2],[98,1],[101,1],[103,1],[107,1],[114,11],[115,2],[116,2],[118,5],[120,3],[121,1],[123,1],[124,3],[129,1],[160,1],[163,10],[164,6],[165,4],[166,1],[167,1],[168,1],[208,1]],"limited":[[11,1],[18,1],[26,1],[32,1],[69,1],[71,1],[75,1],[86,1],[88,1],[90,1],[128,1],[155,1]],"miss":[[11,1],[25,1],[36,1],[71,3],[75,1],[91,1],[98,1],[120,1],[165,1],[166,3],[168,1]],"incomplete":[[11,1],[51,1]],"deliberately":[[11,1],[27,1],[43,1],[65,1],[91,1],[134,1],[140,1],[159,1],[161,1],[205,1],[213,1],[217,2]],"attribute":[[11,1],[33,1],[37,1],[56,1],[71,1]],"isolation":[[11,1],[37,1],[76,1],[77,1],[89,1]],"phobia":[[11,1],[160,2],[208,1]],"relating":[[11,2],[13,4],[14,1],[36,2],[82,1],[83,1],[84,1]],"impressions":[[11,1],[12,1],[13,3],[83,1]],"possibly":[[11,1],[21,1],[38,1],[48,1],[61,1],[75,1],[97,1],[108,1],[111,1],[188,1]],"dose":[[11,1],[81,1],[90,2],[111,1],[163,1],[164,3]],"frequency":[[11,1],[16,1],[25,1],[77,1],[93,1],[95,1],[103,1],[107,1],[109,1],[111,2],[114,2],[119,1],[206,1],[212,5],[217,1],[218,2],[219,1],[222,4]],"duration":[[11,1],[25,1],[63,1],[111,1],[114,1],[120,2],[134,1],[163,2],[166,1],[167,2],[212,5],[217,1],[218,2],[222,4]],"adjunctive":[[11,1],[74,1],[86,1],[87,2],[88,1],[111,2],[127,1]],"services":[[11,1],[65,1],[80,1],[93,1],[108,1],[115,1],[116,14],[117,1],[118,2],[119,1],[122,1],[123,1],[124,1],[125,1],[126,1],[164,1]],"easy":[[11,1],[13,1],[18,1],[21,4],[24,1],[38,1],[41,1],[59,1],[66,1],[90,2],[96,1],[98,3],[100,1],[101,3],[114,1],[120,1],[134,2],[151,1],[166,1],[167,1],[169,1],[174,1],[175,1],[177,1],[191,1],[192,2],[194,2],[195,1],[209,1],[210,1],[214,1]],"request":[[11,1],[14,1],[35,1],[36,2],[98,1],[108,1],[157,2],[158,2],[214,1]],"send":[[11,1],[33,1],[155,1],[200,1],[214,1]],"arrange":[[11,1],[29,1],[92,1]],"sent":[[11,1],[47,1],[86,1],[113,1],[155,4]],"professionals":[[11,1],[14,3],[71,1],[84,2],[112,1],[114,3],[117,1],[163,1],[173,1]],"questionnaires":[[11,1],[57,1],[82,1],[115,2],[120,6],[163,1],[166,1],[167,1],[168,1]],"self-report":[[11,1],[167,1]],"beforehand":[[11,1],[64,1]],"mistaken":[[11,1],[94,1],[98,1],[102,1]],"inform":[[11,1],[86,1],[90,1],[92,1],[93,1],[94,1],[98,1],[101,2],[103,2],[107,3],[114,2],[115,1],[122,2],[163,10],[164,2],[166,2],[200,1],[206,1]],"trusted":[[11,1],[12,1],[134,1],[142,1],[189,2],[216,1],[225,1]],"accompany":[[11,1],[65,1],[92,2],[101,10],[102,5],[134,1],[135,1],[169,1],[178,1],[179,1],[211,1]],"addi-":[[11,1],[48,1],[65,1],[67,1],[69,1],[71,1],[73,1],[186,1],[187,1],[205,1]],"tional":[[11,1],[45,1],[46,1],[48,1],[56,2],[61,1],[65,1],[69,1],[79,1],[81,1],[109,1],[114,1],[115,2],[175,2],[186,1],[187,1],[194,1],[205,1]],"greet":[[11,1],[16,1],[169,1],[201,1]],"convey":[[11,1],[12,1],[35,1],[91,2]],"psychosocial":[[11,1],[80,1],[87,1],[125,1],[127,1]],"relate":[[11,1],[12,1],[13,1],[74,1],[123,1],[199,1]],"legal":[[11,1],[64,1],[121,2]],"requirements":[[11,2],[113,1]],"area":[[11,1],[19,1],[26,1],[31,1],[33,1],[35,1],[59,1],[64,1],[90,1],[94,1],[95,1],[108,1],[113,1],[114,1],[115,1],[120,1],[121,2],[128,1],[133,1],[140,1],[153,3],[158,1],[161,4],[171,2],[172,1],[177,1],[178,1],[210,1],[215,1]],"consent":[[11,1],[14,1],[74,1],[92,3],[107,1],[114,4],[115,5],[118,2],[120,1],[121,4]],"risks":[[11,1],[87,1],[89,4],[90,1],[91,1],[93,2],[94,2],[108,1],[109,2],[110,10],[111,3],[112,3],[114,1],[115,1],[117,1],[118,12],[119,1],[120,3],[126,1],[168,1],[208,1]],"benefits":[[11,1],[26,1],[53,1],[80,1],[81,1],[82,1],[86,1],[87,1],[89,8],[90,2],[93,2],[94,1],[95,3],[96,1],[101,1],[102,1],[103,1],[104,2],[108,1],[109,4],[111,2],[112,1],[120,1],[121,2],[123,1],[124,1],[125,2],[127,1],[141,1],[163,2],[191,1],[200,2],[210,1]],"confidentiality":[[11,1],[115,2],[121,2],[170,1]],"reporting":[[11,1],[16,1],[41,1],[53,1],[87,1],[88,1],[107,1]],"records":[[11,1],[12,2],[26,2],[27,1],[52,1],[109,1],[129,1],[177,1],[178,1],[181,3],[183,1],[184,1],[186,2],[188,8],[192,2],[196,3],[197,1],[198,1],[201,3],[211,1],[213,2],[217,1],[218,3],[219,7]],"whatever":[[12,1],[36,2],[37,2],[38,1],[53,1],[78,1],[97,1],[100,4],[103,1],[105,1],[134,3],[145,1],[155,2],[158,1],[163,1],[165,2],[166,1],[192,1],[196,1],[197,1],[201,1],[204,1],[208,1],[210,2],[215,1],[216,1],[217,1],[222,1]],"accompanying":[[12,1],[45,1],[87,1],[164,1],[185,1]],"none":[[12,1],[33,1],[47,1],[58,1],[88,1],[107,1],[121,1],[122,1],[163,1],[181,1],[194,2],[210,1],[212,1],[214,1],[222,1]],"diag-":[[12,1],[14,2],[32,1]],"nosis":[[12,1],[14,2],[32,1],[86,3],[99,1],[108,1]],"mem-":[[12,1],[181,1]],"perspective":[[12,1],[48,1],[59,1],[60,1],[61,1],[69,1],[71,1],[74,1],[80,1],[81,1],[85,1],[87,1],[95,1],[102,1],[113,1],[124,1],[125,1],[126,1],[129,1],[186,5],[187,2],[188,2],[191,1],[192,2],[198,2],[199,1],[200,1],[214,2],[216,1],[222,2],[223,1]],"advisable":[[12,1],[38,1],[43,1]],"scene":[[12,1],[17,2],[19,1],[42,2],[43,2],[59,1],[69,4],[70,1],[79,4],[100,1],[104,5],[173,1],[178,1],[210,4],[211,1]],"providing":[[12,2],[15,1],[16,7],[19,2],[21,1],[33,2],[36,1],[37,2],[41,1],[48,1],[69,1],[70,1],[81,2],[95,1],[107,1],[111,1],[112,1],[115,1],[121,1],[163,1]],"jupdith":[[12,1],[17,1],[21,1],[44,1],[61,1]],"interrupt":[[12,3],[34,2],[36,6],[37,4],[38,2],[64,1],[74,1],[75,1]],"bothers":[[12,1],[16,1],[37,1],[74,1]],"nods":[[12,1],[17,1],[22,1],[42,2],[56,1],[66,1]],"fourth":[[12,1],[21,1],[36,1],[47,1],[69,1],[86,1],[181,1],[191,1]],"we'll":[[12,3],[13,15],[16,5],[19,3],[25,1],[27,1],[32,1],[34,1],[41,1],[52,1],[53,1],[58,1],[71,1],[79,1],[184,1]],"concerns":[[12,1],[16,1],[35,1],[36,1],[61,1],[71,1],[72,1],[75,1],[83,1],[86,3],[89,5],[90,3],[91,4],[93,1],[98,1],[100,1],[101,1],[108,12],[109,4],[110,3],[111,1],[113,3],[114,2],[115,1],[121,2],[123,1],[125,1],[126,1],[127,3],[163,1],[164,1],[165,1],[166,2],[167,1],[168,1],[173,2],[174,1],[177,1],[203,2],[212,1]],"areas":[[12,2],[18,1],[19,2],[32,3],[36,1],[58,2],[87,1],[92,1],[93,1],[96,1],[97,1],[99,1],[108,1],[110,1],[114,1],[129,1],[144,1],[153,2],[161,1],[168,1],[170,4],[171,7],[172,2],[190,1],[196,2],[197,1],[198,1],[200,1],[204,1],[208,1],[210,1],[212,1],[213,1],[221,2],[222,1]],"carry":[[12,1],[13,1],[23,1],[27,1],[51,1],[101,1],[134,2],[137,1],[139,2],[146,4],[149,1],[150,1],[155,2],[156,2],[157,4],[158,6],[159,2],[172,1],[178,1],[181,1],[182,1],[188,1],[204,1],[210,1],[217,1],[218,3]],"write-up":[[12,1],[14,1],[76,3],[77,1],[81,1],[82,1]],"outline":[[12,1],[65,1],[75,1],[89,1],[114,2],[115,1],[120,1],[192,1],[212,1]],"procedures":[[12,1],[80,1],[86,2],[88,1],[116,1],[120,1],[126,1],[163,1],[166,1],[167,1],[168,4]],"scope":[[12,1],[85,1]],"antony":[[12,1],[79,1],[89,1],[125,1]],"barlow":[[12,1],[63,1],[79,2],[225,1]],"ledley":[[12,1],[81,1]],"homicidal":[[12,1],[16,1],[33,2]],"wenzel":[[12,1],[16,1],[81,1]],"insight":[[12,1],[73,1],[74,1],[76,1],[219,1]],"pinpoint":[[12,1],[32,1],[129,1]],"elsewhere":[[12,1],[63,2],[64,1],[69,1],[101,1],[210,1]],"wake":[[12,2],[18,2],[69,3],[95,1],[163,1],[165,1],[168,1],[176,1],[190,1],[191,3]],"morning":[[12,1],[13,3],[17,3],[21,1],[25,3],[33,2],[35,1],[37,1],[41,1],[53,1],[61,1],[77,1],[79,1],[89,1],[95,2],[98,2],[102,1],[104,1],[106,1],[107,1],[113,2],[121,1],[166,2],[168,1],[169,1],[172,1],[178,1],[182,1],[189,2],[190,1],[191,1],[193,1],[194,1],[204,1],[213,2]],"sleep":[[12,2],[16,1],[18,1],[20,1],[31,1],[37,1],[86,1],[95,5],[96,2],[105,3],[107,2],[109,2],[111,1],[113,2],[116,2],[119,1],[123,1],[155,1],[167,1],[169,2],[170,1],[171,1],[176,1],[178,1],[191,1],[202,2],[222,1]],"night":[[12,1],[34,1],[38,1],[41,1],[43,1],[61,1],[69,1],[70,2],[95,4],[96,2],[98,2],[105,1],[113,1],[155,3],[164,1],[165,2],[167,1],[182,1],[190,2],[192,3],[194,1],[195,4],[204,1],[206,1],[207,3],[215,2],[216,2],[219,1]],"clock":[[12,1],[25,1],[42,1],[104,1],[214,1]],"toss":[[12,1],[103,1],[177,1]],"depends":[[12,1],[23,1],[61,1],[98,1],[123,1],[192,1],[212,1],[213,2],[215,1]],"coffee":[[12,1],[13,3],[17,1],[95,1],[113,2],[190,2],[193,1],[213,5],[219,1]],"dressed":[[12,1],[21,1],[25,1],[56,1],[69,1],[169,2],[171,1],[204,1]],"computer":[[12,1],[21,1],[24,3],[27,1],[69,1],[96,1],[104,2],[113,2],[121,1],[177,1],[204,1]],"afternoon":[[12,2],[27,1],[37,1],[41,1],[70,1],[97,2],[121,1],[165,1],[166,1],[169,1],[178,1],[204,1]],"ihave":[[12,1],[48,1],[76,1],[208,1]],"errand":[[12,1],[51,1]],"food":[[12,2],[21,1],[64,2],[93,1],[96,3],[105,3],[108,1],[109,1],[113,3],[116,2],[118,2],[119,1],[124,1],[130,1],[164,1],[172,2],[178,1],[179,2],[188,1],[196,1],[200,3]],"lunch":[[12,1],[21,1],[25,1],[35,1],[41,2],[43,1],[69,2],[172,3],[175,4],[189,2],[197,1],[200,3],[201,1],[203,2],[204,2]],"grab":[[12,1],[207,1]],"snack":[[12,1],[27,1],[96,1],[108,1]],"load":[[12,1],[24,1]],"newspaper":[[12,1],[206,1]],"asleep":[[12,2],[95,1],[98,4],[102,1],[104,1],[105,2],[107,1],[113,1],[171,1],[205,1],[222,1]],"hour":[[12,1],[15,1],[21,4],[26,1],[58,1],[92,1],[93,1],[105,1],[115,1],[120,2],[166,2],[169,2],[182,1],[185,1],[193,1],[203,4],[204,2],[212,1],[216,1],[222,1]],"frozen":[[12,1],[208,1]],"surf":[[12,1],[89,1],[97,4],[100,3],[102,1],[105,2],[112,1],[119,2]],"o'clock":[[12,2],[69,1]],"attends":[[12,1],[207,1]],"visits":[[12,1],[25,1],[71,1],[191,1]],"moderately":[[12,1],[27,1],[43,2],[76,1]],"routinely":[[12,1],[16,1],[24,1],[86,1],[93,1],[103,1],[114,1]],"guides":[[12,1],[64,1],[103,1],[169,1],[179,1],[217,1]],"activity":[[12,1],[15,1],[19,1],[20,15],[21,17],[22,10],[23,1],[24,2],[25,2],[26,1],[27,1],[31,1],[33,2],[55,1],[56,1],[65,9],[81,1],[82,8],[83,5],[89,1],[96,1],[100,1],[109,1],[116,1],[123,2],[125,1],[127,2],[129,4],[133,2],[159,1],[173,1],[202,1],[203,12],[204,16],[205,17],[210,1],[217,3],[219,2],[222,1],[223,4],[224,3]],"scheduling":[[12,1],[15,1],[16,2],[19,2],[20,4],[21,11],[22,8],[23,1],[24,1],[31,1],[33,2],[34,1],[71,1],[81,1],[82,5],[83,2],[193,1],[204,3],[205,7],[222,1],[223,1]],"hopelessness":[[12,1],[14,1],[16,2],[20,1],[31,2],[33,1],[37,1],[53,1],[56,1],[75,1],[80,1],[82,3],[83,1],[189,2],[197,1],[199,1],[202,5],[223,1]],"skepticism":[[12,2],[14,1],[82,2],[84,1],[100,1]],"indications":[[12,1],[87,2],[88,1]],"unsure":[[12,1],[25,2],[33,3],[35,1],[43,1],[47,1],[64,1],[121,1],[122,2],[145,1],[158,1],[159,1],[164,1]],"committing":[[12,1],[21,1],[90,1],[94,2],[102,2],[113,1]],"subtly":[[12,1],[33,1],[37,1],[43,2]],"suffered":[[12,1],[87,1],[191,1]],"tips":[[12,2],[15,1],[16,2],[18,2],[19,1],[22,2],[25,1],[26,1],[27,1],[32,1],[33,1],[35,1],[36,1],[37,1],[47,2],[51,2],[52,2],[56,2],[57,2],[59,1],[61,1],[63,1],[64,1],[65,2],[67,1],[69,1],[75,1],[82,7],[83,8],[84,7],[85,1],[89,6],[90,4],[91,5],[96,1],[98,1],[99,1],[103,1],[107,1],[118,1],[193,1],[194,1]],"guideline":[[12,1],[103,1],[107,1],[116,1],[123,2]],"sentences":[[12,1],[37,2],[169,2],[186,3],[201,1]],"talk-":[[12,1],[194,1]],"someplace":[[12,1],[18,1],[21,2],[58,1]],"overwhelming":[[12,1],[13,1],[19,2],[21,1],[32,1],[43,1],[95,1],[166,1]],"surprised":[[12,1],[43,1],[94,1],[95,1],[96,1],[171,1],[185,1],[188,1],[193,1],[194,1],[199,3],[205,1],[216,2],[217,1],[219,1]],"anymore":[[12,1],[19,2],[100,1]],"relief":[[12,1],[13,1],[25,2],[32,3],[41,2],[52,1],[53,1],[65,1],[69,2],[70,1],[89,2],[169,1],[170,1],[176,1],[179,1],[197,1],[206,1],[208,1],[209,2],[211,2]],"ball":[[12,1],[97,1],[177,7],[204,1],[210,1]],"guarantee":[[12,1],[37,1],[114,1],[115,2],[120,1],[121,2],[166,1],[214,1]],"accom-":[[12,1],[64,1]],"functioned":[[12,1],[76,1]],"promoted":[[12,1],[91,1],[170,1]],"prided":[[12,1],[56,1]],"hus-":[[12,1],[171,1]],"band":[[12,1],[18,4],[19,1],[24,1],[35,1]],"signs":[[12,1],[32,1],[56,1],[72,4],[74,1],[76,1],[84,1],[138,2],[170,1],[171,1],[176,5],[177,2],[184,1],[192,1],[193,1],[196,1],[198,1],[201,1],[208,3],[211,1],[212,1],[213,7],[214,2],[217,3],[218,13],[223,3],[224,1]],"hasn't":[[12,1],[21,1],[47,2],[51,1],[65,2]],"ears":[[12,1],[116,1]],"misgivings":[[12,1],[25,1]],"agendas":[[12,1],[30,1],[82,1]],"differ-":[[12,1],[86,1],[174,1],[210,1],[215,1]],"previ-":[[12,1],[87,1],[175,1]],"finding":[[12,1],[21,2],[31,1],[43,1],[58,1],[77,1],[87,2],[88,1],[101,1],[110,1],[112,1],[148,1],[163,1],[200,1],[202,1],[214,2],[216,1],[221,1],[222,2]],"precisely":[[12,1],[21,1],[61,1]],"occurred":[[12,1],[34,2],[43,1],[45,1],[48,1],[74,1],[155,1],[156,1],[157,1],[158,1],[161,1],[182,1],[193,1],[216,1]],"latest":[[12,1],[74,1]],"five":[[12,1],[55,1],[69,1],[77,1],[90,1],[93,1],[94,2],[100,1],[101,9],[102,1],[106,1],[111,1],[114,2],[126,1],[155,1],[170,5],[171,5],[172,3],[175,1],[179,1],[183,1],[184,1],[185,2],[200,1],[204,1],[205,1],[209,1],[210,1],[215,6],[224,1],[225,1]],"involving":[[12,1],[86,1],[87,2],[108,2],[145,1],[148,2],[163,1],[215,1]],"accompanied":[[12,1],[161,1],[177,1],[212,1],[217,1]],"invite":[[12,1],[89,3],[94,3],[95,1],[100,1],[103,4],[105,2],[111,1],[113,1],[114,2],[203,1]],"decision":[[13,1],[16,1],[31,1],[32,3],[61,1],[64,3],[67,1],[71,2],[74,1],[82,3],[83,1],[92,1],[95,1],[100,1],[101,1],[103,2],[115,1],[120,1],[121,1],[146,1],[182,1],[212,1]],"aren't":[[13,1],[22,1],[32,1],[45,1],[64,1],[66,2],[69,1],[82,1]],"diagnoses":[[13,1],[33,1],[122,1]],"impression":[[13,1],[25,1],[31,1],[82,1],[83,1],[188,1]],"certainly":[[13,1],[26,1],[36,1],[73,1],[79,1],[91,2],[93,2],[96,1],[98,2],[101,1],[107,1],[113,1],[155,1],[197,1],[215,2]],"news":[[13,1],[75,1],[93,2],[122,2],[123,1],[124,2],[125,1],[127,1],[164,3],[166,3],[171,1],[176,1],[195,1],[203,1],[206,1]],"dozens":[[13,2],[110,1],[183,1],[203,1],[206,1]],"snyder":[[13,1],[81,1]],"describing":[[13,1],[16,1],[34,1],[37,1],[38,1],[42,1],[69,2],[91,1],[115,1],[120,1],[170,1],[175,1],[177,1],[179,1],[182,1],[184,1],[214,1]],"writes":[[13,1],[18,1],[21,3],[46,1],[51,2],[60,1],[64,2],[69,1]],"sheet":[[13,1],[33,1],[46,1],[52,1],[60,1],[92,1],[93,1],[98,1],[101,2],[102,1],[107,2],[114,3],[115,1],[118,1],[119,1],[121,1],[122,1],[127,2],[129,2],[130,2],[141,1],[149,1],[151,2],[152,2],[171,1],[175,1],[181,1],[185,1],[202,1],[206,1],[208,1],[212,1]],"ajob":[[13,1],[77,1]],"apart-":[[13,1],[18,2],[64,2]],"solv-":[[13,1],[37,1],[75,1]],"busy":[[13,1],[25,1],[26,1],[36,1],[47,3],[56,1],[93,1],[178,1],[204,2],[209,1]],"motivating":[[13,1],[58,1],[82,1],[83,1],[89,1],[90,1],[91,1],[100,1],[116,1],[117,1]],"move":[[13,2],[18,1],[32,1],[34,1],[36,1],[37,2],[42,1],[49,2],[56,1],[61,1],[64,3],[90,1],[91,1],[96,2],[97,1],[100,3],[105,2],[113,1],[121,1],[140,1],[150,1],[152,1],[154,1],[157,1],[158,2],[169,1],[180,1],[181,1],[187,1],[190,1],[191,2],[192,1],[194,1],[198,1],[204,2],[209,6],[210,1],[211,1],[213,1],[214,1],[216,1],[222,3]],"closer":[[13,1],[24,1],[25,1],[43,1],[76,1],[97,1],[100,1],[104,6],[105,2],[176,1],[213,1],[216,3]],"improving":[[13,1],[18,1],[30,1],[32,1],[33,1],[71,1],[81,1],[140,1],[163,1],[166,1],[177,1],[203,4],[205,1],[211,1],[217,3],[218,1]],"creating":[[13,2],[18,1],[25,1],[29,1],[30,2],[31,1],[43,1],[69,1],[72,1],[82,2],[84,1],[103,1],[130,1],[141,1]],"gets":[[13,1],[18,1],[19,1],[26,1],[41,1],[47,1],[64,1],[75,1],[104,1],[152,2],[155,1],[165,1],[190,2],[198,2],[201,1],[203,1],[207,1],[210,1]],"wejust":[[13,1],[52,1]],"talked":[[13,1],[16,1],[19,2],[25,2],[26,1],[27,1],[35,2],[37,1],[38,1],[47,1],[51,1],[61,1],[66,1],[71,1],[79,1],[170,1],[171,1],[178,1],[184,1],[191,1],[195,2],[199,1],[214,1],[216,1],[219,1]],"maker":[[13,2],[17,1]],"judy":[[13,1],[17,5],[19,1],[171,1],[178,2],[182,28],[185,14],[186,4],[188,1],[189,5],[190,13],[198,2],[199,6],[203,1],[212,1],[215,1],[216,6],[219,4]],"cream":[[13,2],[16,3],[17,4],[18,1],[19,2]],"anyway":[[13,2],[17,2],[21,2],[24,1],[25,2],[31,1],[43,1],[48,1],[59,1],[64,1],[170,1],[182,1],[190,1],[198,1]],"twice":[[13,1],[17,1],[19,1],[34,1],[64,1],[88,1],[98,2],[100,1],[102,1],[106,1],[107,1],[109,1],[164,1],[170,2],[171,2],[176,1],[202,3],[206,1],[208,1],[210,1]],"meaningful":[[13,1],[21,3],[22,1],[29,2],[34,1],[43,1],[91,1],[113,1],[169,1],[177,1],[191,3],[195,3],[196,1],[211,1],[217,1],[218,1]],"haven't":[[13,1],[16,2],[21,1],[25,1],[32,1],[38,2],[47,4],[49,1],[56,2],[57,1],[58,2],[60,1],[61,1],[69,2],[200,1],[217,1]],"goldstein":[[13,1],[80,2],[87,1],[125,1]],"swift":[[13,1],[81,1],[112,1],[124,1]],"finances":[[13,1],[63,1]],"insurance":[[13,1],[27,1],[35,1],[51,1],[121,2],[189,2]],"comorbid":[[13,1],[28,1],[81,1],[108,1],[111,5],[118,2]],"illness":[[13,1],[17,6],[46,1],[60,1],[75,1],[76,2],[77,1],[111,3],[112,1],[126,1],[138,4],[163,1],[170,2],[191,1],[202,1],[205,1],[208,4]],"sive":[[13,1],[113,1]],"gradually":[[13,1],[76,1],[96,1],[103,2],[109,1],[154,1],[158,2],[159,5],[161,1],[164,3],[166,1],[173,1],[177,1],[199,1],[201,2],[203,1],[208,3],[209,2]],"space":[[13,2],[55,1],[71,1],[90,1],[91,1],[94,1],[104,3],[105,1],[113,1],[122,2],[154,2],[155,5],[200,1]],"farther":[[13,1],[98,1],[100,4],[104,2],[105,4]],"apart":[[13,1],[86,1],[105,1],[120,1],[178,1]],"independently":[[13,1],[39,1],[56,1],[76,1]],"weeks":[[13,2],[21,1],[25,1],[26,2],[32,2],[33,2],[35,1],[58,2],[64,1],[71,3],[77,2],[87,1],[88,3],[91,1],[94,2],[97,1],[98,1],[100,1],[101,2],[103,2],[104,1],[105,1],[107,4],[108,3],[110,1],[111,1],[112,1],[114,2],[115,4],[120,6],[121,1],[122,1],[123,1],[155,1],[163,4],[164,4],[165,2],[166,6],[167,9],[168,22],[169,2],[177,1],[178,3],[183,1],[189,3],[190,3],[196,1],[198,5],[199,1],[200,6],[201,4],[202,1],[203,4],[204,2],[205,5],[206,1],[211,1],[218,1],[219,7],[221,2]],"recommend":[[13,1],[16,1],[36,1],[53,2],[87,1],[89,1],[91,1],[92,1],[93,1],[98,1],[100,1],[103,2],[111,1],[113,1],[117,1],[122,1],[169,1],[176,2],[179,1],[181,1],[188,1],[203,1],[211,1],[218,1]],"predict":[[13,1],[18,1],[21,1],[22,2],[24,1],[25,3],[26,1],[40,1],[44,1],[46,1],[47,1],[48,2],[52,1],[53,1],[55,1],[65,1],[72,1],[87,1],[88,1],[89,1],[114,1],[124,1],[125,1],[126,1],[174,2],[202,1],[208,4]],"long-":[[13,1],[95,1],[122,1]],"standing":[[13,1],[25,1],[75,1],[95,1],[106,1],[122,1],[169,2],[182,1],[206,1],[208,1],[212,1],[213,4],[216,1]],"covered":[[14,1],[33,2],[35,1],[59,1],[63,1],[75,1],[79,1],[100,1],[115,1],[134,1],[163,1],[171,1],[185,1]],"we'd":[[14,1],[65,1]],"reaching":[[14,1],[24,1],[57,1],[90,1],[98,1],[109,1],[176,13],[191,1],[224,2]],"created":[[14,1],[69,1],[83,1],[104,1],[140,1],[150,1],[153,2],[189,1],[190,1],[198,1],[212,1],[215,1]],"mechanics":[[14,1],[110,1]],"report":[[14,1],[24,1],[33,2],[34,1],[36,1],[41,4],[43,2],[45,1],[69,2],[72,1],[86,4],[87,2],[88,5],[90,1],[92,1],[93,3],[94,1],[95,2],[103,2],[105,1],[107,1],[108,1],[111,4],[112,1],[114,1],[116,9],[117,2],[120,1],[122,1],[123,4],[164,1],[170,1],[177,3],[178,1],[181,2],[188,1],[193,2],[210,2]],"cuss":[[14,1],[32,1],[74,1]],"findings":[[14,1],[86,1],[87,1],[88,1],[108,3],[109,1],[116,3],[117,1],[118,1],[119,1],[123,1],[125,1],[126,1],[127,1]],"reveals":[[14,1],[91,1]],"writing":[[14,1],[19,1],[24,2],[27,1],[33,1],[34,1],[50,1],[51,2],[52,1],[61,1],[64,1],[71,2],[82,1],[84,1],[94,1],[95,1],[131,1],[134,1],[136,1],[168,1],[179,1],[182,1],[184,1],[186,1],[188,3],[193,1],[194,2],[195,1],[200,2],[206,1],[214,3],[217,1],[219,1],[222,1],[224,1]],"thorough":[[14,1],[184,1]],"assess-":[[14,1],[114,1]],"objec-":[[14,1],[43,1]],"tives":[[14,1],[80,1],[110,1]],"addressing":[[14,1],[19,1],[36,1],[45,2],[82,3],[83,5],[89,1],[90,1],[94,1],[108,1],[109,1],[112,1],[113,1],[123,1],[168,4]],"former":[[14,1],[56,1],[124,1],[191,1]],"real":[[14,1],[17,7],[25,1],[37,2],[41,1],[43,2],[47,1],[59,1],[61,1],[77,1],[79,1],[91,2],[105,1],[111,1],[116,1],[117,1],[125,1],[132,1],[154,1],[155,2],[159,1],[164,1],[166,1],[173,1],[186,1],[187,3],[189,3],[190,1],[191,1],[192,1],[206,1],[211,1],[213,1]],"parts":[[14,1],[20,1],[21,2],[24,1],[33,1],[34,1],[36,1],[40,1],[49,1],[53,1],[56,3],[58,2],[64,1],[74,1],[79,1],[82,2],[87,1],[94,1],[111,1],[152,1],[164,8],[166,3],[167,5],[168,1],[169,1],[170,2],[171,2],[172,3],[175,2],[177,1],[179,1],[191,3],[196,1],[200,1],[205,2],[209,2],[210,2]],"socialize":[[15,1],[30,1],[33,1],[36,1],[37,1]],"doyou":[[15,2]],"listed":[[15,1],[94,1],[100,1],[104,1],[115,2],[163,1],[166,1],[167,1],[168,1],[172,1],[175,1],[177,2],[179,1],[181,3],[182,1],[186,1],[202,1],[205,1],[209,1],[211,1],[217,1],[222,1]],"devising":[[15,1],[32,1]],"completion":[[15,1],[24,1],[25,1],[31,1],[69,1],[70,1],[82,1],[114,1],[120,1],[128,1],[131,2],[135,1],[163,1],[166,1],[167,1],[168,1]],"outpatient":[[15,1],[76,1],[81,1],[85,1],[86,1]],"intro-":[[15,1],[92,1]],"generate":[[15,1],[88,1],[95,1],[140,3],[148,1],[188,1],[217,1]],"visual":[[15,1],[68,2],[69,3],[113,1],[177,1],[179,1]],"achieved":[[15,1],[18,2],[56,1],[72,1],[81,1],[82,1],[86,1],[87,1],[88,5],[107,1],[112,1],[113,2]],"interests":[[15,1],[43,1],[65,2],[91,1],[102,1],[155,1],[204,1]],"booklet":[[15,1],[24,1],[93,1],[94,1],[98,2],[101,1],[123,1]],"item":[[15,1],[17,1],[18,1],[21,1],[23,1],[24,3],[25,6],[26,6],[27,1],[32,13],[33,5],[34,3],[35,2],[37,1],[38,2],[51,1],[52,1],[53,1],[59,1],[60,2],[64,1],[71,1],[82,2],[83,1],[150,6],[178,2],[199,1],[200,1],[202,5],[205,4],[209,3],[216,4],[221,1],[222,6]],"miller":[[16,1],[80,1],[81,2],[86,1],[89,10],[90,1],[113,1],[116,1],[118,2],[126,1],[127,9]],"scales":[[16,3],[21,5],[22,2],[33,3],[37,1],[75,2],[114,3],[175,1],[198,2],[199,2],[212,1],[215,1],[217,1],[221,1],[225,1]],"inventory-ii":[[16,1],[80,1],[82,1]],"steer":[[16,2],[45,1],[80,3],[110,1],[140,1]],"scale":[[16,4],[21,3],[32,1],[37,1],[43,6],[45,1],[54,1],[57,1],[61,5],[64,1],[74,1],[75,4],[77,1],[78,1],[80,1],[81,1],[82,1],[83,3],[86,1],[90,4],[101,2],[115,1],[121,4],[124,1],[125,1],[140,1],[175,3],[177,3],[186,1],[198,7],[199,13],[203,1],[204,1],[209,1],[210,2],[212,2],[214,2],[215,4],[217,2],[218,1],[221,7],[222,1],[223,1]],"public":[[16,1],[86,1],[112,1],[116,2],[118,1],[122,1],[123,3],[124,3],[125,1],[126,3],[127,2],[157,2],[158,1],[173,1],[206,1],[208,2],[209,1],[224,1]],"patient":[[16,1],[33,1],[56,1],[80,1],[81,2],[83,2],[85,1],[100,1],[154,1],[185,1]],"questionnaire":[[16,1],[33,1],[57,3],[58,1],[75,2],[80,1],[83,3],[84,1],[101,1],[104,1],[107,2],[114,2],[118,1],[122,2],[123,1]],"phq-":[[16,3],[33,1],[77,2],[83,2]],"integration":[[16,2],[89,1]],"samhsa":[[16,2]],"gad-":[[16,3],[33,1],[77,2],[83,1]],"unable":[[16,1],[41,1],[57,1],[61,1],[99,1],[134,1],[140,1],[153,1],[158,1],[163,2],[167,1],[169,1],[178,1],[183,2],[202,1],[205,1],[219,1],[222,1]],"unwilling":[[16,1],[163,2],[167,1],[216,1]],"assign":[[16,1],[24,1],[101,1],[115,1],[147,1],[207,1],[215,2],[216,1]],"dialogue":[[16,1],[79,1],[89,1],[155,1]],"aggressive":[[16,1],[27,1],[33,2],[60,1],[111,1],[196,1],[213,3],[214,1]],"impulses":[[16,1],[33,1],[97,1],[201,1]],"elevated":[[16,1],[37,1],[76,1],[88,1]],"scores":[[16,2],[22,1],[32,1],[169,1],[176,2],[185,1],[188,1],[192,1],[195,1],[201,1],[202,11],[205,9],[206,3],[212,4],[218,4],[219,15],[222,7],[224,3]],"impulsive":[[16,1],[41,1]],"advantage":[[16,1],[64,1],[79,1],[91,2],[94,1],[99,1],[102,1],[106,1],[108,1],[116,1],[178,2],[194,1],[197,2],[200,1],[208,1],[212,1],[213,4],[214,1],[217,1]],"subjective":[[16,1],[32,1],[74,1],[86,1],[123,1],[125,1],[127,1]],"regardless":[[16,1],[26,1],[92,1],[108,2],[110,2],[112,1],[198,1]],"checking":[[16,2],[22,1],[41,2],[74,1],[75,2],[159,1],[167,1],[207,2]],"speaking":[[16,1],[24,1],[41,1],[42,1],[68,1],[79,1],[86,2],[100,1],[127,1],[188,1],[206,2],[207,1],[208,3],[209,1],[214,1]],"filled":[[16,2],[33,1],[37,1],[59,1],[170,1],[171,3],[182,1],[183,1],[185,1],[191,1],[195,1],[202,1],[204,1],[212,2],[215,2],[218,2]],"decreasing":[[16,1],[43,1],[65,1],[71,1],[77,1],[87,1],[134,1],[202,4],[208,1]],"depres-":[[16,1],[17,1],[56,1],[58,1],[59,1],[69,1],[76,2],[80,2],[179,1],[201,1],[202,1],[203,2],[205,1],[219,1]],"thanks":[[16,1],[34,1],[70,1],[93,1],[100,1]],"repeating":[[16,1],[88,1],[142,1],[164,1],[166,1],[167,1]],"looks":[[16,1],[17,2],[21,1],[22,2],[32,2],[33,1],[49,2],[54,1],[58,3],[61,1],[64,1],[69,1],[71,1],[140,1],[145,1],[152,1],[172,3],[181,2],[182,5],[194,1],[210,1]],"measures":[[16,2],[33,1],[77,1],[81,1],[86,1],[92,1],[103,1],[114,2],[115,1],[125,1],[129,1],[164,1],[176,2],[185,1],[188,2],[198,1],[201,1]],"zero":[[16,1],[61,1],[90,2],[103,2],[107,1],[114,1],[150,1],[164,1],[167,1],[207,1]],"greatest":[[16,1],[34,1],[43,1],[57,1]],"apologize":[[16,1],[32,1],[36,1],[47,1]],"sentence":[[16,1],[177,2],[192,2],[194,7],[195,2],[196,2]],"min-":[[16,1],[53,1],[66,1],[114,1]],"utes":[[16,1],[53,1],[114,1]],"adherence":[[16,3],[23,1],[24,1],[26,1],[27,1],[33,1],[36,1],[74,1],[76,3],[80,1],[82,2],[86,1],[89,1],[108,1],[124,1],[127,2]],"effects":[[16,2],[33,2],[74,1],[75,1],[76,3],[80,1],[81,1],[86,1],[87,3],[88,1],[91,1],[93,1],[95,9],[102,7],[103,1],[108,2],[109,4],[110,7],[111,10],[112,2],[113,2],[114,1],[115,5],[116,2],[117,1],[119,1],[120,5],[121,4],[122,1],[123,5],[124,8],[125,6],[126,4],[127,5],[160,2],[164,3],[165,2],[166,4],[167,2],[168,1],[200,5],[201,1],[203,5],[211,1],[217,1],[218,1]],"phrase":[[16,1],[19,1],[57,1],[60,1],[95,2],[97,1],[103,1],[105,3],[106,4]],"medicine":[[16,2],[84,1],[93,1],[98,1],[111,1],[116,10],[117,5],[123,6],[124,3],[125,5],[126,6],[127,5]],"provider":[[16,4],[32,1],[110,1],[202,1],[203,1],[206,1],[218,1]],"sudak":[[16,1],[81,1],[85,1]],"receiving":[[16,2],[76,2],[95,2],[133,1],[163,2],[168,1],[191,1]],"stimulation":[[16,2],[123,1]],"brain":[[16,1],[46,1],[49,1],[78,1],[80,1],[109,1],[110,7],[111,2],[117,1],[140,4],[151,1],[152,6],[153,23],[155,5],[161,6],[163,1],[164,1],[173,4],[191,1],[204,1],[210,1]],"periodically":[[16,1],[32,1],[74,2],[176,1],[202,2],[206,1],[218,2],[219,1]],"exchange":[[16,1],[41,1],[42,1],[183,1]],"medica-":[[16,1],[37,1],[87,1],[203,2],[211,1]],"dosage":[[16,1],[110,2]],"addiction":[[16,1],[89,1],[110,1],[112,1],[114,1],[116,3],[117,2],[123,1],[124,1],[125,4],[126,2],[127,2],[211,3]],"alterna-":[[16,1],[87,1],[176,1],[186,1],[188,1]],"propose":[[16,1],[21,1],[26,1],[27,1],[34,2],[38,1]],"consultation":[[16,3],[75,1],[92,1],[112,1],[171,1],[203,1]],"advantages":[[16,2],[24,1],[25,5],[26,2],[31,1],[32,1],[34,1],[53,3],[57,1],[58,2],[59,4],[64,9],[67,1],[71,7],[74,1],[75,1],[77,1],[82,1],[176,13],[177,1],[188,1],[200,1],[213,1],[217,1],[218,1],[224,1]],"disadvantages":[[16,2],[19,1],[24,1],[25,4],[26,2],[31,1],[32,1],[34,1],[44,1],[53,2],[58,2],[64,10],[67,1],[71,6],[75,1],[77,1],[82,1],[176,12],[177,1],[217,1],[223,3],[224,1]],"tation":[[16,1],[182,1]],"versus":[[16,1],[25,1],[26,1],[41,1],[53,2],[64,1],[67,2],[74,1],[77,1],[80,1],[87,2],[88,1],[89,1],[101,1],[103,1],[108,1],[111,1],[112,2],[122,1],[124,1],[125,1],[126,2],[182,2],[223,1]],"commit":[[16,1],[19,1],[21,1],[25,2],[36,1],[90,1],[92,1],[94,1],[109,1],[163,1],[165,2],[166,1],[167,2],[168,4]],"adjunct":[[16,1],[126,1],[127,1]],"ideally":[[16,1],[21,1],[24,1],[27,1],[46,1],[74,1],[97,1],[98,1],[103,1],[140,1],[148,1],[209,1],[218,1]],"struc-":[[16,1],[36,1],[72,1],[84,1]],"ratio-":[[16,1],[36,1]],"nale":[[16,1],[36,1]],"hap-":[[16,1],[25,1],[36,1],[70,2],[175,1],[196,1],[199,2],[200,1],[221,1],[225,1]],"pened":[[16,1],[36,1],[70,2],[199,1],[221,1]],"that'll":[[16,1],[64,2]],"original":[[16,2],[28,1],[38,1],[47,1],[87,1],[88,1],[97,1],[105,1],[124,1],[140,2],[169,1],[172,1],[183,1],[186,4],[188,3],[191,1],[195,3],[196,1]],"drift":[[16,1],[210,2]],"posi-":[[16,2],[56,2],[59,1],[69,1],[90,1],[169,2],[176,1],[196,1]],"clusions":[[16,1],[183,1]],"grandson":[[16,2],[19,1],[40,1],[43,1],[58,1],[59,1],[60,1]],"ethan":[[16,2],[17,4],[18,2],[19,1],[40,1],[51,1]],"lighten":[[16,1],[47,1]],"hanging":[[16,1],[56,1],[213,1]],"reexperience":[[16,1],[43,1],[69,1],[79,1],[211,1]],"soccer":[[16,1],[40,2],[59,3]],"showing":[[16,1],[21,2],[36,1],[52,2],[59,1],[67,1],[87,1],[99,1],[109,1],[164,2],[166,2],[167,1],[177,1],[203,1]],"according":[[16,2],[20,1],[33,2],[44,1],[53,1],[61,1],[74,3],[88,1],[93,1],[109,1],[110,1],[111,1],[121,1],[163,1],[166,1],[167,1],[168,1]],"hadn't":[[16,1],[17,1],[25,1],[42,1],[60,1],[61,1],[178,1]],"opportunity":[[16,1],[19,1],[24,2],[25,2],[26,1],[27,1],[34,2],[40,1],[61,1],[64,1],[71,1],[73,1],[74,2],[75,1],[90,2],[94,1],[97,1],[99,1],[102,1],[113,2],[115,3],[120,1],[121,1],[128,1],[134,1],[155,1],[166,2],[169,1],[179,1],[182,1],[192,1],[201,1],[204,1],[206,2],[207,1],[208,1],[210,1],[213,1],[216,1],[217,2]],"frame":[[16,1],[34,1],[86,1],[90,1],[92,1],[166,1],[177,1],[200,1],[210,1]],"jubdith":[[16,1],[19,1],[71,1]],"happening":[[16,1],[17,1],[19,1],[22,1],[38,2],[42,1],[43,1],[53,3],[55,1],[59,2],[69,1],[70,4],[79,1],[128,1],[134,1],[140,1],[155,2],[158,1],[170,2],[176,1],[179,1],[197,1],[206,1],[208,1],[210,1],[218,1]],"reviewing":[[16,1],[22,2],[26,3],[33,1],[36,1],[38,1],[51,1],[57,2],[59,1],[74,1],[75,3],[82,3],[94,1],[98,1],[101,1],[103,1],[114,2],[170,1],[195,1],[200,1],[203,1],[217,1],[218,1]],"completely":[[17,1],[18,2],[21,1],[24,1],[32,1],[33,1],[35,2],[41,2],[43,2],[45,1],[46,2],[47,2],[48,3],[49,1],[51,1],[56,1],[58,2],[59,2],[61,1],[76,1],[79,1],[90,2],[96,1],[98,1],[103,1],[112,1],[114,1],[121,2],[122,4],[134,2],[157,1],[158,1],[163,5],[164,4],[166,3],[167,4],[168,3],[179,1],[183,2],[186,3],[187,1],[194,1],[198,1],[206,1],[209,1]],"stuff":[[17,2],[19,1],[25,2],[27,1],[33,1],[34,5],[35,1],[36,1],[65,1],[100,1],[212,1]],"checked":[[17,1],[74,1],[159,1],[169,1],[176,1],[177,1],[193,1]],"strange":[[17,1],[40,1],[41,3],[69,2],[155,1]],"abnormal":[[17,1],[121,1],[164,1]],"bet-":[[17,1],[21,1],[54,1],[199,1]],"label":[[17,1],[43,4],[48,3],[95,1],[102,1],[123,1],[212,1],[213,3],[215,1],[222,1]],"long-standing":[[17,1],[18,1],[58,1]],"attributing":[[17,1],[71,1],[81,1],[84,1]],"lazy":[[17,1],[40,2],[61,2]],"thus":[[17,1],[87,1],[89,1],[112,1],[141,1],[169,1],[188,1],[207,1],[208,1],[214,1]],"moti-":[[17,1],[90,2],[91,1],[114,1]],"vation":[[17,1],[90,1]],"ill-":[[17,2]],"cold":[[17,2],[103,3],[118,1],[163,1],[166,1],[170,2]],"analogy":[[17,2],[19,1],[26,1],[64,1],[82,2],[83,3],[84,1],[138,1],[140,1],[155,2]],"pneumonia":[[17,4],[19,2],[66,1],[83,2]],"peo-":[[17,1],[42,1],[59,1]],"every-":[[17,1],[71,1],[100,1]],"appetite":[[17,1],[56,2],[76,1],[95,2],[109,1],[120,1],[164,1],[168,1],[170,1],[171,1],[201,1],[202,2],[218,1],[222,1]],"sleeping":[[17,2],[72,1],[105,1],[111,1],[121,1],[164,1],[165,1],[170,2],[171,2],[185,1],[202,4],[222,2]],"death":[[17,1],[33,1],[47,1],[109,2],[112,4],[116,1],[170,7],[171,1],[172,2],[191,1],[202,4],[206,1],[222,1]],"analogizing":[[17,1],[83,1]],"head":[[17,1],[53,1],[58,1],[64,1],[69,1],[95,1],[105,3],[106,1],[128,2],[155,3],[159,1],[169,1],[170,1],[171,1],[172,1],[182,1],[183,1],[185,2],[188,1],[210,2],[213,1],[217,1],[218,1],[219,1]],"fault":[[17,4],[19,1],[48,1],[60,1],[65,4],[147,1],[196,1],[199,1],[202,1],[212,1]],"tiredness":[[17,1],[34,1],[37,1],[66,1],[95,1],[102,1],[169,1],[170,1],[171,1],[202,1],[222,1]],"jupbith":[[17,1],[18,2],[32,1]],"metaphor":[[17,1],[58,3],[59,1],[60,1],[64,1],[83,2],[84,1],[97,2]],"wearing":[[17,1],[24,1],[105,1]],"glasses":[[17,5],[19,3],[97,1]],"black":[[17,4],[19,4],[102,1],[108,1],[109,1],[123,1]],"races":[[17,1],[193,3]],"wear":[[17,1],[18,1],[19,1],[24,2],[156,2],[158,4],[159,1]],"blinders":[[17,3]],"distracted":[[17,1],[104,1],[191,1],[193,1]],"straight":[[17,1],[37,1],[58,1],[71,1],[76,1],[95,2],[153,1],[166,1],[169,1]],"ahead":[[17,2],[25,1],[47,1],[48,1],[64,1],[69,2],[70,4],[72,1],[94,4],[95,1],[96,3],[105,1],[125,1],[155,1],[158,1],[165,1],[166,1],[177,1],[180,1],[190,1],[201,1],[204,1],[215,1]],"reinforces":[[17,1],[89,1],[91,1],[103,1],[139,1]],"robust":[[17,1],[24,1],[26,1],[47,1],[50,1],[81,1]],"disagrees":[[17,1],[61,1],[172,1]],"stays":[[17,1],[204,1]],"pointing":[[17,1],[59,2],[64,4],[113,1]],"sit-":[[17,1],[42,1],[76,1]],"uation":[[17,1],[42,1]],"ride":[[17,1],[97,2],[100,1],[105,3],[166,1],[209,2],[217,1]],"we're":[[17,1],[35,1],[36,2],[38,1],[41,1],[42,1],[56,1],[60,1],[69,1],[71,1],[170,1],[172,3],[182,1],[185,1]],"effect":[[18,1],[46,2],[47,2],[58,1],[61,1],[63,1],[81,1],[82,2],[86,2],[89,1],[90,1],[91,3],[108,1],[110,2],[111,1],[116,1],[117,1],[123,1],[124,1],[125,2],[126,2],[127,1],[134,1],[156,1],[164,1],[169,1],[173,2],[187,1],[203,4],[211,2],[218,2]],"affects":[[18,2],[33,1],[58,1],[59,1],[68,1],[75,1],[93,1],[111,1],[164,1],[169,1],[179,1]],"downplay":[[18,1],[42,1]],"struggle":[[18,1],[60,2],[76,1],[85,1],[91,1],[94,1],[97,3],[100,2],[112,1],[132,2],[137,1],[155,1],[171,1],[176,3],[201,1],[211,1],[217,3],[219,1]],"worried":[[18,1],[32,1],[33,1],[41,1],[43,1],[53,1],[63,1],[69,1],[100,1],[155,1],[170,1],[171,3],[173,1],[178,1],[185,1],[189,2],[194,1],[195,4],[204,1],[216,1],[218,1]],"rude":[[18,1],[172,4],[206,1]],"impaired":[[18,1],[24,1],[153,2]],"figures":[[18,1],[50,3],[51,2],[52,1],[186,2],[187,1],[194,1],[202,1]],"empty":[[18,1],[43,1],[164,1],[186,1],[213,1]],"heads":[[18,1],[41,1],[154,1],[172,1],[178,1],[188,1],[211,1]],"emotion-":[[18,1],[170,1]],"pulls":[[18,1],[34,2],[64,1],[97,3]],"notebook":[[18,1],[24,1],[50,1],[51,1],[170,1]],"instructions":[[18,1],[24,2],[26,1],[72,1],[81,1],[86,1],[88,2],[92,1],[98,1],[103,1],[109,2],[115,1],[118,1],[120,1],[122,1],[123,1],[124,2],[198,1],[212,1]],"hands":[[18,2],[22,1],[58,1],[156,3],[158,7],[164,1],[171,1],[175,1],[194,1],[206,1],[209,1],[210,1]],"directions":[[18,1],[21,1],[43,1],[80,1],[93,1],[124,1],[176,1],[203,1]],"reminder":[[18,2],[21,1],[22,1],[24,1],[27,2],[33,1],[52,1],[84,1],[89,1],[94,4],[97,1],[100,2],[101,1],[106,1],[118,2],[154,1],[188,1],[204,1]],"rubber":[[18,4],[19,1],[24,1],[35,1],[97,1]],"wrist":[[18,3],[24,3],[170,1]],"puts":[[18,1],[56,1],[167,1],[214,1]],"choices":[[18,1],[43,1],[56,1],[71,1],[95,1],[102,1],[105,1],[113,1],[121,1],[164,1],[194,1],[195,2],[208,1],[212,1]],"reply":[[18,1],[175,1],[191,1],[213,1],[214,1]],"fitness":[[18,1],[117,2]],"substances":[[18,1],[22,1],[76,1],[93,2],[112,1],[113,1]],"appearance":[[18,1],[121,3],[156,1],[158,2],[169,1],[171,1],[173,1]],"spirituality":[[18,1],[58,1]],"recreation":[[18,1],[21,2]],"entertainment":[[18,1],[21,2]],"hobbies":[[18,1],[22,1],[155,1]],"creativity":[[18,1],[58,1],[73,1]],"relaxation":[[18,1],[44,1],[63,7],[80,2],[81,1],[82,2],[83,2],[84,2],[88,2],[89,3],[91,2],[96,1],[98,2],[112,1],[125,1],[193,1],[208,1],[210,23],[211,2],[213,1],[223,3],[224,1]],"plete":[[18,1],[74,1],[102,1],[183,1],[186,1]],"grandkids":[[18,2],[94,1],[170,1],[183,1],[186,2],[187,1]],"unaddressed":[[18,1],[69,1]],"volunteer":[[18,1],[34,2],[48,1],[61,1],[64,2],[204,4]],"fol-":[[18,1],[22,1],[24,1],[27,1],[33,1],[75,1],[185,1],[199,1]],"lowing":[[18,1],[22,1],[24,1],[27,1],[75,1],[185,1],[199,1]],"hopes":[[18,1],[36,1]],"unhappy":[[18,1],[43,1],[56,1],[181,2],[191,1],[201,1]],"fam-":[[18,1],[41,1],[61,1]],"hard-":[[18,1],[76,1]],"recovered":[[18,1],[170,1],[201,1]],"bedroom":[[18,1],[26,1]],"bigger":[[18,1],[152,1],[173,1],[177,2],[191,1],[193,2],[200,1],[216,1]],"neat":[[18,1],[193,1]],"forward":[[18,1],[24,1],[71,1],[96,1],[100,1],[104,1],[168,1],[183,1],[189,1],[190,1],[191,1],[214,1],[216,1],[217,1],[222,2]],"ihad":[[18,1],[35,1]],"coach":[[18,1],[59,3],[147,1],[177,7]],"imagining":[[18,1],[27,1],[46,1],[47,1],[51,1],[69,4],[70,3],[173,1],[178,1],[209,1],[210,1]],"detail":[[18,1],[21,1],[30,1],[38,1],[42,1],[48,1],[63,1],[69,2],[86,1],[92,1],[97,2],[98,1],[103,1],[108,1],[114,1],[115,1],[163,1],[173,1],[179,2],[195,1],[200,1],[202,1],[209,1],[212,1],[218,3]],"speaks":[[18,1],[192,1]],"ritschel":[[19,1],[81,1],[91,1],[97,1],[118,1],[127,1]],"sheppard":[[19,1],[81,1]],"returning":[[19,1],[97,1],[172,1],[205,1],[215,1],[218,1]],"discus-":[[19,1],[71,1]],"interfering":[[19,1],[24,1],[25,2],[26,4],[27,2],[30,1],[32,2],[36,1],[56,1],[64,1],[65,1],[71,1],[75,1],[77,1],[82,3],[112,1],[113,1],[155,1],[213,1]],"fine":[[19,1],[26,1],[32,1],[34,1],[46,1],[127,1],[168,1],[174,1],[178,1],[208,1],[214,1]],"doctor":[[19,2],[69,1],[79,1],[103,1],[138,1],[157,2],[158,5],[169,1],[170,1],[184,1],[187,4],[219,1]],"against":[[19,1],[60,1],[61,1],[86,1],[94,1],[98,1],[109,1],[111,1],[140,3],[143,3],[144,2],[182,1],[183,1],[185,1],[187,1],[197,2],[209,1],[212,1],[223,12]],"grain":[[19,1],[46,2],[47,1],[60,1],[169,2]],"paint":[[19,1],[167,1]],"limit":[[19,1],[27,1],[32,1],[35,1],[71,1],[158,3],[177,1]],"annoyed":[[19,1],[34,1],[36,2],[37,3],[43,1],[47,1],[48,1],[75,1],[191,1]],"exercising":[[19,1],[27,1],[44,1],[63,2],[96,4],[107,2],[109,2],[115,1],[122,1],[193,2],[202,1],[204,1],[222,1]],"cross":[[19,2],[25,3],[26,1],[65,1],[110,1],[116,1],[117,1],[124,1]],"miracle":[[19,2]],"solution-focused":[[19,1],[63,1],[84,1]],"shazer":[[19,1],[80,1]],"suggests":[[19,1],[37,1],[39,1],[87,1],[89,1],[90,1],[96,1],[98,1],[108,1],[110,1],[132,1],[134,1],[164,2],[179,1],[182,1],[183,2],[192,1],[203,1],[211,2]],"weren":[[19,2],[47,1],[65,1],[76,1],[217,1]],"woke":[[19,1],[41,1]],"tomorrow":[[19,1],[33,2],[35,1],[51,1],[105,1]],"happier":[[19,2],[65,3],[116,1],[169,1],[176,1],[201,3],[218,1],[219,1],[225,1]],"nicer":[[19,2],[37,1]],"pressure":[[19,1],[76,2],[90,1],[105,1],[111,2],[128,1],[140,1],[164,1],[168,1],[170,1],[171,1],[192,1],[212,1],[213,1],[217,1]],"listen":[[19,1],[51,4],[55,1],[57,2],[64,1],[74,1],[79,1],[90,1],[92,1],[94,2],[97,2],[98,10],[99,1],[100,4],[101,2],[102,5],[103,7],[104,4],[107,8],[114,4],[115,4],[120,5],[122,1],[168,1],[199,1],[205,1],[209,1],[212,1],[214,1]],"promise":[[19,1],[21,1],[86,1],[92,1],[168,1],[216,1]],"flip":[[19,1],[34,1]],"teenager":[[19,1],[152,1],[183,1],[186,1],[216,1]],"easier":[[19,1],[20,1],[21,1],[24,2],[25,2],[26,1],[27,1],[52,2],[57,1],[60,1],[64,1],[69,2],[77,1],[90,1],[93,4],[94,2],[96,1],[98,3],[100,1],[103,2],[109,2],[114,1],[134,1],[140,1],[142,1],[155,1],[164,2],[165,1],[167,2],[168,2],[169,2],[176,2],[178,1],[180,1],[182,1],[183,2],[186,1],[187,1],[188,1],[191,1],[192,1],[193,5],[194,1],[198,1],[200,1],[205,3],[209,2],[214,2]],"alternatively":[[19,1],[26,1],[38,1],[75,1],[94,1],[134,3],[156,1],[157,2],[158,1],[163,1],[169,1],[184,1],[191,1],[195,1],[209,1]],"immediate":[[19,1],[53,2],[55,1],[63,1],[65,1],[87,1],[111,1],[114,1],[121,1],[163,1],[165,1],[173,1],[206,1],[209,1],[211,1]],"end-of-session":[[19,1],[82,1],[83,1]],"forces":[[19,1],[96,1],[100,1],[170,1],[216,1]],"element":[[19,1],[36,1],[45,1],[109,2]],"message":[[19,1],[26,2],[37,1],[78,1],[94,2],[101,1],[169,1],[196,1],[214,2],[215,1]],"chance":[[19,2],[51,1],[59,1],[64,1],[71,1],[91,2],[92,1],[93,1],[95,1],[96,1],[101,1],[102,1],[163,2],[164,1],[166,2],[167,1],[171,1],[172,1],[192,2],[203,2],[204,1],[211,1],[213,1],[214,1],[217,1]],"some-":[[19,1],[47,1],[48,1],[60,1],[61,1],[65,2],[70,1],[74,1],[76,2],[79,1],[95,1],[104,1],[173,1],[176,1],[179,1],[186,1],[194,1],[195,2],[206,1],[208,1],[211,1],[213,1],[216,1]],"reception":[[19,1],[33,1],[35,1],[59,1]],"receptionist":[[19,1],[41,1],[59,2]],"unproductive":[[19,1],[74,1]],"crank":[[19,1],[21,3]],"grocery":[[19,1],[21,1],[169,1],[170,1],[212,1]],"store":[[19,2],[21,3],[27,1],[97,1],[115,3],[121,2],[169,1],[170,1],[178,2],[179,2],[182,2],[185,3],[194,1],[195,1],[198,3],[213,2],[215,1]],"hardware":[[19,1],[21,1]],"date":[[19,1],[21,1],[33,1],[65,2],[88,2],[90,1],[94,1],[97,3],[101,4],[102,16],[103,2],[107,14],[111,1],[114,1],[115,2],[120,2],[121,4],[122,6],[127,1],[163,6],[164,5],[165,25],[166,20],[167,13],[168,15],[198,6],[202,1],[205,1],[212,1],[221,6]],"val-":[[19,1],[32,1],[56,1],[58,1]],"sched-":[[20,1],[21,2],[22,1],[24,1],[71,1],[77,1],[115,1],[120,1]],"uling":[[20,1],[71,1]],"cuijpers":[[20,1],[80,1]],"withdrawn":[[20,1],[76,2],[116,1],[196,1]],"internet":[[20,1],[97,1],[115,1],[116,1],[121,1],[138,1],[157,1],[158,2]],"energized":[[20,1],[43,1]],"pushing":[[20,1],[37,1],[112,1],[113,1],[155,2],[161,1],[182,1]],"predictions":[[20,1],[22,4],[24,1],[26,4],[65,4],[81,1],[82,2],[83,4],[84,1],[94,1],[95,1],[171,1],[193,2],[194,2],[195,8],[199,5],[202,1],[211,1],[221,5],[223,1]],"enjoy":[[20,1],[22,3],[89,1],[90,1],[96,1],[98,1],[103,1],[106,1],[113,1],[114,1],[115,1],[120,1],[169,2],[170,1],[172,6],[175,1],[176,3],[183,1],[186,2],[187,1],[191,2],[192,1],[194,1],[195,1],[196,1],[198,2],[200,3],[202,1],[204,2],[205,4],[208,1],[217,1],[218,1],[219,1]],"remain":[[20,1],[34,1],[97,2],[98,1],[110,2],[111,1],[112,1],[140,1],[168,3],[171,1],[172,1],[174,1],[188,1],[196,2],[208,1]],"gain":[[20,1],[25,1],[27,1],[42,1],[43,1],[44,1],[47,1],[48,1],[56,1],[73,1],[78,1],[79,1],[81,1],[89,2],[91,1],[93,1],[95,17],[96,1],[97,1],[100,1],[102,6],[104,2],[108,33],[109,11],[111,1],[113,9],[116,1],[117,1],[118,1],[119,1],[121,1],[123,2],[124,3],[125,1],[126,1],[164,1],[183,1],[187,1],[194,1]],"vicious":[[20,1],[138,3],[160,1]],"cycle":[[20,1],[53,1],[117,1],[127,1],[134,2],[135,5],[136,4],[140,2],[149,2],[155,2]],"recognizing":[[20,2],[35,1],[37,1],[57,2],[72,1],[84,1],[87,1],[91,1],[169,2],[173,1],[191,1],[199,1],[200,1],[213,4],[214,2],[216,2],[217,1]],"lifts":[[20,1],[176,1]],"tinue":[[20,1],[26,1],[37,1],[71,1],[204,1],[218,1]],"recognition":[[20,1],[91,1],[112,1],[169,1]],"hopefulness":[[20,1],[31,1],[183,1]],"derive":[[20,1],[26,1]],"guilt":[[20,1],[43,2],[56,1],[76,1],[134,1],[154,1],[169,1],[170,1],[175,1],[176,2],[179,10],[180,1],[181,4],[184,2],[185,1],[188,1],[201,1],[202,2],[211,2],[212,9],[213,2],[214,5],[215,12],[216,14],[217,5],[218,3],[222,2],[223,6],[224,2],[225,2]],"anger":[[20,1],[43,2],[56,1],[65,1],[71,1],[98,1],[112,1],[120,1],[128,1],[129,1],[130,1],[134,11],[154,1],[169,2],[171,5],[172,1],[173,1],[175,3],[176,2],[177,1],[178,1],[179,11],[180,2],[181,8],[182,5],[184,4],[185,7],[188,2],[189,4],[190,10],[191,1],[198,2],[199,7],[201,2],[202,2],[211,2],[212,35],[213,31],[214,32],[215,2],[216,6],[217,10],[218,3],[219,4],[222,1],[223,11],[224,2],[225,2]],"repeat":[[20,1],[32,1],[53,1],[55,1],[58,1],[64,1],[78,1],[114,1],[135,1],[142,1],[149,1],[150,1],[155,1],[164,1],[166,1],[179,1],[212,1]],"drop":[[20,1],[21,1],[56,1],[75,1],[77,1],[97,2],[110,1],[111,1],[155,1],[159,1],[203,1]],"bucket":[[20,1],[21,1],[77,1]],"ini-":[[20,1],[32,1]],"continuation":[[20,1],[96,1],[135,1]],"diminish":[[20,1],[91,1],[109,1],[111,1],[203,1]],"reengage":[[21,1],[76,1],[77,1]],"noting":[[21,1],[37,1],[92,1],[96,1]],"rating":[[21,7],[32,1],[33,1],[43,1],[48,1],[51,1],[74,2],[75,1],[82,3],[83,3],[175,12],[176,2],[181,3],[182,1],[186,1],[187,1],[188,1],[198,4],[199,12],[201,2],[203,4],[204,1],[209,2],[210,3],[212,8],[214,3],[215,10],[217,3],[219,2],[221,11],[222,8],[223,5],[224,2],[225,1]],"prefer":[[21,1],[38,1],[46,1],[55,1],[87,1],[200,1],[207,1],[208,1]],"combination":[[21,1],[32,1],[72,1],[87,4],[103,1],[111,1],[118,1],[123,2],[163,2],[164,2],[165,1],[166,3],[192,1],[208,2]],"it'll":[[21,1],[34,1],[41,1],[52,1],[70,1]],"apis":[[21,1],[51,1]],"oapia":[[21,2]],"saweb":[[21,4]],"youn":[[21,1],[203,1]],"pure":[[21,1],[51,1],[110,1],[164,1]],"suppose":[[21,3],[47,1],[49,1],[60,1],[89,1],[172,1],[213,1],[214,1]],"places":[[21,1],[41,1],[87,1],[94,2],[97,1],[98,1],[100,2],[101,1],[157,2],[158,2],[159,3],[173,1],[176,1],[201,1],[205,1],[206,1],[209,1],[210,1],[222,1]],"depend":[[21,1],[103,1],[172,1],[187,1]],"jack-in-the-box":[[21,2]],"wind":[[21,1],[41,1],[100,1],[104,1],[105,1],[194,1],[195,1],[209,1]],"clown":[[21,3],[204,1]],"pops":[[21,2],[155,2]],"pose":[[21,1],[31,1],[39,1],[43,1],[45,1],[51,1],[110,1],[112,1],[120,1],[166,1],[203,1]],"tying":[[21,1],[183,1],[186,1]],"produc-":[[21,1],[56,1]],"feel-":[[21,1],[32,1],[37,1],[41,1],[43,1],[63,1],[69,1],[78,1],[94,1],[204,1],[206,1]],"trip":[[21,2],[90,1],[97,2],[159,1],[174,1],[188,1],[193,2]],"persuasive":[[21,1],[60,1],[75,1]],"entirely":[[21,1],[58,1],[215,1]],"brings":[[21,1],[36,1],[131,1],[134,1],[139,1],[154,1],[206,1],[216,1]],"they'll":[[21,1],[23,1],[24,3],[25,3],[31,1],[46,1],[47,1],[55,1],[57,1],[65,1],[69,1],[71,1],[72,1],[172,1]],"ring":[[21,1],[94,1],[95,1]],"earning":[[21,1],[89,1],[126,1]],"romantic":[[21,1],[173,1]],"relation-":[[21,1],[57,1],[72,1],[196,1],[201,1],[202,1],[203,1],[214,1]],"suddenly":[[21,1],[32,1],[70,1],[155,2],[170,1],[211,1]],"show-":[[21,1],[71,1]],"ering":[[21,1],[192,1],[219,1]],"connecting":[[21,3],[33,1],[40,1],[41,1],[170,1],[179,2],[223,1]],"angrily":[[21,1],[22,1]],"disaster":[[21,1],[202,1],[203,1]],"absolutely":[[21,1],[22,1],[33,1],[90,1],[155,1],[172,1],[183,1],[189,2],[196,1]],"photographs":[[21,1],[59,1]],"dwelling":[[21,1],[155,1]],"drinking":[[21,1],[41,1],[95,1],[113,1],[116,1],[127,1],[168,1],[171,2],[182,5],[185,1],[194,1],[219,4]],"project":[[21,1],[48,2],[51,2],[57,1],[74,1],[115,1],[121,2],[172,3],[177,2],[183,1],[186,1],[194,2],[214,1],[219,2]],"songs":[[21,1],[34,1]],"pick":[[21,1],[37,1],[43,1],[85,1],[94,2],[99,1],[129,1],[135,1],[138,1],[169,1],[205,1],[214,1],[217,1]],"tiring":[[21,1],[97,1],[104,1],[205,1],[222,1]],"newspapers":[[21,1],[114,1]],"trash":[[21,1],[103,2],[114,1],[115,1],[120,1]],"refrigerator":[[21,1],[24,1],[94,1],[97,1],[101,1],[185,1]],"activi-":[[21,1],[37,1],[91,1],[203,1],[204,1],[205,1]],"signify":[[21,1],[94,1],[106,1]],"no-lose":[[21,1],[24,1],[25,2],[52,1],[82,1]],"cer-":[[21,1],[36,1],[87,1],[173,1],[177,1]],"collabora-":[[21,1],[43,1]],"tively":[[21,1],[40,1],[43,1],[75,1],[176,1]],"template":[[21,1],[107,1],[114,2],[115,1]],"unreasonable":[[21,1],[24,1],[64,1],[76,1],[175,1]],"peri-":[[21,1],[209,1]],"anchor":[[21,1],[94,5],[97,1],[100,4],[104,4],[106,4]],"ratings":[[21,2],[22,2],[48,1],[51,1],[175,2],[181,2],[182,1],[187,3],[188,1],[198,1],[201,1],[204,2],[209,2],[210,1],[212,1],[214,1],[221,1],[222,3],[224,2]],"bedtime":[[21,1],[204,1]],"dislike":[[21,1],[51,1]],"optional":[[21,2],[23,1],[25,7],[34,1],[35,1],[51,1],[87,1],[101,1],[103,1],[196,1]],"eric":[[21,1],[191,1]],"october":[[21,1],[116,1],[117,1]],"arguing":[[21,1],[86,1],[168,1],[177,1],[212,1]],"promotion":[[21,1],[59,1],[88,1],[109,1],[116,7],[117,1],[123,2],[124,1],[170,5],[194,1],[205,1],[206,1],[219,1]],"finishing":[[21,1],[38,2],[70,2],[184,1]],"race":[[21,1],[121,2],[127,1],[193,1],[208,1],[213,1]],"broke":[[21,1],[22,2],[61,1],[170,2],[172,1],[204,1]],"football":[[21,1],[147,1],[171,1]],"balance":[[22,1],[89,3],[91,1],[118,1],[126,1],[127,1],[158,1],[198,1],[210,1],[213,1]],"empowerment":[[22,1],[29,1],[89,1],[91,1],[92,1],[99,1],[103,1],[105,1],[113,1],[114,1],[120,1]],"search":[[22,1],[63,1],[138,1],[155,1],[183,1],[185,1]],"interview":[[22,1],[42,1],[59,1],[70,1],[77,1],[88,1],[100,6],[109,1],[114,1],[115,1],[116,2],[120,1],[195,1]],"neighbors":[[22,1],[24,1],[94,1],[175,1],[195,2],[200,1],[201,1]],"quent":[[22,1],[217,1]],"habit":[[22,1],[25,1],[89,3],[90,3],[91,9],[92,1],[93,5],[94,2],[95,6],[96,1],[97,3],[98,1],[101,3],[102,5],[103,2],[104,1],[105,2],[112,1],[113,1],[114,2],[115,1],[118,3],[119,3],[120,1],[123,1],[160,1],[172,2],[191,1],[200,1]],"binge":[[22,1],[40,1],[219,2]],"smoke":[[22,1],[86,1],[87,1],[88,2],[89,17],[90,6],[91,14],[92,3],[93,9],[94,2],[95,10],[96,22],[97,21],[98,11],[100,15],[101,20],[102,8],[103,11],[104,9],[105,13],[106,3],[107,3],[108,1],[109,2],[110,1],[111,6],[112,5],[113,4],[114,4],[115,6],[116,1],[118,1],[120,8],[121,9],[122,12],[123,1],[124,2],[125,1],[127,2],[163,10],[164,14],[165,12],[166,25],[167,9],[168,21]],"occurrence":[[22,1],[64,1],[76,1],[84,1],[125,1]],"comparisons":[[22,1],[65,2]],"source":[[22,1],[89,1],[164,1],[209,1],[215,1]],"predicted":[[22,4],[64,1],[65,1],[87,1],[108,1],[193,1],[194,1],[195,2],[199,2],[221,2]],"uled":[[22,1],[24,1],[77,1],[120,1]],"rated":[[22,1],[112,1],[113,1],[175,1],[177,4],[181,2],[186,4],[187,1],[188,1],[199,2],[209,3],[212,1],[221,1],[222,3]],"invitations":[[22,1],[47,1],[155,1],[197,1],[198,1]],"reminds":[[22,1],[36,1],[52,1],[64,1],[65,1],[87,1],[96,1],[97,1],[112,1],[113,1],[163,1],[217,1]],"predic-":[[22,1],[24,1],[48,1],[195,1]],"garden":[[22,7],[183,1],[186,1],[196,4],[219,1]],"weekend":[[22,1],[27,1],[34,1],[43,1],[44,1],[47,2],[54,1],[69,2],[178,1],[182,1],[191,1],[194,2],[195,1],[200,1]],"favorite":[[22,1],[85,1],[95,1],[97,2],[104,1],[204,1]],"favorites":[[22,2]],"enjoying":[[22,2],[33,1],[96,1],[97,1],[105,1],[170,1],[188,1],[195,1]],"remembered":[[22,2],[155,1],[182,2],[184,2],[185,1],[210,1]],"occasion":[[22,1],[25,1],[97,1]],"walking":[[22,1],[41,1],[44,1],[53,1],[69,2],[95,1],[105,1],[113,1],[115,1],[139,1],[155,1],[181,1],[200,1],[204,3],[205,1],[206,1],[209,1],[210,1],[222,1]],"holding":[[22,1],[60,1],[69,2],[76,1],[94,1],[158,1],[183,1]],"names":[[22,1],[94,2],[101,4],[115,2],[120,1],[121,1],[216,1]],"flowers":[[22,1],[113,6],[196,5],[204,1]],"eventually":[[22,1],[46,1],[69,1],[70,1],[71,1],[93,2],[95,1],[99,1],[101,2],[113,1],[190,1],[197,1],[198,1],[202,1],[214,1]],"moderate":[[22,1],[45,1],[76,1],[88,1],[95,1],[107,1],[112,1],[113,1],[164,1],[201,1],[205,1]],"roger":[[22,1],[172,2],[223,1]],"undermining":[[22,1],[91,1]],"activ-":[[22,1],[218,1]],"obsessive":[[22,1],[24,1],[55,1],[132,1],[134,1],[160,2]],"guidance":[[22,1],[41,1],[91,1],[92,1],[112,1],[142,1],[163,1],[164,1],[165,1],[217,1]],"instruction":[[22,1],[64,1],[65,1],[87,1],[164,1]],"gaining":[[22,1],[23,1],[94,1],[95,3],[100,1],[102,1],[104,1],[105,1],[108,4],[109,2],[111,1],[112,1],[113,2],[121,3],[154,1]],"adhere":[[22,1],[30,1],[38,1]],"comparing":[[22,1],[65,1],[126,1],[205,1]],"labeled":[[23,1],[43,1],[175,1],[177,1],[179,2]],"integral":[[23,1],[86,1],[89,1]],"tompkins":[[23,1],[81,1]],"acting":[[23,1],[31,1],[56,1],[59,3],[60,1],[61,2],[82,1],[89,1],[91,1],[96,2],[97,2],[100,2],[105,1],[153,1],[158,1],[163,1],[172,1],[192,1],[205,1],[216,1]],"callan":[[23,1],[80,1]],"kazantzis":[[23,1],[80,1],[81,2]],"success":[[23,1],[26,1],[48,2],[51,1],[60,1],[61,5],[69,1],[79,1],[86,7],[87,27],[88,2],[89,2],[90,2],[91,3],[92,1],[94,2],[95,1],[97,1],[98,5],[102,1],[103,1],[105,2],[107,1],[108,1],[109,1],[112,2],[113,3],[114,5],[117,3],[118,5],[119,3],[120,1],[122,1],[125,2],[163,4],[164,1],[166,6],[173,1],[189,1],[190,1],[193,1],[198,2],[199,1],[204,1],[208,1],[211,2],[219,1]],"progresses":[[23,1],[24,1],[134,1],[168,1],[218,1]],"prepare":[[23,1],[26,2],[35,1],[52,1],[71,3],[72,2],[89,1],[95,1],[98,1],[100,1],[154,1],[174,1],[188,1],[193,1],[206,1],[213,4],[214,1],[217,2],[218,1],[219,1]],"assigning":[[23,1],[27,1],[74,1],[91,1],[140,1]],"importantly":[[23,1],[32,1],[86,1],[91,1],[93,1],[96,1],[109,3],[113,1],[198,1]],"changing":[[23,1],[24,1],[27,1],[33,3],[41,2],[44,1],[45,1],[46,1],[47,1],[48,1],[63,1],[69,3],[75,1],[81,2],[82,1],[83,2],[91,1],[93,1],[94,1],[102,1],[104,1],[113,1],[125,1],[126,1],[134,1],[140,2],[141,1],[144,1],[160,1],[161,1],[166,2],[168,2],[172,1],[175,3],[178,2],[191,1],[192,1],[197,1],[198,4],[199,1],[202,1],[211,6],[219,2],[223,3]],"carrying":[[23,1],[24,1],[25,1],[27,1],[32,1],[130,1],[134,1],[138,1],[139,2],[140,1],[150,2],[155,1],[168,1],[179,1]],"bibliotherapy":[[23,1],[24,1],[32,1],[82,1],[225,1]],"disengage":[[23,1],[44,2],[53,1],[74,1],[97,1],[131,1]],"smartphone":[[24,1],[51,1],[92,1],[93,1]],"simply":[[24,1],[36,2],[48,1],[69,1],[91,1],[94,1],[95,1],[96,4],[97,5],[98,1],[100,5],[102,3],[104,3],[105,1],[111,1],[115,1],[134,2],[144,1],[145,1],[155,1],[174,1],[175,4],[178,1],[184,2],[186,2],[187,1],[191,4],[192,1],[198,2],[200,1],[206,1],[209,1],[210,2],[212,1],[213,2],[217,1]],"design":[[24,1],[48,2],[84,1],[110,2],[213,1],[214,1],[225,1]],"disengaging":[[24,1],[53,1],[54,1],[82,1]],"intrusive":[[24,1],[53,1],[69,1],[70,1],[129,1],[132,6],[138,1],[139,7],[155,14],[158,1],[159,3],[160,1],[161,1]],"lift":[[24,1],[43,1],[82,1],[191,3],[196,1],[200,2],[204,1],[218,3]],"mote":[[24,1],[90,2]],"mentally":[[24,1],[27,1],[31,1],[33,1],[54,1],[79,1],[89,1],[91,2],[105,1],[154,1],[156,1],[158,1],[163,1],[182,1],[213,1]],"relax-":[[24,1],[63,1],[210,3]],"ation":[[24,1],[63,1],[69,1],[175,1],[177,1],[187,1],[209,1],[210,3],[213,1],[219,1]],"regulation":[[24,1],[43,1],[45,1],[63,2],[82,2],[83,2],[84,1],[110,2],[112,2],[113,2],[115,1],[117,2],[123,1],[124,2],[125,1],[127,1],[161,1]],"communication":[[24,1],[31,1],[65,1],[77,2],[80,1],[88,1],[116,1],[125,1],[126,1],[153,2],[155,1],[163,1],[166,1],[167,1],[168,5],[188,1],[214,2],[217,1],[219,1],[223,1]],"budgeting":[[24,1],[64,1]],"greatly":[[24,2],[113,1],[163,2],[166,1],[213,1]],"consumers":[[24,1],[71,1],[86,1],[110,1]],"abct":[[24,1],[64,1],[218,1]],"shbooks":[[24,1],[64,1]],"disagree":[[24,1],[172,1],[173,1],[174,1],[182,1],[199,1]],"comprehend":[[24,1],[86,1]],"fear":[[24,1],[36,1],[65,3],[69,1],[74,1],[78,1],[89,3],[90,2],[91,1],[92,3],[94,3],[95,1],[98,1],[99,1],[102,2],[108,3],[113,4],[118,1],[119,1],[134,1],[139,1],[140,1],[150,1],[154,1],[155,1],[156,1],[157,4],[158,5],[160,2],[161,1],[170,5],[187,5],[191,1],[192,2],[205,3],[206,2],[208,19],[209,33],[210,3],[211,10],[219,3],[222,5],[223,3],[224,2]],"preparing":[[24,2],[25,1],[30,1],[33,2],[36,1],[72,1],[81,1],[82,1],[84,4],[127,1],[165,1],[178,1],[192,1],[214,1],[218,1]],"pare":[[24,1],[215,1]],"encouraging":[[24,1],[60,1],[64,1],[72,1],[82,1],[87,1],[90,2],[94,1],[105,1],[107,1],[112,1],[177,1],[187,1],[199,1],[206,1]],"beneficial":[[24,1],[32,2],[90,2],[109,1],[128,1],[129,1],[134,1],[140,1],[150,1],[169,1],[203,2]],"handle":[[24,1],[65,1],[71,2],[72,1],[92,1],[97,2],[103,1],[114,1],[169,1],[170,1],[176,1],[188,1],[189,1],[190,2],[193,1],[195,3],[198,1],[200,1],[204,1],[206,1],[207,3],[208,1],[209,1],[210,1],[211,1],[213,3],[214,1],[221,2]],"ended":[[24,1],[43,1],[74,1],[89,3],[118,1],[122,2],[170,1]],"occasional":[[24,1],[111,1],[167,2],[171,1]],"properly":[[24,1],[27,1],[46,1],[60,1],[154,1],[161,1],[163,1],[164,1],[166,3],[167,3],[187,2]],"input":[[24,2],[74,1],[96,1]],"size":[[24,1],[56,1],[86,1],[87,1],[88,1],[91,1],[94,2],[110,4],[113,3],[120,1],[125,1],[155,2]],"assignment":[[24,1],[52,1],[83,3],[124,1]],"consideration":[[24,1],[29,1],[85,1],[91,1],[100,1],[101,1],[105,1],[109,1]],"intellectual":[[24,1],[59,1],[60,6],[61,9],[65,2],[72,1],[79,2],[188,1]],"executive":[[24,2],[116,1],[167,1],[171,2]],"cooperation":[[24,1],[98,1],[104,1]],"slightly":[[24,1],[33,1],[36,1],[37,1],[45,1],[61,1],[95,1],[108,2],[134,1],[144,1],[164,1],[167,1],[187,2]],"irri-":[[24,1],[212,1]],"tated":[[24,1],[212,1]],"shower":[[24,1],[63,1],[69,1],[97,1]],"tere":[[24,1],[194,1]],"error":[[24,1],[43,1],[56,1],[59,1],[61,1],[100,1]],"instance":[[24,1],[58,1],[65,2],[110,1],[172,1],[177,1],[188,1],[192,1],[198,2]],"applicable":[[24,2],[32,1],[62,1],[104,1],[114,1],[121,1]],"large":[[24,1],[31,1],[35,1],[70,1],[71,1],[76,1],[86,1],[88,1],[93,1],[95,2],[102,1],[110,1],[120,1],[127,1],[150,1],[164,1],[185,1],[192,2],[198,1],[206,1],[208,1],[215,1],[216,1]],"manageable":[[24,1],[64,1],[71,1],[95,1],[102,1],[103,1],[115,1],[120,1],[129,1]],"cation":[[24,1],[74,1]],"application":[[24,1],[26,5],[121,2],[125,1],[217,1]],"vital":[[24,1],[40,1],[43,1],[87,1],[104,1],[124,1]],"pair":[[24,1],[95,1],[197,1]],"bathroom":[[24,1],[101,1],[155,1]],"mirror":[[24,1],[101,1],[110,1]],"appointment":[[24,1],[26,2],[36,1],[64,2],[71,1],[79,1],[98,1],[104,1],[114,2],[115,1],[120,3],[157,1],[158,2],[165,7],[166,1],[167,4],[168,2],[169,1],[170,2],[171,1]],"device":[[24,1],[50,1],[55,1],[109,4],[110,1],[165,2],[209,1]],"timer":[[24,1],[35,1],[51,1]],"alarm":[[24,1],[33,1],[51,1],[98,2],[102,1],[104,1],[107,1],[190,1],[208,8]],"phones":[[24,1],[51,1],[101,1],[113,1],[178,1]],"switch":[[24,1],[32,1],[36,1],[61,2],[64,1],[74,1],[79,2],[96,2],[97,2],[100,1],[109,2],[181,1]],"hardest":[[24,1],[25,1],[51,1],[183,1]],"alize":[[24,1],[38,1]],"they've":[[24,1],[33,1],[48,1],[60,2],[70,1]],"visualize":[[24,1],[25,1],[42,1],[55,1],[58,1],[59,3],[69,1],[70,1],[89,3],[94,4],[100,1],[113,2]],"verbalize":[[24,1],[47,1]],"probability":[[24,1],[25,1],[64,3],[84,1],[112,1],[213,1]],"covert":[[24,1],[25,3],[26,2],[27,1],[33,1],[35,1],[82,1],[83,1]],"rehearsal":[[24,1],[25,3],[26,2],[27,1],[33,1],[35,1],[82,1],[83,1],[92,1]],"examine":[[24,1],[25,1],[31,1],[44,1],[46,1],[47,1],[49,1],[53,1],[59,1],[82,1],[87,1],[98,1],[102,1],[108,1],[110,1],[114,1],[120,1],[124,1],[154,1],[180,2],[181,6],[182,1],[183,3],[184,6],[185,2],[186,1],[187,3],[188,2],[198,1],[211,1],[213,1]],"randy":[[25,2]],"saturday":[[25,3],[34,1],[69,1],[170,1],[178,1],[182,3],[185,6],[192,3],[202,1]],"prediction":[[25,1],[42,1],[44,1],[45,1],[146,3],[179,1],[193,1],[194,3],[195,1],[199,2],[202,1],[208,1],[221,2]],"pens":[[25,1],[92,1],[110,1],[196,1]],"dresser":[[25,2],[96,1]],"pulling":[[25,1],[69,1],[97,2],[113,1],[170,1],[196,1]],"read-":[[25,1],[84,1],[181,1]],"she'll":[[25,4],[27,1],[36,3],[48,1],[52,1],[75,1],[181,1]],"practi-":[[25,1],[85,1]],"intervene":[[25,1],[36,1],[41,1],[43,1],[68,1],[70,1],[74,1]],"real-life":[[25,2],[64,1]],"imply":[[25,1],[37,1],[72,1]],"contributing":[[25,1],[37,2],[95,1],[153,1],[171,1],[202,1]],"adept":[[25,1],[49,1]],"dealing":[[25,1],[69,1],[70,1],[81,2],[100,1],[130,1],[164,2],[166,3],[167,1],[168,2],[175,1],[206,1],[212,2]],"flexibility":[[25,1],[37,1],[73,1],[89,1],[96,1],[140,3],[196,1],[197,2],[198,1]],"appropriateness":[[25,1],[111,1]],"weigh":[[25,1],[47,1],[64,2],[111,1],[112,1],[121,1],[122,2],[215,2]],"noon":[[25,2]],"ambivalence":[[25,1],[82,1],[86,1],[88,1],[89,4],[90,3],[94,6],[102,7],[103,1],[108,1],[113,2],[118,2],[127,1]],"usefulness":[[25,1],[52,1],[214,1]],"acknowledge":[[25,1],[46,1],[71,1],[72,1],[86,1],[87,1],[90,1],[91,3],[92,3],[94,2],[95,1],[96,1],[97,2],[101,1],[102,1],[105,1],[167,2],[168,1],[191,1],[214,1]],"lose":[[25,1],[36,1],[41,1],[44,1],[51,1],[57,1],[65,2],[71,1],[91,1],[100,1],[102,1],[105,1],[108,2],[109,1],[111,1],[113,1],[120,1],[121,1],[144,1],[170,1],[172,1],[176,1],[178,2],[179,1],[189,4],[194,4],[197,2],[213,1]],"obtained":[[25,1],[87,2],[93,1],[110,1],[140,1],[203,1]],"brand":[[25,1],[87,2],[95,1],[96,1],[127,1]],"portion":[[25,1],[32,1],[37,1],[46,1],[88,1],[155,1],[173,1],[199,1],[216,1]],"worth":[[25,1],[26,3],[29,1],[33,1],[34,1],[40,1],[47,1],[51,1],[52,1],[56,2],[57,1],[74,1],[90,1],[91,1],[93,3],[94,1],[97,1],[98,1],[115,2],[144,1],[164,2],[165,1],[166,4],[167,1],[168,1],[170,1],[171,1],[183,1],[184,1],[187,1],[194,3],[195,2],[198,1],[199,1],[214,1],[219,1],[221,1]],"visiting":[[25,1],[40,1],[71,1],[169,1],[183,1],[201,1]],"criticisms":[[25,2],[87,1],[212,1]],"justified":[[25,1],[110,1],[183,1]],"advance":[[25,1],[36,1],[46,1],[72,1],[86,1],[89,1],[92,1],[103,1],[155,2],[213,1]],"use-":[[26,1],[42,1],[64,1]],"cussing":[[26,1],[115,1]],"aloud":[[26,1],[34,1],[51,1],[52,1],[70,1],[184,1]],"pleased":[[26,1],[43,1],[72,1],[93,1],[219,1]],"proud":[[26,1],[35,1],[43,2],[71,1],[90,1],[91,2],[100,1],[103,1],[106,1],[167,1],[170,1],[171,2],[175,1],[195,2]],"masked":[[26,1],[27,1],[82,1]],"train-":[[26,1],[84,1]],"forgetting":[[26,2],[36,1]],"disorganization":[[26,2]],"accountability":[[26,2],[82,1]],"remem-":[[26,1],[179,1]],"morn-":[[26,1],[51,1],[53,1]],"sharp":[[26,1],[87,1],[117,2]],"reducing":[[26,1],[71,1],[79,1],[81,1],[88,1],[89,1],[90,1],[95,1],[109,1],[111,1],[112,2],[123,1],[161,1],[163,1],[164,3],[167,1],[175,1],[176,2],[183,1],[189,1],[190,1],[195,1],[205,1],[206,1],[207,1],[218,1],[219,1]],"nique":[[26,1],[52,1]],"alternately":[[26,1],[63,1],[210,1]],"calendar":[[26,1],[121,1],[200,1]],"knowing":[[26,1],[38,1],[69,1],[72,1],[91,1],[97,1],[100,1],[104,1],[166,1],[172,1],[175,1],[178,1],[192,1],[193,1],[208,2]],"possibili-":[[26,1],[58,1]],"realize":[[26,2],[32,1],[36,1],[38,2],[66,1],[69,1],[89,1],[91,1],[93,1],[94,1],[96,1],[97,2],[98,2],[100,1],[104,2],[115,1],[122,1],[176,1],[178,1],[188,1],[191,1],[199,1],[201,1],[202,1],[206,1],[207,1],[213,1],[216,1],[219,1]],"unfairly":[[26,1],[171,1],[212,2],[214,1]],"couldn't":[[26,2],[27,1],[35,1],[44,1],[60,2],[71,2],[182,1],[202,1],[205,1]],"admit":[[26,1],[100,1],[194,1]],"cerned":[[26,1],[78,1]],"involve":[[26,1],[36,1],[37,1],[38,1],[64,1],[87,1],[97,1],[115,1],[121,1],[128,1],[135,1],[142,1],[146,1],[163,1],[170,1],[197,1],[198,1],[207,1]],"trivial":[[26,1],[95,2],[102,1],[113,1]],"plenty":[[26,1],[95,1],[96,2],[103,1],[115,1],[193,1],[206,1]],"whichever":[[26,1],[54,1],[65,1],[210,1]],"roommate":[[26,1],[49,1],[56,1]],"overestimating":[[26,1],[206,1],[208,1]],"demands":[[26,1],[83,2],[98,1],[175,1]],"overestimations":[[26,1],[83,1],[211,1]],"million":[[26,1],[94,2],[109,1],[164,8],[166,3],[167,5],[168,1]],"tempo-":[[26,1],[173,1]],"save":[[26,1],[36,1],[64,1],[71,1],[106,1],[206,1]],"blood":[[26,1],[76,2],[90,3],[111,3],[112,1],[122,1],[128,1],[140,1],[164,1],[210,1],[212,1],[217,1]],"threatening":[[26,1],[87,1],[199,2],[208,1],[212,1],[217,1],[219,1]],"rearrange":[[26,1],[96,1]],"dys-":[[26,1],[36,1],[43,1],[74,2],[79,1]],"mall":[[26,1],[42,1],[178,1]],"drag":[[27,1],[69,1]],"stores":[[27,1],[42,1]],"won-":[[27,1],[200,1]],"correctly":[[27,1],[35,1],[36,2],[43,1],[74,1],[75,1],[129,1],[183,1]],"recalled":[[27,1],[43,1],[58,1],[170,1],[181,1],[182,1],[183,1]],"overestimated":[[27,1],[36,1]],"modified":[[27,1],[56,1],[86,1],[92,1],[109,1],[113,1],[167,1],[168,1]],"version":[[27,1],[51,1],[88,3],[124,1],[125,1],[134,1],[152,1],[153,1]],"coat":[[27,1],[110,1],[178,1]],"aunt":[[27,1],[61,1]],"perfectly":[[27,1],[82,1],[85,1],[100,3],[102,1],[105,1],[106,1],[171,1],[194,4],[198,2],[199,1],[205,1],[208,2],[212,1]],"assumption":[[27,1],[57,2],[58,1],[112,1],[184,1],[185,1],[192,8],[193,17],[194,12],[195,24],[211,1],[213,1],[214,1],[217,1],[219,1],[221,8],[223,1]],"necessity":[[27,1],[74,1]],"perfect":[[27,2],[56,1],[60,1],[171,5],[172,1],[178,1],[192,2],[194,9],[195,2],[199,4],[206,1],[216,1],[219,2]],"imperfect":[[27,1],[219,1]],"handwriting":[[27,1],[51,1],[52,1]],"spelling":[[27,1],[51,1],[52,1]],"procrastination":[[27,1],[81,1],[84,1]],"finish":[[27,1],[32,1],[36,1],[38,1],[70,2],[92,2],[176,1],[192,1],[193,1],[201,1],[211,2],[213,1],[218,1]],"normalize":[[27,1],[69,1]],"unpleasant":[[27,1],[166,1],[191,3],[209,1]],"recognizes":[[27,1],[40,1],[112,1]],"commits":[[27,1],[34,1]],"catch":[[27,1],[41,1],[42,1],[46,1],[69,1],[90,1],[95,1],[101,1],[182,1]],"prevented":[[27,1],[212,1]],"investigate":[[27,1],[43,1],[48,2],[49,1],[77,1],[187,1]],"pretend":[[27,1],[32,1],[215,1]],"magically":[[27,1],[49,1],[91,1]],"disappears":[[27,1],[155,3]],"nicely":[[27,1],[214,2]],"he'll":[[27,1],[36,1],[77,1]],"expose":[[27,1],[65,3],[159,1]],"exploring":[[27,1],[89,1],[90,1],[111,1],[160,1]],"favor":[[27,1],[87,1],[90,1]],"assigned":[[27,1],[86,1],[87,2],[88,2],[207,2]],"speed":[[27,1],[71,1],[136,1],[169,1],[206,1],[209,1]],"enrich":[[27,1],[49,1],[71,1],[201,1]],"journey":[[28,1],[124,1],[159,1]],"road":[[28,1],[89,3],[94,3],[110,1],[176,2],[213,2]],"destination":[[28,2]],"main":[[28,2],[54,1],[92,1],[95,1],[109,1],[134,1],[140,1],[155,1],[164,1],[170,1],[189,2],[211,1]],"highways":[[28,2]],"travel":[[28,1],[71,1],[159,2]],"specialized":[[28,1],[62,1]],"texts":[[28,1],[85,1],[209,1]],"answered":[[28,1],[121,1],[179,1],[204,1]],"tailored":[[29,1],[30,1],[75,1],[92,1],[112,2],[113,2],[114,1]],"remission":[[29,1],[32,1],[71,1],[76,1],[77,2]],"connectedness":[[29,1],[77,1]],"weaken":[[29,1],[97,1]],"phases":[[30,1],[82,1],[84,1],[210,1]],"phase":[[30,3],[117,1],[191,1]],"nces":[[30,1],[179,1]],"attainment":[[30,1],[43,1],[89,1],[125,1]],"avoidant":[[30,1],[65,1],[140,1],[155,1]],"decreased":[[30,1],[56,2],[76,1],[77,1],[108,1],[110,1],[111,1],[184,1],[186,2],[189,2],[199,1],[202,1],[203,1],[206,3],[210,2],[219,1],[222,1]],"king":[[30,1],[81,1],[87,1],[109,2],[112,1],[116,1],[117,1],[123,2],[125,1],[126,1]],"dunn":[[30,1],[80,1],[100,1],[124,1],[125,1]],"evalu-":[[30,1],[34,1],[47,1],[56,1],[216,1]],"tual":[[30,1],[184,1]],"ssies":[[30,1],[59,1]],"formulated":[[30,1],[74,1]],"analyzing":[[30,1],[64,1],[205,1]],"fig-":[[30,1],[43,1],[56,1]],"outlines":[[30,1],[187,1],[210,1]],"tical":[[30,1],[100,1]],"pessimism":[[31,1],[76,1],[202,1]],"smaller":[[31,1],[86,1],[90,1],[104,3],[110,2],[152,1],[164,1],[206,1],[209,1],[219,1]],"interviewer":[[31,1],[70,1],[100,1]],"hired":[[31,1],[56,1]],"deficit":[[31,2],[64,2],[65,2],[112,1]],"network":[[31,1],[71,1],[81,1]],"mess":[[31,1],[32,1],[40,2],[42,1],[54,1],[66,1],[69,1],[79,2],[185,4],[186,1]],"firm":[[31,1],[104,2],[170,1],[213,1],[219,1]],"smiling":[[31,1],[65,1],[198,1],[201,1]],"daunting":[[32,1],[86,1],[89,1]],"ceed":[[32,1],[211,1]],"consciously":[[32,1],[56,1],[95,2],[96,2],[105,1],[155,2],[217,1],[218,1]],"dur-":[[32,1],[37,1],[98,1]],"accommodate":[[32,1],[48,1],[52,1],[134,1]],"vidual":[[32,1],[112,1],[177,1]],"ture":[[32,1],[72,1],[115,1]],"drugs":[[32,1],[81,1],[91,1],[110,2],[112,1],[113,1],[116,1],[123,1],[130,1],[155,1],[170,1],[176,1],[211,1],[216,2]],"relation":[[32,2],[80,1],[87,1],[91,1],[108,2],[127,1]],"defining":[[32,1],[129,1]],"position":[[32,1],[102,1],[105,1],[146,1],[155,1],[158,1],[177,1],[182,1]],"curtailing":[[32,1],[87,1],[112,1]],"closing":[[32,1],[118,1],[122,1]],"probe":[[32,1],[34,1],[47,1],[69,1]],"score":[[32,1],[33,1],[43,1],[77,3],[80,1],[90,1],[176,1],[182,1],[192,1],[195,1],[202,7],[204,1],[205,5],[206,3],[212,3],[218,1],[219,5],[222,5],[223,1]],"incidents":[[32,1],[161,1]],"recur":[[32,1],[34,1],[45,1],[72,1],[191,1]],"addressed":[[32,1],[33,2],[50,1],[72,1],[74,2],[103,1],[104,1],[107,1],[112,1],[113,1],[114,1],[122,1],[203,1],[219,1]],"tages":[[32,1],[176,1]],"willingness":[[32,1],[37,2],[86,2],[88,1],[91,4],[98,1],[100,1],[108,1],[172,1],[176,1],[202,1]],"upcoming":[[32,1],[40,1],[55,1],[59,1],[69,4],[70,1],[72,1],[155,1],[171,1],[182,1],[206,1],[210,1]],"month":[[32,1],[47,6],[58,3],[71,2],[77,1],[86,1],[87,7],[88,4],[93,1],[101,1],[109,1],[110,1],[111,2],[114,5],[115,1],[120,3],[121,4],[122,6],[164,3],[170,1],[176,2],[181,3],[182,1],[189,2],[190,2],[191,1],[195,1],[202,2],[206,1],[214,1],[215,1],[218,1],[219,1]],"options":[[32,1],[33,1],[35,1],[97,1],[113,1],[163,1],[166,1],[167,1],[168,2],[213,1]],"business":[[32,2],[77,1],[93,1],[110,1],[113,1],[127,1],[156,1],[157,1],[171,1],[174,1],[208,1]],"badly":[[32,1],[60,1],[198,1]],"devote":[[32,1],[74,1],[98,1]],"rocky":[[32,1],[216,1]],"bankrupt":[[32,1],[212,1]],"sad-":[[32,1],[170,1]],"affecting":[[32,1],[33,1],[60,1],[61,1],[164,1],[196,1]],"assessed":[[32,1],[77,1],[87,2],[108,1],[215,1]],"catastrophizing":[[32,1],[48,2],[51,1],[82,1]],"laboratively":[[32,1],[37,1],[45,1]],"unlike":[[32,1],[96,1],[134,2],[155,1],[165,1],[172,1],[192,1],[198,1],[203,1]],"investigating":[[32,1],[64,1],[65,1],[80,1],[83,1]],"pos-":[[32,1],[69,1],[90,1],[115,1],[177,1],[193,1]],"tial":[[32,1],[86,1]],"posing":[[32,1],[58,1],[89,1]],"determining":[[32,1],[40,1],[58,1],[65,1],[74,1],[83,1],[189,2]],"hypothetically":[[32,2]],"eliminate":[[32,1],[43,1],[53,2],[63,1],[91,1],[94,1],[103,1],[187,1],[207,1],[209,1]],"physically":[[32,1],[43,1],[69,1],[90,1],[101,1],[143,1],[163,1],[165,1],[170,2],[171,1],[173,1],[196,1],[203,1],[206,1],[208,1],[216,1]],"interviewed":[[32,1],[64,1],[70,1],[88,1]],"seemingly":[[32,1],[113,1],[212,1]],"experienc-":[[32,1],[218,1]],"sudden":[[32,1],[81,1],[111,1],[112,1]],"counterproductive":[[32,1],[89,1],[92,1],[95,2],[101,5]],"refocusing":[[32,1],[63,2],[84,1]],"conceptu-":[[32,1],[38,1]],"structuring":[[33,6],[34,3],[35,3],[36,9],[37,5],[38,2],[74,1],[82,5],[84,1]],"fifth":[[33,3],[47,1],[87,1]],"content":[[33,3],[35,1],[36,1],[40,2],[42,1],[43,6],[56,2],[74,2],[75,1],[81,1],[82,5],[83,1],[84,1],[92,1],[98,1],[108,1],[113,2],[125,1],[134,1],[175,1],[212,1],[225,1]],"obtaining":[[33,1],[74,1],[92,1],[103,1],[115,1],[121,2],[212,1]],"summaries":[[33,2],[35,3],[74,1],[82,2],[83,1],[84,1]],"varies":[[33,1],[60,1],[86,1],[95,1],[208,1]],"mindful":[[33,1],[44,1],[53,1],[55,1],[91,1],[95,1],[96,4],[97,1],[100,1],[107,2],[113,1],[209,1],[210,2],[225,1]],"painful":[[33,1],[43,1],[51,1],[60,1],[65,1],[135,1],[139,1],[142,2],[148,1],[154,1],[155,1],[161,2],[171,1],[183,1],[184,1],[186,1],[187,1],[191,2]],"follow-":[[33,1],[59,1],[69,1],[91,1],[184,1]],"preparatory":[[33,1],[123,1]],"self-harm":[[33,2]],"ideation":[[33,2],[75,1]],"concert":[[33,1],[34,4],[43,1]],"babysat":[[33,1],[34,1]],"deserves":[[33,1],[196,1]],"stamina":[[33,4],[35,1],[90,2],[93,2],[122,1],[176,1]],"evaluated":[[33,2],[41,1],[47,2],[51,2],[52,1],[53,1],[74,1],[77,5],[82,1],[84,1],[171,1]],"role-played":[[33,1],[77,1]],"sorting":[[33,3],[35,4]],"divide":[[33,1],[34,1],[216,1]],"sooner":[[33,1],[35,1],[71,2],[164,1],[166,1],[170,1]],"sort":[[33,1],[35,2],[58,1],[152,1]],"untrue":[[33,1],[58,1]],"signature":[[33,1],[101,1],[121,3]],"volunteering":[[33,1],[34,3],[64,9],[65,1],[69,1],[77,1],[207,1]],"positives":[[33,1],[183,1],[190,1],[201,1],[205,2]],"negatives":[[33,1],[205,1]],"title":[[33,1],[114,1],[115,1],[225,1]],"separated":[[33,1],[35,1]],"clarity":[[33,1],[35,1]],"concise":[[33,1],[35,1],[36,1],[37,1]],"prompt":[[33,1],[41,1],[42,2],[51,1],[163,1],[165,1],[166,2],[167,2],[168,9],[215,1]],"creates":[[33,1],[57,1],[69,1],[85,1],[91,1],[105,1],[113,1],[169,2],[198,1],[210,1],[213,1]],"panic":[[33,1],[79,3],[80,1],[117,1],[130,1],[134,1],[140,8],[157,3],[158,3],[160,4],[162,6],[169,1],[170,10],[173,3],[174,1],[175,1],[176,4],[177,2],[179,2],[184,2],[192,1],[193,4],[205,3],[208,10],[209,2],[210,1],[211,2],[219,1],[223,3],[225,1]],"attacks":[[33,1],[130,1],[157,1],[158,3],[160,2],[170,7],[176,2],[177,2],[193,1],[205,2],[208,2],[219,1],[223,1],[225,1]],"rituals":[[33,1],[132,1],[159,1]],"binges":[[33,1],[223,1]],"outbursts":[[33,1],[171,2],[189,4],[190,5],[219,1]],"destructive":[[33,1],[93,1],[113,1],[122,1],[171,1],[198,1],[212,2],[213,2],[215,1]],"handing":[[33,1],[181,1]],"your're":[[33,1],[42,1],[60,1]],"attribution":[[33,1],[37,1],[65,1],[83,1]],"clinic":[[33,1],[84,1],[86,1],[87,1],[93,1],[103,1]],"discrepancy":[[33,1],[43,1],[90,1],[94,1]],"narrative":[[33,1],[76,1],[87,1],[92,1],[127,1]],"rienced":[[33,1],[73,1],[214,1],[216,1],[222,2]],"worsening":[[33,1],[37,1],[70,1],[83,1],[111,1],[206,1],[218,1]],"segment":[[33,1],[36,1]],"wondering":[[34,1],[36,1],[41,2],[173,1],[183,1]],"lightly":[[34,1],[94,1]],"deprived":[[34,1],[105,1],[121,2],[122,4]],"bridge":[[34,1],[65,1],[148,1],[159,1]],"cur-":[[34,1],[53,1],[92,1],[198,1],[221,1]],"rent":[[34,1],[41,1],[48,1],[49,1],[53,1],[64,2],[71,1],[92,1],[198,1],[221,1]],"combine":[[34,1],[86,1],[126,1],[169,1],[177,1],[203,2]],"exclusively":[[34,1],[79,1],[87,2],[177,1]],"naming":[[34,1],[37,2]],"remainder":[[34,1],[107,1],[203,1]],"singer":[[34,1],[127,1]],"plays":[[34,1],[36,1],[43,1],[60,1],[61,1],[65,3],[79,2],[82,1],[83,2],[84,2],[103,1],[161,1],[200,1],[202,1],[211,1]],"unusual":[[34,1],[37,1],[74,1],[91,1],[95,1],[102,1],[120,1],[129,1],[134,1],[157,1],[158,1],[198,1],[202,1],[216,1]],"rel-":[[34,1],[57,1]],"evant":[[34,1],[57,1]],"brother":[[34,1],[37,1],[43,1],[49,1],[71,1],[76,2],[171,1],[196,2]],"blow":[[34,1],[164,1],[202,1],[214,1]],"agrees":[[34,1],[38,1],[60,1]],"priority":[[34,1],[64,1],[94,1],[95,1],[96,1],[102,1],[109,2],[155,1],[191,1]],"prioritizing":[[34,1],[81,1],[82,3],[89,1],[90,1]],"equal":[[34,1],[208,1],[210,1]],"topic":[[34,1],[41,1],[60,1],[74,2],[92,1],[94,1],[102,1],[103,1],[104,1],[199,1]],"par-":[[34,1],[53,1],[57,1],[87,1],[91,1],[93,1],[95,1],[96,1],[100,1],[114,1],[115,1],[122,1]],"ticular":[[34,1],[53,1],[57,1]],"accord-":[[34,1],[191,1]],"approaches":[[34,1],[64,1],[72,1],[79,1],[81,1],[86,3],[87,6],[92,2],[96,3],[98,1],[108,3],[111,1],[118,5],[119,1],[123,1],[125,1],[126,2],[191,1],[192,1],[197,1],[202,1],[203,4],[206,1],[208,1],[211,1],[212,1],[214,1]],"recall":[[35,1],[41,1],[43,3],[68,1],[69,1],[70,1],[71,1],[83,1],[102,1],[105,2],[110,1],[125,1],[129,1],[155,1],[171,1],[173,1],[187,1],[192,1],[198,1],[200,1],[207,1],[208,1],[210,1]],"construction":[[35,1],[56,1],[76,1],[77,1],[145,1]],"chooses":[[35,1],[65,1],[158,1],[200,1]],"latter":[[35,1],[37,1],[57,1],[58,1],[65,1],[87,1],[92,1],[111,1]],"option":[[35,1],[64,5],[67,2],[90,1],[163,1],[164,1],[171,1],[183,1],[198,1],[206,1],[214,1]],"believes":[[35,1],[47,3],[57,2],[61,1],[74,1],[79,2],[152,1]],"gotten":[[35,1],[36,1],[42,1],[57,1],[58,1],[61,1],[69,2],[70,1],[183,1],[207,1]],"clearer":[[35,1],[64,1],[104,2],[176,1]],"incorrectly":[[35,1],[74,1]],"reduced":[[35,1],[79,1],[88,1],[90,2],[103,1],[109,1],[111,1],[122,1],[123,1],[161,1],[193,2],[211,1]],"intensity":[[35,1],[43,7],[44,1],[47,1],[52,1],[53,2],[58,1],[82,1],[83,2],[87,3],[95,2],[102,1],[108,2],[109,1],[112,1],[114,1],[132,1],[148,1],[154,3],[155,1],[175,4],[177,2],[179,1],[180,1],[181,3],[183,1],[185,1],[186,3],[188,3],[208,1],[209,1],[212,1],[217,2],[223,3]],"mary":[[35,1],[110,1],[111,1],[186,1]],"section":[[35,1],[52,1],[69,1],[92,3],[93,1],[94,4],[95,3],[96,2],[97,3],[98,2],[101,1],[114,1],[120,1],[179,2],[194,1],[198,1],[203,3],[208,1],[214,2],[218,2]],"whelmed":[[35,1],[56,1],[177,1]],"onetime":[[35,2]],"spread":[[35,1],[111,1],[185,1],[204,1],[222,1]],"tickets":[[35,1],[51,2]],"discusses":[[35,1],[100,2],[101,1],[103,1]],"varied":[[35,1],[74,1],[219,1]],"interrupted":[[36,1],[71,1],[98,1],[194,1],[219,1]],"direc-":[[36,1],[188,1],[225,1]],"concisely":[[36,1],[37,2]],"invalidated":[[36,1],[45,1],[46,1]],"struggling":[[36,1],[42,1],[64,1],[87,1],[97,1],[107,1],[165,1],[166,3],[167,1],[169,1],[171,1],[196,1],[201,1]],"starts":[[36,1],[47,1],[48,1],[79,1],[91,1],[137,1],[165,1]],"holiday":[[36,3],[48,1],[52,1],[69,1]],"stand":[[36,1],[41,2],[43,1],[44,2],[55,1],[71,4],[74,1],[76,1],[86,1],[87,1],[91,1],[93,1],[97,1],[103,1],[115,1],[155,2],[156,2],[158,4],[171,1],[175,1],[176,1],[182,5],[183,1],[186,1],[192,2],[197,1],[199,1],[212,1],[213,1],[214,1]],"interruption":[[36,1],[37,1],[43,1]],"tolerate":[[36,1],[65,2],[71,1],[96,1],[104,1],[105,2],[111,1],[112,1],[150,2],[151,1],[159,1],[161,1],[185,1],[199,3],[206,1],[207,1],[209,5],[210,3],[211,4],[218,1]],"irritated":[[36,2],[38,1],[40,1],[43,1],[63,2],[169,1],[172,3],[175,2],[178,1],[179,1],[192,1],[199,1],[212,2]],"suspect":[[36,1],[69,1],[93,1],[94,1],[172,1]],"interruptions":[[36,1],[38,1]],"adequately":[[36,1],[37,1],[164,1],[166,1],[167,1]],"type":[[36,1],[69,1],[76,1],[91,2],[94,2],[95,2],[97,1],[98,2],[101,2],[102,2],[122,1],[131,1],[155,4],[173,2],[183,2],[185,1],[187,1],[194,2],[195,1],[197,1],[202,1],[203,1],[208,4],[211,2],[213,1]],"corrective":[[36,1],[60,1],[89,1]],"arises":[[36,1],[37,2],[38,3],[56,2],[104,1],[112,1],[113,1],[208,1]],"somehow":[[36,1],[49,1],[57,1],[91,1],[100,1],[105,1]],"unwillingness":[[36,1],[53,1]],"stopped":[[36,1],[76,3],[79,1],[88,1],[98,1],[100,2],[108,2],[112,1],[113,1],[122,2],[163,2],[164,5],[166,4],[167,2],[168,2],[169,1],[170,3],[172,2],[193,2],[201,1],[215,1],[216,1],[218,1],[219,1]],"hesitantly":[[36,1],[60,1],[188,1]],"dominate":[[36,1],[91,1]],"compromise":[[36,1],[37,1],[112,1],[199,2]],"faulty":[[36,2],[105,1],[167,1]],"socialization":[[36,3],[37,1],[74,1]],"reluctance":[[36,1],[37,2],[94,1]],"customary":[[36,1],[86,1]],"compliance":[[36,1],[80,1],[81,1],[88,1],[89,3],[90,1],[125,1]],"gears":[[36,1],[74,1]],"demanding":[[36,1],[75,1],[95,1],[96,1]],"fashion":[[36,1],[140,1],[169,2],[216,1]],"honest":[[36,1],[74,1],[89,1],[213,1]],"recording":[[36,1],[50,1],[51,3],[53,1],[54,2],[55,2],[63,1],[74,2],[75,1],[92,1],[98,2],[99,1],[101,2],[102,2],[103,2],[104,1],[107,3],[114,1],[115,3],[120,2],[140,1],[177,1],[198,2],[201,1],[219,1],[221,1],[223,1]],"structural":[[36,1],[82,2],[110,1]],"annoyance":[[36,2],[100,1]],"subjectively":[[36,1],[37,1]],"man-":[[36,1],[100,1],[105,1],[207,1]],"literacy":[[36,1],[51,1]],"irrelevant":[[36,2]],"consuming":[[36,1],[47,1],[93,1],[109,1],[110,1],[167,1]],"ceived":[[36,1],[63,1]],"persuasion":[[36,1],[74,1]],"hate":[[36,1],[168,1],[169,2],[177,1],[182,1]],"express-":[[37,2]],"labeling":[[37,2],[43,2],[48,1],[51,2],[61,1],[83,3],[86,1],[94,1],[95,1],[102,1],[124,1],[213,1],[216,1]],"elaborate":[[37,1],[90,1]],"didn't":[[37,1],[171,1],[221,1]],"notion":[[37,1],[90,1],[94,2],[98,1],[128,1]],"engagement":[[37,1],[38,1],[89,1],[123,1]],"ramble":[[37,2]],"contribute":[[37,3],[75,1],[82,1],[108,1],[122,1],[129,1],[165,1],[170,1],[183,1],[188,2],[197,1],[202,2],[206,1],[210,1]],"rambling":[[37,1],[82,1]],"mornings":[[37,3],[189,2],[204,3]],"special":[[37,1],[61,1],[64,1],[81,1],[90,1],[94,1],[97,2],[98,1],[101,7],[104,2],[111,1],[118,1],[122,1],[124,2],[168,1],[178,1],[181,1],[196,1],[203,1],[212,1]],"returns":[[37,1],[164,1]],"chest":[[37,1],[54,1],[70,1],[79,2],[116,1],[121,1],[125,1],[128,2],[178,1],[206,1],[208,2],[210,3],[213,1]],"social-":[[37,1],[76,1]],"ized":[[37,1],[76,1],[109,1]],"mention":[[37,1],[92,1],[108,1],[166,1],[168,1]],"refused":[[37,1],[172,1]],"tactic":[[37,1],[94,1]],"acknowledging":[[37,1],[91,2],[94,1],[102,1],[103,1],[130,1]],"suc-":[[37,2],[61,1],[90,1],[114,1],[120,1],[211,1]],"increases":[[37,1],[78,1],[85,1],[86,2],[87,1],[89,1],[90,1],[91,1],[93,2],[95,1],[110,1],[111,1],[166,4],[173,1],[181,1],[192,1],[198,1],[199,1],[206,1],[211,1]],"unfocused":[[37,1],[38,2]],"downs":[[37,1],[56,1],[71,3]],"fight":[[37,1],[71,1],[89,1],[97,3],[100,1],[182,1],[206,5],[212,1],[223,1]],"comply":[[37,1],[88,1]],"damage":[[37,1],[110,1],[212,3],[214,1],[215,1],[216,2]],"attempts":[[37,1],[86,1],[89,2],[90,1],[91,1],[93,1],[96,1],[97,1],[98,2],[107,1],[108,3],[113,2],[114,1],[117,1],[118,1],[121,2],[123,1],[124,1],[161,1],[163,6],[166,1],[168,2],[170,1],[173,1],[201,1],[216,1],[219,1]],"downward":[[37,1],[57,4],[58,1],[60,1],[81,1],[82,1],[83,1],[134,1],[140,3],[142,4],[170,1],[196,3],[197,11],[201,1],[223,9]],"opposite":[[38,1],[41,3],[42,4],[43,1],[60,1],[83,1],[194,3],[195,4],[198,2],[223,1]],"inefficient":[[38,2]],"pacing":[[38,3],[74,2],[82,1],[83,1],[84,1],[169,1]],"fre-":[[38,1],[71,1],[74,1],[214,1],[217,1]],"quently":[[38,1],[76,1]],"reminded":[[38,1],[67,1],[69,1],[91,1],[113,1],[114,1],[155,1],[185,1],[187,2],[189,2],[191,1],[193,1],[208,1]],"overestimate":[[38,1],[48,1],[51,1],[179,1],[208,2]],"passage":[[38,1],[134,1]],"postpone":[[38,2],[108,1],[158,1],[159,3]],"deviating":[[38,1],[74,1],[82,2]],"risky":[[38,1],[48,1],[109,2],[110,1],[112,1],[166,1],[168,1],[206,1]],"employment":[[38,1],[76,1],[77,1],[93,1],[189,2]],"object":[[38,1],[95,3],[96,2],[104,2],[120,2]],"freely":[[38,1],[89,1],[96,1],[103,1],[105,1],[123,1],[192,1]],"split":[[38,1],[74,1]],"sation":[[38,1],[90,1]],"lighter":[[38,1],[70,1],[87,1],[108,1],[120,1],[210,1]],"concentrate":[[38,1],[48,1],[49,1],[59,1],[89,1],[92,1],[96,1],[98,1],[101,1],[171,1],[184,1],[201,1],[217,1]],"tapes":[[38,1],[122,1]],"invaluable":[[38,1],[169,1]],"logical":[[39,1],[95,1],[101,1],[111,1],[112,1],[134,1],[140,3],[151,1],[153,1],[154,2],[161,1]],"assault":[[39,1],[122,1]],"rejection":[[39,1],[216,1]],"critically":[[39,1],[86,1],[97,1],[108,1]],"examining":[[39,1],[47,1],[59,1],[60,1],[63,1],[64,1],[75,1],[81,1],[86,1],[87,1],[89,1],[112,1],[117,1],[124,1],[134,1],[164,1],[186,1]],"consciousness":[[40,1],[86,1],[98,1],[99,1],[123,1],[124,1],[125,1],[127,1],[155,2],[208,1]],"suf-":[[40,1],[47,1],[60,1],[76,1]],"dysfunction":[[40,1],[74,1],[123,1]],"examination":[[40,1],[75,1],[125,1],[126,1]],"leak":[[40,1],[59,1]],"accepts":[[40,1],[194,1]],"adap-":[[40,1],[47,1],[196,1]],"dance":[[40,1],[78,1]],"recital":[[40,1],[204,1]],"disap-":[[40,1],[47,1],[96,1],[171,1]],"pointed":[[40,1],[47,1],[171,1],[185,1],[194,1]],"gone":[[40,1],[57,1],[72,1],[121,2],[122,4],[155,1],[163,1],[168,2],[169,1],[170,1],[185,1],[195,1]],"distort":[[40,1],[152,1],[161,1],[172,1],[197,1]],"cues":[[40,1],[89,2],[91,2],[101,2],[104,2],[109,1],[113,1],[168,2]],"undermine":[[40,1],[53,1],[90,1],[91,2],[94,2],[95,2],[102,3],[108,1],[163,1],[166,1]],"spot":[[40,1],[48,1],[55,1],[104,2],[198,1],[208,1]],"superior":[[40,1],[46,1],[56,1],[62,1],[86,1],[87,1],[173,1]],"drink":[[40,1],[95,1],[96,2],[97,1],[103,1],[105,1],[109,1],[111,1],[156,2],[157,1],[158,5],[170,1],[171,4],[175,2],[176,1],[177,1],[182,12],[185,2],[192,1],[213,1],[219,3]],"embarrassed":[[40,1],[43,1],[175,2],[179,2],[208,2],[209,1]],"guilty":[[40,1],[43,1],[171,1],[175,1],[179,1],[198,1],[202,1],[214,2],[215,5],[216,4],[217,1],[219,1]],"nected":[[40,1],[201,1],[219,1]],"tension":[[40,1],[41,4],[63,1],[83,1],[91,1],[95,2],[100,3],[102,1],[104,2],[128,2],[171,1],[192,2],[194,1],[205,1],[206,2],[210,9],[213,1],[217,1],[218,1],[222,1]],"stimuli":[[40,1],[53,3],[65,2],[83,1],[88,1],[117,1],[139,1],[161,3]],"series":[[40,1],[41,1],[53,1],[54,1],[81,1],[90,1],[92,1],[103,1],[120,2],[170,1],[172,1],[173,1],[179,1],[183,1],[192,1],[193,2],[195,1],[203,1],[214,1]],"wanting":[[40,1],[89,1],[94,1],[95,1],[98,1],[114,1],[163,1],[166,2],[168,6],[171,1],[190,1],[219,1]],"anticipation":[[40,1],[172,1],[202,1],[213,1]],"reflecting":[[40,1],[89,1],[90,1],[168,1]],"explaining":[[41,1],[58,1],[82,1],[161,1],[163,1]],"lucky":[[41,1],[48,1],[51,1],[193,1],[200,1]],"hers":[[41,4],[74,1]],"uh-huh":[[41,2],[64,1],[66,2],[71,1]],"exhibit":[[41,1],[167,1],[207,4]],"drunk":[[41,1],[215,1]],"street":[[41,1],[91,1],[122,1],[139,1],[155,2],[178,1],[206,1],[208,1],[209,1]],"ends":[[41,1],[110,1],[181,1],[201,1],[211,1]],"seconds":[[41,1],[51,1],[54,8],[100,1],[155,1],[164,4],[177,1],[194,1],[203,1],[210,4]],"drank":[[41,1],[171,2],[193,1],[213,1],[216,1]],"scenario":[[41,1],[47,1],[53,1],[58,1],[65,1],[69,2],[90,1],[140,1],[155,1]],"commonly":[[41,1],[87,1],[91,1],[92,2],[110,1],[111,3],[114,1],[134,2],[137,1],[140,1],[162,1],[179,1]],"embed":[[41,1],[146,1],[151,1]],"discourse":[[41,2],[74,1]],"phrases":[[41,1],[100,1],[103,1],[188,3]],"cancel":[[41,1],[79,1],[191,1]],"shopping":[[41,1],[113,1],[170,1],[178,1],[194,1],[201,1],[203,1],[212,1]],"inconsiderate":[[41,1],[178,1],[185,1]],"irritability":[[41,1],[56,1],[95,2],[102,1],[120,1],[164,1],[169,1],[170,1],[202,1],[205,1],[218,1],[222,1]],"wine":[[41,3]],"slight":[[41,1],[169,1]],"reduction":[[41,2],[56,1],[79,1],[80,1],[88,2],[89,1],[90,16],[91,4],[95,1],[97,1],[104,1],[107,1],[108,1],[109,1],[110,1],[113,1],[116,2],[117,1],[118,2],[119,2],[123,1],[124,2],[125,2],[126,4],[127,5],[140,1],[155,1],[165,1],[210,1],[211,1],[218,2]],"differentiating":[[41,1],[43,2],[81,1],[82,2],[83,4]],"denying":[[41,2]],"heightening":[[41,1],[42,1],[79,1],[83,3]],"supplying":[[41,1],[165,1]],"tense":[[41,1],[42,1],[43,2],[63,2],[79,1],[91,1],[98,1],[169,1],[206,2],[210,3]],"specifying":[[41,1],[73,1],[83,1]],"embedded":[[41,2],[83,2],[93,1],[96,1],[109,1],[140,1]],"exact":[[41,1],[122,4]],"puzzled":[[41,1],[194,1]],"telegraphic":[[41,2],[81,1],[84,1]],"leaving":[[41,1],[140,1],[147,1],[176,1],[182,4],[185,1],[190,1],[193,2],[206,1]],"stupid":[[41,1],[51,2],[52,1],[152,1],[173,1],[179,2],[194,4],[196,2],[208,1],[213,3]],"reunion":[[41,1],[48,1],[52,1],[172,1],[192,1]],"uh-oh":[[41,4],[79,1]],"spell":[[41,2],[61,1]],"supply":[[41,1],[42,2],[88,1],[114,6],[115,3],[120,4],[121,1],[156,1],[157,1],[158,2],[164,2],[165,1],[166,5],[167,3],[168,3],[210,1]],"hire":[[41,2],[169,1]],"restating":[[41,1],[97,1],[98,1]],"encoun-":[[41,1],[193,1]],"tered":[[41,1],[193,1]],"miserable":[[41,1],[49,1],[91,1]],"forever":[[41,1],[71,1],[72,1],[92,1],[94,1],[100,3],[103,3],[104,1],[114,2],[115,3],[120,3],[166,1],[182,1],[186,1],[187,2],[204,1],[208,1]],"predicting":[[42,1],[45,1],[69,2],[118,1],[124,1],[175,1]],"heighten":[[42,1],[44,1],[70,1],[79,1],[110,1]],"access":[[42,2],[44,1],[79,1],[101,1],[104,2],[108,1],[111,1],[114,1],[115,3],[119,1],[120,4],[121,1],[134,1],[140,4],[151,1],[154,1],[155,2],[168,1]],"abdomen":[[42,1],[54,1],[161,1]],"stomach":[[42,2],[121,1],[128,1],[155,1],[171,2],[205,1],[206,1],[208,1],[210,4],[222,1]],"visualizing":[[42,1],[88,1],[89,3],[115,1],[120,1]],"daughter-in-law":[[42,2]],"upstairs":[[42,2]],"chair":[[42,1],[55,1],[59,1],[85,2],[95,1],[96,1],[169,2],[210,1],[219,1]],"posture":[[42,1],[59,1],[89,1],[210,1]],"slumped":[[42,1],[169,1]],"pauses":[[42,1],[54,8]],"iwas":[[42,1],[56,1]],"inquiring":[[42,1],[83,1],[101,1],[114,1]],"birthday":[[42,1],[47,1],[57,1],[185,2],[186,1]],"party":[[42,1],[47,1],[172,2],[178,1],[192,4],[195,4]],"interestingly":[[42,1],[88,1]],"accessing":[[42,1],[140,1],[142,2],[151,1]],"tance":[[42,1],[63,1],[86,1],[112,1],[191,1]],"explicitly":[[42,1],[43,1],[46,1]],"handout":[[42,4],[82,1],[84,1],[92,1],[93,1],[94,2],[95,3],[96,4],[97,3],[100,1],[101,2],[152,1]],"imaginal":[[42,1],[43,1],[65,1],[69,1],[70,1],[72,1],[83,2]],"interferes":[[43,1],[53,2],[206,1],[214,1]],"capacity":[[43,1],[110,1],[134,1],[168,4]],"excessive":[[43,2],[55,1],[113,1]],"enormous":[[43,1],[60,1]],"straighten":[[43,1],[189,2],[210,1]],"held":[[43,1],[53,1],[56,1],[76,2],[115,1],[120,2],[125,1],[134,2],[161,1],[187,1],[192,2],[194,3]],"functions":[[43,1],[83,1],[110,1],[155,2],[202,1],[210,1]],"signal":[[43,1],[104,1],[176,1],[202,1]],"narrow":[[43,1],[129,1],[130,1],[134,1],[188,1]],"broaden":[[43,1],[47,1],[188,1]],"fredrickson":[[43,1],[80,1]],"coped":[[43,1],[69,1]],"tugade":[[43,1],[81,1]],"aimed":[[43,1],[113,1]],"thankful":[[43,2]],"refer":[[43,2],[51,1],[56,1],[71,1],[94,1],[115,1],[120,1],[176,1],[177,1],[182,1],[187,1],[196,1],[204,1],[218,2]],"blessed":[[43,1],[173,1]],"bold":[[43,1],[100,1],[104,1],[127,1]],"centered":[[43,1],[89,1],[104,1],[118,1]],"delighted":[[43,1],[85,1]],"empowered":[[43,1],[96,1],[104,1],[115,1]],"fortunate":[[43,1],[218,1]],"fulfilled":[[43,1],[77,1]],"grateful":[[43,1],[154,1],[155,1],[175,1],[200,15],[201,1]],"inspired":[[43,1],[210,1]],"kindly":[[43,1],[105,1]],"pleasantly":[[43,1],[94,1],[194,1],[199,1]],"reassured":[[43,1],[77,1],[113,1]],"secure":[[43,1],[100,1],[104,2],[114,1],[115,2],[121,1],[189,2]],"serene":[[43,1],[70,1]],"sincere":[[43,1],[100,1]],"supported":[[43,1],[59,1],[80,1],[86,2],[87,1],[111,1],[114,1],[124,2],[127,1],[155,1],[183,1],[184,1],[186,5],[187,2],[188,3],[192,1],[194,1],[196,1]],"tranquil":[[43,1],[210,2]],"valuable":[[43,2],[89,1],[182,1],[183,1],[203,1],[217,1],[219,2]],"vibrant":[[43,1],[104,1]],"wise":[[43,1],[94,1],[102,1],[109,1],[175,1],[208,1],[217,1]],"youthful":[[43,1],[216,1]],"lonely":[[43,3],[69,1],[91,1],[170,1]],"ashamed":[[43,1],[90,1],[171,1],[175,1],[179,2],[188,1],[189,2],[194,3],[214,1],[215,4],[216,3],[219,1]],"humiliated":[[43,1],[155,1],[173,1],[175,1],[208,1]],"fearful":[[43,1],[53,1],[65,3],[72,1],[91,1],[108,1],[112,1],[169,1],[170,1],[175,1],[187,1],[207,1],[208,2]],"scared":[[43,1],[175,2],[178,5],[179,1],[191,1],[193,1]],"despair":[[43,1],[191,1]],"panicky":[[43,1],[140,1],[155,1],[170,2],[192,1],[206,2],[208,1]],"frustrated":[[43,1],[49,1],[52,3],[54,1],[57,1],[95,1],[101,1],[103,1],[175,1],[189,1],[190,1],[191,1],[192,1]],"resentful":[[43,1],[179,1]],"vacation":[[43,1],[71,1],[97,2],[193,1]],"driver":[[43,1],[159,1],[170,1],[188,1]],"music":[[43,1],[44,1],[177,1],[195,1],[204,2],[210,4]],"neck":[[43,1],[210,1]],"sounded":[[43,3],[47,2]],"stated":[[43,1],[86,1],[90,1],[93,2],[96,1],[97,1],[113,1],[115,1],[192,2]],"prematurely":[[43,1],[215,1]],"realizing":[[43,1],[76,1],[81,1],[90,1],[104,1]],"place":[[43,1],[53,2],[56,1],[58,2],[61,1],[65,2],[79,4],[87,1],[92,1],[94,1],[95,1],[96,3],[98,2],[100,2],[101,5],[104,5],[105,4],[107,1],[111,1],[113,1],[130,1],[133,1],[134,6],[140,2],[145,1],[147,1],[148,13],[149,3],[151,1],[154,1],[155,3],[161,1],[164,1],[166,1],[167,1],[168,2],[172,1],[186,1],[189,1],[190,1],[196,1],[200,1],[201,1],[210,2],[213,1],[216,2],[217,1]],"num-":[[43,1],[90,1],[98,1],[115,1]],"intensely":[[43,2],[79,1],[164,1],[176,1]],"medium":[[43,3],[45,1],[79,1],[175,2],[203,1],[208,1],[212,3],[215,5],[218,1],[222,2]],"numbers":[[43,1],[81,1],[101,2],[115,1],[121,2],[155,2],[164,1],[202,2],[205,2]],"pain":[[43,1],[53,1],[55,1],[65,1],[121,1],[124,2],[128,1],[171,2],[183,7],[184,1],[186,1],[187,2],[191,2],[206,2],[208,2],[213,2],[214,1],[216,2],[222,2]],"edge":[[43,1],[86,2],[88,1],[89,1],[90,1],[91,2],[92,13],[93,5],[94,6],[95,4],[96,5],[97,4],[98,8],[99,3],[100,2],[103,1],[104,3],[105,1],[106,1],[109,1],[112,2],[114,2],[118,6],[119,3],[120,1],[122,1],[170,1],[205,1],[206,2],[222,1]],"validate":[[43,1],[103,1]],"tress":[[43,1],[203,1]],"confuse":[[43,1],[175,1]],"word":[[43,3],[57,1],[61,1],[88,1],[105,3],[106,3],[142,1],[175,6],[176,2],[177,3],[179,2],[180,1],[181,4],[184,2],[185,1],[186,2],[188,1],[198,3],[203,2],[205,1],[212,1],[214,1],[217,1]],"confusion":[[43,2],[74,1],[111,1]],"nights":[[43,1],[48,1],[215,1]],"distant":[[43,2]],"distinguish":[[43,1],[64,1],[151,1],[163,1],[167,1],[175,4],[178,1],[202,1]],"movies":[[43,1],[60,2],[83,2],[100,1],[173,1]],"evaluat-":[[43,1],[199,1]],"pic-":[[43,1],[115,1],[179,1]],"tures":[[43,1],[173,1],[179,1]],"reverse":[[43,1],[51,1],[52,1]],"walked":[[43,1],[113,1],[185,2],[208,1],[213,1]],"matching":[[43,1],[81,1],[82,2],[83,1]],"ience":[[43,1],[81,1]],"influencing":[[43,1],[172,1]],"recom-":[[43,1],[95,1],[115,1],[176,1],[218,1]],"confused":[[43,1],[51,1],[79,1],[178,1],[183,1],[184,1],[186,1],[187,2],[191,1]],"vividly":[[43,1],[70,1],[197,1],[202,1],[208,1],[210,2]],"possibilities":[[43,1],[48,1],[89,1],[96,1],[97,1],[100,1],[104,2],[155,1],[176,1],[178,1],[187,1]],"recommendation":[[43,1],[87,1],[111,1],[169,1],[178,1]],"interchange":[[43,1],[205,1]],"inconsistency":[[43,1],[61,1],[90,1]],"chosen":[[43,1],[163,1],[166,1],[169,1],[197,1]],"missed":[[43,1],[79,1],[170,2],[176,1],[189,1],[190,1],[191,1],[203,1],[205,1],[206,1],[208,1]],"uncontrollable":[[44,2],[53,1]],"intolerable":[[44,1],[75,1]],"consequences":[[44,1],[47,1],[89,1],[93,2],[110,1],[111,1],[116,3],[123,2],[134,1],[140,1],[141,2],[172,1],[215,1]],"somatic":[[44,1],[68,1],[79,2]],"greenberg":[[44,1],[80,4],[81,2]],"crying":[[44,1],[70,2],[190,1]],"hospital":[[44,1],[114,5],[115,3],[120,4],[121,5],[170,2],[184,2],[187,2],[205,1]],"regulate":[[44,3],[63,1],[67,1],[83,1],[109,1],[111,1],[112,1],[126,1],[134,1]],"self-soothing":[[44,1],[63,3],[84,1]],"bath":[[44,1],[63,1],[97,1],[98,1]],"soothing":[[44,1],[103,1]],"oneself":[[44,1],[56,1],[88,1],[91,1],[94,1],[197,1],[202,1]],"mere":[[44,1],[100,1],[178,1]],"emer":[[44,1],[172,1],[202,1],[217,1]],"tolerance":[[44,2],[96,1],[100,1],[111,1],[114,1],[211,2]],"dysfunc-":[[45,1],[56,2],[81,1]],"alternate":[[45,1],[48,1],[82,1],[103,1],[135,1]],"methods":[[45,1],[46,2],[48,2],[57,1],[82,2],[84,1],[103,1],[116,3],[117,3],[121,1],[167,3],[168,3],[169,3],[170,1],[177,1],[197,1],[203,2],[205,1],[206,1],[208,3],[210,7],[211,2],[213,2],[214,5],[217,1],[218,1],[219,3],[223,1],[224,1]],"eeee":[[45,1],[194,1],[203,1]],"spontaneous":[[45,1],[68,2],[69,5],[70,1],[82,1],[83,2]],"determined":[[45,1],[58,1],[63,1],[88,2],[91,1],[112,1],[166,1],[168,1],[208,2]],"principal":[[46,1],[92,2]],"truth":[[46,2],[47,1],[95,1],[98,1],[99,1],[102,1],[210,1],[214,1]],"disputing":[[46,1],[91,1]],"front":[[46,1],[60,1],[69,1],[84,1],[92,3],[103,2],[104,1],[140,1],[173,1],[185,1],[206,2],[208,2],[213,2]],"inquiry":[[46,1],[86,1]],"conversa-":[[46,1],[191,1],[200,1]],"didactic":[[46,1],[75,1],[100,1]],"braun":[[46,1],[80,1]],"saree":[[46,1],[178,1]],"heiniger":[[46,1],[80,1]],"injury":[[46,1],[121,1],[213,2]],"eval-":[[46,1],[47,1]],"uate":[[46,1],[47,1]],"pull":[[46,1],[51,1],[52,2],[97,2],[178,1],[205,1],[206,1],[208,2]],"evenhanded":[[47,1],[60,1]],"explore":[[47,1],[74,1],[89,1],[163,1],[166,1],[168,1],[177,1]],"distance":[[47,2],[48,1],[59,1],[61,2],[78,1],[105,1],[109,1],[112,1],[129,1],[187,1],[204,1],[214,1]],"hoped":[[47,1],[193,1],[219,1]],"sympathetic":[[47,1],[216,1]],"touch":[[47,4],[77,1],[89,1],[94,1],[97,1],[100,1],[104,1],[105,2],[106,2],[138,1],[163,1],[205,1],[209,1]],"decatastrophizing":[[47,1],[83,1],[84,1]],"worst-case":[[47,1],[155,1]],"dying":[[47,2],[70,1],[93,1],[132,1],[170,2],[172,2],[173,2],[183,1],[186,1],[191,1],[192,1],[193,1],[208,1]],"ofyour":[[47,1],[197,1]],"distancing":[[47,1],[69,2],[83,2],[84,1]],"pros":[[47,1],[64,1],[89,5],[90,1],[93,1],[95,1],[110,1],[111,1],[112,1],[118,1]],"cons":[[47,1],[64,1],[89,4],[90,1],[93,1],[95,1],[110,1],[111,1],[112,1],[118,1]],"disclosing":[[47,1],[115,1]],"brainstorm":[[47,1],[49,1],[209,2],[222,2]],"ficiently":[[47,1],[60,1]],"inadequate":[[47,1],[48,1],[51,1],[75,1],[76,1],[86,1],[142,1],[173,3],[196,1],[197,2],[201,1],[214,1]],"understands":[[47,1],[58,1],[99,1],[209,1]],"andrew":[[47,9]],"margaret":[[47,14]],"jumping":[[47,1],[69,1],[70,5],[83,1],[172,1],[183,1],[188,1]],"coworker":[[47,1],[94,1],[98,1],[202,1],[207,1]],"there-":[[47,1],[102,1],[192,1]],"fore":[[47,1],[102,1],[192,1]],"hardly":[[47,1],[155,1]],"soul":[[47,1],[81,1]],"leahy":[[48,1],[57,1],[80,1],[81,2]],"tolin":[[48,1],[81,1],[91,1],[122,1]],"distortion":[[48,3],[51,2],[56,1],[57,1],[102,1]],"papers":[[48,1],[56,1],[69,1],[103,2],[155,2],[160,1]],"known":[[48,1],[51,1],[70,1],[90,2],[103,1],[110,2],[111,1],[134,1],[138,1],[150,1],[153,3],[163,1]],"waited":[[48,1],[155,1]],"count":[[48,2],[51,1],[52,1],[58,1],[100,1],[101,1],[106,1],[164,2],[197,1],[198,1],[210,2]],"convinced":[[48,1],[60,1],[172,1],[189,2],[192,1],[193,1],[194,1],[207,1],[208,1]],"scheme":[[48,1],[114,4],[115,2],[120,1],[121,4],[122,3],[126,1]],"func-":[[48,1],[56,1]],"shifted":[[48,1],[185,1],[186,1],[198,3],[199,1]],"contexts":[[48,1],[71,1],[89,1],[160,1]],"variation":[[48,1],[108,1],[212,1]],"distortions":[[48,7],[51,2],[52,1],[72,1],[81,1],[82,2],[83,1],[112,1],[118,5],[128,1],[140,2],[151,1],[152,5],[161,1],[211,1]],"consistent":[[48,1],[62,1],[74,1],[87,2],[89,4],[91,2],[94,1],[100,3],[102,1],[105,2],[108,1],[109,2],[110,1],[111,1],[170,1],[172,1],[186,1],[188,3],[191,2],[196,1],[198,1],[201,1],[213,1],[214,1],[219,1]],"errors":[[48,4],[74,1],[189,2],[194,1]],"systematic":[[48,1],[62,1],[63,1],[79,1],[80,2],[81,4],[85,1],[86,1],[88,1],[110,1],[116,9],[117,5],[122,2],[123,2],[124,2],[125,5],[126,7],[127,3],[141,2],[150,6]],"burns":[[48,1],[80,1],[90,1],[123,1]],"all-or-nothing":[[48,3],[51,1],[60,1],[61,1],[82,1],[196,2],[197,3],[199,4],[201,1],[221,3]],"polarized":[[48,1],[60,1]],"dichotomous":[[48,1],[94,1]],"fortune-telling":[[48,2],[51,1]],"disqualifying":[[48,1],[51,1],[83,1]],"unreasonably":[[48,2],[76,1]],"deeds":[[48,1],[200,1]],"ignoring":[[48,1],[172,2],[183,3],[187,1],[198,1],[200,1],[212,1]],"fixed":[[48,2],[56,1],[60,1],[128,1],[140,1],[144,1],[196,2],[197,1]],"magnification":[[48,1],[51,1],[83,2],[95,1],[102,1],[140,1],[161,1]],"mediocre":[[48,1],[51,1],[57,1]],"minimization":[[48,1],[51,1],[83,2]],"proves":[[48,1],[51,1]],"magnify":[[48,1],[95,1],[102,1]],"minimize":[[48,1],[95,2],[96,4],[97,1],[102,1],[109,1],[110,1],[113,2],[115,2],[120,1],[203,2],[213,1]],"smart":[[48,1],[51,1],[81,2]],"filter":[[48,1],[83,1]],"selective":[[48,1],[117,1],[162,6]],"abstraction":[[48,1],[74,1]],"lousy":[[48,2],[51,2],[169,1]],"personalization":[[48,1],[83,1]],"repairman":[[48,1],[51,1]],"curt":[[48,1],[51,1]],"precise":[[48,1],[108,1]],"tunnel":[[48,1],[51,1],[84,1],[189,2]],"vision":[[48,1],[51,1],[63,1],[84,1],[121,1]],"teacher":[[48,1],[51,1],[178,1],[200,1],[206,2],[210,2]],"insensitive":[[48,1],[51,1]],"represented":[[48,1],[59,1],[71,1]],"circled":[[48,1],[64,1],[94,1],[177,1],[180,2],[181,4],[182,2],[183,1],[188,1],[202,3],[205,2]],"handy":[[48,1],[151,1],[166,1]],"referred":[[48,1],[87,1],[92,2],[134,1],[171,1],[203,1]],"designing":[[48,1],[148,1]],"firms":[[48,1],[104,1]],"homeless":[[48,1],[59,1],[60,3],[64,1],[69,2],[178,1]],"shelter":[[48,1],[59,1],[60,4],[64,1],[69,3]],"examined":[[48,1],[77,1],[87,1],[88,1],[108,1],[187,1],[188,1]],"feasible":[[48,1],[53,1],[65,1],[112,1]],"abused":[[48,1],[173,1],[175,1],[196,4],[201,2],[203,1],[206,1],[212,3],[215,2]],"attack":[[48,1],[111,1],[140,2],[157,1],[170,5],[173,5],[174,1],[178,2],[179,2],[184,11],[187,10],[192,6],[193,13],[206,1],[208,9],[209,2],[210,1],[212,5],[213,2],[216,1],[217,1],[219,1]],"fire":[[48,1],[109,1],[110,2],[116,1],[172,1],[173,1],[197,1]],"judicious":[[48,1],[61,1],[64,1]],"applies":[[48,1],[51,1],[194,1],[195,2],[217,1]],"quit":[[49,1],[52,1],[86,2],[87,4],[88,4],[89,1],[90,5],[93,1],[108,8],[109,4],[111,2],[112,6],[113,3],[116,1],[117,4],[118,2],[121,8],[123,3],[124,2],[126,4],[127,1],[163,33],[164,10],[165,30],[166,40],[167,18],[168,23],[193,2]],"expensive":[[49,1],[97,1],[204,1]],"temporarily":[[49,1],[61,1],[71,1],[97,1],[153,1],[182,1]],"assistance":[[49,1],[121,1],[161,1]],"pur-":[[49,1],[65,1]],"repeated":[[49,1],[90,1],[91,1],[93,1],[112,1],[113,1],[139,1],[158,1],[161,2],[164,1],[166,2],[167,1],[188,1],[196,1],[205,1],[208,2],[210,1]],"tiveness":[[50,1],[64,1]],"audio":[[50,1],[51,2],[54,1],[63,1],[98,1],[103,1],[114,1],[115,2],[118,2],[119,1],[120,2],[210,1]],"composing":[[51,1],[84,1]],"preference":[[51,2],[127,1]],"applications":[[51,1],[80,1],[81,2],[124,1],[125,1]],"inte-":[[51,1],[79,1]],"repeatedly":[[51,2],[69,2],[91,1],[95,1],[98,1],[110,1],[196,1],[214,1]],"easiest":[[51,1],[77,1],[94,1],[196,1]],"chances":[[51,1],[92,1],[95,1],[96,1],[99,1],[113,1],[163,6],[164,2],[166,4],[167,1],[198,1],[204,2]],"human":[[51,1],[56,1],[57,1],[75,2],[93,1],[108,1],[110,2],[116,14],[118,2],[119,1],[121,1],[123,1],[124,1],[125,1],[126,1],[127,1],[153,1],[160,1],[200,1],[216,1]],"copies":[[51,1],[94,2],[98,1],[101,2],[103,1],[107,1],[114,1],[169,1],[171,1],[174,1],[175,2],[176,4],[177,1],[178,1],[179,2],[180,1],[181,6],[182,1],[184,6],[185,3],[187,1],[188,2],[190,2],[191,1],[194,2],[195,4],[197,4],[198,3],[199,2],[200,5],[201,1],[202,3],[204,1],[205,1],[206,1],[208,1],[209,2],[210,1],[212,4],[214,2],[215,1],[216,3],[217,1],[218,1],[219,1],[221,8],[222,10],[223,1],[225,1]],"cree":[[51,1],[178,1]],"audio-recorded":[[51,1],[82,1],[84,1]],"ensuring":[[51,1],[166,2]],"ideal":[[51,1],[65,1],[85,1],[98,2],[100,1],[192,1],[213,1]],"recorder":[[51,2]],"record-":[[51,1],[74,1],[102,1],[209,1]],"linking":[[51,1],[109,1],[164,1],[175,1]],"unmotivated":[[51,1],[74,1]],"grammar":[[51,1],[52,1]],"philadel-":[[51,2]],"phia":[[51,2]],"inside":[[51,1],[80,1],[94,1],[98,1],[103,1],[145,3]],"sensation":[[51,1],[54,1],[173,1],[208,1]],"daydream":[[51,1],[69,1],[178,1]],"flashback":[[51,1],[208,1]],"parking":[[51,4],[60,1],[70,3],[113,1],[115,1],[121,2],[182,1]],"ticket":[[51,3],[60,1],[193,1]],"gabe":[[51,1],[52,1]],"jyhnoy":[[51,1],[220,2]],"suonsenb":[[51,2]],"poow":[[51,2],[204,1],[219,3],[220,29],[221,10],[222,1]],"jjasunoa":[[51,1],[220,6]],"ybnosy":[[51,1],[220,3],[221,1]],"suoi":[[51,2],[219,1],[220,5],[221,2]],"yyyhnnoy":[[51,1],[221,1]],"senb":[[51,1],[219,1]],"ybnoy":[[51,1],[219,1],[220,4],[221,2]],"bulyjewos":[[51,2]],"inoa":[[51,1],[220,2],[221,1]],"sjybnou":[[51,1],[220,1]],"dwexy":[[51,3]],"dwexz":[[51,2]],"ysnf":[[51,1],[220,2],[221,2]],"jeum":[[51,2],[220,5],[221,3]],"uonenys":[[51,1],[220,2]],"ybnou":[[51,2],[219,1],[220,5],[221,1]],"yeum":[[51,2]],"ybnoyy":[[51,1],[220,3],[221,1]],"uonows":[[51,2]],"yonw":[[51,2],[220,1],[221,1]],"mojaq":[[51,1],[220,5],[221,2]],"pulw":[[51,1],[220,4],[221,2]],"juem":[[51,1],[220,4],[221,2]],"ybnouy":[[51,1],[220,3]],"uaym":[[51,1],[220,2]],"golf":[[51,1],[97,1],[204,1]],"snoasau":[[51,2]],"djay":[[51,1],[220,4],[221,1]],"pjnoo":[[51,3]],"yhnouy":[[51,1],[220,3],[221,1]],"jyyhnouy":[[51,1],[219,1]],"simpler":[[52,1],[196,1]],"infor-":[[52,1],[58,1],[114,1],[181,1]],"mation":[[52,1],[58,1],[114,1],[181,1]],"columns":[[52,1],[143,1],[177,9],[178,3],[180,1],[182,9],[183,2],[184,2],[185,2],[186,11],[187,3],[188,6],[193,1],[195,1],[223,4]],"umns":[[52,1],[183,1],[184,1]],"overemphasize":[[52,1],[56,1],[97,1]],"opportu-":[[52,1],[206,1]],"nity":[[52,1],[206,1]],"optimal":[[52,1],[84,1]],"two-column":[[52,1],[84,1]],"rita":[[52,1],[69,2],[194,3]],"studied":[[53,2],[88,1],[90,1],[120,1],[186,1],[187,1]],"intensively":[[53,1],[165,1]],"standalone":[[53,2],[55,1]],"practiced":[[53,1],[54,1],[107,1],[113,1],[169,1],[184,1],[185,1],[187,1],[188,1],[192,1],[193,1],[199,1],[206,1],[208,1],[210,1],[217,3],[219,2],[224,1],[225,1]],"abbott":[[53,1],[79,1]],"chiesa":[[53,1],[80,1]],"serretti":[[53,1],[80,1]],"hof-":[[53,1],[81,1]],"mann":[[53,1],[81,1]],"kallapiran":[[53,1],[81,1]],"informal":[[53,7],[54,1],[55,2],[83,2]],"definition":[[53,1],[80,1],[105,1],[118,1],[124,1],[125,1],[126,1]],"reached":[[53,1],[172,1],[198,1],[201,1],[209,1]],"bishop":[[53,1],[80,1]],"externally":[[53,1],[158,4]],"internally":[[53,1],[89,1],[154,1]],"nonjudgmental":[[53,2],[89,2],[91,1],[96,1],[191,1]],"obsessing":[[53,1],[63,1]],"encing":[[53,1],[68,1],[191,1],[212,1],[217,1]],"cravings":[[53,1],[89,2],[91,2],[96,2],[97,3],[98,1],[109,1],[111,1],[114,1],[115,1],[116,2],[118,1],[120,1],[125,1],[127,1],[163,1],[164,1],[165,1],[166,7],[167,2],[168,2]],"judgment":[[53,1],[59,1],[76,1],[78,1],[191,1],[216,1]],"impossible":[[53,1],[155,1],[172,1],[192,1],[208,1]],"excessively":[[53,1],[55,1],[140,1]],"ruminate":[[53,1],[55,1],[97,1]],"suppress":[[53,1],[78,1],[91,2],[96,1],[97,1]],"self-compassion":[[53,1],[105,1]],"nation":[[53,1],[110,1]],"runs":[[53,1],[70,1],[216,1]],"wasting":[[53,1],[54,1],[57,1]],"heavy":[[53,1],[88,1],[90,1],[108,2],[111,2],[112,1],[115,1],[124,1],[128,1],[156,1],[158,1]],"percentage":[[53,1],[79,1],[140,2],[147,1]],"ican":[[53,1],[190,1]],"occurring":[[53,1],[113,1],[134,1],[161,1],[218,1]],"recurrence":[[53,1],[71,1],[80,1]],"mind-":[[53,2],[55,1]],"fulness":[[53,2],[55,1]],"meditation":[[53,2],[55,1],[71,1],[83,1],[87,1],[125,1],[126,2]],"aside":[[53,1],[103,1],[109,1],[121,1],[169,1],[218,1]],"wandered":[[53,1],[55,1]],"wanders":[[53,2],[54,2],[55,1],[70,1]],"upon":[[53,1],[107,1],[113,1],[163,2],[164,1],[166,1],[167,1],[172,1],[187,1],[205,1]],"experi":[[53,1],[108,1]],"self-practice":[[53,1],[80,1]],"ings":[[53,1],[94,1],[188,1],[206,1]],"brushing":[[53,1],[58,2],[95,1],[97,1]],"teeth":[[53,1],[58,2],[95,1],[97,1],[113,1]],"senses":[[53,1],[55,1],[63,1],[69,1],[93,2],[105,3],[161,1],[205,1],[208,1],[209,1],[210,2]],"surroundings":[[53,1],[96,1],[99,1],[100,1],[102,1],[105,1],[208,1],[209,1]],"driving":[[53,1],[98,2],[102,1],[103,1],[107,1],[175,1],[177,1],[178,1],[185,1],[187,1],[204,1],[208,1],[209,1]],"chores":[[53,1],[63,1],[78,1],[202,1]],"mindful-":[[53,1],[55,1],[89,1]],"caught":[[53,1],[54,2],[69,1],[168,1],[217,1]],"advise":[[53,1],[60,1],[64,1],[69,1],[91,1],[94,1],[97,2],[98,1],[112,1],[114,1],[115,1],[163,1],[164,1],[165,3],[166,7],[167,5],[168,17]],"re-rate":[[53,1],[79,1]],"typically":[[53,1],[71,1],[74,1],[87,1],[89,1],[90,1],[93,3],[97,3],[98,1],[102,1],[103,2],[105,1],[108,2],[110,2],[111,2],[112,1],[163,1],[164,1],[166,1],[194,1]],"motivates":[[53,1],[69,1]],"replicate":[[53,1],[88,1]],"nonjudg-":[[54,1],[213,1]],"loud":[[54,1],[103,2]],"closed":[[54,1],[171,1]],"breathe":[[54,1],[78,1],[93,1],[100,1],[104,1],[105,1],[178,1],[184,1],[193,4],[208,1],[210,7]],"lungs":[[54,1],[110,1],[161,1],[164,5],[168,1]],"contract":[[54,1],[89,1],[94,5],[101,5],[118,1]],"wander":[[54,2],[55,1],[179,1],[192,1]],"ferent":[[54,1],[170,1],[214,1]],"fade":[[54,1],[93,1]],"sible":[[54,1],[69,1],[90,1],[115,1],[177,1],[193,1]],"kabat-zinn":[[54,1],[81,1]],"mccown":[[54,1],[81,1]],"emery":[[55,1],[68,1],[69,1],[78,1],[80,2],[190,1],[215,1]],"constructively":[[55,1],[78,2],[101,1],[213,1]],"adopting":[[55,1],[92,1]],"script":[[55,1],[98,2],[100,10],[103,7],[104,3],[105,1],[107,1],[114,1],[119,2],[213,1]],"floor":[[55,1],[79,4],[178,1],[185,1],[209,1],[214,1],[218,1]],"craving":[[55,1],[91,1],[96,1],[100,1],[111,1],[114,1],[127,1],[211,1]],"deeper":[[56,1],[100,5],[104,9],[105,8],[106,1],[155,1],[170,1],[192,1],[195,1],[210,1],[218,2]],"finkel":[[56,1],[80,1]],"catego-":[[56,1],[204,1],[222,1]],"ries":[[56,1],[69,1],[112,1],[175,1],[178,1],[204,1],[222,1]],"assump-":[[56,1],[192,1],[194,2],[195,1]],"malleable":[[56,1],[144,1]],"schemas":[[56,27],[58,1],[59,1],[60,2],[81,1],[82,1],[83,2],[84,1]],"modes":[[56,4],[80,1],[83,2],[84,1]],"authors":[[56,1],[71,1],[86,1],[87,6],[88,1],[108,2],[112,2],[224,1],[225,1]],"structures":[[56,1],[110,1],[153,2]],"tivity":[[56,1],[202,1]],"magnitude":[[56,1],[90,1],[110,1]],"eral":[[56,1],[60,2],[64,1],[68,1],[108,1],[186,1]],"indicating":[[56,1],[109,1],[183,1],[203,1]],"motivational":[[56,3],[63,1],[87,1],[89,5],[90,2],[91,3],[98,2],[116,4],[117,1],[118,1],[123,4],[124,2],[125,2],[126,5],[127,6]],"physi-":[[56,1],[60,1],[63,1],[114,1],[115,1],[170,1],[175,1]],"ological":[[56,1],[63,1]],"ures":[[56,1],[199,1]],"accordance":[[56,1],[58,1],[64,1],[69,1],[71,1],[72,1],[96,1],[103,1]],"shane":[[56,1],[58,1]],"deactivate":[[56,1],[59,1]],"activate":[[56,1],[59,1],[79,1],[109,1],[137,1],[201,1]],"balanced":[[56,4],[59,1],[60,1],[95,1],[109,1],[129,1],[135,1],[140,6],[143,3],[149,3],[152,1],[170,1],[177,4],[182,2],[183,4],[184,8],[185,5],[186,30],[187,22],[188,24],[189,2],[192,4],[210,3],[217,1],[218,1],[223,11]],"yelled":[[56,1],[58,1],[79,1],[177,1],[178,1],[182,4],[185,2],[212,2]],"paid":[[56,1],[58,2],[61,2],[100,1],[121,1],[186,1],[199,1],[219,1]],"competently":[[56,3],[58,1],[61,2],[76,1]],"likable":[[56,2],[173,1],[196,1]],"lovability":[[56,2],[172,1],[198,5]],"affective":[[56,2],[63,1],[127,1]],"libido":[[56,2],[76,1]],"forth":[[56,1],[74,1],[110,1],[176,1],[197,1],[213,1]],"clark":[[56,1],[63,1],[80,4],[81,1],[127,1],[140,2],[160,3]],"belongs":[[56,1],[60,1],[76,1],[215,1]],"likewise":[[56,1],[113,1],[170,1]],"falls":[[56,1],[57,1],[87,1]],"rotten":[[56,1],[214,1]],"ated":[[56,1],[108,1],[115,1]],"encountered":[[56,1],[168,1],[183,1]],"faced":[[56,1],[69,1],[122,1],[155,1],[209,1]],"minor":[[56,1],[91,1],[121,1],[164,2],[165,1],[215,6]],"deactivated":[[56,1],[59,1]],"firmly":[[56,1],[74,1],[104,1],[193,1]],"violated":[[56,1],[134,1],[212,1],[214,1],[216,2]],"overgeneralize":[[56,1],[95,1],[101,1]],"overdue":[[56,1],[215,1],[216,1]],"bill":[[56,2],[57,1]],"researching":[[56,1],[114,1],[138,1],[161,1]],"bounced":[[56,1],[61,1]],"incorporated":[[56,1],[74,1],[99,1],[101,1],[113,1]],"petently":[[56,1],[92,1]],"beliefin":[[57,1],[197,1]],"operating":[[57,1],[58,3],[192,1]],"sustain":[[57,1],[89,2],[110,1],[119,1]],"lying":[[57,1],[63,1],[69,1],[100,1],[155,1],[178,2],[179,1],[184,1],[187,1],[192,1],[195,2],[215,3]],"espe-":[[57,1],[76,1],[203,1],[216,1],[219,1]],"cially":[[57,1],[76,1],[203,1],[216,1],[219,1]],"forgotten":[[57,1],[155,3],[172,1],[185,1],[212,1],[217,1]],"capture":[[57,1],[179,1],[198,2]],"ships":[[57,1],[196,1],[203,1],[214,1]],"weakness":[[57,1],[208,1]],"sticking":[[57,2],[190,1]],"crowd":[[57,2],[192,1],[194,1],[208,1]],"weissman":[[57,1],[81,1]],"endorsed":[[57,1],[74,1]],"highlight":[[57,1],[97,1],[114,1],[129,1],[208,1],[217,1]],"cally":[[58,1],[60,1],[64,1],[76,1],[103,1],[110,1]],"identi-":[[58,1],[179,1],[191,1]],"fying":[[58,1],[191,1]],"sese":[[58,1],[70,1]],"eset":[[58,1],[59,1]],"impairment":[[58,1],[75,1]],"readily":[[58,1],[71,1],[112,1],[203,1]],"compe-":[[58,1],[59,1]],"prevents":[[58,1],[86,1],[191,1]],"billion":[[58,1],[109,1]],"contradicts":[[58,1],[172,1]],"screening":[[58,1],[154,1]],"evi-":[[58,2],[59,1],[185,1],[189,2],[198,1]],"dence":[[58,2],[59,1],[69,1],[89,2],[110,1],[185,1],[189,2],[198,2],[208,1],[209,1]],"robot":[[58,2],[86,1],[98,1]],"basement":[[58,1],[218,1]],"minister":[[58,1],[219,1]],"thanked":[[58,1],[59,1],[200,1]],"meals":[[58,2],[171,1]],"draws":[[58,1],[61,1],[64,1],[65,1],[93,1],[109,1],[139,1]],"provoking":[[58,1],[65,1],[150,2]],"analysis":[[58,1],[64,1],[80,1],[81,3],[82,2],[86,6],[87,5],[110,1],[116,6],[117,2],[118,1],[119,1],[122,1],[123,3],[124,1],[125,9],[126,8],[127,4]],"passing":[[58,1],[70,1],[100,1],[104,2]],"waking":[[58,1],[69,1],[93,1],[163,1],[164,1],[168,1]],"house-":[[58,1],[64,1]],"clause":[[58,1],[94,1],[102,1]],"imagined":[[58,1],[70,1],[78,1],[104,1],[182,1],[186,1],[194,1],[206,1],[209,3],[210,1]],"maladap-":[[59,1],[96,1]],"weakening":[[59,1],[113,1]],"ingram":[[59,1],[81,2]],"padesky":[[59,1],[70,1],[81,3],[134,1],[160,1],[170,1],[171,1],[174,1],[175,2],[176,3],[177,2],[178,1],[179,3],[180,1],[181,4],[182,1],[183,1],[184,2],[185,1],[186,1],[187,2],[188,2],[190,1],[191,1],[193,1],[194,2],[195,1],[197,4],[198,3],[199,2],[200,5],[201,1],[202,3],[204,1],[205,1],[206,1],[208,2],[209,2],[210,1],[212,3],[214,2],[215,1],[216,3],[217,1],[218,1],[221,8],[222,10],[223,1],[224,1],[225,3]],"pugh":[[59,1],[60,1],[62,1],[81,1]],"referencing":[[59,2],[83,2]],"inducing":[[59,2],[69,1],[82,1],[83,1],[84,1]],"initiated":[[59,1],[109,1],[113,1]],"atthe":[[59,1],[178,1],[194,1],[195,1]],"self-confidence":[[59,1],[69,1],[134,1],[163,1],[166,2],[167,3],[168,1],[202,1]],"characterized":[[59,1],[202,1],[205,1],[208,1],[211,1],[217,1],[219,1]],"plus":[[59,1],[86,1],[109,1],[127,2],[164,1],[165,1],[166,1]],"indicates":[[59,1],[163,1],[164,1],[165,1],[211,1]],"favorable":[[59,1],[86,2],[87,3],[88,1],[89,1]],"tice":[[59,1],[81,1],[95,1],[200,1]],"discovered":[[59,1],[90,4],[110,1],[173,1],[175,2],[184,1],[185,1],[186,2],[191,2],[199,1],[206,1],[213,1]],"historic":[[59,2]],"graphs":[[59,1],[185,1]],"potent":[[59,1],[112,1],[113,1]],"pipe":[[59,1],[111,6],[123,1]],"asks":[[59,1],[60,1],[70,1],[176,4],[179,1],[183,1],[185,1],[186,1],[207,1],[208,1],[214,1],[217,1]],"counterbalancing":[[60,1],[198,1]],"widely":[[60,1],[71,1],[110,1]],"weakened":[[60,1],[219,1]],"remnant":[[60,1],[71,1]],"gestalt-type":[[60,1],[79,1],[83,1]],"empty-chair":[[60,1],[83,1]],"escape":[[60,1],[94,1],[102,1],[134,1],[156,1],[158,1],[207,1]],"distraction":[[60,1],[63,1],[74,1],[92,1],[161,1],[166,1],[193,1]],"oliveira":[[60,2],[80,1]],"contribution":[[60,1],[65,1],[224,1],[225,1]],"reframing":[[60,2],[62,1],[83,1],[84,1]],"stories":[[60,2],[83,1],[84,1],[114,1],[156,1],[158,2],[183,1],[201,1]],"continuum":[[60,3],[83,2],[196,1]],"reference":[[60,1],[61,2],[83,1],[161,1],[166,1]],"tests":[[60,2],[61,1],[74,1],[83,2],[123,1],[138,1],[157,2],[158,3],[164,2],[166,1],[167,1],[168,1],[169,1],[170,1],[192,1],[205,1],[208,1]],"ingful":[[60,1],[100,1]],"remaining":[[60,1],[65,1],[94,1],[100,1],[101,1],[114,1],[164,1],[165,1],[171,1],[191,2],[201,1],[211,1]],"staff":[[60,1],[109,1],[114,1],[121,1],[123,1],[164,1],[190,1],[191,2]],"reframe":[[60,5],[62,2],[71,2],[79,2],[94,1]],"myjob":[[60,1],[61,1],[70,1]],"reframes":[[60,3],[83,1],[84,1]],"counter":[[60,1],[88,1],[95,1],[111,2],[113,1],[115,1],[118,1],[120,1],[178,1],[185,1],[188,2],[213,2],[216,1]],"imag-":[[60,1],[70,1],[210,1],[218,1]],"reason-":[[60,1],[213,1]],"lamp":[[60,2],[181,4]],"introduced":[[60,1],[107,1],[169,1]],"carried":[[60,1],[72,1],[110,1],[146,2],[163,1],[164,1],[166,1],[167,1],[168,1],[216,1]],"powerfully":[[60,1],[173,1]],"article":[[60,1],[116,5],[124,1],[125,1],[126,5],[127,3],[169,1],[206,1]],"economic":[[60,1],[108,1],[112,1],[124,1],[197,1]],"trends":[[60,1],[116,1],[123,2],[160,1]],"son-in-law":[[60,1],[183,1],[186,1]],"tasted":[[60,1],[105,1]],"cooking":[[60,1],[177,1],[204,1]],"door":[[60,1],[64,1],[100,1],[178,1],[192,2],[201,1],[204,1],[207,6]],"decreas-":[[60,1],[211,1]],"entering":[[60,1],[65,2],[191,1],[213,2]],"vivid":[[60,1],[69,1],[70,1],[111,1],[121,1],[132,1],[173,1]],"abusive":[[60,1],[75,1],[171,2],[173,1],[196,2],[203,1],[212,1],[214,2]],"leagues":[[60,1],[62,1],[89,1],[108,1]],"ground":[[60,1],[179,1],[196,2],[197,1],[218,1]],"represent":[[61,1],[93,1],[113,1],[155,3],[215,1]],"who's":[[61,2]],"belong":[[61,1],[103,1]],"jeremy":[[61,4]],"ethic":[[61,3],[88,1]],"borrowing":[[61,1],[89,1]],"hurting":[[61,1],[212,3],[214,1],[216,3],[217,1],[224,1]],"sounding":[[61,1],[194,2]],"cessful":[[61,1],[90,1],[114,1]],"heightened":[[61,1],[95,1],[108,1],[113,1],[154,1],[155,1],[161,2]],"boyfriend":[[61,1],[171,1]],"fail-":[[61,1],[199,1],[216,1]],"responds":[[61,2],[71,1],[74,1]],"roles":[[61,4],[64,1],[79,1],[171,1]],"train":[[61,1],[80,1],[105,1],[159,1]],"emilio":[[61,2]],"trade":[[61,1],[108,1]],"switching":[[61,1],[69,1],[82,1],[83,1]],"confrontational":[[61,1],[89,1]],"elementary":[[62,2]],"adolescent":[[62,1],[81,1],[110,1],[117,1]],"salient":[[62,1],[104,1],[108,1],[113,2]],"periods":[[62,1],[71,1],[76,1],[87,2],[90,1],[111,1],[112,1],[134,1],[153,1],[159,1],[163,1],[166,3],[171,1],[205,1],[208,1],[210,1],[212,1],[218,1]],"concluded":[[62,1],[87,5],[89,1],[108,3],[109,1],[110,3],[171,1],[173,1],[178,1],[186,2],[187,1],[195,2],[196,1]],"girls":[[62,1],[173,2],[196,1]],"bullied":[[62,1],[206,1],[208,1]],"picked":[[62,1],[176,1],[215,1]],"hood":[[62,1],[110,1],[196,1],[211,1]],"mcevoy":[[62,1],[81,1]],"corresponding":[[62,1],[76,1]],"restructur-":[[63,1],[74,1]],"mitment":[[63,1],[92,1],[208,1]],"interviewing":[[63,1],[64,1],[89,2],[116,4],[117,1],[118,1],[123,4],[124,2],[125,2],[126,5],[127,6],[192,1]],"graded":[[63,1],[64,1],[65,1],[82,1],[83,3],[168,1]],"assignments":[[63,1],[64,1],[82,1],[120,1]],"self-comparisons":[[63,1],[65,1],[82,2],[83,1]],"circum-":[[63,1],[71,1],[98,1],[191,1],[196,1],[216,1]],"stances":[[63,1],[98,1],[191,1],[196,1],[216,1]],"accep-":[[63,1],[191,1]],"mindfully":[[63,1],[113,1]],"ner-":[[63,1],[70,1]],"vous":[[63,1],[70,1],[178,1]],"websites":[[63,1],[218,2]],"bodies":[[63,1],[128,1],[129,2],[161,2],[164,1],[166,1],[167,1],[169,2],[210,1],[212,1]],"posting":[[63,1],[97,1]],"pets":[[63,1],[93,1],[200,1]],"gratitude":[[63,1],[176,1],[196,1],[200,44],[201,4],[217,3],[218,5],[219,1],[223,9],[224,1],[225,1]],"benson":[[63,1],[80,1]],"davis":[[63,1],[80,2],[100,1],[116,1],[117,2],[123,2],[124,2]],"jacobson":[[63,1],[80,1],[81,2],[117,1],[126,1]],"progressive":[[63,1],[81,1],[83,1],[84,1],[142,1],[210,7],[211,2],[223,1]],"muscle":[[63,2],[83,1],[84,1],[120,1],[128,1],[161,1],[171,1],[173,3],[184,1],[187,2],[193,1],[205,3],[206,2],[210,12],[211,2],[213,1],[217,1],[218,1],[222,3],[223,2]],"slow":[[63,1],[70,1],[76,1],[98,1],[100,2],[104,2],[198,1],[201,1],[208,1],[210,3]],"relax":[[63,1],[98,2],[100,1],[103,1],[106,1],[156,1],[157,1],[158,2],[167,1],[169,1],[175,1],[192,1],[195,1],[210,2],[213,1]],"groups":[[63,1],[86,3],[88,1],[92,1],[107,1],[109,1],[116,1],[120,2],[128,1],[208,1],[210,2]],"beach":[[63,1],[69,1],[224,2],[225,2]],"scripts":[[63,1],[89,1],[91,1],[96,1],[98,1],[101,2],[103,1],[107,1],[115,1],[118,4]],"paradoxical":[[63,1],[122,1]],"munication":[[64,2]],"parenting":[[64,2],[186,3]],"organization":[[64,1],[84,1],[110,1],[117,3],[119,1]],"possess":[[64,1],[91,1],[218,1]],"imake":[[64,1],[171,1]],"adequate":[[64,1],[113,1],[167,1],[168,1],[169,1],[175,1],[216,1]],"clothes":[[64,1],[76,1],[93,1],[156,1],[158,1],[190,1],[210,1]],"uncertainty":[[64,1],[110,1],[207,1]],"mak-":[[64,1],[65,1],[194,1]],"weighing":[[64,2],[215,2],[217,1]],"piece":[[64,1],[95,3],[97,1],[159,1],[176,1],[182,1],[184,1],[196,1]],"volunteerin":[[64,3]],"writ-":[[64,1],[182,1],[193,1],[200,1]],"sides":[[64,1],[140,1],[153,2],[174,1]],"circles":[[64,1],[169,1]],"column":[[64,1],[143,1],[177,25],[178,2],[180,5],[181,7],[182,7],[183,16],[184,14],[185,7],[186,14],[187,9],[188,8],[189,1],[190,1],[195,4],[202,2],[205,2],[209,3],[212,2],[222,3]],"listing":[[64,1],[65,1],[94,1],[97,1],[177,1]],"staircase":[[64,5],[82,1],[83,2],[84,1]],"graphic":[[64,1],[65,1],[69,1]],"mov-":[[64,1],[96,1]],"rtment":[[64,2]],"afford":[[64,2]],"sev-":[[64,1],[68,1],[186,1]],"bot-":[[64,1],[182,1],[195,1]],"wont":[[64,1],[187,1]],"socially":[[65,1],[76,1],[124,1],[137,1],[140,1],[155,1],[179,1]],"salkovskis":[[65,1],[80,1],[81,2]],"gradual":[[65,1],[125,1],[134,1],[164,1]],"cats":[[65,3]],"pictures":[[65,1],[68,1],[97,1],[103,1],[178,1],[211,1]],"carrier":[[65,1],[109,1]],"petting":[[65,1],[200,1]],"noted":[[65,1],[76,1],[86,1],[96,1],[103,2],[108,1],[113,2],[115,1],[202,1]],"anxiety-provoking":[[65,2],[78,1],[208,1]],"exposures":[[65,7],[82,1],[83,1],[127,1],[209,1]],"anxiety-":[[65,1],[170,1]],"raise":[[65,1],[95,1],[173,1],[193,2]],"formally":[[65,1],[86,1],[92,1]],"craske":[[65,1],[80,1]],"dan-":[[65,1],[193,1],[206,1],[208,1]],"gerous":[[65,1],[193,1],[208,1]],"consequence":[[65,1],[95,1],[167,1]],"condi-":[[65,1],[197,1]],"impractical":[[65,1],[101,1]],"regular":[[65,1],[70,1],[71,1],[94,1],[96,1],[103,2],[105,1],[109,8],[110,1],[126,1],[128,2],[132,1],[151,1],[163,3],[164,1],[166,3],[169,2],[170,1],[176,1],[200,2],[201,1],[202,1],[210,1],[212,1],[218,3],[223,1]],"aroused":[[65,1],[173,1]],"hierarchies":[[65,1],[71,1]],"stein":[[65,1],[118,1],[123,1]],"stainback":[[65,1],[80,1]],"hare":[[65,1],[178,1]],"stance":[[65,1],[71,1],[80,1],[89,1],[90,1],[111,1]],"played":[[65,2],[113,1],[210,1]],"replied":[[65,1],[172,1],[178,1],[213,1],[217,1]],"devoting":[[65,1],[109,1]],"expenditure":[[65,2],[67,1],[108,1]],"charts":[[65,1],[83,1]],"hair":[[65,3],[93,1],[156,1],[158,1],[171,1]],"losing":[[65,2],[70,1],[76,1],[89,1],[94,1],[113,1],[140,1],[155,1],[157,1],[172,1],[175,1],[178,1],[179,1],[188,1],[189,3],[190,1],[201,1],[208,3],[213,2]],"sections":[[65,3],[92,1],[178,1],[194,1],[196,2],[197,1],[202,2],[203,1],[208,1],[212,1]],"labels":[[65,4],[74,1],[179,1],[213,1]],"estimate":[[65,1],[93,2],[108,1],[120,1],[121,1],[122,2]],"organizing":[[65,1],[113,1]],"legitimate":[[66,3]],"concen-":[[66,1],[76,1]],"trating":[[66,1],[76,1]],"comparison":[[66,2],[80,1],[86,1],[87,1],[89,1],[108,1],[117,1],[124,3],[125,1],[155,1]],"lowest":[[67,1],[150,1],[208,1],[209,1],[222,1]],"prospect":[[67,1],[89,1]],"email":[[68,1],[69,1],[94,1],[101,3],[104,1],[115,2],[120,3],[121,3],[166,1],[200,1]],"envisioned":[[68,1],[69,1]],"sensory":[[68,1],[113,2],[128,1],[148,1],[159,1],[160,1],[205,1],[208,1],[209,1]],"hackmann":[[68,1],[69,1],[70,1],[80,1]],"induce":[[68,1],[70,1]],"envision":[[69,2],[89,1],[202,1]],"induces":[[69,1],[134,1]],"rehearsing":[[69,2],[82,1],[83,1],[89,1],[213,1]],"substituting":[[69,3],[83,1],[90,1],[109,1],[112,1]],"memo-":[[69,1],[175,1]],"confi-":[[69,1],[89,2],[198,1],[208,1],[209,1]],"summer":[[69,3]],"succeeded":[[69,1],[96,1],[100,1],[113,1],[176,1]],"imagination":[[69,1],[92,3],[97,1],[98,1],[99,1],[114,2],[115,1],[118,2],[119,1],[120,1],[127,1],[193,3],[208,1],[209,2],[211,1],[218,3]],"boosts":[[69,1],[168,1]],"rough":[[69,2],[166,1]],"staring":[[69,1],[171,1],[179,2],[184,1]],"natural":[[69,1],[78,1],[135,1],[137,1],[141,1],[183,1],[193,1],[210,1]],"near":[[69,1],[70,3],[72,1],[95,1],[155,2],[156,1],[157,1],[158,2],[185,1],[203,1],[218,2]],"tak-":[[69,1],[70,1],[211,1]],"situ-":[[69,1],[175,4],[177,2],[187,1],[188,1],[192,1],[209,1],[213,2]],"predicts":[[69,1],[80,1],[87,1],[192,1]],"induced":[[69,2],[123,1]],"function-":[[69,1],[77,2]],"suitable":[[69,1],[164,2],[165,1]],"channel":[[69,1],[95,1],[96,1]],"undergoing":[[69,1],[86,1],[90,1],[108,1],[127,1],[170,1]],"faces":[[69,1],[70,1],[201,1],[209,1]],"wonderful":[[69,1],[105,1],[172,2],[208,1]],"july":[[69,1],[123,1]],"synonyms":[[69,1],[83,1]],"scary":[[69,1],[173,1],[178,3],[216,1]],"violent":[[69,1],[122,1],[173,1],[194,1]],"distress-":[[69,1],[72,1],[79,1],[176,1]],"director":[[69,1],[85,2],[224,1]],"invites":[[69,2],[103,1]],"picking":[[69,1],[105,1],[140,1]],"neither":[[69,1],[96,1]],"catastrophe":[[70,2],[81,1],[206,1],[208,4]],"stops":[[70,2],[95,1],[102,1],[163,1],[164,1]],"shaky":[[70,1],[205,1],[222,1]],"sight":[[70,1],[97,1],[176,1],[205,1]],"jumped":[[70,1],[170,1],[178,1]],"accordingly":[[70,1],[87,2],[88,1],[89,1],[91,1],[92,2],[95,1],[108,1],[110,1],[111,3],[166,1]],"intensive":[[70,1],[86,1],[87,3],[124,1],[163,1]],"cancer":[[70,1],[86,1],[87,1],[93,1],[103,1],[109,2],[110,1],[111,2],[113,1],[116,1],[118,1],[122,2],[123,2],[124,2],[126,1],[127,10],[164,1],[166,1],[170,8],[191,6],[201,1],[202,1]],"dead":[[70,1],[170,2]],"survive":[[70,1],[208,1]],"desperate":[[70,1],[171,1]],"deserted":[[70,2]],"combined":[[70,1],[86,1],[87,2],[88,3],[89,1],[93,1],[109,1],[125,2],[191,1]],"rehearse":[[70,1],[156,1],[158,1],[213,1]],"tressing":[[70,1],[188,1]],"mooney":[[70,1],[81,1]],"confrontation":[[70,1],[89,1],[130,1],[155,1],[216,1]],"gathering":[[70,1],[168,4],[185,2],[186,1],[192,1],[195,1],[197,1],[213,1],[223,7]],"presentation":[[70,1],[80,1],[86,1],[92,6],[98,1],[99,1],[100,2],[101,1],[103,1],[114,2],[115,3],[120,1],[208,2]],"delay":[[71,1],[127,1],[182,1],[210,2],[220,1]],"jonge":[[71,1],[80,1]],"enhancing":[[71,1],[74,1],[81,1],[89,2],[90,1],[94,1],[95,1],[100,1],[104,1],[113,1],[124,1],[125,1],[127,1]],"self-therapy":[[71,7],[72,4],[82,1],[83,1],[84,1]],"setbacks":[[71,4],[72,3],[82,1],[84,5],[189,1],[190,1]],"graph":[[71,8],[82,2],[83,1],[84,2],[169,1],[188,1],[202,1],[219,2]],"fluctuations":[[71,1],[129,3],[133,2],[217,1],[218,1]],"temporary":[[71,1],[80,1],[93,2],[97,1],[102,2],[106,1],[111,2],[115,1],[117,1],[120,1],[163,1],[170,1],[184,1],[189,2],[205,1],[209,1]],"plateau":[[71,1],[90,1]],"skillfully":[[71,1],[91,1]],"resemble":[[71,1],[110,1]],"southern":[[71,2]],"border":[[71,2]],"texas":[[71,3]],"florida":[[71,2]],"humorous":[[71,1],[205,1]],"square":[[71,1],[177,1]],"scheduled":[[71,1],[72,2],[77,2],[103,1],[120,2],[205,1]],"synopsis":[[71,1],[92,1]],"balancing":[[71,1],[210,1]],"proportion":[[71,1],[212,2]],"embarrassment":[[71,1],[207,1],[211,1]],"tern":[[71,1],[209,1]],"american":[[71,1],[76,1],[79,2],[80,6],[81,5],[82,1],[87,2],[88,1],[92,1],[93,1],[101,1],[103,1],[111,1],[116,8],[117,3],[118,2],[121,2],[122,2],[123,12],[124,8],[125,9],[126,11],[127,5]],"association":[[71,1],[79,2],[80,1],[81,4],[82,1],[87,1],[88,1],[91,1],[92,1],[93,1],[96,2],[101,1],[110,1],[113,1],[116,3],[117,2],[118,1],[121,2],[122,1],[123,1],[124,4],[125,7],[126,5],[127,1],[224,1],[225,2]],"connections":[[71,1],[169,1],[170,1],[171,1],[173,4],[196,1],[203,1],[205,1],[217,1],[224,1]],"catastrophic":[[71,1],[95,1],[123,1],[140,1],[160,1],[161,1],[170,1],[171,1],[184,1],[206,1],[208,1],[219,2]],"chal-":[[71,1],[171,1],[209,1]],"lenges":[[71,1],[171,1],[209,1]],"grow":[[71,1],[105,1],[161,1],[169,1],[177,2],[195,1],[196,3],[198,1]],"martin":[[71,1],[84,1],[109,2],[126,1],[127,1]],"seligman":[[71,1],[84,1]],"bannink":[[71,1],[79,1]],"jeste":[[71,1],[81,1]],"palmer":[[71,1],[81,1]],"near-termination":[[71,1],[83,1],[84,1]],"dependence":[[71,1],[87,2],[108,1],[111,4],[114,1],[116,3],[117,1],[123,4],[124,2],[125,4],[126,2],[163,10],[168,4]],"spacing":[[71,3]],"quency":[[71,1],[74,1],[214,1]],"experimenting":[[71,1],[199,1]],"identifies":[[71,1],[121,1],[194,1]],"selftherapy":[[71,2]],"convenience":[[71,1],[181,1]],"fresh":[[71,1],[89,1],[96,1],[97,1],[105,2],[113,1],[164,1],[197,1],[213,2]],"appointments":[[72,2],[158,1],[165,1],[166,2],[167,1],[170,1]],"frightened":[[72,1],[155,1],[170,2],[175,2],[219,1]],"warning":[[72,3],[208,1],[213,4],[214,2],[217,2],[218,15],[223,3],[224,1]],"start-":[[72,1],[206,1]],"mixed":[[72,1],[86,1],[162,1],[176,1],[177,1]],"ship":[[72,1],[201,1],[202,1]],"regret":[[72,1],[171,1],[172,1],[182,1]],"procrastinating":[[72,1],[218,1]],"catastrophize":[[72,1],[75,1]],"pride":[[72,1],[89,1],[90,1],[93,1],[97,1],[179,1],[196,1],[210,1]],"preventive":[[72,1],[80,1],[116,2],[117,1],[123,5],[124,2],[125,1],[126,2],[127,1]],"esee":[[72,1],[178,1]],"wince":[[72,1],[213,1]],"cere":[[72,1],[215,1]],"ners":[[72,1],[81,1]],"handled":[[72,1],[145,2],[206,1],[216,1]],"joint":[[73,1],[76,1],[115,1],[121,1],[126,1]],"uncovering":[[73,1],[74,1],[84,1]],"remediate":[[73,3],[75,1]],"existence":[[74,1],[84,1],[129,1],[154,1]],"tracking":[[74,1],[101,1],[113,1],[170,1],[176,2],[182,1],[185,1],[188,2],[192,1],[195,1],[201,1],[205,1],[212,3],[219,1],[222,2],[224,1]],"tape":[[74,1],[98,1],[101,1]],"super-":[[74,1],[189,2]],"visor":[[74,1],[189,2]],"confidential":[[74,1],[115,2],[121,3]],"delete":[[74,2]],"inhibit":[[74,1],[87,1]],"blaming":[[74,1],[147,1],[183,1]],"resistant":[[74,1],[91,1],[110,2]],"resolving":[[74,1],[75,2]],"disease":[[74,1],[79,1],[90,5],[93,4],[108,1],[109,2],[110,3],[111,3],[114,1],[115,1],[116,14],[117,1],[118,1],[120,1],[122,2],[123,9],[124,3],[125,1],[164,2]],"deleterious":[[74,1],[112,1],[113,1]],"technical":[[74,1],[75,1],[121,2],[126,1]],"pace":[[74,1],[75,1],[198,1],[211,1]],"statistical":[[74,1],[76,2],[79,1],[86,2],[87,2]],"international":[[74,1],[76,1],[81,1],[89,2],[116,4],[117,2],[121,1],[122,2],[123,5],[124,4],[125,13],[126,6],[127,2]],"classification":[[74,1],[76,1]],"diseases":[[74,1],[76,1],[90,1],[93,1],[109,2],[111,1],[124,2]],"ting":[[74,1],[76,1],[213,1]],"monitored":[[74,1],[208,1]],"upbeat":[[74,1],[92,1],[107,1]],"lessness":[[74,1],[202,1]],"stan-":[[74,1],[214,1]],"goal-focused":[[74,1],[83,1]],"tackle":[[74,1],[113,1]],"maximizing":[[74,2],[80,1],[82,1],[83,1],[126,1]],"rower":[[74,1],[190,1],[204,1]],"sistent":[[74,1],[170,1]],"sustained":[[74,1],[81,1],[86,1],[219,1]],"unsuccessful":[[74,1],[87,1],[108,1]],"summarized":[[74,1],[89,1],[113,1],[177,1],[186,1],[208,1]],"disagreement":[[74,1],[199,1]],"extremely":[[75,1],[131,1],[153,1],[163,3],[181,1],[202,1]],"crime":[[75,1],[194,1]],"remediating":[[75,1],[84,1]],"referring":[[75,1],[92,1]],"doubts":[[75,2],[89,1],[95,1],[186,1],[208,1]],"workbook":[[75,1],[80,2],[101,1],[225,1]],"plan-":[[75,1],[217,1]],"fallible":[[75,2]],"handling":[[75,1],[96,1],[114,1],[189,1],[190,1],[193,1],[209,1]],"suburban":[[75,1],[84,1],[173,1]],"offers":[[75,1],[84,2],[85,1],[115,1],[163,2],[167,1],[168,1],[197,1]],"individu-":[[75,1],[89,1],[95,1]],"organizations":[[75,1],[84,1],[114,1],[121,1]],"certification":[[75,2],[84,1]],"clini-":[[75,1],[225,1]],"cian":[[75,1],[114,1],[115,1]],"connect":[[75,1],[90,1],[91,1],[104,4],[155,1],[186,1],[191,1]],"links":[[75,1],[181,1]],"accounts":[[75,1],[107,1]],"materials":[[75,1],[86,1],[88,2],[89,1],[92,9],[97,1],[98,6],[99,1],[100,1],[101,1],[103,2],[107,1],[114,4],[115,2],[118,2],[119,2],[120,1],[122,2],[125,1],[169,1],[181,1],[185,1],[212,1]],"manuals":[[75,2],[87,1]],"inventories":[[75,1],[84,1],[114,1]],"edition":[[75,1],[84,1],[85,4],[86,1],[89,1],[92,1],[100,1],[101,1],[103,1],[107,1],[108,1],[114,1],[117,1],[118,1],[122,1],[123,1],[127,1],[160,1],[171,1],[174,1],[175,2],[176,3],[177,1],[178,1],[179,3],[180,1],[181,4],[182,1],[183,1],[184,2],[185,1],[186,1],[187,2],[188,1],[190,1],[191,1],[193,1],[194,2],[195,1],[197,4],[198,3],[199,2],[200,5],[201,1],[202,3],[203,1],[204,1],[205,1],[206,1],[208,2],[209,2],[210,1],[212,3],[214,2],[215,1],[216,3],[217,1],[218,1],[221,8],[222,10],[223,1],[225,4]],"adolescents":[[75,1],[95,1],[123,1],[216,1]],"suicide":[[75,1],[164,1],[170,2],[171,1],[183,2],[184,1],[186,2],[187,1],[189,2],[201,1],[202,2],[219,1],[222,1]],"patients":[[75,1],[80,1],[81,1],[85,1],[86,7],[87,5],[88,1],[111,6],[112,1],[116,1],[117,2],[127,2]],"city":[[76,1],[123,1],[208,3],[209,1]],"complaint":[[76,2]],"sought":[[76,1],[191,1]],"heaviness":[[76,1],[79,1],[163,2],[175,1]],"relaxing":[[76,1],[98,1],[100,2],[161,1],[210,2]],"appeared":[[76,1],[87,1],[113,2],[198,1],[212,1]],"smile":[[76,1],[95,1],[169,1],[171,1],[176,1],[201,2]],"movements":[[76,1],[173,1]],"speech":[[76,1],[179,1],[206,13],[208,2]],"intact":[[76,1],[134,2]],"personal-":[[76,1],[80,1]],"features":[[76,1],[81,1],[88,1],[89,1],[115,1],[120,1],[225,1]],"visited":[[76,1],[104,1],[191,2],[219,1]],"sporting":[[76,1],[204,1]],"coworkers":[[76,2],[94,2],[198,1],[200,1],[201,1]],"bright":[[76,1],[169,1]],"worsened":[[76,2]],"educational":[[76,1],[81,1],[86,1],[89,1],[92,5],[98,3],[101,1],[103,3],[113,1],[114,1],[115,1],[118,1],[119,1],[120,1],[160,1]],"devel-":[[76,1],[225,1]],"oped":[[76,1],[110,1]],"neighborhood":[[76,1],[173,1],[175,1],[178,1],[188,1],[200,1]],"student":[[76,1],[85,1],[107,1],[123,1],[171,2],[177,10],[196,1],[206,1],[216,1]],"highest":[[76,1],[91,2],[94,3],[96,2],[100,1],[102,1],[109,1],[112,1],[121,1],[140,1],[154,1],[181,1],[200,1],[209,1],[222,1]],"industry":[[76,2]],"evaluations":[[76,1],[171,1],[219,1]],"limitations":[[76,2],[86,1]],"except":[[76,1],[165,1],[170,1]],"steadily":[[76,2]],"declined":[[76,1],[111,1]],"unemployment":[[76,1],[77,1]],"autonomy":[[76,1],[90,1],[91,1],[117,2]],"financially":[[76,2]],"incorporating":[[76,1],[86,1],[87,1],[96,1],[109,3]],"his-":[[76,2],[212,1]],"tory":[[76,1],[206,2],[212,1]],"permanently":[[76,1],[164,1],[166,1]],"rock":[[76,1],[208,1]],"predictable":[[76,2],[135,1]],"deeply":[[76,1],[90,1],[105,3],[109,1],[111,1],[113,1],[170,2],[184,1],[187,1],[192,1],[210,1],[214,2],[216,1]],"harsh":[[76,1],[171,1],[197,3],[216,1],[222,1]],"plea-":[[77,1],[203,1],[205,2]],"assertion":[[77,1],[213,4],[214,9],[217,1],[223,1]],"punishing":[[77,1],[197,4]],"deserved":[[77,1],[79,1]],"scored":[[77,1],[171,2]],"assessments":[[77,1],[115,2],[120,2],[157,1],[158,1]],"subsequently":[[77,1],[95,1],[103,1]],"survival":[[78,1],[153,2],[208,1]],"reacts":[[78,1],[173,1]],"slowly":[[78,1],[95,1],[96,1],[105,1],[113,1],[164,2],[169,2],[184,1],[185,1],[201,2],[203,1],[209,1],[210,1]],"normally":[[78,1],[104,1],[134,1],[158,1],[164,2],[165,1],[167,2],[213,1]],"restructure":[[79,2]],"begun":[[79,1],[170,1],[186,1],[190,1],[194,1],[211,1],[215,1]],"reenact-":[[79,2]],"attached":[[79,1],[132,1],[134,1],[177,1]],"iden-":[[79,1],[87,1],[177,1],[189,2],[192,1],[196,1],[214,1]],"tify":[[79,1],[189,2],[192,1],[196,1],[214,1]],"outburst":[[79,1],[216,2]],"colored":[[79,1],[101,1],[185,2]],"clay":[[79,6]],"daugh-":[[79,1],[187,1]],"client-younger":[[79,1],[83,1]],"earliest":[[79,1],[128,1],[173,1],[213,1]],"ished":[[79,1],[109,1]],"safer":[[79,2],[90,1],[109,2],[110,1],[111,1],[126,1],[158,1],[165,2]],"compassionate":[[79,1],[183,1],[214,1],[216,1],[222,2]],"references":[[79,2],[80,4],[81,4],[92,2],[116,4],[117,1],[122,2],[123,4],[124,4],[125,4],[126,4],[127,4],[160,1]],"vascular":[[79,1],[90,1],[108,1],[109,1]],"meta-analysis":[[79,1],[80,6],[81,4]],"randomised":[[79,1],[81,1],[116,1]],"journal":[[79,1],[80,7],[81,5],[89,2],[116,16],[117,13],[122,4],[123,26],[124,23],[125,26],[126,17],[127,12],[160,4],[200,12],[201,2],[217,1],[218,4],[219,1],[223,2]],"psychoso-":[[79,1],[81,1]],"integrative":[[79,1],[80,1],[81,1],[125,1],[126,1]],"power":[[79,1],[86,1],[87,2],[93,1],[95,2],[97,1],[102,1],[105,2],[108,1],[117,1],[127,1],[134,1],[144,1]],"york":[[79,5],[80,24],[81,24],[85,1],[92,1],[117,2],[123,2],[124,1],[125,2],[126,2],[127,4],[160,1],[203,2],[225,1]],"handbook":[[79,1],[80,1],[81,2],[124,1],[125,2],[126,2]],"century":[[79,1],[111,1],[125,1]],"washington":[[79,1],[80,2],[81,3],[116,3],[124,2],[125,5],[126,5]],"hoboken":[[79,1],[80,1],[81,1],[117,1],[123,1],[125,2]],"wiley":[[79,1],[80,3],[81,2],[86,3],[89,3],[92,3],[98,1],[100,3],[101,4],[103,3],[107,3],[108,3],[114,3],[116,2],[117,4],[118,3],[119,3],[122,4],[123,1],[124,1],[125,3],[126,3],[127,2],[160,1]],"routledge":[[79,1],[80,2],[81,2],[117,1]],"archives":[[79,1],[80,2],[124,1],[125,1],[126,3],[127,1]],"psychiatry":[[79,1],[80,7],[81,5],[84,2],[85,2],[116,1],[117,2],[123,2],[124,1],[125,1],[160,1]],"causes":[[79,1],[109,1],[116,1],[123,1],[127,1],[164,1],[181,1],[193,1],[197,1]],"interna-":[[79,1],[225,1]],"universities":[[79,1],[161,1]],"rachman":[[79,1],[139,4],[160,1]],"erlbaum":[[79,1],[81,1]],"evolution":[[80,1],[85,1],[153,1]],"science":[[80,3],[81,1],[93,1],[114,1],[120,1],[123,1],[124,1],[125,1],[126,3],[127,4],[219,1],[225,1]],"phobias":[[80,1],[162,6],[205,1],[208,1],[211,1],[223,1]],"perivoliotis":[[80,2]],"antonio":[[80,3]],"chological":[[80,2],[81,2]],"corporation":[[80,3]],"brown":[[80,1],[81,1],[86,1],[87,1],[96,1],[109,1],[117,1],[123,3],[124,1],[157,1],[158,2]],"integrated":[[80,1],[113,1]],"publishing":[[80,1],[81,1],[124,1]],"diet":[[80,1],[95,2],[96,6],[103,2],[109,2],[113,2],[115,1],[118,1],[157,1],[202,1],[222,1]],"thin":[[80,1],[109,1],[110,1],[116,1],[190,1]],"oxford":[[80,7],[81,6],[122,1],[126,1],[160,2]],"gilbert":[[80,1],[108,1],[124,1]],"taylor":[[80,1],[89,1],[109,5],[116,5],[117,2],[118,1],[125,1],[126,1],[127,1],[160,1]],"francis":[[80,1],[89,1],[110,1]],"avon":[[80,1],[204,1]],"anderson":[[80,1],[108,1],[125,1],[127,1]],"carmody":[[80,1],[88,5],[112,2],[117,1],[123,3],[126,1]],"psychology":[[80,9],[81,9],[84,2],[85,4],[92,2],[93,1],[98,1],[116,3],[117,5],[122,2],[123,7],[124,10],[125,10],[126,4],[127,10],[160,2],[224,1],[225,1]],"cooper":[[80,2],[108,1],[124,1],[126,1]],"behaviour":[[80,4],[81,1],[116,2],[125,1],[127,1],[128,2],[129,1],[131,2],[134,5],[136,4],[139,2],[140,2],[141,7],[144,1],[146,10],[148,4],[149,3],[151,3],[152,2],[155,3],[156,1],[157,2],[158,11],[159,7],[160,2],[161,3],[168,13]],"chapman":[[80,1],[110,1],[123,1]],"forman":[[80,1],[125,2]],"empirical":[[80,1],[86,1],[87,1],[88,1],[114,1],[115,1],[126,1],[127,2]],"powers":[[80,2],[118,1],[123,1]],"smits":[[80,1],[118,1],[123,1]],"empirically":[[80,1],[86,3],[87,1],[89,1],[110,1],[124,1],[127,1]],"annual":[[80,1],[81,2],[127,1]],"foundations":[[80,1],[81,1],[123,1],[124,1],[125,1]],"sity":[[80,1],[220,1]],"constantino":[[80,1],[86,1],[89,1],[124,1],[125,1]],"ametrano":[[80,1],[124,1]],"participant":[[80,1],[86,2],[88,1],[89,2],[91,2],[98,1],[101,1],[110,1],[112,1],[113,1],[121,4],[125,1]],"conway":[[80,1],[116,1]],"springer":[[80,1],[81,1],[124,1],[125,1]],"cristea":[[80,1],[117,1],[123,1]],"frontiers":[[80,1],[81,1],[160,1]],"mckay":[[80,1],[81,1],[87,1],[117,1]],"oakland":[[80,1],[85,1],[125,1]],"harbinger":[[80,1],[125,1]],"consulting":[[80,2],[81,3],[113,1],[116,2],[122,1],[123,3],[124,2],[125,3],[126,3],[127,2],[160,1]],"clues":[[80,1],[175,1],[178,2],[182,1],[192,1]],"nor-":[[80,1],[95,1],[199,1]],"cognitive-":[[80,2],[81,1]],"kohlenberg":[[80,1],[96,1],[117,1],[124,1]],"gallop":[[80,1],[81,1]],"insights":[[80,1],[124,1],[140,1]],"basden":[[80,2]],"leyro":[[80,1],[112,1],[117,1]],"otto":[[80,1],[127,1]],"meta-analytic":[[80,1],[81,1],[87,1]],"watson":[[80,1],[124,1]],"stuart":[[80,1],[116,1]],"misuse":[[80,1],[123,1],[126,1],[127,2],[192,1]],"london":[[80,1],[123,1]],"murphy":[[80,1],[108,1],[118,2],[125,1],[126,1]],"rape":[[80,1],[81,1]],"psychologist":[[80,1],[116,1],[124,1],[127,2],[224,2],[225,2]],"quality":[[80,1],[81,1],[86,1],[87,1],[91,1],[94,1],[114,1],[123,2],[171,1],[189,2],[196,1],[203,1],[214,1]],"expectancies":[[80,1],[81,1],[86,3],[88,1],[118,1],[122,1],[125,2]],"meta-regression":[[80,2],[81,1]],"society":[[80,1],[81,1],[87,1],[103,1],[111,1],[116,1],[118,1],[123,1]],"hall":[[80,1],[81,1],[108,1],[123,1],[125,2]],"scott":[[80,1],[127,1]],"jones":[[80,1],[108,1],[117,1],[125,1]],"expanding":[[80,1],[127,1]],"wilson":[[80,1],[95,1],[122,1],[138,1],[160,2]],"multicultural":[[80,1],[123,1]],"non-":[[80,1],[94,1],[95,1],[100,1],[101,1],[107,1]],"experimental":[[80,1],[81,1],[89,2],[116,1],[122,1],[123,1],[124,5],[125,9],[126,4],[127,2]],"asnaani":[[81,1],[125,1]],"sawyer":[[81,2],[125,1]],"witt":[[81,1],[185,1]],"antidepres-":[[81,1],[203,2]],"sant":[[81,1],[203,2]],"antidepressants":[[81,1],[125,1],[171,1],[203,4]],"jama":[[81,1],[123,2],[124,1],[125,1],[126,1]],"academic":[[81,1],[116,1],[124,1]],"chicago":[[81,2],[85,1]],"cole":[[81,1],[126,1]],"british":[[81,1],[123,2],[160,1],[172,1],[225,1]],"processes":[[81,2],[124,1],[129,1],[131,1],[136,1],[139,1],[141,1],[148,1],[151,1],[152,2],[155,6],[218,1]],"analyses":[[81,1],[86,1],[87,1]],"norton":[[81,2],[117,1]],"quantity":[[81,1],[171,1]],"relations":[[81,1],[126,1]],"surveys":[[81,1],[86,1],[98,1],[140,1]],"whipple":[[81,3]],"vermeersch":[[81,2]],"nielsen":[[81,2]],"hawkins":[[81,2],[112,1],[124,1]],"heimberg":[[81,1],[160,1]],"practitioners":[[81,1],[87,1],[163,1],[166,1]],"dong":[[81,1],[117,1],[123,1]],"harvey":[[81,1],[87,1],[124,1]],"sullivan":[[81,1],[160,1]],"garcia":[[81,1],[112,1],[126,1]],"drug":[[81,1],[83,1],[87,2],[91,1],[93,2],[108,1],[109,1],[110,3],[111,2],[114,1],[116,4],[117,1],[118,3],[119,1],[123,2],[124,2],[125,2],[126,3],[156,1],[166,1],[169,3],[192,1],[211,1],[216,1],[223,1]],"users":[[81,1],[109,2],[110,1],[111,5],[123,1]],"north":[[81,1],[116,1],[123,1],[127,1]],"america":[[81,1],[116,1],[127,1],[218,1]],"pharmacological":[[81,1],[87,1],[112,1],[118,1]],"lancet":[[81,1],[110,1],[116,1],[125,1],[126,3]],"plenum":[[81,1],[123,1],[127,1]],"hubble":[[81,1],[111,1]],"constructing":[[81,1],[188,2],[192,1]],"gress":[[81,1],[122,1]],"behavioural":[[81,2],[127,3],[140,4],[146,6],[152,2],[158,4],[159,2],[160,1],[161,1],[163,4],[225,1]],"sage":[[81,1],[127,1]],"lopez":[[81,1],[96,1],[125,1]],"comparative":[[81,1],[122,1],[124,1]],"pharmacotherapy":[[81,1],[87,2],[125,2]],"threat":[[81,1],[131,1],[154,7],[160,1],[161,2],[208,9],[212,1]],"williams":[[81,1],[89,1],[91,1],[109,2],[110,1],[117,6],[118,1],[122,1],[123,1],[124,1],[127,1],[225,1]],"duncan":[[81,1],[117,1],[123,2]],"bridges":[[81,1],[159,1]],"combining":[[81,1],[93,1],[111,1],[118,1],[125,2],[164,1],[186,1],[208,1]],"berger":[[81,1],[225,1]],"premature":[[81,1],[86,1],[87,1],[112,1]],"contemporary":[[81,1],[85,1],[123,3],[126,1]],"comprehensive":[[81,1],[86,1],[87,1],[92,2],[99,1],[114,1],[126,1],[175,1]],"barrett":[[81,1],[117,1],[125,1]],"psychosomatics":[[81,1],[116,1],[123,1]],"trainee":[[81,1],[160,1]],"pilot":[[81,1],[116,2],[123,1],[210,1]],"preliminary":[[81,1],[113,1],[123,1],[125,1]],"resource":[[81,1],[84,1],[140,1]],"predictors":[[81,1],[116,1],[117,1],[123,2],[124,1]],"sequences":[[81,1],[83,1]],"cont":[[82,2],[83,1],[84,1]],"recommendations":[[82,1],[84,1],[109,1],[113,1],[126,1],[127,1],[203,1]],"regarding":[[82,1],[83,2],[86,2],[87,1],[88,2],[89,2],[91,2],[100,1],[108,1],[110,2],[111,3],[112,1],[113,1],[121,1],[125,1],[163,1],[168,1],[171,1],[173,1],[186,1],[187,1],[189,2],[211,1]],"resistance":[[83,1],[88,1],[89,2],[90,1],[100,1],[113,1],[118,2],[123,1],[124,1],[140,1]],"systems":[[84,1],[117,1],[125,1],[160,1]],"visualization":[[84,1],[92,2],[100,1],[103,1],[114,1],[118,2],[119,2]],"alternatives":[[84,1],[96,1],[112,1],[186,1],[187,1]],"audience":[[84,1],[86,1]],"nursing":[[84,1],[122,1],[126,1]],"website":[[84,2],[86,1],[89,1],[92,1],[98,1],[100,1],[101,2],[103,1],[107,1],[108,1],[114,3],[117,1],[118,3],[119,3],[122,1],[224,2],[225,2]],"pres-":[[84,1],[90,1],[192,1],[210,1]],"nonprofit":[[84,1],[114,1]],"serves":[[84,1],[92,2],[94,1],[114,1]],"professor":[[84,1],[85,3],[153,2]],"presentations":[[84,1],[112,1]],"contributions":[[84,1],[125,1],[224,1],[225,1]],"paul":[[84,1],[209,7],[225,1]],"gordon":[[84,1],[109,1],[112,1],[126,1],[225,1]],"practitioner":[[85,1],[163,2],[164,1]],"learner":[[85,1],[177,1]],"reflective":[[85,1],[163,1],[166,1],[167,2],[168,6]],"forming":[[85,1],[105,1],[111,1]],"center":[[85,1],[88,1],[93,1],[112,1],[116,6],[123,1],[178,1],[203,1],[209,1],[224,2],[225,1]],"department":[[85,1],[93,1],[108,1],[110,1],[114,1],[116,15],[118,2],[119,1],[123,1],[124,1],[126,1]],"california":[[85,3],[177,1],[224,3],[225,3]],"comment":[[85,1],[89,1],[90,1],[91,1],[191,1],[200,1]],"private":[[85,1],[114,1]],"lake":[[85,1],[208,1]],"forest":[[85,1],[210,1]],"classic":[[85,1],[225,1]],"rob-":[[85,1],[206,1]],"newer":[[85,1],[178,1]],"families":[[85,1],[173,1],[178,2],[195,1]],"boston":[[85,1],[116,1]],"isbn":[[85,1],[225,1]],"seventh":[[85,1],[225,1]],"avenue":[[85,1],[225,1]],"hypnosis":[[86,67],[87,18],[88,27],[89,7],[90,1],[91,2],[92,7],[94,1],[96,5],[97,1],[98,46],[99,20],[100,38],[101,12],[102,8],[103,13],[104,14],[105,6],[106,3],[107,5],[108,9],[112,1],[113,5],[114,16],[115,14],[116,4],[117,3],[118,9],[119,7],[120,9],[121,1],[122,5],[123,20],[124,12],[125,33],[126,29],[127,11]],"supporting":[[86,3],[87,1],[88,2],[98,2],[105,1],[117,1],[171,1],[183,1],[185,2],[186,4],[187,1],[188,2],[217,1]],"misconceptions":[[86,3],[98,1],[115,1],[118,2],[120,1],[125,1]],"winning":[[86,2],[88,1],[89,1],[90,1],[91,2],[92,13],[93,5],[94,6],[95,5],[96,5],[97,4],[98,8],[99,3],[100,2],[103,1],[104,2],[105,1],[106,1],[109,1],[112,2],[114,2],[118,6],[119,3],[120,1],[122,1]],"tool":[[86,2],[111,1],[129,2],[141,1],[177,1],[178,2],[213,1]],"frank":[[86,1],[89,1]],"smoking":[[86,25],[87,33],[88,15],[89,45],[90,54],[91,56],[92,22],[93,33],[94,44],[95,48],[96,32],[97,27],[98,16],[99,7],[100,17],[101,29],[102,42],[103,24],[104,8],[105,18],[106,3],[107,14],[108,52],[109,32],[110,13],[111,39],[112,43],[113,29],[114,29],[115,18],[116,41],[117,22],[118,50],[119,8],[120,27],[121,17],[122,33],[123,31],[124,39],[125,35],[126,39],[127,27],[163,38],[164,31],[165,10],[166,36],[167,21],[168,41]],"cessation":[[86,16],[87,18],[88,4],[89,9],[90,9],[91,2],[92,7],[93,2],[95,3],[96,3],[97,1],[99,1],[100,1],[101,4],[103,2],[107,1],[108,27],[109,14],[110,2],[111,8],[112,5],[113,6],[114,4],[115,1],[116,21],[117,13],[118,19],[119,4],[121,3],[122,5],[123,13],[124,19],[125,22],[126,25],[127,16],[163,1],[164,1],[166,2],[168,4]],"rates":[[86,7],[87,17],[88,6],[89,1],[98,1],[108,4],[109,4],[111,4],[112,4],[113,1],[117,1],[118,7],[119,3],[127,2],[205,1],[211,3]],"versions":[[86,1],[88,1],[111,1]],"longstanding":[[86,1],[94,1],[106,1],[113,1]],"component":[[86,1],[91,1],[92,4],[93,1],[94,2],[96,2],[98,2],[99,1],[101,1],[112,1],[113,1],[115,1],[118,1],[119,1],[120,1],[122,1],[177,1],[216,1]],"premise":[[86,1],[152,1]],"enhances":[[86,2],[124,1],[126,1]],"involvement":[[86,1],[112,1]],"thereby":[[86,1],[89,1],[91,2],[110,1],[111,1],[112,1],[140,1],[164,1]],"facilitating":[[86,1],[91,2],[117,1]],"smok-":[[86,2],[91,2],[95,1],[96,1],[115,1]],"lynn":[[86,13],[87,5],[88,3],[89,2],[90,3],[92,2],[96,1],[98,7],[100,1],[101,1],[103,2],[107,1],[108,4],[114,2],[117,2],[118,1],[120,1],[122,2],[124,2],[125,9],[126,15],[127,1]],"kirsch":[[86,10],[87,1],[88,1],[98,2],[117,1],[122,1],[124,3],[125,1],[126,10],[127,1]],"moreover":[[86,2],[108,1],[110,2],[111,2],[112,1]],"suggestibility":[[86,1],[87,3],[88,1],[118,2]],"balaganesh":[[86,1],[123,1]],"oakley":[[86,1],[123,1]],"rhue":[[86,2],[88,1],[90,1],[118,1],[124,1],[125,1],[126,5]],"weaving":[[86,1],[90,1]],"implementation":[[86,1],[89,1],[118,1],[123,1],[124,3],[127,1]],"hypnotic":[[86,7],[87,5],[88,2],[98,4],[99,1],[100,1],[113,1],[116,1],[122,1],[123,1],[124,4],[125,1],[126,2],[127,1]],"responsiveness":[[86,3],[98,1],[124,1]],"gallo":[[86,1],[117,1],[124,1]],"pfau":[[86,1],[118,1],[124,1]],"gollwitzer":[[86,1],[117,1],[124,4]],"additionally":[[86,2],[88,1],[90,1],[91,1],[98,1],[109,1],[110,1],[164,1]],"complement":[[86,3]],"green":[[86,13],[87,3],[88,2],[89,3],[90,2],[92,3],[98,9],[100,2],[101,3],[103,3],[107,2],[108,6],[109,1],[112,1],[114,3],[116,3],[117,4],[118,2],[120,1],[122,2],[123,1],[124,2],[125,18],[126,5],[127,2]],"exaggerated":[[86,1],[118,1],[161,1],[208,1]],"claims":[[86,1],[91,1],[109,1],[118,1]],"scientifically":[[86,2],[89,1],[92,1],[93,1],[100,1],[101,1],[103,1],[107,1],[108,1],[114,1],[117,1],[118,1],[122,1]],"grounded":[[86,2],[88,1],[210,1]],"enhancement":[[86,1],[87,1],[112,1],[124,1],[126,1],[127,1]],"montgomery":[[86,4],[87,1],[98,3],[108,1],[111,1],[116,1],[118,2],[125,3],[126,3],[127,6]],"schnur":[[86,2],[116,1],[118,1],[127,4]],"kravits":[[86,1],[117,1],[127,1]],"correlate":[[86,1],[89,1]],"accardi":[[86,2],[96,1],[117,1],[122,1],[126,2]],"cleere":[[86,2],[117,1],[122,1],[126,2]],"pretreatment":[[86,2],[87,1]],"dispel":[[86,1],[113,1],[115,1]],"myths":[[86,4],[89,1],[94,1],[95,1],[98,1],[99,2],[101,2],[102,1],[113,1],[115,1],[118,3],[125,1]],"comfort":[[86,2],[93,1],[98,1],[170,1],[176,1],[219,1]],"protocols":[[86,3],[87,1],[113,1],[114,1],[115,1],[163,1],[166,1],[167,1],[168,1]],"steven":[[86,1],[89,1],[92,2],[100,1],[101,1],[103,1],[107,1],[108,1],[114,2],[117,1],[118,1],[120,1],[122,1]],"companion":[[86,1],[89,1],[92,1],[98,1],[100,1],[101,2],[103,1],[107,1],[108,1],[114,1],[117,1],[118,3],[119,3],[122,1],[196,1]],"cbt-mindfulness":[[86,1],[89,1],[92,1],[98,1],[100,1],[101,2],[103,1],[107,1],[108,1],[114,1],[117,1],[118,1],[122,1]],"popular":[[86,3],[90,2],[110,3],[111,1],[112,1],[125,1],[165,1],[196,1]],"capafons":[[86,5],[89,1],[117,1],[123,4],[124,2],[126,1],[127,2]],"sucala":[[86,1],[113,1],[116,1],[118,1],[127,2]],"dillon":[[86,1],[117,1],[127,1]],"schoenberger":[[86,1],[118,1],[127,2]],"gearan":[[86,1],[127,1]],"pastyrnak":[[86,1],[127,1]],"uncommon":[[86,1],[91,2],[110,1],[112,1],[155,1],[163,1]],"participants":[[86,8],[87,7],[88,15],[89,13],[90,20],[91,19],[92,21],[93,7],[94,18],[95,18],[96,6],[97,21],[98,12],[100,6],[101,12],[103,26],[104,1],[107,17],[108,11],[109,3],[110,2],[111,6],[112,8],[113,10],[114,35],[115,2],[120,1],[121,1],[122,1],[127,1]],"hypno-":[[86,3],[87,1],[96,1],[106,1]],"understandably":[[86,1],[142,1]],"dignity":[[86,1],[191,1]],"furnham":[[86,2],[117,1],[124,1]],"maxwell":[[86,1],[98,1],[117,1],[126,3]],"trance":[[86,1],[100,1]],"whereby":[[86,1],[87,1],[91,1],[98,1]],"everyday":[[86,1],[91,1],[95,1],[97,1],[98,1],[104,1],[125,1],[145,2],[169,1],[191,1],[196,1],[204,1]],"transpired":[[86,1],[115,1]],"dramatic":[[86,1],[95,2],[100,1],[102,1],[191,1],[219,1]],"magic":[[86,1],[155,1],[164,1]],"hypnotist":[[86,1],[98,3],[99,1]],"inherently":[[86,1],[173,1]],"rasekhy":[[86,1],[118,1],[125,1]],"johnson":[[86,3],[108,1],[117,1],[125,3],[127,1]],"bernhardt":[[86,1],[117,1],[125,1]],"mendoza":[[86,3],[118,1],[123,2],[127,2]],"jensen":[[86,1],[117,2],[124,1],[125,1],[127,1]],"furthermore":[[86,2],[87,1],[88,1],[95,1],[108,1],[111,1],[115,1],[184,1],[186,1],[208,2],[213,1],[219,1]],"cost":[[86,1],[89,3],[90,1],[114,1],[116,1],[118,1],[121,1],[123,1],[124,1],[126,1]],"viable":[[86,1],[113,1]],"hyp-":[[86,3],[96,1],[99,1],[115,1]],"qualitative":[[86,1],[124,1],[125,1]],"meta":[[86,10],[87,5],[89,1],[108,1],[110,1],[116,5],[117,3],[118,1],[119,1],[122,1],[123,4],[124,2],[125,11],[126,7],[127,4]],"analytic":[[86,3],[89,1],[108,1],[117,2],[124,1],[125,2],[140,1]],"document":[[86,1],[121,1]],"hornyak":[[86,1],[117,1],[125,3]],"asthma":[[86,1],[93,1],[122,1]],"gains":[[86,3],[89,3],[90,4],[95,2],[97,1],[102,4],[106,1],[107,2],[108,1],[109,1],[113,1],[126,1],[201,1],[217,2],[218,2],[223,2]],"ponniah":[[86,1],[127,1]],"breast":[[86,1],[112,1],[127,2],[170,1]],"tandem":[[86,1],[125,1]],"developments":[[86,1],[92,1]],"gained":[[86,1],[102,1],[108,9],[109,1],[113,1],[188,1],[193,1],[219,1]],"popularity":[[86,1],[109,1],[111,1]],"lipton":[[86,1],[126,1]],"hauck":[[86,1],[125,1]],"sood":[[86,2],[116,2],[118,2]],"ebbert":[[86,1],[116,1],[117,1]],"stevens":[[86,1],[116,1],[118,1]],"tobacco":[[86,1],[88,1],[90,1],[93,4],[101,1],[103,1],[104,1],[108,1],[109,5],[110,5],[111,9],[114,1],[116,13],[117,13],[118,1],[121,1],[122,2],[123,16],[124,17],[125,7],[126,11],[127,17],[163,3],[164,1],[165,1],[167,1],[168,2]],"complementary":[[86,1],[116,2],[125,1]],"attempting":[[86,1],[95,1],[109,2],[144,1],[194,1]],"hypnotherapy":[[86,2],[87,3],[88,1],[116,1],[118,1],[122,2],[123,1],[124,4],[125,3],[126,1]],"produced":[[86,1],[87,2],[88,1],[89,1],[93,1],[110,1],[113,1],[152,1],[165,1]],"abbot":[[86,1],[122,1]],"stead":[[86,1],[87,2],[111,2],[112,2],[116,4],[118,1],[122,1],[123,1],[125,1],[126,1]],"white":[[86,1],[90,1],[93,1],[102,1],[108,1],[111,1],[122,1],[126,1],[127,1],[155,5]],"barnes":[[86,1],[87,1],[96,1],[117,2],[122,1],[123,1],[126,1]],"ernst":[[86,1],[122,1]],"raised":[[86,1],[89,1],[92,1],[93,1],[110,1],[111,1],[173,1],[193,1],[199,1]],"bayot":[[86,1],[117,1],[123,1]],"cardena":[[86,1],[117,1],[123,1],[124,2]],"attributable":[[86,1],[108,1],[116,1],[118,1],[124,1]],"regimen":[[86,1],[109,1],[113,2]],"controls":[[86,1],[87,1],[109,1]],"compre-":[[86,2]],"hensive":[[86,2]],"definitive":[[86,1],[87,1],[88,1]],"biochemical":[[86,2],[87,1],[88,4],[103,2]],"verification":[[86,2],[88,2],[103,1]],"abstinence":[[86,7],[87,6],[88,7],[89,3],[90,8],[91,1],[92,1],[97,3],[100,1],[107,2],[108,3],[109,4],[110,3],[111,1],[112,8],[113,1],[116,1],[117,2],[118,1],[122,1],[123,1],[125,4],[126,1],[127,1],[163,1],[167,2],[168,1]],"prevalence":[[86,1],[87,1],[88,3],[111,1],[118,1],[122,1],[123,3],[124,3],[126,2],[127,1]],"whereas":[[86,1],[87,1],[90,2],[91,1],[98,1],[111,1],[135,1]],"continuous":[[86,1],[87,3],[88,2],[108,1],[113,1],[155,1]],"dropouts":[[86,2],[88,1]],"statistics":[[86,3],[87,1],[88,1],[108,1],[109,1],[111,1],[123,1],[124,1]],"losses":[[86,1],[170,1],[187,1]],"biochemi-":[[86,1],[88,1]],"tang":[[86,1],[87,3],[103,1],[109,1],[118,2],[124,1],[126,1]],"cessa-":[[86,1],[121,1]],"golish":[[86,1],[127,1]],"schwartz":[[86,1],[87,2],[116,2],[118,1],[123,1]],"spiegel":[[86,2],[98,1],[116,3],[118,1],[124,1]],"frischholz":[[86,1],[116,1]],"fleiss":[[86,1],[116,1],[124,1]],"approache":[[86,1],[87,1]],"elkins":[[86,1],[87,1],[98,1],[117,1],[124,4],[125,1]],"marcus":[[86,1],[109,3],[112,1],[117,2],[123,1],[124,1],[125,1],[126,3],[127,1]],"bates":[[86,1],[117,1],[124,1]],"rajab":[[86,1],[118,1],[124,1]],"cook":[[86,1],[117,1],[124,1],[127,1]],"abstinent":[[86,2],[88,1],[167,3],[168,3]],"expired":[[86,1],[167,1]],"carbon":[[86,1],[88,1],[103,1],[111,1],[114,1],[115,1],[118,1],[120,2],[124,1],[126,1],[161,1],[163,4],[164,10],[165,2],[166,5],[167,7],[168,3],[210,2]],"monoxide":[[86,1],[88,1],[103,1],[111,1],[114,1],[115,2],[118,1],[120,2],[124,1],[126,1],[163,4],[164,10],[165,2],[166,5],[167,7],[168,3]],"readings":[[86,1],[164,1],[167,1]],"hasan":[[86,1],[87,1],[125,1]],"randomly":[[86,1],[87,2],[88,3],[113,1],[155,1]],"cardiac":[[86,1],[87,1],[123,1]],"pulmonary":[[86,1],[87,1],[111,1],[122,1],[123,1],[126,1]],"illnesses":[[86,1],[111,1],[124,1],[206,1],[208,1]],"consisting":[[86,1],[87,1],[110,1],[114,1]],"nicotine":[[86,2],[87,13],[88,2],[89,1],[90,1],[92,1],[93,10],[95,3],[102,1],[103,8],[108,8],[109,5],[110,26],[111,29],[112,3],[114,17],[115,21],[116,13],[117,6],[118,3],[120,10],[121,4],[122,3],[123,12],[124,5],[125,6],[126,13],[127,13],[163,9],[164,15],[165,5],[166,8],[168,3]],"replacement":[[86,2],[87,1],[88,1],[89,1],[92,1],[93,6],[103,3],[108,1],[110,1],[111,3],[114,4],[115,10],[116,4],[117,1],[118,2],[120,4],[121,2],[122,1],[123,4],[125,2],[127,3],[164,4],[165,1]],"uninterested":[[86,1],[91,1],[102,1]],"protocol":[[86,2],[87,1],[88,2],[109,1],[112,2],[114,1],[125,1]],"stopping":[[86,1],[87,2],[89,3],[90,3],[91,6],[92,1],[93,2],[94,9],[95,8],[96,2],[97,2],[98,2],[99,1],[100,3],[101,2],[102,7],[103,4],[107,2],[108,3],[109,2],[111,1],[112,3],[113,1],[114,3],[115,1],[118,3],[120,1],[121,1],[163,8],[164,8],[166,5],[167,1],[168,1],[170,1],[195,1],[203,1],[215,1]],"tout-":[[86,1],[87,1]],"enthusiasm":[[86,1],[173,1]],"tahiri":[[86,1],[87,3],[116,1],[118,1]],"mottillo":[[86,1],[116,1],[118,1]],"pilote":[[86,1],[87,1],[116,1],[118,1]],"eisenberg":[[86,1],[87,1],[116,1],[117,1]],"iterations":[[86,1],[88,1]],"rigorous":[[86,2],[109,1],[113,1]],"mudge":[[86,1],[127,1]],"webster":[[86,1],[127,1]],"quantitative":[[86,1],[163,1]],"haidich":[[86,1],[117,1],[125,1]],"weaker":[[86,1],[196,1]],"designs":[[86,1],[87,1]],"reflects":[[86,1],[90,1],[140,1],[184,1],[202,1]],"minimum":[[86,1],[93,1],[98,2],[163,1],[164,1],[166,1],[167,2]],"investigations":[[87,1],[110,1],[138,1]],"stegenga":[[87,1],[116,1]],"viswesvaran":[[87,4],[117,1],[118,1]],"schmidt":[[87,4],[112,2],[117,1],[118,1],[124,2]],"proved":[[87,1],[167,1]],"lung":[[87,1],[88,1],[92,1],[93,2],[101,1],[109,1],[110,3],[118,1],[121,2],[122,2],[123,1],[124,1],[126,1],[164,1]],"gram":[[87,1],[115,1],[120,1]],"approximately":[[87,3],[92,1],[108,1],[111,1],[114,13],[115,6],[120,10],[121,2],[122,2],[183,1],[206,1],[219,1]],"ticipants":[[87,1],[96,1],[100,1],[109,1],[113,1],[114,1],[122,1]],"physician":[[87,1],[93,2],[96,1],[109,1],[111,2],[113,1],[114,1],[115,5],[117,1],[120,2],[121,1],[126,1],[127,1],[170,1],[171,1],[184,1],[193,1],[203,9],[211,2]],"cochrane":[[87,4],[116,5],[117,1],[118,1],[122,1],[123,1],[124,1],[125,2],[126,4],[127,2]],"criteria":[[87,2]],"heterogeneity":[[87,1],[125,1]],"contrast":[[87,2],[100,1],[110,1],[169,1],[172,1],[186,1],[211,1]],"acupuncture":[[87,2]],"aversive":[[87,1],[134,1],[142,1]],"partici-":[[87,1],[88,1],[90,1],[91,2],[93,1],[94,1],[95,1],[96,1],[97,1],[103,2],[114,2],[115,1]],"pants":[[87,1],[88,1],[90,1],[91,2],[93,1],[94,1],[95,1],[96,1],[97,1],[103,2],[108,2],[110,1],[112,1],[114,2],[200,1]],"qualified":[[87,1],[112,1],[123,1],[198,1]],"inclusion":[[87,2],[89,1],[109,1]],"substantial":[[87,1],[110,1]],"trol":[[87,1],[113,2],[175,1]],"recommended":[[87,1],[88,1],[103,1],[110,1],[111,3],[163,1],[164,1],[169,1],[176,4],[211,1],[217,1]],"administer":[[87,1],[92,1],[114,4],[115,2]],"separating":[[87,1],[105,1],[178,1],[179,2],[223,1]],"assert":[[87,1],[90,1]],"meets":[[87,1],[176,1]],"disentangling":[[87,1],[126,1]],"maglione":[[87,1],[126,1]],"baer":[[87,2],[108,2],[117,1],[123,2]],"carey":[[87,1],[123,1]],"meminger":[[87,1],[123,1]],"barabasz":[[87,2],[98,1],[108,4],[117,2],[123,2],[124,1],[125,1]],"sheehan":[[87,1],[108,2],[116,1],[118,1],[123,1]],"basker":[[87,1],[123,2]],"cornwell":[[87,1],[124,1]],"burrows":[[87,1],[124,1]],"mcmurray":[[87,1],[116,1],[124,1]],"holroyd":[[87,1],[125,1]],"stanton":[[87,1],[116,1]],"dyck":[[87,1],[117,1]],"hoogduin":[[87,1],[117,1]],"glasgow":[[87,1],[117,1],[124,1]],"lichtenstein":[[87,1],[117,1],[124,1]],"cinciripini":[[87,3],[111,1],[117,2],[123,2]],"wallfisch":[[87,1],[118,1],[123,1]],"haque":[[87,1],[117,1],[123,1]],"vunakis":[[87,1],[118,1],[123,1]],"wittchen":[[87,3],[117,1],[118,1]],"hoch":[[87,1],[117,2]],"klotsche":[[87,1],[117,2]],"muehlig":[[87,1],[117,1],[118,1]],"bupro-":[[87,2]],"prion":[[87,2]],"delivered":[[87,1],[110,2],[164,1],[194,1]],"physicians":[[87,2],[110,1],[112,1],[114,1],[127,1],[191,1]],"tifying":[[87,1],[177,1]],"triggers":[[87,1],[88,1],[89,1],[91,1],[95,2],[96,7],[100,1],[101,3],[103,1],[104,1],[112,4],[114,3],[119,1],[129,1],[139,2],[153,2],[166,2],[168,3],[194,2],[195,1],[196,1],[205,1],[223,1]],"buproprion":[[87,3],[111,1],[116,1],[118,1],[124,1],[164,1]],"cited":[[87,1],[88,1],[225,1]],"secured":[[87,3],[89,1]],"smokers":[[87,8],[88,2],[89,3],[90,2],[91,4],[93,3],[95,1],[102,1],[108,7],[109,13],[111,4],[112,1],[115,1],[116,8],[117,1],[122,5],[123,8],[124,3],[125,2],[126,11],[127,2],[163,6],[164,9],[165,2],[166,10],[167,2],[168,1]],"varenicline":[[87,4],[111,3],[116,1],[119,1],[123,3],[126,1],[164,2]],"chantix":[[87,1],[111,9],[116,1],[118,1],[127,2]],"champix":[[87,1],[118,1],[164,12],[165,1],[166,3],[168,2]],"zyban":[[87,1],[111,6],[116,1],[119,1],[164,6],[165,3],[166,3],[168,2]],"fiore":[[87,5],[111,5],[117,3],[123,1],[124,1],[127,1]],"placebo":[[87,2],[108,2],[110,1],[116,1],[117,2],[122,1],[123,1],[173,2]],"patch":[[87,7],[93,1],[103,1],[108,2],[111,2],[114,8],[115,6],[116,1],[118,1],[120,4],[121,1],[122,2],[123,2],[124,1],[126,1],[163,1],[164,4],[165,1],[166,1]],"comparable":[[87,1],[108,1]],"regarded":[[87,1],[134,1]],"convenient":[[87,1],[101,1],[175,1]],"chewing":[[87,2],[100,1],[105,1],[111,1],[121,1],[122,1],[123,1],[127,1],[164,1]],"chew":[[87,1],[96,1],[97,2],[100,1],[108,1]],"user":[[87,1],[101,1],[109,2],[119,1],[217,1]],"product":[[87,1],[93,1],[110,2],[111,1],[115,1],[117,1],[122,1],[164,3],[165,1],[166,3],[189,2]],"foods":[[87,1],[95,1],[96,3],[105,1],[107,2],[108,1],[113,1]],"absorption":[[87,1],[100,1],[104,1],[111,1],[113,1]],"haxby":[[87,2],[111,1],[117,1],[125,1]],"cepeda":[[87,3],[111,1],[117,1],[123,1]],"benito":[[87,3],[111,1],[117,1],[123,1]],"approxi-":[[87,1],[92,1]],"mately":[[87,1],[92,1]],"tonnesen":[[87,2],[111,2],[116,2],[118,1]],"rubey":[[87,1],[124,1]],"hughes":[[87,3],[90,5],[111,1],[112,2],[117,1],[125,7],[126,2]],"shiffman":[[87,1],[90,1],[108,1],[109,1],[111,1],[116,4],[123,1],[125,1],[127,1]],"pagoto":[[87,1],[108,1],[109,1],[116,2],[127,1]],"horn":[[87,1],[116,1]],"fisher":[[87,1],[116,1],[117,1],[123,1]],"double":[[87,1],[108,1],[111,1],[112,1],[116,1],[124,1],[164,1],[166,2]],"bupropion":[[87,1],[111,1],[116,1],[126,1],[164,1]],"hand-":[[87,1],[101,2],[115,1],[219,1]],"estimated":[[87,1],[111,1]],"silagy":[[87,1],[111,1],[112,1],[116,2]],"fowler":[[87,1],[112,1],[116,2]],"lodge":[[87,1],[116,1]],"higher":[[87,1],[88,2],[90,1],[108,1],[109,1],[111,2],[112,4],[150,1],[154,1],[164,3],[166,2],[167,1],[202,2],[204,1],[205,1],[210,1],[212,1],[219,1],[222,1]],"respectively":[[87,1],[88,3],[108,1],[111,1]],"baker":[[87,1],[108,1],[117,2],[123,3],[124,1],[125,1]],"progra":[[87,1],[88,1]],"lozenge":[[87,1],[93,1],[116,2],[164,3],[165,1],[168,1]],"verified":[[87,1],[109,1]],"collectively":[[87,1],[92,2]],"proponents":[[87,1],[89,1],[110,1]],"electronic":[[87,2],[101,1],[115,1],[116,2],[117,1],[118,1],[119,1],[121,1],[122,3],[123,2],[124,3],[125,2],[126,1],[127,2],[165,1],[200,2]],"cigarettes":[[87,2],[88,1],[89,1],[90,7],[91,6],[93,6],[97,2],[98,2],[100,2],[101,8],[102,5],[103,7],[107,16],[108,4],[109,18],[110,14],[111,8],[113,2],[114,3],[115,2],[116,2],[117,2],[118,5],[119,1],[120,1],[121,3],[122,7],[123,7],[124,4],[125,3],[126,8],[127,9],[163,5],[164,3],[165,12],[166,17],[167,4],[168,3]],"argued":[[87,1],[88,1],[91,1],[192,1]],"overstated":[[87,1],[111,1]],"vaping":[[87,1],[109,1],[110,4],[117,2],[119,1],[163,1],[164,2],[165,4],[166,1]],"stanley":[[87,2],[111,1],[116,1],[118,1]],"massey":[[87,2],[111,1],[116,1],[117,1]],"pared":[[87,1],[109,1]],"publication":[[87,1],[126,1],[127,1],[225,1]],"surgeon":[[87,1],[116,8],[123,1]],"usdhhs":[[87,1],[90,3],[108,2],[110,2],[112,1],[116,7],[119,1]],"products":[[87,1],[93,4],[103,1],[108,1],[110,4],[111,4],[114,2],[115,6],[116,1],[120,3],[122,2],[123,1],[124,2],[163,1],[164,7],[165,1],[166,6],[167,1],[219,1]],"concerning":[[87,1],[91,1],[108,1]],"proof":[[87,1],[164,1],[166,1],[167,1],[168,1],[213,1]],"ously":[[87,1],[113,1]],"available":[[87,1],[88,1],[110,3],[111,1],[115,2],[120,1],[123,3],[126,1],[155,4],[163,2],[164,5],[165,2],[166,2],[169,1],[175,1],[178,1],[183,1],[186,3],[188,1],[195,1],[202,1],[203,1],[206,2],[217,1]],"villanti":[[87,1],[117,1]],"abrams":[[87,1],[95,1],[117,2],[122,1],[126,2]],"holtgrave":[[87,1],[117,1]],"bowie":[[87,1],[117,1]],"solberg":[[87,1],[116,1]],"boyle":[[87,1],[116,1]],"mccarty":[[87,1],[116,1]],"asche":[[87,1],[116,1]],"thoele":[[87,1],[116,1]],"dependent":[[87,1],[88,1],[90,1],[95,1],[102,1],[112,1],[163,2],[164,1],[166,1],[167,1],[168,3]],"usage":[[87,1],[109,1],[110,2],[166,2]],"chemical":[[87,1],[88,1],[109,1],[110,2],[127,2],[161,2]],"fagan":[[87,1],[124,1]],"suls":[[87,1],[116,1],[118,1]],"aged":[[87,1],[113,1],[114,1]],"fared":[[87,1],[103,1]],"pharmacotherapies":[[87,1],[126,1]],"telephone":[[87,1],[101,2],[103,2],[104,1],[114,2],[119,1],[120,1],[121,1],[126,1],[169,1],[172,1],[185,1],[200,1]],"population":[[87,1],[89,1],[111,1],[112,3],[116,1],[117,1],[123,1],[124,2],[125,2],[126,1]],"neufeld":[[87,1],[88,1],[90,1],[118,1],[126,3]],"ahijevych":[[87,1],[117,1],[122,1]],"yerardi":[[87,1],[118,1],[122,1]],"nedilsky":[[87,1],[118,1],[122,1]],"selected":[[88,1],[124,1],[135,1],[140,1],[219,1]],"enrolled":[[88,1],[89,1],[93,1],[107,2],[108,1],[112,1],[123,1],[188,1]],"ohio":[[88,1],[92,2],[122,1],[126,1]],"francisco":[[88,2],[110,1]],"patches":[[88,2],[108,1],[114,5],[115,4],[120,2],[121,1],[164,1]],"preva-":[[88,2]],"lence":[[88,2],[94,1],[111,1]],"proxy":[[88,4]],"statistically":[[88,3]],"unpublished":[[88,1],[126,1]],"ranging":[[88,1],[91,1],[93,1]],"trainers":[[88,4],[91,1]],"hely":[[88,1],[117,1],[125,1]],"australia":[[88,1],[218,1]],"administered":[[88,2],[112,2]],"seven":[[88,2],[163,1],[165,1],[188,1],[202,1],[203,1],[219,1]],"nico-":[[88,1],[115,2],[120,2]],"tine":[[88,1],[110,3],[115,2],[120,2]],"cigarette":[[88,1],[89,1],[90,2],[91,1],[92,1],[93,5],[94,1],[95,1],[98,1],[101,4],[102,1],[105,1],[107,1],[108,1],[109,2],[110,5],[111,10],[113,3],[116,6],[120,1],[121,3],[122,11],[123,4],[124,7],[125,2],[127,6],[163,7],[164,5],[165,7],[166,9],[167,8],[168,12]],"consumption":[[88,1],[90,3],[91,1],[103,1],[107,1],[108,1],[109,1],[110,2],[111,3],[112,5]],"firmed":[[88,1],[216,1]],"seling":[[88,2]],"consisted":[[88,3],[201,1]],"gorassini":[[88,1],[117,1],[124,2]],"spanos":[[88,1],[118,1],[124,2]],"matorin":[[88,1],[90,1],[117,1],[126,1]],"nonsmoker":[[88,1],[89,1],[91,2],[92,3],[94,5],[95,9],[96,1],[97,1],[98,3],[100,14],[101,2],[103,4],[104,16],[105,10],[107,9],[113,3],[114,2],[115,1],[118,1],[119,1],[120,3]],"resisting":[[88,1],[89,1],[90,1],[91,1],[98,1],[103,1],[105,1],[120,1],[171,1],[212,1]],"urges":[[88,2],[89,3],[91,6],[93,2],[95,2],[96,7],[97,5],[98,1],[100,6],[101,1],[102,5],[103,1],[104,2],[105,2],[106,1],[112,1],[113,1],[114,1],[115,3],[118,1],[119,2],[120,2],[121,1],[122,1],[163,1],[164,5],[166,6],[167,5],[168,10],[171,2],[219,3]],"quitting":[[88,1],[89,1],[90,2],[108,1],[109,1],[110,1],[111,2],[112,1],[113,1],[116,1],[123,3],[124,1],[126,1],[127,4],[163,9],[164,3],[165,2],[166,11],[167,3],[168,3]],"anchoring":[[88,1],[89,1],[94,3],[106,1],[118,2]],"breaths":[[88,1],[95,1],[98,1],[100,2],[104,2],[105,1],[166,1]],"reminders":[[88,1],[96,1],[101,1],[113,1],[175,1],[177,1],[184,1],[188,1],[189,1],[192,2],[199,1]],"january":[[88,1],[110,1],[116,1],[117,1],[123,1],[126,1]],"smoked":[[88,1],[89,1],[90,2],[93,2],[94,1],[95,1],[96,1],[97,3],[98,2],[100,1],[101,9],[102,4],[104,1],[105,3],[107,15],[108,1],[109,1],[111,1],[112,2],[113,1],[114,1],[121,2],[122,4],[164,1],[165,1],[166,3],[167,1]],"routines":[[88,1],[120,1]],"environmental":[[88,1],[91,1],[101,1],[108,1],[110,1],[113,1],[123,3],[126,1],[139,1],[168,2],[170,1],[173,1],[223,1]],"stimulus":[[88,1],[89,1],[95,1],[96,2],[105,1],[112,1],[113,2],[119,1]],"rewards":[[88,1],[89,1],[90,1],[94,2],[97,9],[101,2],[106,1],[118,2],[124,1],[168,4]],"dramatically":[[88,1],[95,1],[96,2],[98,1],[99,1],[102,1],[103,1],[111,1]],"strate-":[[88,1],[92,1],[189,1],[190,1]],"gies":[[88,1],[92,1],[189,1],[190,1]],"contend":[[88,2],[110,1],[111,1]],"success-":[[88,1],[90,2],[95,1],[202,1],[210,1]],"bolster":[[88,1],[89,1],[90,1],[98,1],[112,1],[114,1]],"facilitators":[[88,1],[89,6],[90,10],[91,11],[92,6],[101,1],[103,2],[108,2],[109,1],[110,2],[113,2],[114,2],[120,1]],"defeating":[[88,1],[92,2]],"vious":[[88,1],[115,1]],"appear":[[88,1],[90,1],[108,3],[110,1],[111,1],[113,1],[132,1],[134,2],[139,1],[155,1],[164,1],[181,1],[186,1],[191,2],[211,1]],"literature":[[88,1],[116,1],[117,1],[126,1],[127,1],[134,1]],"promotes":[[89,1],[95,1],[98,1],[141,1]],"hara":[[89,1],[108,1],[125,1],[127,1]],"aviram":[[89,1],[117,1],[125,1]],"westra":[[89,1],[117,1],[125,1]],"proven":[[89,1],[92,2],[98,1],[114,1],[163,1],[169,2],[225,1]],"anxieties":[[89,1],[90,1]],"alongside":[[89,2],[97,1],[112,1],[113,1]],"facili-":[[89,2]],"tators":[[89,2]],"delivery":[[89,1],[103,1],[110,1],[117,1],[168,1]],"manualized":[[89,1],[91,1]],"cupertino":[[89,1],[90,1],[91,1],[117,1],[124,1]],"lundahl":[[89,1],[126,1]],"kunz":[[89,1],[126,1]],"brownell":[[89,1],[126,1]],"tollefson":[[89,1],[126,1]],"burke":[[89,1],[123,1],[126,1]],"moyers":[[89,4],[118,1],[127,2]],"rollnick":[[89,3],[90,1],[118,1],[127,3]],"rose":[[89,3],[111,2],[118,1],[127,3],[218,1]],"addictions":[[89,1],[91,1],[123,1],[124,1],[125,1],[126,1]],"automaticity":[[89,1],[95,1],[118,2]],"ritual":[[89,1],[93,1],[113,1],[207,1]],"intentions":[[89,1],[100,2],[104,2],[105,4],[106,2],[124,3],[155,1],[194,1],[212,1],[213,5]],"personally":[[89,1],[169,1],[213,1],[215,1]],"financial":[[89,1],[91,1],[124,1],[171,1],[216,2]],"urge":[[89,3],[90,2],[91,17],[92,1],[95,3],[96,13],[97,28],[98,1],[100,13],[101,2],[102,4],[103,4],[104,3],[105,21],[106,2],[112,1],[113,2],[114,1],[118,1],[119,4],[120,1],[121,2],[122,4],[123,1],[127,1],[159,1],[166,3],[168,1],[171,1],[175,2],[182,1],[205,1],[207,1],[222,1]],"outweigh":[[89,3],[90,1],[108,1],[109,1],[111,1],[186,1]],"costs":[[89,5],[90,1],[91,1],[94,2],[110,1],[114,1],[115,1],[118,1],[121,1]],"suppression":[[89,1],[119,1],[122,1]],"surrounded":[[89,1],[169,1]],"gesture":[[89,1],[94,1],[106,1],[155,1]],"spouse":[[89,1],[94,3],[96,1],[98,2],[107,1],[113,1],[209,1],[214,1]],"healthier":[[89,1],[100,1],[101,1],[113,1],[126,1],[219,1]],"multifaceted":[[89,1],[125,1]],"interviewin":[[89,2],[90,2],[91,2]],"tilt":[[89,2]],"forsberg":[[89,2],[124,2],[126,1]],"managed":[[89,1],[113,1],[116,1],[126,1],[163,2],[167,2],[168,4],[206,1]],"ambivalent":[[89,1],[91,2],[92,1],[94,1],[163,1],[166,1]],"automatized":[[89,1],[112,1]],"habitual":[[89,2],[91,3],[96,1],[108,1],[113,1],[140,1],[141,1],[161,1]],"aspect":[[89,1],[147,2]],"assist":[[89,1],[92,1],[98,1],[112,3],[114,1],[115,1],[120,1],[121,1],[128,1],[140,1],[155,1],[163,1]],"apodaca":[[89,1],[123,1],[126,1]],"longabaugh":[[89,1],[123,1],[126,1]],"observed":[[89,1],[90,2],[195,1],[210,1]],"relinquishing":[[89,1],[113,1]],"allowing":[[89,1],[101,1],[111,1],[213,1]],"krigel":[[89,2],[117,1],[126,1]],"hettema":[[89,1],[117,1],[125,1]],"hendricks":[[89,1],[108,2],[109,1],[117,1],[125,3]],"diclemente":[[89,1],[90,1],[124,2]],"corno":[[89,1],[124,1]],"graydon":[[89,1],[124,1]],"wiprovnick":[[89,1],[124,1]],"knoblach":[[89,1],[124,1]],"heckman":[[89,1],[117,1],[125,1]],"egleston":[[89,1],[117,1],[125,1]],"lindson":[[89,1],[90,3],[112,1],[117,1],[123,1],[126,3]],"hawley":[[89,1],[90,2],[117,1],[123,1],[126,2]],"thompson":[[89,1],[109,1],[116,2],[118,1],[126,2]],"begh":[[89,1],[90,1],[123,1],[126,1]],"proving":[[89,1],[211,1]],"catley":[[89,2],[117,1],[123,2],[124,1],[126,1]],"urban":[[89,1],[127,1]],"sobell":[[89,2],[90,2],[116,2],[118,2]],"relational":[[89,3],[126,1]],"imel":[[89,1],[117,1]],"counselor":[[89,2]],"boardman":[[89,1],[123,1]],"grobe":[[89,1],[111,1],[117,1],[123,2],[126,1],[127,1]],"ahluwalia":[[89,1],[111,1],[117,1],[123,1]],"meier":[[89,1],[127,1]],"barrowclough":[[89,1],[127,1]],"donmall":[[89,1],[127,1]],"underscoring":[[89,2]],"coupled":[[89,1],[94,1],[102,1],[104,1],[109,1],[172,1]],"costly":[[89,1],[97,2]],"conquer":[[89,1],[96,1],[225,1]],"evoking":[[89,1],[150,2]],"stimulate":[[89,1],[164,1]],"contin-":[[89,1],[214,1]],"viduals":[[89,1],[113,1]],"facilitator":[[89,1],[90,4],[91,1],[100,1],[103,3],[107,1],[108,1],[110,1],[114,2],[115,1],[118,1],[120,1]],"indication":[[89,1],[134,1],[163,1]],"lindqvist":[[89,1],[124,1],[126,1]],"enebrink":[[89,1],[126,1]],"andersson":[[89,1],[126,1]],"rosendahl":[[89,1],[126,1]],"generating":[[89,1],[91,1]],"newfound":[[89,1],[97,1]],"achterberg":[[89,1],[122,1]],"lawlis":[[89,1],[122,1]],"ahsen":[[89,1],[122,1]],"determination":[[90,3],[91,1],[94,2],[100,1],[104,3],[106,1],[114,1],[115,1],[117,2],[118,1],[125,1],[127,1]],"reward":[[90,1],[97,10],[101,11],[103,1],[106,1],[108,2],[110,2],[113,1],[116,1],[196,1]],"doctors":[[90,1],[157,1],[158,1],[169,1],[191,1],[193,1],[208,1]],"situational":[[90,1],[91,1],[114,1],[116,1],[175,2],[223,2]],"pressures":[[90,1],[114,1],[219,1]],"sorts":[[90,1],[91,1],[96,1],[105,1],[152,1],[155,1]],"shot":[[90,1],[91,1]],"doubt":[[90,1],[94,1],[100,1],[183,1],[188,1]],"succeeding":[[90,1],[105,1],[107,1],[114,1]],"discouragement":[[90,1],[179,1]],"columbo":[[90,2],[94,1],[118,2]],"deploying":[[90,1],[94,1],[118,1]],"discrepancies":[[90,2],[94,1],[118,1]],"renowned":[[90,1],[224,1],[225,1]],"televi-":[[90,1],[95,1]],"encourages":[[90,1],[99,1],[110,1],[113,1],[114,1],[128,1],[129,1],[131,1],[141,2]],"harmed":[[90,1],[93,1],[179,1]],"flight":[[90,1],[170,1],[174,1],[193,6],[206,3],[208,1],[223,1]],"stairs":[[90,1],[113,1],[173,1]],"causing":[[90,1],[111,1],[128,1],[189,1],[190,1]],"enlisting":[[90,2],[94,2]],"tudiver":[[90,1],[127,1]],"schultz":[[90,1],[127,1]],"campbell":[[90,1],[116,2],[127,1]],"workers":[[90,1],[91,1],[114,1],[160,1]],"enrolling":[[90,1],[92,1],[115,1]],"publicly":[[90,1],[121,1]],"ingrained":[[90,1],[113,1],[217,1]],"enlist":[[90,1],[94,2],[97,1],[122,1],[189,2]],"lines":[[90,1],[91,1],[108,1],[113,1],[121,1],[154,1],[175,2],[176,3]],"inviting":[[90,1],[92,1]],"port":[[90,1],[112,1],[114,1],[186,2]],"linear":[[90,2],[113,1]],"morbidity":[[90,1],[112,1],[116,1],[118,1],[123,2]],"mortality":[[90,1],[112,4],[116,1],[118,1],[123,2],[126,1]],"biomarkers":[[90,5]],"coronary":[[90,1],[93,2],[108,1]],"bolliger":[[90,1],[117,1],[123,1]],"improvements":[[90,1],[93,1],[126,1],[170,1],[171,1],[177,1],[196,1],[205,2],[218,1]],"cardiovascular":[[90,2],[109,2],[111,2],[116,1],[123,3],[124,2],[125,1]],"respiratory":[[90,1],[93,1],[109,1],[110,1],[111,1],[117,1],[123,1],[125,1]],"counts":[[90,2],[172,3],[173,1],[174,1]],"eliasson":[[90,1],[124,1]],"hjalmarson":[[90,1],[116,1],[124,1]],"kruse":[[90,1],[124,1]],"landfeldt":[[90,1],[124,1]],"westin":[[90,1],[118,1],[123,1],[124,1]],"hatsukami":[[90,4],[117,1],[125,1]],"nonsmokers":[[90,1],[108,1],[111,1]],"handful":[[90,2],[92,1]],"godtfredsen":[[90,1],[124,1]],"osler":[[90,1],[124,1]],"vestbo":[[90,1],[124,1]],"andersen":[[90,1],[124,1]],"prescott":[[90,1],[111,1],[124,2]],"sizes":[[90,1],[215,1]],"modest":[[90,2]],"smallest":[[90,1],[171,1]],"cutting":[[90,2],[103,1],[112,4],[114,1],[118,3],[119,1],[121,1],[124,1],[164,2],[165,1]],"attainable":[[90,3]],"bandura":[[90,1],[117,1],[123,1],[160,1]],"ping":[[90,1],[108,1]],"aveyard":[[90,3],[108,2],[112,1],[116,2],[117,1],[123,2],[124,1],[126,3]],"reduces":[[90,1],[127,1],[129,1],[150,1],[163,1],[164,1],[166,4],[167,1],[214,1]],"colby":[[90,1],[123,1]],"tiffany":[[90,1],[123,2]],"naiura":[[90,1],[123,1]],"route":[[90,1],[96,1],[108,1],[159,1],[192,1]],"callas":[[90,1],[125,1]],"peters":[[90,1],[125,1]],"sumption":[[90,1],[110,1],[111,1],[113,1]],"absti-":[[90,1],[104,1]],"nence":[[90,1],[104,1]],"steady":[[90,1],[111,1],[219,1]],"exception":[[90,1],[92,1],[110,1],[165,1],[198,1]],"readiness":[[90,9],[106,1],[118,1],[125,1],[163,2],[166,2],[168,2]],"trans-":[[90,1],[105,1]],"amodei":[[90,1],[123,1]],"lamb":[[90,1],[123,1]],"vangeli":[[90,1],[117,1]],"stapleton":[[90,1],[117,1]],"smit":[[90,1],[117,1]],"borland":[[90,1],[116,2],[117,2],[127,1]],"west":[[90,1],[110,1],[116,3],[117,2],[118,1],[123,2],[126,1],[127,1]],"midpoint":[[90,1],[198,1]],"visualizations":[[90,1],[99,1]],"impressed":[[91,3],[190,1]],"evidenced":[[91,1],[113,1]],"attendance":[[91,1],[171,1],[186,1]],"slides":[[91,1],[92,8],[95,1],[96,1],[98,2],[99,1],[103,3],[104,1]],"tude":[[91,1],[200,1],[201,1]],"ticipant":[[91,1],[115,1]],"reiterate":[[91,1],[114,1],[128,1]],"detailing":[[91,1],[101,2]],"programmed":[[91,3],[118,3]],"excuse":[[91,1],[100,1]],"stamped":[[91,1],[103,1],[104,1],[114,1],[122,1]],"inevitable":[[91,1],[95,1],[109,1]],"unfolds":[[91,1],[96,1]],"frustration":[[91,2],[96,1],[98,1],[114,1],[120,1]],"impulse":[[91,2],[96,1],[97,1]],"chain":[[91,1],[97,1],[113,1]],"unconscious":[[91,1],[99,1],[112,1]],"driven":[[91,1],[111,1],[192,1]],"kick":[[91,2],[98,1],[102,1]],"pass":[[91,3],[95,1],[96,1],[97,5],[100,3],[101,1],[102,2],[104,3],[105,4],[106,1],[164,2],[166,2]],"nonsmoking":[[91,2],[101,4],[112,1],[115,1],[120,1]],"substitution":[[91,1],[96,1],[105,1],[112,1],[113,1],[118,2],[186,1]],"deny":[[91,1],[214,1],[216,2],[222,2]],"destined":[[91,1],[171,1]],"abramowitz":[[91,1],[97,1],[122,1],[139,1],[160,1]],"ramirez":[[91,1],[97,1],[118,1],[127,1]],"associate":[[91,2],[94,1],[95,1],[101,1],[108,1],[168,4]],"compete":[[91,1],[177,1],[178,1]],"excuses":[[91,1],[100,1],[156,1],[158,1]],"actu-":[[91,1],[205,1]],"comments":[[91,2],[92,1],[103,3],[115,1],[118,1],[122,1],[194,1],[206,1],[210,1]],"reinforced":[[91,1],[93,1],[95,1],[113,1]],"bored":[[91,1],[191,1]],"station":[[91,1],[95,2],[96,2],[104,1]],"removing":[[91,1],[97,1],[213,1]],"license":[[91,1],[119,1]],"disclose":[[91,1],[114,1]],"passion":[[91,1],[222,1]],"moments":[[91,1],[97,1],[104,1],[176,1],[183,1],[205,1]],"underscore":[[91,1],[94,1]],"striving":[[91,1],[100,1],[104,1]],"smoker":[[91,1],[93,2],[95,1],[97,1],[100,1],[101,1],[103,1],[105,5],[110,2],[113,1],[116,2],[163,2],[164,2],[165,1],[166,4],[168,4]],"explains":[[91,1],[92,1],[179,1]],"grief":[[91,1],[172,1],[175,5],[191,2]],"spitzer":[[91,1],[116,1]],"rettes":[[91,1],[109,1]],"relatedly":[[91,1],[108,1],[111,1]],"instrumental":[[91,1],[214,1]],"support-":[[91,1],[187,1],[219,1]],"belittling":[[91,1],[102,1]],"appraising":[[91,1],[102,1]],"fellow":[[91,1],[102,1],[224,1],[225,1]],"club":[[91,1],[102,1]],"misery":[[91,1],[102,1]],"loves":[[91,1],[102,1],[182,1],[185,1]],"priorities":[[91,1],[102,1]],"intrinsically":[[91,2]],"gagne":[[91,1],[117,1]],"ryan":[[91,1],[96,1],[117,3],[123,1],[124,1],[127,1]],"deci":[[91,1],[117,4],[124,1],[127,1]],"motivations":[[91,1],[112,1],[127,1]],"intrinsic":[[91,1],[124,1],[127,1]],"extrinsic":[[91,2],[124,1]],"capitalize":[[91,1],[112,1]],"undeniably":[[91,1],[100,1]],"applaud":[[91,1],[100,1],[107,1]],"forefront":[[91,1],[100,1]],"motivator":[[91,1],[100,1],[114,1]],"harness":[[91,1],[100,1]],"kindness":[[91,1],[100,1],[105,4],[145,1],[196,1],[200,1],[201,9],[216,1],[217,1],[218,1],[222,1],[223,2],[224,1]],"puff":[[91,1],[100,1],[163,4],[164,2],[165,5],[166,4],[167,11],[168,11]],"challenged":[[91,1],[113,1],[140,3],[149,1],[155,1]],"introductions":[[92,2]],"trainer":[[92,9]],"administering":[[92,1],[93,1]],"arrangement":[[92,1],[165,1],[166,1]],"interact":[[92,1],[124,1],[158,1],[170,1],[171,1]],"tables":[[92,1],[101,1],[140,1],[158,1],[172,2]],"handouts":[[92,10],[98,4],[101,11],[102,5],[103,2],[107,7],[114,1],[115,1],[118,3],[119,2],[120,2],[134,2],[151,4]],"layout":[[92,1],[155,1]],"extra":[[92,1],[94,1],[96,2],[98,1],[101,8],[113,1],[164,1],[166,1],[170,1],[172,2],[176,1],[206,1],[215,1],[216,1]],"permit":[[92,1],[120,1],[175,1]],"faqs":[[92,1],[107,1],[118,1],[119,1]],"saves":[[92,2]],"templates":[[92,1],[107,1],[114,2]],"specifics":[[92,2],[101,1]],"administration":[[92,1],[93,1],[107,1],[109,2],[110,1],[116,3],[118,2],[119,1],[124,1]],"powerpoint":[[92,5],[103,1]],"clip":[[92,1],[93,1],[99,1]],"congratulating":[[92,1],[98,1],[163,1]],"introduces":[[92,2],[172,1],[198,1]],"credentials":[[92,1],[114,1]],"biggest":[[92,1],[123,2],[166,1],[171,1],[189,2],[203,1],[204,1]],"hypnotizable":[[92,1],[115,1]],"atmosphere":[[92,1],[164,1],[195,1]],"presenter":[[92,2]],"slide":[[92,8],[98,3],[99,1],[100,1],[101,1],[103,3],[114,2],[115,2],[120,1]],"calculate":[[92,1],[93,1]],"calculators":[[92,1],[93,1]],"beneath":[[92,1],[153,3],[192,1],[194,1],[196,1]],"narration":[[92,2]],"citations":[[92,3]],"eliminated":[[92,1],[217,1]],"welcome":[[92,3],[93,1],[100,1],[103,1],[104,1],[119,1],[154,1],[166,1],[167,1],[168,1]],"hello":[[92,1],[93,1],[100,2],[178,1]],"congratulations":[[92,1],[99,1],[104,1],[167,1],[168,1]],"location":[[92,1],[93,1],[95,1],[96,1],[101,1],[102,1],[105,1],[115,2]],"individually":[[92,1],[112,2],[113,1],[114,1],[120,1]],"assisted":[[92,1],[108,2],[116,2]],"multidimensional":[[92,2],[115,1]],"dangers":[[92,2],[110,2],[112,2],[115,2],[118,1],[120,2],[166,1],[206,3],[208,6],[209,1],[211,2]],"doable":[[92,1],[93,1],[96,1],[225,1]],"printed":[[92,1],[103,1],[121,2],[181,1],[185,1],[197,3]],"facts":[[92,1],[95,2],[101,2],[140,2],[182,9],[183,3],[184,2],[185,2],[188,1],[223,2]],"acquire":[[92,1],[196,1]],"detect":[[92,1],[120,1]],"unlearn":[[92,1],[96,1]],"pulled":[[92,1],[182,1]],"habits":[[93,3],[106,1],[122,1],[123,1],[138,1],[172,1],[198,1],[201,1],[213,1]],"transform":[[93,1],[117,1],[169,1],[201,1],[219,2],[225,2]],"unhealthy":[[93,1],[105,1]],"unique":[[93,2],[101,1],[112,1],[120,1]],"empowering":[[93,1],[105,1],[115,1]],"mouth":[[93,3],[97,1],[101,1],[111,2],[121,1],[156,1],[157,1],[158,3],[164,3],[165,1],[203,1],[205,1],[206,1],[210,2],[222,1]],"pleting":[[93,1],[98,1]],"harmful":[[93,3],[110,2],[112,1],[164,1],[165,1],[166,1],[187,1],[197,1],[214,1],[216,1]],"chemicals":[[93,1],[110,3],[111,2],[123,1],[164,1],[204,1]],"combustible":[[93,1],[109,2],[110,6]],"taste":[[93,1],[105,4],[166,1],[205,2],[209,1]],"smell":[[93,2],[100,1],[105,4],[113,2],[123,1],[205,3],[209,1],[210,1]],"alive":[[93,2],[105,2],[172,1]],"endurance":[[93,2]],"immune":[[93,3]],"classes":[[93,1],[210,1]],"multiply":[[93,2],[101,1]],"puffs":[[93,3],[101,1],[109,1],[167,1]],"calculated":[[93,1],[108,1],[112,1]],"poisonous":[[93,4],[138,1],[163,1]],"burning":[[93,1],[109,1],[111,1],[121,1]],"plant":[[93,1],[201,1]],"insecticide":[[93,2]],"compound":[[93,2]],"insecticides":[[93,2],[110,1]],"poison":[[93,2],[165,1]],"weed":[[93,2],[178,1],[196,1]],"hydrogen":[[93,2]],"rocket":[[93,2],[110,1]],"fuels":[[93,1],[208,1]],"colorless":[[93,2]],"wood":[[93,1],[125,1],[158,1],[159,1]],"peat":[[93,1],[184,1]],"dioxide":[[93,1],[161,1],[210,2]],"packs":[[93,1],[95,1],[102,2],[112,1]],"pack":[[93,2],[98,1],[100,1],[103,1],[110,1],[112,1],[115,1]],"killer":[[93,1],[123,2]],"fuel":[[93,1],[214,1]],"rolled":[[93,1],[170,1]],"sticks":[[93,1],[97,1]],"nurse":[[93,1],[191,1]],"nearly":[[93,1],[98,1],[107,1],[108,1],[110,1],[111,2],[112,1],[113,1],[168,1],[194,1],[201,1],[208,1],[213,1]],"witnessed":[[93,1],[109,1],[197,1]],"equally":[[93,1],[111,1],[134,1],[135,1],[170,1],[175,1],[192,1],[199,1],[209,1],[211,1],[215,1],[222,1]],"deadly":[[93,2],[110,2]],"cancers":[[93,2],[109,1]],"doubles":[[93,1],[164,1]],"stroke":[[93,1],[111,1],[122,1],[140,1],[177,2],[208,1]],"women":[[93,1],[108,22],[109,4],[111,1],[112,17],[116,1],[117,1],[122,1],[123,3],[124,1],[125,5],[126,3],[127,5],[205,1]],"heal":[[93,1],[95,1],[102,1],[105,2],[200,1]],"cough":[[93,1],[95,2],[102,1]],"luck":[[93,1],[100,1],[104,1],[106,1],[206,1]],"tastes":[[93,1],[113,2],[158,1],[159,1],[179,1]],"smells":[[93,1],[105,1],[113,1],[158,1],[159,1],[205,1],[208,1],[209,1],[210,1]],"happiness":[[93,1],[124,1],[127,1],[169,2],[173,1],[176,6],[182,1],[185,1],[188,2],[192,1],[195,3],[197,1],[198,4],[200,1],[201,7],[212,3],[214,1],[217,3],[218,5],[219,1],[222,2],[223,3]],"spends":[[93,1],[194,1]],"approved":[[93,1],[110,1],[111,3],[116,1]],"nrts":[[93,1],[110,1]],"inhaler":[[93,1],[111,1],[164,1]],"nasal":[[93,1],[111,1],[127,1],[164,2],[166,1]],"spray":[[93,1],[111,1],[127,1],[164,3],[166,1]],"proper":[[93,1],[96,1],[103,1],[105,1],[109,1],[114,2],[120,1],[164,1],[166,2],[167,1],[177,1]],"rare":[[94,1],[97,1],[110,1],[111,1]],"onto":[[94,1],[101,2],[138,1],[140,1],[144,1],[150,1],[155,2],[156,2],[157,2],[158,7],[159,1],[161,1],[198,1],[209,1]],"handicapping":[[94,2]],"ramifications":[[94,2],[102,1]],"falling":[[94,2],[98,1],[102,1],[113,1],[205,1],[222,1]],"defensive":[[94,1],[214,1]],"spitting":[[94,1],[119,1]],"soup":[[94,1],[119,1]],"sharf":[[94,1],[116,1]],"dollars":[[94,1],[97,1],[110,1]],"instruct":[[94,2],[97,1],[103,1],[107,1],[177,1]],"inserted":[[94,1],[135,1],[140,2]],"displayed":[[94,1],[113,1],[164,1]],"wallet":[[94,2],[101,1]],"posted":[[94,1],[155,1]],"forefinger":[[94,2],[100,1],[104,1],[106,1]],"security":[[94,1],[104,2],[110,1],[115,1],[116,1],[121,1],[173,1],[208,1],[215,1]],"calmness":[[94,2],[98,2]],"revisit":[[94,1],[166,1],[167,1]],"justify":[[94,1],[102,1]],"withstand":[[94,1],[102,1]],"stick":[[94,1],[95,1],[96,1],[97,1],[99,1],[168,1],[182,1]],"buddy":[[94,2],[97,2],[98,2],[101,7],[118,1],[166,1]],"pleted":[[94,1],[186,2],[187,1]],"visible":[[94,2],[101,1]],"finger":[[94,4]],"anytime":[[94,1],[106,1]],"generalization":[[94,1],[113,1]],"willpower":[[95,2],[102,3]],"addict":[[95,2],[102,2]],"constipation":[[95,2],[102,1],[111,1],[164,1]],"headaches":[[95,2],[102,1],[120,1]],"factor":[[95,1],[109,2],[124,1],[125,1],[139,1]],"klesges":[[95,1],[108,2],[126,3]],"acts":[[95,1],[111,1],[129,1],[153,2],[161,1],[164,1],[196,1],[201,16],[223,2],[224,1]],"metabolism":[[95,2],[108,1]],"chiolero":[[95,1],[108,1],[117,1],[123,1]],"faeh":[[95,1],[108,1],[117,1],[123,1]],"paccaud":[[95,1],[108,1],[118,1],[123,1]],"cornuz":[[95,1],[108,2],[117,1],[123,1],[126,1]],"amounts":[[95,2],[102,1],[110,1],[113,1],[144,2],[155,1],[164,1],[167,1],[209,1],[211,1]],"compliment":[[95,2],[178,3],[201,1]],"enjoyable":[[95,2],[100,1],[129,1],[155,1],[172,1],[176,1],[195,1],[202,1],[204,8],[205,3],[223,1]],"constantly":[[95,1],[101,1],[155,1],[169,1],[171,1],[178,1],[194,1],[195,3],[196,1],[203,1]],"illogical":[[95,1],[96,1],[101,1]],"ter-":[[95,1],[202,1]],"rible":[[95,1],[202,1]],"myth":[[95,2],[102,3]],"suffers":[[95,1],[102,1]],"learns":[[95,1],[102,1],[208,1]],"nervousness":[[95,1],[102,1],[121,1],[172,1],[173,1],[175,1],[176,1],[181,5],[182,1],[184,1],[185,1],[188,1],[192,1],[195,1],[201,1],[202,1],[205,1],[211,1]],"restlessness":[[95,1],[102,1],[164,1],[205,1],[222,1]],"surprises":[[95,1],[102,1]],"pounds":[[95,3],[102,2],[108,1],[109,2],[113,1],[121,1],[122,2]],"standpoint":[[95,2],[102,1],[109,1]],"conviction":[[95,1],[100,1],[103,1],[104,1],[113,1],[134,1]],"delicious":[[95,1],[178,1]],"monly":[[95,1],[208,1]],"tune":[[95,1],[96,1],[100,1],[104,1],[113,1]],"radio":[[95,1],[96,1],[104,1]],"porch":[[95,1],[104,2]],"thoughtless":[[95,1],[212,2],[213,6]],"cinnamon":[[95,1],[97,1],[113,1]],"water":[[95,1],[96,2],[97,1],[100,1],[103,1],[105,1],[108,1],[109,1],[110,1],[111,12],[118,1],[119,2],[123,1],[156,1],[157,1],[158,4],[164,1],[183,1],[186,1],[208,1]],"nonstrenuous":[[95,1],[115,1]],"secondary":[[95,1],[116,1]],"tajeu":[[95,1],[116,1]],"obesity":[[95,1],[116,3],[123,1],[124,2],[126,1]],"mended":[[95,1],[112,1],[176,1],[218,1]],"chaput":[[95,1],[123,1]],"dutil":[[95,1],[123,1]],"minimizing":[[95,1],[109,1]],"clair":[[95,1],[108,2],[117,1],[123,1],[126,1]],"lifestyle":[[95,1],[96,2],[109,1],[116,1],[125,1]],"addicted":[[95,1],[111,1],[166,1]],"join":[[96,1],[98,1],[195,1],[203,1]],"ourselves":[[96,1],[105,1],[134,1],[146,1],[155,3],[173,1],[187,1],[196,2],[197,2],[200,1],[201,3],[202,1],[205,1],[208,1],[212,2],[213,2],[214,5],[215,1],[216,1],[217,1]],"atten-":[[96,1],[213,1]],"remove":[[96,1],[104,1],[115,1],[121,1],[139,1]],"lighters":[[96,1],[165,1],[166,1]],"matches":[[96,1],[103,1],[195,1],[198,1],[212,1],[221,1],[222,1]],"furniture":[[96,1],[97,1]],"photos":[[96,1],[209,1]],"cellphone":[[96,1],[110,2],[113,1]],"wallpaper":[[96,1],[113,1]],"moderation":[[96,2],[105,1],[124,1]],"vegetables":[[96,1],[186,1]],"salty":[[96,1],[113,1]],"snacks":[[96,2],[113,1],[116,1],[195,1]],"savor":[[96,1],[205,1]],"output":[[96,1],[110,1]],"health-":[[96,1],[120,1]],"relieve":[[96,1],[216,1]],"rested":[[96,2],[185,1]],"definitions":[[96,1],[98,1]],"purposes":[[96,1],[101,1],[102,1],[103,1],[178,1],[206,1],[211,1],[217,1]],"define":[[96,1],[98,2],[128,2],[163,1],[172,1],[175,1],[179,1]],"hussain":[[96,1],[125,1]],"deming":[[96,1],[117,1],[126,1]],"yapko":[[96,1],[117,1],[118,1]],"prone":[[96,1],[112,1],[132,1],[154,1],[173,1],[217,1]],"gifford":[[96,1],[117,1],[124,1]],"antonuccio":[[96,1],[117,1],[124,1]],"piasecki":[[96,1],[118,1],[124,1]],"hernandez":[[96,1],[125,1]],"luciano":[[96,1],[125,1]],"bricker":[[96,1],[125,1]],"roales":[[96,1],[125,1]],"nieto":[[96,1],[125,1]],"montesinos":[[96,1],[125,1]],"centuries":[[96,1],[98,1],[111,1]],"eastern":[[96,1],[111,1]],"attunement":[[96,1],[100,1],[104,1]],"breaking":[[96,1],[100,1],[134,1],[170,1],[212,1],[215,1],[216,1],[217,2]],"judging":[[96,1],[171,1],[191,2],[192,1],[194,1],[210,1],[213,1],[215,1]],"boredom":[[96,1],[98,1]],"personalized":[[96,1],[97,1],[112,1],[116,1]],"rebounding":[[97,2]],"pink":[[97,4]],"elephant":[[97,4]],"monster":[[97,7],[171,1]],"rope":[[97,4]],"analyze":[[97,1],[175,1],[204,1]],"crystallize":[[97,1],[100,1],[104,1],[110,1]],"equate":[[97,1],[171,1],[196,1]],"distract":[[97,4],[101,1],[103,1],[105,1],[113,1],[148,1],[157,1],[158,2],[159,1]],"huge":[[97,1],[144,2],[151,1],[155,2],[161,1],[168,1]],"passes":[[97,2],[105,1],[112,1]],"resisted":[[97,1],[105,1],[114,1]],"stretch":[[97,1],[100,1],[105,1],[106,1],[173,1]],"toes":[[97,1],[100,1],[104,1]],"bicycle":[[97,1],[217,1]],"song":[[97,2],[179,1]],"toothpicks":[[97,1],[113,1]],"magazine":[[97,2],[169,1],[184,2],[187,2]],"outfit":[[97,4]],"library":[[97,2],[111,1],[116,2],[224,1]],"restaurant":[[97,1],[178,1],[200,1]],"incentives":[[97,1],[114,1]],"buying":[[97,1],[185,1],[201,1]],"shirt":[[97,2],[212,11],[213,1]],"announce":[[97,1],[103,2]],"color":[[97,1],[109,1],[173,1]],"strug-":[[97,1],[225,1]],"encour-":[[97,1],[103,1],[114,1]],"agement":[[97,1],[105,1]],"frustrations":[[97,1],[103,1]],"rooms":[[97,1],[155,2],[192,3]],"intention":[[97,1],[100,5],[104,10],[105,3],[113,2],[114,1],[124,1],[154,1],[197,1],[213,1]],"lapses":[[97,1],[111,1]],"redouble":[[97,1],[98,1]],"rework":[[97,1],[98,1],[104,1],[107,1]],"lapse":[[97,3],[98,1],[103,1],[111,1],[124,1]],"relisten":[[97,1],[107,1],[182,1]],"tracks":[[97,1],[108,1],[114,3],[115,1]],"batteries":[[98,1],[110,4]],"towel":[[98,1],[178,1]],"dubbed":[[98,1],[103,1],[115,1],[120,1]],"stressing":[[98,1],[163,1]],"council":[[98,1],[117,1],[124,1],[208,2],[209,2]],"absorbed":[[98,1],[100,12],[101,2],[104,6],[105,3],[111,1],[146,1],[164,1],[210,1]],"distracting":[[98,1],[134,2]],"superstar":[[98,1],[99,1]],"hypnotizability":[[98,1],[118,3],[125,2]],"ubiquitous":[[98,1],[108,1],[112,1]],"false":[[98,2]],"mistakenly":[[98,2]],"hypnotized":[[98,3],[99,2],[100,1],[101,2],[114,1]],"willed":[[98,1],[99,1]],"malinoski":[[98,1],[117,1],[125,1]],"sapirstein":[[98,1],[118,1],[126,1]],"laurence":[[98,1],[117,1],[125,1],[126,1]],"becom-":[[98,1],[115,1]],"procedure":[[98,1],[126,1],[164,1]],"inductions":[[98,1],[123,1]],"misperceptions":[[98,1],[126,1]],"sug-":[[99,1],[183,1]],"refers":[[99,1],[169,1]],"volume":[[99,1],[109,1]],"factory":[[99,1],[110,1],[113,2]],"prohibited":[[99,1],[109,1]],"rights":[[99,1],[115,1],[121,5],[188,1],[214,1]],"transfer":[[100,1],[160,1]],"cunningham":[[100,1],[124,1]],"bremner":[[100,1],[124,1]],"rzasa":[[100,1],[124,1]],"masters":[[100,1],[127,1]],"burish":[[100,1],[127,1]],"rimm":[[100,1],[127,1]],"path":[[100,1],[191,2],[200,2],[210,1]],"self-hypnosis":[[100,3]],"tempted":[[100,1],[165,1],[168,4]],"foolish":[[100,1],[194,1],[205,1],[208,1]],"closest":[[100,1],[199,1],[214,1],[216,1]],"cool":[[100,1],[105,1],[199,1],[205,1],[206,1],[210,1]],"shoulders":[[100,1],[104,1],[185,1],[210,1]],"disturb":[[100,1],[104,2]],"settle":[[100,1],[104,1],[110,1]],"draining":[[100,1],[140,1]],"clouds":[[100,1],[104,1],[105,1],[210,2]],"scan":[[100,1],[104,1],[135,2],[140,1],[142,1],[145,1],[149,1],[157,1],[169,1],[208,1]],"remnants":[[100,1],[104,1]],"fingertips":[[100,1],[104,1]],"battle":[[100,1],[171,1],[202,1],[206,1]],"acted":[[100,1],[182,1]],"dissipate":[[100,1],[110,1]],"wave":[[100,2],[105,2],[200,1]],"ocean":[[100,2]],"sand":[[100,1],[169,3],[184,1],[219,1],[220,4],[221,2]],"vast":[[100,1],[108,1]],"tolerant":[[100,1],[167,1]],"motiva-":[[100,1],[115,1]],"spirit":[[100,1],[214,1]],"preserve":[[100,1],[104,2],[105,1],[106,1]],"intend":[[100,1],[104,3],[105,2],[145,1],[178,1],[213,1]],"exer-":[[100,1],[115,1],[169,1],[205,1]],"patience":[[100,1],[169,1],[200,1]],"shared":[[100,1],[122,1]],"refreshed":[[100,1],[106,1]],"reassure":[[100,1],[108,1],[112,1],[163,3],[166,4]],"dismiss":[[100,1],[132,1],[139,1]],"generic":[[101,1],[134,2],[135,3],[142,1],[149,2],[155,2]],"outs":[[101,2],[115,1]],"site":[[101,2],[121,2]],"devices":[[101,1],[109,1],[110,4]],"surrounding":[[101,1],[110,1],[215,1],[216,1],[217,1]],"fitted":[[101,1],[198,1]],"leaders":[[101,1],[103,1]],"collection":[[101,2],[107,1],[114,2],[125,1],[164,1],[209,1]],"lips":[[101,1],[121,1],[164,1],[166,1],[167,1]],"witnesses":[[101,2]],"haps":[[101,1],[217,1]],"locations":[[101,1],[102,1]],"celebrating":[[101,3]],"preferably":[[101,1],[102,1],[107,1]],"contacted":[[101,2]],"dates":[[101,1],[114,1],[115,3]],"surround":[[102,1],[205,1],[209,1]],"symp-":[[102,1],[193,1]],"toms":[[102,1],[193,1],[203,1]],"instructed":[[102,1],[113,1],[114,2],[115,1],[120,3],[122,1]],"cigs":[[102,8],[109,5],[110,21],[118,1],[119,1]],"accidentally":[[102,1],[107,1]],"official":[[102,1],[116,1],[117,1],[124,1],[127,1]],"partly":[[103,2],[173,1],[188,1],[215,1]],"leader":[[103,1],[107,1],[200,1]],"ceremony":[[103,1],[114,1],[119,1]],"ashtrays":[[103,2],[104,1],[165,1],[166,1]],"tear":[[103,1],[115,1]],"crumple":[[103,2],[114,1]],"announcing":[[103,1],[107,1]],"lasts":[[103,2],[120,2],[164,1],[184,1],[187,1],[190,1]],"prod-":[[103,1],[114,1],[115,1]],"ucts":[[103,1],[114,1],[115,1]],"reputable":[[103,2],[165,1]],"distributed":[[103,1],[121,1]],"pharmacist":[[103,1],[115,3],[120,1]],"lozenges":[[103,1],[111,1],[115,2],[120,1]],"turkey":[[103,3],[118,1],[163,1],[166,1]],"fading":[[103,4],[118,1]],"designators":[[103,1],[104,1]],"targeted":[[103,1],[213,1]],"informa-":[[103,1],[172,1]],"envelope":[[103,1],[104,1],[107,1],[122,1]],"posttreatment":[[103,2],[114,1]],"intervals":[[103,1],[128,1],[158,1],[169,1],[202,1]],"standardized":[[103,1],[114,1]],"strongest":[[103,1],[108,1],[166,1],[171,1],[182,1],[212,1],[222,1]],"healthily":[[103,1],[115,1]],"celebrate":[[103,1],[166,1]],"toughest":[[103,1],[167,1]],"literally":[[103,2],[109,1]],"merit":[[104,1],[110,1]],"alright":[[104,1],[155,1]],"enable":[[104,1],[168,4],[196,1],[213,1]],"keener":[[104,2]],"drains":[[104,1],[198,1]],"ther":[[104,1],[178,1],[183,2],[186,1],[194,1]],"quietly":[[104,1],[192,2]],"ashtray":[[104,1],[120,1]],"associations":[[104,1],[113,1],[117,1],[126,1],[127,1]],"embrace":[[104,1],[113,1]],"flowing":[[105,1],[173,1]],"moves":[[105,1],[210,1]],"fades":[[105,3]],"sights":[[105,2],[205,1],[208,1],[210,1]],"nothingness":[[105,2]],"legs":[[105,1],[128,1],[210,1]],"intentionally":[[105,1],[113,1],[213,1]],"healing":[[105,1],[120,1],[123,1],[125,2],[141,1],[214,1],[216,1]],"awful":[[105,2],[139,1],[171,2],[202,2],[214,1],[215,1],[216,2]],"horrible":[[105,1],[199,1]],"nasty":[[105,1],[194,1]],"prove":[[105,1],[107,1],[114,1],[144,1],[204,1]],"compli-":[[105,1],[169,1]],"realization":[[105,2],[183,1],[186,1]],"esteem":[[105,1],[106,1],[112,2]],"rewarded":[[106,1],[173,1],[206,1]],"muscles":[[106,1],[173,1],[193,1],[206,3],[209,1],[210,1],[212,1]],"pressured":[[107,1],[171,1],[209,1]],"employer":[[107,2],[176,1]],"enroll":[[107,1],[121,1],[202,1],[206,1]],"headed":[[107,1],[114,1],[177,1]],"appreciated":[[107,1],[189,3],[190,1],[200,2],[219,1]],"preferred":[[107,1],[109,1]],"assistant":[[107,2],[171,1],[216,1]],"affiliated":[[107,1],[121,1]],"judgmental":[[107,1],[191,1]],"samples":[[107,1],[108,1],[110,1],[117,1],[121,1]],"requiring":[[107,1],[113,1],[114,1]],"caller":[[107,1],[170,1],[171,1]],"complaints":[[107,1],[121,2],[129,2],[214,1]],"individualizing":[[108,3],[109,1],[110,2],[111,2],[112,3],[113,3]],"extensions":[[108,3],[109,1],[110,2],[111,2],[112,1],[113,2]],"partici":[[108,2],[110,1],[112,2],[113,1]],"pipes":[[108,1],[111,5],[118,1],[119,2]],"pregnancy":[[108,2],[111,1],[112,6],[116,2],[117,1],[118,1],[124,3],[127,1]],"extending":[[108,1],[113,2]],"piper":[[108,1],[118,1],[123,1],[127,1]],"bessette":[[108,1],[116,1],[117,1]],"weinberger":[[108,3],[116,2],[117,1],[118,1]],"sheffer":[[108,1],[116,1],[118,1]],"mckee":[[108,2],[111,1],[116,3],[117,1],[118,1],[126,1],[127,1]],"swan":[[108,1],[116,1]],"jack":[[108,1],[116,1]],"javitz":[[108,1],[116,1]],"escobedo":[[108,1],[117,1],[124,1]],"peddicord":[[108,1],[118,1],[124,1]],"birth":[[108,1],[112,4],[124,2],[126,1],[171,1]],"cohorts":[[108,1],[124,1]],"wetter":[[108,1],[117,1],[118,1]],"blind":[[108,1],[116,1],[124,1]],"replace":[[108,1],[121,1],[148,1],[165,1],[186,1]],"perkins":[[108,1],[111,1],[118,1],[126,1],[127,3]],"separately":[[108,1],[203,1]],"zhang":[[108,1],[111,1],[112,1],[116,1],[117,2],[118,1],[125,1]],"mazure":[[108,1],[116,1],[117,2]],"overlapping":[[108,1],[160,1]],"disparity":[[108,2]],"blazer":[[108,1],[123,1]],"kessler":[[108,1],[116,1],[123,1]],"mcgonagle":[[108,1],[123,1]],"swartz":[[108,1],[123,1]],"glassman":[[108,1],[124,1]],"brandon":[[108,1],[116,1],[117,1],[122,1],[123,2]],"menstrual":[[108,1],[117,1],[127,1]],"mcvay":[[108,1],[127,1]],"copeland":[[108,1],[112,1],[124,1],[127,1]],"pomerleau":[[108,1],[127,1]],"sweeney":[[108,1],[116,1],[126,1]],"dresler":[[108,1],[116,1]],"cigars":[[108,1],[110,1]],"jarvis":[[108,2],[125,2]],"cohen":[[108,1],[123,1],[125,1]],"delnevo":[[108,1],[125,1]],"giovino":[[108,1],[117,2],[125,1]],"tong":[[108,1],[116,1]],"acceptability":[[108,1],[199,1]],"assertively":[[108,1],[199,1]],"horwitz":[[108,1],[125,1]],"hindi":[[108,1],[125,1]],"alexander":[[108,1],[111,1],[117,1],[125,1]],"wagner":[[108,1],[125,1]],"harassment":[[108,1],[171,1],[175,1]],"barriers":[[108,1],[125,1],[127,1],[165,1],[166,1],[168,1],[195,1]],"smok":[[108,2],[109,1],[112,1],[113,1]],"incentivize":[[108,1],[113,1]],"javel":[[108,1],[125,1]],"surman":[[108,1],[116,1]],"karkut":[[108,1],[125,1]],"nonhypnosis":[[108,1],[114,1]],"germeroth":[[108,3],[109,1],[117,1],[124,1]],"levine":[[108,4],[109,1],[110,1],[117,1],[123,1],[124,1],[125,2],[126,2],[127,1]],"national":[[108,2],[109,3],[110,1],[111,1],[116,14],[117,2],[118,1],[121,1],[123,3],[124,1],[125,1],[126,5],[127,2],[160,1],[168,1],[225,1]],"nida":[[108,1],[110,4],[111,3],[118,1],[125,1],[126,1]],"gurguis":[[108,1],[125,1]],"complicate":[[108,1],[109,1],[213,1]],"hispanic":[[108,1],[126,1]],"beebe":[[108,2],[117,1],[123,2]],"bush":[[108,3],[109,1],[117,1],[123,2],[126,1]],"rosenthal":[[108,1],[127,1]],"landrau":[[108,2],[109,1],[126,1]],"cribbs":[[108,2],[109,1],[126,1]],"cabriales":[[108,1],[126,1]],"pankova":[[108,2],[127,1]],"eight":[[108,1],[110,1],[111,1],[164,1],[170,2],[202,1],[203,1],[207,1]],"obese":[[108,1],[109,1],[126,1]],"mass":[[108,1],[125,1],[126,1],[173,1]],"magnusson":[[108,1],[126,1]],"cheng":[[108,1],[126,2]],"chen":[[108,1],[126,1]],"jeffrey":[[108,2],[125,1]],"hennrikus":[[108,1],[125,1]],"lando":[[108,1],[125,1]],"asso":[[108,1],[110,1],[113,1]],"filozof":[[108,1],[124,1]],"fernandez":[[108,2],[124,2]],"pinilla":[[108,1],[124,1]],"cruz":[[108,1],[124,1]],"snacking":[[108,1],[109,1],[127,1]],"pope":[[108,1],[124,1],[127,1]],"meyers":[[108,1],[126,1]],"vasque":[[108,1],[126,1]],"mcchargue":[[108,1],[116,1]],"hedeker":[[108,1],[116,1]],"werth":[[108,1],[116,1]],"hydrate":[[108,1],[158,1]],"female":[[108,2],[109,1],[116,2],[121,1]],"infrequent":[[108,1],[111,1]],"venn":[[108,1],[116,1]],"otahal":[[108,1],[116,1]],"gall":[[108,1],[116,1]],"farley":[[108,1],[123,1],[124,1]],"hajek":[[108,1],[110,3],[117,1],[124,1],[125,1],[127,1]],"lycett":[[108,2],[117,1],[123,1],[124,1],[126,1]],"postcessation":[[108,3],[123,1],[124,1],[125,1]],"aubin":[[108,1],[123,1]],"williamson":[[108,4],[117,1],[118,1]],"leventhal":[[108,1],[125,1]],"locatelli":[[108,2],[117,1],[126,1]],"collet":[[108,1],[117,1],[126,1]],"rodondi":[[108,1],[118,1],[126,1]],"abstainers":[[108,2]],"revealed":[[108,1],[202,1],[215,2],[216,1]],"ginsberg":[[108,1],[125,1]],"cohort":[[108,1],[116,1],[117,1],[123,2],[124,1],[126,2],[127,1]],"minority":[[108,1],[111,1]],"munafo":[[108,1],[118,1],[126,1]],"matched":[[108,1],[219,1]],"prime":[[108,1],[114,1]],"kasteridis":[[108,1],[125,1]],"prospective":[[108,1],[114,1],[116,1],[124,1],[125,1],[126,1],[160,1]],"cerebral":[[108,1],[109,1]],"quitters":[[109,2],[163,1]],"independent":[[109,2],[111,1]],"diabetes":[[109,1],[122,1],[123,1]],"siahpush":[[109,1],[116,1],[118,1]],"survey":[[109,1],[111,1],[114,1],[115,1],[116,7],[117,1],[121,1],[123,2],[125,3],[126,1],[127,1]],"overweight":[[109,1],[113,1],[126,1]],"ample":[[109,1],[110,1]],"recom":[[109,1],[112,1]],"friesen":[[109,1],[123,1]],"wurzmann":[[109,1],[123,1]],"quitline":[[109,1],[123,1],[126,1]],"clarify":[[109,1],[167,1],[178,1],[188,1],[202,1]],"overwhelm":[[109,1],[113,1]],"pinto":[[109,1],[112,1],[118,1],[123,1],[125,1],[126,1]],"emmons":[[109,1],[125,1]],"patten":[[109,2],[118,1],[123,1],[127,1]],"vickers":[[109,1],[127,1]],"ussher":[[109,3],[116,3],[117,1]],"faulkner":[[109,3],[116,1],[117,1],[125,1],[127,2]],"kaczynski":[[109,2],[125,1]],"manske":[[109,1],[125,1]],"mannell":[[109,1],[125,1]],"grewal":[[109,1],[125,1]],"indirect":[[109,1],[117,1],[127,1],[197,1]],"loprinzi":[[109,2],[126,1]],"wolfe":[[109,1],[126,1]],"walker":[[109,1],[118,1],[123,1],[126,1]],"roberts":[[109,1],[118,1],[126,1],[127,1]],"maddison":[[109,1],[127,2]],"simpson":[[109,1],[127,1]],"bullen":[[109,1],[110,2],[116,1],[117,1],[126,1],[127,2]],"prapavessis":[[109,3],[116,1],[127,2]],"approached":[[109,1],[209,1],[217,1]],"marlatt":[[109,1],[112,1],[117,2],[123,1],[124,1],[126,1],[127,1]],"dishman":[[109,1],[124,1]],"wills":[[109,1],[116,1]],"tritter":[[109,1],[116,1]],"fitzgeorge":[[109,1],[116,1],[127,1]],"murray":[[109,1],[125,1],[127,1]],"lawrence":[[109,1],[127,1]],"schneider":[[109,1],[127,1]],"haasova":[[109,1],[125,1]],"hunger":[[109,1],[217,1]],"curb":[[109,1],[114,1],[208,1]],"rensburg":[[109,1],[117,1],[125,1]],"hodgson":[[109,1],[117,1]],"ruiter":[[109,1],[127,1]],"walks":[[109,1],[176,1],[192,1],[213,1]],"contraindications":[[109,1],[111,1]],"kozlowski":[[109,1],[110,1],[126,2]],"mutti":[[109,1],[127,1]],"tindle":[[109,1],[116,1]],"menthol":[[109,1],[118,1],[126,1]],"flavored":[[109,1],[110,1],[111,1],[118,1],[123,1]],"companies":[[109,2]],"marketing":[[109,1],[111,1],[170,1],[171,1]],"descriptors":[[109,1],[127,1]],"marlboro":[[109,4]],"lights":[[109,2],[181,1]],"camel":[[109,2]],"regulatory":[[109,1],[121,1],[124,1]],"packaging":[[109,1],[124,1]],"falcone":[[109,1],[117,1],[124,1]],"bansal":[[109,1],[117,1],[124,1]],"travers":[[109,1],[117,1],[123,1],[124,1]],"sanborn":[[109,1],[118,1],[124,1]],"strasser":[[109,1],[118,1],[124,1]],"decade":[[109,1],[124,1]],"sales":[[109,1],[178,1],[181,2],[197,2]],"richtel":[[109,1],[127,1]],"longitudinal":[[109,1],[123,2],[134,12]],"midwest":[[109,1],[123,1]],"choi":[[109,1],[117,1],[123,1]],"bestrashniy":[[109,1],[117,1],[123,1]],"forster":[[109,1],[117,1],[123,1]],"dockrell":[[109,1],[124,1]],"morrison":[[109,1],[124,1]],"bauld":[[109,1],[124,1]],"mcneill":[[109,1],[124,1]],"battery":[[109,1],[110,5]],"liquid":[[109,1],[110,1],[125,1],[198,2]],"vapor":[[109,2],[110,6]],"heating":[[109,5]],"sophisticated":[[109,1],[151,1]],"accidental":[[109,1],[110,1]],"pocket":[[109,1],[207,1]],"juice":[[109,1],[110,1]],"flavorings":[[109,1],[110,5],[111,1]],"vape":[[109,1],[110,1],[165,5],[167,4],[168,6]],"usfa":[[109,1],[110,3],[116,1]],"brands":[[109,1],[110,2],[117,1]],"brai":[[109,1],[110,1]],"flavors":[[110,1],[200,1],[205,1]],"built":[[110,2],[152,1],[163,1],[171,1],[183,1],[186,1],[199,1],[218,1]],"customized":[[110,2],[169,1],[176,1],[211,1]],"vaporizers":[[110,2]],"correlates":[[110,1],[160,1]],"liquids":[[110,2],[124,1],[125,1],[165,1]],"emissions":[[110,1],[124,1],[127,1]],"aerosol":[[110,1],[111,1],[124,1]],"vapors":[[110,3]],"offermann":[[110,3],[118,1],[127,1]],"remains":[[110,1],[112,1],[114,1],[150,1],[198,1],[215,1]],"deliver":[[110,1],[111,2],[127,1],[164,1],[168,1]],"nico":[[110,3]],"mcrobbie":[[110,3],[118,1],[123,1],[125,1],[127,1]],"hartmann":[[110,1],[116,1],[117,1],[127,1]],"boyce":[[110,1],[116,1],[117,1],[127,1]],"opponents":[[110,1],[111,1]],"etter":[[110,1],[117,1],[124,1],[125,1]],"benowitz":[[110,1],[117,1],[124,1],[125,1]],"eissenberg":[[110,1],[111,4],[117,1],[123,2],[124,1],[125,1],[127,4]],"gucht":[[110,1],[117,1]],"baeyens":[[110,1],[117,1]],"kalkhoran":[[110,1],[117,1],[125,1]],"glantz":[[110,1],[116,1],[117,1],[125,1]],"odds":[[110,1],[111,1]],"methodological":[[110,1],[127,1]],"producing":[[110,3]],"widespread":[[110,1],[191,1]],"knight":[[110,1],[126,1]],"kiviniemi":[[110,1],[126,1]],"royal":[[110,1],[127,1]],"college":[[110,1],[111,2],[121,2],[123,2],[125,1],[127,1],[171,1],[219,2]],"particulate":[[110,2],[111,1]],"overdose":[[110,1],[111,2]],"exhale":[[110,1],[164,2]],"nitric":[[110,1],[126,1]],"oxide":[[110,1],[126,1]],"marini":[[110,1],[126,1]],"buonanno":[[110,1],[126,1]],"stabile":[[110,1],[126,1]],"ficco":[[110,1],[126,1]],"abramovitz":[[110,1],[122,1]],"mcqueen":[[110,1],[122,1]],"martinez":[[110,1],[122,1]],"sumner":[[110,1],[122,1]],"animal":[[110,2],[152,5],[153,2]],"mrsa":[[110,3],[127,1]],"mcnamee":[[110,2],[118,1],[127,1]],"bacteria":[[110,3]],"lowered":[[110,1],[177,1]],"cells":[[110,1],[161,1]],"kill":[[110,1],[127,1],[171,2],[183,3],[186,1],[187,1]],"convert":[[110,1],[140,1]],"carcinogens":[[110,1],[111,1]],"diacetyl":[[110,4],[118,1],[123,1]],"farsalinos":[[110,2],[117,1],[124,2]],"kistler":[[110,1],[117,1],[124,1]],"gillman":[[110,1],[117,1],[124,1]],"voudris":[[110,1],[118,1],[124,1]],"flavoring":[[110,2],[123,1]],"ingestion":[[110,3]],"irritant":[[110,1],[169,1],[219,1]],"popcorn":[[110,3]],"employees":[[110,1],[213,1]],"missouri":[[110,1],[112,1]],"fumes":[[110,1],[164,1],[167,1]],"warned":[[110,2]],"allen":[[110,1],[117,3],[123,1],[125,1]],"nitrosamines":[[110,3],[111,1],[125,1]],"fluid":[[110,1],[112,1]],"shin":[[110,1],[125,1]],"debate":[[110,1],[117,1]],"polosa":[[110,1],[124,1]],"distribution":[[110,1],[123,2]],"peak":[[110,2]],"inhale":[[110,1],[111,1]],"poisoning":[[110,1],[116,1],[138,1],[167,1]],"tremors":[[110,1],[111,1]],"fatal":[[110,1],[124,2],[168,1]],"limbic":[[110,2],[153,7],[161,1]],"yuan":[[110,1],[117,1]],"loughlin":[[110,1],[117,1]],"leslie":[[110,1],[117,1]],"intelligence":[[110,1],[160,1]],"pathways":[[110,1],[116,1],[139,1],[191,1]],"regulating":[[110,1],[111,1],[113,1],[127,1]],"gateway":[[110,1],[125,1]],"huang":[[110,2],[117,1],[125,2]],"kandel":[[110,1],[125,3]],"primes":[[110,1],[125,1]],"susceptibility":[[110,1],[116,1],[124,2]],"hazardous":[[110,1],[112,1],[125,1],[127,1]],"president":[[110,1],[225,2]],"indoor":[[110,1],[123,1]],"regulations":[[110,1],[121,1]],"pertaining":[[110,1],[176,1]],"homeland":[[110,1],[116,1]],"federal":[[110,1],[116,1],[121,2],[124,1]],"emergency":[[110,1],[116,1],[170,1],[193,1],[205,1],[208,1]],"agency":[[110,1],[116,1],[124,1]],"fema":[[110,1],[116,2]],"fires":[[110,2],[116,1]],"overheated":[[110,3]],"exploding":[[110,2],[132,1]],"exploded":[[110,1],[171,1],[182,1],[198,1]],"container":[[110,1],[198,6]],"modern":[[110,1],[123,1],[173,1],[202,1]],"hotter":[[110,1],[181,1],[187,1]],"maziak":[[110,1],[111,3],[117,1],[122,1],[127,4]],"hookah":[[111,4],[118,1],[126,1],[127,1]],"shisha":[[111,2],[119,1]],"narghile":[[111,1],[123,1],[124,1]],"heat":[[111,2],[158,1],[205,1],[222,1]],"neergaard":[[111,5],[118,1],[126,1]],"singh":[[111,1],[116,1],[118,2],[123,1],[126,1]],"hose":[[111,1],[204,1]],"mouthpiece":[[111,1],[164,3]],"inhaled":[[111,1],[164,1]],"cobb":[[111,3],[123,2]],"kabir":[[111,1],[125,1]],"jahan":[[111,1],[125,1]],"india":[[111,1],[123,1]],"east":[[111,1],[123,1],[190,1]],"asia":[[111,1],[218,1]],"afifi":[[111,1],[127,1]],"soweid":[[111,1],[127,1]],"availability":[[111,1],[113,1],[165,1],[166,1]],"globe":[[111,1],[225,1]],"pepper":[[111,1],[127,1]],"warren":[[111,1],[116,2],[117,1],[125,1]],"arrazola":[[111,1],[123,1]],"primack":[[111,1],[127,1]],"commission":[[111,1],[118,1],[124,2]],"eurobarometer":[[111,1],[118,1],[124,2]],"ecse":[[111,1],[118,1],[124,1]],"alzyoud":[[111,1],[123,1]],"weglicki":[[111,1],[123,1]],"kheirallah":[[111,1],[123,1]],"haddad":[[111,1],[123,1]],"alhawamdeh":[[111,1],[123,1]],"cheaper":[[111,1],[168,1]],"addictive":[[111,1],[116,1],[117,1],[123,5],[124,2],[125,4],[126,7],[127,7]],"majeed":[[111,1],[126,1]],"sterling":[[111,1],[126,1]],"weaver":[[111,1],[126,1]],"pechacek":[[111,1],[126,1]],"eriksen":[[111,1],[126,1]],"dahar":[[111,2],[124,1]],"zaatari":[[111,3],[122,1],[124,2]],"chami":[[111,1],[124,1]],"martinasek":[[111,1],[126,1]],"calvanese":[[111,1],[126,1]],"sahmarani":[[111,1],[123,1]],"shihadeh":[[111,2],[122,1],[123,1],[124,2]],"siddiqi":[[111,1],[117,1]],"cessatio":[[111,1],[113,1]],"asfar":[[111,1],[117,1],[127,1]],"boskabady":[[111,2],[123,2]],"farhang":[[111,1],[123,1]],"mahmoodinia":[[111,1],[123,1]],"heydari":[[111,1],[123,1]],"toxins":[[111,1],[120,1],[124,1]],"hazards":[[111,1],[125,1]],"prescription":[[111,2],[114,1],[115,2],[120,1],[122,1],[165,1]],"weighed":[[111,1],[176,1],[216,1]],"insomnia":[[111,2],[120,1],[170,1],[202,1]],"allergic":[[111,3]],"seizures":[[111,5]],"lancaster":[[111,1],[112,1],[116,4],[117,1],[125,1],[126,1]],"psycho":[[111,1],[112,1]],"aggression":[[111,1],[164,1],[196,1]],"sites":[[111,1],[116,1],[126,1]],"assists":[[111,1],[128,1]],"resumed":[[111,1],[219,1]],"chang":[[111,1],[123,1]],"nausea":[[111,1],[120,2],[121,1],[164,3],[205,1],[206,1],[208,1],[211,1],[222,1]],"vomiting":[[111,1],[121,1],[157,2],[158,2]],"pfizer":[[111,2],[118,1],[127,1]],"skin":[[111,2],[205,1],[209,1],[210,1]],"mechanism":[[111,1],[126,1],[161,1]],"pregnant":[[111,1],[112,9],[114,1],[115,2],[120,1],[121,3],[123,1],[171,1]],"warnings":[[111,1],[112,1],[125,1],[171,1],[189,4]],"agitation":[[111,2]],"nortriptyline":[[111,1],[162,1]],"clonidine":[[111,1],[124,1]],"vaccine":[[111,2]],"block":[[111,1],[113,1],[213,1]],"transdermal":[[111,1],[123,1],[127,1]],"nemeth":[[111,1],[127,1]],"coslett":[[111,1],[127,1]],"henningfield":[[111,1],[127,1]],"herskovic":[[111,1],[127,1]],"trilling":[[111,1],[127,1]],"jarvik":[[111,1],[127,1]],"stiller":[[111,1],[127,1]],"fonte":[[111,1],[127,1]],"goettler":[[111,1],[127,1]],"dizziness":[[111,2],[121,2],[171,1],[173,1],[174,1],[205,1],[206,2],[208,1],[222,1]],"irritation":[[111,1],[172,1],[178,1],[182,1],[191,1],[212,2],[214,1],[217,1]],"diarrhea":[[111,1],[205,1],[222,1]],"imperative":[[111,1],[113,1]],"fold":[[111,1],[114,1],[115,1],[120,1]],"pierce":[[111,1],[127,1]],"cummins":[[111,1],[117,1],[127,1]],"humphrey":[[111,1],[127,1]],"messer":[[111,1],[127,1]],"verbiest":[[111,1],[117,1]],"publications":[[111,1],[116,1],[123,1],[125,1]],"surprising":[[111,1],[195,1]],"hasin":[[111,1],[112,1],[124,1],[125,1]],"chou":[[111,1],[124,1]],"stinson":[[111,1],[124,1]],"dawson":[[111,1],[124,1]],"jiang":[[111,1],[125,1]],"swendsen":[[111,1],[116,1]],"posttraumatic":[[111,1],[122,1],[126,2],[127,1],[205,1],[208,1],[211,1],[223,1]],"lasser":[[111,1],[126,1]],"flensborg":[[111,1],[124,1],[125,1]],"madsen":[[111,1],[124,1],[125,1]],"scholten":[[111,1],[124,1]],"flachs":[[111,1],[124,1]],"tolstrup":[[111,1],[124,1],[125,1]],"zawertailo":[[111,1],[117,1]],"voci":[[111,1],[117,1]],"falba":[[111,1],[127,1]],"malley":[[111,1],[126,1],[127,2]],"sindelar":[[111,1],[127,1]],"connor":[[111,1],[127,2],[160,1]],"lisha":[[112,2],[117,1],[126,1]],"humfleet":[[112,1],[117,1],[126,1]],"delucchi":[[112,1],[117,2],[123,1],[125,1],[126,1]],"krall":[[112,1],[126,1]],"garvey":[[112,1],[126,1]],"drinkers":[[112,2]],"leeman":[[112,1],[126,1]],"vieten":[[112,1],[118,1],[123,1]],"astin":[[112,1],[117,1],[123,1]],"farris":[[112,2],[124,2],[126,1]],"zvolensky":[[112,3],[117,1],[124,2],[126,1]],"beckham":[[112,1],[124,1]],"vujanovic":[[112,1],[124,1]],"mahaffey":[[112,1],[126,1]],"yang":[[112,2],[117,1]],"currie":[[112,2],[124,1]],"mckelvey":[[112,1],[118,1],[127,1]],"thrul":[[112,1],[118,1],[127,1]],"ramo":[[112,1],[118,1],[127,1]],"centers":[[112,1],[116,6],[118,1],[123,3],[124,1]],"pate":[[112,1],[187,1],[217,1]],"cise":[[112,1],[115,1],[205,1]],"midst":[[112,1],[187,1],[192,2]],"proceedings":[[112,1],[160,1]],"acierno":[[112,1],[122,1]],"kilpatrick":[[112,1],[122,1]],"resnick":[[112,1],[122,1]],"saunders":[[112,1],[122,1]],"borrelli":[[112,1],[123,1]],"bock":[[112,1],[123,1]],"zorick":[[112,1],[117,1]],"mandelkern":[[112,1],[117,1]],"brody":[[112,1],[117,1]],"prevalent":[[112,1],[113,1]],"curtin":[[112,1],[124,1]],"matthews":[[112,1],[124,1]],"fetus":[[112,3]],"infant":[[112,4],[126,1]],"syndrome":[[112,1],[127,1]],"congenital":[[112,1],[117,1]],"defects":[[112,1],[117,1]],"milk":[[112,1],[185,1],[193,1]],"fetal":[[112,4],[117,1],[126,1]],"barthwell":[[112,1],[123,1]],"kleinman":[[112,1],[117,2],[126,1]],"pierre":[[112,1],[118,1],[126,1]],"madans":[[112,1],[117,3],[126,1]],"land":[[112,1],[117,1],[126,1],[177,2]],"schramm":[[112,1],[118,1],[126,1]],"arnold":[[112,1],[123,1]],"ershoff":[[112,1],[124,1]],"solomon":[[112,1],[124,1]],"dolan":[[112,1],[124,1]],"mullen":[[112,1],[124,1]],"graham":[[112,2],[124,2]],"partners":[[112,1],[168,1]],"pickett":[[112,1],[127,1]],"wilkinson":[[112,1],[127,1]],"wakschlag":[[112,1],[127,1]],"flemming":[[112,1],[124,1]],"heirs":[[112,1],[124,1]],"sowden":[[112,1],[124,1]],"medically":[[112,1],[193,1]],"marufu":[[112,1],[126,1]],"ahankari":[[112,1],[126,1]],"coleman":[[112,1],[126,1]],"lewis":[[112,1],[123,1],[126,1],[176,1]],"stepped":[[112,1],[188,1],[213,3]],"indi":[[112,1],[113,1]],"roffman":[[112,1],[124,1]],"stephens":[[112,1],[124,1]],"comforting":[[113,1],[152,1]],"vase":[[113,2]],"beauty":[[113,1],[173,1]],"served":[[113,2],[177,1],[195,1]],"texture":[[113,1],[210,2]],"replaced":[[113,1],[155,1],[206,1]],"manager":[[113,1],[194,1],[207,4],[210,2],[214,1]],"attributed":[[113,1],[219,2]],"seriousness":[[113,1],[215,12],[217,1],[224,1]],"textures":[[113,1],[205,1]],"anticipated":[[113,1],[174,1],[193,1],[211,1],[216,1]],"sugar":[[113,1],[173,1]],"elevator":[[113,1],[209,3],[218,2]],"savoring":[[113,1],[205,1],[218,1]],"egies":[[113,1],[170,1],[219,1]],"apps":[[113,3],[116,1],[117,1],[118,1],[210,1]],"convincing":[[113,4],[189,2]],"ening":[[113,1],[198,1],[202,1],[221,1]],"baird":[[113,1],[117,1],[123,1]],"illegal":[[113,1],[216,1]],"catalyze":[[113,1],[123,1]],"kipnis":[[113,1],[126,1]],"perseverance":[[114,1],[169,1]],"institutional":[[114,1],[121,1]],"board":[[114,1],[121,1],[155,5]],"approval":[[114,1],[155,1],[171,1]],"meetings":[[114,2],[115,1],[120,1],[121,1],[156,1],[157,1],[171,2],[182,1],[185,2],[194,1],[207,3],[209,2],[210,1]],"gift":[[114,3],[121,1]],"local":[[114,3],[121,2],[163,1],[166,1],[167,1],[168,4],[170,1],[171,1],[203,1]],"quitlines":[[114,1],[118,1],[127,1]],"handheld":[[114,1],[120,1]],"implications":[[114,1],[117,1],[125,1],[127,1]],"height":[[114,2],[115,1],[120,1],[177,1]],"measurements":[[114,2],[124,1]],"baseline":[[114,3],[126,1],[202,1],[206,1]],"educa-":[[114,1],[115,2]],"asserting":[[114,1],[130,1]],"round":[[114,2],[167,1]],"advertising":[[114,2],[115,2],[120,2],[121,3],[122,3]],"publicize":[[114,1],[115,1]],"distribute":[[114,1],[120,1]],"notices":[[114,1],[154,1]],"teaming":[[114,2],[120,1]],"contacts":[[114,1],[120,1],[166,2],[168,1]],"smokes":[[114,1],[163,1],[166,1]],"participating":[[114,1],[115,2],[120,4],[121,3]],"incentive":[[114,1],[121,1]],"psychologists":[[114,1],[120,2]],"paces":[[114,1],[120,1]],"privately":[[115,1],[120,1],[209,1]],"hopefully":[[115,1],[120,1],[135,1]],"prompts":[[115,1],[188,1]],"discard":[[115,1],[120,1],[166,1],[196,1]],"purchase":[[115,2],[120,1],[188,1]],"deemed":[[115,2],[120,1]],"storage":[[115,1],[121,1],[198,1]],"shredded":[[115,1],[121,1],[185,1]],"transmissions":[[115,1],[121,1]],"intercepted":[[115,1],[121,1]],"venture":[[115,1],[121,1]],"transported":[[115,1],[121,1]],"facilities":[[115,1],[121,1]],"transport":[[115,1],[121,1],[157,1],[158,1],[159,2]],"webpage":[[115,2]],"insert":[[115,1],[121,1]],"researcher":[[115,1],[121,1]],"penalty":[[115,1],[120,1],[121,1]],"shahab":[[116,1],[117,1],[123,1]],"sectional":[[116,1],[124,1]],"tibbits":[[116,1],[118,1]],"pinard":[[116,1],[118,1]],"shaikh":[[116,1],[118,1]],"yaroch":[[116,1],[118,1]],"database":[[116,5],[117,1],[122,1],[123,1],[124,1],[126,4],[127,2]],"chichester":[[116,2],[122,1],[124,1],[125,1],[126,3],[127,2]],"berg":[[116,1],[117,1],[124,1]],"kasza":[[116,1],[117,1]],"hyland":[[116,1],[117,1]],"fong":[[116,1],[117,1],[127,1]],"brady":[[116,1],[117,1]],"hartwell":[[116,1],[117,1]],"cummings":[[116,1],[117,1],[127,1]],"country":[[116,1],[127,1],[188,1]],"retrieved":[[116,7],[117,4],[122,1],[123,3],[124,3],[126,2],[127,5],[160,1]],"accessed":[[116,1],[117,1],[123,1],[126,1]],"http":[[116,1],[117,3],[122,1],[124,1],[126,1],[160,1]],"letter":[[116,1],[155,1],[200,7],[214,11],[216,1],[219,1],[222,1],[224,1]],"whyquit":[[116,2]],"html":[[116,1],[123,1],[127,1],[160,1]],"pharmacology":[[116,1],[126,1],[127,4]],"biochemistry":[[116,1],[127,1]],"epidemiology":[[116,1],[123,1],[124,1],[126,1],[127,1]],"carroll":[[116,1],[117,1],[123,1],[127,2],[176,1]],"programmes":[[116,2],[159,1]],"perera":[[116,1],[118,1]],"cahill":[[116,1],[117,1]],"sciences":[[116,1],[160,1]],"glazier":[[116,1],[117,1]],"luger":[[116,1],[117,1]],"curry":[[116,1],[117,1],[124,1]],"mermelstein":[[116,1],[118,1]],"sporer":[[116,1],[118,1]],"reactivity":[[116,1],[122,1]],"predictor":[[116,1],[117,1],[127,1],[160,1]],"comorbidity":[[116,1],[123,1]],"greaves":[[116,2]],"ayres":[[116,2]],"byng":[[116,2]],"michie":[[116,2],[117,1],[118,1],[123,1],[127,1]],"disadvantaged":[[116,2]],"rigotti":[[116,1],[118,1],[123,1],[126,1]],"england":[[116,1],[117,1],[125,1]],"policy":[[116,1],[124,3],[127,1],[189,2]],"atlanta":[[116,3]],"rockville":[[116,1],[124,1]],"explosions":[[116,1],[198,1]],"https":[[116,5],[123,3],[124,2],[126,2],[127,5]],"december":[[116,1],[123,1]],"consumer":[[116,1],[123,2]],"medicines":[[116,1],[164,1],[168,2]],"medlineplus":[[116,2]],"ency":[[116,2]],"towards":[[117,1],[123,1],[124,2],[126,1],[140,2],[159,1],[161,3],[163,1]],"mcewen":[[117,1],[123,1]],"waterpipe":[[117,1],[122,2],[123,3],[124,3],[125,1],[126,2],[127,5]],"suppl":[[117,1],[123,2],[124,1],[126,1]],"gray":[[117,1],[171,1]],"english":[[117,1],[188,1]],"kenford":[[117,2]],"jorenby":[[117,2],[127,1]],"activating":[[117,1],[161,1]],"autonomous":[[117,1],[124,1]],"mcgregor":[[117,2]],"kouides":[[117,2]],"levesque":[[117,2]],"division":[[117,1],[124,1],[125,1],[126,1]],"anda":[[117,2],[184,1],[187,2],[194,1]],"byers":[[117,2]],"epidemic":[[117,1],[127,2]],"mpower":[[117,2]],"parties":[[117,1],[172,1],[192,1],[194,1],[207,1]],"convention":[[117,1],[127,1]],"fctc":[[117,2]],"selby":[[117,1],[123,1]],"observational":[[117,1],[125,1]],"hundred":[[117,1],[155,1]],"naturalistic":[[117,1],[124,1]],"becker":[[117,1],[123,1],[125,1]],"alarcon":[[117,1],[123,1]],"bell":[[117,1],[123,1]],"albrecht":[[117,1],[126,2]],"bennett":[[117,1],[123,1]],"levy":[[117,1],[123,1],[126,2]],"alladin":[[117,1],[123,1]],"boeckman":[[117,1],[123,1]],"armitage":[[117,1],[123,1]],"bolt":[[117,1],[123,1],[127,1]],"bovbjerg":[[117,1],[127,3]],"bowen":[[117,1],[123,1]],"bradley":[[117,1],[123,1]],"ewing":[[117,1],[123,1],[126,1]],"bailey":[[117,1],[124,1]],"baltman":[[117,1],[126,1]],"cabanas":[[117,1],[123,1]],"elinoff":[[117,1],[126,1]],"ellerbeck":[[117,1],[123,1],[124,1]],"carvallho":[[117,1],[123,1]],"espejo":[[117,1],[123,2]],"cerutti":[[117,1],[123,1]],"chappell":[[117,1],[126,1]],"christiani":[[117,1],[123,1]],"feder":[[117,1],[126,1]],"churchill":[[117,1],[127,1]],"ferguson":[[117,1],[126,1]],"flanigan":[[117,1],[123,1]],"flores":[[117,1],[123,1]],"condon":[[117,1],[126,1]],"fraser":[[117,1],[123,1]],"gajewski":[[117,1],[124,1]],"agostino":[[117,1],[123,1]],"gfeller":[[117,1],[124,1]],"danielsson":[[117,1],[123,1]],"goggin":[[117,1],[123,1],[126,1]],"deprey":[[117,1],[123,1]],"dunstan":[[117,1],[125,1]],"hallquist":[[117,1],[127,1]],"harris":[[117,1],[123,1],[126,1]],"leblanc":[[117,1],[123,1]],"levin":[[117,1],[125,1],[126,1]],"huggins":[[117,1],[123,2]],"lilienfeld":[[117,1],[126,1],[127,1]],"lopes":[[117,1],[123,1]],"pires":[[117,1],[123,1]],"jaen":[[117,1],[124,1]],"jamieson":[[117,1],[125,1]],"mackie":[[117,1],[123,1]],"macnaughton":[[117,1],[123,1]],"malaktaris":[[117,1],[126,1]],"kangas":[[117,1],[127,2]],"kotlyar":[[117,1],[125,1]],"mcafee":[[118,1],[123,2],[125,1]],"mehta":[[118,1],[123,1]],"meigs":[[118,1],[123,1]],"porneala":[[118,1],[123,1]],"pribble":[[118,1],[124,1]],"monje":[[118,1],[123,1]],"morariu":[[118,1],[123,1]],"moreno":[[118,1],[123,1],[126,1]],"resnincow":[[118,1],[123,1]],"richter":[[118,2],[123,1],[124,1]],"rinck":[[118,1],[123,1]],"robidou":[[118,1],[123,1]],"niaura":[[118,1],[126,2]],"rosenfield":[[118,1],[123,1]],"sawe":[[118,1],[123,1]],"parisi":[[118,1],[126,1]],"patel":[[118,1],[126,1]],"schuz":[[118,1],[126,1]],"patterson":[[118,1],[124,1]],"selma":[[118,1],[123,1]],"pencina":[[118,1],[123,1]],"sheeran":[[118,1],[124,1]],"perruchoud":[[118,1],[123,1]],"pestana":[[118,1],[123,1]],"silverstein":[[118,1],[127,1]],"simkin":[[118,1],[126,1]],"simon":[[118,1],[123,2]],"vallarino":[[118,1],[123,1]],"biljon":[[118,1],[123,1]],"solkowitz":[[118,1],[123,2]],"walter":[[118,1],[126,1]],"stewart":[[118,1],[123,1]],"winkel":[[118,1],[127,1]],"zbikowski":[[118,1],[123,1]],"zellweger":[[118,1],[123,1]],"cdcp":[[118,1],[123,2]],"decisional":[[118,1],[126,1],[127,1]],"instructional":[[118,2],[119,2]],"eula":[[119,2]],"likes":[[120,1],[196,2],[197,1],[202,1],[203,1]],"dislikes":[[120,1],[202,1],[203,1]],"scenes":[[120,2],[208,1],[210,4]],"tube":[[120,1],[164,1],[166,1],[167,1]],"reschedule":[[120,1],[205,1]],"discomforts":[[120,2]],"exam":[[120,3],[184,1],[193,1]],"headache":[[120,1],[121,2],[164,1],[165,1]],"redness":[[121,2]],"itching":[[121,2]],"sweating":[[121,1],[156,1],[158,1],[170,1],[171,1],[173,1],[187,4],[192,2],[193,8],[205,1],[206,3],[208,2],[211,1],[222,1]],"swelling":[[121,2]],"irregular":[[121,1],[171,1]],"nies":[[121,1],[183,1]],"injured":[[121,1],[216,1]],"signing":[[121,3]],"develops":[[121,1],[163,4],[168,1],[169,1],[196,1],[201,1]],"policies":[[121,1],[124,1]],"representative":[[121,2],[202,1]],"neatly":[[121,1],[122,1],[169,1],[171,2]],"longest":[[121,2],[122,2],[163,1]],"kilograms":[[121,1],[122,2]],"tall":[[121,1],[171,1],[208,1],[210,1]],"feet":[[121,1],[171,1],[182,1],[184,1],[185,1],[187,1],[190,1],[194,1],[195,1],[204,1],[208,1],[209,1],[210,3],[213,1],[214,1]],"meters":[[121,1],[203,1]],"coughing":[[122,1],[207,1]],"joined":[[122,1],[171,1]],"thank":[[122,1],[154,1],[219,1]],"slows":[[122,2]],"descriptive":[[122,1],[170,1]],"carcinogen":[[122,1],[124,1]],"gibson":[[123,1],[124,1]],"croghan":[[123,1],[127,1]],"nash":[[123,1],[126,1]],"mcneil":[[123,1],[127,1]],"britain":[[123,1],[124,1],[125,1]],"onken":[[123,1],[125,1]],"induction":[[123,1],[125,1],[126,2]],"analytical":[[123,1],[140,1],[161,1]],"impacts":[[123,1],[124,1],[125,1]],"nutrition":[[123,2]],"toxicant":[[123,1],[124,1]],"autonomic":[[123,1],[160,1]],"toxicology":[[123,1],[126,1],[127,1]],"letters":[[123,1],[155,1],[169,5]],"expectation":[[124,1],[163,2],[166,2],[168,1],[173,1],[212,1],[216,1]],"australian":[[124,1],[125,1]],"acquisition":[[124,2]],"bulletin":[[124,1],[126,1]],"europa":[[124,2]],"eurostat":[[124,3]],"killed":[[124,1],[185,1]],"retirement":[[124,1],[170,1]],"advances":[[124,2],[125,1]],"surgery":[[124,1],[125,1],[170,1]],"surgical":[[124,1],[127,1]],"barrier":[[124,1],[168,4],[172,1]],"diego":[[124,1],[127,1]],"amigo":[[124,2]],"casebook":[[124,1],[126,1]],"autobiographical":[[125,1],[148,1]],"annals":[[125,1],[126,1],[127,3],[198,1]],"tennessee":[[125,2]],"pharmacy":[[125,1],[188,2]],"causal":[[125,1],[126,1],[164,1]],"herbert":[[125,2]],"mediators":[[125,2]],"amygdala":[[125,1],[153,2],[161,1]],"receptors":[[125,1],[160,1]],"mediate":[[125,1],[160,1]],"monograph":[[125,2]],"conceptual":[[125,1],[160,1]],"canada":[[125,1],[218,2]],"conflicting":[[125,1],[192,1]],"aversion":[[125,1],[142,1]],"kabat":[[125,2]],"zinn":[[125,2]],"wherever":[[125,1],[154,1],[166,1]],"chromatography":[[125,2]],"normative":[[126,1],[168,4]],"aging":[[126,1],[207,1]],"intending":[[126,1],[166,1]],"journals":[[126,1],[225,1]],"abrupt":[[126,2],[163,1],[164,1],[166,2],[168,3]],"sociocognitive":[[126,2]],"dissociation":[[126,1],[161,1]],"planes":[[126,1],[132,1]],"default":[[126,1],[161,1]],"verywell":[[126,2]],"jawad":[[127,2]],"strain":[[127,1],[166,1]],"updated":[[127,1],[225,1]],"competences":[[127,1],[163,1],[166,1],[167,1],[168,11]],"unconditional":[[127,1],[134,2],[142,1]],"emotive":[[127,1],[151,1]],"carl":[[127,1],[171,2],[203,1]],"guildford":[[127,1],[160,2]],"radiotherapy":[[127,2]],"dialysis":[[127,2]],"therapeutics":[[127,3]],"alcoholism":[[127,1],[201,1],[215,1]],"jesus":[[127,2]],"indian":[[127,1],[220,1]],"targeting":[[127,1],[130,1],[217,1]],"projects":[[127,1],[155,1],[170,1],[219,1]],"diaries":[[128,4],[129,6],[131,3],[133,2],[134,2],[140,1],[148,1]],"handed":[[128,1],[188,1],[189,2]],"diary":[[128,1],[129,2],[131,1],[132,2],[134,3],[135,2],[140,1],[148,1],[200,1]],"located":[[128,2],[153,3],[161,1]],"scanning":[[128,1],[209,1]],"tight":[[128,1],[173,1],[175,1],[178,1],[206,2],[208,1],[212,1]],"pounding":[[128,1],[170,1]],"churning":[[128,1],[155,2],[161,1]],"labelling":[[128,3]],"behaviours":[[128,1],[129,1],[130,3],[132,1],[133,1],[134,10],[136,1],[137,3],[138,3],[139,2],[140,2],[141,4],[148,2],[149,3],[150,3],[152,3],[155,2],[159,1],[161,4]],"attach":[[128,1],[164,1]],"recognise":[[128,1],[134,1],[136,1],[141,1],[152,1],[155,4],[159,1]],"focussing":[[128,1],[129,1],[142,1],[158,1]],"desired":[[129,1],[130,1],[140,1],[203,2],[214,1]],"schedules":[[129,1],[133,1],[217,1],[219,1]],"dimensions":[[129,1],[191,1],[200,1]],"rule-based":[[129,1],[140,1]],"utilised":[[129,1],[161,1]],"self-esteem":[[130,1],[134,1],[169,3],[171,2],[198,1],[201,1],[202,2],[212,1],[219,1],[222,1],[223,1],[225,1]],"stepping":[[131,1],[213,1]],"observing":[[131,1],[161,1],[191,2],[192,1],[195,2],[197,1],[204,1]],"prefrontal":[[131,1],[140,1],[153,8],[160,1],[161,1]],"cortex":[[131,1],[140,2],[141,1],[153,9],[160,1],[161,1]],"centre":[[131,1],[161,1],[168,1]],"invitation":[[132,1],[175,2],[192,1]],"compulsive":[[132,1],[134,1],[160,1]],"neutralising":[[132,1],[139,2]],"unreliable":[[133,1],[198,2]],"psychiatrist":[[133,1],[171,1],[203,1]],"bear":[[134,1],[140,1],[145,1],[154,3]],"compensatory":[[134,1],[164,1]],"limiting":[[134,7],[140,1]],"learnt":[[134,1],[151,1],[155,1]],"domains":[[134,2]],"flawed":[[134,1],[214,1]],"luckily":[[134,1],[176,1],[192,1]],"believability":[[134,1],[188,3]],"requests":[[134,2],[155,1],[199,1]],"violations":[[134,2],[216,1]],"violation":[[134,1],[212,1],[215,1],[216,1]],"broken":[[134,3],[150,1],[179,1],[213,1]],"shame":[[134,1],[169,1],[171,1],[175,1],[176,1],[178,1],[179,12],[180,2],[181,8],[184,4],[185,2],[188,2],[201,1],[211,2],[212,12],[213,2],[214,6],[215,20],[216,16],[217,6],[218,3],[222,3],[223,5],[224,2],[225,2]],"routes":[[134,1],[158,1],[159,1]],"nats":[[134,7],[135,1],[140,3],[142,1],[149,1],[151,1]],"christine":[[134,1],[170,1],[171,1],[174,1],[175,2],[176,3],[177,2],[178,1],[179,3],[180,1],[181,4],[182,1],[183,1],[184,2],[185,1],[186,1],[187,2],[188,2],[190,1],[191,1],[193,1],[194,2],[195,1],[197,4],[198,3],[199,2],[200,5],[201,3],[202,3],[204,1],[205,1],[206,1],[208,2],[209,2],[210,1],[212,3],[214,2],[215,1],[216,3],[217,1],[218,1],[221,8],[222,10],[223,1],[224,1],[225,2]],"cycles":[[134,2],[136,1],[140,4],[142,1],[149,2],[160,1]],"manning":[[134,1],[140,2],[153,1]],"ridgeway":[[134,1],[140,2],[153,1]],"self-phobic":[[134,1],[140,1]],"bringing":[[135,2],[148,1],[161,1],[169,1],[177,1],[193,1],[195,1],[216,1]],"self-fulfilling":[[135,2],[161,1]],"prophecies":[[135,2]],"placing":[[136,1],[154,2],[161,1],[198,1],[221,1]],"hide":[[137,1],[155,1],[156,1],[158,1]],"flower":[[138,4],[160,1]],"moorey":[[138,1],[160,1]],"veale":[[138,1],[160,2]],"reassurance":[[138,1],[157,1],[158,4],[159,4],[163,2],[166,1],[167,1],[168,5]],"requesting":[[138,1],[158,1]],"coughtrey":[[139,1],[160,1]],"radomsky":[[139,1],[160,2]],"urgency":[[139,1],[155,1]],"nowhere":[[139,1],[155,1]],"neocortex":[[140,2],[141,1],[153,7],[161,2]],"primitive":[[140,2],[153,3],[154,3]],"subcortical":[[140,1],[153,9],[154,1],[161,2]],"regions":[[140,2],[153,9],[161,2]],"phobic":[[140,1],[158,1],[159,2],[161,1]],"incredibly":[[140,1],[143,1],[166,1]],"lawyer":[[140,2]],"penny":[[140,2]],"parks":[[140,3]],"developer":[[140,1],[225,1]],"inner":[[140,1],[145,1],[178,1]],"fmds":[[140,3],[145,14]],"pies":[[140,2],[147,2],[210,1],[216,2],[224,1]],"pre-frontal":[[140,1],[141,1]],"governed":[[141,1],[148,1]],"sub-cortical":[[141,1],[153,2]],"desensitisation":[[141,2],[150,8]],"self-imposed":[[144,2]],"approve":[[144,1],[214,1],[216,1],[222,1]],"frightening":[[144,1],[155,2],[158,1],[161,1],[211,1]],"someday":[[145,1],[178,1]],"dealt":[[145,1],[155,1],[161,1],[167,4],[168,1]],"reacted":[[145,1],[173,1],[177,1],[178,1],[199,1]],"somebody":[[147,1],[158,1],[164,1],[166,1],[186,1],[187,1],[197,1]],"overleaf":[[147,1],[150,1],[152,1],[164,1]],"generated":[[148,1],[153,2],[155,2]],"outdoor":[[148,3]],"visualisations":[[148,2]],"distinct":[[148,1],[208,1]],"organisation":[[151,1],[152,1],[153,1]],"dissimilar":[[152,1],[155,2]],"placed":[[152,1],[164,1],[166,1]],"clever":[[152,3],[196,2]],"minder":[[152,3],[153,1]],"calming":[[152,1],[156,1],[210,1],[213,1]],"underneath":[[153,2],[154,1]],"mammals":[[153,2]],"region":[[153,3],[154,1]],"messenger":[[153,1],[161,1]],"quietens":[[153,2]],"noise":[[153,2]],"brains":[[153,1],[161,1]],"withdrawing":[[154,1],[202,2],[212,1],[218,1],[221,1]],"recognising":[[154,1],[155,1]],"practise":[[154,1],[158,1]],"hole":[[155,2],[198,1]],"certainty":[[155,1],[182,1],[203,1]],"whiteboard":[[155,15]],"nine":[[155,1],[165,1],[203,1],[207,1]],"disappearing":[[155,1],[168,1]],"out-of-conscious":[[155,6]],"housed":[[155,1],[207,1]],"three-dimensional":[[155,2]],"secret":[[155,1],[183,1],[215,3],[216,6],[217,1]],"filing":[[155,2],[177,1]],"cabinets":[[155,2]],"reams":[[155,3]],"waiting":[[155,1],[184,2],[201,1],[208,1],[213,2]],"strands":[[155,2]],"holidays":[[155,1],[168,1]],"disappear":[[155,1],[164,1],[166,1],[170,1],[187,1],[191,1],[203,1]],"misfiled":[[155,2]],"librarian":[[155,8]],"girl":[[155,1],[173,1],[196,1],[212,1]],"registered":[[155,1],[161,2]],"pushed":[[155,3],[209,1],[213,2]],"gregory":[[155,16]],"cinema":[[155,3]],"seat":[[155,5],[178,1],[207,1]],"aisle":[[155,4],[207,1],[209,1]],"exit":[[155,1],[156,1],[157,1],[158,3],[207,1],[208,1]],"diazepam":[[156,2],[157,2],[158,2],[161,1],[162,1]],"beta":[[156,1],[162,1]],"toilet":[[156,1],[157,1],[158,1]],"lavatories":[[156,1],[158,1]],"overhearing":[[156,1],[158,1],[205,1]],"lavatory":[[156,1],[158,3]],"bottle":[[156,2],[157,1],[158,3],[185,1]],"lean":[[156,1],[157,1],[158,2]],"shaking":[[156,2],[158,2],[208,2],[209,2]],"trembling":[[156,1],[158,1],[205,1],[222,1]],"clothing":[[156,1],[158,2]],"window":[[156,1],[158,1],[205,1],[210,1]],"doorway":[[156,1],[158,1]],"over-heating":[[156,1],[157,1],[158,2]],"conceal":[[156,2],[158,2]],"tissue":[[156,1],[158,1],[161,1]],"wipe":[[156,1],[158,1],[164,1]],"sweaty":[[156,1],[158,1],[174,2],[175,1],[206,1]],"make-up":[[156,1],[158,3],[159,2]],"blushing":[[156,1],[158,2],[208,2],[211,1]],"corner":[[156,1],[158,1],[178,1],[192,1]],"profile":[[156,1],[158,1],[202,2],[206,1],[212,1],[223,3]],"bowels":[[157,1],[158,1]],"plastic":[[157,1],[158,2]],"self-diagnose":[[157,1],[158,1]],"obsessional":[[158,1],[159,1]],"ritualistic":[[158,1],[159,2]],"touching":[[158,1],[159,1],[164,1]],"calculations":[[158,1],[159,1]],"jewellery":[[158,1],[159,2]],"re-check":[[158,1],[159,1]],"contamination":[[158,1],[159,1],[160,1]],"hoard":[[158,1],[159,1]],"urinate":[[158,3],[205,1],[222,1]],"urinal":[[158,2]],"sobriety":[[158,1],[182,1],[185,1],[219,4]],"warmer":[[158,1],[210,1]],"shake":[[158,2],[178,1],[211,1],[219,1]],"blush":[[158,1],[172,1]],"shops":[[158,1],[165,1]],"restroom":[[158,2]],"safely":[[159,1],[207,1],[208,1]],"traumatic":[[160,1],[161,1],[173,2],[196,1],[197,1],[208,3]],"robinson":[[160,4]],"wells":[[160,2]],"academy":[[160,1],[224,2],[225,2]],"greenberger":[[160,1],[171,1],[174,1],[175,2],[176,3],[177,1],[178,1],[179,3],[180,1],[181,4],[182,1],[183,1],[184,2],[185,1],[186,1],[187,2],[188,1],[190,1],[191,1],[193,1],[194,2],[195,1],[197,4],[198,3],[199,2],[200,5],[201,1],[202,3],[204,1],[205,1],[206,1],[208,2],[209,2],[210,1],[212,3],[214,2],[215,1],[216,3],[217,1],[218,1],[221,8],[222,10],[223,1],[224,1],[225,2]],"neuroscience":[[160,3]],"conditioned":[[160,1],[161,1]],"twin":[[160,3]],"pairs":[[160,1],[200,1],[201,1]],"valdosta":[[160,2]],"scare":[[160,1],[207,1]],"academics":[[161,2]],"adjustment":[[161,1],[164,1],[166,1]],"communicate":[[161,1],[166,1],[214,2]],"shallow":[[161,1],[173,2]],"serotonin":[[161,2],[162,6]],"benzodiazepine":[[162,6]],"anticonvulsant":[[162,2]],"generalised":[[162,9]],"tricyclic":[[162,5]],"reuptake":[[162,8]],"inhibitor":[[162,10]],"monoamine":[[162,2]],"oxidase":[[162,2]],"pre-quit":[[163,9],[164,6],[165,4],[166,1],[167,1],[168,1]],"programme":[[163,7],[164,1],[167,1],[168,3]],"preparations":[[163,2],[165,3]],"congratulate":[[163,1],[166,2],[167,1],[168,2]],"overconfident":[[163,1],[166,3]],"abruptly":[[163,3],[164,1],[167,1]],"vapes":[[163,1],[165,4],[166,1]],"ncsct":[[163,1],[168,7]],"ambiguity":[[163,1],[164,1]],"doses":[[163,1],[164,1],[166,1],[203,1]],"fagerstr":[[163,1],[168,1]],"ftnd":[[163,1],[164,1],[168,1]],"scoring":[[163,1],[168,1]],"shortly":[[164,1],[171,1]],"non-smoker":[[164,6],[166,4],[167,2],[168,3]],"machine":[[164,5],[212,1],[215,2]],"blowing":[[164,1],[209,1]],"measured":[[164,1],[169,1],[176,1],[211,1]],"removed":[[164,1],[212,1]],"refuse":[[164,1],[166,1]],"pieces":[[164,1],[183,1],[187,1],[216,1]],"politely":[[164,1],[166,1],[167,1]],"accumulates":[[164,1],[166,1]],"exhaust":[[164,1],[167,1]],"fluctuate":[[164,1],[167,1],[175,1],[183,1],[202,1]],"enquire":[[164,1],[166,4],[167,4],[168,1]],"light-headedness":[[164,1],[173,1],[205,1],[222,1]],"inhalator":[[164,1],[168,1]],"microtab":[[164,1],[168,1]],"e-cigarettes":[[165,2]],"burn":[[165,1],[181,1]],"smokefree":[[165,2],[167,1],[168,1]],"supplies":[[165,1],[168,3]],"summarise":[[165,1],[166,1],[167,1],[168,5]],"high-risk":[[166,5],[167,8],[168,5],[213,1],[217,2],[218,6],[223,1]],"arrived":[[166,1],[170,1],[171,1],[183,1],[188,1],[190,1],[197,1],[201,1]],"oral":[[166,3]],"roughly":[[166,1],[210,1]],"permanent":[[166,1],[167,1]],"ex-smoker":[[166,1],[167,1],[168,6]],"tricky":[[166,2]],"desperately":[[166,1],[167,1]],"strike":[[166,1],[167,1],[168,1],[183,1]],"displays":[[166,2]],"tough":[[167,1],[206,1]],"unexpected":[[167,1],[195,2],[200,1],[210,1],[221,2]],"disappeared":[[168,1],[173,1]],"emphasise":[[168,2]],"approaching":[[168,1],[175,1],[203,1],[204,1],[206,1],[207,1],[208,2]],"helpline":[[168,2]],"contingent":[[168,4]],"maximising":[[168,4]],"self-regulatory":[[168,4]],"stop-smoking":[[168,4]],"oyster":[[169,4],[219,1]],"pearl":[[169,2],[219,1]],"coating":[[169,2]],"pearls":[[169,1],[219,1]],"wisdom":[[169,1],[225,1]],"jealousy":[[169,1],[223,1]],"nearby":[[169,1],[170,1],[185,1],[203,1],[210,1]],"clerks":[[169,1],[194,3],[195,1],[199,2],[201,2]],"complaining":[[169,1],[189,1],[190,1],[215,1]],"clerk":[[169,1],[178,1],[194,2],[200,1],[205,1],[213,4]],"calmer":[[169,1],[210,1],[225,1]],"paragraphs":[[169,1],[179,1]],"pertain":[[169,1],[208,1]],"customize":[[169,2]],"purging":[[169,1],[223,1]],"overeating":[[169,1],[192,1],[194,1],[223,1]],"sylvie":[[169,5],[170,12],[172,7],[201,2],[204,6],[219,3]],"complained":[[169,2],[216,1]],"irritable":[[169,1],[170,1],[175,1],[201,1],[202,2],[212,1],[216,1],[221,1]],"satisfy":[[169,1],[214,1],[217,1]],"greeted":[[169,1],[201,1]],"swallowed":[[170,1],[171,1],[216,1]],"nodded":[[170,1],[171,1]],"louie":[[170,6],[172,3],[202,1]],"died":[[170,1],[172,2],[201,1],[219,2]],"five-part":[[170,3],[171,5],[223,12]],"trips":[[170,1],[193,1]],"arrows":[[170,1],[196,1]],"strat-":[[170,1],[219,1]],"linpa":[[170,1],[173,1],[184,1],[187,1],[192,1],[219,1]],"linda":[[170,14],[171,4],[172,1],[173,7],[174,3],[177,1],[178,1],[184,16],[186,1],[187,10],[188,2],[192,6],[193,30],[205,3],[206,2],[208,7],[210,6],[217,1],[218,1],[219,6],[223,8]],"flying":[[170,4],[184,1],[187,2],[205,1],[208,1],[210,1],[219,2]],"airplanes":[[170,3],[172,1],[184,2],[205,1],[208,2],[217,1],[219,1]],"regional":[[170,1],[219,1]],"sweats":[[170,2]],"airplane":[[170,3],[174,1],[184,3],[187,4],[188,1],[193,3],[205,2],[208,4],[210,1]],"linda's":[[170,1],[187,1],[192,1],[193,1]],"sweat":[[170,2],[184,1],[187,1],[192,1],[193,6]],"raced":[[170,1],[192,1],[193,1],[194,1]],"blue":[[170,1],[196,2],[205,1],[210,1]],"flyer":[[170,1],[193,1],[219,1]],"worries":[[170,1],[204,1],[205,3],[206,2],[207,1],[208,3],[211,2],[223,1]],"jumpy":[[170,2]],"marked":[[170,1],[180,2],[181,1],[184,3],[185,1],[188,1],[202,3],[205,2],[212,1]],"ficult":[[170,1],[188,1],[209,1]],"distinguishing":[[170,1],[178,3],[223,1]],"marissa":[[170,2],[171,22],[172,10],[173,3],[177,13],[178,16],[183,14],[184,4],[186,9],[187,5],[189,44],[190,1],[191,5],[196,13],[197,10],[198,12],[201,3],[202,2],[212,3],[215,13],[216,2],[217,1],[218,1],[219,15],[223,8]],"tears":[[170,1],[171,1]],"sexually":[[171,2],[173,2],[201,1],[203,1],[206,1],[212,1],[215,1]],"molested":[[171,2],[215,5]],"grabbed":[[171,1],[178,1]],"husbands":[[171,1],[196,1],[201,1],[202,1]],"emerged":[[171,1],[186,1]],"part-time":[[171,1],[210,1]],"administrative":[[171,1],[216,1]],"pany":[[171,1],[192,1]],"successes":[[171,1],[176,1],[196,1],[199,1]],"bleak":[[171,1],[202,1]],"killing":[[171,1],[183,1]],"supervi-":[[171,1],[189,4]],"herselfin":[[171,1],[199,1]],"fell":[[171,1],[186,1]],"promised":[[171,1],[182,1],[189,2]],"similarities":[[171,2],[181,1]],"alcoholic":[[171,1],[196,1]],"sober":[[171,4],[175,1],[182,3],[186,1],[189,1],[190,1],[201,1]],"rang":[[171,1],[215,2]],"wile":[[171,1],[190,1]],"mistreating":[[171,1],[179,1],[213,1]],"temper":[[171,1],[176,1],[188,1],[189,1],[190,2],[213,2]],"rage":[[171,1],[212,1],[217,1]],"inad-":[[171,2],[196,1]],"perfectionist":[[171,1],[194,1]],"doug":[[171,2],[196,4]],"star":[[171,1],[196,1],[203,1]],"affection":[[171,1],[192,1]],"laugh":[[171,1],[179,1],[183,2],[186,1],[194,1],[211,1]],"imperfections":[[171,1],[216,1],[219,1]],"fairness":[[171,1],[212,1]],"disrespect":[[171,1],[192,1]],"mistreated":[[171,1],[214,2],[222,1]],"hints":[[171,2],[178,1],[179,7],[181,5],[183,5],[184,6],[185,3],[186,5],[187,1],[188,3],[196,1],[198,2],[215,2],[217,2]],"dennis":[[171,1],[174,1],[175,2],[176,3],[177,1],[178,1],[179,3],[180,1],[181,4],[182,1],[183,1],[184,2],[185,1],[186,1],[187,2],[188,1],[190,1],[191,1],[193,1],[194,2],[195,1],[197,4],[198,3],[199,2],[200,5],[201,1],[202,3],[204,1],[205,1],[206,1],[208,2],[209,2],[210,1],[212,3],[214,2],[215,1],[216,3],[217,1],[218,1],[221,8],[222,10],[223,1],[224,1],[225,2]],"ofthe":[[171,1],[173,2],[174,1],[177,1],[179,1],[181,2],[182,1],[191,1],[194,1],[195,1],[197,1],[198,3],[199,1],[200,1],[202,1],[209,1],[212,2],[214,1],[217,2],[221,2],[222,4]],"contents":[[171,1],[174,1],[175,2],[176,3],[177,1],[178,1],[179,2],[180,1],[181,4],[182,1],[184,2],[185,1],[187,1],[188,1],[190,1],[191,1],[194,2],[195,1],[197,4],[198,3],[199,2],[200,5],[201,1],[202,3],[204,1],[205,1],[206,1],[208,1],[209,2],[210,1],[212,3],[214,2],[215,1],[216,3],[217,1],[218,1],[221,8],[222,10],[223,1]],"troubling":[[171,1],[175,1],[188,1],[192,1]],"ofthese":[[172,1],[184,1]],"envi-":[[172,1],[175,1]],"alex":[[172,7]],"insulting":[[172,1],[179,1]],"bore":[[172,1],[178,1]],"everybody":[[172,1],[196,1]],"fool":[[172,1],[192,1]],"julio":[[172,5]],"complimented":[[172,1],[173,1],[189,2]],"ignored":[[172,1],[186,1],[202,1],[213,1],[216,1],[218,1]],"athletes":[[172,1],[173,3],[213,1]],"four-minute":[[172,2]],"mile":[[172,4]],"runners":[[172,2]],"bannister":[[172,4],[223,1]],"remarkably":[[172,1],[177,1]],"buffet":[[172,2]],"sucha":[[172,1],[183,1]],"passed":[[172,1],[219,1]],"anyhow":[[172,2],[214,1]],"shook":[[172,1],[185,1]],"stayed":[[172,1],[176,1],[182,3],[194,1],[199,1],[209,1],[219,2]],"ben's":[[172,1],[183,1],[186,1]],"beat":[[173,2],[184,2],[187,2],[192,1],[193,1],[206,1]],"inspirational":[[173,1],[210,2]],"pill":[[173,3],[207,1]],"oxygen":[[173,3],[206,1],[208,1],[210,6]],"communities":[[173,1],[195,1],[203,1]],"unac-":[[173,1],[198,1]],"ceptable":[[173,1],[198,1]],"religion":[[173,1],[200,1]],"sider":[[173,1],[214,1]],"sarah":[[173,2],[174,3]],"argument":[[173,1],[177,1],[185,1],[212,1],[214,1]],"thought-mood":[[173,1],[223,1]],"sarah's":[[173,1],[174,1]],"thought-behavior":[[174,1],[223,1]],"silent":[[174,2],[208,1],[212,1],[216,1]],"palms":[[174,2],[206,1]],"frightens":[[175,1],[206,2]],"ations":[[175,2],[177,1],[188,1],[192,1],[213,1]],"enraged":[[175,1],[189,1],[190,1],[212,2],[213,1]],"clue":[[175,1],[178,1],[192,1]],"particu-":[[175,1],[181,1],[205,1]],"unhappiness":[[176,1],[182,1],[185,1],[188,1],[192,1],[195,1],[201,2]],"measurement":[[176,1],[218,1]],"colors":[[176,1],[205,1],[209,1],[210,1],[212,1],[222,1]],"personalize":[[176,1],[213,2]],"alice":[[176,6]],"wonderland":[[176,3]],"cheshire":[[176,2]],"completes":[[176,1],[194,2]],"anna":[[176,5]],"zone":[[176,1],[213,1]],"improv":[[176,2]],"disagreements":[[176,1],[199,1]],"appreciation":[[176,1],[185,1],[200,1],[216,1],[218,1]],"tennis":[[177,3]],"motion":[[177,2],[209,1],[210,1]],"racquet":[[177,3]],"angle":[[177,1],[213,1]],"baby":[[177,1],[206,1]],"wrote":[[177,3],[178,1],[180,1],[181,1],[182,2],[184,3],[185,1],[186,1],[187,4],[189,3],[190,1],[193,2],[194,1],[195,2],[199,1],[200,7],[203,3],[204,1],[216,1],[218,2]],"rerate":[[177,2],[182,1],[183,2],[184,3],[185,1],[186,2],[187,4],[188,3],[198,1],[221,1]],"depressea":[[177,3]],"wowt":[[177,1],[182,1]],"tuesday":[[177,3],[190,1]],"inthe":[[177,1],[182,1],[183,1],[184,1],[186,2],[187,3],[190,4],[204,2]],"wight":[[177,1],[187,2]],"anol":[[177,2],[178,1],[186,1],[190,1],[195,1]],"needto":[[177,1],[195,1]],"cares":[[177,1],[182,2],[183,1],[185,1],[186,2],[187,1]],"wantto":[[177,1],[183,1],[184,1]],"judly":[[177,1],[185,1]],"saal":[[177,1],[183,1]],"cawt":[[177,1],[184,1]],"vic's":[[177,1],[181,1],[182,2],[185,1],[190,1],[216,1]],"nthe":[[178,1],[190,1],[204,2]],"sutating":[[178,1],[208,1]],"hawe":[[178,1],[190,1]],"town":[[178,1],[199,1],[206,1]],"dow't":[[178,1],[184,1],[186,2],[187,1],[194,1],[195,1],[204,1]],"she's":[[178,1],[181,1],[182,4]],"i'ma":[[178,1],[202,2]],"onthe":[[178,1],[184,1],[187,2],[190,1],[195,1],[204,1],[221,1]],"ieee":[[178,1],[199,1],[203,1]],"cane":[[178,1],[203,1]],"ernie":[[178,1],[219,1]],"peete":[[178,1],[212,1]],"sete":[[178,1],[182,1]],"ofthinking":[[178,1],[188,1]],"throwing":[[178,1],[210,1]],"dish":[[178,2]],"slammed":[[178,1],[182,1],[185,1]],"compliments":[[178,2],[194,1],[198,1]],"cooked":[[178,1],[200,1]],"identify-":[[179,1],[214,1]],"laughed":[[179,1],[194,3]],"paramedics":[[179,1],[208,1]],"screaming":[[179,1],[208,1]],"unfair":[[179,1],[212,1],[213,1],[217,1]],"recommends":[[179,1],[203,1],[211,1]],"aniya":[[179,3]],"microscope":[[180,2]],"slice":[[180,1],[215,1]],"springboard":[[180,1],[217,1]],"electricity":[[181,2]],"wires":[[181,2]],"lawn":[[181,3]],"salespeople":[[181,2]],"hottest":[[181,3],[182,1],[183,1],[192,1]],"hotness":[[181,5]],"check-up":[[182,1],[188,1],[192,2],[195,1],[198,1],[201,1]],"where's":[[182,3],[183,3],[184,3]],"thursday":[[182,2],[203,1]],"surge":[[182,1],[206,1]],"fist":[[182,1],[185,1],[190,1],[199,1]],"stormed":[[182,1],[185,1]],"drove":[[182,1],[185,1]],"liquor":[[182,2],[185,3]],"gong":[[182,1],[204,1]],"doesnt":[[182,2],[195,1]],"umportant":[[182,1],[185,1],[194,1]],"yond":[[182,1],[183,1],[185,1]],"al-anon":[[182,1],[185,1]],"doen't":[[182,1],[187,1]],"haral":[[182,1],[185,1]],"anal":[[182,1],[186,1],[194,1],[200,1],[204,1]],"meas":[[182,1],[199,1]],"wore":[[182,1],[204,2]],"gathered":[[182,1],[184,1],[186,3],[187,1],[188,1],[192,1]],"guesses":[[182,1],[185,1]],"fate":[[182,1],[187,1]],"dwell":[[183,1],[191,1]],"november":[[183,1],[186,1]],"hada":[[183,1],[186,1],[195,1],[200,1]],"hadwt":[[183,1],[186,1]],"dring":[[183,1],[186,1],[215,1]],"attentionto":[[183,1],[204,1]],"gronddaughter":[[183,1],[204,1]],"son-":[[183,1],[186,1]],"in-law":[[183,1],[186,1]],"nicole":[[183,1],[186,2],[204,1]],"cabrnets":[[183,1],[186,1]],"seemedto":[[183,1],[186,1]],"witha":[[183,1],[186,1],[219,1]],"nicote":[[183,1],[186,1]],"dowt":[[183,1],[184,1],[187,1],[194,1],[195,1],[204,1]],"lessen":[[183,2]],"doubtful":[[183,4],[187,1]],"athe":[[183,1],[184,1]],"makrissa":[[183,2]],"kate":[[183,1],[184,2],[186,2],[187,1]],"aearly":[[184,1],[187,1]],"feela":[[184,1],[187,1]],"runway":[[184,1],[187,4],[210,1]],"plane":[[184,1],[187,3],[193,3],[206,1],[208,3],[210,1]],"andl":[[184,1],[187,1],[194,1],[195,1]],"airports":[[184,2]],"fthis":[[184,1],[187,1]],"annitty":[[184,1],[193,1]],"couse":[[184,1],[187,1]],"rapa":[[184,2],[187,1]],"cowla":[[184,1],[204,1]],"uying":[[184,1],[187,1]],"vapid":[[184,1],[187,2]],"haye":[[184,1],[187,1]],"haadthy":[[184,1],[187,1]],"returnedto":[[184,1],[187,1]],"peter":[[184,4],[206,7]],"stared":[[184,2]],"proceeding":[[185,1],[203,1]],"yuki":[[185,8]],"akiko":[[185,9],[186,4]],"furious":[[185,1],[212,1]],"smiled":[[185,1],[188,1],[198,1],[219,1]],"get-well":[[185,1],[186,1]],"fueled":[[185,1],[192,1],[219,1]],"sponsor":[[185,3]],"arrive":[[185,1],[186,3],[187,1],[190,1],[192,3],[197,6]],"voiced":[[185,1],[199,1]],"apologized":[[185,1],[190,1],[194,1]],"consis-":[[186,2]],"damaging":[[186,1],[202,1]],"constructed":[[186,1],[189,2],[219,1]],"believable":[[186,3],[187,6],[188,2],[189,1],[198,1]],"alter-":[[186,1],[187,1],[192,1]],"native":[[186,1],[187,1],[188,2],[192,1]],"attempted":[[186,1],[215,1]],"rationalization":[[186,3]],"lessened":[[186,1],[217,1]],"enyoy":[[186,2]],"grondolaughter":[[186,1],[204,1]],"woes":[[186,1],[203,1]],"unreal":[[186,1],[187,1]],"nght":[[187,1],[204,1]],"dropped":[[187,2],[218,1]],"shifting":[[187,1],[198,1],[215,1]],"pane":[[187,1],[208,1]],"sweat-":[[187,1],[193,1]],"tola":[[187,1],[194,1],[200,1]],"methat":[[187,1],[194,1],[204,1]],"pave":[[187,1],[189,1]],"panicking":[[188,1],[208,1]],"flexibly":[[188,2],[198,1]],"abusing":[[188,1],[214,1]],"alerts":[[188,1],[208,1]],"spanish":[[188,6]],"mexico":[[188,3]],"postcards":[[188,2]],"stamps":[[188,3]],"digital":[[188,1],[204,1]],"emerge":[[188,1],[213,1]],"chronically":[[189,2]],"arriving":[[189,2],[192,2],[215,2]],"acknowledged":[[189,2],[191,1]],"maggie":[[189,6],[190,2]],"assure":[[189,2]],"enlisted":[[189,2]],"appropri-":[[189,2]],"admitted":[[189,1],[190,1]],"kinder":[[189,1],[190,1],[213,1]],"antici-":[[189,1],[190,1],[218,1]],"pated":[[189,1],[190,1],[218,1]],"explosive":[[189,1],[190,1],[212,1]],"intensities":[[189,1],[190,1]],"talkto":[[190,1],[194,1]],"postive":[[190,2]],"carly":[[190,1],[194,1],[204,1]],"powtive":[[190,1],[200,1]],"lcan":[[190,1],[194,1]],"goool":[[190,1],[195,1]],"massage":[[190,1],[214,1]],"dial":[[190,1],[199,1]],"moon":[[190,2],[200,1]],"howe":[[190,1],[204,1]],"thaw":[[190,2]],"rhax":[[190,1],[195,1]],"takea":[[190,3]],"juoly":[[190,2]],"ifthey":[[190,1],[194,1],[221,2]],"endure":[[191,1],[192,1]],"lupe":[[191,11]],"opinion":[[191,1],[199,1]],"spirits":[[191,2]],"terminal":[[191,1],[208,1]],"rodney":[[191,16]],"elderly":[[191,1],[192,1],[200,1]],"rod-":[[191,2]],"judgments":[[191,1],[208,2],[209,1],[213,1],[215,1]],"irritating":[[191,2]],"price":[[191,1],[194,1]],"paths":[[191,1],[192,1],[223,1]],"moodskills":[[191,1],[222,1]],"trey":[[192,10]],"foot":[[192,1],[213,3],[214,1]],"shauntelle":[[192,9]],"hosts":[[192,2]],"roots":[[192,1],[196,1],[201,1]],"look-":[[192,1],[205,1]],"tidy":[[192,3]],"chat":[[192,1],[200,1]],"beats":[[192,1],[193,1],[210,1]],"extremes":[[192,1],[201,1]],"perfectionism":[[192,1],[199,1],[208,1]],"ifthe":[[192,1],[208,1]],"ofanxiety":[[192,1],[211,1]],"flights":[[193,6]],"airport":[[193,3]],"airline":[[193,2],[208,2]],"anniety":[[193,1],[208,1]],"charted":[[193,1],[204,1],[205,1]],"conquered":[[193,1],[219,1]],"breath-":[[193,1],[210,1]],"rushing":[[193,2]],"considers":[[194,1],[212,1]],"derrick":[[194,4]],"havea":[[194,1],[208,2]],"criti-":[[194,1],[195,1]],"mike":[[194,7],[195,1]],"laughing":[[194,2],[208,1]],"thes":[[194,1],[215,1]],"claudia":[[194,12],[195,2]],"waitress":[[194,2]],"waitresses":[[194,4],[195,1]],"gabriela":[[194,5],[195,10]],"accident":[[194,1],[206,1],[208,3],[213,1]],"strangers":[[194,1],[199,5],[200,1],[201,1],[221,1]],"childyen":[[194,1],[204,1]],"ldont":[[194,1],[195,1]],"sowething":[[194,1],[195,1]],"tothe":[[194,1],[200,1]],"wartress":[[194,2]],"goon":[[194,1],[195,1]],"angelina":[[195,4]],"vowething":[[195,1],[204,1]],"weeds":[[196,6]],"favors":[[196,1],[212,1]],"stored":[[196,1],[198,2]],"dogs":[[196,4],[197,1]],"bite":[[196,1],[197,1],[206,1],[208,1]],"hitting":[[196,3]],"choking":[[196,1],[208,1]],"achievements":[[196,2]],"marsha":[[196,2],[197,1]],"unlikable":[[197,2]],"quotas":[[197,2]],"crash":[[197,1],[206,1]],"benefited":[[197,1],[218,1]],"appearing":[[198,1],[205,1]],"timeout":[[199,2],[213,6],[214,1]],"carla":[[199,10]],"piness":[[200,1],[225,1]],"pathway":[[200,2]],"capturing":[[200,1],[205,2]],"mindset":[[200,1],[205,1]],"louisa":[[200,9]],"imme-":[[200,1],[206,1]],"diately":[[200,1],[206,1]],"grati-":[[200,1],[201,1]],"piano":[[200,2],[210,4]],"olay":[[200,1],[204,1]],"whol":[[200,2]],"animals":[[201,1],[205,1]],"ters":[[201,1],[225,1]],"disruptive":[[201,2],[217,1]],"epilogue":[[202,1],[218,2],[219,2]],"epee":[[202,1],[204,1]],"helpfulness":[[202,1],[206,1]],"nobody":[[202,2]],"sence":[[203,3]],"tree":[[203,1],[210,1]],"alam":[[203,1],[220,1],[221,1]],"anti-":[[203,2]],"depressant":[[203,2]],"aepsaupam":[[203,1],[204,1]],"xrofyoug":[[203,2]],"aepsan":[[203,1],[205,1]],"aepuow":[[203,1],[204,1]],"uoou":[[203,2],[204,2],[205,1],[222,2]],"yydea":[[203,1],[204,1],[221,1],[222,1]],"awandy":[[203,2],[204,1]],"yyhlupiw":[[203,1],[222,1]],"aepuns":[[204,1],[205,1]],"pooy":[[204,1],[221,1]],"pioday":[[204,1],[219,1],[220,4],[221,2]],"laahswyom":[[204,2]],"ll-ol":[[204,2],[205,2],[222,2]],"vitting":[[204,2]],"penon":[[204,1],[215,2]],"dinwer":[[204,1],[215,1]],"callto":[[204,2]],"pleasur-":[[204,1],[222,1]],"asiduaxa":[[204,1],[222,1]],"swos":[[204,1],[220,1]],"mnok":[[204,1],[220,1],[222,1]],"huoje":[[204,1],[222,1]],"umop":[[204,2],[221,1],[222,3]],"yeymnoa":[[204,1],[222,1]],"poledul":[[204,1],[222,1]],"pauue":[[204,1],[222,1]],"ayaiide":[[204,1],[222,1]],"sbunes":[[204,1],[222,1]],"saldod":[[205,1],[219,1],[220,2]],"jaaq":[[205,1],[219,2],[220,2],[221,2],[222,1]],"siuuag":[[205,1],[220,2],[221,1]],"puoias":[[205,1],[219,1],[220,3],[221,2],[222,1]],"jablaquaasy":[[205,1],[219,1],[220,2]],"peojumop":[[205,1],[219,2],[220,7],[221,2],[222,1]],"aysaped":[[205,1],[219,2],[220,8],[221,4]],"skipped":[[205,1],[217,1]],"golfing":[[205,6]],"drifting":[[205,1],[210,2]],"tiny":[[205,3]],"birds":[[205,1],[210,1]],"engine":[[205,1],[208,1]],"heights":[[205,1],[208,1]],"insects":[[205,1],[208,1]],"twitching":[[205,1],[222,1]],"aches":[[205,1],[222,1]],"soreness":[[205,1],[222,1]],"flushes":[[205,1],[222,1]],"flashes":[[205,1],[206,1],[208,1],[222,1]],"chills":[[205,1],[206,1],[208,1],[222,1]],"swallowing":[[205,1],[206,1],[222,1]],"lump":[[205,1],[222,1]],"throat":[[205,1],[222,1]],"keyed":[[205,1],[222,1]],"startle":[[205,1],[222,1]],"ofthis":[[206,1],[222,1]],"inven-":[[206,2]],"shakiness":[[206,1],[213,1]],"snakes":[[206,2],[207,3],[208,2]],"freeze":[[206,5],[223,1]],"underestimating":[[206,2]],"pump":[[206,1],[210,1]],"prolong":[[206,1],[207,1]],"paring":[[206,1],[213,1]],"tyra":[[206,1],[207,6]],"snake":[[207,2],[208,2]],"kenji":[[207,5]],"locked":[[207,3]],"roberta":[[207,7]],"lous":[[207,1],[208,1]],"frighten":[[207,1],[208,1]],"excitement":[[207,1],[208,1],[219,1]],"antianxiety":[[207,1],[211,2]],"dive":[[208,4]],"freeway":[[208,4]],"traffic":[[208,2]],"future-oriented":[[208,2]],"threatened":[[208,1],[213,1]],"miles":[[208,1],[209,1]],"pante":[[208,2]],"entered":[[208,1],[210,1],[219,1]],"fine-tune":[[208,2]],"elevators":[[208,1],[209,2]],"damaged":[[208,1],[212,1]],"ladder":[[208,10],[209,33],[210,2],[211,9],[219,2],[222,5],[223,3],[224,2]],"toler-":[[208,2],[210,1]],"juanita":[[208,7],[209,5]],"seats":[[209,3]],"crowded":[[209,2]],"floors":[[209,1],[218,1]],"frow":[[209,1],[215,1]],"tele":[[209,1],[224,1]],"lad-":[[209,1],[222,1]],"left-hand":[[209,1],[222,1]],"right-hand":[[209,1],[222,1]],"tolerable":[[209,1],[210,1]],"helper":[[209,2]],"mobile":[[209,1],[210,1]],"shallowly":[[210,2]],"upper":[[210,2],[218,1]],"tensed":[[210,3]],"jolene":[[210,3]],"photo":[[211,2]],"long-lasting":[[211,2]],"improve-":[[211,1],[219,1]],"tranquilizers":[[211,3]],"stron-":[[212,1],[222,1]],"gest":[[212,1],[222,1]],"orless":[[212,1],[222,1]],"rick":[[212,15],[213,20]],"dryer":[[212,3]],"washed":[[212,1],[213,1]],"careless":[[212,2],[213,1]],"attacking":[[212,1],[213,1]],"silence":[[212,1],[215,1],[216,1],[217,2]],"calmly":[[212,1],[213,1]],"provoke":[[212,2]],"reasonableness":[[212,1],[213,1]],"intentional":[[213,1],[217,1]],"misinterpret":[[213,2]],"timeouts":[[213,6],[214,1],[217,2],[223,1]],"clenched":[[213,2]],"regroup":[[213,1],[214,1]],"selfish":[[214,2]],"forgiving":[[214,3],[216,5],[219,1],[222,4],[224,1]],"apologizes":[[214,2]],"forgiveness":[[214,18],[216,6],[217,2],[219,1],[222,7],[223,3],[224,1],[225,1]],"forgive":[[214,8],[216,6],[222,6]],"hurts":[[214,1],[222,1]],"ought":[[214,1],[217,1]],"secretiveness":[[215,1],[216,1],[223,1]],"surrounds":[[215,1],[216,1]],"julie":[[215,2]],"reparations":[[215,1],[216,5],[217,1],[224,1]],"self-forgiveness":[[215,1],[216,6],[217,2],[222,1],[223,1]],"toby":[[215,8]],"affair":[[215,3]],"monogamous":[[215,2]],"torture":[[215,2]],"murder":[[215,2]],"molestation":[[215,6],[216,1]],"slices":[[215,2],[216,2]],"debts":[[216,2]],"amends":[[216,9]],"petra":[[216,11]],"kicked":[[216,2]],"monique":[[216,7]],"voices":[[216,1],[222,1]],"condone":[[216,1],[222,1]],"fisherman":[[217,3]],"fishing":[[217,2]],"hungry":[[217,2]],"fish":[[217,5]],"messed":[[217,2]],"sinking":[[218,2]],"mindovermood":[[218,1],[224,1],[225,1]],"irritants":[[219,2]],"yyhnoy":[[219,2],[220,12],[221,1]],"lhonohldy":[[219,1],[220,2]],"syioddns":[[219,1],[220,2],[221,3]],"uapiag":[[219,1],[220,1]],"paduejeg":[[219,1],[220,1],[221,1]],"sobew":[[219,1],[220,2],[221,1]],"syybnoyl":[[219,1],[220,1]],"spoow":[[219,3],[220,19],[221,9]],"aquaseq":[[219,1],[221,1]],"jamsuyy":[[219,1],[220,3],[221,1]],"yojo":[[219,1],[220,4]],"uday":[[219,1],[220,3],[221,2]],"snoiaaid":[[219,1],[220,2],[221,1]],"piomayey":[[219,1],[220,1],[221,1]],"aysuayul":[[219,1],[220,1]],"bwos":[[219,1],[220,2]],"suonsend":[[219,1],[220,1]],"ulun":[[219,1],[220,5],[221,2]],"ydiymnoa":[[219,1],[220,3],[221,1]],"dyideds":[[219,1],[220,1],[221,1]],"padsjo":[[219,1],[220,1],[221,1]],"payxjew":[[219,1],[220,2]],"jjasunod":[[219,1],[220,3],[221,2]],"suonsand":[[219,1],[220,3],[221,1]],"paduejeq":[[219,1],[220,16],[221,4]],"yyhnou":[[219,1],[220,2]],"ibulop":[[219,1],[220,3],[221,1]],"ajam":[[219,1],[220,1],[221,1]],"poownok":[[219,1],[220,3]],"purw":[[219,1],[220,2],[221,1]],"oddns":[[219,1],[220,4],[221,1]],"ayey":[[219,1],[220,4],[221,1]],"jamse":[[219,1],[220,1],[221,1]],"hulob":[[219,1],[220,4],[221,1]],"paye":[[219,1],[220,3],[221,2]],"iaem":[[219,1],[220,2],[221,2]],"sabew":[[219,1],[220,5],[221,3]],"jbaoisip":[[219,1],[220,1],[221,1]],"paouejeq":[[219,1],[220,1],[221,1]],"uoisn":[[219,1],[220,8],[221,3]],"duod":[[219,1],[220,7],[221,2]],"inok":[[219,1],[220,3],[221,1]],"enys":[[219,1],[220,1]],"yhnoy":[[219,1],[220,8],[221,5]],"spoou":[[219,1],[220,1]],"jubuadod":[[219,1],[220,1]],"aulisuud":[[219,1],[220,1]],"aysapeg":[[219,2],[220,6],[221,2],[222,1]],"pajuldaypui":[[219,1],[220,1],[221,1]],"puoras":[[219,1],[220,3]],"uonipj":[[219,1],[220,1]],"yhuadod":[[219,1],[220,2]],"siuuaq":[[219,2],[221,1],[222,1]],"adod":[[219,2],[220,4],[222,1]],"jeuonippe":[[219,1],[220,2],[221,1]],"saidod":[[219,1],[220,3],[221,2],[222,1]],"xoje":[[219,1],[220,4]],"puajo":[[219,1],[220,6],[221,1],[222,1]],"siyhh":[[219,1],[220,1]],"jayjo":[[219,1],[220,2]],"ippe":[[219,1],[220,1]],"jabiaquaaly":[[219,1],[220,1]],"iyhuadod":[[219,1],[220,1],[221,2]],"yooued":[[219,1],[220,3],[222,1]],"squih":[[219,1],[220,2],[221,2]],"jasunoa":[[219,1],[220,2],[221,2]],"bduapiaa":[[219,1],[220,6],[221,2]],"jaaodsip":[[219,1],[220,1],[221,1]],"yybnoy":[[219,1],[220,1],[221,1]],"yioddns":[[219,1],[220,2]],"anoa":[[219,1],[220,3],[221,2]],"uonjenus":[[220,1],[221,1]],"spoouw":[[220,2]],"savowaw":[[220,1],[221,1]],"bium":[[220,2]],"ayisuayul":[[220,3]],"qduapiav":[[220,2]],"hulyoo":[[220,5],[221,2]],"adaljaq":[[220,4],[221,1]],"syybnoy":[[220,3]],"bulob":[[220,4],[221,1]],"adam":[[220,1],[221,1]],"snolaaid":[[220,3],[221,1]],"awwos":[[220,1],[221,1]],"ydiym":[[220,1],[221,1]],"mojag":[[220,2]],"yjog":[[220,2],[221,2]],"jamsuy":[[220,2]],"sanb":[[220,7],[221,3]],"jaoddns":[[220,2]],"poduejeg":[[220,3],[221,2]],"uaapiag":[[220,1],[221,1]],"sysoddns":[[220,3]],"jeyy":[[220,2],[221,1]],"sobeuy":[[220,3]],"uohenis":[[220,2],[221,2]],"lhonohl":[[220,3],[221,2]],"hsyyom":[[220,2]],"uohenys":[[220,1],[221,1]],"dwewo":[[220,1],[221,1]],"qjon":[[220,1],[221,1]],"paouejeg":[[220,2]],"juoddns":[[220,2]],"ybnoul":[[220,2],[221,1]],"aquosaq":[[220,2],[221,1]],"uunjod":[[220,2]],"suosand":[[220,2]],"jaydeyd":[[220,2],[221,1]],"qduapiad":[[220,1],[221,1]],"yoddns":[[220,5],[221,3]],"ydea":[[220,6],[221,3]],"jasunod":[[220,3]],"suonsanb":[[220,5]],"ojaq":[[220,4]],"yonwnoa":[[220,3],[221,1]],"ybnoiy":[[220,2],[221,2]],"aaijeusaye":[[220,2],[221,1]],"suiluexa":[[220,2]],"baey":[[220,3],[221,1]],"ybuadod":[[220,1],[222,1]],"suaseysing":[[220,2]],"xoqje":[[220,2],[221,1]],"lhonohlqdy":[[220,2]],"uaapiaj":[[220,3],[221,1]],"woddns":[[220,4],[221,3]],"yhnou":[[220,1],[221,2]],"wody":[[220,2]],"ulquo":[[220,2]],"yddiym":[[220,1],[221,1]],"syyhnou":[[220,1],[221,1]],"mmojaq":[[220,1],[221,1]],"suoljsanb":[[220,2]],"suolsanb":[[220,2]],"dyidads":[[220,2]],"awos":[[220,2],[221,1]],"jbulop":[[220,1],[221,1]],"pasuejeq":[[220,2],[221,1]],"ikem":[[220,4]],"njdjaysquih":[[220,2],[221,1]],"yonwwnoa":[[220,2]],"sluuaq":[[220,2]],"quiluexa":[[220,4]],"zuoijents":[[220,1],[221,1]],"jeuo":[[220,2],[222,1]],"jippe":[[220,2]],"jaaysyjom":[[220,2],[221,3]],"xogje":[[220,1],[221,1],[222,1]],"ajqe":[[220,2],[221,2]],"hsyuom":[[220,1],[221,3]],"aquoseq":[[220,2]],"ydiymnok":[[220,2]],"jaydeys":[[220,2]],"peduejeq":[[220,1],[221,1]],"siue":[[220,2]],"aaneujaye":[[220,2]],"jsnf":[[220,2]],"suoisanb":[[220,1],[221,3]],"sahew":[[220,1],[221,1]],"jbaodsip":[[220,4]],"inoh":[[220,2]],"payudaypui":[[220,2],[221,1]],"suaseyring":[[220,2]],"siyi":[[220,2]],"paasasad":[[220,3],[221,1]],"uaap":[[220,1],[221,1]],"ybnoyl":[[220,2],[221,1]],"deyd":[[220,2]],"ajesay":[[220,2]],"aduapiaa":[[220,2],[221,1]],"daieuja":[[220,1],[221,1]],"iene":[[220,1],[224,1]],"aaey":[[220,2],[221,1]],"uoijenus":[[220,2]],"jyhuadod":[[220,2]],"jabjaquaaly":[[220,1],[221,1]],"aysxjom":[[220,2]],"hsuom":[[220,1],[222,1]],"piodey":[[220,2]],"jaydey":[[220,1],[221,1]],"pooww":[[220,2]],"payjew":[[220,2],[221,1]],"isnf":[[220,3],[221,1]],"nydjaysquih":[[220,1],[221,1]],"yybnou":[[220,2]],"aaaljaq":[[220,1],[221,1]],"ajey":[[220,2]],"yhuado":[[220,2]],"siyy":[[220,2],[221,1]],"suol":[[220,2]],"padded":[[220,1],[221,1]],"aojaq":[[220,1],[221,1]],"iybuado":[[220,1],[221,1]],"uuag":[[220,2]],"auiishyd":[[220,1],[221,1]],"ooqued":[[220,1],[221,1]],"sabeuy":[[220,1],[221,1]],"jnjdjaysquih":[[220,1],[221,1]],"gued":[[220,1],[221,1]],"siaseyring":[[221,1],[222,1]],"paysew":[[221,2]],"ayisuaqul":[[221,2]],"jjassnoa":[[221,2]],"aduapiag":[[221,2]],"jybuadod":[[221,2]],"founder":[[224,1],[225,1]],"newport":[[224,1],[225,1]],"founding":[[224,1],[225,1]],"cofounder":[[224,1],[225,1]],"huntington":[[224,1],[225,1]],"coauthor":[[224,1],[225,2]],"speaker":[[224,1],[225,1]],"award":[[224,2],[225,2]],"distinguished":[[224,1],[225,1]]}};
