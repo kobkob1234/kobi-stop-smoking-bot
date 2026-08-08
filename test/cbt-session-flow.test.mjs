@@ -458,3 +458,97 @@ test('הודעת העצירה מציעה מוצא אמיתי', () => {
   assert.match(block, /\/סיום/, 'הודעת העצירה אינה מציעה דרך לצאת');
   assert.match(block, /לאותו שלב/, 'לא נאמר ש-/טיפול מחזיר לאותה שאלה');
 });
+
+
+// ==========================================================================
+//  יכולות שנאספו ומעולם לא רצו
+//
+//  ארבעה מנגנונים שנכתבו, תועדו, ונספרו בנאמנות — ואף אחד מהם לא
+//  עבד. זה הדפוס החוזר בקוד הזה: הערה שמתארת התנהגות שאינה מתקיימת.
+// ==========================================================================
+
+test('מדד הביטחון 0–10 נשמר', async () => {
+  // `mode:'scale'` חזר בלי `captured`, ולכן `cbt.confidence` מעולם
+  // לא נכתב — בזמן שהשאלה נשאלה בכל קליטה ונספרה כפריט חובה.
+  const o = SESS.openSession(fresh(), ISO);
+  const r = await SESS.runStep(o.cbt, TOOLS.find(t => t.id === 'assess-readiness'),
+    ST, '7', { call: fake() });
+  assert.equal(r.cbt.confidence.length, 1, 'הביטחון נזרק');
+  assert.equal(r.cbt.confidence[0].v, 7);
+});
+
+test('תשובה מילולית לסולם עדיין נקלטת', async () => {
+  // `parseInt('בערך 7')` → NaN, והערך נזרק בשקט.
+  const o = SESS.openSession(fresh(), ISO);
+  const r = await SESS.runStep(o.cbt, TOOLS.find(t => t.id === 'assess-readiness'),
+    ST, 'אני בערך 7 מתוך 10', { call: fake() });
+  assert.equal(r.cbt.confidence[0]?.v, 7, 'מספר בתוך משפט לא חולץ');
+});
+
+test('סולם מחוץ לטווח נדחה', async () => {
+  const o = SESS.openSession(fresh(), ISO);
+  const r = await SESS.runStep(o.cbt, TOOLS.find(t => t.id === 'assess-readiness'),
+    ST, '99', { call: fake() });
+  assert.equal(r.cbt.confidence.length, 0, 'ערך מחוץ לטווח נשמר');
+});
+
+test('כלי scale אינו שורף קריאת מודל', async () => {
+  const seen = [];
+  const spy = async (role) => { seen.push(role); return 'x'; };
+  const o = SESS.openSession(fresh(), ISO);
+  await SESS.runStep(o.cbt, TOOLS.find(t => t.id === 'assess-readiness'), ST, '7', { call: spy });
+  assert.deepEqual(seen, [], `נשרפו ${seen.length} קריאות על סולם`);
+});
+
+test('הרצף בתוך הסשן מגיע לפרומפט', async () => {
+  // `index.js` בנה `{tool, answer}` ו-`capturedChain` קרא `.captured`,
+  // ולכן הוא החזיר '' תמיד — הרצף בתוך הסשן לא רץ מעולם.
+  const E = await import('../src/cbt/engine.js');
+  assert.match(E.capturedChain([{ tool: 'a', captured: 'ערב' }]), /ערב/,
+    'capturedChain לא קורא את הצורה שנבנית');
+  const src = readFileSync(join(SRC, 'index.js'), 'utf8')
+    .replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+  assert.match(src, /\[tool, captured\]/, 'index בונה צורה אחרת מזו שנקראת');
+});
+
+test('ההיסטוריה מסומנת כערך שנקלט, לא כציטוט', async () => {
+  const E = await import('../src/cbt/engine.js');
+  const h = E.historyDigest([{ tool: 'a', captured: 'ערב' }]);
+  assert.match(h, /ערב/);
+  assert.doesNotMatch(h, /הוא ענה/, 'ערך מחולץ מוצג כציטוט מילולי');
+});
+
+test('שיעורי בית ישנים נסגרים; חדשים נשארים', () => {
+  // `markHomeworkDone` היה מיוצא ולא נקרא, ולכן ש"ב נשארו פתוחים
+  // לנצח ו-`openingContext` דיווח עליהם עם `daysAgo` שגדל.
+  const old = { ...fresh(), homework: { text: 'ישן', assignedISO: '2026-08-01', done: false } };
+  const c1 = S.completeSession(S.startSession(old, 'intake', ISO), ISO);
+  assert.equal(c1.homework.done, true, 'ש"ב ישנים נשארו פתוחים');
+
+  const now = { ...fresh(), homework: { text: 'חדש', assignedISO: ISO, done: false } };
+  const c2 = S.completeSession(S.startSession(now, 'intake', ISO), ISO);
+  assert.equal(c2.homework.done, false, 'ש"ב שהוקצו בסשן הזה נסגרו מיד');
+});
+
+test('טריגרים נקראים באותו כיוון שהם נכתבים', () => {
+  // נכתבו `slice(-5)` ונקראו `slice(0,3)` — טריגר חדש היה בלתי-נראה
+  // עד שאחד ישן נשר, ו-`coping-plan` נשאר נעול על הראשון שנקלט.
+  let cbt = fresh();
+  for (const t of ['ראשון', 'שני', 'שלישי', 'רביעי']) {
+    cbt = { ...cbt, triggers: [...cbt.triggers, t].slice(-5) };
+  }
+  const st = S.toolState(cbt, [], { clean: 10 }, ISO);
+  assert.equal(st.triggers[0], 'רביעי', `הכי חדש הוא ${st.triggers[0]}`);
+  assert.equal(st.triggers.length, 3);
+});
+
+test('קריאות ה-CBT נספרות במונה המכסה', () => {
+  // ~35 בקשות לסשן היו בלתי-נראות ל-meta.ai.n.
+  const src = readFileSync(join(SRC, 'index.js'), 'utf8')
+    .replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+  const calls = [...src.matchAll(/AI\.cbtCall\([^)]*\)/g)].map(m => m[0]);
+  assert.ok(calls.length >= 2, `רק ${calls.length} אתרי קריאה`);
+  for (const c of calls) {
+    assert.match(c, /Meter|meter/, `קריאה בלי מונה: ${c}`);
+  }
+});

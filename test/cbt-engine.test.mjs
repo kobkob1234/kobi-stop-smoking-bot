@@ -37,29 +37,60 @@ test('לכל תפקיד תקציב משלו — ולא אותה תצורה לכ�
   assert.ok(E.ROLES.respond.reserve > E.ROLES.triage.reserve * 3);
 });
 
-test('לא שולחים thinkingConfig לכינוי -latest', () => {
-  // מתועד בקוד הקיים: הכינויים דוחים את הפרמטר ב-400.
-  const b = E.buildRequest('respond', { system: 's', user: 'u', model: 'gemini-flash-lite-latest' });
+// ==========================================================================
+//  תצורת הבקשה — נבדקת על מה שבאמת נשלח
+//
+//  שלוש הבדיקות האלה כוונו ל-`buildRequest`, שלא נקרא מ-`src/` בכלל
+//  ו**חלק על הפרודקשן** (4096 מול 8192 טוקני חשיבה). כלומר הכיסוי
+//  אימת מספרים של ענף מת. עכשיו הן חוטפות את הבקשה האמיתית מ-`cbtCall`.
+// ==========================================================================
+
+/** לוכד את גוף הבקשה ש-`cbtCall` שולח, בלי רשת */
+async function captureBody(env, role = 'respond') {
+  const AI = await import('../src/ai.js');
+  const orig = globalThis.fetch;
+  let body = null;
+  globalThis.fetch = async (_u, opt) => {
+    body = JSON.parse(opt.body);
+    return { ok: true, status: 200,
+             json: async () => ({ candidates: [{ content: { parts: [{ text: 'ok' }] } }] }) };
+  };
+  try { await AI.cbtCall({ GEMINI_KEY: 'k', ...env }, E.ROLES)(role, 'p', 's'); }
+  finally { globalThis.fetch = orig; }
+  return body;
+}
+
+test('לא שולחים thinkingConfig לכינוי -latest', async () => {
+  // מתועד בקוד: הכינויים דוחים את הפרמטר ב-400. `CBT_MODEL` ריק ⇒
+  // רצים על הכינוי ⇒ אסור לשלוח חשיבה.
+  const b = await captureBody({ GEMINI_MODEL: 'gemini-flash-lite-latest' });
   assert.equal(b.generationConfig.thinkingConfig, undefined);
   assert.equal(b.generationConfig.thinkingLevel, undefined);
 });
 
-test('גמיני 3 מקבל thinkingLevel · גמיני 2.5 מקבל thinkingBudget — לעולם לא שניהם', () => {
-  // שליחת שניהם מחזירה שגיאה.
-  const g3 = E.buildRequest('respond', { system: 's', user: 'u', model: 'gemini-3-flash-001' });
-  assert.equal(g3.generationConfig.thinkingLevel, 'high');
-  assert.equal(g3.generationConfig.thinkingBudget, undefined);
-
-  const g25 = E.buildRequest('respond', { system: 's', user: 'u', model: 'gemini-2.5-flash-002' });
-  assert.ok(g25.generationConfig.thinkingConfig.thinkingBudget > 0);
-  assert.equal(g25.generationConfig.thinkingLevel, undefined);
+test('מודל מקובע כן מקבל תקציב חשיבה', async () => {
+  const b = await captureBody({ CBT_MODEL: 'gemini-2.5-flash-002' });
+  assert.ok(b.generationConfig.thinkingConfig?.thinkingBudget > 0,
+    'מודל מקובע רץ בלי חשיבה — respond הוא בדיוק מה שדורש אותה');
+  // לעולם לא שניהם — שליחת שניהם מחזירה שגיאה
+  assert.equal(b.generationConfig.thinkingLevel, undefined);
 });
 
-test('תקציב הפלט נדיב — טוקני חשיבה נאכלים ממנו', () => {
+test('תקציב הפלט נדיב — טוקני חשיבה נאכלים ממנו', async () => {
   // הכשל המתועד: התשובה נחתכה באמצע מילה כי החשיבה אכלה את התקציב.
-  const b = E.buildRequest('respond', { system: 's', user: 'u', model: 'gemini-3-flash-001' });
-  assert.ok(b.generationConfig.maxOutputTokens >= 2000);
+  const b = await captureBody({ CBT_MODEL: 'gemini-2.5-flash-002' });
+  const cfg = b.generationConfig;
+  assert.ok(cfg.maxOutputTokens > cfg.thinkingConfig.thinkingBudget,
+    `פלט ${cfg.maxOutputTokens} מול חשיבה ${cfg.thinkingConfig.thinkingBudget}`);
 });
+
+test('אין בונה-בקשה שני', () => {
+  // שני מימושים לאותה בקשה נפרדו והתחילו לחלוק על עצמם.
+  const src = readFileSync(new URL('../src/cbt/engine.js', import.meta.url), 'utf8');
+  assert.doesNotMatch(src, /generationConfig/,
+    'engine בונה בקשה במקביל ל-ai.js');
+});
+
 
 // ---------- הבחירה נשארת דטרמיניסטית ----------
 
@@ -83,7 +114,6 @@ test('כלי fixed אינו קורא למודל בכלל', async () => {
   // **בלי תשובה.** הוא החזיר את הטקסט של עצמו, והבוט שלח אותו — אחרי
   // שכבר הציג אותו בתור הקודם. כל סשן הראה את הכלים ההצהרתיים פעמיים.
   assert.equal(r.text, null, 'כלי הצהרתי מחזיר תשובה וגורם להדפסה כפולה');
-  assert.equal(E.turnCost('fixed'), 0);
 });
 
 // ---------- התור התגובתי ----------
@@ -132,15 +162,23 @@ test('כישלון המודל אינו מחזיר טקסט חלקי', async () =
   assert.equal(r.mode, 'failed');
 });
 
-test('עלות תור נשארת בתוך המכסה', async () => {
-  // 8 כלים לסשן, מתוכם ~6 תגובתיים × 4 קריאות = 24. מול 1,500 ליום.
-  const s = P.byId('wk3');
-  const cost = s.checklist
-    .map(c => T.byId(c.bct))
-    .reduce((t, tool) => t + E.turnCost(tool.mode), 0);
-  assert.ok(cost < 40, `סשן עולה ${cost} קריאות`);
-  assert.ok(cost > 10, 'העלות נמוכה מדי — סימן שהתגובתיות לא באמת רצה');
+test('עלות סשן נשארת בתוך המכסה — נמדדת, לא מוערכת', async () => {
+  // הגרסה הקודמת סכמה `turnCost`, שהחזיר 4 בזמן שתור תגובתי עולה 5.
+  // כאן נספרות הקריאות בפועל דרך תור אמיתי.
+  const SESS = await import('../src/cbt/session.js');
+  const S = await import('../src/cbt/state.js');
+  const sess = P.byId('wk3');
+  let calls = 0;
+  const count = async (role) => { calls++; return role === 'triage' ? 'answer' : role === 'critique' ? 'OK' : 'x'; };
+  let cbt = S.startSession(S.migrateCbt(null), 'wk3', '2026-08-15');
+  for (const c of sess.checklist) {
+    const tool = T.byId(c.bct);
+    ({ cbt } = await SESS.runStep(cbt, tool, RICH, 'תשובה', { call: count }));
+  }
+  assert.ok(calls < 60, `סשן עולה ${calls} קריאות`);
+  assert.ok(calls > 10, `רק ${calls} קריאות — התגובתיות לא באמת רצה`);
 });
+
 
 // ==========================================================================
 //  איכות הפרומפט — מה שנקבע בסימולציה

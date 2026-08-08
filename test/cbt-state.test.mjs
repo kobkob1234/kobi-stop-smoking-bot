@@ -73,12 +73,22 @@ test('ערך מחוץ לטווח 0–10 נדחה', () => {
 });
 
 test('שיעורי בית נשמרים ונשאלים בסשן הבא', () => {
-  const c = run([['summary-and-homework', 'לשים לב מתי בערב']]);
-  assert.equal(c.homework.done, false);
-  const ctx = S.openingContext(c, '2026-08-15');
-  assert.ok(ctx.some(b => b.kind === 'homework'), 'שיעורי הבית לא עולים בפתיחה');
-  assert.equal(S.markHomeworkDone(c).homework.done, true);
+  // `markHomeworkDone` הוסר — הסגירה קורית ב-`completeSession`, שהוא
+  // המקום היחיד שבו באמת ידוע שהסשן הסתיים.
+  let cbt = S.migrateCbt(null);
+  cbt = S.startSession(cbt, 'intake', '2026-08-07');
+  cbt = S.recordBct(cbt, 'summary-and-homework', 'לרשום מתי הדחף מגיע');
+  assert.equal(cbt.homework.text, 'לרשום מתי הדחף מגיע');
+  assert.equal(cbt.homework.done, false, 'ש"ב נסגרו באותו סשן שהוקצו בו');
+
+  // הסשן הבא — הם עדיין פתוחים בפתיחה, ונסגרים בסיומו
+  const nxt = S.startSession(S.completeSession(cbt, '2026-08-07'), 'wk3', '2026-08-15');
+  assert.ok(S.openingContext(nxt, '2026-08-15').some(b => b.kind === 'homework'),
+    'ש"ב לא עלו בפתיחת הסשן הבא');
+  assert.equal(S.completeSession(nxt, '2026-08-15').homework.done, true,
+    'ש"ב לא נסגרו בסוף הסשן שסקר אותם');
 });
+
 
 test('פתיחת הסשן מזכירה ירידה בביטחון', () => {
   // זה בדיוק מה שמטפל היה פותח בו.

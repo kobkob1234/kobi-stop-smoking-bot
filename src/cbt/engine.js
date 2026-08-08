@@ -63,28 +63,15 @@ export const ROLES = {
   critique: { think: 'low',    reserve: 600,  temp: 0.2 },
 };
 
-/**
- * בונה את גוף הבקשה לפי תפקיד.
- *
- * מופרד מ-ai.js בכוונה: הקריאה שם משרתת שיחה חופשית ומכווננת למהירות,
- * וכאן הצורך הפוך. ערבוב השניים היה מכריח פשרה שפוגעת בשניהם.
- */
-export function buildRequest(role, { system, user, model, gen = {} }) {
-  const r = ROLES[role];
-  if (!r) throw new Error(`תפקיד לא מוכר: ${role}`);
-  const body = {
-    systemInstruction: { parts: [{ text: system }] },
-    contents: [{ role: 'user', parts: [{ text: user }] }],
-    generationConfig: { temperature: r.temp, maxOutputTokens: r.reserve, ...gen },
-  };
-  // גמיני 3 משתמש ב-thinkingLevel; 2.5 ב-thinkingBudget. **שליחת שניהם
-  // מחזירה שגיאה**, ולכן נבחר לפי המודל ולא נשלח "ליתר ביטחון".
-  if (r.think !== 'none' && model && !model.includes('-latest')) {
-    if (/gemini-3/.test(model)) body.generationConfig.thinkingLevel = r.think;
-    else body.generationConfig.thinkingConfig = { thinkingBudget: r.think === 'high' ? 4096 : 1024 };
-  }
-  return body;
-}
+// ═══ אין כאן בונה-בקשה ═══
+//
+// היה כאן `buildRequest` שלא נקרא מ-`src/` בכלל — הפרודקשן בונה את
+// הבקשה ב-`ai.js`. שני מימושים לאותו דבר, **ובערכים שונים**: 4096
+// טוקני חשיבה כאן מול 8192 שם. ארבע בדיקות אימתו את המספרים של הענף
+// המת, כלומר הכיסוי הצביע על קוד שאיש לא הריץ.
+//
+// המקום היחיד שבונה בקשה הוא `ai.cbtCall`.
+
 
 // ==========================================================================
 //  הפרומפט — כאן נקבעת האיכות, לא בצינור
@@ -276,8 +263,11 @@ export function stateDigest(s) {
 /** מה שכבר נאמר בסשן הזה — בלעדיו תור 3 לא יודע שתור 1 קרה */
 export function historyDigest(turns = []) {
   if (!turns.length) return null;
+  // **"נקלט" ולא "הוא ענה".** מה שנשמר הוא הערך המחולץ (עד 6 מילים),
+  // לא הציטוט המילולי — והצגתו כציטוט שלחה למודל מילים שהמשתמש
+  // מעולם לא אמר, בתור "מה שהוא אמר".
   return turns.slice(-6)
-    .map(t => `· ${t.tool}: הוא ענה "${String(t.answer).slice(0, 180)}"`)
+    .map(t => `· ${t.tool}: נקלט "${String(t.captured ?? t.answer ?? '').slice(0, 180)}"`)
     .join('\n');
 }
 
@@ -323,7 +313,7 @@ export const CRITIQUE_RULES = [
 /** הערכים שחולצו בסשן — שורדים את חיתוך ההיסטוריה */
 export function capturedChain(turns = []) {
   const vals = turns.map(t => t.captured).filter(Boolean);
-  return vals.length ? `נאמר עד כה בסשן: ${vals.join(' · ')}` : '';
+  return vals.length ? `נקלט עד כה בסשן: ${vals.join(' · ')}` : '';
 }
 
 // ==========================================================================
@@ -354,7 +344,16 @@ export async function runTurn({ tool, state, userText, call, retrieve = null,
   //
   // `text: null` אומר "אין מה להגיב"; הכלי כבר נאמר.
   if (tool.mode === 'fixed' || tool.mode === 'scale') {
-    return { text: null, trace, mode: tool.mode };
+    // ═══ אבל `scale` **כן** מייצר ערך ═══
+    //
+    // הוא חזר בלי `captured`, ולכן `applyCapture` לא רץ ו-`cbt.confidence`
+    // **מעולם לא נכתב**. השאלה נשאלה בכל קליטה, נספרה כפריט חובה
+    // בנאמנות, והתשובה נזרקה — ואיתה כל מה שתלוי בה: מגמת הביטחון
+    // בפתיחת הסשן, הענף של ביטחון נמוך, ו-`stateDigest`.
+    //
+    // אין כאן קריאת מודל: התשובה היא מספר, והחילוץ הוא regex.
+    return { text: null, trace, mode: tool.mode,
+             captured: tool.mode === 'scale' ? String(userText ?? '').trim() || null : null };
   }
 
   // **פלט מובנה ולא התאמת מחרוזת.** הגרסה הראשונה בדקה
@@ -558,9 +557,9 @@ export function describeOpening(b) {
   }
 }
 
-/** כמה קריאות תור אחד עולה — לתקצוב מול המכסה */
-export const turnCost = (toolMode, withRetrieval = true) =>
-  toolMode === 'fixed' || toolMode === 'scale' ? 0 : (withRetrieval ? 4 : 3);
+// `turnCost` הוסר: הוא החזיר 4 בזמן שתור תגובתי עולה 5 קריאות
+// (או 6 כשיש תיקון), ואיש לא קרא לו. מספר תקציב שגוי שאין לו צרכן.
+
 
 // ==========================================================================
 //  פורמולציה — מה שמטפל עושה ורשימת כלים לא

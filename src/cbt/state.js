@@ -133,7 +133,10 @@ export function toolState(cbt, days, plan, iso) {
     fatigue: med('fatigue'),
     waves7: sum('waves'),
     slips7: sum('slips'),
-    triggers: cbt.triggers.slice(0, 3),
+    // **החדשים.** נכתבים `slice(-5)` (החדשים) ונקראו `slice(0,3)`
+    // (הישנים), ולכן טריגר שזוהה עכשיו היה בלתי-נראה עד שאחד ישן נשר —
+    // ו-`coping-plan`, התערבות ה-d=0.65, נשאר נעול על הראשון שנקלט.
+    triggers: cbt.triggers.slice(-3).reverse(),
     pastAttempts: cbt.pastAttempts.slice(0, 2),
     confidence: conf,
     homework: cbt.homework && !cbt.homework.done ? cbt.homework.text : null,
@@ -213,7 +216,10 @@ function applyCapture(cbt, bct, value) {
     case 'assess-dependence':
       return { ...cbt, dependence: txt };
     case 'assess-readiness': {
-      const v = parseInt(txt, 10);
+      // `parseInt('בערך 7')` → NaN, והערך נזרק בשקט בזמן שהפלט דיווח
+      // `recorded`. תשובה טבעית לשאלת סולם היא לרוב לא מספר עירום.
+      const m = String(txt).match(/\d+/);
+      const v = m ? parseInt(m[0], 10) : NaN;
       if (isNaN(v) || v < 0 || v > 10) return cbt;
       return { ...cbt, confidence: [...cbt.confidence, { iso: cbt.active?.iso, v }].slice(-12) };
     }
@@ -224,9 +230,10 @@ function applyCapture(cbt, bct, value) {
   }
 }
 
-/** סימון שיעורי הבית כבוצעו — נשאל בסשן הבא */
-export const markHomeworkDone = cbt =>
-  cbt.homework ? { ...cbt, homework: { ...cbt.homework, done: true } } : cbt;
+// `markHomeworkDone` הוסר: הוא היה מיוצא ולא נקרא משום מקום, ולכן
+// שיעורי בית לא נסגרו לעולם. הסגירה קורית עכשיו ב-`completeSession`,
+// שהוא המקום היחיד שבו באמת ידוע שהסשן הסתיים.
+
 
 /**
  * סגירת סשן.
@@ -253,8 +260,20 @@ export function completeSession(cbt, iso) {
   // סופר לפי קידומת, כך שכל כפילות **דוחה את הסשן הבא בשבוע**.
   // `fidelityReport` גם ספר את ההערה פעמיים.
   const dup = cbt.sessionsDone.includes(cbt.active.id);
+  // ═══ שיעורי בית שהוקצו לפני הסשן הזה נסגרים בסופו ═══
+  //
+  // `markHomeworkDone` היה מיוצא ולא נקרא משום מקום, ולכן `done` נשאר
+  // `false` לנצח: `openingContext` דיווח על אותם שיעורי בית בכל פתיחה
+  // עם `daysAgo` שגדל, והכלי תמיד שאל "מה יצא?" על משימה בת חודש.
+  //
+  // ש"ב שהוקצו **בסשן הזה** נשארים פתוחים — הם למחר.
+  const hw = cbt.homework && !cbt.homework.done &&
+             cbt.homework.assignedISO && cbt.homework.assignedISO < cbt.active.iso
+    ? { ...cbt.homework, done: true }
+    : cbt.homework;
   return {
     ...cbt,
+    homework: hw,
     sessionsDone: dup ? cbt.sessionsDone : [...cbt.sessionsDone, cbt.active.id],
     notes: dup ? cbt.notes : [...cbt.notes, note].slice(-20),
     active: null,

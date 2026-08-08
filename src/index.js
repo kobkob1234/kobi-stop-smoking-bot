@@ -870,9 +870,15 @@ async function cbtState(env, meta, cbt, pl, iso) {
                                      confirmedTaper: !!gp.confirmedTaper }, iso);
 }
 
-/** התורות של הסשן הנוכחי — נגזרים מ-`captured`, כי הם מה ששרד */
+/**
+ * התורות של הסשן הנוכחי — נגזרים מ-`captured`, כי הם מה ששרד.
+ *
+ * השדה נקרא `captured` ולא `answer`: `capturedChain` ו-`historyDigest`
+ * קוראים `.captured`, ולכן הצורה `{tool, answer}` הפכה את שניהם
+ * לריקים תמיד — הרצף בתוך הסשן היה מנגנון שלא רץ מעולם.
+ */
 const cbtTurns = cbt => Object.entries(cbt.active?.captured || {})
-  .map(([tool, answer]) => ({ tool, answer }));
+  .map(([tool, captured]) => ({ tool, captured }));
 
 /**
  * תור אחד: מריץ, רושם, ושואל את הבא.
@@ -880,6 +886,15 @@ const cbtTurns = cbt => Object.entries(cbt.active?.captured || {})
  * **המצב נשמר גם כשהמודל נכשל.** תור שלא נרשם משאיר את הכלי
  * ב-remaining לנצח — כישלון רשת שהופך לסשן שאי אפשר לסיים.
  */
+/**
+ * מונה הקריאות של הסשן.
+ *
+ * `cbtCall` נקרא בלי `meter`, ולכן ~35 בקשות לסשן היו **בלתי-נראות**
+ * ל-`meta.ai.n`. המכסה היומית האמיתית נשרפה בנתיב הזה ואז הנתיב
+ * הנמדד נכשל, בזמן שהמונה הראה אפס.
+ */
+const cbtMeter = { calls: 0 };
+
 async function runTherapyTurn(env, chatId, meta, text, pl, iso) {
   const cbt0 = CBTS.migrateCbt(meta.cbt);
   if (!cbt0.active) return void await send(env, chatId, 'אין סשן פתוח. /טיפול כדי להתחיל.');
@@ -890,7 +905,7 @@ async function runTherapyTurn(env, chatId, meta, text, pl, iso) {
 
   const turns = cbtTurns(cbt0);
   const r = await CBTSESS.runStep(cbt0, tool, st, text, {
-    call: AI.cbtCall(env, CBTE.ROLES),
+    call: AI.cbtCall(env, CBTE.ROLES, cbtMeter),
     retrieve: retrieverFor(env, { bct: tool.id }),
     turns,
   });
@@ -945,7 +960,7 @@ async function runTherapyTurn(env, chatId, meta, text, pl, iso) {
 /** סגירה — ציון נאמנות ודפוס */
 async function finishTherapy(env, chatId, meta, cbt, st) {
   const r = await CBTSESS.closeSession(cbt, st, {
-    call: AI.cbtCall(env, CBTE.ROLES), turns: cbtTurns(cbt),
+    call: AI.cbtCall(env, CBTE.ROLES, cbtMeter), turns: cbtTurns(cbt),
   });
   if (r.error) return void await send(env, chatId, 'אין סשן פתוח.');
   meta.cbt = r.cbt; meta.awaiting = null;
