@@ -249,3 +249,45 @@ test('nextDueISO לתחזוקה נמדד מהסשן האחרון', () => {
   assert.equal(C.nextDueISO('2026-10-02', done, '2026-08-07', '2026-10-01'),
     '2026-10-08', 'התאריך הבא אינו שבוע מהסשן שרץ');
 });
+
+
+test('רק פריטי חובה נספרים בנאמנות', () => {
+  // סריקת מוטציות: ביטול `filter(c => c.required)` שרד — אף בדיקה לא
+  // הבחינה בין חובה לרשות, כלומר "נאמנות לפרוטוקול" יכלה להיות
+  // ממוצע על פריטים שהפרוטוקול עצמו מסמן כאופציונליים.
+  // `maint` הוא הסשן היחיד עם פריט רשות (coping-plan)
+  const s = C.byId('maint');
+  const opt = s.checklist.filter(c => !c.required).map(c => c.bct);
+  const req = s.checklist.filter(c => c.required).map(c => c.bct);
+  assert.ok(opt.length, 'לסשן אין פריטי רשות — הבדיקה לא בודקת כלום');
+
+  // כל החובה ואף רשות → 100%
+  assert.equal(C.fidelity(s, req).score, 1,
+    'פריטי רשות שנשמטו הורידו את הציון');
+  // כל הרשות ואף חובה → 0%
+  assert.equal(C.fidelity(s, opt).score, 0,
+    'פריטי רשות העלו את הציון בלי שאף פריט חובה רץ');
+});
+
+test('missed מדווח רק פריטי חובה שנשמטו', () => {
+  const s = C.byId('maint');
+  const req = s.checklist.filter(c => c.required).map(c => c.bct);
+  assert.deepEqual(C.fidelity(s, req).missed, [], 'רשות דווחה כנשמטת');
+});
+
+
+test('canComplete מבחין בין חובה לרשות', () => {
+  // סריקת מוטציות: `filter(c => c.required)` ב-`canComplete` שרד —
+  // אף בדיקה לא בדקה שפריט רשות שנשמט אינו חוסם סגירה.
+  const s = C.byId('maint');
+  const req = s.checklist.filter(c => c.required).map(c => c.bct);
+  const opt = s.checklist.filter(c => !c.required).map(c => c.bct);
+  assert.ok(opt.length, 'אין פריט רשות — הבדיקה לא בודקת כלום');
+
+  assert.equal(C.canComplete(s, req).ok, true,
+    'פריט רשות שנשמט חסם סגירה');
+  assert.equal(C.canComplete(s, req.slice(1)).ok, false,
+    'פריט חובה שנשמט לא חסם סגירה');
+  assert.equal(C.canComplete(s, opt).ok, false,
+    'רשות לבדה הספיקה לסגירה');
+});

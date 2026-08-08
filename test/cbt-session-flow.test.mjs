@@ -552,3 +552,19 @@ test('קריאות ה-CBT נספרות במונה המכסה', () => {
     assert.match(c, /Meter|meter/, `קריאה בלי מונה: ${c}`);
   }
 });
+
+
+test('פורמולציה דורשת שלושה תורות לפחות', () => {
+  // סף מדויק: שניים אינם דפוס, שלושה כן. `>` במקום `>=` היה מבטל
+  // פורמולציה בסשן הקצר ביותר בלי שאיש יבחין.
+  const t3 = [{ tool: 'a', answer: '1' }, { tool: 'b', answer: '2' }, { tool: 'c', answer: '3' }];
+  const t2 = t3.slice(0, 2);
+  const o = SESS.openSession(fresh(), ISO);
+  return Promise.all([
+    SESS.closeSession(o.cbt, ST, { call: fake(), turns: t3 }),
+    SESS.closeSession(o.cbt, ST, { call: fake(), turns: t2 }),
+  ]).then(([a, b]) => {
+    assert.ok(a.formulation, 'שלושה תורות לא הפיקו דפוס');
+    assert.equal(b.formulation, null, 'שני תורות הפיקו דפוס');
+  });
+});

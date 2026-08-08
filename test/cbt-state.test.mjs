@@ -334,3 +334,63 @@ test('מפתחות זרים אינם שורדים דרך migrateCbt+pickCbtField
   assert.equal('force' in c, false);
   assert.equal('x' in c, false);
 });
+
+
+test('מערכי מחרוזות מסוננים מערכים שאינם מחרוזת', () => {
+  // סריקת מוטציות: שלושת הסינונים האלה שרדו — הבדיקות כיסו את
+  // notes/confidence/homework/active ולא את אלה.
+  const c = S.migrateCbt({
+    sessionsDone: ['intake', null, 42, '', 'wk3'],
+    triggers: ['ערב', null, { x: 1 }],
+    pastAttempts: ['ניסיתי', undefined, 7],
+  });
+  assert.deepEqual(c.sessionsDone, ['intake', 'wk3']);
+  assert.deepEqual(c.triggers, ['ערב']);
+  assert.deepEqual(c.pastAttempts, ['ניסיתי']);
+});
+
+test('dayNum אינו שלילי לפני תאריך הגמילה', () => {
+  // `Math.max(0, …)` — תאריך לפני הגמילה נותן יום שלילי, ו-`tools.js`
+  // מדפיס אותו כ"יום N".
+  const before = S.toolState(S.migrateCbt(null), [], { clean: 0 }, '2026-01-01');
+  assert.ok(before.dayNum >= 0, `יום ${before.dayNum}`);
+});
+
+test('מגמה זעירה אינה מדווחת כשינוי', () => {
+  // סף של 0.05 — בלעדיו כל רעש מדווח כ"↑ 1%".
+  const note = (score) => ({ id: 'x', iso: '2026-08-01', bcts: [], score, missed: [], complete: true });
+  const flat = { notes: [note(1), note(1), note(1), note(1), note(0.99)] };
+  const line = S.fidelityLine(flat);
+  assert.doesNotMatch(line, /[↑↓]/, `מגמה זעירה דווחה: ${line}`);
+
+  const real = { notes: [note(1), note(1), note(0.4), note(0.4), note(0.4)] };
+  assert.match(S.fidelityLine(real), /↓/, 'ירידה אמיתית לא דווחה');
+});
+
+test('פריט שנשמט פעם אחת אינו "נשמט הכי הרבה"', () => {
+  // סף של 2 — פעם אחת היא מקרה, לא דפוס.
+  const note = (missed) => ({ id: 'x', iso: '2026-08-01', bcts: [], score: 0.8, missed, complete: false });
+  const once = { notes: [note(['coping-plan']), note([]), note([])] };
+  assert.doesNotMatch(S.fidelityLine(once), /נשמט הכי הרבה/,
+    'השמטה בודדת דווחה כדפוס');
+
+  const twice = { notes: [note(['coping-plan']), note(['coping-plan']), note([])] };
+  assert.match(S.fidelityLine(twice), /נשמט הכי הרבה/, 'דפוס אמיתי לא דווח');
+});
+
+test('סגירת הסשן שלך אינה מסווגת כהתנגשות', () => {
+  // התנאי חסם גם את המקרה הלגיטימי: סוכן שסגר סשן שולח `active: null`,
+  // וזה נראה זהה לדריסה. נמצא בהרצת אינטגרציה — `finish` דיווח
+  // `pushed: false` והמצב ב-KV נשאר פתוח לנצח.
+  const open = { ...S.migrateCbt(null),
+                 active: { id: 'intake', iso: '2026-08-08', remaining: [], done: [], captured: {} } };
+  const closing = { sessionsDone: ['intake'], active: null,
+                    notes: [{ id: 'intake', iso: '2026-08-08', score: 1, missed: [] }] };
+  const r = S.applyCbtPush(open, closing);
+  assert.ok(r.cbt, `סגירה נחסמה: ${r.why}`);
+  assert.equal(r.cbt.active, null, 'הסשן לא נסגר');
+
+  // אבל דריסה בלי סגירה עדיין נחסמת
+  assert.ok(S.applyCbtPush(open, { sessionsDone: [], active: null }).conflict,
+    'דריסה בלי סגירה עברה');
+});

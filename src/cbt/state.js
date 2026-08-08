@@ -448,7 +448,14 @@ export function applyCbtPush(current, body) {
   // סשן פתוח בבוט אינו נדרס. התנאי הקודם בדק `!b.active` בלבד, כלומר
   // התיר **החלפה** של סשן פתוח וחסם רק מחיקה.
   const a = body.active;
-  const clash = !!cur.active &&
+  // ═══ סגירה אינה התנגשות ═══
+  //
+  // התנאי הראשון חסם גם את המקרה הלגיטימי: סוכן שהריץ סשן וסגר אותו
+  // שולח `active: null`, וזה נראה זהה לדריסה של סשן שמישהו באמצעו.
+  // ההוכחה שהוא **סגר** ולא **דרס** היא שהמזהה נמצא ב-`sessionsDone`.
+  const closed = !!cur.active &&
+    Array.isArray(body.sessionsDone) && body.sessionsDone.includes(cur.active.id);
+  const clash = !!cur.active && !closed &&
     (!a || a.id !== cur.active.id || a.iso !== cur.active.iso);
   if (clash && !body.force) {
     return { conflict: true, why: 'סשן פתוח בבוט', active: cur.active.id };

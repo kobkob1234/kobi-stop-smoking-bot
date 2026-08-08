@@ -404,7 +404,13 @@ export async function runTurn({ tool, state, userText, call, retrieve = null,
   if (retrieve) {
     const want = await step('fetch',
       `הכלי: ${tool.name} (${tool.id}). המשתמש אמר: "${userText}"\n${FETCH_ASK}`);
-    sources = await retrieve(want || tool.id);
+    // ═══ הנפילה חייבת להיות מונחים, לא מזהה ═══
+    //
+    // `tool.id` הוא `identify-triggers`, והמקף בתוך מחלקת התווים של
+    // הטוקנייזר, ולכן הוא טוקן **אחד** שאינו קיים בפוסטינגס. כלומר
+    // כשל של שלב ה-fetch החזיר את האחזור בשקט להתנהגות שקדמה ל-BM25:
+    // תג בלבד. פיצול המקף מחזיר 23.9 במקום 16 באותה שאילתה.
+    sources = await retrieve(want || tool.id.replace(/-/g, ' '));
   }
 
   // **השאלה שנשאלה** חייבת להיות בפרומפט. בלעדיה המודל רואה תשובה

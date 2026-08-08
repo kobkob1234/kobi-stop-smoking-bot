@@ -429,3 +429,63 @@ test('לא יותר משני קטעים מאותו פרק', () => {
     }
   }
 });
+
+// ==========================================================================
+//  התאמה בין הבנאי לשאילתה
+//
+//  שני צדדים מטוקנים את אותו טקסט. כל הפרש ביניהם פירושו מונח שנגזם
+//  בבנייה ומחופש בשאילתה — או להפך — ואי-ההתאמה **שקטה לחלוטין**:
+//  BM25 פשוט מדלג על מונח שאינו בפוסטינגס.
+// ==========================================================================
+
+test('רשימות מילות העצירה זהות בשני הצדדים', async () => {
+  const { readFileSync: rf } = await import('node:fs');
+  const py = rf(join(SRC, '..', '..', 'extraction', 'build_cbt_index.py'), 'utf8');
+  const m = py.match(/^STOP = set\("""([\s\S]*?)"""\.split\(\)\)/m);
+  assert.ok(m, 'לא נמצאה רשימת ה-STOP של הבנאי');
+  const pyStop = new Set(m[1].split(/\s+/).filter(Boolean));
+
+  const js = rf(join(SRC, 'cbt', 'retrieve.js'), 'utf8');
+  const m2 = js.match(/const STOP = new Set\(\('([\s\S]*?)'\)\.split/);
+  assert.ok(m2, 'לא נמצאה רשימת ה-STOP של השאילתה');
+  const jsStop = new Set(m2[1].replace(/'\s*\+\s*\n\s*'/g, ' ').split(/\s+/).filter(Boolean));
+
+  const onlyPy = [...pyStop].filter(w => !jsStop.has(w));
+  const onlyJs = [...jsStop].filter(w => !pyStop.has(w));
+  assert.deepEqual(onlyPy, [], `נגזמות בבנייה ומחופשות בשאילתה: ${onlyPy}`);
+  assert.deepEqual(onlyJs, [], `נגזמות בשאילתה ולא בבנייה: ${onlyJs}`);
+});
+
+test('מזהה כלי מפוצל למונחים לפני האחזור', async () => {
+  // `identify-triggers` הוא טוקן אחד שאינו בפוסטינגס, ולכן הנפילה
+  // החזירה את האחזור בשקט לדירוג לפי תג בלבד.
+  assert.deepEqual(queryTerms('identify-triggers'), ['identify-triggers'],
+    'הטוקנייזר השתנה — הנימוק למטה כבר לא תקף');
+  const asId = pickSections('identify-triggers', { bct: 'identify-triggers' });
+  const asWords = pickSections('identify triggers', { bct: 'identify-triggers' });
+  assert.ok(asWords[0].score > asId[0].score,
+    'פיצול המקף אינו משפר — הבדיקה שומרת על כלום');
+
+  const src = readFileSync(join(SRC, 'cbt', 'engine.js'), 'utf8')
+    .replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+  assert.match(src, /tool\.id\.replace\(\/-\/g, ' '\)/,
+    'הנפילה עדיין מעבירה מזהה במקום מונחים');
+});
+
+
+test('לכל מקטע שנבחר יש רצפת חיתוך', () => {
+  // `Math.max(600, budget/n)` — בלי הרצפה, שלושה מקטעים בתקציב קטן
+  // היו נחתכים לכלום, והמודל היה מקבל כותרת בלי גוף.
+  const long = '> **Source:** X\n\n' + 'word '.repeat(5000);
+  const env = { KV: { get: async () => long } };
+  return retrieverFor(env, { bct: 'coping-plan' })('coping plan action items')
+    .then(r => {
+      assert.ok(r.length, 'לא נשלף כלום');
+      for (const s of r) {
+        const n = s.text.split(/\s+/).length;
+        // הרצפה היא 600, אבל עם 3 מקטעים התקציב נותן ~2000 לכל אחד.
+        // סף של 500 עבר גם כשהרצפה הפכה לתקרה (`min` במקום `max`).
+        assert.ok(n >= 1500, `${s.id}: ${n} מילים — החלוקה לא הוחלה`);
+      }
+    });
+});
