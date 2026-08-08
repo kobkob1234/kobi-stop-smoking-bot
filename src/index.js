@@ -884,7 +884,7 @@ async function runTherapyTurn(env, chatId, meta, text, pl, iso) {
   });
 
   const next = CBTSESS.nextStep(r.cbt, st);
-  const done = !next || CBTSESS.exhausted(cbtTurns(r.cbt));
+  const done = !next || CBTSESS.exhausted(cbtTurns(r.cbt), r.cbt);
   meta.cbt = r.cbt;
   meta.awaiting = done ? null : 'cbt';
   await putMeta(env, meta);
@@ -911,7 +911,12 @@ async function runTherapyTurn(env, chatId, meta, text, pl, iso) {
   // תשובה שנכשלה אינה מוסתרת: סשן שממשיך כאילו כלום לא קרה מייצר
   // רצף שבור שהמשתמש לא יכול להסביר לעצמו.
   if (r.reply) bits.push(esc(r.reply));
-  else bits.push('<i>(לא הצלחתי לנסח תגובה — ממשיכים)</i>');
+  else if (r.mode === 'failed' && r.tries < CBTSESS.MAX_TRIES) {
+    // הכלי **לא** נרשם כבוצע — לכן ההודעה אומרת "שוב", לא "ממשיכים".
+    bits.push('<i>(לא הצלחתי לנסח תגובה. ננסה את אותו שלב שוב — ענה שוב, או /סיום.)</i>');
+  } else {
+    bits.push('<i>(לא הצלחתי לנסח תגובה. מדלג על השלב הזה — הוא יסומן כנשמט.)</i>');
+  }
   if (next) {
     const a = next.run(st);
     bits.push('', `<b>${esc(next.name)}</b>`, esc(a.text));
@@ -1535,10 +1540,15 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
       meta.cbt = open.cbt; meta.awaiting = 'cbt'; await putMeta(env, meta);
       const st = await cbtState(env, meta, open.cbt, pl, iso);
       const tool = CBTSESS.nextStep(open.cbt, st);
+      if (!tool) return void await finishTherapy(env, chatId, meta, open.cbt, st);
       const a = tool.run(st);
+      // **אומרים מראש כשאין AI.** `sessionMode` נכתב בדיוק בשביל זה
+      // ולא נקרא מ-`src/` בכלל, ולכן סשן בלי מודל נראה זהה לסשן מלא.
+      const smode = CBTT.sessionMode(open.cbt.active.remaining, !!env.GEMINI_KEY);
       return void await send(env, chatId, [
         `🪑 <b>${esc(open.session.title)}</b>`,
         `${open.session.checklist.length} שלבים · כ-${open.session.minMinutes} דקות`,
+        ...(smode && smode.note ? [`<i>${esc(smode.note)}</i>`] : []),
         ...(open.opening.length ? ['', `<i>${esc(open.opening.join(' · '))}</i>`] : []),
         '', `<b>${esc(tool.name)}</b>`, esc(a.text),
         ...(a.ask ? ['', `<b>${esc(a.ask)}</b>`] : []),

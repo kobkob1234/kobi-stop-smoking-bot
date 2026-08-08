@@ -62,14 +62,67 @@ test('תור מריץ, רושם, ומקטין את הנותרים', async () => 
   assert.ok(r.reply, 'אין תגובה');
 });
 
-test('מודל שנכשל עדיין מקדם את הסשן', async () => {
-  // תור שלא נרשם משאיר את הכלי ב-remaining לנצח, והסשן נתקע על אותה
-  // שאלה — כישלון רשת שהופך לסשן שאי אפשר לסיים.
+// ---------- כשל מודל: לא לשרוף פריט, ולא לתקוע ----------
+
+test('כשל ראשון אינו מסמן את הכלי כבוצע', async () => {
+  // הפריט נרשם כבוצע ו-`fidelity` דיווח 100% על סשן שלא נאמר בו דבר:
+  // מפתח מבוטל ⇒ שבע הודעות "לא הצלחתי לנסח" ⇒ "נאמנות 100%".
   const o = SESS.openSession(fresh(), ISO);
   const tool = SESS.nextStep(o.cbt, ST);
   const before = o.cbt.active.remaining.length;
   const r = await SESS.runStep(o.cbt, tool, ST, 'משהו', { call: async () => null });
-  assert.equal(r.cbt.active.remaining.length, before - 1, 'כישלון מודל תקע את הסשן');
+  assert.equal(r.mode, 'failed');
+  assert.equal(r.cbt.active.remaining.length, before, 'הכלי נשרף על כשל חולף');
+  assert.equal(r.tries, 1);
+});
+
+test('אחרי MAX_TRIES הכלי מדולג — לא לולאה אינסופית', async () => {
+  // אי-רישום לבדו מחזיר את אותו כלי לנצח כשהמודל מושבת.
+  let cbt = SESS.openSession(fresh(), ISO).cbt;
+  const tool = SESS.nextStep(cbt, ST);
+  const before = cbt.active.remaining.length;
+  for (let i = 0; i < SESS.MAX_TRIES; i++) {
+    ({ cbt } = await SESS.runStep(cbt, tool, ST, 'משהו', { call: async () => null }));
+  }
+  assert.equal(cbt.active.remaining.length, before - 1, 'הסשן נתקע על אותו כלי');
+});
+
+test('סשן בלי מודל בכלל מסתיים, ונאמנותו אינה 100%', async () => {
+  let cbt = SESS.openSession(fresh(), ISO).cbt;
+  let n = 0;
+  for (;;) {
+    const tool = SESS.nextStep(cbt, ST);
+    if (!tool) break;
+    assert.ok(++n <= 40, 'הסשן לא נגמר בלי מודל');
+    ({ cbt } = await SESS.runStep(cbt, tool, ST, 'x', { call: async () => null }));
+  }
+  const r = await SESS.closeSession(cbt, ST, { call: null, turns: [] });
+  assert.ok(r.fidelity.score < 1,
+    `נאמנות ${r.fidelity.score} על סשן שלא נאמר בו דבר`);
+});
+
+test('גדר האורך סופרת גם ניסיונות חוזרים', async () => {
+  // היא נספרה מול `captured` שחסום בגודל הצ׳קליסט (6–8), ולכן 24
+  // היה בלתי-מושג והגדר מעולם לא יכלה לירות.
+  const many = { active: { tries: Object.fromEntries(
+    Array.from({ length: 12 }, (_, i) => [`t${i}`, 2])) } };
+  assert.equal(SESS.exhausted([], many), true, 'ניסיונות חוזרים אינם נספרים');
+  assert.equal(SESS.exhausted([], null), false);
+});
+
+test('הבוט אומר "שוב" בכשל ראשון ו"מדלג" בשני', () => {
+  const src = readFileSync(join(SRC, 'index.js'), 'utf8')
+    .replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+  assert.match(src, /r\.tries < CBTSESS\.MAX_TRIES/, 'ההודעה אינה מבחינה בין השניים');
+  assert.match(src, /יסומן כנשמט/, 'דילוג מוצג כהתקדמות');
+});
+
+test('סשן בלי AI אומר זאת בפתיחה', () => {
+  // `sessionMode` נכתב בדיוק בשביל זה ולא נקרא מ-src בכלל.
+  const src = readFileSync(join(SRC, 'index.js'), 'utf8')
+    .replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+  assert.match(src, /sessionMode\(/, 'מנגנון היושר אינו מחווט');
+  assert.match(src, /smode/, 'התוצאה אינה מוצגת');
 });
 
 test('הערך שנקלט מוזן ל-state הקבוע ולא רק לסשן', async () => {

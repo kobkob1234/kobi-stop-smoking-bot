@@ -73,6 +73,45 @@ export function migrateCbt(cbt) {
  * שום שדה טקסט חופשי אינו עובר לכאן חוץ מטריגרים, שהם קצרים, נבחרים
  * במפורש, והם **הדבר היחיד שבלעדיו כלי ההתמודדות מייצר שאלה מופשטת**.
  */
+/**
+ * רצף הימים הנקיים בפועל — נספר אחורה עד המעידה האחרונה.
+ *
+ * ═══ למה זה לא `plan.clean` ═══
+ *
+ * `plan.js` מגדיר `clean: i` כאינדקס היום בתוכנית. הוא **אינו מתאפס
+ * במעידה** ואינו קורא `slips` בכלל, כלומר הוא ימי לוח מאז הגמילה.
+ * הוא הוצג כ"ימים נקיים רצופים", ובאותה נשימה תחת הכותרת "מה שהמערכת
+ * רואה, ולא מה שנזכר" — כלומר הכלי שכל תפקידו אימות אובייקטיבי הציג
+ * מספר חסר ערך אימותי. באותו סשן `slips7` העלה את "אף לא שאיפה אחת"
+ * לעדיפות 95, והמערכת אמרה את שני הדברים יחד.
+ *
+ * **יום בלי רשומה אינו שובר את הרצף** — היעדר דיווח אינו מעידה.
+ */
+export function cleanStreak(days, fallback = 0) {
+  if (!Array.isArray(days) || !days.length) return fallback;
+  let n = 0;
+  for (const d of days) {                 // days: החדש ראשון
+    if ((d?.slips || 0) > 0) return n;    // מעידה — הרצף נשבר כאן
+    n += 1;
+  }
+  // לא נמצאה מעידה בחלון כולו. החלון הוא 14 יום, והרצף עשוי להיות ארוך
+  // ממנו — אז נופלים לספירת התוכנית. **היעדר ראיה בחלון אינו ראיה
+  // להיעדר רצף**, ולקצץ ל-14 היה מדווח חסר על מי שנקי חודשיים.
+  return Math.max(n, fallback);
+}
+
+/**
+ * כמה מ-7 הימים האחרונים בכלל תועדו.
+ *
+ * בלי המכנה הזה יום שלא תועד תורם 0 לסכום, ולכן מי שתיעד 3 ימים ביעד
+ * מקבל "2.6 מנות ליום מול יעד 6 — תת-שימוש הוא הכשל הקלאסי של NRT".
+ * הקוד כבר עושה את זה נכון בדוח לשותפה; כאן זה נעדר.
+ */
+export const COVERAGE_MIN = 5;
+const logged = d => !!(d && (d.gum || d.patch || d.waves || d.slips || d.mood ||
+                             d.journal || d.win || d.mine || d.gumMissed ||
+                             d.mDone || d.eDone || d.planning || d.enroute));
+
 export function toolState(cbt, days, plan, iso) {
   const last7 = days.slice(0, 7);
   const sum = k => last7.reduce((t, d) => t + (d[k] || 0), 0);
@@ -84,7 +123,9 @@ export function toolState(cbt, days, plan, iso) {
   return {
     iso,
     dayNum: Math.max(0, diffDays(QUIT, iso) + 1),
-    cleanDays: plan?.clean ?? plan?.cleanDays ?? 0,
+    cleanDays: cleanStreak(days, plan?.clean ?? plan?.cleanDays ?? 0),
+    // כמה ימים מתוך 7 בכלל תועדו. כל טענת היענות למטה תלויה בזה.
+    coverage: last7.filter(logged).length,
     gum7: sum('gum'),
     gumTarget: plan?.gumTarget ?? 0,
     patchDays7: last7.filter(d => d.patch).length,
@@ -139,6 +180,19 @@ export function recordBct(cbt, bct, value = null) {
     },
   };
   return applyCapture(out, bct, value);
+}
+
+/**
+ * הסרת כלי מהצ׳קליסט **בלי לסמן אותו כבוצע**.
+ *
+ * זה ההבדל בין "דילגנו" לבין "עשינו". הגרסה הראשונה של הדילוג קראה
+ * ל-`recordBct`, ולכן הכלי נכנס ל-`done` ו-`fidelity` דיווח 100% על
+ * סשן שהמודל לא ענה בו כלום — בזמן שההודעה למשתמש אמרה "יסומן כנשמט".
+ */
+export function skipBct(cbt, bct) {
+  if (!cbt.active) return cbt;
+  return { ...cbt, active: { ...cbt.active,
+    remaining: cbt.active.remaining.filter(b => b !== bct) } };
 }
 
 /**

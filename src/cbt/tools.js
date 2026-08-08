@@ -28,6 +28,7 @@
 // ==========================================================================
 
 import { BCT } from './protocol.js';
+import { COVERAGE_MIN } from './state.js';
 
 const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
 
@@ -39,7 +40,7 @@ const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
  * יכולת על פני פרטיות, ודווקא לכן שווה לצמצם את מה שיוצא.
  */
 export const EMPTY_STATE = {
-  iso: null, dayNum: 0, cleanDays: 0,
+  iso: null, dayNum: 0, cleanDays: 0, coverage: 0,
   gum7: 0, gumTarget: 0, patchDays7: 0,
   mood: null, fatigue: null, waves7: 0, slips7: 0,
   triggers: [], pastAttempts: [], confidence: null,
@@ -59,7 +60,8 @@ export const TOOLS = [
     appliesWhen: s => s.dayNum > 0,
     priority: () => 90,
     run: s => ({
-      text: `יום ${s.dayNum}. ${s.cleanDays} ימים נקיים רצופים.`,
+      text: `יום ${s.dayNum}. ${s.cleanDays} ימים נקיים רצופים.`
+            + (s.coverage < COVERAGE_MIN ? ` <i>(${s.coverage}/7 ימים תועדו)</i>` : ''),
       ask: 'איך היה השבוע — במילה או שתיים?',
       expects: 'free',
     }),
@@ -76,7 +78,10 @@ export const TOOLS = [
     run: s => ({
       text: [
         `<b>מה שהמערכת רואה, ולא מה שנזכר:</b>`,
-        `· ${s.cleanDays} ימים נקיים`,
+        `· ${s.cleanDays} ימים נקיים רצופים`,
+        // **המכנה נאמר.** בלי זה "מדבקה 3/7" נקרא כאי-היענות, גם כשרק
+        // שלושה ימים תועדו בכלל — וזה הכלי שמצהיר שהוא מציג מדידה.
+        `· ${s.coverage} מתוך 7 הימים תועדו${s.coverage < COVERAGE_MIN ? ' — המספרים למטה חלקיים' : ''}`,
         `· מדבקה ב-${s.patchDays7} מתוך 7 הימים`,
         `· ${(s.gum7 / 7).toFixed(1)} מנות מסטיק ליום${s.gumTarget ? ` (יעד ${s.gumTarget})` : ''}`,
       ].join('\n'),

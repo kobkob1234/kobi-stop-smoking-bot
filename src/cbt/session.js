@@ -15,8 +15,18 @@ import * as T from './tools.js';
 import * as S from './state.js';
 import { runTurn, describeOpening, formulate } from './engine.js';
 
-/** כמה תורות סשן אחד יכול לקחת לפני שנעצרים. גדר בטיחות, לא יעד. */
-export const MAX_TURNS = 24;
+/**
+ * כמה פעמים מנסים כלי שהמודל נכשל עליו לפני שמוותרים.
+ *
+ * שתי דרישות מתנגשות: כשל חולף לא אמור לשרוף פריט צ׳קליסט, וכשל קבוע
+ * לא אמור לתקוע את הסשן על אותה שאלה לנצח.
+ */
+export const MAX_TRIES = 2;
+
+/** מונה ניסיונות לכלי — בתוך `active`, ולכן נמחק עם סגירת הסשן */
+const withTry = (cbt, id, n) => (cbt.active
+  ? { ...cbt, active: { ...cbt.active, tries: { ...(cbt.active.tries || {}), [id]: n } } }
+  : cbt);
 
 /** פתיחה: מה להגיד כשהסשן מתחיל */
 export function openSession(cbt, iso) {
@@ -61,11 +71,34 @@ export async function runStep(cbt, tool, state, userText, { call, retrieve = nul
     opening: S.openingContext(cbt, state.iso),
     formulation: S.latestFormulation(cbt),
   });
-  // עצירת בטיחות אינה תשובה: רישום הכלי כאן היה מסמן אותו כבוצע
-  // ומדלג עליו כשחוזרים לסשן.
-  const next = r.mode === 'halt' ? cbt : S.recordBct(cbt, tool.id, r.captured || null);
-  return { cbt: next, reply: r.text, mode: r.mode, captured: r.captured || null,
-           sources: r.sources || [], trace: r.trace || [] };
+  // ═══ מה נחשב "הכלי בוצע" ═══
+  //
+  //  `halt`   — עצירת בטיחות. לא תשובה, ולכן לא נרשם.
+  //  `failed` — המודל לא החזיר ניסוח. הפריט נרשם כבוצע ו-`fidelity`
+  //             דיווח 100% על סשן שלא נאמר בו דבר: מפתח מבוטל ⇒ שבע
+  //             הודעות "לא הצלחתי לנסח תגובה" ⇒ "נאמנות 100%".
+  //
+  // **אבל לא לולאה.** אי-רישום לבדו מחזיר את אותו כלי לנצח כשהמודל
+  // מושבת. לכן נספרים ניסיונות, ואחרי `MAX_TRIES` הכלי מסומן כבוצע
+  // עם `partial` — כלומר מדולג ביודעין ולא מוסתר.
+  const tries = (cbt.active?.tries?.[tool.id] || 0) + 1;
+  let next;
+  if (r.mode === 'halt') {
+    next = cbt;                                  // עצירת בטיחות — כלום לא זז
+  } else if (r.mode === 'failed') {
+    // ניסיון נוסף, ואחרי `MAX_TRIES` **מדלגים בלי לסמן כבוצע** — אחרת
+    // `fidelity` סופר אותו כהושלם וההודעה "יסומן כנשמט" היא שקר.
+    next = tries < MAX_TRIES
+      ? withTry(cbt, tool.id, tries)
+      : S.skipBct(withTry(cbt, tool.id, tries), tool.id);
+  } else {
+    next = S.recordBct(cbt, tool.id, r.captured || null);
+  }
+  // `revised`/`verified`/`kind` חושבו במנוע ונזרקו כאן — כלומר הביקורת
+  // השנייה ו-שלוש מארבע קטגוריות ה-triage היו קריאות מודל בלי צרכן.
+  return { cbt: next, reply: r.text, mode: r.mode, tries, captured: r.captured || null,
+           sources: r.sources || [], trace: r.trace || [],
+           revised: !!r.revised, verified: r.verified !== false, kind: r.kind || null };
 }
 
 /**
@@ -91,5 +124,17 @@ export async function closeSession(cbt, state, { call = null, turns = [] } = {})
   return { cbt: out, fidelity: fid, formulation: pattern, id: sess.id };
 }
 
-/** האם עברנו את גדר הבטיחות */
-export const exhausted = turns => turns.length >= MAX_TURNS;
+/**
+ * גדר הבטיחות של אורך הסשן.
+ *
+ * נספר מול `captured`, שהוא אובייקט לפי מזהה כלי וחסום בגודל הצ׳קליסט
+ * (6–8) — כלומר 24 היה בלתי-מושג והגדר מעולם לא יכלה לירות. עכשיו
+ * נספרים גם הניסיונות החוזרים, שהם המקרה היחיד שבו תור אינו מקדם.
+ */
+export const exhausted = (turns, cbt = null) => {
+  const retries = Object.values(cbt?.active?.tries || {}).reduce((t, n) => t + n, 0);
+  return turns.length + retries >= MAX_TURNS;
+};
+
+/** כמה תורות סשן אחד יכול לקחת לפני שנעצרים */
+export const MAX_TURNS = 24;

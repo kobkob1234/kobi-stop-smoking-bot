@@ -441,24 +441,66 @@ export async function runTurn({ tool, state, userText, call, retrieve = null,
     formulation ? `הדפוס שזוהה: "${formulation}"` : '',
     '', `התשובה שנכתבה: "${candidate}"`, '',
     ...CRITIQUE_RULES.map(r => `· ${r}`),
-    '', 'אם היא עוברת — החזר OK בלבד. אחרת — החזר גרסה מתוקנת בלבד.',
+    '',
+    // ═══ חוזה פלט, לא "החזר גרסה מתוקנת" ═══
+    //
+    // הניסוח הקודם הרשה כל מחרוזת, והקוד לקח כל דבר שאינו "OK" כתשובת
+    // המטפל. מודל שענה על הכללים בפרוזה — "התשובה גנרית, היא לא
+    // מתייחסת למה שהוא אמר" — שלח את הביקורת **כלשונה** לאדם בגמילה.
+    'החזר בדיוק אחת משתי הצורות:',
+    '  OK',
+    '  FIX: <התשובה המתוקנת, כפי שתישלח אליו>',
+    'בלי הסבר, בלי ניתוח, ובלי לדבר על התשובה בגוף שלישי.',
   ].join('\n');
 
-  const pass = v => v && /^OK\b/i.test(v.trim());
-  const first = await step('critique', critiquePrompt(draft));
-  if (pass(first)) return { text: draft, revised: false, captured, kind, sources, trace, mode: 'responsive' };
-  if (!first) return { text: draft, revised: false, captured, kind, sources, trace, mode: 'responsive' };
+  const keep = (t) => ({ text: t, revised: false, verified: true,
+                         captured, kind, sources, trace, mode: 'responsive' });
 
-  // **התיקון מאומת ולא נלקח בעיוורון.** ביקורת שמייצרת גרסה גרועה
-  // יותר הייתה נשלחת כמו שהיא, כי איש לא בדק אותה.
-  const second = await step('critique', critiquePrompt(first));
-  return {
-    text: first,
-    revised: true,
-    verified: pass(second),
-    captured, kind, sources, trace, mode: 'responsive',
-  };
+  const first = readCritique(draft, await step('critique', critiquePrompt(draft)));
+  if (first.ok || !first.fix) return keep(draft);
+
+  // ═══ הסיבוב השני באמת מכריע ═══
+  //
+  // הגרסה הקודמת החזירה `text: first` בין אם הסיבוב השני אישר ובין אם
+  // לא, ורק חישבה `verified` — ש-`session.js` לא העביר הלאה. כלומר
+  // קריאת מודל שלמה נשרפה על דגל שאיש לא קרא, והתיקון נלקח בעיוורון
+  // בדיוק כפי שההערה טענה שאינו.
+  const second = readCritique(first.fix, await step('critique', critiquePrompt(first.fix)));
+  if (second.ok) return { ...keep(first.fix), revised: true };
+  // הסיבוב השני הציע תיקון משלו — הוא ראה גם את הטיוטה וגם את התיקון,
+  // ולכן הוא ההצעה המעודכנת ביותר. אם גם הוא פסול, חוזרים לטיוטה:
+  // הטיוטה לפחות נכתבה כתשובה.
+  if (second.fix) return { ...keep(second.fix), revised: true, verified: false };
+  return { ...keep(draft), verified: false };
 }
+
+/**
+ * פענוח תשובת הביקורת לפי החוזה `OK` / `FIX: <טקסט>`.
+ *
+ * **כל דבר אחר נדחה.** הקוד הקודם בדק רק `/^OK\b/i` ולקח כל מחרוזת
+ * אחרת כתשובת המטפל — כולל ביקורת בפרוזה.
+ *
+ * שתי בדיקות שפיות מעבר לחוזה, כי מודל לא תמיד מציית לפורמט:
+ *   · אורך — תשובת מטפל היא עד שלושה משפטים ושאלה, לא פסקה.
+ *   · מטא-שפה — "התשובה", "גנרית", "היא לא מתייחסת" הן דיבור **על**
+ *     התשובה, לא התשובה.
+ */
+const META_TALK = /\b(התשובה|התגובה|הניסוח)\b|גנרי|מתייחסת|עוברת את|יש לתקן|הכלל ה/;
+
+export function readCritique(candidate, raw) {
+  const t = String(raw ?? '').trim();
+  if (!t) return { ok: false, fix: null };            // כשל מודל — משאירים טיוטה
+  if (/^OK\b/i.test(t)) return { ok: true, fix: null };
+  const m = t.match(/^FIX:\s*([\s\S]+)$/i);
+  const fix = (m ? m[1] : t).trim();
+  if (!fix || fix === candidate) return { ok: true, fix: null };
+  if (fix.length > CRITIQUE_MAX_CHARS) return { ok: false, fix: null };
+  if (META_TALK.test(fix)) return { ok: false, fix: null };
+  return { ok: false, fix };
+}
+
+/** תשובת מטפל היא עד שלושה משפטים ושאלה. מעבר לזה — לא תשובה. */
+export const CRITIQUE_MAX_CHARS = 600;
 
 /**
  * סיווג בטוח-בברירת-מחדל.

@@ -14,6 +14,8 @@ import * as S from '../src/cbt/state.js';
 import * as P from '../src/cbt/protocol.js';
 import { makeKV, makeEnv, day } from './helpers.mjs';
 import { getMeta, putMeta } from '../src/store.js';
+import * as TOOLS_MOD from '../src/cbt/tools.js';
+const ISO = '2026-08-08';
 
 const run = (steps, iso = '2026-08-07') => {
   let c = S.migrateCbt(null);
@@ -192,4 +194,76 @@ test('הדפוס עולה בפתיחת הסשן', () => {
 test('formulations שרד מיגרציה ממצב ישן', () => {
   const c = S.migrateCbt({ formulation: 'ישן', formulations: null });
   assert.deepEqual(c.formulations, []);
+});
+
+
+// ==========================================================================
+//  מה שהמערכת מציגה כעובדה מדודה
+//
+//  שני מספרים הוצגו תחת הכותרת "מה שהמערכת רואה, ולא מה שנזכר" —
+//  ושניהם לא היו מדידה:
+//    · `cleanDays` היה **ימי לוח** מאז הגמילה. לא התאפס במעידה, ולא
+//      קרא `slips` בכלל, בזמן שבאותו סשן `slips7` העלה את "אף לא
+//      שאיפה אחת" לעדיפות 95.
+//    · לסכומים לא היה מכנה, ולכן יום שלא תועד תרם 0 — ומי שתיעד
+//      שלושה ימים ביעד קיבל "תת-שימוש הוא הכשל הקלאסי של NRT".
+// ==========================================================================
+
+/** יום מלא — `day` כבר תפוס ע"י helpers.mjs */
+const d7 = (o = {}) => ({ gum: 4, patch: true, slips: 0, waves: 0, ...o });
+
+test('רצף נקי נשבר במעידה', () => {
+  const days = [d7(), d7(), d7(), d7({ slips: 1 }), d7(), d7()];
+  assert.equal(S.cleanStreak(days, 30), 3, 'המעידה לא שברה את הרצף');
+  assert.equal(S.cleanStreak([d7({ slips: 1 }), d7()], 30), 0, 'מעידה היום');
+});
+
+test('רצף נקי אינו מוגבל לחלון הנתונים', () => {
+  // 14 ימים בלי מעידה אינם ראיה שהרצף הוא 14 — הוא עשוי להיות ארוך
+  // יותר. קיצוץ לחלון היה מדווח חסר על מי שנקי חודשיים.
+  assert.equal(S.cleanStreak(Array(14).fill(d7()), 60), 60);
+});
+
+test('בלי נתונים — נופלים לספירת התוכנית', () => {
+  assert.equal(S.cleanStreak([], 21), 21);
+  assert.equal(S.cleanStreak(null, 21), 21);
+});
+
+test('`cleanDays` ב-toolState הוא הרצף, לא ימי הלוח', () => {
+  // זו הבדיקה שמונעת חזרה ל-`plan.clean`.
+  const days = [d7(), d7({ slips: 1 }), d7(), d7()];
+  const st = S.toolState(S.migrateCbt(null), days, { clean: 40, gumTarget: 6 }, ISO);
+  assert.equal(st.cleanDays, 1, `קיבלנו ${st.cleanDays} — ימי לוח חזרו`);
+});
+
+test('כיסוי סופר ימים מתועדים בפועל', () => {
+  const days = [d7(), {}, {}, d7(), {}, d7(), {}];
+  const st = S.toolState(S.migrateCbt(null), days, { clean: 10, gumTarget: 6 }, ISO);
+  assert.equal(st.coverage, 3, `כיסוי ${st.coverage} מתוך 3 ימים מתועדים`);
+});
+
+test('יום ריק אינו נספר ככיסוי, יום עם מצב רוח בלבד כן', () => {
+  const st = S.toolState(S.migrateCbt(null),
+    [{ mood: 3 }, {}, { gum: 0, patch: false }], { clean: 5 }, ISO);
+  assert.equal(st.coverage, 1, 'ספירת הכיסוי אינה מבחינה בין ריק לתועד');
+});
+
+test('הכלים אומרים את המכנה כשהכיסוי חלקי', () => {
+  const T = TOOLS_MOD;
+  const low = { ...T.EMPTY_STATE, dayNum: 20, cleanDays: 20, coverage: 3,
+                gum7: 12, gumTarget: 6, patchDays7: 3, triggers: [] };
+  const obj = T.byId('objective-verification').run(low);
+  assert.match(obj.text, /3 מתוך 7/, 'הכלי אינו אומר כמה ימים תועדו');
+  assert.match(obj.text, /חלקיים/, 'לא נאמר שהמספרים חלקיים');
+
+  const full = { ...low, coverage: 7 };
+  assert.doesNotMatch(T.byId('objective-verification').run(full).text, /חלקיים/,
+    'אזהרת כיסוי מוצגת גם כשהכיסוי מלא');
+});
+
+test('בדיקת ההתקדמות מסמנת כיסוי חלקי', () => {
+  const T = TOOLS_MOD;
+  const low = { ...T.EMPTY_STATE, dayNum: 20, cleanDays: 20, coverage: 2 };
+  assert.match(T.byId('review-progress').run(low).text, /2\/7/,
+    'לא נאמר שהכיסוי חלקי');
 });

@@ -263,10 +263,91 @@ test('תיקון מהביקורת מאומת ולא נלקח בעיוורון', 
   assert.equal(r.verified, true);
 });
 
-test('תיקון שנכשל שוב מסומן כלא-מאומת', async () => {
-  const call = async (role) => (role === 'critique' ? 'עוד גרסה' : role === 'triage' ? 'answer' : 'x');
+// ==========================================================================
+//  הביקורת — החוזה, ומה שקורה כשהוא מופר
+//
+//  הגרסה הקודמת בדקה `/^OK\b/i` בלבד ולקחה כל מחרוזת אחרת כתשובת
+//  המטפל. מודל שענה על הכללים בפרוזה שלח את **הביקורת** לאדם בגמילה.
+//  והסיבוב השני לא הכריע כלל: `text: first` הוחזר בין אם אישר ובין אם
+//  לא, ורק `verified` חושב — ו-`session.js` זרק אותו.
+// ==========================================================================
+
+test('פרוזה של ביקורת אינה הופכת לתשובת המטפל', async () => {
+  const meta = 'התשובה גנרית, היא לא מתייחסת למה שהוא אמר';
+  const call = async (role) => (role === 'critique' ? meta
+    : role === 'triage' ? 'answer' : 'טיוטה. מה קרה אז?');
   const r = await E.runTurn({ tool: T.byId(P.BCT.MEDS), state: RICH, call, userText: 'x' });
-  assert.equal(r.verified, false, 'גרסה לא מאומתת מוצגת כמאומתת');
+  assert.notEqual(r.text, meta, 'הביקורת נשלחה למשתמש');
+  assert.equal(r.text, 'טיוטה. מה קרה אז?', 'לא נפלנו חזרה לטיוטה');
+});
+
+test('תיקון ארוך מדי נדחה — תשובת מטפל אינה פסקה', async () => {
+  const long = 'FIX: ' + 'מילה '.repeat(300);
+  const call = async (role) => (role === 'critique' ? long
+    : role === 'triage' ? 'answer' : 'טיוטה קצרה?');
+  const r = await E.runTurn({ tool: T.byId(P.BCT.MEDS), state: RICH, call, userText: 'x' });
+  assert.equal(r.text, 'טיוטה קצרה?', 'תיקון באורך פסקה התקבל');
+});
+
+test('הסיבוב השני מכריע ולא רק מחשב דגל', async () => {
+  let n = 0;
+  const call = async (role) => {
+    if (role === 'triage') return 'answer';
+    if (role !== 'critique') return 'טיוטה?';
+    return ++n === 1 ? 'FIX: גרסה שנייה?' : 'FIX: גרסה שלישית?';
+  };
+  const r = await E.runTurn({ tool: T.byId(P.BCT.MEDS), state: RICH, call, userText: 'x' });
+  assert.equal(r.text, 'גרסה שלישית?', 'הצעת הסיבוב השני נזרקה');
+  assert.equal(r.verified, false, 'גרסה שלא אושרה סומנה כמאומתת');
+});
+
+test('סיבוב שני שמאשר — הגרסה המתוקנת נשלחת ומסומנת מאומתת', async () => {
+  let n = 0;
+  const call = async (role) => {
+    if (role === 'triage') return 'answer';
+    if (role !== 'critique') return 'טיוטה?';
+    return ++n === 1 ? 'FIX: גרסה מתוקנת?' : 'OK';
+  };
+  const r = await E.runTurn({ tool: T.byId(P.BCT.MEDS), state: RICH, call, userText: 'x' });
+  assert.equal(r.text, 'גרסה מתוקנת?');
+  assert.equal(r.revised, true);
+  assert.equal(r.verified, true);
+});
+
+test('ביקורת שנכשלה משאירה את הטיוטה', async () => {
+  const call = async (role) => (role === 'critique' ? null
+    : role === 'triage' ? 'answer' : 'טיוטה?');
+  const r = await E.runTurn({ tool: T.byId(P.BCT.MEDS), state: RICH, call, userText: 'x' });
+  assert.equal(r.text, 'טיוטה?');
+});
+
+test('הפרומפט מכתיב את החוזה OK / FIX', async () => {
+  const { call, seen } = fake({ triage: 'answer', critique: 'OK' });
+  await E.runTurn({ tool: T.byId(P.BCT.MEDS), state: RICH, call, userText: 'x' });
+  const c = seen.find(x => x.role === 'critique');
+  // **דורשים את המשפט שמכתיב את הצורה**, לא רק את המחרוזת "FIX:" —
+  // מוטציה שהסירה את ההכתבה השאירה את שורות הדוגמה ועברה.
+  assert.match(c.prompt, /בדיוק אחת משתי הצורות/, 'הפרומפט אינו מכתיב צורת פלט');
+  assert.match(c.prompt, /^\s*OK$/m, 'צורת OK אינה מוגדרת');
+  assert.match(c.prompt, /FIX: </, 'צורת FIX אינה מוגדרת');
+  assert.match(c.prompt, /גוף שלישי/, 'לא נאסר לדבר על התשובה');
+});
+
+test('session.js מעביר את דגלי הביקורת הלאה', async () => {
+  const SESS = await import('../src/cbt/session.js');
+  const S = await import('../src/cbt/state.js');
+  const o = SESS.openSession(S.migrateCbt(null), '2026-08-07');
+  const tool = SESS.nextStep(o.cbt, RICH);
+  let n = 0;
+  const call = async (role) => {
+    if (role === 'triage') return 'answer';
+    if (role !== 'critique') return 'טיוטה?';
+    return ++n === 1 ? 'FIX: אחרת?' : 'FIX: שלישית?';
+  };
+  const r = await SESS.runStep(o.cbt, tool, RICH, 'x', { call });
+  assert.equal(r.revised, true, 'revised נזרק');
+  assert.equal(r.verified, false, 'verified נזרק');
+  assert.ok('kind' in r, 'kind נזרק');
 });
 
 test('בחירת מקטעים מקבלת חשיבה — היא משימת הסקה', () => {
