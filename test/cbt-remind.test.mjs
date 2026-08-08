@@ -124,3 +124,32 @@ test('אין יותר עותק נפרד של מצב ה-CBT', () => {
 test('cbt קיים ב-DEFAULT_META', () => {
   assert.ok('cbt' in DEFAULT_META, 'מפתח חסר — מיגרציה תיפול');
 });
+
+
+test('אין תזכורת כשהסשן הקודם רץ לפני פחות מהמרווח', async () => {
+  // התזכורת ירתה על סשן שאי אפשר לפתוח: `dueSession` חוסם לפי מרווח,
+  // והתזכורת לא העבירה `lastISO` בכלל — הודעה יומית על משהו שלחיצה
+  // עליו מחזירה "אין סשן שאמור לרוץ היום".
+  //
+  // התרחיש חייב להיות כזה שהסשן **כן** הגיע לתאריך שלו ורק המרווח
+  // חוסם אותו — אחרת הבדיקה עוברת מהסיבה הלא-נכונה.
+  const P = await import('../src/cbt/protocol.js');
+  const cbt = {
+    sessionsDone: ['intake', 'wk3'], startISO: '2026-08-07',
+    notes: [{ id: 'wk3', iso: '2026-08-21', score: 1, missed: [], bcts: [] }],
+  };
+  // wk4 מגיע ב-22.8; הסשן הקודם רץ ב-21.8 — יומיים בלבד.
+  assert.ok(P.dueSession('2026-08-23', cbt.sessionsDone, cbt.startISO),
+    'התרחיש שגוי: wk4 אינו זמין בלי המרווח');
+  assert.equal(P.dueSession('2026-08-23', cbt.sessionsDone, cbt.startISO, '2026-08-21'), null,
+    'התרחיש שגוי: המרווח אינו חוסם');
+
+  assert.equal(cbtRemindDue(at(21), meta({ cbt }), '2026-08-23', P.dueSession), null,
+    'תזכורת על סשן שהמרווח חוסם');
+
+  // ואחרי שהמרווח עבר — כן מזכיר. 29.8 הוא שבוע אחרי היעד של wk4,
+  // כלומר גם המרווח וגם הנסיגה השבועית פתוחים.
+  assert.ok(cbtRemindDue(at(21), meta({ cbt }), '2026-08-29', P.dueSession),
+    'אין תזכורת גם אחרי שהמרווח עבר');
+});
+

@@ -23,19 +23,26 @@ import { runTurn, describeOpening, formulate } from './engine.js';
  */
 export const MAX_TRIES = 2;
 
+/** כמה עצירות בטיחות על אותו כלי לפני שמדלגים עליו */
+export const MAX_HALTS = 2;
+
 /** מונה ניסיונות לכלי — בתוך `active`, ולכן נמחק עם סגירת הסשן */
 const withTry = (cbt, id, n) => (cbt.active
   ? { ...cbt, active: { ...cbt.active, tries: { ...(cbt.active.tries || {}), [id]: n } } }
   : cbt);
 
 /** פתיחה: מה להגיד כשהסשן מתחיל */
+/** התאריך שבו רץ הסשן האחרון בפועל — עוגן המרווח ועוגן התחזוקה */
+export const lastSessionISO = cbt =>
+  (cbt.notes && cbt.notes.length ? cbt.notes[cbt.notes.length - 1].iso : null);
+
 export function openSession(cbt, iso) {
   if (cbt.active) return { error: 'active', id: cbt.active.id };
-  const due = P.dueSession(iso, cbt.sessionsDone, cbt.startISO || iso);
+  const last = lastSessionISO(cbt);
+  const due = P.dueSession(iso, cbt.sessionsDone, cbt.startISO || iso, last);
   if (!due) {
-    const next = P.scheduleFor(cbt.startISO || iso)
-      .find(s => !cbt.sessionsDone.includes(s.id));
-    return { error: 'none-due', nextISO: next ? next.dueISO : null };
+    return { error: 'none-due',
+             nextISO: P.nextDueISO(iso, cbt.sessionsDone, cbt.startISO || iso, last) };
   }
   const out = S.startSession(cbt, due.id, iso);
   return {
@@ -84,7 +91,14 @@ export async function runStep(cbt, tool, state, userText, { call, retrieve = nul
   const tries = (cbt.active?.tries?.[tool.id] || 0) + 1;
   let next;
   if (r.mode === 'halt') {
-    next = cbt;                                  // עצירת בטיחות — כלום לא זז
+    // ═══ עצירה חוזרת על אותו כלי אינה עצירה — היא לולאה ═══
+    //
+    // הכלי בצדק אינו נרשם, ולכן `/טיפול` מחזיר **את אותה שאלה**, אותה
+    // תשובה, ואותו סיווג. אין מוצא, והפעולה היחידה שהוצעה בהודעה
+    // מחזירה ללולאה. אחרי `MAX_HALTS` הכלי מדולג — בלי להיספר כבוצע.
+    next = tries < MAX_HALTS
+      ? withTry(cbt, tool.id, tries)
+      : S.skipBct(withTry(cbt, tool.id, tries), tool.id);
   } else if (r.mode === 'failed') {
     // ניסיון נוסף, ואחרי `MAX_TRIES` **מדלגים בלי לסמן כבוצע** — אחרת
     // `fidelity` סופר אותו כהושלם וההודעה "יסומן כנשמט" היא שקר.

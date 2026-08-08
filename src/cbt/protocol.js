@@ -142,8 +142,24 @@ export function scheduleFor(startISO) {
   ];
 }
 
-/** הסשן שאמור לרוץ עכשיו, או null */
-export function dueSession(iso, done = [], startISO = null) {
+/**
+ * מרווח מינימלי בין סשנים.
+ *
+ * בלי זה משתמש שפתח `/טיפול` אחרי חודשיים יכול להריץ **עשרה סשנים
+ * ברצף באותו ערב** — כל אחד נסגר ומיד חושף את הבא. פרוטוקול שכל
+ * הפואנטה שלו היא מרווח שבועי בין מפגשים.
+ */
+export const MIN_GAP_DAYS = 5;
+
+/**
+ * הסשן שאמור לרוץ עכשיו, או null.
+ *
+ * `lastISO` — התאריך שבו רץ הסשן האחרון בפועל. הוא גם אוכף את המרווח
+ * וגם משמש עוגן לתחזוקה, במקום תאריך לוח קבוע שממנו נגזר בק-לוג של
+ * מפגשים שכולם "אמורים לרוץ" בבת אחת.
+ */
+export function dueSession(iso, done = [], startISO = null, lastISO = null) {
+  if (lastISO && diffDays(lastISO, iso) < MIN_GAP_DAYS) return null;
   const sched = scheduleFor(startISO || iso);
   for (const s of sched) {
     if (done.includes(s.id)) continue;
@@ -157,8 +173,11 @@ export function dueSession(iso, done = [], startISO = null) {
   // הראשון במקום שבוע. תחזוקה שרצה יום אחרי סשן המעקב אינה תחזוקה.
   const maint = byId('maint');
   const lastMaint = done.filter(d => d.startsWith('maint')).length;
-  const anchor = addDaysISO(QUIT, 28);
-  const dueISO = addDaysISO(anchor, (lastMaint + 1) * maint.everyDays);
+  // **העוגן הוא הסשן האחרון בפועל**, לא תאריך לוח. עוגן קבוע ייצר
+  // בק-לוג: אחרי הפסקה של חודש, כל מפגש שבועי שפוספס היה "אמור לרוץ"
+  // רטרואקטיבית, והשלמת אחד חשפה מיד את הבא.
+  const anchor = lastISO || addDaysISO(QUIT, 28);
+  const dueISO = addDaysISO(anchor, maint.everyDays);
   return iso >= dueISO ? { ...maint, id: `maint:${lastMaint}`, dueISO } : null;
 }
 
@@ -194,3 +213,22 @@ export function fidelity(session, doneBcts = []) {
 /** כל מזהי ה-BCT שהפרוטוקול מבקש — מקור האמת ל-tools.js */
 export const requiredBcts = () =>
   [...new Set(SESSIONS.flatMap(s => s.checklist.map(c => c.bct)))];
+
+
+/**
+ * מתי הסשן הבא, גם כשאין סשן להיום.
+ *
+ * `session.js` חישב את זה משלושת הקבועים בלבד, ולכן אחרי `wk4` תמיד
+ * החזיר `null` — והבוט אמר "אין סשן שאמור לרוץ היום" בלי תאריך, לנצח,
+ * בזמן שהתחזוקה היא כל השלב הזה של התוכנית.
+ */
+export function nextDueISO(iso, done = [], startISO = null, lastISO = null) {
+  const gapUntil = lastISO ? addDaysISO(lastISO, MIN_GAP_DAYS) : null;
+  const later = d => (gapUntil && gapUntil > d ? gapUntil : d);
+  for (const s of scheduleFor(startISO || iso)) {
+    if (!done.includes(s.id)) return later(s.dueISO);
+  }
+  const maint = byId('maint');
+  const anchor = lastISO || addDaysISO(QUIT, 28);
+  return later(addDaysISO(anchor, maint.everyDays));
+}

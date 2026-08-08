@@ -156,24 +156,62 @@ test('אין תאריך קשיח בפרוטוקול — הכול נגזר מ-pla
 //  תחזוקה לא מתחילה ביום של wk4
 // ==========================================================================
 
-test('אין שני סשנים על אותו תאריך', () => {
-  // העוגן של התחזוקה הוא יום ה-wk4, ולכן `weeks >= lastMaint` הפך את
-  // maint:0 לזמין באותו יום. בפועל זה אומר תחזוקה **יום אחרי** סשן
-  // המעקב במקום שבוע — כלומר לא תחזוקה.
+test('אין שני סשנים על אותו תאריך, ויש מרווח מינימלי', () => {
+  // שתי תכונות שנשברו יחד: `maint:0` היה זמין באותו יום כמו `wk4`,
+  // ולא היה בכלל מרווח — משתמש שפתח `/טיפול` אחרי חודשיים יכול היה
+  // להריץ עשרה סשנים ברצף באותו ערב.
   const seen = new Map();
   const done = [];
-  let iso = '2026-08-07';
-  for (let d = 0; d <= 120; d++) {
-    iso = new Date(Date.parse('2026-08-07') + d * 864e5).toISOString().slice(0, 10);
-    const s = C.dueSession(iso, done, '2026-08-07');
+  let last = null;
+  let ran = 0;
+  for (let d = 0; d <= 200; d++) {
+    const iso = new Date(Date.parse('2026-08-07') + d * 864e5).toISOString().slice(0, 10);
+    const s = C.dueSession(iso, done, '2026-08-07', last);
     if (!s) continue;
     assert.ok(!seen.has(s.dueISO),
       `${s.id} ו-${seen.get(s.dueISO)} חולקים את ${s.dueISO}`);
+    if (last) {
+      const gap = Math.round((Date.parse(iso) - Date.parse(last)) / 864e5);
+      assert.ok(gap >= C.MIN_GAP_DAYS, `${s.id} רץ ${gap} ימים אחרי הקודם`);
+    }
     seen.set(s.dueISO, s.id);
     done.push(s.id);
+    last = iso;
+    ran++;
   }
-  assert.ok(done.length >= 8, `רק ${done.length} סשנים — הלוח נשבר`);
+  assert.ok(ran >= 8, `רק ${ran} סשנים — הלוח נשבר`);
 });
+
+test('בק-לוג אינו נפתח בבת אחת', () => {
+  // התרחיש: המשתמש נעלם לחודשיים ופותח /טיפול. כל מפגש שפוספס היה
+  // "אמור לרוץ" רטרואקטיבית, והשלמת אחד חשפה מיד את הבא.
+  const done = [];
+  let last = null;
+  let n = 0;
+  while (n < 12) {
+    const s = C.dueSession('2026-10-15', done, '2026-10-15', last);
+    if (!s) break;
+    done.push(s.id); last = '2026-10-15'; n++;
+  }
+  assert.equal(n, 1, `${n} סשנים נפתחו באותו יום`);
+});
+
+test('nextDueISO מחשב גם תחזוקה', () => {
+  // הוא נגזר משלושת הקבועים בלבד, ולכן אחרי wk4 החזיר null לנצח —
+  // והבוט אמר "אין סשן היום" בלי תאריך, בזמן שהתחזוקה היא כל השלב.
+  const done = ['intake', 'wk3', 'wk4'];
+  const next = C.nextDueISO('2026-08-23', done, '2026-08-07', '2026-08-22');
+  assert.ok(next, 'אין תאריך לסשן הבא אחרי wk4');
+  assert.match(next, /^\d{4}-\d{2}-\d{2}$/);
+  assert.ok(next > '2026-08-22', 'התאריך הבא אינו אחרי הסשן האחרון');
+});
+
+test('המרווח נאכף גם על התאריך הבא', () => {
+  const next = C.nextDueISO('2026-08-16', ['intake'], '2026-08-07', '2026-08-15');
+  const gap = Math.round((Date.parse(next) - Date.parse('2026-08-15')) / 864e5);
+  assert.ok(gap >= C.MIN_GAP_DAYS, `הבא בעוד ${gap} ימים בלבד`);
+});
+
 
 test('התחזוקה הראשונה שבוע אחרי wk4', () => {
   const done = ['intake', 'wk3', 'wk4'];
@@ -185,4 +223,29 @@ test('התחזוקה הראשונה שבוע אחרי wk4', () => {
     'תחזוקה זמינה יום אחרי wk4');
   const weekAfter = new Date(Date.parse(wk4Due) + 7 * 864e5).toISOString().slice(0, 10);
   assert.equal(C.dueSession(weekAfter, done, '2026-08-07').id, 'maint:0');
+});
+
+
+test('התחזוקה נגזרת מהסשן האחרון בפועל, לא מתאריך לוח', () => {
+  // עוגן קבוע פירושו שמי שאיחר בשבועיים מקבל את המפגש הבא "מיד",
+  // כי התאריך שלו כבר עבר. עוגן אמיתי נותן שבוע **מהמפגש שהיה**.
+  const done = ['intake', 'wk3', 'wk4', 'maint:0'];
+  const ranLate = '2026-10-01';                 // התחזוקה רצה באיחור
+  // יום אחרי — עדיין לא
+  assert.equal(C.dueSession('2026-10-02', done, '2026-08-07', ranLate), null,
+    'מפגש נוסף יום אחרי הקודם');
+  // שישה ימים — עדיין לא (everyDays = 7)
+  assert.equal(C.dueSession('2026-10-07', done, '2026-08-07', ranLate), null,
+    'מפגש נוסף לפני שבוע');
+  // שבוע בדיוק — כן
+  const due = C.dueSession('2026-10-08', done, '2026-08-07', ranLate);
+  assert.ok(due, 'אין מפגש שבוע אחרי הקודם');
+  assert.equal(due.dueISO, '2026-10-08',
+    `העוגן הוא ${due.dueISO} ולא תאריך הסשן שרץ`);
+});
+
+test('nextDueISO לתחזוקה נמדד מהסשן האחרון', () => {
+  const done = ['intake', 'wk3', 'wk4', 'maint:0'];
+  assert.equal(C.nextDueISO('2026-10-02', done, '2026-08-07', '2026-10-01'),
+    '2026-10-08', 'התאריך הבא אינו שבוע מהסשן שרץ');
 });

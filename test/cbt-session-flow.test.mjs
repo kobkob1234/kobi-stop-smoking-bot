@@ -14,6 +14,8 @@ import * as SESS from '../src/cbt/session.js';
 import * as S from '../src/cbt/state.js';
 import * as P from '../src/cbt/protocol.js';
 import { ROLES } from '../src/cbt/engine.js';
+import { TOOLS } from '../src/cbt/tools.js';
+import * as E from '../src/cbt/engine.js';
 
 const SRC = join(dirname(fileURLToPath(import.meta.url)), '..', 'src');
 const ISO = '2026-08-07';
@@ -21,6 +23,8 @@ const ST = { iso: ISO, dayNum: 14, cleanDays: 14, gum7: 60, gumTarget: 9,
              patchDays7: 7, mood: 3, fatigue: 2, waves7: 5, slips7: 0,
              triggers: [], pastAttempts: [], confidence: null,
              homework: null, sessionsDone: [], taperStarted: true };
+/** מצב עשיר — כלים שמייצרים HTML צריכים טריגר וכיסוי */
+const RICH_ST = { ...ST, triggers: ['ערב מול הטלוויזיה'], coverage: 7 };
 
 const fresh = () => S.migrateCbt(null);
 /** מודל מזויף: עונה משהו סביר לכל תפקיד */
@@ -367,4 +371,90 @@ test('הבוט מציג את ההיסטוריה, לא רק את הציון הא�
   assert.ok(i > 0);
   assert.match(src.slice(i, i + 600), /fidelityLine/,
     'אין סשן היום ⇒ אין שום משוב על התהליך');
+});
+
+
+// ==========================================================================
+//  מה שהמשתמש באמת רואה
+//
+//  שלושה ליקויים שכולם על המסך ואף אחד מהם לא היה מכוסה:
+//    · כלי הצהרתי החזיר את הטקסט של עצמו כתשובה, אחרי שכבר הוצג —
+//      הדפסה כפולה בכל סשן.
+//    · `tools.js` כותב `<b>` בכוונה, וכל אתר רינדור עטף ב-`esc()`,
+//      ולכן טלגרם הציג את התגיות כתווים.
+//    · עצירת בטיחות החזירה את אותו כלי לנצח.
+// ==========================================================================
+
+test('כלי הצהרתי אינו מייצר תשובה', async () => {
+  for (const id of TOOLS.filter(t => t.mode !== 'responsive').map(t => t.id)) {
+    const r = await SESS.runStep(SESS.openSession(fresh(), ISO).cbt,
+      TOOLS.find(t => t.id === id), ST, 'x', { call: fake() });
+    assert.equal(r.reply, null, `${id} מחזיר תשובה — הדפסה כפולה`);
+  }
+});
+
+test('טקסט כלי אינו עובר escaping בשום אתר רינדור', () => {
+  const src = readFileSync(join(SRC, 'index.js'), 'utf8')
+    .replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+  // `a.text` הוא טקסט כלי; `r.reply` הוא תשובת מודל.
+  assert.doesNotMatch(src, /esc\(a\.text\)/, 'טקסט כלי עובר escaping');
+  assert.match(src, /toolText\(a\.text\)/, 'טקסט כלי אינו עובר דרך toolText');
+  assert.match(src, /esc\(r\.reply\)/, 'תשובת מודל אינה עוברת escaping');
+});
+
+test('הכלים אכן כותבים HTML — אחרת הבדיקה שומרת על כלום', () => {
+  const withHtml = TOOLS.filter(t => {
+    try { return /<b>|<i>/.test(t.run(RICH_ST).text || ''); } catch { return false; }
+  });
+  assert.ok(withHtml.length, 'אף כלי לא מייצר HTML — toolText מיותר');
+});
+
+// ---------- עצירת בטיחות ----------
+
+test('הטריאז׳ מסווג לפי המילה הראשונה, לא לפי הכלה', () => {
+  // `includes('distress')` נבדק ראשון, ולכן "This is an answer, not
+  // distress" סווג כמצוקה — ועצר את הסשן על תשובה תמימה.
+  assert.equal(E.classifyTriage('This is an answer, not distress'), 'answer');
+  assert.equal(E.classifyTriage('answer'), 'answer');
+  assert.equal(E.classifyTriage('distress'), 'distress');
+  assert.equal(E.classifyTriage('evasion — he changed the subject'), 'evasion');
+  // לא מוכר — עדיין נוטים לבטוח
+  assert.equal(E.classifyTriage('משהו'), 'distress');
+  assert.equal(E.classifyTriage(''), null);
+});
+
+test('עצירה חוזרת על אותו כלי אינה לולאה', async () => {
+  let cbt = SESS.openSession(fresh(), ISO).cbt;
+  const tool = SESS.nextStep(cbt, ST);
+  const before = cbt.active.remaining.length;
+  for (let i = 0; i < SESS.MAX_HALTS; i++) {
+    const r = await SESS.runStep(cbt, tool, ST, 'x', { call: fake({ triage: 'distress' }) });
+    assert.equal(r.mode, 'halt');
+    cbt = r.cbt;
+  }
+  assert.equal(cbt.active.remaining.length, before - 1,
+    'אותו כלי חוזר לנצח אחרי עצירת בטיחות');
+});
+
+test('עצירה שדולגה אינה נספרת כבוצעה', async () => {
+  let cbt = SESS.openSession(fresh(), ISO).cbt;
+  const tool = SESS.nextStep(cbt, ST);
+  for (let i = 0; i < SESS.MAX_HALTS; i++) {
+    ({ cbt } = await SESS.runStep(cbt, tool, ST, 'x', { call: fake({ triage: 'distress' }) }));
+  }
+  assert.ok(!cbt.active.done.includes(tool.id), 'כלי שדולג נספר כבוצע');
+});
+
+test('הודעת העצירה מציעה מוצא אמיתי', () => {
+  // היא הציעה רק /טיפול — שמחזיר לאותה שאלה ולכן לאותה עצירה.
+  // **מחפשים בתוך ההודעה עצמה**, לא בחלון של 900 תווים שבו `/סיום`
+  // מופיע ממילא בהקשר אחר — הגרסה הראשונה של הבדיקה עברה מוטציה.
+  const src = readFileSync(join(SRC, 'index.js'), 'utf8')
+    .replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+  const i = src.indexOf("r.mode === 'halt'");
+  assert.ok(i > 0);
+  const end = src.indexOf('const bits', i);
+  const block = src.slice(i, end > i ? end : i + 700);
+  assert.match(block, /\/סיום/, 'הודעת העצירה אינה מציעה דרך לצאת');
+  assert.match(block, /לאותו שלב/, 'לא נאמר ש-/טיפול מחזיר לאותה שאלה');
 });

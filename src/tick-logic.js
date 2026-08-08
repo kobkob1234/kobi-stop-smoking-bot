@@ -164,7 +164,9 @@ export function cbtRemindDue(minutes, meta, iso, dueSession) {
   const cbt = meta.cbt || {};
   // סשן שכבר פתוח אינו "אמור לרוץ" — הוא רץ. תזכורת עליו היא רעש.
   if (cbt.active) return null;
-  const due = dueSession(iso, cbt.sessionsDone || [], cbt.startISO || iso);
+  // עוגן המרווח — אחרת התזכורת יורה על סשן שאי אפשר לפתוח.
+  const lastISO = cbt.notes && cbt.notes.length ? cbt.notes[cbt.notes.length - 1].iso : null;
+  const due = dueSession(iso, cbt.sessionsDone || [], cbt.startISO || iso, lastISO);
   if (!due) return null;
 
   // ═══ נסיגה ═══

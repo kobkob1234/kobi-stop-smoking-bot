@@ -850,6 +850,18 @@ async function tick(env) {
 //  ב-`cbt/session.js` ונבדקות שם בלי טלגרם ובלי KV.
 // ==========================================================================
 
+/**
+ * טקסט של כלי — **HTML שנכתב בכוונה**, לא קלט משתמש.
+ *
+ * `tools.js` כותב `<b>...</b>` במפורש, וכל אתר רינדור עטף אותו ב-`esc()`,
+ * ולכן טלגרם הציג `<b>` כתווים. escaping נכון לתשובת מודל; כאן הוא
+ * הופך עיצוב מכוון לזבל על המסך.
+ *
+ * הכלים הם קוד שלנו, לא קלט חיצוני — אבל ערכים שמוזרקים לתוכם (טריגר
+ * שהמשתמש כתב) כן עוברים escaping ב-`tools.js` עצמו.
+ */
+const toolText = s => String(s ?? '');
+
 /** ה-state המספרי שהכלים והמודל מקבלים */
 async function cbtState(env, meta, cbt, pl, iso) {
   const days = await ANL.collect(env, iso, 14);
@@ -903,13 +915,17 @@ async function runTherapyTurn(env, chatId, meta, text, pl, iso) {
       '',
       ...C.PHONES.split('\n').filter(Boolean),
       '',
-      '<i>/טיפול כשתרצה לחזור.</i>',
+      // **מוצא אמיתי.** ההודעה הציעה רק `/טיפול`, שמחזיר לאותה שאלה
+      // ולכן לאותה עצירה. `/סיום` לא הוזכר בכלל.
+      '<i>/טיפול לחזור לאותו שלב · /סיום לסגור את הסשן.</i>',
     ].join('\n'));
   }
 
   const bits = [];
   // תשובה שנכשלה אינה מוסתרת: סשן שממשיך כאילו כלום לא קרה מייצר
   // רצף שבור שהמשתמש לא יכול להסביר לעצמו.
+  //
+  // **תשובת מודל עוברת escaping; טקסט כלי לא.** ראה `toolText` למטה.
   if (r.reply) bits.push(esc(r.reply));
   else if (r.mode === 'failed' && r.tries < CBTSESS.MAX_TRIES) {
     // הכלי **לא** נרשם כבוצע — לכן ההודעה אומרת "שוב", לא "ממשיכים".
@@ -919,7 +935,7 @@ async function runTherapyTurn(env, chatId, meta, text, pl, iso) {
   }
   if (next) {
     const a = next.run(st);
-    bits.push('', `<b>${esc(next.name)}</b>`, esc(a.text));
+    bits.push('', `<b>${esc(next.name)}</b>`, toolText(a.text));
     if (a.ask) bits.push('', `<b>${esc(a.ask)}</b>`);
   }
   await send(env, chatId, bits.join('\n'));
@@ -1524,7 +1540,7 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
         meta.awaiting = 'cbt'; await putMeta(env, meta);
         const a = tool.run(st);
         return void await send(env, chatId,
-          `🪑 <b>${esc(tool.name)}</b>\n\n${esc(a.text)}${a.ask ? `\n\n<b>${esc(a.ask)}</b>` : ''}`);
+          `🪑 <b>${esc(tool.name)}</b>\n\n${toolText(a.text)}${a.ask ? `\n\n<b>${esc(a.ask)}</b>` : ''}`);
       }
       const open = CBTSESS.openSession(cbt, iso);
       if (open.error === 'none-due') {
@@ -1550,7 +1566,7 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
         `${open.session.checklist.length} שלבים · כ-${open.session.minMinutes} דקות`,
         ...(smode && smode.note ? [`<i>${esc(smode.note)}</i>`] : []),
         ...(open.opening.length ? ['', `<i>${esc(open.opening.join(' · '))}</i>`] : []),
-        '', `<b>${esc(tool.name)}</b>`, esc(a.text),
+        '', `<b>${esc(tool.name)}</b>`, toolText(a.text),
         ...(a.ask ? ['', `<b>${esc(a.ask)}</b>`] : []),
         '', '<i>/סיום כדי לעצור באמצע.</i>',
       ].join('\n'));

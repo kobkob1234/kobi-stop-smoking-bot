@@ -346,8 +346,15 @@ export async function runTurn({ tool, state, userText, call, retrieve = null,
   };
 
   // כלי הצהרתי — אין למה להגיב, ואין טעם לשרוף קריאה
+  // ═══ כלי הצהרתי אינו מייצר **תשובה** ═══
+  //
+  // הוא החזיר את הטקסט של עצמו כ-`text`, והבוט שלח אותו — אחרי שכבר
+  // הציג אותו בתור הקודם. כל סשן הראה את "אימות אובייקטיבי" ו"אף לא
+  // שאיפה אחת" פעמיים ברצף.
+  //
+  // `text: null` אומר "אין מה להגיב"; הכלי כבר נאמר.
   if (tool.mode === 'fixed' || tool.mode === 'scale') {
-    return { text: tool.run(state).text, trace, mode: tool.mode };
+    return { text: null, trace, mode: tool.mode };
   }
 
   // **פלט מובנה ולא התאמת מחרוזת.** הגרסה הראשונה בדקה
@@ -518,12 +525,26 @@ export const CRITIQUE_MAX_CHARS = 600;
  *
  * מחזיר `null` על כלום — והמתקשר ממשיך בלי שער ה-triage.
  */
+export const TRIAGE_KINDS = ['answer', 'evasion', 'pushback', 'distress'];
+
 export function classifyTriage(raw) {
   const s = String(raw ?? '').trim().toLowerCase();
   if (!s) return null;
-  for (const k of ['distress', 'evasion', 'pushback', 'answer']) {
-    if (s.includes(k)) return k;
+  // ═══ הקטגוריה הראשונה שמופיעה, לא `includes` בסדר קבוע ═══
+  //
+  // `includes('distress')` נבדק **ראשון על כל המחרוזת**, ולכן כל פלט
+  // שהוא משפט ולא טוקן — "This is an answer, not distress" — סווג
+  // כמצוקה. ה-triage רץ על השכבה הזולה בלי חשיבה, כלומר פלט כזה הוא
+  // הנורמה ולא החריג, והתוצאה הייתה עצירת בטיחות על תשובה תמימה.
+  //
+  // **המגבלה הידועה:** שלילה מפורשת ("not an answer — distress") תסווג
+  // לפי המילה המוקדמת. זו החלפה מודעת: עצירה מוטעית מלמדת לא להזכיר
+  // דחפים, והעצירה עצמה חסומה ב-`MAX_HALTS` ולכן עולה שני תורות
+  // לכל היותר.
+  for (const w of s.split(/[^a-z]+/)) {
+    if (TRIAGE_KINDS.includes(w)) return w;
   }
+  // אף קטגוריה מוכרת לא הופיעה — נוטים לבטוח.
   return 'distress';
 }
 

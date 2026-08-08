@@ -80,7 +80,9 @@ test('כלי fixed אינו קורא למודל בכלל', async () => {
   const { call, seen } = fake();
   const r = await E.runTurn({ tool: T.byId(P.BCT.NAP), state, userText: 'ok', call });
   assert.equal(seen.length, 0, `נשרפו ${seen.length} קריאות על הצהרה`);
-  assert.ok(r.text.includes('שאיפה'));
+  // **בלי תשובה.** הוא החזיר את הטקסט של עצמו, והבוט שלח אותו — אחרי
+  // שכבר הציג אותו בתור הקודם. כל סשן הראה את הכלים ההצהרתיים פעמיים.
+  assert.equal(r.text, null, 'כלי הצהרתי מחזיר תשובה וגורם להדפסה כפולה');
   assert.equal(E.turnCost('fixed'), 0);
 });
 
