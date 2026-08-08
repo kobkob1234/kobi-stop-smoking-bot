@@ -249,6 +249,14 @@ export const exemplarText = (toolId = null) => {
 /** תמצית מספרית — מה שהמודל צריך כדי לראות דפוס */
 export function stateDigest(s) {
   const L = [`יום ${s.dayNum} · ${s.cleanDays} ימים נקיים`];
+  // ═══ המכנה נאמר **למודל**, לא רק בטקסט הכלי ═══
+  //
+  // הכלים תוקנו לומר כמה ימים תועדו, והתמצית שנשלחת למודל לא — והיא
+  // זו שמנסחת את התשובה. "מסטיק 1.7/יום מול יעד 6" על שלושה ימים
+  // מתועדים נקרא כאי-היענות, והמודל הגיב בהתאם.
+  if (s.coverage != null && s.coverage < 7) {
+    L.push(`⚠️ רק ${s.coverage} מ-7 הימים תועדו — המספרים הבאים חלקיים`);
+  }
   if (s.gumTarget) L.push(`מסטיק ${(s.gum7 / 7).toFixed(1)}/יום מול יעד ${s.gumTarget}`);
   if (s.patchDays7 != null) L.push(`מדבקה ${s.patchDays7}/7 ימים`);
   if (s.mood != null) L.push(`מצב רוח חציוני ${s.mood}/5`);

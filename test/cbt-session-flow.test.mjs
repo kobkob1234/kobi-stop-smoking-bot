@@ -568,3 +568,22 @@ test('פורמולציה דורשת שלושה תורות לפחות', () => {
     assert.equal(b.formulation, null, 'שני תורות הפיקו דפוס');
   });
 });
+
+test('כל פקודת CBT מופיעה בתפריט שנרשם לטלגרם', () => {
+  // `/טיפול` עבד בניתוב ולא הופיע בתפריט: `BOT_COMMANDS` הוא מה
+  // ש-`/setup` שולח ל-`setMyCommands`, והוא נפרד מ-`ALIAS`. פקודה
+  // שקיימת ואי אפשר למצוא אותה שווה לפקודה שאינה קיימת.
+  const src = readFileSync(join(SRC, 'index.js'), 'utf8');
+  const menu = src.slice(src.indexOf('const BOT_COMMANDS'), src.indexOf('];', src.indexOf('const BOT_COMMANDS')));
+  const listed = [...menu.matchAll(/command: '(\w+)'/g)].map(m => m[1]);
+
+  const alias = src.slice(src.indexOf('const ALIAS = {'), src.indexOf('\n};', src.indexOf('const ALIAS = {')));
+  for (const key of ['therapy', 'endsess']) {
+    const m = alias.match(new RegExp(`${key}:\\s*\\[([^\\]]*)\\]`));
+    assert.ok(m, `${key} אינו ב-ALIAS`);
+    const names = [...m[1].matchAll(/'([^']+)'/g)].map(x => x[1]);
+    // לפחות אחד מהכינויים הלטיניים רשום בתפריט
+    assert.ok(names.some(n => listed.includes(n)),
+      `${key}: אף כינוי (${names}) אינו בתפריט שנרשם`);
+  }
+});

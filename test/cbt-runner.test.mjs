@@ -22,6 +22,11 @@ const REPO = join(HERE, '..');
 const CBT = join(REPO, 'cbt-state');
 const CBT_LIB = join(REPO, '..', 'cbt');
 const SRC_DIR = join(REPO, 'src');
+/** מצב עשיר — הכלים שמייצרים HTML צריכים טריגר, יעד וכיסוי */
+const RICH_STATE = { iso: '2026-08-08', dayNum: 15, cleanDays: 14, gum7: 50,
+  gumTarget: 9, patchDays7: 7, coverage: 7, mood: 3, fatigue: 2, waves7: 3,
+  slips7: 0, triggers: ['ערב'], pastAttempts: [], confidence: 6, homework: null,
+  sessionsDone: [], taperStarted: true };
 // **הרמטי בכוונה.** מאז שכל פקודה מוטציונית מושכת מ-KV, בדיקה שרצה מול
 // הבוט החי תלויה במה שבמקרה שמור שם.
 //
@@ -392,6 +397,7 @@ import { createServer } from 'node:http';
 import * as ST from '../src/cbt/state.js';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
+import * as TOOLS_MOD from '../src/cbt/tools.js';
 const execFileP = promisify(execFile);
 
 /** worker מדומה: מחזיק מצב CBT, מכבד את הגנת ה-409, וסופר בקשות */
@@ -803,4 +809,95 @@ test('ה-SKILL מסביר מה לעשות כשסשן כבר פתוח', () => {
   const doc = readFileSync(SKILL, 'utf8');
   assert.match(doc, /אל תריץ `start`/, 'אין הנחיה לסשן פתוח');
   assert.match(doc, /חזרה לסשן שנקטע/, 'אין סעיף על חידוש סשן');
+});
+
+test('הרצף שורד מחיקה של הקובץ המקומי', async () => {
+  // התרחיש: ממשיכים סשן ממכונה אחרת, או אחרי שהבוט פתח אותו.
+  // `capturedSoFar` נגזר מ-`s.turns` — קובץ מקומי — ולכן חזר ריק,
+  // והסוכן שאל שוב את מה שכבר נענה. `active.captured` נוסע ב-KV.
+  const w = await fakeWorker();
+  try {
+    reset();
+    await cliAt(w, 'start');
+    const step = await cliAt(w, 'next');
+    await cliAt(w, 'record', step.tool, 'תשובה גולמית', 'ערך מחולץ');
+
+    // מוחקים את הקובץ — כאילו מכונה אחרת
+    rmSync(join(CBT, 'session-state.json'), { force: true });
+
+    const after = await cliAt(w, 'next');
+    assert.ok(!after.done, 'הסשן נראה גמור');
+    assert.match(after.context.capturedSoFar, /ערך מחולץ/,
+      'הרצף בתוך הסשן אבד במעבר מכונה');
+    assert.notEqual(after.tool, step.tool, 'הכלי שנרשם חזר');
+  } finally { await w.close(); reset(); }
+});
+
+test('close בונה פורמולציה ממה שב-KV, לא מהקובץ', async () => {
+  const w = await fakeWorker();
+  try {
+    reset();
+    await cliAt(w, 'start');
+    for (let i = 0; i < 3; i++) {
+      const s = await cliAt(w, 'next');
+      if (s.done) break;
+      await cliAt(w, 'record', s.tool, 'גולמי', `ערך-${i}`);
+    }
+    rmSync(join(CBT, 'session-state.json'), { force: true });
+    const c = await cliAt(w, 'close');
+    assert.ok(c.formulatePrompt.turns.length >= 3,
+      `הפרומפט לפורמולציה קיבל ${c.formulatePrompt.turns.length} תורות`);
+    assert.ok(c.formulatePrompt.turns.some(t => t.includes('ערך-0')),
+      'הערכים שנקלטו לא הגיעו לפרומפט');
+  } finally { await w.close(); reset(); }
+});
+
+
+test('כלים אכן מייצרים HTML — אחרת הניקוי מיותר', () => {
+  const withHtml = TOOLS_MOD.TOOLS.filter(t => {
+    try { return /<[a-z][^>]*>/i.test(t.run(RICH_STATE).text || ''); } catch { return false; }
+  });
+  assert.ok(withHtml.length >= 2, `רק ${withHtml.length} כלים מייצרים HTML`);
+});
+
+test('הסוכן מקבל טקסט נקי מ-HTML של טלגרם', () => {
+  // `tools.js` כותב `<b>` בכוונה, והערוץ כאן אינו טלגרם — התגיות היו
+  // מגיעות לסוכן כתווים ומשם אל המשתמש.
+  reset();
+  const st = cli('start');
+  if (st.error) return;
+  let steps = 0;
+  for (let i = 0; i < 8; i++) {
+    const n = cli('next');
+    if (n.done) break;
+    steps++;
+    for (const [k, f] of [['say', n.say], ['ask', n.ask]]) {
+      if (f) assert.doesNotMatch(f, /<[a-z/][^>]*>/i, `HTML ב-${n.tool}.${k}: ${f}`);
+    }
+    cli('record', n.tool, 'תשובה', 'ערך');
+  }
+  cli('close'); cli('finish', 'NONE'); reset();
+  assert.ok(steps >= 5, `רק ${steps} צעדים — הלולאה לא רצה`);
+});
+
+
+test('close על סשן שנמשך מ-KV מפיק פורמולציה', async () => {
+  // `closeSession` קיבל `s.turns` — הקובץ המקומי — ולכן סשן שנמשך
+  // ממכונה אחרת נסגר בלי דפוס, וזו התוצאה היחידה של הסשן.
+  const w = await fakeWorker();
+  try {
+    reset();
+    await cliAt(w, 'start');
+    for (let i = 0; i < 4; i++) {
+      const s = await cliAt(w, 'next');
+      if (s.done) break;
+      await cliAt(w, 'record', s.tool, 'גולמי', `ערך-${i}`);
+    }
+    rmSync(join(CBT, 'session-state.json'), { force: true });
+    const fin = await cliAt(w, 'finish', 'הדפוס: בערב, כשהוא לבד.');
+    assert.equal(fin.formulation, 'הדפוס: בערב, כשהוא לבד.', 'הדפוס לא נשמר');
+    assert.ok(fin.note, 'לא נרשמה הערת סשן');
+    assert.ok(fin.note.bcts.length >= 4,
+      `ההערה רשמה ${fin.note.bcts.length} כלים — נבנתה מקובץ ריק`);
+  } finally { await w.close(); reset(); }
 });

@@ -54,6 +54,7 @@ const BOT_COMMANDS = [
   { command: 'keyboard', description: '⌨️ מצב המקלדת: פתוחה / מתקפלת / מוסתרת' },
   { command: 'button',   description: '📲 כפתור פיזי — הפעלה בלי לפתוח את האפליקציה' },
   { command: 'therapy', description: '🪑 סשן CBT — לפי פרוטוקול NCSCT' },
+  { command: 'endsession', description: '⏹️ עצירת סשן CBT באמצע' },
   { command: 'review',  description: '🗓️ סקירה שבועית' },
   { command: 'phones',  description: '📞 טלפוני תמיכה' },
   { command: 'help',    description: '❓ עזרה' },

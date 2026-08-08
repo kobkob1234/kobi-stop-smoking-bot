@@ -97,6 +97,20 @@ const save = (s) => {
 };
 const today = () => il().iso;
 
+/**
+ * התורות של הסשן הפתוח — **מ-`active.captured`, לא מקובץ מקומי**.
+ *
+ * `s.turns` חי רק בקובץ שעל המכונה הזו. סשן שנפתח בבוט, או שממשיכים
+ * אותו ממחשב אחר, הגיע עם `turns: []` — ואז `capturedSoFar` ריק
+ * ו-`close` בונה פורמולציה מכלום. כלומר בדיוק הרצף שהמודול קיים
+ * בשבילו נשבר במעבר בין המשטחים.
+ *
+ * `active.captured` נוסע ב-KV, ולכן הוא היחיד ששורד.
+ */
+const turnsOf = (s) => Object.entries(s.cbt.active?.captured || {})
+  .map(([tool, captured]) => ({ tool, captured,
+                                answer: (s.turns || []).find(t => t.tool === tool)?.answer || '' }));
+
 /** נתוני הבוט — מתצלום, עם סימון גיל */
 function botState(s, iso) {
   const plan = planFor(iso) || {};
@@ -117,6 +131,11 @@ function botState(s, iso) {
  * פלט יחיד. **שגיאה מסמנת exit code** — כל מסלול שגיאה יצא ב-0, ולכן
  * קורא שבודק `$?` ראה הצלחה על "אין סשן פתוח".
  */
+/** מסיר תגיות HTML של טלגרם — הערוץ כאן אינו טלגרם */
+const plain = (s) => (s == null ? null
+  : String(s).replace(/<[^>]+>/g, '').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+             .replace(/&amp;/g, '&').trim());
+
 const out = (o) => {
   if (o && o.error) process.exitCode = 1;
   console.log(JSON.stringify(o, null, 2));
@@ -318,13 +337,16 @@ const CMDS = {
     out({
       warning: warn,
       tool: tool.id, name: tool.name, mode: tool.mode, evidence: tool.evidence,
-      say: asked.text, ask: asked.ask || null, expects: asked.expects,
+      // `tools.js` כותב HTML של טלגרם. הערוץ כאן אינו טלגרם, ולכן
+      // `<b>` היה מגיע לסוכן כתווים ומשם אל המשתמש. אותו לקח כמו
+      // ב-`esc()`: העיצוב תלוי-ערוץ, והטקסט לא.
+      say: plain(asked.text), ask: plain(asked.ask) || null, expects: asked.expects,
       remaining: s.cbt.active.remaining.length,
       context: {
         system: E.THERAPIST_SYSTEM,
         data: E.stateDigest(st),
         formulation: S.latestFormulation(s.cbt),
-        capturedSoFar: E.capturedChain(s.turns),
+        capturedSoFar: E.capturedChain(turnsOf(s)),
         rules: E.RESPOND_RULES,
         // **הדוגמה של הכלי הזה**, לא שתי גנריות. כל טכניקה נכשלת אחרת.
         exemplars: E.exemplarText(tool.id),
@@ -381,7 +403,7 @@ const CMDS = {
       formulatePrompt: {
         data: E.stateDigest(botState(s, iso)),
         prior: S.latestFormulation(s.cbt),
-        turns: s.turns.map(t => `${t.tool}: "${t.answer}"`),
+        turns: turnsOf(s).map(t => `${t.tool}: "${t.captured}"`),
         instruction: 'נסח דפוס אחד — לא סיכום. אם אין מספיק, החזר NONE.',
       },
       then: 'הרץ: cbt-session.mjs finish "<הדפוס או NONE>"',
@@ -411,7 +433,7 @@ const CMDS = {
     }
     // הסגירה עצמה עוברת דרך אותו מודול כמו בבוט. `call: null` — הדפוס
     // מגיע מהסוכן ולא מקריאת מודל נוספת.
-    const c = await SESS.closeSession(s.cbt, botState(s, iso), { call: null, turns: s.turns });
+    const c = await SESS.closeSession(s.cbt, botState(s, iso), { call: null, turns: turnsOf(s) });
     s.cbt = c.cbt;
     s.turns = [];
     save(s);

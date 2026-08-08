@@ -572,3 +572,20 @@ test('capturedChain ריק כשאין מה לשרשר', () => {
   assert.equal(E.capturedChain([]), '');
   assert.equal(E.capturedChain([{ tool: 'x', answer: 'y' }]), '');
 });
+
+
+test('המכנה מגיע למודל, לא רק לטקסט הכלי', async () => {
+  // הכלים תוקנו לומר כמה ימים תועדו והתמצית לא — והיא זו שמנסחת
+  // את התשובה. "מסטיק 1.7/יום מול יעד 6" על שלושה ימים מתועדים
+  // נקרא כאי-היענות.
+  const S = await import('../src/cbt/state.js');
+  const partial = S.toolState(S.migrateCbt(null),
+    [{ gum: 4, patch: true }, {}, {}, { gum: 4, patch: true }, {}, { gum: 4, patch: true }, {}],
+    { clean: 20, gumTarget: 6 }, '2026-08-08');
+  assert.match(E.stateDigest(partial), /3 מ-7/, 'המכנה אינו בתמצית שנשלחת למודל');
+
+  const full = S.toolState(S.migrateCbt(null), Array(7).fill({ gum: 4, patch: true }),
+    { clean: 20, gumTarget: 6 }, '2026-08-08');
+  assert.doesNotMatch(E.stateDigest(full), /תועדו/,
+    'אזהרת כיסוי מוצגת גם כשכל הימים תועדו');
+});
