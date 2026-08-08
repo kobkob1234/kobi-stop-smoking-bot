@@ -260,3 +260,58 @@ test('הביקורת תופסת חיבור מספרים שאינו קשור', as
   assert.match(joined, /מספרים/, 'הביקורת אינה בודקת חיבור נתונים גנרי');
   assert.match(joined, /קשר ממשי/, 'לא נדרש קשר ממשי');
 });
+
+// ==========================================================================
+//  נאמנות לאורך זמן
+//
+//  `notes` נכתב בסגירת כל סשן — ציון, פריטים שדולגו — ונקרא רק על ידי
+//  `openingContext`, ורק האחרון. מדד איכות שנאסף ואי אפשר לראות.
+// ==========================================================================
+
+const note = (score, missed = []) =>
+  ({ id: 'x', iso: '2026-08-01', bcts: [], score, missed, complete: score === 1 });
+
+test('בלי היסטוריה — אין דוח, ולא אפס מטעה', async () => {
+  assert.equal(S.fidelityReport({ notes: [] }), null);
+  assert.equal(S.fidelityLine({ notes: [] }), null);
+});
+
+test('הדוח מסכם ממוצע, מגמה ומה נשמט', () => {
+  const r = S.fidelityReport({ notes: [note(1), note(1), note(1),
+                                       note(0.6, ['coping-plan']), note(0.5, ['coping-plan']),
+                                       note(0.5, ['coping-plan', 'summary-and-homework'])] });
+  assert.equal(r.sessions, 6);
+  assert.ok(r.trend < 0, 'ירידה ברורה לא זוהתה');
+  assert.equal(r.topMissed[0].bct, 'coping-plan');
+  assert.equal(r.topMissed[0].times, 3);
+  assert.equal(r.incomplete, 3);
+});
+
+test('ירידה מתמשכת נכשלת בקול', () => {
+  // סשן שמדלג על פריטי חובה נראה כמו טיפול ואינו טיפול. ירידה
+  // מתמשכת היא בדיוק הסימן, ולכן היא מסומנת ולא רק נספרת.
+  const low = { notes: [note(1), note(1), note(0.4), note(0.4), note(0.4)] };
+  assert.equal(S.fidelityReport(low).below, true, 'ירידה מתחת לסף לא סומנה');
+  assert.match(S.fidelityLine(low), /⚠️/, 'האזהרה אינה מוצגת');
+});
+
+test('סשן חלש בודד אינו מגמה', () => {
+  // המגמה נמדדת על שלושה, לא על שניים — אחרת כל סשן קצר מייצר אזהרה.
+  const one = { notes: [note(1), note(1), note(1), note(1), note(1), note(0.5)] };
+  assert.equal(S.fidelityReport(one).below, false, 'סשן חלש בודד הדליק אזהרה');
+});
+
+test('הסף מוגדר ואינו 0', () => {
+  assert.ok(S.FIDELITY_FLOOR > 0 && S.FIDELITY_FLOOR <= 1);
+});
+
+test('הבוט מציג את ההיסטוריה, לא רק את הציון האחרון', () => {
+  const src = readFileSync(join(SRC, 'index.js'), 'utf8')
+    .replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+  assert.match(src, /fidelityLine/, 'ההיסטוריה אינה מוצגת בשום מקום');
+  // גם כשאין סשן היום — זה המקום היחיד שבו רואים מגמה
+  const i = src.indexOf("'none-due'");
+  assert.ok(i > 0);
+  assert.match(src.slice(i, i + 600), /fidelityLine/,
+    'אין סשן היום ⇒ אין שום משוב על התהליך');
+});

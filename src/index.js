@@ -16,6 +16,7 @@ import * as CBTT from './cbt/tools.js';
 import * as CBTE from './cbt/engine.js';
 import * as CBTSESS from './cbt/session.js';
 import { retrieverFor } from './cbt/retrieve.js';
+const S_latest = c => CBTS.latestFormulation(c);
 import * as ANL from './analytics.js';
 import * as INT from './intent.js';
 import * as G from './gum.js';
@@ -198,7 +199,7 @@ export default {
     if (url.pathname === '/health') return new Response('ok');
 
     // בדיקת שפיות + קרון-גיבוי מ-GitHub Actions (מוגן ב-WEBHOOK_SECRET)
-    if (['/diag', '/cron', '/export', '/send', '/ask', '/trigger', '/cbt-state', '/cbt-probe'].includes(url.pathname)) {
+    if (['/diag', '/cron', '/export', '/send', '/ask', '/trigger', '/cbt-state', '/cbt-probe', '/cbt-fetch'].includes(url.pathname)) {
       // /trigger מקבל גם TRIGGER_KEY נפרד — הסוד הזה יושב בקיצור על
       // הטלפון, ולא רצוי שיהיה אותו סוד שמגן על /export ועל הווביהוק.
       const given = url.searchParams.get('key');
@@ -294,6 +295,20 @@ export default {
         if (level === 2) { await startPlanning(meta.chatId, env, meta, iso, now); return new Response('🧠 תירוצים לצאת — נשלח, ובת הזוג עודכנה'); }
         await startWave(meta.chatId, env, meta, iso, now);
         return new Response('🌊 דחף — הזרימה נשלחה לטלגרם');
+      }
+
+      if (url.pathname === '/cbt-fetch') {
+        // ═══ אחזור לסוכן ═══
+        //
+        // הסוכן מריץ את אותו פרוטוקול עם מודל חזק יותר — ועד עכשיו
+        // **בלי הספרייה בכלל**, כי היא ב-KV והוא מריץ מקומית. כלומר
+        // הצד עם המודל הטוב קיבל את ההקשר הגרוע.
+        //
+        // אותו `pickSections` בדיוק, אותם משקלים, אותו תקציב.
+        const want = url.searchParams.get('q') || '';
+        const bct = url.searchParams.get('bct') || null;
+        const r = await retrieverFor(env, { bct })(want);
+        return Response.json({ sources: r });
       }
 
       if (url.pathname === '/cbt-probe') {
@@ -920,10 +935,12 @@ async function finishTherapy(env, chatId, meta, cbt, st) {
   if (r.error) return void await send(env, chatId, 'אין סשן פתוח.');
   meta.cbt = r.cbt; meta.awaiting = null;
   await putMeta(env, meta);
+  const fl = CBTS.fidelityLine(r.cbt);
   await send(env, chatId, [
     '🪑 <b>הסשן נסגר.</b>',
     `נאמנות לפרוטוקול: <b>${Math.round(r.fidelity.score * 100)}%</b>` +
       (r.fidelity.missed.length ? ` · דולג: ${esc(r.fidelity.missed.join(', '))}` : ''),
+    ...(fl ? [esc(fl)] : []),
     ...(r.formulation ? ['', `<i>${esc(r.formulation)}</i>`] : []),
   ].join('\n'));
 }
@@ -1512,8 +1529,14 @@ async function runCommand(cmd, arg, chatId, env, meta, pl, iso, now) {
       }
       const open = CBTSESS.openSession(cbt, iso);
       if (open.error === 'none-due') {
-        return void await send(env, chatId,
-          `🪑 אין סשן שאמור לרוץ היום.${open.nextISO ? `\nהבא: <b>${P.fmtHe(open.nextISO)}</b>.` : ''}`);
+        // ההיסטוריה נרשמה בכל סגירה ואיש לא קרא אותה. כאן היא סוף סוף
+        // נראית — וזה גם המקום היחיד שבו ירידה מתמשכת מסומנת.
+        const fl = CBTS.fidelityLine(cbt);
+        return void await send(env, chatId, [
+          `🪑 אין סשן שאמור לרוץ היום.${open.nextISO ? ` הבא: <b>${P.fmtHe(open.nextISO)}</b>.` : ''}`,
+          ...(fl ? ['', esc(fl)] : []),
+          ...(S_latest(cbt) ? ['', `<i>${esc(S_latest(cbt))}</i>`] : []),
+        ].join('\n'));
       }
       meta.cbt = open.cbt; meta.awaiting = 'cbt'; await putMeta(env, meta);
       const st = await cbtState(env, meta, open.cbt, pl, iso);

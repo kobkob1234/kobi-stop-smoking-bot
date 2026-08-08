@@ -29,6 +29,8 @@ import * as P from '../src/cbt/protocol.js';
 import * as T from '../src/cbt/tools.js';
 import * as E from '../src/cbt/engine.js';
 import * as S from '../src/cbt/state.js';
+import * as SESS from '../src/cbt/session.js';
+import { pickSections } from '../src/cbt/retrieve.js';
 import { planFor, il } from '../src/plan.js';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -82,6 +84,35 @@ function botState(s, iso) {
 }
 
 const out = (o) => console.log(JSON.stringify(o, null, 2));
+
+/**
+ * אחזור לסוכן.
+ *
+ * הצד הזה מריץ את אותו פרוטוקול עם מודל חזק יותר — ועד עכשיו קיבל
+ * **את ההקשר הגרוע**: בלי הספרייה בכלל, כי היא ב-KV והסקריפט רץ
+ * מקומית. כלומר בדיוק הפוך מהכוונה.
+ *
+ * הבחירה נעשית מקומית (`pickSections` — האינדקס בבנדל, בלי רשת),
+ * והטקסט נמשך מהבוט. אם הוא לא נענה — מחזירים את הבחירה בלי גוף,
+ * כי לדעת **אילו** מקטעים רלוונטיים עדיין שווה משהו לסוכן.
+ */
+async function fetchSources(want, bct) {
+  const picks = pickSections(want, { bct });
+  if (!picks.length) return [];
+  const kf = join(REPO, '.webhook-secret');
+  if (!existsSync(kf) || process.env.CBT_OFFLINE) {
+    return picks.map(p => ({ id: p.id, src: `${p.src} — ${p.title}`, words: p.words, text: null }));
+  }
+  try {
+    const u = `${WORKER}/cbt-fetch?key=${readFileSync(kf, 'utf8').trim()}` +
+              `&q=${encodeURIComponent(want)}${bct ? `&bct=${encodeURIComponent(bct)}` : ''}`;
+    const r = await fetch(u, { signal: AbortSignal.timeout(25000) });
+    if (!r.ok) throw new Error(String(r.status));
+    return (await r.json()).sources || [];
+  } catch {
+    return picks.map(p => ({ id: p.id, src: `${p.src} — ${p.title}`, words: p.words, text: null }));
+  }
+}
 
 /**
  * דחיפת המראה לבוט — כדי שיפסיק להזכיר על סשן שכבר רץ.
@@ -145,6 +176,8 @@ const CMDS = {
       due: due ? { id: due.id, title: due.title, dueISO: due.dueISO } : null,
       opening: S.openingContext(s.cbt, iso).map(E.describeOpening).filter(Boolean),
       formulation: S.latestFormulation(s.cbt),
+      fidelity: S.fidelityLine(s.cbt),
+      fidelityDetail: S.fidelityReport(s.cbt),
     });
   },
 
@@ -154,17 +187,20 @@ const CMDS = {
     // מושכים לפני שנוגעים — אחרת סשן שנפתח בבוט לא ייראה כאן.
     const remote = await pullCbt();
     if (remote) s.cbt = S.migrateCbt(remote);
-    if (s.cbt.active) return out({ error: 'סשן כבר פתוח', active: s.cbt.active.id });
-    const due = P.dueSession(iso, s.cbt.sessionsDone, s.cbt.startISO || iso);
-    if (!due) return out({ error: 'אין סשן שאמור לרוץ היום' });
-    s.cbt = S.startSession(s.cbt, due.id, iso);
+    // **אותו מחזור חיים כמו בבוט.** הסקריפט החזיק עותק משלו —
+    // startSession/nextTool/fidelity/completeSession — ולכן כל תיקון
+    // היה צריך לקרות פעמיים, וההתנהגות יכלה להתפצל בשקט בין השניים.
+    const o = SESS.openSession(s.cbt, iso);
+    if (o.error === 'active') return out({ error: 'סשן כבר פתוח', active: o.id });
+    if (o.error === 'none-due') return out({ error: 'אין סשן שאמור לרוץ היום', nextISO: o.nextISO });
+    s.cbt = o.cbt;
     s.turns = [];
     save(s);
     await pushMirror(s);
     out({
-      started: due.id, title: due.title, stpRef: due.stpRef,
-      checklist: due.checklist.map(c => ({ bct: c.bct, label: c.label, required: c.required })),
-      opening: S.openingContext(s.cbt, iso).map(E.describeOpening).filter(Boolean),
+      started: o.session.id, title: o.session.title, stpRef: o.session.stpRef,
+      checklist: o.session.checklist.map(c => ({ bct: c.bct, label: c.label, required: c.required })),
+      opening: o.opening,
     });
   },
 
@@ -174,11 +210,11 @@ const CMDS = {
    * הסקריפט אינו מנסח את התשובה. הוא מגיש את אותו הקשר שהמנוע היה
    * מגיש לג׳מיני, והסוכן ממלא את תפקיד `respond`.
    */
-  next() {
+  async next() {
     const s = load(); const iso = today();
     if (!s.cbt.active) return out({ error: 'אין סשן פתוח — הרץ start' });
     const st = botState(s, iso);
-    const tool = T.nextTool(st, s.cbt.active.remaining);
+    const tool = SESS.nextStep(s.cbt, st);
     if (!tool) {
       const sess = P.byId(s.cbt.active.id);
       return out({ done: true, fidelity: P.fidelity(sess, s.cbt.active.done) });
@@ -200,7 +236,11 @@ const CMDS = {
         formulation: S.latestFormulation(s.cbt),
         capturedSoFar: E.capturedChain(s.turns),
         rules: E.RESPOND_RULES,
-        exemplars: E.exemplarText(),
+        // **הדוגמה של הכלי הזה**, לא שתי גנריות. כל טכניקה נכשלת אחרת.
+        exemplars: E.exemplarText(tool.id),
+        critique: E.CRITIQUE_RULES,
+        // הרקע המקצועי — לביסוס הניסוח, לא לציטוט.
+        sources: await fetchSources(`${tool.name} ${tool.id}`, tool.id),
       },
     });
   },
@@ -225,7 +265,7 @@ const CMDS = {
     const s = load(); const iso = today();
     if (!s.cbt.active) return out({ error: 'אין סשן פתוח' });
     const sess = P.byId(s.cbt.active.id);
-    const f = P.fidelity(sess, s.cbt.active.done);
+    const f = P.fidelity(sess, s.cbt.active.done);   // תצוגה בלבד — finish הוא שסוגר
     out({
       session: s.cbt.active.id,
       fidelity: f,
@@ -257,7 +297,10 @@ const CMDS = {
     if (formulation && !/^NONE$/i.test(formulation.trim())) {
       s.cbt = S.recordFormulation(s.cbt, formulation.trim(), iso);
     }
-    s.cbt = S.completeSession(s.cbt, iso);
+    // הסגירה עצמה עוברת דרך אותו מודול כמו בבוט. `call: null` — הדפוס
+    // מגיע מהסוכן ולא מקריאת מודל נוספת.
+    const c = await SESS.closeSession(s.cbt, botState(s, iso), { call: null, turns: s.turns });
+    s.cbt = c.cbt;
     s.turns = [];
     save(s);
     // הדחיפה מיד אחרי הסגירה — אחרת התזכורת של הערב הבא חוזרת על סשן

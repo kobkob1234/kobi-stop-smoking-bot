@@ -235,3 +235,61 @@ export const latestFormulation = cbt =>
 
 /** האם הפרוטוקול בכלל התחיל */
 export const started = cbt => !!cbt.startISO;
+
+// ==========================================================================
+//  נאמנות לאורך זמן — הנתון שנרשם ואיש לא קרא
+//
+//  `notes` נכתב בסגירת כל סשן — ציון, פריטים שדולגו, האם הושלם — ואת
+//  התוצאה קראה רק `openingContext`, ורק את האחרון. כלומר נאסף כאן מדד
+//  איכות ולא הייתה שום דרך לראות אותו.
+//
+//  זה חשוב מעבר לתצוגה: **סשן שמדלג על פריטי חובה הוא סשן שנראה
+//  כמו טיפול ואינו טיפול**, וירידה מתמשכת בציון היא בדיוק הסימן לכך.
+//  לכן יש כאן גם סף שנכשל בקול ולא רק מספר.
+// ==========================================================================
+
+/** מתחת לזה הפרוטוקול אינו באמת רץ */
+export const FIDELITY_FLOOR = 0.7;
+
+/**
+ * תמונת הנאמנות: ממוצע, מגמה, ומה נשמט הכי הרבה.
+ *
+ * המגמה נמדדת על שלושה אחרונים מול הקודמים — לא על שניים, כי סשן
+ * חלש בודד הוא רעש ולא כיוון.
+ */
+export function fidelityReport(cbt) {
+  const n = cbt.notes || [];
+  if (!n.length) return null;
+  const avg = a => a.reduce((t, x) => t + x.score, 0) / a.length;
+  const recent = n.slice(-3);
+  const prior = n.slice(0, -3);
+  const missed = {};
+  for (const x of n) for (const m of x.missed || []) missed[m] = (missed[m] || 0) + 1;
+  return {
+    sessions: n.length,
+    last: n[n.length - 1].score,
+    avg: +avg(n).toFixed(2),
+    recentAvg: +avg(recent).toFixed(2),
+    trend: prior.length ? +(avg(recent) - avg(prior)).toFixed(2) : null,
+    below: avg(recent) < FIDELITY_FLOOR,
+    topMissed: Object.entries(missed).sort((a, b) => b[1] - a[1]).slice(0, 3)
+      .map(([bct, times]) => ({ bct, times })),
+    incomplete: n.filter(x => !x.complete).length,
+  };
+}
+
+/** משפט אחד לתצוגה, או null כשאין מספיק היסטוריה */
+export function fidelityLine(cbt) {
+  const r = fidelityReport(cbt);
+  if (!r) return null;
+  const pct = x => Math.round(x * 100) + '%';
+  const bits = [`${r.sessions} סשנים · נאמנות ${pct(r.avg)}`];
+  if (r.trend !== null && Math.abs(r.trend) >= 0.05) {
+    bits.push(`${r.trend > 0 ? '↑' : '↓'} ${pct(Math.abs(r.trend))} לאחרונה`);
+  }
+  if (r.below) bits.push(`⚠️ ${pct(r.recentAvg)} בשלושה האחרונים — מתחת לסף`);
+  if (r.topMissed.length && r.topMissed[0].times >= 2) {
+    bits.push(`נשמט הכי הרבה: ${r.topMissed[0].bct}`);
+  }
+  return bits.join(' · ');
+}

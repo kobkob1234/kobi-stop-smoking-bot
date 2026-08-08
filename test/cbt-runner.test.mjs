@@ -11,7 +11,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { readFileSync, existsSync, rmSync, realpathSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, rmSync, realpathSync } from 'node:fs';
 import { relative, isAbsolute } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
@@ -32,6 +32,31 @@ const cliEnv = (env, ...a) => {
   for (const k of Object.keys(e)) if (e[k] === undefined) delete e[k];
   return JSON.parse(execFileSync('node', [RUN, ...a], { encoding: 'utf8', env: e }));
 };
+
+/**
+ * איפוס מצב ה-CBT המקומי.
+ *
+ * הבדיקות פותחות וסוגרות סשנים, ולכן מצב שנשאר מהרצה קודמת — או
+ * מהרצה ידנית — קובע אם יש בכלל סשן שאפשר לפתוח. בלי איפוס מפורש
+ * הן עוברות או נכשלות לפי מה שקרה קודם, וזה לא מבחן.
+ */
+const reset = () => {
+  const p = join(CBT, 'session-state.json');
+  if (existsSync(p)) {
+    const j = JSON.parse(readFileSync(p, 'utf8'));
+    j.cbt = { ver: 1, startISO: null, sessionsDone: [], triggers: [], pastAttempts: [],
+              dependence: null, confidence: [], homework: null, formulations: [],
+              notes: [], active: null };
+    j.turns = [];
+    writeFileSync(p, JSON.stringify(j, null, 2) + '\n');
+  }
+};
+
+test('איפוס — הבדיקות לא תלויות בהרצה קודמת', () => {
+  cliEnv({}, 'sync');
+  reset();
+  assert.deepEqual(cli('status').sessionsDone, []);
+});
 
 test('הסקריפט קיים ורץ', () => {
   assert.ok(existsSync(RUN));
@@ -211,5 +236,70 @@ test('ניקוי', () => {
   }
   rmSync(join(CBT, 'session-state.json'), { force: true });
   cli('sync');
+  assert.equal(cli('status').active, null);
+});
+
+// ==========================================================================
+//  שוויון בין שני המשטחים
+//
+//  הסוכן מריץ עם המודל החזק יותר, ובכל זאת קיבל זמן־מה את ההקשר
+//  הגרוע: בלי הספרייה, עם דוגמאות גנריות, ועם עותק משלו של מחזור
+//  החיים. כל תיקון היה צריך לקרות פעמיים, וההתנהגות יכלה להתפצל בשקט.
+// ==========================================================================
+
+test('הסקריפט אינו מכפיל את מחזור החיים של הסשן', () => {
+  const src = readFileSync(RUN, 'utf8')
+    .replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+  // בחירת כלי, ציון נאמנות וסגירה — כולם ב-session.js
+  assert.doesNotMatch(src, /T\.nextTool\(/, 'בחירת כלי משוכפלת');
+  assert.doesNotMatch(src, /S\.completeSession\(/, 'הסגירה משוכפלת');
+  assert.doesNotMatch(src, /S\.startSession\(/, 'הפתיחה משוכפלת');
+  assert.match(src, /SESS\.(openSession|nextStep|closeSession)/, 'אינו משתמש במודול');
+});
+
+test('ההקשר לסוכן נושא את מה שהבוט שולח למודל', () => {
+  const st = cli('status');
+  if (!st.active) cli('start');
+  const n = cli('next');
+  if (n.done) return;
+  for (const k of ['system', 'data', 'rules', 'exemplars', 'critique', 'sources']) {
+    assert.ok(k in n.context, `ההקשר חסר ${k}`);
+  }
+  // **לא ריק.** מערך ריק היה מרוקן כל בדיקה שרצה עליו בלולאה, ושתי
+  // מוטציות עברו בדיוק כך.
+  assert.ok(n.context.sources.length > 0,
+    `${n.tool}: אפס מקורות — הסוכן רץ בלי הספרייה`);
+  for (const src of n.context.sources) assert.ok(src.id && src.src, 'מקור בלי זיהוי');
+});
+
+test('הדוגמה בהקשר היא של הכלי הפעיל', async () => {
+  const { TOOL_EXEMPLARS } = await import('../src/cbt/engine.js');
+  const st = cli('status');
+  if (!st.active) cli('start');
+  const n = cli('next');
+  if (n.done) return;
+  const own = TOOL_EXEMPLARS[n.tool];
+  if (!own) return;                       // כלי בלי דוגמה ייעודית
+  assert.ok(n.context.exemplars.includes(own.good),
+    `הדוגמה של ${n.tool} לא הוגשה`);
+});
+
+test('בלי רשת — עדיין נאמר אילו מקטעים רלוונטיים', () => {
+  // לדעת **אילו** מקטעים רלוונטיים שווה משהו לסוכן גם בלי הגוף.
+  const st = cli('status');
+  if (!st.active) cli('start');
+  const n = cliEnv({ CBT_OFFLINE: '1' }, 'next');
+  if (n.done) return;
+  assert.ok(n.context.sources.length > 0, 'בלי רשת לא נאמר כלום על המקורות');
+  for (const s of n.context.sources) {
+    assert.ok(s.id && s.src, 'מקור בלי זיהוי');
+    assert.equal(s.text, null, 'טקסט הגיע במצב offline');
+  }
+});
+
+test('ניקוי אחרי בדיקות השוויון', () => {
+  const s = cli('status');
+  if (s.active) { cli('close'); cli('finish', 'NONE'); }
+  reset();
   assert.equal(cli('status').active, null);
 });
