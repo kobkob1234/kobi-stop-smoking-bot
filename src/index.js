@@ -359,17 +359,11 @@ export default {
         const meta = await getMeta(env);
         const cur = CBTS.migrateCbt(meta.cbt);
         if (req.method === 'POST') {
-          const b = await req.json().catch(() => null);
-          if (!b || !Array.isArray(b.sessionsDone)) {
-            return new Response('bad body', { status: 400 });
-          }
-          // סשן פתוח בבוט אינו נדרס משליחה חיצונית — מי שבאמצע
-          // שיחה הוא שהתחיל אותה.
-          if (cur.active && !b.active && !b.force) {
-            return Response.json({ ok: false, why: 'סשן פתוח בבוט',
-                                   active: cur.active.id }, { status: 409 });
-          }
-          meta.cbt = CBTS.migrateCbt(b);
+          // ההחלטה עצמה ב-`state.js` — מחוץ ל-I/O ולכן נבדקת ישירות.
+          const r = CBTS.applyCbtPush(meta.cbt, await req.json().catch(() => null));
+          if (r.bad) return new Response('bad body', { status: 400 });
+          if (r.conflict) return Response.json({ ok: false, ...r }, { status: 409 });
+          meta.cbt = r.cbt;
           await putMeta(env, meta);
           return Response.json({ ok: true, cbt: meta.cbt });
         }

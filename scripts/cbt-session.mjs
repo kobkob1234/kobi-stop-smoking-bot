@@ -123,7 +123,7 @@ async function fetchSources(want, bct) {
  *
  * מחזיר ולא מדפיס, כדי שהקורא יחליט על הפלט.
  */
-async function pushMirror(s) {
+async function pushMirror(s, { force = false } = {}) {
   const kf = join(REPO, '.webhook-secret');
   if (!existsSync(kf)) return { pushed: false, why: 'אין .webhook-secret' };
   try {
@@ -132,9 +132,21 @@ async function pushMirror(s) {
       headers: { 'content-type': 'application/json' },
       // **המצב המלא.** דחיפה חלקית הייתה מוחקת טריגרים, דפוסים ושיעורי
       // בית — כלומר בדיוק את הרצף שכל המודול קיים בשבילו.
-      body: JSON.stringify({ ...s.cbt, force: true }),
+      //
+      // ═══ `force` רק כשמבקשים אותו במפורש ═══
+      //
+      // הוא נשלח כאן בכל דחיפה, וההגנה בבוט בודקת `!b.force` — כלומר
+      // **ההגנה מעולם לא נורתה**. אין לקוח אחר לנקודת הקצה הזו, ולכן
+      // 409 היה קוד מת מהיום שנכתב. גרוע מזה: `migrateCbt` משמר מפתחות
+      // לא מוכרים, אז `force: true` נשמר ל-KV, חזר ב-GET, ונשמר לקובץ
+      // שבגיט — דגל חד-פעמי שהפך למצב קבוע.
+      body: JSON.stringify(force ? { ...s.cbt, force: true } : s.cbt),
       signal: AbortSignal.timeout(20000),
     });
+    if (r.status === 409) {
+      const j = await r.json().catch(() => ({}));
+      return { pushed: false, conflict: true, why: j.why || 'סשן פתוח בבוט', active: j.active };
+    }
     return { pushed: r.ok, status: r.status, sessionsDone: s.cbt.sessionsDone };
   } catch (e) {
     return { pushed: false, why: String(e.message || e) };
@@ -145,25 +157,57 @@ async function pushMirror(s) {
 //  פקודות
 // ==========================================================================
 
-/** מושך את מצב ה-CBT מ-KV. **המקור** — לא עותק. */
+/**
+ * מושך את מצב ה-CBT מ-KV. **המקור** — לא עותק.
+ *
+ * מחזיר `{cbt}` בהצלחה, `{offline}` כשבמכוון אין רשת, או `{error}`.
+ * הגרסה הקודמת החזירה `null` לשישה מצבים שונים — מפתח חסר, 403, timeout,
+ * JSON פגום, מצב חסר — וכל הקוראים התייחסו אליו כ"המשך עם המקומי".
+ * מפתח שהוחלף היה מייצר פיצול מלא ושקט בין שני המשטחים.
+ */
 async function pullCbt() {
   const kf = join(REPO, '.webhook-secret');
-  if (process.env.CBT_OFFLINE) return null;
-  if (!existsSync(kf)) return null;
+  if (process.env.CBT_OFFLINE) return { offline: true, why: 'CBT_OFFLINE' };
+  if (!existsSync(kf)) return { offline: true, why: 'אין .webhook-secret' };
   try {
     const r = await fetch(`${WORKER}/cbt-state?key=${readFileSync(kf, 'utf8').trim()}`,
                           { signal: AbortSignal.timeout(20000) });
-    if (!r.ok) return null;
-    return (await r.json()).cbt || null;
-  } catch { return null; }
+    if (!r.ok) return { error: `הבוט החזיר ${r.status}` };
+    const j = await r.json();
+    if (!j.cbt) return { error: 'התשובה בלי מצב CBT' };
+    return { cbt: j.cbt };
+  } catch (e) { return { error: String(e.message || e) }; }
+}
+
+/**
+ * מצב טרי לפני כל שינוי.
+ *
+ * ═══ למה זה קיים ═══
+ *
+ * רק `status` ו-`start` משכו. `next`/`record`/`close`/`finish` קראו את
+ * הקובץ המקומי ודחפו מעליו — בעוד התיעוד טען שהסקריפט "מושך לפני שהוא
+ * נוגע". התוצאה: סוכן פותח סשן, המשתמש עונה שלוש תורות בטלגרם, הסוכן
+ * מריץ `record`, **שלוש התשובות נמחקות** והפלט אומר `pushed: true`.
+ *
+ * **כישלון משיכה עוצר את הכתיבה.** מצב שלא ידוע אם הוא טרי אינו בסיס
+ * לכתיבה שדורסת — זה בדיוק המסלול שאיבד את הנתונים.
+ */
+async function fresh() {
+  const s = load();
+  const r = await pullCbt();
+  if (r.error) return { err: { error: `לא הצלחתי למשוך מצב טרי: ${r.error}`, hint: 'המצב לא שונה. נסה שוב, או הרץ עם CBT_OFFLINE=1 אם אתה בכוונה בלי רשת.' } };
+  if (r.cbt) { s.cbt = S.migrateCbt(r.cbt); save(s); }
+  s._offline = !!r.offline;
+  return { s };
 }
 
 const CMDS = {
   /** מה המצב, ומה אמור לרוץ */
   async status() {
-    const s = load(); const iso = today();
-    const remote = await pullCbt();
-    if (remote) { s.cbt = S.migrateCbt(remote); save(s); }
+    const iso = today();
+    const f = await fresh();
+    if (f.err) return void out(f.err);
+    const s = f.s;
     const due = P.dueSession(iso, s.cbt.sessionsDone, s.cbt.startISO || iso);
     out({
       today: iso,
@@ -183,10 +227,11 @@ const CMDS = {
 
   /** פתיחת הסשן שאמור לרוץ */
   async start() {
-    const s = load(); const iso = today();
+    const iso = today();
     // מושכים לפני שנוגעים — אחרת סשן שנפתח בבוט לא ייראה כאן.
-    const remote = await pullCbt();
-    if (remote) s.cbt = S.migrateCbt(remote);
+    const f = await fresh();
+    if (f.err) return void out(f.err);
+    const s = f.s;
     // **אותו מחזור חיים כמו בבוט.** הסקריפט החזיק עותק משלו —
     // startSession/nextTool/fidelity/completeSession — ולכן כל תיקון
     // היה צריך לקרות פעמיים, וההתנהגות יכלה להתפצל בשקט בין השניים.
@@ -196,8 +241,11 @@ const CMDS = {
     s.cbt = o.cbt;
     s.turns = [];
     save(s);
-    await pushMirror(s);
+    // **התוצאה מדווחת.** היא נזרקה, ולכן סשן שנפתח בלי שהבוט ידע נראה
+    // זהה לסשן שנפתח בהצלחה — והתזכורת של 20:30 המשיכה לירות עליו.
+    const mirror = await pushMirror(s);
     out({
+      mirror,
       started: o.session.id, title: o.session.title, stpRef: o.session.stpRef,
       checklist: o.session.checklist.map(c => ({ bct: c.bct, label: c.label, required: c.required })),
       opening: o.opening,
@@ -211,7 +259,10 @@ const CMDS = {
    * מגיש לג׳מיני, והסוכן ממלא את תפקיד `respond`.
    */
   async next() {
-    const s = load(); const iso = today();
+    const iso = today();
+    const f = await fresh();
+    if (f.err) return void out(f.err);
+    const s = f.s;
     if (!s.cbt.active) return out({ error: 'אין סשן פתוח — הרץ start' });
     const st = botState(s, iso);
     const tool = SESS.nextStep(s.cbt, st);
@@ -247,7 +298,9 @@ const CMDS = {
 
   /** רישום תשובה: record <bct> "<answer>" ["<captured>"] */
   async record(bct, answer, captured) {
-    const s = load();
+    const f = await fresh();
+    if (f.err) return void out(f.err);
+    const s = f.s;
     if (!s.cbt.active) return out({ error: 'אין סשן פתוח' });
     if (!bct || !P.requiredBcts().includes(bct)) return out({ error: `bct לא מוכר: ${bct}` });
     s.cbt = S.recordBct(s.cbt, bct, captured || answer || null);
@@ -261,8 +314,11 @@ const CMDS = {
   },
 
   /** סגירה — מחזיר גם את הפרומפט לפורמולציה */
-  close() {
-    const s = load(); const iso = today();
+  async close() {
+    const iso = today();
+    const pulled = await fresh();
+    if (pulled.err) return void out(pulled.err);
+    const s = pulled.s;
     if (!s.cbt.active) return out({ error: 'אין סשן פתוח' });
     const sess = P.byId(s.cbt.active.id);
     const f = P.fidelity(sess, s.cbt.active.done);   // תצוגה בלבד — finish הוא שסוגר
@@ -287,11 +343,14 @@ const CMDS = {
    * מתבטא בתזכורת שחוזרת על סשן שנסגר — או גרוע יותר, בשתיקה על סשן
    * שלא רץ.
    */
-  async push() { out(await pushMirror(load())); },
+  async push(flag) { out(await pushMirror(load(), { force: flag === '--force' })); },
 
   /** סגירה סופית עם הדפוס */
   async finish(formulation) {
-    const s = load(); const iso = today();
+    const iso = today();
+    const f = await fresh();
+    if (f.err) return void out(f.err);
+    const s = f.s;
     if (!s.cbt.active) return out({ error: 'אין סשן פתוח' });
     const id = s.cbt.active.id;
     if (formulation && !/^NONE$/i.test(formulation.trim())) {

@@ -37,6 +37,20 @@ export const EMPTY_CBT = {
   active: null,            // סשן שרץ עכשיו
 };
 
+/**
+ * רק השדות שמצב CBT באמת מכיל.
+ *
+ * `migrateCbt` הוא `{...EMPTY_CBT, ...cbt}` ולכן **משמר כל מפתח זר**.
+ * דגל `force: true` שנשלח פעם אחת נכתב ל-KV, חזר ב-GET, ונשמר לקובץ
+ * שבגיט — דגל חד-פעמי שהפך למצב קבוע. כל קלט חיצוני עובר דרך כאן.
+ */
+export const pickCbtFields = (o) => {
+  const out = {};
+  if (!o || typeof o !== 'object') return out;
+  for (const k of Object.keys(EMPTY_CBT)) if (k in o) out[k] = o[k];
+  return out;
+};
+
 /** מיגרציה — אותו דפוס כמו PLAN_VER, רץ בכל קריאה ולא רק בשדרוג */
 export function migrateCbt(cbt) {
   if (!cbt) return { ...EMPTY_CBT };
@@ -178,10 +192,17 @@ export function completeSession(cbt, iso) {
     missed: f.missed,
     complete: canComplete(s, cbt.active.done).ok,
   };
+  // ═══ סגירה כפולה לא נספרת פעמיים ═══
+  //
+  // `finish` בסוכן בודק רק את ה-`active` המקומי. אם הסשן כבר נסגר
+  // בטלגרם, הסגירה השנייה הוסיפה `maint:0` פעם נוספת — ו-`dueSession`
+  // סופר לפי קידומת, כך שכל כפילות **דוחה את הסשן הבא בשבוע**.
+  // `fidelityReport` גם ספר את ההערה פעמיים.
+  const dup = cbt.sessionsDone.includes(cbt.active.id);
   return {
     ...cbt,
-    sessionsDone: [...cbt.sessionsDone, cbt.active.id],
-    notes: [...cbt.notes, note].slice(-20),
+    sessionsDone: dup ? cbt.sessionsDone : [...cbt.sessionsDone, cbt.active.id],
+    notes: dup ? cbt.notes : [...cbt.notes, note].slice(-20),
     active: null,
   };
 }
@@ -292,4 +313,30 @@ export function fidelityLine(cbt) {
     bits.push(`נשמט הכי הרבה: ${r.topMissed[0].bct}`);
   }
   return bits.join(' · ');
+}
+
+/**
+ * ההחלטה של `/cbt-state` POST — **מחוץ ל-I/O, ולכן נבדקת**.
+ *
+ * ═══ למה זה חולץ ═══
+ *
+ * ההחלטה ישבה בתוך ה-handler, וה-worker המדומה בבדיקות שכפל אותה
+ * במקום להריץ אותה. שתי מוטציות על ההגנה האמיתית עברו — כי מה שנבדק
+ * היה ההעתק. מוק ששוכפל ממנו הקוד עובר בדיוק כשהמקור נשבר.
+ *
+ * מחזיר `{cbt}` לכתיבה, או `{conflict}` ל-409.
+ */
+export function applyCbtPush(current, body) {
+  const cur = migrateCbt(current);
+  if (!body || !Array.isArray(body.sessionsDone)) return { bad: true };
+  // סשן פתוח בבוט אינו נדרס. התנאי הקודם בדק `!b.active` בלבד, כלומר
+  // התיר **החלפה** של סשן פתוח וחסם רק מחיקה.
+  const a = body.active;
+  const clash = !!cur.active &&
+    (!a || a.id !== cur.active.id || a.iso !== cur.active.iso);
+  if (clash && !body.force) {
+    return { conflict: true, why: 'סשן פתוח בבוט', active: cur.active.id };
+  }
+  // רק מפתחות מוכרים — אחרת `force` וכל שדה זר נשמרים לנצח.
+  return { cbt: migrateCbt(pickCbtFields(body)) };
 }
