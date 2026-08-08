@@ -11,7 +11,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { readFileSync, writeFileSync, existsSync, rmSync, realpathSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, rmSync, realpathSync, mkdtempSync, readdirSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { relative, isAbsolute } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
@@ -19,7 +20,13 @@ import { dirname, join } from 'node:path';
 const HERE = dirname(fileURLToPath(import.meta.url));
 const RUN = join(HERE, '..', 'scripts', 'cbt-session.mjs');
 const REPO = join(HERE, '..');
-const CBT = join(REPO, 'cbt-state');
+// ═══ תיקיית מצב מבודדת ═══
+//
+// `reset()` למטה כותבת ישירות לקובץ המצב. כשהוא היה הקובץ שבגיט,
+// הרצת בדיקות **מחקה היסטוריית טיפול אמיתית** — אומת בניסוי: שני
+// סשנים, דפוס והערה נעלמו אחרי `npm test`.
+const CBT = mkdtempSync(join(tmpdir(), 'cbt-test-'));
+const REAL_CBT = join(REPO, 'cbt-state');
 const CBT_LIB = join(REPO, '..', 'cbt');
 const SRC_DIR = join(REPO, 'src');
 /** מצב עשיר — הכלים שמייצרים HTML צריכים טריגר, יעד וכיסוי */
@@ -33,7 +40,7 @@ const RICH_STATE = { iso: '2026-08-08', dayNum: 15, cleanDays: 14, gum7: 50,
 // `CBT_OFFLINE` ולא פורט מת: פורט מת פירושו עכשיו "הבוט לא נענה", וזה
 // **עוצר את הכתיבה** — בכוונה, כי מצב שלא ידוע אם הוא טרי אינו בסיס
 // לדריסה. `CBT_OFFLINE` הוא הצהרת כוונה, ולכן ממשיך עם המקומי.
-const OFFLINE = { CBT_OFFLINE: '1' };
+const OFFLINE = { CBT_OFFLINE: '1', CBT_STATE_DIR: CBT };
 /**
  * מריץ פקודה ומחזיר את ה-JSON.
  *
@@ -104,19 +111,27 @@ test('sync כותב רק לתצלום ולא נוגע במצב ה-CBT', () => {
     'sync שינה מצב שאינו בבעלותו');
 });
 
-test('sync מעדיף נתונים חיים, ולא משתיק נפילה לגיבוי', () => {
+test('sync מעדיף נתונים חיים, ולא משתיק נפילה לגיבוי', async () => {
   // הסוד יושב מקומית כל הזמן — הגרסה הראשונה בכל זאת הגישה גיבוי בן
   // ארבעה ימים בשקט. אם הבוט לא נענה זה בסדר, אבל **המקור חייב לומר
   // זאת**, כי כלי האימות מציג את המספרים כעובדה מדודה.
-  // הבדיקה הזו **כן** צריכה את הבוט החי — היא בודקת בדיוק את זה.
-  const live = cliEnv({ CBT_OFFLINE: undefined, CBT_WORKER: undefined }, 'sync');
-  assert.match(live.source, /חי/, `לא נשלף חי: ${live.source}`);
+  //
+  // מול worker מדומה ולא מול הפרודקשן: הגרסה הקודמת פנתה לאינטרנט,
+  // ולכן `npm test` נכשל במצב טיסה ותוצאתו הייתה תלויה בשירות חיצוני.
+  const w = await fakeWorker();
+  try {
+    const live = await cliAt(w, 'sync');
+    assert.match(live.source, /חי/, `לא נשלף חי: ${live.source}`);
+    assert.equal(live.syncedISO, '2026-08-08', 'התאריך לא מהתשובה של הבוט');
+    assert.equal(live.synced, 14);
+  } finally { await w.close(); }
 
-  // כופים נפילה — אחרת הענף לא רץ כשיש רשת, והבדיקה שומרת על כלום.
+  // כופים נפילה — אחרת הענף לא רץ, והמוטציה שמשתיקה את ההודעה עוברת.
   const fell = cliEnv({ CBT_OFFLINE: undefined, CBT_WORKER: 'http://127.0.0.1:1' }, 'sync');
   assert.match(fell.source, /לא נענה/, `נפילה לגיבוי הוסתרה: ${fell.source}`);
-  cli('sync');                                     // מחזירים נתונים טריים
+  cli('sync');
 });
+
 
 test('גיל הנתונים מדווח אמיתי ולא נופל להיום', () => {
   // הגרסה הראשונה נפלה ל-today() כשהרשומה לא נשאה iso, והציגה גיבוי
@@ -132,20 +147,25 @@ test('סטטוס מסמן נתונים ישנים', () => {
   assert.match(s.dataAge, /ימים|לא סונכרן/);
 });
 
-test('המצב יושב בתוך הריפו — לא בנתיב שנמחק בבנייה מחדש', () => {
+test('ברירת המחדל של המצב יושבת בתוך הריפו ומחוץ לנתיב המחיקה', () => {
   // שני באגים אמיתיים שהתגלו יחד:
-  //   • `cbt/` אינו ריפו כלל — רק `telegram-bot/` הוא. קובץ שם לא
-  //     מנוהל גרסאות ולא ניתן לשחזור.
+  //   • `cbt/` אינו ריפו כלל — רק `telegram-bot/` הוא.
   //   • `extraction/build_cbt.py` עושה rmtree על `cbt/`, וה-CLAUDE.md
-  //     מנחה להריץ אותו אחרי הוספת ספר — תחזוקה שגרתית שהייתה מוחקת
-  //     בשקט את כל היסטוריית הטיפול.
+  //     מנחה להריץ אותו אחרי הוספת ספר.
+  //
+  // הנתיב ניתן עכשיו לדריסה (`CBT_STATE_DIR`) כדי שבדיקות לא ימחקו
+  // טיפול אמיתי — ולכן נבדקת **ברירת המחדל**, לא הביטוי.
   const src = readFileSync(RUN, 'utf8');
-  const paths = [...src.matchAll(/const (STATE|SNAP) = ([^;]+);/g)].map(m => m[2]);
-  assert.equal(paths.length, 2, 'לא נמצאו שני נתיבי מצב');
-  for (const p of paths) {
-    assert.ok(/REPO/.test(p), `נתיב מחוץ לריפו: ${p}`);
-    assert.ok(!/'cbt'/.test(p), `נתיב בתוך תיקיית ה-RAG שנמחקת: ${p}`);
+  const def = src.match(/const STATE_DIR = process\.env\.CBT_STATE_DIR \|\| ([^;]+);/);
+  assert.ok(def, 'אין ברירת מחדל לנתיב המצב');
+  assert.match(def[1], /REPO/, `ברירת המחדל מחוץ לריפו: ${def[1]}`);
+  assert.ok(!/'cbt'/.test(def[1]), `ברירת המחדל בתיקיית ה-RAG שנמחקת: ${def[1]}`);
+
+  // שני הקבצים נגזרים מ-STATE_DIR ולא מנתיב עצמאי
+  for (const [, expr] of src.matchAll(/const (?:STATE|SNAP) = join\(([^;]+)\);/g)) {
+    assert.match(expr, /STATE_DIR/, `נתיב שאינו נגזר מ-STATE_DIR: ${expr}`);
   }
+
   // והבנאי עדיין באמת מוחק — כלומר הבדיקה שומרת על משהו חי
   const builder = join(REPO, '..', 'extraction', 'build_cbt.py');
   if (existsSync(builder)) {
@@ -153,6 +173,16 @@ test('המצב יושב בתוך הריפו — לא בנתיב שנמחק בב�
       'הבנאי כבר לא מוחק — עדכן את הנימוק בבדיקה הזו');
   }
 });
+
+test('הרצת בדיקות אינה נוגעת בקובץ המצב האמיתי', () => {
+  // אומת בניסוי לפני התיקון: שתילת שני סשנים, דפוס והערה, ואז
+  // `npm test` — שלושתם נמחקו.
+  assert.notEqual(CBT, REAL_CBT, 'הבדיקות עובדות על הקובץ האמיתי');
+  assert.match(CBT, /cbt-test-/, 'תיקיית הבדיקות אינה זמנית');
+  // ו-OFFLINE מעביר אותה לכל הרצת CLI
+  assert.equal(OFFLINE.CBT_STATE_DIR, CBT, 'ה-CLI לא מקבל את התיקייה המבודדת');
+});
+
 
 test('קובץ המצב במעקב גיט, התצלום לא', () => {
   const tracked = (f) => {
@@ -412,6 +442,19 @@ function fakeWorker(initial = {}) {
     req.on('end', () => {
       const url = new URL(req.url, 'http://x');
       log.push({ method: req.method, path: url.pathname, body: body || null });
+      // `/export` — כדי ש-`sync` ייבדק בלי הבוט החי. הבדיקה הקודמת
+      // ניקתה `CBT_WORKER` ופנתה לפרודקשן, ולכן `npm test` נכשל במצב
+      // לא-מקוון ותוצאתו הייתה תלויה בזמינות שירות חיצוני.
+      if (url.pathname === '/export') {
+        res.writeHead(200, { 'content-type': 'application/json' });
+        return void res.end(JSON.stringify({
+          exportedAt: '2026-08-08',
+          days: Array.from({ length: 14 }, (_, i) => ({
+            iso: new Date(Date.parse('2026-08-08') - i * 864e5).toISOString().slice(0, 10),
+            gum: 4, patch: true, waves: 1, slips: 0,
+          })),
+        }));
+      }
       if (url.pathname !== '/cbt-state') { res.writeHead(404).end('no'); return; }
       if (req.method === 'POST') {
         // **ההחלטה האמיתית**, לא העתק שלה. הגרסה הראשונה שכפלה כאן את
@@ -450,7 +493,7 @@ function fakeWorker(initial = {}) {
  * עד ה-timeout של ה-fetch.
  */
 const cliAt = async (worker, ...a) => {
-  const env = { ...process.env, CBT_WORKER: worker.url };
+  const env = { ...process.env, CBT_WORKER: worker.url, CBT_STATE_DIR: CBT };
   delete env.CBT_OFFLINE;
   try {
     const { stdout } = await execFileP('node', [RUN, ...a], { encoding: 'utf8', env });
@@ -508,7 +551,7 @@ test('סשן פתוח בבוט חוסם דחיפה מתנגשת — 409 מדוו
 test('משיכה שנכשלה עוצרת את הכתיבה', async () => {
   // מצב שלא ידוע אם הוא טרי אינו בסיס לדריסה — זה המסלול שאיבד נתונים.
   const dead = { url: 'http://127.0.0.1:1' };
-  const env = { ...process.env, CBT_WORKER: dead.url };
+  const env = { ...process.env, CBT_WORKER: dead.url, CBT_STATE_DIR: CBT };
   delete env.CBT_OFFLINE;
   const run = (...a) => runCli(env, a);
   for (const cmd of ['start', 'next', 'record', 'close', 'finish']) {
@@ -900,4 +943,112 @@ test('close על סשן שנמשך מ-KV מפיק פורמולציה', async () 
     assert.ok(fin.note.bcts.length >= 4,
       `ההערה רשמה ${fin.note.bcts.length} כלים — נבנתה מקובץ ריק`);
   } finally { await w.close(); reset(); }
+});
+
+// ==========================================================================
+//  גילוי המודול מחוץ ל-Claude Code
+//
+//  `AGENTS.md` — מה ש-Gemini/Antigravity קורא — היה זהה בתים ל-`CLAUDE.md`
+//  ותיאר פרסונה אחרת לגמרי: ספרן שעונה משלושה ספרים, **אפס אזכורים של
+//  cbt**. סוכן שם שהתבקש "בוא נעשה סשן" ביצע אחזור מהספרים; שום סשן לא
+//  נפתח, `sessionsDone` לא גדל, והתזכורת המשיכה לירות.
+//
+//  התזכורת של הבוט מזכירה את Antigravity בשמה — הנתיב הזה מתוכנן לשימוש.
+// ==========================================================================
+
+const ROOT_DIR = join(REPO, '..');
+
+test('AGENTS.md מתאר את מודול ה-CBT ומצביע לסקיל', () => {
+  const doc = readFileSync(join(ROOT_DIR, 'AGENTS.md'), 'utf8');
+  assert.match(doc, /cbt-session\/SKILL\.md/, 'אין הפניה לסקיל');
+  assert.match(doc, /cbt-session\.mjs/, 'אין הפניה לסקריפט');
+  // מילות ההפעלה — בלעדיהן הסוכן לא יידע מתי להחליף מצב
+  for (const w of ['סשן', 'טיפול']) {
+    assert.ok(doc.includes(w), `מילת ההפעלה "${w}" חסרה`);
+  }
+});
+
+test('AGENTS.md ו-CLAUDE.md נשארים זהים', () => {
+  // שני סוכנים שונים קוראים קבצים שונים. הפרש ביניהם פירושו שהתנהגות
+  // מתוקנת במקום אחד ולא בשני — וזה בדיוק איך המודול נעלם ב-Antigravity.
+  const a = readFileSync(join(ROOT_DIR, 'AGENTS.md'), 'utf8');
+  const c = readFileSync(join(ROOT_DIR, 'CLAUDE.md'), 'utf8');
+  assert.equal(a, c, 'AGENTS.md ו-CLAUDE.md נפרדו');
+});
+
+test('הסקיל שה-AGENTS.md מצביע אליו באמת קיים', () => {
+  assert.ok(existsSync(join(REPO, 'skills', 'cbt-session', 'SKILL.md')),
+    'ההפניה שבורה');
+});
+
+// ==========================================================================
+//  שני חוזים שנשברו בשקט
+// ==========================================================================
+
+test('status ו-start מסכימים על מה שאפשר לפתוח', async () => {
+  // `status` לא העביר `lastISO`, ולכן התעלם ממרווח 5 הימים והציע סשן
+  // ש-`start` מסרב לפתוח. ה-SKILL מורה לסוכן לסמוך על `due`, אז הוא
+  // מכריז על סשן ואז מקבל שגיאה שנאמר לו שפירושה "אין מה להריץ".
+  const P = await import('../src/cbt/protocol.js');
+  const SESS = await import('../src/cbt/session.js');
+  const S = await import('../src/cbt/state.js');
+
+  const cases = [
+    { sessionsDone: [], notes: [] },
+    { sessionsDone: ['intake'], notes: [{ id: 'intake', iso: '2026-08-14', score: 1, missed: [], bcts: [], complete: true }] },
+    { sessionsDone: ['intake'], notes: [{ id: 'intake', iso: '2026-08-01', score: 1, missed: [], bcts: [], complete: true }] },
+  ];
+  for (const c of cases) {
+    const cbt = { ...S.migrateCbt(null), startISO: '2026-08-07', ...c };
+    for (const iso of ['2026-08-16', '2026-08-20', '2026-09-05']) {
+      const last = SESS.lastSessionISO(cbt);
+      const statusDue = P.dueSession(iso, cbt.sessionsDone, cbt.startISO, last);
+      const started = SESS.openSession(cbt, iso);
+      if (statusDue) {
+        assert.ok(!started.error,
+          `status הציע ${statusDue.id} ב-${iso} ו-start החזיר ${started.error}`);
+      }
+    }
+  }
+});
+
+test('status מעביר lastISO — לא רק במקרה', () => {
+  const src = readFileSync(RUN, 'utf8')
+    .replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+  const m = src.match(/const due = P\.dueSession\(([^;]+)\);/);
+  assert.ok(m, 'לא נמצאה הקריאה');
+  assert.match(m[1], /lastISO/, `status מחשב בלי מרווח: ${m[1]}`);
+});
+
+test('שאילתת האחזור של הסוכן מייצרת מונחים אמיתיים', async () => {
+  // `${tool.name} ${tool.id}` — שם עברי ומזהה עם מקף — התפרק לטוקן
+  // אחד שאינו בפוסטינגס. BM25 תרם אפס.
+  const R = await import('../src/cbt/retrieve.js');
+  const src = readFileSync(RUN, 'utf8')
+    .replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+  const m = src.match(/sources: await fetchSources\(([^,]+),/);
+  assert.ok(m, 'לא נמצאה קריאת האחזור');
+  assert.doesNotMatch(m[1], /tool\.name/, 'שם עברי בשאילתה מול קורפוס אנגלי');
+  assert.match(m[1], /replace\(\/-\/g/, 'המקף לא מפוצל');
+
+  // וההוכחה שזה משנה
+  assert.ok(R.queryTerms('identify triggers').length >= 2, 'הפיצול לא עובד');
+  const split = R.pickSections('identify triggers', { bct: 'identify-triggers' })[0];
+  const joined = R.pickSections('identify-triggers', { bct: 'identify-triggers' })[0];
+  assert.ok(split.score > joined.score,
+    `מפוצל ${split.score} מול מחובר ${joined.score} — הפיצול לא משפר`);
+});
+
+test('שום בדיקה אינה פונה לוורקר החי', () => {
+  // בדיקה אחת ניקתה `CBT_WORKER` ופנתה לפרודקשן, ולכן `npm test` נכשל
+  // במצב טיסה ותוצאתו הייתה תלויה בזמינות שירות חיצוני. בדיקה שאינה
+  // דטרמיניסטית אינה בדיקה.
+  const files = readdirSync(join(REPO, 'test')).filter(f => f.endsWith('.test.mjs'));
+  for (const f of files) {
+    const src = readFileSync(join(REPO, 'test', f), 'utf8')
+      .replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+    assert.doesNotMatch(src, /workers\.dev/, `${f} מקודד את הוורקר החי`);
+    assert.doesNotMatch(src, /CBT_WORKER:\s*undefined/,
+      `${f} מנקה את CBT_WORKER — כלומר נופל לפרודקשן`);
+  }
 });

@@ -22,7 +22,7 @@
  * `active` מונע התנגשות: הבוט מסרב לקבל דחיפה שתדרוס סשן שפתוח בו.
  */
 
-import { readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as P from '../src/cbt/protocol.js';
@@ -53,10 +53,20 @@ const REPO = join(HERE, '..');
 //      כלומר תחזוקה שגרתית הייתה **מוחקת בשקט את כל היסטוריית הטיפול**.
 //
 // כאן הוא מנוהל גרסאות, נדחף עם הבוט, ומחוץ לנתיב המחיקה.
-const STATE = join(REPO, 'cbt-state', 'session-state.json');
+//
+// ═══ ניתן לדריסה — כדי שהרצת בדיקות לא תמחק טיפול אמיתי ═══
+//
+// `reset()` בבדיקות כותבת ישירות לקובץ הזה. אומת בניסוי: שתילת
+// `sessionsDone: ['intake','wk3']`, דפוס והערה, ואז `npm test` —
+// **שלושתם נמחקו**. היום הקובץ ריק ולכן לא אבד דבר; אחרי הסשן האמיתי
+// הראשון, כל הרצת בדיקות תמחק אותו.
+//
+// הבדיקות מצביעות ל-`mkdtemp`, והפרודקשן נשאר בברירת המחדל.
+const STATE_DIR = process.env.CBT_STATE_DIR || join(REPO, 'cbt-state');
+const STATE = join(STATE_DIR, 'session-state.json');
 // תצלום נתוני הבוט — **נגזר, לא בבעלות**, ולכן מחוץ לגיט. בלי ההפרדה
 // כל sync היה מייצר diff של 17KB על נתונים שהבוט כבר מחזיק.
-const SNAP = join(REPO, 'cbt-state', '.bot-snapshot.json');
+const SNAP = join(STATE_DIR, '.bot-snapshot.json');
 // ניתן לדריסה כדי שהבדיקות יוכלו לכפות את מסלול הנפילה. בלי זה הענף
 // הזה לא רץ אף פעם כשיש רשת, והמוטציה שמשתיקה את ההודעה עוברת.
 const WORKER = process.env.CBT_WORKER || 'https://kobi-stop-smoking-bot.kobiamit.workers.dev';
@@ -91,6 +101,7 @@ const corruptError = (s) => s._corrupt && {
 };
 
 const save = (s) => {
+  if (!existsSync(STATE_DIR)) mkdirSync(STATE_DIR, { recursive: true });
   const { days, syncedISO, ...own } = s;
   writeFileSync(STATE, JSON.stringify(own, null, 2) + '\n', 'utf8');
   if (days) writeFileSync(SNAP, JSON.stringify({ days, syncedISO }, null, 2) + '\n', 'utf8');
@@ -266,7 +277,13 @@ const CMDS = {
     const f = await fresh();
     if (f.err) return void out(f.err);
     const s = f.s;
-    const due = P.dueSession(iso, s.cbt.sessionsDone, s.cbt.startISO || iso);
+    // ═══ אותו חישוב כמו `start` ═══
+    //
+    // `lastISO` לא הועבר כאן, ולכן `status` התעלם ממרווח 5 הימים
+    // והציע סשן ש-`start` מסרב לפתוח. אומת: `status → wk3`,
+    // `start → none-due`. ה-SKILL מורה לסוכן לסמוך על `due`.
+    const lastISO = SESS.lastSessionISO(s.cbt);
+    const due = P.dueSession(iso, s.cbt.sessionsDone, s.cbt.startISO || iso, lastISO);
     out({
       today: iso,
       dataAge: s.syncedISO
@@ -352,7 +369,16 @@ const CMDS = {
         exemplars: E.exemplarText(tool.id),
         critique: E.CRITIQUE_RULES,
         // הרקע המקצועי — לביסוס הניסוח, לא לציטוט.
-        sources: await fetchSources(`${tool.name} ${tool.id}`, tool.id),
+        // ═══ מונחים, לא מזהה ═══
+        //
+        // היה `${tool.name} ${tool.id}` — שם עברי ומזהה עם מקף. המקף
+        // בתוך מחלקת התווים של הטוקנייזר, ולכן `identify-triggers` הוא
+        // **טוקן אחד** שאינו בפוסטינגס, והשם העברי לא נפגש עם קורפוס
+        // אנגלי. BM25 תרם אפס והדירוג התמוטט לתג ה-BCT בלבד — בדיוק
+        // ההתנהגות שקדמה ל-BM25.
+        //
+        // תוקן ב-`engine.js` ואתר הקריאה כאן נשאר מאחור.
+        sources: await fetchSources(tool.id.replace(/-/g, ' '), tool.id),
       },
     });
   },
