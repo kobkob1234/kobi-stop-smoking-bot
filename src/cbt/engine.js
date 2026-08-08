@@ -550,9 +550,12 @@ export function classifyTriage(raw) {
 /** openingContext → משפט קצר. בלי זה הרצף משלב 4 נבנה ולא בשימוש. */
 export function describeOpening(b) {
   switch (b.kind) {
-    case 'homework':   return `שיעורי בית פתוחים מלפני ${b.daysAgo} ימים: "${b.text}"`;
+    case 'homework':   return b.daysAgo == null
+      ? `שיעורי בית פתוחים: "${b.text}"`
+      : `שיעורי בית פתוחים מלפני ${b.daysAgo} ימים: "${b.text}"`;
     case 'confidence': return `הביטחון ${b.from > b.to ? 'ירד' : 'עלה'} ${b.from}→${b.to}`;
-    case 'last':       return `הסשן הקודם היה לפני ${b.daysAgo} ימים`;
+    case 'last':       return b.daysAgo == null ? null
+      : `הסשן הקודם היה לפני ${b.daysAgo} ימים`;
     default:           return null;
   }
 }

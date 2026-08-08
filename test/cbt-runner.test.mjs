@@ -29,12 +29,26 @@ const SRC_DIR = join(REPO, 'src');
 // **עוצר את הכתיבה** — בכוונה, כי מצב שלא ידוע אם הוא טרי אינו בסיס
 // לדריסה. `CBT_OFFLINE` הוא הצהרת כוונה, ולכן ממשיך עם המקומי.
 const OFFLINE = { CBT_OFFLINE: '1' };
-const cli = (...a) => JSON.parse(execFileSync('node', [RUN, ...a],
-  { encoding: 'utf8', env: { ...process.env, ...OFFLINE } }));
+/**
+ * מריץ פקודה ומחזיר את ה-JSON.
+ *
+ * **סובל exit code 1**: כל מסלול שגיאה יצא ב-0, ולכן קורא שבודק `$?`
+ * ראה הצלחה על "אין סשן פתוח". עכשיו שגיאה מסמנת, ו-`execFileSync`
+ * זורק — אבל ה-JSON עדיין ב-stdout וזה מה שהבדיקות רוצות לקרוא.
+ */
+const runCli = (env, a) => {
+  try {
+    return JSON.parse(execFileSync('node', [RUN, ...a], { encoding: 'utf8', env }));
+  } catch (e) {
+    if (e.stdout) return JSON.parse(e.stdout);
+    throw e;
+  }
+};
+const cli = (...a) => runCli({ ...process.env, ...OFFLINE }, a);
 const cliEnv = (env, ...a) => {
   const e = { ...process.env, ...OFFLINE, ...env };
   for (const k of Object.keys(e)) if (e[k] === undefined) delete e[k];
-  return JSON.parse(execFileSync('node', [RUN, ...a], { encoding: 'utf8', env: e }));
+  return runCli(e, a);
 };
 
 /**
@@ -187,7 +201,7 @@ test('bct לא מוכר נדחה', () => {
   const st = cli('status');
   if (!st.active) cli('start');
   const r = cli('record', 'לא-קיים', 'x');
-  assert.match(r.error || '', /לא מוכר/);
+  assert.match(r.error || '', /אינו בצ׳קליסט/);
 });
 
 test('next מגיש את כל ההקשר שהמנוע היה שולח למודל', () => {
@@ -430,11 +444,15 @@ function fakeWorker(initial = {}) {
  * עד ה-timeout של ה-fetch.
  */
 const cliAt = async (worker, ...a) => {
-  const { stdout } = await execFileP('node', [RUN, ...a], {
-    encoding: 'utf8',
-    env: { ...process.env, CBT_OFFLINE: undefined, CBT_WORKER: worker.url },
-  });
-  return JSON.parse(stdout);
+  const env = { ...process.env, CBT_WORKER: worker.url };
+  delete env.CBT_OFFLINE;
+  try {
+    const { stdout } = await execFileP('node', [RUN, ...a], { encoding: 'utf8', env });
+    return JSON.parse(stdout);
+  } catch (e) {
+    if (e.stdout) return JSON.parse(e.stdout);
+    throw e;
+  }
 };
 
 test('כל פקודה מוטציונית מושכת מ-KV לפני שהיא כותבת', async () => {
@@ -484,9 +502,9 @@ test('סשן פתוח בבוט חוסם דחיפה מתנגשת — 409 מדוו
 test('משיכה שנכשלה עוצרת את הכתיבה', async () => {
   // מצב שלא ידוע אם הוא טרי אינו בסיס לדריסה — זה המסלול שאיבד נתונים.
   const dead = { url: 'http://127.0.0.1:1' };
-  const run = (...a) => JSON.parse(execFileSync('node', [RUN, ...a], {
-    encoding: 'utf8', env: { ...process.env, CBT_OFFLINE: undefined, CBT_WORKER: dead.url },
-  }));
+  const env = { ...process.env, CBT_WORKER: dead.url };
+  delete env.CBT_OFFLINE;
+  const run = (...a) => runCli(env, a);
   for (const cmd of ['start', 'next', 'record', 'close', 'finish']) {
     const r = run(cmd);
     assert.match(r.error || '', /למשוך מצב טרי/, `${cmd} כתב בלי מצב טרי`);
@@ -601,4 +619,122 @@ test('הבוט משתמש בהחלטה המחולצת ולא בעותק', () => 
     .replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
   assert.match(src, /applyCbtPush/, 'ה-endpoint אינו משתמש בהחלטה המחולצת');
   assert.doesNotMatch(src, /cur\.active && \(!b\.active/, 'ההגנה שוכפלה בחזרה ל-index');
+});
+
+
+// ==========================================================================
+//  התאוששות — מה שלא היה
+// ==========================================================================
+
+test('קובץ פגום אינו הורג את כל הפקודות', () => {
+  // `load()` היא השורה הראשונה של כל פקודה, ולכן `JSON.parse` שזורק
+  // הרג גם את `status` — לא הייתה דרך לאבחן, ולא הייתה פקודת התאוששות.
+  const f = join(CBT, 'session-state.json');
+  const bak = existsSync(f) ? readFileSync(f, 'utf8') : null;
+  try {
+    writeFileSync(f, '{"cbt":{');
+    const r = cli('status');
+    assert.match(r.error || '', /פגום/, 'קובץ פגום לא דווח');
+    assert.match(r.hint || '', /reset/, 'לא הוצע מסלול התאוששות');
+  } finally {
+    if (bak) writeFileSync(f, bak); else rmSync(f, { force: true });
+  }
+});
+
+test('reset בונה מחדש מ-KV', async () => {
+  const w = await fakeWorker({ sessionsDone: ['intake'] });
+  try {
+    const f = join(CBT, 'session-state.json');
+    writeFileSync(f, '{{{ פגום');
+    const r = await cliAt(w, 'reset');
+    assert.equal(r.reset, true, `reset נכשל: ${r.error}`);
+    assert.deepEqual(r.sessionsDone, ['intake'], 'לא נמשך מ-KV');
+    assert.ok(!cli('status').error, 'הקובץ עדיין פגום אחרי reset');
+  } finally { await w.close(); reset(); }
+});
+
+test('שגיאה מסמנת exit code', () => {
+  let code = 0;
+  try {
+    execFileSync('node', [RUN, 'record', 'לא-קיים'],
+      { encoding: 'utf8', env: { ...process.env, ...OFFLINE } });
+  } catch (e) { code = e.status; }
+  assert.equal(code, 1, 'מסלול שגיאה יצא ב-0');
+});
+
+test('פקודה מהפרוטוטייפ נדחית', () => {
+  // `CMDS['constructor']` היה אמיתי, ולכן הפקודה רצה ויצאה ב-0 בלי פלט.
+  for (const bad of ['constructor', 'toString', 'valueOf', 'hasOwnProperty']) {
+    let out = '';
+    try {
+      out = execFileSync('node', [RUN, bad], { encoding: 'utf8', env: { ...process.env, ...OFFLINE } });
+    } catch (e) { out = e.stdout || ''; }
+    assert.match(out, /לא מוכרת/, `${bad} התקבל כפקודה`);
+  }
+});
+
+test('record נדחה כשהכלי אינו בצ׳קליסט הפתוח', () => {
+  // `requiredBcts()` הוא האיחוד של כל הסשנים, ולכן כלי מסשן אחר התקבל,
+  // דיווח `recorded`, ולא הוריד כלום מ-`remaining`.
+  reset();
+  const st = cli('start');
+  if (st.error) return;
+  const notInIntake = 'relapse-prevention';
+  const r = cli('record', notInIntake, 'תשובה', 'ערך');
+  assert.match(r.error || '', /אינו בצ׳קליסט/, 'כלי מסשן אחר התקבל');
+  cli('close'); cli('finish', 'NONE'); reset();
+});
+
+test('record בלי ערך מחולץ מזהיר', () => {
+  // הנפילה לתשובה הגולמית הייתה ברירת המחדל — בדיוק הכשל שה-SKILL
+  // מזהיר מפניו: המשפט השלם נשמר כטריגר.
+  reset();
+  const st = cli('start');
+  if (st.error) return;
+  const n = cli('next');
+  const r = cli('record', n.tool, 'משפט שלם וארוך שהמשתמש אמר');
+  assert.ok(r.warning, 'לא הוזהר על היעדר חילוץ');
+  assert.equal(r.captured, null, 'התשובה הגולמית נשמרה כערך');
+  cli('close'); cli('finish', 'NONE'); reset();
+});
+
+test('הסוכן והבוט מחשבים את יעד המסטיק מאותו מקור', () => {
+  // `gumTarget: 9` היה קבוע בסוכן מול חישוב חי בבוט, ולכן ברגע
+  // שהצמצום ירד מתחת ל-9 הסוכן אמר "תת-שימוש" למי שעומד ביעד.
+  const src = readFileSync(RUN, 'utf8')
+    .replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+  assert.doesNotMatch(src, /gumTarget:\s*9\b/, 'יעד המסטיק קבוע בסוכן');
+  assert.match(src, /G\.dailyTarget\(/, 'היעד אינו נגזר מהתוכנית');
+  assert.match(src, /confirmedTaper/, 'מצב הצמצום אינו מועבר');
+});
+
+test('sync מדווח כל מקור בנפרד ולא מסתיר נפילה', () => {
+  // נתיב קובץ שגוי הפך `!file` ל-false ולכן דילג על השליפה החיה
+  // לגמרי — ודיווח "הבוט לא נענה" בלי לפנות אליו.
+  const bad = cli('sync', '/no/such/path.json');
+  assert.match(bad.error || '', /לא נמצא/, 'נתיב שגוי לא דווח');
+  assert.ok(!bad.source, 'נתיב שגוי דיווח מקור');
+
+  // גיבוי — כי OFFLINE מונע את הבוט
+  const off = cli('sync');
+  assert.match(off.source || '', /backups/, `מקור לא צפוי: ${off.source}`);
+  assert.match(off.source, /לא נענה/, 'הנפילה לגיבוי לא סומנה');
+});
+
+test('sync על קובץ פגום אינו זורק', () => {
+  const f = join(CBT, '.bad-export.json');
+  try {
+    writeFileSync(f, '{"days": ');
+    const r = cli('sync', f);
+    assert.match(r.error || '', /פגום/, 'קובץ פגום לא דווח כשגיאה');
+  } finally { rmSync(f, { force: true }); }
+});
+
+test('sync על קובץ בלי מערך ימים אינו זורק', () => {
+  const f = join(CBT, '.bad-export2.json');
+  try {
+    writeFileSync(f, '{"meta": {}}');
+    const r = cli('sync', f);
+    assert.match(r.error || '', /מערך ימים/, 'אובייקט בלי days לא דווח');
+  } finally { rmSync(f, { force: true }); }
 });

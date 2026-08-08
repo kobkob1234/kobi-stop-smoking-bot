@@ -277,3 +277,60 @@ test('בדיקת ההתקדמות מסמנת כיסוי חלקי', () => {
   assert.match(T.byId('review-progress').run(low).text, /2\/7/,
     'לא נאמר שהכיסוי חלקי');
 });
+
+
+// ==========================================================================
+//  קלט פגום — כל אחד מאלה הפיל את /טיפול ב-500
+//
+//  `migrateCbt` נעצר ב-`Array.isArray`, ולכן **מערך תקין עם תוכן פגום**
+//  עבר. `/cbt-state` POST הוא הנתיב הישיר פנימה, וכל ערך כזה נשמר ל-KV
+//  והמשיך להפיל כל בקשה עד עריכה ידנית.
+// ==========================================================================
+
+const survives = (bad) => {
+  const c = S.migrateCbt(bad);
+  P.fidelity(c.active ? P.byId(c.active.id) : P.byId('intake'), c.active?.done || []);
+  S.fidelityReport(c);
+  S.openingContext(c, '2026-08-08');
+  S.toolState(c, [], { clean: 5, gumTarget: 6 }, '2026-08-08');
+  return c;
+};
+
+test('active פגום מנוטרל ולא מפיל את fidelity', () => {
+  assert.equal(survives({ active: {} }).active, null);
+  assert.equal(survives({ active: { id: 'לא-קיים' } }).active, null);
+  assert.equal(survives({ active: { id: 'intake', remaining: 'x', done: null } })
+    .active.remaining.length, 0);
+});
+
+test('notes פגומים מסוננים — fidelityReport לא זורק', () => {
+  // רשומה חייבת גם תאריך — בלעדיו `openingContext` קרס על diffDays.
+  const c = survives({ notes: [null, { score: 1, missed: [], iso: '2026-08-01' },
+                               { score: 'x', missed: [], iso: '2026-08-02' },
+                               { score: 1, missed: [] }] });
+  assert.equal(c.notes.length, 1, `שרדו ${c.notes.length} רשומות`);
+});
+
+test('confidence פגום מסונן — openingContext לא זורק', () => {
+  assert.equal(survives({ confidence: [null, null, { v: 6 }] }).confidence.length, 1);
+});
+
+test('homework שאינו אובייקט מנוטרל', () => {
+  // "ש\"ב פתוחים מלפני NaN ימים: undefined" נשלח למשתמש.
+  assert.equal(survives({ homework: 'טקסט' }).homework, null);
+  assert.equal(survives({ homework: { text: 'ok' } }).homework.text, 'ok');
+});
+
+test('קלט שאינו אובייקט מחזיר מצב ריק', () => {
+  for (const bad of ['hello', [1, 2], 42, true]) {
+    const c = survives(bad);
+    assert.deepEqual(c.sessionsDone, [], `${JSON.stringify(bad)} השאיר זבל`);
+    assert.equal('0' in c, false, 'מחרוזת התפרקה לאינדקסים');
+  }
+});
+
+test('מפתחות זרים אינם שורדים דרך migrateCbt+pickCbtFields', () => {
+  const c = S.migrateCbt(S.pickCbtFields({ sessionsDone: [], force: true, x: 1 }));
+  assert.equal('force' in c, false);
+  assert.equal('x' in c, false);
+});

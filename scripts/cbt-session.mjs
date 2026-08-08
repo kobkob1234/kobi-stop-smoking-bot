@@ -32,6 +32,10 @@ import * as S from '../src/cbt/state.js';
 import * as SESS from '../src/cbt/session.js';
 import { pickSections } from '../src/cbt/retrieve.js';
 import { planFor, il } from '../src/plan.js';
+import * as G from '../src/gum.js';
+
+/** תוכנית המסטיק מהתצלום, או ברירת המחדל */
+const gumPlan = s => ({ ...G.DEFAULT_PLAN, ...(s.gumPlan || {}) });
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..', '..');
@@ -57,14 +61,33 @@ const SNAP = join(REPO, 'cbt-state', '.bot-snapshot.json');
 // הזה לא רץ אף פעם כשיש רשת, והמוטציה שמשתיקה את ההודעה עוברת.
 const WORKER = process.env.CBT_WORKER || 'https://kobi-stop-smoking-bot.kobiamit.workers.dev';
 
+/**
+ * קריאת JSON עמידה.
+ *
+ * `load()` היא השורה הראשונה של **כל** פקודה, ולכן `JSON.parse` שזורק
+ * הרג גם את `status` — כלומר לא הייתה שום דרך לאבחן. הרפו יושב תחת
+ * OneDrive, שבו קונפליקט סנכרון או כתיבה שנקטעה הם תרחיש ממשי, ולא
+ * הייתה פקודת התאוששות.
+ */
+const readJson = (path, fallback) => {
+  if (!existsSync(path)) return fallback;
+  try { return JSON.parse(readFileSync(path, 'utf8')); }
+  catch (e) { return { _corrupt: String(e.message || e), _path: path }; }
+};
+
 const load = () => {
-  const own = existsSync(STATE)
-    ? JSON.parse(readFileSync(STATE, 'utf8'))
-    : { cbt: S.migrateCbt(null), turns: [] };
-  const snap = existsSync(SNAP)
-    ? JSON.parse(readFileSync(SNAP, 'utf8'))
-    : { days: [], syncedISO: null };
-  return { ...own, cbt: S.migrateCbt(own.cbt), ...snap };
+  const own = readJson(STATE, { cbt: S.migrateCbt(null), turns: [] });
+  const snap = readJson(SNAP, { days: [], syncedISO: null });
+  const corrupt = own._corrupt ? own : (snap._corrupt ? snap : null);
+  return { ...own, cbt: S.migrateCbt(own.cbt), ...snap,
+           _corrupt: corrupt && { why: corrupt._corrupt, path: corrupt._path } };
+};
+
+/** כל פקודה נעצרת על מצב פגום — חוץ מ-`reset`, שקיימת בשבילו */
+const corruptError = (s) => s._corrupt && {
+  error: `קובץ מצב פגום: ${s._corrupt.why}`,
+  path: s._corrupt.path,
+  hint: 'הרץ `cbt-session.mjs reset` כדי לבנות אותו מחדש מ-KV.',
 };
 
 const save = (s) => {
@@ -78,12 +101,26 @@ const today = () => il().iso;
 function botState(s, iso) {
   const plan = planFor(iso) || {};
   return {
-    ...S.toolState(s.cbt, s.days || [], { ...plan, gumTarget: 9 }, iso),
+    // `gumTarget: 9` היה קבוע מול חישוב חי בבוט, ולכן ברגע שהצמצום
+    // ירד מתחת ל-9 הסוכן אמר "תת-שימוש" למי שעומד ביעד. `confirmedTaper`
+    // גם לא הועבר, ולכן `taperStarted` היה תמיד false בצד הזה.
+    ...S.toolState(s.cbt, s.days || [], {
+      ...plan,
+      gumTarget: G.dailyTarget(gumPlan(s), iso),
+      confirmedTaper: !!gumPlan(s).confirmedTaper,
+    }, iso),
     _stale: s.syncedISO ? Math.max(0, Math.round((Date.parse(iso) - Date.parse(s.syncedISO)) / 864e5)) : null,
   };
 }
 
-const out = (o) => console.log(JSON.stringify(o, null, 2));
+/**
+ * פלט יחיד. **שגיאה מסמנת exit code** — כל מסלול שגיאה יצא ב-0, ולכן
+ * קורא שבודק `$?` ראה הצלחה על "אין סשן פתוח".
+ */
+const out = (o) => {
+  if (o && o.error) process.exitCode = 1;
+  console.log(JSON.stringify(o, null, 2));
+};
 
 /**
  * אחזור לסוכן.
@@ -194,6 +231,8 @@ async function pullCbt() {
  */
 async function fresh() {
   const s = load();
+  const bad = corruptError(s);
+  if (bad) return { err: bad };
   const r = await pullCbt();
   if (r.error) return { err: { error: `לא הצלחתי למשוך מצב טרי: ${r.error}`, hint: 'המצב לא שונה. נסה שוב, או הרץ עם CBT_OFFLINE=1 אם אתה בכוונה בלי רשת.' } };
   if (r.cbt) { s.cbt = S.migrateCbt(r.cbt); save(s); }
@@ -302,14 +341,28 @@ const CMDS = {
     if (f.err) return void out(f.err);
     const s = f.s;
     if (!s.cbt.active) return out({ error: 'אין סשן פתוח' });
-    if (!bct || !P.requiredBcts().includes(bct)) return out({ error: `bct לא מוכר: ${bct}` });
-    s.cbt = S.recordBct(s.cbt, bct, captured || answer || null);
-    s.turns.push({ tool: bct, answer: answer || '', captured: captured || null });
+    // ═══ מול הצ׳קליסט הפעיל, לא מול כל 17 ה-BCT ═══
+    //
+    // `requiredBcts()` הוא האיחוד של כל הסשנים, ולכן `record` קיבל כלי
+    // שאינו בסשן הזה: `recordBct` סינן את `remaining` (no-op), הוסיף
+    // ל-`done`, ו-`applyCapture` בכל זאת רץ — כלומר טעות הקלדה אחת
+    // הפילה פריט מהצ׳קליסט בשקט ודיווחה `recorded`.
+    const open = s.cbt.active.remaining;
+    if (!bct || !open.includes(bct)) {
+      return out({ error: `bct אינו בצ׳קליסט הפתוח: ${bct}`, remaining: open });
+    }
+    // הנפילה לתשובה הגולמית הייתה **ברירת המחדל**, בדיוק הכשל
+    // שה-SKILL מזהיר מפניו: המשפט השלם נשמר כטריגר ומזין את הסשן הבא.
+    const val = captured || null;
+    s.cbt = S.recordBct(s.cbt, bct, val);
+    s.turns.push({ tool: bct, answer: answer || '', captured: val });
     save(s);
     // דחיפה בכל תור ולא רק בסוף: סשן שנקטע באמצע משאיר את מה שנאמר
     // ב-KV, ולא רק בקובץ מקומי שאיש לא יסתכל בו.
     const m = await pushMirror(s);
-    out({ recorded: bct, captured: captured || null,
+    out({ recorded: bct, captured: val,
+          ...(val ? {} : { warning: 'בלי ערך מחולץ — הכלי סומן כבוצע בלי תוכן. ' +
+                                    'ראה "החילוץ" ב-SKILL.' }),
           remaining: s.cbt.active.remaining.length, pushed: m.pushed });
   },
 
@@ -372,6 +425,23 @@ const CMDS = {
   },
 
   /**
+   * בנייה מחדש של הקובץ המקומי מ-KV.
+   *
+   * זו הייתה החסרה היחידה במסלול ההתאוששות: קובץ פגום עצר כל פקודה,
+   * כולל את זו שהייתה אמורה לאבחן אותו, והדרך היחידה קדימה הייתה
+   * עריכה ידנית של קובץ שהסקיל לא מזכיר בשמו.
+   */
+  async reset() {
+    const r = await pullCbt();
+    if (r.error) return void out({ error: `אין מצב טרי למשוך: ${r.error}`,
+                                   hint: 'ללא רשת אפשר למחוק את הקובץ ידנית.' });
+    const cbt = S.migrateCbt(r.cbt || null);
+    writeFileSync(STATE, JSON.stringify({ cbt, turns: [] }, null, 2) + '\n', 'utf8');
+    out({ reset: true, from: r.cbt ? 'KV' : 'ריק', sessionsDone: cbt.sessionsDone,
+          active: cbt.active ? cbt.active.id : null });
+  },
+
+  /**
    * רענון תצלום נתוני הבוט.
    *
    * מקבל קובץ ייצוא של הבוט, או נופל לגיבוי המקומי. **כותב רק לשדה
@@ -379,49 +449,67 @@ const CMDS = {
    */
   async sync(file) {
     const s = load();
-    let days = [], src = null, at = null;
-    if (file && existsSync(file)) {
-      const j = JSON.parse(readFileSync(file, 'utf8'));
-      days = j.days || j; at = j.exportedAt || null; src = file;
-    } else if (!file && (at = await (async () => {
-      // **חי קודם.** הסוד יושב מקומית ב-.webhook-secret, כלומר הנתונים
-      // הטריים היו בהישג יד כל הזמן והסקריפט בכל זאת הגיש גיבוי בן
-      // ארבעה ימים. `exportedAt` מגיע מהבוט עצמו — הוא הסמכות על
-      // התאריך, לא שם קובץ ולא שעון מקומי.
+    // ═══ שלושה באגי זרימה בגרסה הקודמת ═══
+    //
+    //  · `else if (!file && (at = await …))` — `exportedAt` falsy ביטל
+    //    שליפה **מוצלחת** ודרס אותה בגיבוי, בזמן שהמקור דיווח
+    //    "הבוט לא נענה".
+    //  · נתיב קובץ שגוי הפך `!file` ל-false ולכן דילג על השליפה החיה
+    //    לגמרי — ודיווח שהבוט לא נענה בלי לפנות אליו.
+    //  · `days = j.days || j` הפך אובייקט בלי `days` למערך מדומה,
+    //    ו-`.slice` זרק.
+    //
+    // כאן כל מקור נבדק בנפרד ומדווח את עצמו.
+    const fromFile = () => {
+      if (!file) return null;
+      if (!existsSync(file)) return { err: `הקובץ לא נמצא: ${file}` };
+      try {
+        const j = JSON.parse(readFileSync(file, 'utf8'));
+        const days = Array.isArray(j) ? j : j.days;
+        if (!Array.isArray(days)) return { err: 'הקובץ אינו מכיל מערך ימים' };
+        return { days, at: j.exportedAt || days[0]?.iso || null, src: file };
+      } catch (e) { return { err: `קובץ פגום: ${e.message}` }; }
+    };
+    const fromBot = async () => {
       const kf = join(REPO, '.webhook-secret');
-      if (!existsSync(kf)) return null;
+      if (process.env.CBT_OFFLINE || !existsSync(kf)) return null;
       try {
         const r = await fetch(`${WORKER}/export?days=14&key=${readFileSync(kf, 'utf8').trim()}`,
                               { signal: AbortSignal.timeout(25000) });
         if (!r.ok) return null;
         const j = await r.json();
-        days = j.days || []; src = 'הבוט (חי)';
-        return j.exportedAt || null;
+        if (!Array.isArray(j.days)) return null;
+        return { days: j.days, at: j.exportedAt || j.days[0]?.iso || null, src: 'הבוט (חי)' };
       } catch { return null; }
-    })())) {
-      // נשלף חי — days ו-src כבר הוצבו
-    } else {
+    };
+    const fromBackup = () => {
       const dir = join(ROOT, 'backups', 'days-20260803');
-      if (!existsSync(dir)) return out({ error: 'אין קובץ ייצוא ואין גיבוי מקומי' });
-      // התאריך מגיע **משם הקובץ**, לא מתוך הרשומה — רשומות היום אינן
-      // נושאות `iso`. בלי זה הנפילה ל-`today()` הציגה גיבוי מ-3.8
-      // כאילו סונכרן היום, כלומר שיקרה על גיל הנתונים בדיוק במקום
-      // שבו הגיל הוא כל העניין.
+      if (!existsSync(dir)) return { err: 'אין ייצוא, אין בוט, ואין גיבוי מקומי' };
       const files = readdirSync(dir).filter(f => f.endsWith('.json')).sort().reverse();
-      days = files.map(f => ({ iso: f.replace('.json', ''),
-                               ...JSON.parse(readFileSync(join(dir, f), 'utf8')) }));
-      at = days[0]?.iso || null; src = 'backups/ (הבוט לא נענה)';
-    }
-    s.days = days.slice(0, 14);
-    s.syncedISO = at || days[0]?.iso || null;
+      // התאריך מ**שם הקובץ** — רשומות היום אינן נושאות `iso`, והנפילה
+      // ל-`today()` הציגה גיבוי ישן כאילו סונכרן עכשיו.
+      const days = files.map(f => ({ iso: f.replace('.json', ''),
+                                     ...JSON.parse(readFileSync(join(dir, f), 'utf8')) }));
+      return { days, at: days[0]?.iso || null, src: 'backups/ (הבוט לא נענה)' };
+    };
+
+    const r = fromFile() || await fromBot() || fromBackup();
+    if (r.err) return void out({ error: r.err });
+    s.days = r.days.slice(0, 14);
+    s.syncedISO = r.at;
     save(s);
-    out({ synced: s.days.length, syncedISO: s.syncedISO, source: src });
+    out({ synced: s.days.length, syncedISO: s.syncedISO, source: r.src });
   },
+
 };
 
 const [cmd, ...args] = process.argv.slice(2);
-if (!CMDS[cmd]) {
-  console.log(`שימוש: cbt-session.mjs <${Object.keys(CMDS).join('|')}>`);
+// `CMDS[cmd]` היה אמיתי גם ל-`toString`/`constructor`/`valueOf`, ולכן
+// `cbt-session.mjs constructor` רץ ויצא ב-0 **בלי שום פלט** — שם פקודה
+// מומצא נראה כמו הצלחה שקטה.
+if (!Object.hasOwn(CMDS, cmd || '')) {
+  console.log(JSON.stringify({ error: `פקודה לא מוכרת: ${cmd || '(חסר)'}`,
+                               commands: Object.keys(CMDS) }, null, 2));
   process.exit(1);
 }
 await CMDS[cmd](...args);

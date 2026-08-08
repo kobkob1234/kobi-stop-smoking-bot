@@ -53,12 +53,52 @@ export const pickCbtFields = (o) => {
 
 /** מיגרציה — אותו דפוס כמו PLAN_VER, רץ בכל קריאה ולא רק בשדרוג */
 export function migrateCbt(cbt) {
-  if (!cbt) return { ...EMPTY_CBT };
+  if (!cbt || typeof cbt !== 'object' || Array.isArray(cbt)) return { ...EMPTY_CBT };
   const out = { ...EMPTY_CBT, ...cbt, ver: CBT_VER };
   // שדות מערך שהגיעו כ-null מ-KV ישן היו מפילים כל .length בהמשך
   for (const k of ['sessionsDone', 'triggers', 'pastAttempts', 'confidence', 'notes', 'formulations']) {
     if (!Array.isArray(out[k])) out[k] = [];
   }
+
+  // ═══ תיקון עמוק — אותו לקח מ-`repairPlan` ═══
+  //
+  // הבדיקה נעצרה ב-`Array.isArray`, ולכן **מערך תקין עם תוכן פגום** עבר.
+  // כל אחד מאלה הפיל את `/טיפול` ב-500 עד עריכה ידנית של KV:
+  //
+  //   {active:{}}              → P.fidelity(null) זורק על `.checklist`
+  //   {notes:[null]}           → fidelityReport זורק על `.score`
+  //   {confidence:[null,null]} → openingContext זורק על `.v`
+  //   {homework:'טקסט'}        → "ש\"ב פתוחים מלפני NaN ימים: undefined"
+  //                              **נשלח למשתמש**
+  //
+  // מתקנים ולא זורקים: חריגה כאן עוצרת גם את התזכורות.
+  out.sessionsDone = out.sessionsDone.filter(x => typeof x === 'string' && x);
+  out.triggers = out.triggers.filter(x => typeof x === 'string' && x);
+  out.pastAttempts = out.pastAttempts.filter(x => typeof x === 'string' && x);
+  out.confidence = out.confidence.filter(x => x && typeof x.v === 'number');
+  out.formulations = out.formulations.filter(x => x && typeof x.text === 'string');
+  out.notes = out.notes.filter(x => x && typeof x.score === 'number' &&
+                                   Array.isArray(x.missed) && typeof x.iso === 'string');
+
+  out.homework = (out.homework && typeof out.homework === 'object' &&
+                  typeof out.homework.text === 'string')
+    ? { text: out.homework.text, assignedISO: out.homework.assignedISO || null,
+        done: !!out.homework.done }
+    : null;
+
+  // `active` הוא המסוכן ביותר: הוא מזין את `byId` ואת `fidelity`.
+  const a = out.active;
+  out.active = (a && typeof a === 'object' && typeof a.id === 'string' && byId(a.id))
+    ? { id: a.id, iso: a.iso || null,
+        remaining: Array.isArray(a.remaining) ? a.remaining.filter(x => typeof x === 'string') : [],
+        done: Array.isArray(a.done) ? a.done.filter(x => typeof x === 'string') : [],
+        captured: (a.captured && typeof a.captured === 'object' && !Array.isArray(a.captured))
+          ? a.captured : {},
+        tries: (a.tries && typeof a.tries === 'object' && !Array.isArray(a.tries)) ? a.tries : {} }
+    : null;
+
+  if (typeof out.startISO !== 'string') out.startISO = null;
+  if (out.dependence != null && typeof out.dependence !== 'string') out.dependence = null;
   return out;
 }
 
@@ -292,14 +332,17 @@ export function completeSession(cbt, iso) {
  */
 export function openingContext(cbt, iso) {
   const bits = [];
+  // **תאריך חסר אינו קורס.** `diffDays` מפרק מחרוזת, ולכן רשומה בלי
+  // `iso` — או ש"ב בלי `assignedISO` — הפילו את פתיחת הסשן כולה.
+  // מספר ימים לא ידוע הוא null, לא חריגה.
+  const since = a => (typeof a === 'string' && a ? diffDays(a, iso) : null);
   const last = cbt.notes[cbt.notes.length - 1];
   if (last) {
-    const gap = diffDays(last.iso, iso);
-    bits.push({ kind: 'last', id: last.id, daysAgo: gap, score: last.score });
+    bits.push({ kind: 'last', id: last.id, daysAgo: since(last.iso), score: last.score });
   }
   if (cbt.homework && !cbt.homework.done) {
     bits.push({ kind: 'homework', text: cbt.homework.text,
-                daysAgo: diffDays(cbt.homework.assignedISO, iso) });
+                daysAgo: since(cbt.homework.assignedISO) });
   }
   if (cbt.confidence.length >= 2) {
     const c = cbt.confidence;
