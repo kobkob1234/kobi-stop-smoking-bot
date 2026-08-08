@@ -10,7 +10,8 @@
     "homework": null,
     "formulations": [],
     "notes": [],
-    "active": null
+    "active": null,
+    "force": true
   },
   "turns": []
 }

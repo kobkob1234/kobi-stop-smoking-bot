@@ -20,6 +20,7 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const RUN = join(HERE, '..', 'scripts', 'cbt-session.mjs');
 const REPO = join(HERE, '..');
 const CBT = join(REPO, 'cbt-state');
+const CBT_LIB = join(REPO, '..', 'cbt');
 // **הרמטי בכוונה.** מאז ש-`status`/`start` מושכים את המצב מ-KV, בדיקה
 // שרצה מול הבוט החי תלויה במה שבמקרה שמור שם — וסשן שנשאר פתוח
 // מהרצה קודמת היה מפיל אותה. מכוונים לפורט מת כדי שהמשיכה תיכשל
@@ -302,4 +303,58 @@ test('ניקוי אחרי בדיקות השוויון', () => {
   if (s.active) { cli('close'); cli('finish', 'NONE'); }
   reset();
   assert.equal(cli('status').active, null);
+});
+
+
+// ==========================================================================
+//  הפלט חייב להיות JSON תקין — בכל צעד של סשן שלם
+//
+//  הרצה מקצה לקצה נכשלה על "Invalid control character": הקורפוס מגיע
+//  מ-pdftotext, ו-8 מתוך 121 הקטעים נשאו form feed, bell ו-backspace.
+//  הם נוסעים משם אל הפרומפט **ואל כל JSON שעוטף אותם**.
+//
+//  מבחן צעד בודד לא היה תופס את זה: התקלה תלויה באיזה קטע נבחר, ולכן
+//  כאן רץ סשן שלם וכל פלט מפורסר.
+// ==========================================================================
+
+const CTRL = /[\u0000-\u0008\u000b-\u001f\u007f]/;
+
+test('הטקסט שעולה ל-KV נקי מתווי בקרה', () => {
+  // הגרסה הראשונה של הבדיקה הזו בדקה כותרות ומונחים מהאינדקס — שניהם
+  // עוברים טוקניזציה ל-[a-z] ולכן **לא יכולים** להכיל תווי בקרה.
+  // כלומר היא לא יכלה להיכשל, ומוטציה שביטלה את הניקוי עברה.
+  //
+  // מה שנבדק עכשיו הוא הארטיפקט שבאמת נשלח: גוף הקטעים.
+  const bulk = join(CBT_LIB, '.kv-bulk.json');
+  if (!existsSync(bulk)) return;                 // נבנה מחדש בלבד
+  const rows = JSON.parse(readFileSync(bulk, 'utf8'));
+  assert.ok(rows.length > 50, `רק ${rows.length} קטעים`);
+  const dirty = rows.filter(r => CTRL.test(r.value)).map(r => r.key);
+  assert.deepEqual(dirty, [], 'תווי בקרה מ-pdftotext שרדו אל מה שנשלח למודל');
+});
+
+test('סשן שלם — כל פלט הוא JSON תקין', () => {
+  const s0 = cli('status');
+  if (s0.active) { cli('close'); cli('finish', 'NONE'); }
+  reset();
+  const st = cli('start');
+  assert.ok(!st.error, `start נכשל: ${st.error}`);
+  let n = 0;
+  for (;;) {
+    const step = cli('next');            // cli מפרסר — פלט פגום זורק כאן
+    if (step.done) break;
+    assert.ok(++n <= 20, 'הסשן לא נגמר');
+    assert.ok(step.tool && step.name, 'צעד בלי כלי');
+    // גם הטקסט שנשלף חייב להיות נקי — הוא נכנס לפרומפט
+    for (const src of step.context.sources) {
+      if (src.text) assert.ok(!CTRL.test(src.text), `${src.id}: תווי בקרה בטקסט`);
+    }
+    const r = cli('record', step.tool, 'תשובה לבדיקה', 'ערך');
+    assert.equal(r.recorded, step.tool);
+  }
+  assert.ok(n >= 5, `רק ${n} צעדים`);
+  const c = cli('close');
+  assert.equal(c.fidelity.score, 1, `נאמנות ${c.fidelity.score} · דולג ${c.fidelity.missed}`);
+  cli('finish', 'NONE');
+  reset();
 });

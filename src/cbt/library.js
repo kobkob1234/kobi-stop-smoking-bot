@@ -2714,7 +2714,7 @@ export const LIBRARY = [
   "title": "6. Handouts and Worksheets to Accompany Session 1 (1/2)",
   "src": "CBT, Mindfulness and Hypnosis for Smoking Cessation — Green & Lynn",
   "kind": "exercise",
-  "words": 2186,
+  "words": 2175,
   "terms": [
    "smoking",
    "smoke",
