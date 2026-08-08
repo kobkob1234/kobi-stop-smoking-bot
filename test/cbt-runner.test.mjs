@@ -738,3 +738,69 @@ test('sync על קובץ בלי מערך ימים אינו זורק', () => {
     assert.match(r.error || '', /מערך ימים/, 'אובייקט בלי days לא דווח');
   } finally { rmSync(f, { force: true }); }
 });
+
+// ==========================================================================
+//  ה-SKILL מול הקוד
+//
+//  הוא הכיל שתי טענות שקריות שהסוכן היה מסתמך עליהן: "הבוט מחזיר 409"
+//  (ההגנה הייתה קוד מת) ו"הסקריפט מושך לפני שהוא נוגע" (רק שתי פקודות
+//  משכו). תיעוד שקרי גרוע מתיעוד חסר — הוא מייצר ביטחון.
+//
+//  הבדיקות כאן **גוזרות מהקוד** במקום להשוות לרשימה ידנית.
+// ==========================================================================
+
+const SKILL = join(REPO, 'skills', 'cbt-session', 'SKILL.md');
+
+test('כל פקודה בסקריפט מתועדת ב-SKILL, ולהפך', () => {
+  const src = readFileSync(RUN, 'utf8');
+  const body = src.slice(src.indexOf('const CMDS = {'), src.indexOf('const [cmd,'));
+  const cmds = [...body.matchAll(/\n  (?:async )?(\w+)\(/g)].map(m => m[1]);
+  assert.ok(cmds.length >= 7, `נמצאו ${cmds.length} פקודות`);
+
+  const doc = readFileSync(SKILL, 'utf8');
+  const undocumented = cmds.filter(c => !doc.includes(`cbt-session.mjs ${c}`));
+  assert.deepEqual(undocumented, [], `פקודות בלי תיעוד: ${undocumented}`);
+
+  const mentioned = [...doc.matchAll(/cbt-session\.mjs (\w+)/g)].map(m => m[1]);
+  const ghosts = [...new Set(mentioned)].filter(c => !cmds.includes(c));
+  assert.deepEqual(ghosts, [], `ה-SKILL מזכיר פקודות שאינן קיימות: ${ghosts}`);
+});
+
+test('הודעות השגיאה שה-SKILL מצטט קיימות בקוד', () => {
+  const src = readFileSync(RUN, 'utf8');
+  const doc = readFileSync(SKILL, 'utf8');
+  // כל מחרוזת בעברית בתוך backticks בטבלת התקלות
+  for (const q of ['לא הצלחתי למשוך מצב טרי', 'קובץ מצב פגום', 'סשן כבר פתוח',
+                   'אין סשן שאמור לרוץ היום']) {
+    assert.ok(doc.includes(q), `ה-SKILL אינו מזכיר "${q}"`);
+    assert.ok(src.includes(q), `ה-SKILL מצטט הודעה שאינה בקוד: "${q}"`);
+  }
+});
+
+test('ה-SKILL אינו טוען טענות שהוסרו', () => {
+  const doc = readFileSync(SKILL, 'utf8');
+  // הטענה הקודמת: "מושך לפני שהוא נוגע ודוחף אחרי כל תור" — כשרק
+  // status ו-start משכו.
+  assert.doesNotMatch(doc, /מושך לפני שהוא נוגע ודוחף אחרי כל תור/,
+    'הטענה החלקית חזרה');
+  assert.match(doc, /כל פקודה מוטציונית מושכת/, 'לא נאמר מה באמת קורה');
+  assert.match(doc, /כישלון משיכה עוצר את הכתיבה/, 'ההתנהגות החדשה לא מתועדת');
+});
+
+test('כתובת הבוט ב-SKILL זהה לזו שבסקריפט', () => {
+  const src = readFileSync(RUN, 'utf8');
+  const doc = readFileSync(SKILL, 'utf8');
+  const inCode = src.match(/https:\/\/[a-z0-9.-]+\.workers\.dev/);
+  const inDoc = doc.match(/https:\/\/[a-z0-9.-]+\.workers\.dev/);
+  assert.ok(inCode && inDoc, 'חסרה כתובת באחד הצדדים');
+  assert.equal(inDoc[0], inCode[0], 'הכתובת ב-SKILL אינה זו שבקוד');
+  // ולא משתנה shell שלא הוגדר בשום מקום
+  assert.doesNotMatch(doc, /\$WORKER\b/, '$WORKER אינו מוגדר בשום מקום');
+});
+
+test('ה-SKILL מסביר מה לעשות כשסשן כבר פתוח', () => {
+  // זה בדיוק מקרה החזרה לאמצע סשן, והוא לא היה מתועד בכלל.
+  const doc = readFileSync(SKILL, 'utf8');
+  assert.match(doc, /אל תריץ `start`/, 'אין הנחיה לסשן פתוח');
+  assert.match(doc, /חזרה לסשן שנקטע/, 'אין סעיף על חידוש סשן');
+});

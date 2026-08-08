@@ -1,7 +1,7 @@
 {
   "cbt": {
     "ver": 1,
-    "startISO": "2026-08-08",
+    "startISO": null,
     "sessionsDone": [],
     "triggers": [],
     "pastAttempts": [],
@@ -10,22 +10,7 @@
     "homework": null,
     "formulations": [],
     "notes": [],
-    "active": {
-      "id": "intake",
-      "iso": "2026-08-08",
-      "remaining": [
-        "past-attempts",
-        "identify-triggers",
-        "assess-dependence",
-        "assess-readiness",
-        "summary-and-homework"
-      ],
-      "done": [
-        "check-nrt"
-      ],
-      "captured": {},
-      "tries": {}
-    }
+    "active": null
   },
   "turns": [],
   "_corrupt": null,
